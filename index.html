@@ -921,8 +921,16 @@ qall('.side-item,.mobilenav .nv').forEach(function(n){n.classList.toggle('on',n.
 setTimeout(hideSplash,6000);
 // Enregistre le Service Worker (offline) — seulement quand l'app est hébergée ailleurs (pas dans l'iframe Apps Script)
 if(HOSTED && 'serviceWorker' in navigator){
+  var swRefreshed=false;
+  // Quand un nouveau service worker prend le contrôle → recharge pour servir la nouvelle version
+  navigator.serviceWorker.addEventListener('controllerchange',function(){
+    if(swRefreshed)return;swRefreshed=true;location.reload();
+  });
   window.addEventListener('load',function(){
-    navigator.serviceWorker.register('sw.js').catch(function(){});
+    navigator.serviceWorker.register('sw.js').then(function(reg){
+      // vérifie périodiquement s'il y a une mise à jour
+      if(reg&&reg.update){setInterval(function(){reg.update();},60000);}
+    }).catch(function(){});
   });
 }
 load();
