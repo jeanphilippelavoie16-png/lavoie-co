@@ -394,7 +394,7 @@ function lastCookedLabel(r){
 
 function hideSplash(){if(splashHidden)return;splashHidden=true;var s=document.getElementById('splash');if(s){s.classList.add('gone');setTimeout(function(){s.remove();},600);}}
 
-function updateSync(){var busy=inflight>0;var h=document.getElementById('hsub');if(h)h.textContent=isOffline?'Hors ligne':(busy?'Synchronisation…':'Famille Lavoie');var d=document.getElementById('sdot');if(d){d.classList.toggle('busy',busy&&!isOffline);d.classList.toggle('offline',isOffline);}var f=document.getElementById('sfoot');if(f)f.textContent=isOffline?'Hors ligne — consultation':(busy?'Synchronisation…':'Synchronisé');}
+function updateSync(){var busy=inflight>0;var pend=pendingCount();var h=document.getElementById('hsub');if(h)h.textContent=isOffline?(pend?('Hors ligne · '+pend+' en attente'):'Hors ligne'):(pend?('Sync… '+pend):(busy?'Synchronisation…':'Famille Lavoie'));var d=document.getElementById('sdot');if(d){d.classList.toggle('busy',(busy||pend>0)&&!isOffline);d.classList.toggle('offline',isOffline);}var f=document.getElementById('sfoot');if(f)f.textContent=isOffline?(pend?(pend+' modif. en attente'):'Hors ligne — consultation'):(pend?('Synchronisation… '+pend):(busy?'Synchronisation…':'Synchronisé'));}
 // Appel API unifié : fetch si hébergé ailleurs (GitHub Pages), google.script.run si dans l'iframe Apps Script
 function apiCall(fn,args){
   if(HOSTED){
@@ -416,22 +416,72 @@ function apiCall(fn,args){
     google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[fn].apply(google.script.run,args||[]);
   });
 }
-function call(fn,args,onSuccess){
-  inflight++;updateSync();
-  apiCall(fn,args).then(function(res){
-    inflight=Math.max(0,inflight-1);
-    if(isOffline){isOffline=false;} // le réseau est revenu
-    updateSync();
-    // si on a une nouvelle copie complète des données en retour, on la garde aussi en local
-    if(DATA)saveLocal(DATA);
-    if(onSuccess)onSuccess(res);
+/* ===== File de synchronisation (écriture offline) =====
+   Chaque modification est ajoutée à une file persistante (localStorage).
+   On vide la file vers le serveur dès que possible ; hors ligne, elle s'accumule
+   et se synchronise automatiquement au retour du réseau. */
+var QUEUE_KEY='LCO_SYNC_QUEUE_v1';
+var syncQueue=[];
+var flushing=false;
+// actions qui ont besoin d'une réponse serveur immédiate → NE PAS mettre en file
+var NO_QUEUE={getAllData:1,genererEpicerie:1};
+
+function loadQueue(){try{var raw=localStorage.getItem(QUEUE_KEY);syncQueue=raw?JSON.parse(raw):[];if(!Array.isArray(syncQueue))syncQueue=[];}catch(e){syncQueue=[];}}
+function saveQueue(){try{localStorage.setItem(QUEUE_KEY,JSON.stringify(syncQueue));}catch(e){}}
+function pendingCount(){return syncQueue.length;}
+
+// Ajoute une action à la file et tente de synchroniser
+function enqueue(fn,args){
+  syncQueue.push({fn:fn,args:args||[],id:cid('q'),ts:Date.now()});
+  saveQueue();updateSync();
+  flushQueue();
+}
+
+// Vide la file vers le serveur, dans l'ordre. S'arrête au premier échec (= hors ligne).
+function flushQueue(){
+  if(flushing)return;
+  if(!syncQueue.length){return;}
+  flushing=true;inflight++;updateSync();
+  var item=syncQueue[0];
+  apiCall(item.fn,item.args).then(function(){
+    // succès → on retire cet élément et on continue avec le suivant
+    syncQueue.shift();saveQueue();
+    isOffline=false;
+    flushing=false;inflight=Math.max(0,inflight-1);updateSync();
+    if(syncQueue.length){flushQueue();}
+    else {
+      // file vidée → on rafraîchit les données depuis le serveur (récupère les modifs des autres)
+      refreshSilent();
+    }
   }).catch(function(){
-    inflight=Math.max(0,inflight-1);
-    // Échec = probablement hors ligne. On NE recharge PAS (ça effacerait le changement à l'écran).
-    // On prévient que la modif n'est pas encore sauvegardée. (La vraie file de sync = Étape 3.)
-    isOffline=true;updateSync();
-    toast('Hors ligne — modification non sauvegardée');
+    // échec → probablement hors ligne. On garde la file et on réessaiera.
+    isOffline=true;
+    flushing=false;inflight=Math.max(0,inflight-1);updateSync();
   });
+}
+
+// Rafraîchit DATA depuis le serveur sans bloquer l'UI (après une sync réussie)
+function refreshSilent(){
+  apiCall('getAllData',[]).then(function(d){isOffline=false;DATA=d;saveLocal(d);render();updateSync();}).catch(function(){});
+}
+function call(fn,args,onSuccess){
+  // Actions qui exigent une réponse serveur (ex. génération de liste) : appel direct, échoue proprement si offline
+  if(NO_QUEUE[fn]){
+    inflight++;updateSync();
+    apiCall(fn,args).then(function(res){
+      inflight=Math.max(0,inflight-1);isOffline=false;updateSync();
+      if(DATA)saveLocal(DATA);
+      if(onSuccess)onSuccess(res);
+    }).catch(function(){
+      inflight=Math.max(0,inflight-1);isOffline=true;updateSync();
+      toast('Hors ligne — action impossible pour l\'instant');
+    });
+    return;
+  }
+  // Actions normales : le changement optimiste est déjà à l'écran → on met juste en file.
+  enqueue(fn,args);
+  if(DATA)saveLocal(DATA);
+  if(onSuccess)onSuccess();
 }
 function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){t.remove();},300);},2200);}
 function load(){
@@ -439,7 +489,11 @@ function load(){
   // 1) Affiche immédiatement la copie locale si on en a une (instantané, et base pour l'offline)
   var cached=loadLocal();
   if(cached&&!DATA){DATA=cached.data;render();}
-  // 2) Tente de rafraîchir depuis le serveur
+  // Si des changements offline sont en attente : on les pousse d'abord (flushQueue rafraîchit ensuite)
+  if(syncQueue.length){
+    hideSplash();render();updateSync();flushQueue();return;
+  }
+  // 2) Sinon, on rafraîchit depuis le serveur
   apiCall('getAllData',[]).then(function(d){
     isOffline=false;DATA=d;saveLocal(d);updateSync();render();
     var wait=Math.max(0,1500-(Date.now()-t0));setTimeout(hideSplash,wait);
@@ -449,9 +503,8 @@ function load(){
       // On a des données en cache → mode hors ligne (consultation)
       isOffline=true;updateSync();render();
     } else {
-      // DÉBOGAGE : on affiche l'erreur réelle pour comprendre ce qui bloque
-      var msg=(e&&e.message)?e.message:String(e);
-      document.getElementById('view').innerHTML='<div class="empty"><div class="ic">📡</div><b>Détail technique de l\'erreur :</b><br><br><span style="color:var(--danger);font-size:13px;word-break:break-word">'+esc(msg)+'</span><br><br><span style="font-size:12px">URL appelée :<br>'+esc(API_URL.slice(0,60))+'…</span><br><br><button class="btn sm" onclick="location.reload()" style="margin:0 auto;width:auto">Réessayer</button></div>';
+      // Aucune donnée locale et pas de réseau → on ne peut rien montrer
+      document.getElementById('view').innerHTML='<div class="empty"><div class="ic">📡</div>Pas de connexion et aucune donnée enregistrée.<br>Connecte-toi à Internet une première fois pour charger tes données.<br><br><button class="btn sm" onclick="location.reload()" style="margin:0 auto;width:auto">Réessayer</button></div>';
     }
   });
 }
@@ -925,6 +978,16 @@ document.getElementById('fab').onclick=function(){if(TAB==='recettes')openRecett
 document.getElementById('sideNew').onclick=function(){setTab('recettes');openRecette();};
 qall('.side-item,.mobilenav .nv').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-tab')===TAB);});
 setTimeout(hideSplash,6000);
+// Charge la file de synchronisation en attente (changements offline non encore envoyés)
+loadQueue();
+// Quand le réseau revient → on tente de vider la file automatiquement
+window.addEventListener('online',function(){isOffline=false;updateSync();flushQueue();});
+window.addEventListener('offline',function(){isOffline=true;updateSync();});
+// Filet de sécurité : on réessaie de vider la file toutes les 20 s s'il reste des choses
+setInterval(function(){if(syncQueue.length&&!flushing){flushQueue();}},20000);
+// Avant de fermer/masquer l'app, dernière tentative de sync
+window.addEventListener('pagehide',function(){if(syncQueue.length)flushQueue();});
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&syncQueue.length)flushQueue();});
 // Enregistre le Service Worker (offline) — seulement quand l'app est hébergée ailleurs (pas dans l'iframe Apps Script)
 if(HOSTED && 'serviceWorker' in navigator){
   var swRefreshed=false;
@@ -939,6 +1002,8 @@ if(HOSTED && 'serviceWorker' in navigator){
     }).catch(function(){});
   });
 }
+// Au démarrage : s'il y a déjà des changements en attente, on tente de les envoyer
+if(syncQueue.length)setTimeout(flushQueue,1200);
 load();
 </script>
 </body>
