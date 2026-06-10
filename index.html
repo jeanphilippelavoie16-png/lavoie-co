@@ -400,9 +400,16 @@ function apiCall(fn,args){
   if(HOSTED){
     // GET avec params dans l'URL : Safari iOS bloque les POST cross-domain, mais accepte les GET "simples".
     var url=API_URL+'?api='+encodeURIComponent(fn)+'&args='+encodeURIComponent(JSON.stringify(args||[]))+'&t='+Date.now();
-    return fetch(url,{method:'GET'}).then(function(r){return r.json();}).then(function(j){
-      if(!j||!j.ok)throw new Error((j&&j.error)||'Erreur serveur');
-      return j.result;
+    return fetch(url,{method:'GET',redirect:'follow'}).then(function(r){
+      return r.text().then(function(txt){
+        var j;
+        try{j=JSON.parse(txt);}catch(parseErr){
+          // la réponse n'est pas du JSON → on montre le début du contenu réel reçu
+          throw new Error('Réponse non-JSON ('+r.status+') : '+String(txt).slice(0,120));
+        }
+        if(!j||!j.ok)throw new Error((j&&j.error)||'Erreur serveur');
+        return j.result;
+      });
     });
   }
   return new Promise(function(resolve,reject){
@@ -442,8 +449,9 @@ function load(){
       // On a des données en cache → mode hors ligne (consultation)
       isOffline=true;updateSync();render();
     } else {
-      // Aucune donnée locale et pas de réseau → on ne peut rien montrer
-      document.getElementById('view').innerHTML='<div class="empty"><div class="ic">📡</div>Pas de connexion et aucune donnée enregistrée.<br>Connecte-toi à Internet une première fois pour charger tes données.</div>';
+      // DÉBOGAGE : on affiche l'erreur réelle pour comprendre ce qui bloque
+      var msg=(e&&e.message)?e.message:String(e);
+      document.getElementById('view').innerHTML='<div class="empty"><div class="ic">📡</div><b>Détail technique de l\'erreur :</b><br><br><span style="color:var(--danger);font-size:13px;word-break:break-word">'+esc(msg)+'</span><br><br><span style="font-size:12px">URL appelée :<br>'+esc(API_URL.slice(0,60))+'…</span><br><br><button class="btn sm" onclick="location.reload()" style="margin:0 auto;width:auto">Réessayer</button></div>';
     }
   });
 }
