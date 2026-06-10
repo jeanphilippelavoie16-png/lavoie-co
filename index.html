@@ -464,6 +464,34 @@ function flushQueue(){
 function refreshSilent(){
   apiCall('getAllData',[]).then(function(d){isOffline=false;DATA=d;saveLocal(d);render();updateSync();}).catch(function(){});
 }
+
+// Vrai si l'utilisateur est en train d'éditer (un modal/feuille est ouvert) → on évite de rafraîchir sous ses doigts
+function editingOpen(){return !!(document.getElementById('ov')||document.getElementById('ov2'));}
+
+// "Battement de cœur" : tourne périodiquement quand l'app est visible.
+// Sert à 2 choses : (1) détecter la reconnexion automatiquement, (2) voir les changements des autres.
+var hbBusy=false;
+function heartbeat(){
+  if(hbBusy)return;
+  if(document.visibilityState!=='visible')return; // pas en arrière-plan (économie)
+  // Coches en attente de batch (debounce) → on les envoie d'abord
+  if(typeof pendEpi==='object'&&Object.keys(pendEpi).length){flushEpi();return;}
+  if(typeof pendLi==='object'&&Object.keys(pendLi).length){flushLi();return;}
+  // S'il y a des changements en attente, priorité à les envoyer (pas de rafraîchissement qui les écraserait)
+  if(syncQueue.length){if(!flushing)flushQueue();return;}
+  hbBusy=true;
+  apiCall('getAllData',[]).then(function(d){
+    var wasOffline=isOffline;isOffline=false;
+    if(!editingOpen()){
+      // rafraîchissement silencieux : on remplace les données et on re-rend
+      DATA=d;saveLocal(d);render();
+    }
+    updateSync();
+    hbBusy=false;
+  }).catch(function(){
+    isOffline=true;updateSync();hbBusy=false;
+  });
+}
 function call(fn,args,onSuccess){
   // Actions qui exigent une réponse serveur (ex. génération de liste) : appel direct, échoue proprement si offline
   if(NO_QUEUE[fn]){
@@ -980,14 +1008,16 @@ qall('.side-item,.mobilenav .nv').forEach(function(n){n.classList.toggle('on',n.
 setTimeout(hideSplash,6000);
 // Charge la file de synchronisation en attente (changements offline non encore envoyés)
 loadQueue();
-// Quand le réseau revient → on tente de vider la file automatiquement
+// Écouteurs réseau natifs (bonus — Safari iOS les déclenche mal, d'où le heartbeat ci-dessous)
 window.addEventListener('online',function(){isOffline=false;updateSync();flushQueue();});
 window.addEventListener('offline',function(){isOffline=true;updateSync();});
-// Filet de sécurité : on réessaie de vider la file toutes les 20 s s'il reste des choses
-setInterval(function(){if(syncQueue.length&&!flushing){flushQueue();}},20000);
+// ❤️ Battement de cœur toutes les 15 s : détecte la reconnexion automatiquement ET récupère
+//    les changements des autres utilisateurs (rafraîchissement silencieux). Seulement si l'app est visible.
+setInterval(heartbeat,15000);
+// Quand on revient sur l'app (déverrouillage, changement d'onglet) → battement immédiat
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'){heartbeat();}});
 // Avant de fermer/masquer l'app, dernière tentative de sync
 window.addEventListener('pagehide',function(){if(syncQueue.length)flushQueue();});
-document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&syncQueue.length)flushQueue();});
 // Enregistre le Service Worker (offline) — seulement quand l'app est hébergée ailleurs (pas dans l'iframe Apps Script)
 if(HOSTED && 'serviceWorker' in navigator){
   var swRefreshed=false;
