@@ -64,6 +64,7 @@
   .side-foot{display:flex;align-items:center;gap:8px;padding:12px 8px 4px;border-top:1px solid var(--side-2);font-size:12px;color:var(--side-muted);font-weight:500}
   .sdot{width:7px;height:7px;border-radius:50%;background:#7bbf8a;transition:background .2s}
   .sdot.busy{background:var(--gold);animation:pulse 1s infinite}
+  .sdot.offline{background:#c9803f;animation:none}
   @keyframes pulse{50%{opacity:.4}}
 
   /* ---------- Contenu ---------- */
@@ -302,7 +303,7 @@
 <script>
 // ⚙️ URL de ton backend Apps Script (déploiement Web App, finit par /exec)
 // À REMPLACER par ton URL réelle une fois le backend redéployé.
-var API_URL = 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec';
+var API_URL = 'https://script.google.com/macros/s/REMPLACE_MOI/exec';
 // Détecte si on tourne en mode "hébergé ailleurs" (GitHub Pages) vs dans l'iframe Apps Script
 var HOSTED = location.hostname.indexOf('script.google.com') < 0 && location.hostname.indexOf('googleusercontent') < 0;
 
@@ -313,7 +314,12 @@ var JOURS_C=['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
 var MOIS_L=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 var TITLES={menu:'Menu',recettes:'Recettes',epicerie:'Épicerie',ingredients:'Ingrédients',listes:'Listes'};
 var CHK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>';
-var inflight=0, busyGen=false, splashHidden=false;
+var inflight=0, busyGen=false, splashHidden=false, isOffline=false;
+var LOCAL_KEY='LCO_DATA_CACHE_v1';
+// Sauvegarde une copie locale des données (pour la lecture offline)
+function saveLocal(d){try{localStorage.setItem(LOCAL_KEY,JSON.stringify({t:Date.now(),data:d}));}catch(e){}}
+// Récupère la dernière copie locale, ou null
+function loadLocal(){try{var raw=localStorage.getItem(LOCAL_KEY);if(!raw)return null;var o=JSON.parse(raw);return o&&o.data?o:null;}catch(e){return null;}}
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function fmtNum(v){return String(v).replace('.',',');}
@@ -388,7 +394,7 @@ function lastCookedLabel(r){
 
 function hideSplash(){if(splashHidden)return;splashHidden=true;var s=document.getElementById('splash');if(s){s.classList.add('gone');setTimeout(function(){s.remove();},600);}}
 
-function updateSync(){var busy=inflight>0;var h=document.getElementById('hsub');if(h)h.textContent=busy?'Synchronisation…':'Famille Lavoie';var d=document.getElementById('sdot');if(d)d.classList.toggle('busy',busy);var f=document.getElementById('sfoot');if(f)f.textContent=busy?'Synchronisation…':'Synchronisé';}
+function updateSync(){var busy=inflight>0;var h=document.getElementById('hsub');if(h)h.textContent=isOffline?'Hors ligne':(busy?'Synchronisation…':'Famille Lavoie');var d=document.getElementById('sdot');if(d){d.classList.toggle('busy',busy&&!isOffline);d.classList.toggle('offline',isOffline);}var f=document.getElementById('sfoot');if(f)f.textContent=isOffline?'Hors ligne — consultation':(busy?'Synchronisation…':'Synchronisé');}
 // Appel API unifié : fetch si hébergé ailleurs (GitHub Pages), google.script.run si dans l'iframe Apps Script
 function apiCall(fn,args){
   if(HOSTED){
@@ -405,9 +411,44 @@ function apiCall(fn,args){
     google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[fn].apply(google.script.run,args||[]);
   });
 }
-function call(fn,args,onSuccess){inflight++;updateSync();apiCall(fn,args).then(function(res){inflight=Math.max(0,inflight-1);updateSync();if(onSuccess)onSuccess(res);}).catch(function(){inflight=Math.max(0,inflight-1);updateSync();toast('Échec de sync — rechargement');setTimeout(load,400);});}
+function call(fn,args,onSuccess){
+  inflight++;updateSync();
+  apiCall(fn,args).then(function(res){
+    inflight=Math.max(0,inflight-1);
+    if(isOffline){isOffline=false;} // le réseau est revenu
+    updateSync();
+    // si on a une nouvelle copie complète des données en retour, on la garde aussi en local
+    if(DATA)saveLocal(DATA);
+    if(onSuccess)onSuccess(res);
+  }).catch(function(){
+    inflight=Math.max(0,inflight-1);
+    // Échec = probablement hors ligne. On NE recharge PAS (ça effacerait le changement à l'écran).
+    // On prévient que la modif n'est pas encore sauvegardée. (La vraie file de sync = Étape 3.)
+    isOffline=true;updateSync();
+    toast('Hors ligne — modification non sauvegardée');
+  });
+}
 function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){t.remove();},300);},2200);}
-function load(){var t0=Date.now();apiCall('getAllData',[]).then(function(d){DATA=d;updateSync();render();var wait=Math.max(0,1500-(Date.now()-t0));setTimeout(hideSplash,wait);}).catch(function(e){hideSplash();document.getElementById('view').innerHTML='<div class="empty">Erreur de chargement.<br>'+esc(e&&e.message||e)+'</div>';});}
+function load(){
+  var t0=Date.now();
+  // 1) Affiche immédiatement la copie locale si on en a une (instantané, et base pour l'offline)
+  var cached=loadLocal();
+  if(cached&&!DATA){DATA=cached.data;render();}
+  // 2) Tente de rafraîchir depuis le serveur
+  apiCall('getAllData',[]).then(function(d){
+    isOffline=false;DATA=d;saveLocal(d);updateSync();render();
+    var wait=Math.max(0,1500-(Date.now()-t0));setTimeout(hideSplash,wait);
+  }).catch(function(e){
+    hideSplash();
+    if(DATA){
+      // On a des données en cache → mode hors ligne (consultation)
+      isOffline=true;updateSync();render();
+    } else {
+      // Aucune donnée locale et pas de réseau → on ne peut rien montrer
+      document.getElementById('view').innerHTML='<div class="empty"><div class="ic">📡</div>Pas de connexion et aucune donnée enregistrée.<br>Connecte-toi à Internet une première fois pour charger tes données.</div>';
+    }
+  });
+}
 
 var pendEpi={},epiT=null,pendLi={},liT=null;
 function flushEpi(){var ks=Object.keys(pendEpi);if(!ks.length)return;var arr=ks.map(function(k){return {id:k,coche:pendEpi[k]};});pendEpi={};call('setEpicerieCochesBatch',[arr]);}
