@@ -430,9 +430,14 @@ function loadQueue(){try{var raw=localStorage.getItem(QUEUE_KEY);syncQueue=raw?J
 function saveQueue(){try{localStorage.setItem(QUEUE_KEY,JSON.stringify(syncQueue));}catch(e){}}
 function pendingCount(){return syncQueue.length;}
 
+// Callbacks en mémoire (non persistés : une fonction ne peut pas être sauvée dans localStorage)
+var queueCallbacks={};
+
 // Ajoute une action à la file et tente de synchroniser
-function enqueue(fn,args){
-  syncQueue.push({fn:fn,args:args||[],id:cid('q'),ts:Date.now()});
+function enqueue(fn,args,onSuccess){
+  var qid=cid('q');
+  syncQueue.push({fn:fn,args:args||[],id:qid,ts:Date.now()});
+  if(onSuccess)queueCallbacks[qid]=onSuccess;
   saveQueue();updateSync();
   flushQueue();
 }
@@ -443,16 +448,14 @@ function flushQueue(){
   if(!syncQueue.length){return;}
   flushing=true;inflight++;updateSync();
   var item=syncQueue[0];
-  apiCall(item.fn,item.args).then(function(){
-    // succès → on retire cet élément et on continue avec le suivant
+  apiCall(item.fn,item.args).then(function(res){
+    // succès → on retire cet élément, on appelle son callback avec le résultat serveur
     syncQueue.shift();saveQueue();
     isOffline=false;
     flushing=false;inflight=Math.max(0,inflight-1);updateSync();
+    var cb=queueCallbacks[item.id];
+    if(cb){delete queueCallbacks[item.id];try{cb(res);}catch(e){}}
     if(syncQueue.length){flushQueue();}
-    else {
-      // file vidée → on rafraîchit les données depuis le serveur (récupère les modifs des autres)
-      refreshSilent();
-    }
   }).catch(function(){
     // échec → probablement hors ligne. On garde la file et on réessaiera.
     isOffline=true;
@@ -468,32 +471,53 @@ function refreshSilent(){
 // Vrai si l'utilisateur est en train d'éditer (un modal/feuille est ouvert) → on évite de rafraîchir sous ses doigts
 function editingOpen(){return !!(document.getElementById('ov')||document.getElementById('ov2'));}
 
+// VERROU DE SÉCURITÉ : vrai dès qu'un changement local n'est pas encore confirmé par le serveur.
+// Tant que c'est vrai, AUCUN rafraîchissement automatique ne peut écraser les données locales.
+var lastLocalChange=0;
+function markLocalChange(){lastLocalChange=Date.now();}
+function safeToRefresh(){
+  if(syncQueue.length)return false;                       // des changements attendent d'être envoyés
+  if(flushing)return false;                               // envoi en cours
+  if(inflight>0)return false;                             // un appel serveur est en vol
+  if(editingOpen())return false;                          // l'utilisateur édite
+  if(typeof pendEpi==='object'&&Object.keys(pendEpi).length)return false; // coches en attente
+  if(typeof pendLi==='object'&&Object.keys(pendLi).length)return false;
+  if(Date.now()-lastLocalChange<5000)return false;        // marge de 5 s après le dernier changement local
+  return true;
+}
+
 // "Battement de cœur" : tourne périodiquement quand l'app est visible.
 // Sert à 2 choses : (1) détecter la reconnexion automatiquement, (2) voir les changements des autres.
 var hbBusy=false;
 function heartbeat(){
   if(hbBusy)return;
   if(document.visibilityState!=='visible')return; // pas en arrière-plan (économie)
-  // Coches en attente de batch (debounce) → on les envoie d'abord
+  // 1) Priorité absolue : envoyer ce qui est en attente
   if(typeof pendEpi==='object'&&Object.keys(pendEpi).length){flushEpi();return;}
   if(typeof pendLi==='object'&&Object.keys(pendLi).length){flushLi();return;}
-  // S'il y a des changements en attente, priorité à les envoyer (pas de rafraîchissement qui les écraserait)
   if(syncQueue.length){if(!flushing)flushQueue();return;}
+  // 2) Rafraîchissement SEULEMENT si rien n'est en cours (verrou strict)
+  if(!safeToRefresh()){
+    // On teste quand même la connexion sans toucher aux données
+    if(isOffline){
+      hbBusy=true;
+      apiCall('getAllData',[]).then(function(){isOffline=false;updateSync();hbBusy=false;}).catch(function(){hbBusy=false;});
+    }
+    return;
+  }
   hbBusy=true;
   apiCall('getAllData',[]).then(function(d){
-    var wasOffline=isOffline;isOffline=false;
-    if(!editingOpen()){
-      // rafraîchissement silencieux : on remplace les données et on re-rend
-      DATA=d;saveLocal(d);render();
-    }
-    updateSync();
-    hbBusy=false;
+    isOffline=false;
+    // re-vérification au retour : si un changement est survenu pendant l'appel, on n'écrase PAS
+    if(safeToRefresh()){DATA=d;saveLocal(d);render();}
+    updateSync();hbBusy=false;
   }).catch(function(){
     isOffline=true;updateSync();hbBusy=false;
   });
 }
 function call(fn,args,onSuccess){
-  // Actions qui exigent une réponse serveur (ex. génération de liste) : appel direct, échoue proprement si offline
+  markLocalChange(); // bloque tout rafraîchissement automatique pendant un moment
+  // Actions qui exigent une réponse serveur (ex. génération de liste) : appel direct
   if(NO_QUEUE[fn]){
     inflight++;updateSync();
     apiCall(fn,args).then(function(res){
@@ -506,10 +530,9 @@ function call(fn,args,onSuccess){
     });
     return;
   }
-  // Actions normales : le changement optimiste est déjà à l'écran → on met juste en file.
-  enqueue(fn,args);
+  // Actions normales : mise en file. Le onSuccess sera appelé avec le résultat serveur quand ce sera envoyé.
+  enqueue(fn,args,onSuccess);
   if(DATA)saveLocal(DATA);
-  if(onSuccess)onSuccess();
 }
 function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){t.remove();},300);},2200);}
 function load(){
@@ -639,11 +662,15 @@ function openRecipeDetail(rid){
 /* ============ ÉPICERIE ============ */
 function viewEpicerie(){
   var h='<div class="ph">Épicerie</div><div class="psub">Coche les repas à magasiner, la liste se construit</div><div class="panes"><section class="pane-a">';
-  var s=(DATA.soupers||[]).slice().sort(function(a,b){return a.Date<b.Date?-1:1;});
-  h+='<label style="margin:0 4px 8px">Repas à magasiner</label>';
-  if(!s.length){h+='<div class="card muted small">Aucun repas au menu. Planifie des soupers, ou ajoute des items à la main.</div>';}
+  // On n'affiche que les repas D'AUJOURD'HUI ET À VENIR (l'historique passé n'encombre plus la liste)
+  var today=ymd(new Date());
+  var all=(DATA.soupers||[]).slice().sort(function(a,b){return a.Date<b.Date?-1:1;});
+  var s=all.filter(function(x){return String(x.Date)>=today;});
+  var passes=all.length-s.length;
+  h+='<div class="row" style="margin:0 4px 8px"><label style="margin:0" class="grow">Repas à magasiner</label>'+(s.length?'<span class="small muted clk" id="epiSelAll" style="color:var(--sage-d);font-weight:600">Tout cocher</span>':'')+'</div>';
+  if(!s.length){h+='<div class="card muted small">Aucun repas à venir. Planifie des soupers dans le menu, ou ajoute des items à la main.'+(passes?'<br><span style="font-size:11px">('+passes+' repas passés masqués)</span>':'')+'</div>';}
   else{
-    s.forEach(function(x){var k='EPI_'+x.RecetteID+'_'+x.Date,sel=MENU_SEL[k]===true,d=parseYmd(x.Date);h+='<div class="card tap" style="'+(sel?'border-color:var(--sage);background:var(--sage-bg)':'')+'" data-epimeal="'+esc(x.RecetteID)+'" data-epidate="'+esc(x.Date)+'"><div class="row clk"><span class="chk '+(sel?'on':'')+'">'+(sel?CHK:'')+'</span><div class="grow"><div class="mealname">'+esc(recetteNom(x.RecetteID))+'</div><div class="cook">'+JOURS[d.getDay()]+' '+d.getDate()+' '+MOIS_L[d.getMonth()]+'</div></div></div></div>';});
+    s.forEach(function(x){var k='EPI_'+x.RecetteID+'_'+x.Date,sel=MENU_SEL[k]===true,d=parseYmd(x.Date);h+='<div class="card tap" style="'+(sel?'border-color:var(--sage);background:var(--sage-bg)':'')+'"><div class="row"><div class="epi-main clk" data-epimeal="'+esc(x.RecetteID)+'" data-epidate="'+esc(x.Date)+'" style="flex:1;min-width:0"><span class="chk '+(sel?'on':'')+'">'+(sel?CHK:'')+'</span><div class="grow"><div class="mealname trunc">'+esc(recetteNom(x.RecetteID))+'</div><div class="cook">'+JOURS[d.getDay()]+' '+d.getDate()+' '+MOIS_L[d.getMonth()]+'</div></div></div><span class="xdel clk" data-epidel="'+esc(x.Date)+'" title="Retirer du menu">&times;</span></div></div>';});
     var n=Object.keys(MENU_SEL).filter(function(k){return k.indexOf('EPI_')===0&&MENU_SEL[k];}).length;
     h+='<button class="btn" style="margin:6px 0 4px" id="genBtn"'+(busyGen?' disabled':'')+'>'+(busyGen?'Génération…':(n?'Générer la liste ('+n+' repas)':'Sélectionne au moins un repas'))+'</button>';
   }
@@ -820,7 +847,16 @@ function bind(){
   qall('[data-recdetail]').forEach(function(el){el.onclick=function(){openRecipeDetail(el.getAttribute('data-recdetail'));};});
   qall('[data-addgroup]').forEach(function(el){el.onclick=function(ev){ev.stopPropagation();openRecette(el.getAttribute('data-addgroup'));};});
 
-  qall('[data-epimeal]').forEach(function(el){el.querySelector('.row').onclick=function(){var k='EPI_'+el.getAttribute('data-epimeal')+'_'+el.getAttribute('data-epidate');MENU_SEL[k]=!MENU_SEL[k];render();};});
+  qall('[data-epimeal]').forEach(function(el){el.onclick=function(){var k='EPI_'+el.getAttribute('data-epimeal')+'_'+el.getAttribute('data-epidate');MENU_SEL[k]=!MENU_SEL[k];render();};});
+  qall('[data-epidel]').forEach(function(el){el.onclick=function(ev){ev.stopPropagation();var dt=el.getAttribute('data-epidel');var s=souperFor(dt);if(!s)return;if(!confirm('Retirer « '+recetteNom(s.RecetteID)+' » du menu ?'))return;delete MENU_SEL['EPI_'+s.RecetteID+'_'+dt];DATA.soupers=DATA.soupers.filter(function(x){return x.Date!==dt;});call('retirerSouper',[dt]);render();};});
+  var selAll=document.getElementById('epiSelAll');
+  if(selAll)selAll.onclick=function(){
+    var today=ymd(new Date());
+    var s=(DATA.soupers||[]).filter(function(x){return String(x.Date)>=today;});
+    var allSel=s.every(function(x){return MENU_SEL['EPI_'+x.RecetteID+'_'+x.Date];});
+    s.forEach(function(x){var k='EPI_'+x.RecetteID+'_'+x.Date;if(allSel)delete MENU_SEL[k];else MENU_SEL[k]=true;});
+    render();
+  };
   var gb=document.getElementById('genBtn');
   if(gb)gb.onclick=function(){var ids=Object.keys(MENU_SEL).filter(function(k){return k.indexOf('EPI_')===0&&MENU_SEL[k];}).map(function(k){return k.split('_')[1];});if(!ids.length){toast('Choisis au moins un repas');return;}var nb=ids.length;busyGen=true;render();call('genererEpicerie',[ids],function(rows){busyGen=false;Object.keys(MENU_SEL).forEach(function(k){if(k.indexOf('EPI_')===0)delete MENU_SEL[k];});DATA.epicerie=rows||[];render();toast('Liste générée pour '+nb+' repas');});};
   var mb=document.getElementById('manBtn');if(mb)mb.onclick=openManuel;
