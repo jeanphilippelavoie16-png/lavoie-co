@@ -1,60 +1,82 @@
-/* Service Worker — Lavoie & Co (Étape 2 : interface offline + auto-mise à jour)
-   - "Réseau d'abord" pour l'app : quand tu es en ligne, l'app la plus récente est servie
-     et mise en cache ; hors ligne, on sert la dernière version en cache.
-   - Les DONNÉES (recettes, listes…) sont gérées séparément par localStorage dans l'app.
-   IMPORTANT : à chaque mise à jour de l'app, incrémente CACHE_VERSION (v2 → v3 …). */
-var CACHE_VERSION = 'lavoie-co-v3';
-var CORE_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-180.png'
-];
+/* ================================================================
+   LAVOIE & CO — Service Worker v4.0.0
+   ----------------------------------------------------------------
+   Stratégie :
+   - Navigation / HTML : réseau d'abord (les mises à jour arrivent
+     toujours), cache en secours (l'app ouvre quand même au chalet).
+   - Autres fichiers (manifest, icônes) : cache d'abord, mise à jour
+     en arrière-plan (stale-while-revalidate).
+   - API Apps Script (script.google.com) : JAMAIS touchée par le SW —
+     c'est le moteur de sync de l'app qui gère le hors-ligne.
+   - skipWaiting + clients.claim : la nouvelle version prend le
+     contrôle tout de suite ; l'app se recharge via controllerchange.
+   Pour forcer une mise à jour chez tout le monde : change CACHE_NAME.
+   ================================================================ */
 
-// Installation : met en cache les fichiers de base et s'active tout de suite
-self.addEventListener('install', function (e) {
-  e.waitUntil(
-    caches.open(CACHE_VERSION).then(function (cache) {
-      return cache.addAll(CORE_ASSETS);
+var CACHE_NAME = 'lco-cache-v4.0.0';
+var PRECACHE = ['./', './index.html', './manifest.json', './icon-180.png'];
+
+self.addEventListener('install', function (event) {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function (cache) {
+      // Précache tolérant : un fichier manquant (ex. icône) ne bloque pas l'installation.
+      return Promise.all(PRECACHE.map(function (url) {
+        return cache.add(url).catch(function () {});
+      }));
     }).then(function () { return self.skipWaiting(); })
   );
 });
 
-// Activation : supprime les vieux caches (donc l'ancienne version disparaît)
-self.addEventListener('activate', function (e) {
-  e.waitUntil(
+self.addEventListener('activate', function (event) {
+  event.waitUntil(
     caches.keys().then(function (keys) {
       return Promise.all(keys.map(function (k) {
-        if (k !== CACHE_VERSION) return caches.delete(k);
+        if (k !== CACHE_NAME) return caches.delete(k);
       }));
     }).then(function () { return self.clients.claim(); })
   );
 });
 
-self.addEventListener('fetch', function (e) {
-  var url = e.request.url;
+self.addEventListener('fetch', function (event) {
+  var req = event.request;
 
-  // Les appels à l'API Apps Script ont besoin du réseau → on ne les touche pas.
-  if (url.indexOf('/exec') >= 0 || url.indexOf('script.google.com') >= 0 || url.indexOf('googleusercontent') >= 0) {
+  // On ne gère que les GET du même domaine (GitHub Pages).
+  // Tout le reste — surtout les appels API vers script.google.com — passe direct au réseau.
+  if (req.method !== 'GET') return;
+  var url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+
+  var isNav = req.mode === 'navigate' ||
+    (req.headers.get('accept') || '').indexOf('text/html') >= 0;
+
+  if (isNav) {
+    // Réseau d'abord : garantit qu'une nouvelle version publiée sur
+    // GitHub Pages est servie dès qu'il y a du réseau.
+    event.respondWith(
+      fetch(req).then(function (res) {
+        var copy = res.clone();
+        caches.open(CACHE_NAME).then(function (c) { c.put('./index.html', copy).catch(function () {}); });
+        return res;
+      }).catch(function () {
+        return caches.match(req).then(function (hit) {
+          return hit || caches.match('./index.html');
+        });
+      })
+    );
     return;
   }
 
-  // Pour l'interface : RÉSEAU D'ABORD, cache en secours.
-  // → en ligne, tu as toujours la dernière version ; hors ligne, tu as la dernière version connue.
-  e.respondWith(
-    fetch(e.request).then(function (resp) {
-      if (resp && resp.status === 200 && (resp.type === 'basic' || resp.type === 'cors')) {
-        var copy = resp.clone();
-        caches.open(CACHE_VERSION).then(function (cache) { cache.put(e.request, copy); });
-      }
-      return resp;
-    }).catch(function () {
-      // hors ligne → on sert depuis le cache
-      return caches.match(e.request).then(function (cached) {
-        return cached || caches.match('./index.html');
-      });
+  // Assets : cache d'abord, rafraîchissement silencieux en arrière-plan.
+  event.respondWith(
+    caches.match(req).then(function (hit) {
+      var refresh = fetch(req).then(function (res) {
+        if (res && res.ok) {
+          var copy = res.clone();
+          caches.open(CACHE_NAME).then(function (c) { c.put(req, copy).catch(function () {}); });
+        }
+        return res;
+      }).catch(function () { return hit; });
+      return hit || refresh;
     })
   );
 });
