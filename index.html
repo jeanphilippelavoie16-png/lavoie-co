@@ -131,6 +131,32 @@
   .datechip.empty .m{color:var(--mut)}
   .mealname{font-size:15px;font-weight:600}
   .cook{font-size:11.5px;color:var(--mut);margin-top:1px}
+  /* étapes visuelles de l'import Instagram */
+  .impsteps{margin:18px 2px 6px;display:none}
+  .impsteps.show{display:block}
+  .impstep{display:flex;align-items:flex-start;gap:12px;position:relative;padding-bottom:20px}
+  .impstep:last-child{padding-bottom:0}
+  .impstep::before{content:'';position:absolute;left:13px;top:32px;bottom:4px;width:2px;background:var(--line);border-radius:2px}
+  .impstep:last-child::before{display:none}
+  .impstep.ok::before{background:linear-gradient(180deg,var(--brass-2),var(--brass))}
+  .impstep .num{position:relative;width:28px;height:28px;border-radius:50%;background:var(--card);border:2px solid var(--line);
+    color:var(--mut);font-family:var(--serif);font-size:13.5px;font-weight:700;display:flex;align-items:center;
+    justify-content:center;flex-shrink:0;transition:background .25s,border-color .25s,color .25s}
+  .impstep .num svg{width:14px;height:14px}
+  .impstep .lbl{font-size:14px;font-weight:600;color:var(--mut);padding-top:3px;transition:color .25s}
+  .impstep .sub{font-size:11.5px;color:var(--mut);margin-top:1px;font-weight:400;line-height:1.45}
+  .impstep.on .num{border-color:var(--pine);color:var(--pine-deep);background:var(--pine-ghost)}
+  .impstep.on .num::after{content:'';position:absolute;inset:-7px;border-radius:50%;border:2px solid transparent;
+    border-top-color:var(--brass);animation:impspin .9s linear infinite}
+  .impstep.on .lbl{color:var(--ink)}
+  .impstep.ok .num{background:linear-gradient(135deg,var(--brass-2),var(--brass));border-color:transparent;color:#fff;
+    box-shadow:0 1px 4px rgba(180,134,62,.45)}
+  .impstep.ok .lbl{color:var(--ink)}
+  .impstep.err .num{background:var(--danger-ghost);border-color:var(--danger);color:var(--danger)}
+  .impstep.err .lbl{color:var(--danger)}
+  .impstep.err .sub{color:var(--danger)}
+  @keyframes impspin{to{transform:rotate(360deg)}}
+
   /* créneaux dîner/souper dans une carte de jour */
   .slotrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-radius:9px}
   .slotrow + .slotrow{border-top:1px solid var(--line2)}
@@ -1565,30 +1591,55 @@ function bindUniteSelect(idBase){
 // texte en brouillon, qui s'ouvre dans l'éditeur de recette pour
 // révision — rien n'est enregistré avant « Enregistrer la recette ».
 function openImportIG(){
+  function stepHtml(i, lbl, sub){
+    return '<div class="impstep" data-step="' + i + '"><span class="num">' + i + '</span><div><div class="lbl">' + lbl + '</div><div class="sub">' + sub + '</div></div></div>';
+  }
   showSheet('Importer une recette',
     '<div class="psub" style="margin-bottom:14px">Colle le lien du reel Instagram. Si la recette n\'est pas lisible depuis le lien, on te demandera de coller son texte.</div>' +
     '<div class="field"><label>Lien Instagram</label><input id="ig-url" inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://www.instagram.com/reel/…"></div>' +
     '<div class="field hide" id="ig-manual"><label>Texte de la recette (le commentaire du reel)</label><textarea id="ig-txt" rows="7" placeholder="Colle ici le texte complet de la recette…"></textarea></div>' +
     '<button class="btn" id="ig-go">Analyser</button>' +
+    '<div class="impsteps" id="ig-steps">' +
+      stepHtml(1, 'Lecture du lien', '') +
+      stepHtml(2, 'Structuration par l\'IA', 'nom, ingrédients, quantités, étapes') +
+      stepHtml(3, 'Révision', 'la recette s\'ouvre pour vérification avant d\'être enregistrée') +
+    '</div>' +
     '<div class="small muted" id="ig-hint" style="margin-top:10px;text-align:center"></div>', true);
+  function setStep(i, state, sub){
+    var el = document.querySelector('#ig-steps .impstep[data-step="' + i + '"]'); if (!el) return;
+    el.className = 'impstep' + (state ? ' ' + state : '');
+    var n = el.querySelector('.num');
+    if (state === 'ok') n.innerHTML = CHK;
+    else if (state === 'err') n.textContent = '!';
+    else n.textContent = String(i);
+    if (sub !== undefined) el.querySelector('.sub').textContent = sub;
+  }
   var busy = false;
   function setBtn(label, disabled){ var b = $('ig-go'); if (b) { b.disabled = !!disabled; b.textContent = label; } }
   function reset(){ busy = false; setBtn('Analyser', false); }
-  function fail(err){
+  function fail(stepIdx, err){
     reset();
     var msg = String(err && err.message || err);
     if (/failed to fetch|load failed|networkerror|network request failed/i.test(msg)) {
       msg = 'Impossible de joindre le serveur — vérifie ta connexion et réessaie.';
     } else { isOffline = false; updateSync(); } // le serveur a répondu : on n'est pas hors ligne
+    setStep(stepIdx, 'err', msg);
     toast(msg, 'err');
   }
   function structurer(texte, url){
-    setBtn('Structuration de la recette… (10 à 30 s)', true);
+    setBtn('Analyse en cours…', true);
+    setStep(2, 'on', 'l\'IA lit la recette… (10 à 30 s)');
     apiCall('structurerRecetteTexte', [texte, url]).then(function (res) {
       isOffline = false; updateSync();
-      if (res && res.recette) { closeSheet(); openRecette(null, res.recette); return; }
-      reset(); toast('Réponse inattendue du serveur', 'err');
-    }).catch(fail);
+      if (res && res.recette) {
+        var nIng = (res.recette.ingredients || []).length;
+        setStep(2, 'ok', nIng + ' ingrédient' + (nIng > 1 ? 's' : '') + ', ' + (res.recette.etapes || []).length + ' étape' + ((res.recette.etapes || []).length > 1 ? 's' : ''));
+        setStep(3, 'ok', 'ouverture de l\'éditeur…');
+        setTimeout(function () { closeSheet(); openRecette(null, res.recette); }, 550);
+        return;
+      }
+      fail(2, new Error('Réponse inattendue du serveur'));
+    }).catch(function (err) { fail(2, err); });
   }
   $('ig-go').onclick = function () {
     if (busy) return;
@@ -1599,16 +1650,22 @@ function openImportIG(){
     // Deux appels courts plutôt qu'un long : Safari iOS coupe les
     // requêtes qui dépassent ~60 s.
     busy = true;
-    if (txt) { structurer(txt, url); return; }
-    setBtn('Lecture du lien…', true);
+    $('ig-steps').classList.add('show');
+    $('ig-hint').textContent = '';
+    setStep(2, '', 'nom, ingrédients, quantités, étapes');
+    setStep(3, '', 'la recette s\'ouvre pour vérification avant d\'être enregistrée');
+    if (txt) { setStep(1, 'ok', 'texte collé à la main'); structurer(txt, url); return; }
+    setBtn('Analyse en cours…', true);
+    setStep(1, 'on', 'on demande la description publique du reel…');
     apiCall('lireLienIG', [url]).then(function (res) {
       isOffline = false; updateSync();
-      if (res && res.texte) { structurer(res.texte, url); return; }
+      if (res && res.texte) { setStep(1, 'ok', 'description du reel récupérée'); structurer(res.texte, url); return; }
       reset();
+      setStep(1, 'err', 'Instagram bloque la lecture de ce lien');
       $('ig-manual').classList.remove('hide');
-      $('ig-hint').textContent = 'Instagram n\'a pas laissé lire ce lien. Ouvre le reel, copie le texte de la recette (souvent le commentaire épinglé), puis colle-le ci-dessus.';
+      $('ig-hint').textContent = 'Pas grave : ouvre le reel, copie le texte de la recette (souvent le commentaire épinglé), colle-le ci-dessus et réanalyse.';
       setTimeout(function () { var t = $('ig-txt'); if (t) t.focus(); }, 60);
-    }).catch(fail);
+    }).catch(function (err) { fail(1, err); });
   };
 }
 
