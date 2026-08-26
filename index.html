@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.2.0 « La Carte »
+     LAVOIE & CO — v4.2.1 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -111,7 +111,7 @@
   .pagetitle{display:none;font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:-.01em}
 
   main{padding:18px 14px 0;max-width:600px;margin:0 auto;padding-bottom:calc(var(--navbar-h) + 24px)}
-  .ph{font-family:var(--serif);font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px;line-height:1.12}
+  .ph{font-family:var(--serif);font-size:34px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px;line-height:1.1}
   .psub{color:var(--mut);font-size:13px;margin:0 0 18px;letter-spacing:.01em}
 
   .panes{display:block}
@@ -174,6 +174,41 @@
     width:48px;flex-shrink:0}
   .slotempty{color:var(--mut);font-size:13px;font-weight:500}
   .slotrow.dragover{background:var(--pine-ghost);box-shadow:0 0 0 3px var(--pine-ghost)}
+
+  /* La carte du jour : aujourd'hui s'inverse — l'encre devient le fond.
+     C'est le punch de la page, et c'est de l'information : le jour qui
+     compte se lit avant tous les autres. */
+  .card.today{background:var(--ink);border-color:var(--ink);color:#FBFBF9;
+    box-shadow:0 14px 30px rgba(20,22,19,.22)}
+  .card.today .datechip .d{color:#fff}
+  .card.today .datechip .m{color:rgba(255,255,255,.55)}
+  .card.today .slotlbl{color:#9DC3AC}
+  .card.today .slotempty{color:rgba(255,255,255,.42)}
+  .card.today .mealname{color:#FBFBF9}
+  .card.today .cook{color:rgba(255,255,255,.55)}
+  .card.today .slotrow + .slotrow{border-top-color:rgba(255,255,255,.14)}
+  .card.today .chev,.card.today .xdel,.card.today .dragh{color:rgba(255,255,255,.4)}
+  .card.today .xdel:active{color:#FF8A70}
+  .card.today .slotrow.dragover{background:rgba(255,255,255,.14);box-shadow:none}
+
+  /* Entrée orchestrée : les cartes montent en cascade au changement
+     d'onglet — et seulement là, jamais à chaque coche. */
+  @keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .anim .pane-a > *{animation:cardIn .45s cubic-bezier(.22,1,.36,1) both}
+  .anim .pane-a > *:nth-child(2){animation-delay:.04s}
+  .anim .pane-a > *:nth-child(3){animation-delay:.08s}
+  .anim .pane-a > *:nth-child(4){animation-delay:.12s}
+  .anim .pane-a > *:nth-child(5){animation-delay:.16s}
+  .anim .pane-a > *:nth-child(6){animation-delay:.2s}
+  .anim .pane-a > *:nth-child(7){animation-delay:.24s}
+  .anim .pane-a > *:nth-child(8){animation-delay:.28s}
+  .anim .pane-a > *:nth-child(n+9){animation-delay:.32s}
+  .anim .recgrid > .card,.anim .inggrid > .card{animation:cardIn .4s cubic-bezier(.22,1,.36,1) both}
+
+  /* Rayon d'épicerie complété : l'en-tête se raye, le compte devient ✓ */
+  .rayhd.done > span:first-child{color:var(--brass);text-decoration:line-through;
+    text-decoration-thickness:1px;text-decoration-color:var(--brass-2)}
+  .rayhd.done .ct{color:var(--brass);font-weight:700}
   .lastcook{color:var(--brass);font-weight:600}
   .tagrow{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
   .ttag{font-size:10px;padding:2.5px 8px;border-radius:20px;background:var(--pine-ghost);color:var(--pine-deep);font-weight:600}
@@ -364,7 +399,7 @@
     .topbar{padding:20px 36px;background:var(--paper)}
     .brand{display:none} .pagetitle{display:block}
     main{max-width:1120px;margin:0 auto;padding:30px 36px 60px}
-    .ph{font-size:33px} .psub{font-size:14.5px;margin-bottom:24px}
+    .ph{font-size:42px} .psub{font-size:14.5px;margin-bottom:24px}
     .card{padding:14px 16px;margin-bottom:9px} .epi-card{padding:11px 14px}
     .toast{bottom:32px} .selbtn{position:static}
     .panes{display:grid;grid-template-columns:minmax(330px,360px) 1fr;gap:32px;align-items:start}
@@ -401,7 +436,7 @@
   <div class="sp-rule"></div>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.2.0</div>
+  <div class="sp-ver">v4.2.1</div>
 </div>
 
 <aside class="sidebar">
@@ -415,14 +450,14 @@
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.2.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.2.1</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.2.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.2.1"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -439,7 +474,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.2.0
+   LAVOIE & CO — Frontend v4.2.1
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -460,7 +495,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.2.0'
+  VERSION: '4.2.1'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -798,8 +833,10 @@ function load(){
 /* ================================================================
    NAVIGATION & RENDU
    ================================================================ */
+var ANIM_NEXT = true; // cascade d'entrée : armée au chargement et au changement d'onglet
 function setTab(t){
   TAB = t;
+  ANIM_NEXT = true;
   qall('.side-item,.mobilenav .nv').forEach(function (n) { n.classList.toggle('on', n.getAttribute('data-tab') === t); });
   var pt = $('pagetitle'); if (pt) pt.textContent = TITLES[t] || '';
   render();
@@ -809,6 +846,8 @@ function render(){
   flushEpi(); flushLi();
   $('fab').classList.toggle('hide', TAB !== 'recettes');
   var v = $('view');
+  v.classList.remove('anim');
+  if (ANIM_NEXT) { void v.offsetWidth; v.classList.add('anim'); ANIM_NEXT = false; }
   if (TAB === 'menu') v.innerHTML = viewMenu();
   else if (TAB === 'recettes') v.innerHTML = viewRecettes();
   else if (TAB === 'epicerie') v.innerHTML = viewEpicerie();
@@ -824,10 +863,11 @@ function viewMenu(){
   var sub = weekOffset === 0 ? 'Cette semaine' : (weekOffset === 1 ? 'Semaine prochaine' : (weekOffset === -1 ? 'Semaine dernière' : ''));
   var h = '<div class="ph">Le menu</div><div class="psub">Choisis tes recettes — elles se placent dans la semaine</div><div class="panes"><section class="pane-a">';
   h += '<div class="weeknav"><div class="arr clk" id="wPrev" role="button" aria-label="Semaine précédente">‹</div><div class="lbl">' + esc(lbl) + (sub ? '<span class="sm">' + esc(sub) + '</span>' : '') + '</div><div class="arr clk" id="wNext" role="button" aria-label="Semaine suivante">›</div></div>';
+  var isoAuj = ymd(new Date());
   dates.forEach(function (d) {
     var iso = ymd(d), wd = d.getDay();
     var any = souperFor(iso, 'diner') || souperFor(iso, 'souper');
-    h += '<div class="card" style="padding:8px 13px"><div class="row"><div class="datechip' + (any ? '' : ' empty') + '"><span class="d">' + d.getDate() + '</span><span class="m">' + JOURS_C[wd] + '</span></div><div class="grow">';
+    h += '<div class="card' + (iso === isoAuj ? ' today' : '') + '" style="padding:8px 13px"><div class="row"><div class="datechip' + (any ? '' : ' empty') + '"><span class="d">' + d.getDate() + '</span><span class="m">' + (iso === isoAuj ? 'AUJ.' : JOURS_C[wd]) + '</span></div><div class="grow">';
     ['diner', 'souper'].forEach(function (rep) {
       var s = souperFor(iso, rep);
       if (s) {
@@ -981,7 +1021,8 @@ function viewEpicerie(){
 function rayBlock(ray, items){
   var done = items.filter(function (i) { return isTrue(i.Coche); }).length;
   var pct = items.length ? Math.round(done / items.length * 100) : 0;
-  var h = '<div class="rayhd" data-rayhd="' + esc(ray) + '"><span>' + esc(ray) + '</span><span class="rayprog"><i style="width:' + pct + '%"></i></span><span class="ct">' + done + '/' + items.length + '</span></div>';
+  var complet = items.length && done === items.length;
+  var h = '<div class="rayhd' + (complet ? ' done' : '') + '" data-rayhd="' + esc(ray) + '"><span>' + esc(ray) + '</span><span class="rayprog"><i style="width:' + pct + '%"></i></span><span class="ct">' + (complet ? '✓' : done + '/' + items.length) + '</span></div>';
   items.forEach(function (it) {
     var dn = isTrue(it.Coche);
     h += '<div class="card tap epi-card ' + (dn ? 'done' : '') + '" data-rayof="' + esc(ray) + '"><div class="row"><div class="epi-main" data-epi="' + esc(it.ListeID) + '"><span class="chk ' + (dn ? 'on' : '') + '">' + (dn ? CHK : '') + '</span><div class="grow"><span class="itxt">' + esc(it.Ingredient) + '</span>' + (it.Source && String(it.Source).toLowerCase() !== 'manuel' ? '<div class="src">' + esc(it.Source) + '</div>' : '') + '</div></div><span class="epi-qty clk" data-qtyedit="' + esc(it.ListeID) + '">' + esc(fmtNum(it.Quantite)) + ' <span class="u">' + esc(plurUnite(it.Quantite, it.Unite)) + '</span></span><span class="xdel clk" data-delepi="' + esc(it.ListeID) + '">&times;</span></div></div>';
@@ -993,7 +1034,9 @@ function refreshRayonCount(ray){
   if (!hd) return;
   var items = (DATA.epicerie || []).filter(function (i) { return i.Rayon === ray; });
   var done = items.filter(function (i) { return isTrue(i.Coche); }).length;
-  var ct = hd.querySelector('.ct'); if (ct) ct.textContent = done + '/' + items.length;
+  var complet = items.length && done === items.length;
+  hd.classList.toggle('done', !!complet);
+  var ct = hd.querySelector('.ct'); if (ct) ct.textContent = complet ? '✓' : done + '/' + items.length;
   var bar = hd.querySelector('.rayprog i'); if (bar) bar.style.width = (items.length ? Math.round(done / items.length * 100) : 0) + '%';
 }
 function editQty(id, el){
