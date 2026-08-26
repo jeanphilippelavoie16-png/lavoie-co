@@ -1,5 +1,5 @@
 /* ================================================================
-   LAVOIE & CO — Service Worker v4.0.0
+   LAVOIE & CO — Service Worker v4.1.0
    ----------------------------------------------------------------
    Stratégie :
    - Navigation / HTML : réseau d'abord (les mises à jour arrivent
@@ -13,7 +13,7 @@
    Pour forcer une mise à jour chez tout le monde : change CACHE_NAME.
    ================================================================ */
 
-var CACHE_NAME = 'lco-cache-v4.0.0';
+var CACHE_NAME = 'lco-cache-v4.1.0';
 var PRECACHE = ['./', './index.html', './manifest.json', './icon-180.png'];
 
 self.addEventListener('install', function (event) {

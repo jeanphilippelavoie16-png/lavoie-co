@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.0.0 « Carnet de famille »
+     LAVOIE & CO — v4.1.0 « Carnet de famille »
      Système : papier chaud + pin profond + laiton.
      Titres en serif (New York / Georgia — natif, zéro téléchargement),
      interface en SF. Filets de laiton = progression d'épicerie.
@@ -131,6 +131,13 @@
   .datechip.empty .m{color:var(--mut)}
   .mealname{font-size:15px;font-weight:600}
   .cook{font-size:11.5px;color:var(--mut);margin-top:1px}
+  /* créneaux dîner/souper dans une carte de jour */
+  .slotrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-radius:9px}
+  .slotrow + .slotrow{border-top:1px solid var(--line2)}
+  .slotlbl{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--brass);
+    width:48px;flex-shrink:0}
+  .slotempty{color:var(--mut);font-size:13px;font-weight:500}
+  .slotrow.dragover{background:var(--pine-ghost);box-shadow:0 0 0 3px var(--pine-ghost)}
   .lastcook{color:var(--brass);font-weight:600}
   .tagrow{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
   .ttag{font-size:10px;padding:2.5px 8px;border-radius:20px;background:var(--pine-ghost);color:var(--pine-deep);font-weight:600}
@@ -378,7 +385,7 @@
   <div class="sp-title">Lavoie <span class="amp">&amp;</span> Co</div>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.0.0</div>
+  <div class="sp-ver">v4.1.0</div>
 </div>
 
 <aside class="sidebar">
@@ -392,14 +399,14 @@
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.0.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.1.0</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><svg class="brandmark" viewBox="0 0 124 148" aria-hidden="true"><defs><linearGradient id="bmS1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3C5B48"/><stop offset="1" stop-color="#20372A"/></linearGradient></defs><path d="M16 28 Q16 16 28 16 L96 16 Q108 16 108 28 L108 80 Q108 110 62 134 Q16 110 16 80 Z" fill="url(#bmS1)"/><path d="M25 34 Q25 28 31 28 L93 28 Q99 28 99 34 L99 76 Q99 102 62 121 Q25 102 25 76 Z" fill="none" stroke="#D9B87A" stroke-width="1" opacity="0.55"/><text x="62" y="74" text-anchor="middle" font-family="Georgia,serif" font-size="44" font-weight="700" fill="#F6F3EA" letter-spacing="-2">L</text><g stroke="#D9B87A" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="34" y1="89" x2="52" y2="89"/><line x1="72" y1="89" x2="90" y2="89"/><path d="M59 85 V88 M62 85 V88 M65 85 V88"/><path d="M59 88 Q59 90 62 90 Q65 90 65 88"/><path d="M62 90 V94"/></g><text x="62" y="108" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#D9B87A" letter-spacing="2">&amp; CO</text></svg><span class="logo">Lavoie <span class="amp">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.0.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.1.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -416,7 +423,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.0.0
+   LAVOIE & CO — Frontend v4.1.0
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -437,7 +444,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.0.0'
+  VERSION: '4.1.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -451,12 +458,17 @@ var CHK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid
 var CREST_MINI = '<svg class="crest" viewBox="0 0 124 148" fill="none" stroke="currentColor" stroke-width="4"><path d="M16 28 Q16 16 28 16 L96 16 Q108 16 108 28 L108 80 Q108 110 62 134 Q16 110 16 80 Z"/></svg>';
 var UNITES = ['unité','g','kg','ml','L','c. à thé','c. à soupe','tasse','pincée','sac','boîte','paquet','pot','conserve','bouteille','lb','douzaine','tranche','gousse'];
 var UNIT_NOPLUR = { 'g':1,'kg':1,'ml':1,'l':1,'lb':1,'unité':1 };
+// v4.1 : deux créneaux par jour. Une ligne sans Repas (données d'avant
+// la migration) est un souper — même règle que le serveur.
+var REPAS_ORD = { diner: 0, souper: 1 };
+var REPAS_LBL = { diner: 'Dîner', souper: 'Souper' };
+function repasOf(v){ return norm(v) === 'diner' ? 'diner' : 'souper'; }
 
 /* ---------- État ---------- */
 var DATA = null, REV = 0, TAB = 'menu';
 var curListe = null, weekOffset = 0;
 var MENU_SEL = {}, MENU_FILTER = '', ING_SEARCH = '';
-var REC_INGS = [], REC_TYPES = {}, REC_STEPS = [], EDIT_RID = null;
+var REC_INGS = [], REC_TYPES = {}, REC_STEPS = [], EDIT_RID = null, REC_NOTES = '';
 var LKEY = 'LCO_DATA_V4', QKEY = 'LCO_QUEUE_V4';
 var LKEY_OLD = 'LCO_DATA_CACHE_v1', QKEY_OLD = 'LCO_SYNC_QUEUE_v1';
 var splashHidden = false, isOffline = false;
@@ -491,12 +503,12 @@ function recetteNom(rid){ var r = recette(rid); return r ? r.Nom : '(supprimée)
 function ingredientsOf(rid){ return (DATA.ingredients || []).filter(function (i) { return String(i.RecetteID) === String(rid); }); }
 function rayonsSorted(){ return (DATA.rayons || []).slice().sort(function (a, b) { return a.Ordre - b.Ordre; }); }
 function catalogue(){ return (DATA.catalogue || []).slice().sort(function (a, b) { return String(a.Ingredient).localeCompare(String(b.Ingredient)); }); }
-function souperFor(iso){ return (DATA.soupers || []).filter(function (s) { return s.Date === iso; })[0]; }
+function souperFor(iso, rep){ rep = rep || 'souper'; return (DATA.soupers || []).filter(function (s) { return s.Date === iso && repasOf(s.Repas) === rep; })[0]; }
 function epiItem(id){ return (DATA.epicerie || []).filter(function (x) { return String(x.ListeID) === String(id); })[0]; }
 function liste(id){ return (DATA.listes || []).filter(function (l) { return String(l.ListeID) === String(id); })[0]; }
-function mealTracked(date, rid){
+function mealTracked(date, rep, rid){
   return (DATA.epicerieRepas || []).some(function (t) {
-    return String(t.Date) === String(date) && String(t.RecetteID) === String(rid);
+    return String(t.Date) === String(date) && repasOf(t.Repas) === rep && String(t.RecetteID) === String(rid);
   });
 }
 function lastCookedLabel(r){
@@ -515,7 +527,13 @@ function lastCookedLabel(r){
 }
 
 /* ---------- Persistance locale ---------- */
-function normalizeData(d){ if (!d) return d; d.epicerieRepas = d.epicerieRepas || []; return d; }
+function normalizeData(d){
+  if (!d) return d;
+  d.epicerieRepas = d.epicerieRepas || [];
+  (d.soupers || []).forEach(function (s) { s.Repas = repasOf(s.Repas); });
+  d.epicerieRepas.forEach(function (t) { t.Repas = repasOf(t.Repas); });
+  return d;
+}
 function saveLocal(){ try { localStorage.setItem(LKEY, JSON.stringify({ t: Date.now(), rev: REV, data: DATA })); } catch (e) {} }
 function loadLocal(){
   try {
@@ -791,12 +809,18 @@ function viewMenu(){
   var h = '<div class="ph">Le menu</div><div class="psub">Choisis tes recettes — elles se placent dans la semaine</div><div class="panes"><section class="pane-a">';
   h += '<div class="weeknav"><div class="arr clk" id="wPrev" role="button" aria-label="Semaine précédente">‹</div><div class="lbl">' + esc(lbl) + (sub ? '<span class="sm">' + esc(sub) + '</span>' : '') + '</div><div class="arr clk" id="wNext" role="button" aria-label="Semaine suivante">›</div></div>';
   dates.forEach(function (d) {
-    var iso = ymd(d), s = souperFor(iso), wd = d.getDay();
-    if (s) {
-      h += '<div class="card dropday" draggable="true" data-dropday="' + esc(iso) + '" data-dragday="' + esc(iso) + '"><div class="row"><div class="epi-main clk" data-mealday="' + esc(s.RecetteID) + '" style="flex:1;min-width:0"><div class="datechip"><span class="d">' + d.getDate() + '</span><span class="m">' + JOURS_C[wd] + '</span></div><div class="grow"><div class="mealname trunc">' + esc(recetteNom(s.RecetteID)) + '</div><div class="cook">' + JOURS[wd] + (s.Cuisinier ? ' · ' + esc(s.Cuisinier) : '') + '</div></div></div><span class="dragh">⠿</span><span class="xdel clk" data-delsoup="' + esc(iso) + '">&times;</span></div></div>';
-    } else {
-      h += '<div class="card tap clk dropday" data-dropday="' + esc(iso) + '" data-addday="' + esc(iso) + '"><div class="row"><div class="datechip empty"><span class="d">' + d.getDate() + '</span><span class="m">' + JOURS_C[wd] + '</span></div><div class="grow"><div class="mealname" style="color:var(--mut);font-weight:500">Libre</div><div class="cook">touche pour ajouter</div></div><span class="chev">+</span></div></div>';
-    }
+    var iso = ymd(d), wd = d.getDay();
+    var any = souperFor(iso, 'diner') || souperFor(iso, 'souper');
+    h += '<div class="card" style="padding:8px 13px"><div class="row"><div class="datechip' + (any ? '' : ' empty') + '"><span class="d">' + d.getDate() + '</span><span class="m">' + JOURS_C[wd] + '</span></div><div class="grow">';
+    ['diner', 'souper'].forEach(function (rep) {
+      var s = souperFor(iso, rep);
+      if (s) {
+        h += '<div class="slotrow dropslot" draggable="true" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-dragday="' + esc(iso) + '" data-dragrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><div class="epi-main clk" data-mealday="' + esc(s.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc" style="font-size:14px">' + esc(recetteNom(s.RecetteID)) + (s.Cuisinier ? ' <span class="cook" style="display:inline">· ' + esc(s.Cuisinier) + '</span>' : '') + '</div></div></div><span class="dragh">⠿</span><span class="xdel clk" data-delsoup="' + esc(iso) + '" data-delrep="' + rep + '">&times;</span></div>';
+      } else {
+        h += '<div class="slotrow clk dropslot" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-addday="' + esc(iso) + '" data-addrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><span class="slotempty grow">Libre — touche pour ajouter</span><span class="chev">+</span></div>';
+      }
+    });
+    h += '</div></div></div>';
   });
   h += '</section><section class="pane-b">';
   var recs = (DATA.recettes || []);
@@ -810,8 +834,8 @@ function viewMenu(){
   if (!filtered.length) h += '<div class="empty small">Aucune recette de ce type.</div>';
   filtered.forEach(function (r) { h += recPickCard(r); });
   h += '</div>';
-  var n = Object.keys(MENU_SEL).filter(function (k) { return MENU_SEL[k] && k.indexOf('EPI_') !== 0 && k.indexOf('QR_') !== 0; }).length;
-  if (n > 0) h += '<div class="selbtn"><button class="btn" id="addMenu">Ajouter au menu (' + n + ')</button></div>';
+  var n = Object.keys(MENU_SEL).filter(function (k) { return MENU_SEL[k] && k.indexOf('EPI|') !== 0 && k.indexOf('QR_') !== 0; }).length;
+  if (n > 0) h += '<div class="selbtn"><div class="btnrow"><button class="btn" id="addMenuSouper">→ Soupers (' + n + ')</button><button class="btn ghost" id="addMenuDiner">→ Dîners (' + n + ')</button></div></div>';
   h += '</section></div>';
   return h;
 }
@@ -826,6 +850,7 @@ function recPickCard(r){
 function viewRecettes(){
   var r = (DATA.recettes || []);
   var h = '<div class="ph">Mes recettes</div><div class="psub">' + r.length + ' recette' + (r.length > 1 ? 's' : '') + ' dans le carnet</div>';
+  h += '<button class="btn sec" id="igBtn" style="width:auto;padding:11px 16px;margin-bottom:16px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>Importer d\'Instagram</button>';
   if (!r.length) { h += '<div class="empty">' + CREST_MINI + 'Le carnet est vide.<br>Touche « Nouvelle recette » pour commencer.</div>'; return h; }
   var types = (DATA.types || []);
   types.forEach(function (t) {
@@ -860,7 +885,8 @@ function openRecipeDetail(rid){
   if (etapes.length) {
     stepsHtml = '<label style="margin-top:18px;margin-bottom:8px">Préparation</label><div class="steplist">' + etapes.map(function (s, idx) { return '<div class="steprow"><span class="stepnum">' + (idx + 1) + '</span><div class="stepbody">' + esc(s) + '</div></div>'; }).join('') + '</div>';
   }
-  showSheet(r.Nom, ((r.types || []).length ? '<div class="tagrow" style="margin-bottom:10px">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '<div class="cook" style="margin-bottom:14px">' + esc(r.Portions) + ' portions' + (lc ? ' · dernière fois : <span class="lastcook">' + esc(lc) + '</span>' : ' · jamais cuisiné') + '</div><label style="margin-bottom:8px">Ingrédients</label>' + ingHtml + stepsHtml + '<div class="btnrow" style="margin-top:18px"><button class="btn" id="rdEdit">Modifier</button><button class="btn danger" id="rdDel">Supprimer</button></div>');
+  var srcLink = /^https?:\/\//.test(String(r.Notes || '')) ? '<div class="small" style="margin:-6px 0 14px"><a href="' + esc(r.Notes) + '" target="_blank" rel="noopener" style="color:var(--pine-deep);font-weight:600;text-decoration:none">Voir la publication d\'origine ↗</a></div>' : '';
+  showSheet(r.Nom, ((r.types || []).length ? '<div class="tagrow" style="margin-bottom:10px">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '<div class="cook" style="margin-bottom:14px">' + esc(r.Portions) + ' portions' + (lc ? ' · dernière fois : <span class="lastcook">' + esc(lc) + '</span>' : ' · jamais cuisiné') + '</div>' + srcLink + '<label style="margin-bottom:8px">Ingrédients</label>' + ingHtml + stepsHtml + '<div class="btnrow" style="margin-top:18px"><button class="btn" id="rdEdit">Modifier</button><button class="btn danger" id="rdDel">Supprimer</button></div>');
   $('rdEdit').onclick = function () { closeSheet(); openEditRecette(rid); };
   $('rdDel').onclick = function () {
     if (!confirm('Supprimer cette recette ?')) return;
@@ -874,26 +900,30 @@ function openRecipeDetail(rid){
 function viewEpicerie(){
   var h = '<div class="ph">Épicerie</div><div class="psub">Ajoute des repas — la liste se construit sans rien effacer</div><div class="panes"><section class="pane-a">';
   var today = ymd(new Date());
-  var all = (DATA.soupers || []).slice().sort(function (a, b) { return a.Date < b.Date ? -1 : 1; });
+  var all = (DATA.soupers || []).slice().sort(function (a, b) {
+    if (a.Date !== b.Date) return a.Date < b.Date ? -1 : 1;
+    return REPAS_ORD[repasOf(a.Repas)] - REPAS_ORD[repasOf(b.Repas)];
+  });
   var s = all.filter(function (x) { return String(x.Date) >= today; });
   var passes = all.length - s.length;
-  var selectable = s.filter(function (x) { return !mealTracked(x.Date, x.RecetteID); });
+  var selectable = s.filter(function (x) { return !mealTracked(x.Date, repasOf(x.Repas), x.RecetteID); });
 
   h += '<div class="row" style="margin:0 4px 8px"><label style="margin:0" class="grow">Repas à magasiner</label>' + (selectable.length ? '<span class="small muted clk" id="epiSelAll" style="color:var(--pine-deep);font-weight:600">Tout cocher</span>' : '') + '</div>';
   if (!s.length) {
     h += '<div class="card muted small">Aucun repas à venir. Planifie des soupers dans le menu, ou ajoute des items à la main.' + (passes ? '<br><span style="font-size:11px">(' + passes + ' repas passés masqués)</span>' : '') + '</div>';
   } else {
     s.forEach(function (x) {
-      var d = parseYmd(x.Date);
-      var tracked = mealTracked(x.Date, x.RecetteID);
+      var d = parseYmd(x.Date), rep = repasOf(x.Repas);
+      var quand = REPAS_LBL[rep] + ' · ' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()];
+      var tracked = mealTracked(x.Date, rep, x.RecetteID);
       if (tracked) {
-        h += '<div class="card tracked"><div class="row"><div class="epi-main clk" data-mealday="' + esc(x.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()] + '</div></div></div><span class="trackchip"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Dans la liste</span><span class="xdel clk" data-epidel="' + esc(x.Date) + '" title="Retirer du menu">&times;</span></div></div>';
+        h += '<div class="card tracked"><div class="row"><div class="epi-main clk" data-mealday="' + esc(x.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="trackchip"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Dans la liste</span><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
       } else {
-        var k = 'EPI_' + x.RecetteID + '_' + x.Date, sel = MENU_SEL[k] === true;
-        h += '<div class="card tap" style="' + (sel ? 'border-color:var(--pine);background:var(--pine-ghost)' : '') + '"><div class="row"><div class="epi-main clk" data-epimeal="' + esc(x.RecetteID) + '" data-epidate="' + esc(x.Date) + '" style="flex:1;min-width:0"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()] + '</div></div></div><span class="xdel clk" data-epidel="' + esc(x.Date) + '" title="Retirer du menu">&times;</span></div></div>';
+        var k = 'EPI|' + x.RecetteID + '|' + x.Date + '|' + rep, sel = MENU_SEL[k] === true;
+        h += '<div class="card tap" style="' + (sel ? 'border-color:var(--pine);background:var(--pine-ghost)' : '') + '"><div class="row"><div class="epi-main clk" data-epimeal="' + esc(x.RecetteID) + '" data-epidate="' + esc(x.Date) + '" data-epirep="' + rep + '" style="flex:1;min-width:0"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
       }
     });
-    var n = Object.keys(MENU_SEL).filter(function (k) { return k.indexOf('EPI_') === 0 && MENU_SEL[k]; }).length;
+    var n = Object.keys(MENU_SEL).filter(function (k) { return k.indexOf('EPI|') === 0 && MENU_SEL[k]; }).length;
     if (selectable.length) {
       h += '<button class="btn' + (n ? '' : ' sec') + '" style="margin:6px 0 4px" id="genBtn">' + (n ? 'Ajouter à la liste (' + n + ' repas)' : 'Choisis des repas à ajouter') + '</button>';
     } else {
@@ -1050,51 +1080,52 @@ function changeIngredientRayon(nom, nouveauRayon){
 }
 
 /* ============ Drag & drop (bureau) ============ */
-var DRAG = null; // {type:'rec'|'day'|'ing', id}
-function untrackDateLocal(iso){
-  DATA.epicerieRepas = (DATA.epicerieRepas || []).filter(function (t) { return String(t.Date) !== String(iso); });
+var DRAG = null; // {type:'rec'|'day'|'ing', id, rep?}
+function untrackDateLocal(iso, rep){
+  DATA.epicerieRepas = (DATA.epicerieRepas || []).filter(function (t) { return !(String(t.Date) === String(iso) && repasOf(t.Repas) === rep); });
 }
 function bindDragDrop(){
   qall('[data-dragrec]').forEach(function (el) {
     el.addEventListener('dragstart', function (e) { DRAG = { type: 'rec', id: el.getAttribute('data-dragrec') }; el.classList.add('dragging'); try { e.dataTransfer.effectAllowed = 'copy'; e.dataTransfer.setData('text/plain', DRAG.id); } catch (x) {} });
-    el.addEventListener('dragend', function () { el.classList.remove('dragging'); DRAG = null; qall('.dropday').forEach(function (d) { d.classList.remove('dragover'); }); });
+    el.addEventListener('dragend', function () { el.classList.remove('dragging'); DRAG = null; qall('.dropslot').forEach(function (d) { d.classList.remove('dragover'); }); });
   });
   qall('[data-dragday]').forEach(function (el) {
-    el.addEventListener('dragstart', function (e) { DRAG = { type: 'day', id: el.getAttribute('data-dragday') }; el.classList.add('dragging'); try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', DRAG.id); } catch (x) {} });
-    el.addEventListener('dragend', function () { el.classList.remove('dragging'); DRAG = null; qall('.dropday').forEach(function (d) { d.classList.remove('dragover'); }); });
+    el.addEventListener('dragstart', function (e) { DRAG = { type: 'day', id: el.getAttribute('data-dragday'), rep: el.getAttribute('data-dragrep') || 'souper' }; el.classList.add('dragging'); try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', DRAG.id); } catch (x) {} });
+    el.addEventListener('dragend', function () { el.classList.remove('dragging'); DRAG = null; qall('.dropslot').forEach(function (d) { d.classList.remove('dragover'); }); });
   });
-  qall('.dropday').forEach(function (el) {
+  qall('.dropslot').forEach(function (el) {
     el.addEventListener('dragover', function (e) { if (DRAG && (DRAG.type === 'rec' || DRAG.type === 'day')) { e.preventDefault(); el.classList.add('dragover'); } });
     el.addEventListener('dragleave', function () { el.classList.remove('dragover'); });
     el.addEventListener('drop', function (e) {
       e.preventDefault(); el.classList.remove('dragover'); if (!DRAG) return;
-      var target = el.getAttribute('data-dropday');
+      var target = el.getAttribute('data-dropday'), targetRep = el.getAttribute('data-droprep') || 'souper';
       if (DRAG.type === 'rec') {
-        var ex = souperFor(target);
+        var ex = souperFor(target, targetRep);
         if (ex) {
-          if (String(ex.RecetteID) !== String(DRAG.id)) untrackDateLocal(target);
+          if (String(ex.RecetteID) !== String(DRAG.id)) untrackDateLocal(target, targetRep);
           ex.RecetteID = DRAG.id;
-        } else DATA.soupers.push({ Date: target, RecetteID: DRAG.id, Cuisinier: '' });
-        call('setSouper', [target, DRAG.id, '']); render();
+        } else DATA.soupers.push({ Date: target, RecetteID: DRAG.id, Cuisinier: '', Repas: targetRep });
+        call('setSouper', [target, DRAG.id, '', targetRep]); render();
       } else if (DRAG.type === 'day') {
-        var from = DRAG.id; if (from === target) return;
-        var sFrom = souperFor(from), sTarget = souperFor(target);
+        var from = DRAG.id, fromRep = DRAG.rep || 'souper';
+        if (from === target && fromRep === targetRep) return;
+        var sFrom = souperFor(from, fromRep), sTarget = souperFor(target, targetRep);
         if (!sFrom) return;
         if (sTarget) { // échange
           var tmpR = sFrom.RecetteID, tmpC = sFrom.Cuisinier;
           sFrom.RecetteID = sTarget.RecetteID; sFrom.Cuisinier = sTarget.Cuisinier;
           sTarget.RecetteID = tmpR; sTarget.Cuisinier = tmpC;
-          untrackDateLocal(from); untrackDateLocal(target);
+          untrackDateLocal(from, fromRep); untrackDateLocal(target, targetRep);
           call('setSoupersBatch', [[
-            { date: from, recetteId: sFrom.RecetteID, cuisinier: sFrom.Cuisinier },
-            { date: target, recetteId: sTarget.RecetteID, cuisinier: sTarget.Cuisinier }
+            { date: from, recetteId: sFrom.RecetteID, cuisinier: sFrom.Cuisinier, repas: fromRep },
+            { date: target, recetteId: sTarget.RecetteID, cuisinier: sTarget.Cuisinier, repas: targetRep }
           ]]);
-        } else { // déplacer vers jour libre
-          DATA.soupers.push({ Date: target, RecetteID: sFrom.RecetteID, Cuisinier: sFrom.Cuisinier });
-          DATA.soupers = DATA.soupers.filter(function (x) { return x.Date !== from; });
-          untrackDateLocal(from);
-          call('setSouper', [target, sFrom.RecetteID, sFrom.Cuisinier]);
-          call('retirerSouper', [from]);
+        } else { // déplacer vers un créneau libre
+          DATA.soupers.push({ Date: target, RecetteID: sFrom.RecetteID, Cuisinier: sFrom.Cuisinier, Repas: targetRep });
+          DATA.soupers = DATA.soupers.filter(function (x) { return !(x.Date === from && repasOf(x.Repas) === fromRep); });
+          untrackDateLocal(from, fromRep);
+          call('setSouper', [target, sFrom.RecetteID, sFrom.Cuisinier, targetRep]);
+          call('retirerSouper', [from, fromRep]);
         }
         render();
       }
@@ -1133,71 +1164,74 @@ function bind(){
   var wp = $('wPrev'); if (wp) wp.onclick = function () { weekOffset--; render(); };
   var wn = $('wNext'); if (wn) wn.onclick = function () { weekOffset++; render(); };
   qall('[data-pick]').forEach(function (el) { el.querySelector('.row').onclick = function () { var id = el.getAttribute('data-pick'); MENU_SEL[id] = !MENU_SEL[id]; render(); }; });
-  qall('[data-addday]').forEach(function (el) { el.onclick = function () { openDayPicker(el.getAttribute('data-addday')); }; });
+  qall('[data-addday]').forEach(function (el) { el.onclick = function () { openDayPicker(el.getAttribute('data-addday'), el.getAttribute('data-addrep') || 'souper'); }; });
   bindDragDrop();
   qall('[data-delsoup]').forEach(function (el) {
     el.onclick = function (ev) {
       ev.stopPropagation();
-      var d = el.getAttribute('data-delsoup');
-      DATA.soupers = DATA.soupers.filter(function (x) { return x.Date !== d; });
-      untrackDateLocal(d);
-      call('retirerSouper', [d]); render();
+      var d = el.getAttribute('data-delsoup'), rep = el.getAttribute('data-delrep') || 'souper';
+      DATA.soupers = DATA.soupers.filter(function (x) { return !(x.Date === d && repasOf(x.Repas) === rep); });
+      untrackDateLocal(d, rep);
+      call('retirerSouper', [d, rep]); render();
     };
   });
   qall('[data-mealday]').forEach(function (el) { el.onclick = function (ev) { ev.stopPropagation(); openRecipeDetail(el.getAttribute('data-mealday')); }; });
-  var am = $('addMenu');
-  if (am) am.onclick = function () {
-    var ids = Object.keys(MENU_SEL).filter(function (k) { return MENU_SEL[k] && k.indexOf('EPI_') !== 0 && k.indexOf('QR_') !== 0; });
+  function fillMenu(rep){
+    var ids = Object.keys(MENU_SEL).filter(function (k) { return MENU_SEL[k] && k.indexOf('EPI|') !== 0 && k.indexOf('QR_') !== 0; });
     if (!ids.length) return;
-    var dates = weekDates(weekOffset), empties = dates.map(ymd).filter(function (iso) { return !souperFor(iso); });
+    var dates = weekDates(weekOffset), empties = dates.map(ymd).filter(function (iso) { return !souperFor(iso, rep); });
     var assigns = [], i = 0;
-    for (; i < ids.length && i < empties.length; i++) assigns.push({ date: empties[i], recetteId: ids[i], cuisinier: '' });
+    for (; i < ids.length && i < empties.length; i++) assigns.push({ date: empties[i], recetteId: ids[i], cuisinier: '', repas: rep });
     var overflow = ids.length - empties.length;
-    assigns.forEach(function (a) { DATA.soupers.push({ Date: a.date, RecetteID: a.recetteId, Cuisinier: '' }); });
+    assigns.forEach(function (a) { DATA.soupers.push({ Date: a.date, RecetteID: a.recetteId, Cuisinier: '', Repas: rep }); });
     if (assigns.length) call('setSoupersBatch', [assigns]);
     MENU_SEL = {}; render();
-    if (overflow > 0) toast(overflow + ' repas non placé' + (overflow > 1 ? 's' : '') + ' — semaine pleine');
-    else toast(assigns.length + ' repas ajouté' + (assigns.length > 1 ? 's' : '') + ' au menu');
-  };
+    var mot = rep === 'diner' ? 'dîner' : 'souper';
+    if (overflow > 0) toast(overflow + ' repas non placé' + (overflow > 1 ? 's' : '') + ' — plus de ' + mot + 's libres cette semaine');
+    else toast(assigns.length + ' ' + mot + (assigns.length > 1 ? 's' : '') + ' ajouté' + (assigns.length > 1 ? 's' : '') + ' au menu');
+  }
+  var ams = $('addMenuSouper'); if (ams) ams.onclick = function () { fillMenu('souper'); };
+  var amd = $('addMenuDiner'); if (amd) amd.onclick = function () { fillMenu('diner'); };
   qall('[data-filt]').forEach(function (el) { el.onclick = function () { MENU_FILTER = el.getAttribute('data-filt'); render(); }; });
 
   // --- Recettes ---
   qall('[data-recdetail]').forEach(function (el) { el.onclick = function () { openRecipeDetail(el.getAttribute('data-recdetail')); }; });
   qall('[data-addgroup]').forEach(function (el) { el.onclick = function (ev) { ev.stopPropagation(); openRecette(el.getAttribute('data-addgroup')); }; });
+  var igb = $('igBtn'); if (igb) igb.onclick = openImportIG;
 
   // --- Épicerie : repas ---
-  qall('[data-epimeal]').forEach(function (el) { el.onclick = function () { var k = 'EPI_' + el.getAttribute('data-epimeal') + '_' + el.getAttribute('data-epidate'); MENU_SEL[k] = !MENU_SEL[k]; render(); }; });
+  qall('[data-epimeal]').forEach(function (el) { el.onclick = function () { var k = 'EPI|' + el.getAttribute('data-epimeal') + '|' + el.getAttribute('data-epidate') + '|' + (el.getAttribute('data-epirep') || 'souper'); MENU_SEL[k] = !MENU_SEL[k]; render(); }; });
   qall('[data-epidel]').forEach(function (el) {
     el.onclick = function (ev) {
       ev.stopPropagation();
-      var dt = el.getAttribute('data-epidel');
-      var s = souperFor(dt); if (!s) return;
+      var dt = el.getAttribute('data-epidel'), rep = el.getAttribute('data-epidelrep') || 'souper';
+      var s = souperFor(dt, rep); if (!s) return;
       if (!confirm('Retirer « ' + recetteNom(s.RecetteID) + ' » du menu ?')) return;
-      delete MENU_SEL['EPI_' + s.RecetteID + '_' + dt];
-      DATA.soupers = DATA.soupers.filter(function (x) { return x.Date !== dt; });
-      untrackDateLocal(dt);
-      call('retirerSouper', [dt]); render();
+      delete MENU_SEL['EPI|' + s.RecetteID + '|' + dt + '|' + rep];
+      DATA.soupers = DATA.soupers.filter(function (x) { return !(x.Date === dt && repasOf(x.Repas) === rep); });
+      untrackDateLocal(dt, rep);
+      call('retirerSouper', [dt, rep]); render();
     };
   });
   var selAll = $('epiSelAll');
   if (selAll) selAll.onclick = function () {
     var today = ymd(new Date());
-    var s = (DATA.soupers || []).filter(function (x) { return String(x.Date) >= today && !mealTracked(x.Date, x.RecetteID); });
-    var allSel = s.length && s.every(function (x) { return MENU_SEL['EPI_' + x.RecetteID + '_' + x.Date]; });
-    s.forEach(function (x) { var k = 'EPI_' + x.RecetteID + '_' + x.Date; if (allSel) delete MENU_SEL[k]; else MENU_SEL[k] = true; });
+    var s = (DATA.soupers || []).filter(function (x) { return String(x.Date) >= today && !mealTracked(x.Date, repasOf(x.Repas), x.RecetteID); });
+    var allSel = s.length && s.every(function (x) { return MENU_SEL['EPI|' + x.RecetteID + '|' + x.Date + '|' + repasOf(x.Repas)]; });
+    s.forEach(function (x) { var k = 'EPI|' + x.RecetteID + '|' + x.Date + '|' + repasOf(x.Repas); if (allSel) delete MENU_SEL[k]; else MENU_SEL[k] = true; });
     render();
   };
   var gb = $('genBtn');
   if (gb) gb.onclick = function () {
     var chosen = Object.keys(MENU_SEL)
-      .filter(function (k) { return k.indexOf('EPI_') === 0 && MENU_SEL[k]; })
-      .map(function (k) { var p = k.split('_'); return { recetteId: p[1], date: p[2] }; });
+      .filter(function (k) { return k.indexOf('EPI|') === 0 && MENU_SEL[k]; })
+      .map(function (k) { var p = k.split('|'); return { recetteId: p[1], date: p[2], repas: p[3] || 'souper' }; });
     if (!chosen.length) { toast('Choisis au moins un repas'); return; }
     // Optimiste : marquer comme « dans la liste » + fusion locale (même logique que le serveur)
     var items = [];
     chosen.forEach(function (m) {
-      delete MENU_SEL['EPI_' + m.recetteId + '_' + m.date];
-      DATA.epicerieRepas.push({ Date: m.date, RecetteID: m.recetteId });
+      delete MENU_SEL['EPI|' + m.recetteId + '|' + m.date + '|' + m.repas];
+      DATA.epicerieRepas.push({ Date: m.date, RecetteID: m.recetteId, Repas: m.repas });
       ingredientsOf(m.recetteId).forEach(function (ing) {
         items.push({ ingredient: ing.Ingredient, quantite: num(ing.Quantite), unite: ing.Unite, rayon: ing.Rayon, source: recetteNom(m.recetteId) });
       });
@@ -1372,37 +1406,51 @@ function promptNewIngredient(nom, cb){
 }
 
 /* ============ Picker jour ============ */
-function openDayPicker(iso){
+function openDayPicker(iso, rep){
+  rep = rep || 'souper';
   var d = parseYmd(iso), recs = (DATA.recettes || []);
   if (!recs.length) { alert('Crée d\'abord une recette.'); return; }
   var list = recs.map(function (r) { return '<div class="card tap clk" data-dp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
-  showSheet(JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()], '<label style="margin-bottom:8px">Choisis une recette</label>' + list + '<div class="field" style="margin-top:8px"><label>Qui cuisine ? (optionnel)</label><input id="dp-cook" placeholder="Marie, JP…"></div>', true);
+  showSheet(REPAS_LBL[rep] + ' · ' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()], '<label style="margin-bottom:8px">Choisis une recette</label>' + list + '<div class="field" style="margin-top:8px"><label>Qui cuisine ? (optionnel)</label><input id="dp-cook" placeholder="Marie, JP…"></div>', true);
   qall('[data-dp]').forEach(function (el) {
     el.onclick = function () {
       var rid = el.getAttribute('data-dp'), cook = $('dp-cook').value.trim();
-      var ex = souperFor(iso);
+      var ex = souperFor(iso, rep);
       if (ex) {
-        if (String(ex.RecetteID) !== String(rid)) untrackDateLocal(iso);
+        if (String(ex.RecetteID) !== String(rid)) untrackDateLocal(iso, rep);
         ex.RecetteID = rid; ex.Cuisinier = cook;
-      } else DATA.soupers.push({ Date: iso, RecetteID: rid, Cuisinier: cook });
-      call('setSouper', [iso, rid, cook]);
+      } else DATA.soupers.push({ Date: iso, RecetteID: rid, Cuisinier: cook, Repas: rep });
+      call('setSouper', [iso, rid, cook, rep]);
       closeSheet(); render();
     };
   });
 }
 
 /* ============ Recettes : créer / modifier ============ */
-function openRecette(preGroup){
-  EDIT_RID = null; REC_INGS = []; REC_TYPES = {}; REC_STEPS = [];
+// draft (optionnel) : brouillon renvoyé par l'import Instagram —
+// pré-remplit tout, l'utilisateur révise puis enregistre normalement.
+function openRecette(preGroup, draft){
+  EDIT_RID = null; REC_INGS = []; REC_TYPES = {}; REC_STEPS = []; REC_NOTES = '';
   if (preGroup) REC_TYPES[preGroup] = true;
+  var titre = 'Nouvelle recette', nomIni = '', portIni = 4;
+  if (draft) {
+    titre = 'Recette importée';
+    nomIni = draft.nom || ''; portIni = draft.portions || 4;
+    REC_NOTES = draft.source || '';
+    (draft.types || []).forEach(function (t) { REC_TYPES[t] = true; });
+    REC_STEPS = (draft.etapes || []).slice();
+    REC_INGS = (draft.ingredients || []).map(function (g) {
+      return { ingredient: g.ingredient, rayon: g.rayon, quantite: String(g.quantite == null ? '' : g.quantite).replace(',', '.'), unite: g.unite || '', nouveau: !!g.nouveau };
+    });
+  }
   var typeChips = (DATA.types || []).map(function (t) { return '<span class="tchip ' + (REC_TYPES[t] ? 'on' : '') + ' clk" data-type="' + esc(t) + '">' + esc(t) + '</span>'; }).join('');
-  showSheet('Nouvelle recette', '<div class="field"><label>Nom du repas</label><input id="rn" placeholder="Ex. Lasagne maison"></div><div class="field" style="max-width:140px"><label>Portions</label><input id="rp" type="number" value="4"></div><label style="margin-top:2px">Groupe(s)</label><div class="tchips" id="rTypes">' + typeChips + '<span class="tchip clk" id="rTypeNew" style="border-style:dashed">+ Groupe</span></div><label style="margin-top:4px">Ingrédients</label><div id="rIngWrap"></div><div id="rAddZone"></div><label style="margin-top:16px">Étapes de préparation</label><div id="rStepWrap"></div><div id="rStepAdd"></div><button class="btn" id="saveRec" style="margin-top:16px">Enregistrer la recette</button>');
+  showSheet(titre, (draft ? '<div class="psub" style="margin-bottom:12px">Vérifie les quantités et les rayons, puis enregistre.</div>' : '') + '<div class="field"><label>Nom du repas</label><input id="rn" value="' + esc(nomIni) + '" placeholder="Ex. Lasagne maison"></div><div class="field" style="max-width:140px"><label>Portions</label><input id="rp" type="number" value="' + esc(portIni) + '"></div><label style="margin-top:2px">Groupe(s)</label><div class="tchips" id="rTypes">' + typeChips + '<span class="tchip clk" id="rTypeNew" style="border-style:dashed">+ Groupe</span></div><label style="margin-top:4px">Ingrédients</label><div id="rIngWrap"></div><div id="rAddZone"></div><label style="margin-top:16px">Étapes de préparation</label><div id="rStepWrap"></div><div id="rStepAdd"></div><button class="btn" id="saveRec" style="margin-top:16px">Enregistrer la recette</button>');
   bindTypeChips(); renderRecIngs(); renderRecSteps();
   $('saveRec').onclick = saveRecette;
 }
 function openEditRecette(rid){
   var r = recette(rid); if (!r) return;
-  EDIT_RID = rid; REC_TYPES = {};
+  EDIT_RID = rid; REC_TYPES = {}; REC_NOTES = '';
   (r.types || []).forEach(function (t) { REC_TYPES[t] = true; });
   REC_INGS = ingredientsOf(rid).map(function (i) { return { ingredient: i.Ingredient, rayon: i.Rayon, quantite: String(i.Quantite).replace(',', '.'), unite: i.Unite }; });
   REC_STEPS = (r.etapes || []).slice();
@@ -1441,7 +1489,7 @@ function bindTypeChips(){
 }
 function renderRecIngs(){
   var wrap = $('rIngWrap');
-  wrap.innerHTML = REC_INGS.map(function (g, idx) { return '<div class="ingrow"><div class="top"><span class="nm">' + esc(g.ingredient) + '</span><span class="ray">' + esc(g.rayon) + '</span><span class="rm clk" data-rmv="' + idx + '">&times;</span></div><div class="bot"><input class="ri-qty" data-qi="' + idx + '" inputmode="decimal" placeholder="Qté" value="' + esc(g.quantite || '') + '" style="flex:.8"><div style="flex:1.4">' + uniteSelectHtml('ri' + idx, g.unite) + '</div></div></div>'; }).join('');
+  wrap.innerHTML = REC_INGS.map(function (g, idx) { return '<div class="ingrow"><div class="top"><span class="nm">' + esc(g.ingredient) + '</span><span class="ray">' + esc(g.rayon) + (g.nouveau ? ' · nouveau' : '') + '</span><span class="rm clk" data-rmv="' + idx + '">&times;</span></div><div class="bot"><input class="ri-qty" data-qi="' + idx + '" inputmode="decimal" placeholder="Qté" value="' + esc(g.quantite || '') + '" style="flex:.8"><div style="flex:1.4">' + uniteSelectHtml('ri' + idx, g.unite) + '</div></div></div>'; }).join('');
   wrap.querySelectorAll('[data-rmv]').forEach(function (b) { b.onclick = function () { syncRecIngs(); REC_INGS.splice(+b.getAttribute('data-rmv'), 1); renderRecIngs(); }; });
   wrap.querySelectorAll('[data-qi]').forEach(function (i) { i.oninput = function () { REC_INGS[+i.getAttribute('data-qi')].quantite = i.value; }; });
   REC_INGS.forEach(function (g, idx) { bindUniteSelect('ri' + idx); });
@@ -1479,12 +1527,12 @@ function saveRecette(){
     EDIT_RID = null; closeSheet(); toast('Recette modifiée'); render(); return;
   }
   var id = cid('R');
-  DATA.recettes.push({ RecetteID: id, Nom: nom, Portions: portions || 4, Notes: '', Types: types.join(', '), types: types, etapes: REC_STEPS.slice(), lastCooked: '' });
+  DATA.recettes.push({ RecetteID: id, Nom: nom, Portions: portions || 4, Notes: REC_NOTES, Types: types.join(', '), types: types, etapes: REC_STEPS.slice(), lastCooked: '' });
   ings.forEach(function (ing) {
     DATA.ingredients.push({ RecetteID: id, Ingredient: ing.ingredient, Quantite: fmtNum(ing.quantite), Unite: ing.unite, Rayon: ing.rayon });
     if (!DATA.catalogue.some(function (c) { return norm(c.Ingredient) === norm(ing.ingredient); })) DATA.catalogue.push({ Ingredient: ing.ingredient, Rayon: ing.rayon });
   });
-  call('ajouterRecette', [{ id: id, nom: nom, portions: portions, notes: '', types: types, etapes: REC_STEPS, ingredients: ings }]);
+  call('ajouterRecette', [{ id: id, nom: nom, portions: portions, notes: REC_NOTES, types: types, etapes: REC_STEPS, ingredients: ings }]);
   closeSheet(); toast('Recette enregistrée'); render();
 }
 
@@ -1508,6 +1556,47 @@ function bindUniteSelect(idBase){
   var sel = $(idBase + '-sel'), cust = $(idBase + '-cust');
   if (!sel || !cust) return;
   sel.onchange = function () { if (sel.value === '__custom__') { cust.style.display = ''; cust.focus(); } else { cust.style.display = 'none'; } };
+}
+
+/* ============ Import Instagram ============ */
+// Flux : coller le lien → le serveur tente de lire la description
+// publique du reel. Si Instagram bloque, on demande de coller le texte
+// (le commentaire du reel). Dans les deux cas l'API Claude structure le
+// texte en brouillon, qui s'ouvre dans l'éditeur de recette pour
+// révision — rien n'est enregistré avant « Enregistrer la recette ».
+function openImportIG(){
+  showSheet('Importer une recette',
+    '<div class="psub" style="margin-bottom:14px">Colle le lien du reel Instagram. Si la recette n\'est pas lisible depuis le lien, on te demandera de coller son texte.</div>' +
+    '<div class="field"><label>Lien Instagram</label><input id="ig-url" inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://www.instagram.com/reel/…"></div>' +
+    '<div class="field hide" id="ig-manual"><label>Texte de la recette (le commentaire du reel)</label><textarea id="ig-txt" rows="7" placeholder="Colle ici le texte complet de la recette…"></textarea></div>' +
+    '<button class="btn" id="ig-go">Analyser</button>' +
+    '<div class="small muted" id="ig-hint" style="margin-top:10px;text-align:center"></div>', true);
+  var busy = false;
+  $('ig-go').onclick = function () {
+    if (busy) return;
+    var url = $('ig-url').value.trim(), txt = $('ig-txt').value.trim();
+    if (!url && !txt) { toast('Colle un lien Instagram ou le texte de la recette', 'err'); return; }
+    if (isOffline) { toast('L\'import a besoin d\'une connexion Internet', 'err'); return; }
+    busy = true;
+    var btn = $('ig-go');
+    btn.disabled = true; btn.textContent = 'Analyse en cours… (10 à 30 s)';
+    function reset(){ busy = false; var b = $('ig-go'); if (b) { b.disabled = false; b.textContent = 'Analyser'; } }
+    // Appel direct (pas la file offline) : l'import est interactif et
+    // n'a de sens qu'avec une réponse immédiate.
+    apiCall('importerRecetteIG', [url, txt]).then(function (res) {
+      if (res && res.besoinTexte) {
+        reset();
+        $('ig-manual').classList.remove('hide');
+        $('ig-hint').textContent = 'Instagram n\'a pas laissé lire ce lien. Ouvre le reel, copie le texte de la recette (souvent le commentaire épinglé), puis colle-le ci-dessus.';
+        setTimeout(function () { var t = $('ig-txt'); if (t) t.focus(); }, 60);
+        return;
+      }
+      if (res && res.recette) { closeSheet(); openRecette(null, res.recette); return; }
+      reset(); toast('Réponse inattendue du serveur', 'err');
+    }).catch(function (err) {
+      reset(); toast(String(err && err.message || err), 'err');
+    });
+  };
 }
 
 /* ============ Ajout manuel épicerie ============ */
