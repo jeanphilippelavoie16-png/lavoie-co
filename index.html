@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.2.1 « La Carte »
+     LAVOIE & CO — v4.3.0 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -61,15 +61,29 @@
     transition:opacity .45s ease,visibility .45s}
   #splash.gone{opacity:0;visibility:hidden}
   .sp-word{font-family:var(--serif);font-size:29px;letter-spacing:.32em;text-transform:uppercase;
-    color:var(--ink);padding-left:.32em;animation:spRise .9s cubic-bezier(.22,1,.36,1) both}
+    color:var(--ink);padding-left:.32em}
   .sp-word .et{color:var(--pine)}
-  .sp-rule{width:0;height:1px;background:var(--ink);animation:spRule 1.1s .35s cubic-bezier(.22,1,.36,1) forwards}
-  @keyframes spRule{to{width:132px}}
+  /* Révélation lettre par lettre : chaque lettre monte et se défloute.
+     Les états de base sont les états FINAUX — si les animations sont
+     coupées (réduction des mouvements), tout reste visible. */
+  .sp-word span{display:inline-block;animation:spLetter .65s cubic-bezier(.22,1,.36,1) both}
+  @keyframes spLetter{from{opacity:0;transform:translateY(18px);filter:blur(7px)}}
+  .sp-word span:nth-child(1){animation-delay:.05s}
+  .sp-word span:nth-child(2){animation-delay:.11s}
+  .sp-word span:nth-child(3){animation-delay:.17s}
+  .sp-word span:nth-child(4){animation-delay:.23s}
+  .sp-word span:nth-child(5){animation-delay:.29s}
+  .sp-word span:nth-child(6){animation-delay:.35s}
+  .sp-word span:nth-child(7){animation-delay:.44s}
+  .sp-word span:nth-child(8){animation-delay:.53s}
+  .sp-word span:nth-child(9){animation-delay:.59s}
+  .sp-rule{width:132px;height:1px;background:var(--ink);animation:spRule .9s .55s cubic-bezier(.22,1,.36,1) both}
+  @keyframes spRule{from{width:0}}
   .sp-tag{font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--mut);
-    padding-left:.3em;animation:spRise .9s .5s cubic-bezier(.22,1,.36,1) both}
-  .sp-bar{width:132px;height:2px;background:var(--line);overflow:hidden;animation:spRise .9s .62s both}
+    padding-left:.3em;animation:spRise .9s .75s cubic-bezier(.22,1,.36,1) both}
+  .sp-bar{width:132px;height:2px;background:var(--line);overflow:hidden;animation:spRise .9s .85s both}
   .sp-bar i{display:block;height:100%;width:40%;background:var(--ink);animation:spLoad 1.4s ease-in-out infinite}
-  .sp-ver{font-size:10px;color:var(--mut);letter-spacing:.12em;animation:spRise .9s .72s both}
+  .sp-ver{font-size:10px;color:var(--mut);letter-spacing:.12em;animation:spRise .9s .95s both}
   @keyframes spRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
   @keyframes spLoad{0%{transform:translateX(-120%)}100%{transform:translateX(330%)}}
 
@@ -103,7 +117,8 @@
   .content{min-height:100vh}
   .topbar{position:sticky;top:0;z-index:30;background:rgba(250,250,248,.92);
     backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-    padding:calc(11px + var(--safe-t)) 16px 10px;border-bottom:1px solid var(--line2);
+    padding:calc(11px + var(--safe-t)) 16px 10px;border-bottom:1px solid transparent;
+    transition:border-color .25s,box-shadow .25s;
     display:flex;align-items:center;gap:10px}
   .brand{display:flex;align-items:center;gap:9px}
   .brand .logo{font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:-.01em}
@@ -209,6 +224,37 @@
   .rayhd.done > span:first-child{color:var(--brass);text-decoration:line-through;
     text-decoration-thickness:1px;text-decoration-color:var(--brass-2)}
   .rayhd.done .ct{color:var(--brass);font-weight:700}
+
+  /* ---------- Accordéons (listes rapides, rayons) ---------- */
+  /* Pliage moderne : grid 1fr → 0fr, le contenu glisse sans mesurer sa hauteur. */
+  .fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .32s cubic-bezier(.22,1,.36,1)}
+  .fold.closed{grid-template-rows:0fr}
+  .fold > div{overflow:hidden;min-width:0}
+  .foldchev{color:#C2C5BD;font-size:17px;display:inline-block;padding:0 2px;
+    transform:rotate(0);transition:transform .25s cubic-bezier(.22,1,.36,1)}
+  .foldchev.open{transform:rotate(90deg)}
+  .ctchip{font-size:10.5px;font-weight:700;color:var(--ink2);background:var(--line2);
+    border-radius:20px;padding:3px 9px;letter-spacing:.03em;white-space:nowrap}
+
+  /* En-têtes de rayon collants : en magasin, le rayon reste lisible
+     pendant qu'on défile ses items. */
+  .rayhd{position:sticky;top:calc(44px + var(--safe-t));z-index:5;background:var(--paper);
+    cursor:pointer;padding:7px 5px;margin:12px 0 4px}
+
+  /* Badge de navigation : ce qu'il reste à acheter, visible de partout. */
+  .mobilenav .nv{position:relative}
+  .navbadge{position:absolute;top:0;right:2px;min-width:16px;height:16px;border-radius:9px;
+    background:var(--pine);color:#fff;font-size:9px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;padding:0 4px}
+  .side-item .navbadge{position:static;margin-left:auto}
+
+  /* Voile de la barre du haut : le filet n'apparaît qu'au défilement. */
+  body.scrolled .topbar{border-bottom-color:var(--line);box-shadow:0 8px 24px rgba(20,22,19,.05)}
+
+  /* Barre de défilement discrète (bureau) */
+  ::-webkit-scrollbar{width:11px}
+  ::-webkit-scrollbar-thumb{background:#DADAD3;border-radius:8px;border:3px solid var(--paper)}
+  ::-webkit-scrollbar-track{background:transparent}
   .lastcook{color:var(--brass);font-weight:600}
   .tagrow{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
   .ttag{font-size:10px;padding:2.5px 8px;border-radius:20px;background:var(--pine-ghost);color:var(--pine-deep);font-weight:600}
@@ -432,11 +478,11 @@
 <body>
 
 <div id="splash">
-  <div class="sp-word">Lavoie <span class="et">&amp;</span> Co</div>
+  <div class="sp-word"><span>L</span><span>a</span><span>v</span><span>o</span><span>i</span><span>e</span> <span class="et">&amp;</span> <span>C</span><span>o</span></div>
   <div class="sp-rule"></div>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.2.1</div>
+  <div class="sp-ver">v4.3.0</div>
 </div>
 
 <aside class="sidebar">
@@ -446,18 +492,18 @@
   <nav class="side-nav" id="sideNav">
     <div class="side-item" data-tab="menu" role="button" tabindex="0"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 4v17"/></svg>Menu de la semaine</div>
     <div class="side-item" data-tab="recettes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 4h12a1 1 0 0 1 1 1v15l-7-3-7 3V5a1 1 0 0 1 1-1z"/></svg>Recettes</div>
-    <div class="side-item" data-tab="epicerie" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Épicerie</div>
+    <div class="side-item" data-tab="epicerie" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Épicerie<span class="navbadge hide" data-epibadge></span></div>
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.2.1</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.3.0</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.2.1"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.3.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -465,7 +511,7 @@
 <nav class="mobilenav" id="mobileNav">
   <div class="nv" data-tab="menu" role="button" tabindex="0"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 4v17"/></svg>Menu</div>
   <div class="nv" data-tab="recettes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 4h12a1 1 0 0 1 1 1v15l-7-3-7 3V5a1 1 0 0 1 1-1z"/></svg>Recettes</div>
-  <div class="nv" data-tab="epicerie" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Épicerie</div>
+  <div class="nv" data-tab="epicerie" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Épicerie<span class="navbadge hide" data-epibadge></span></div>
   <div class="nv" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
   <div class="nv" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
 </nav>
@@ -474,7 +520,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.2.1
+   LAVOIE & CO — Frontend v4.3.0
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -495,7 +541,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.2.1'
+  VERSION: '4.3.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -523,6 +569,27 @@ var REC_INGS = [], REC_TYPES = {}, REC_STEPS = [], EDIT_RID = null, REC_NOTES = 
 var LKEY = 'LCO_DATA_V4', QKEY = 'LCO_QUEUE_V4';
 var LKEY_OLD = 'LCO_DATA_CACHE_v1', QKEY_OLD = 'LCO_SYNC_QUEUE_v1';
 var splashHidden = false, isOffline = false;
+
+/* ---------- Sections dépliées/repliées (mémorisées par appareil) ---------- */
+var FOLD_KEY = 'LCO_FOLD_V1', UI_FOLD = {};
+try { UI_FOLD = JSON.parse(localStorage.getItem(FOLD_KEY) || '{}') || {}; } catch (e) { UI_FOLD = {}; }
+function foldOpen(key, parDefaut){ return UI_FOLD.hasOwnProperty(key) ? !!UI_FOLD[key] : parDefaut; }
+function setFold(key, open){ UI_FOLD[key] = open; try { localStorage.setItem(FOLD_KEY, JSON.stringify(UI_FOLD)); } catch (e) {} }
+// Attache le comportement accordéon : l'en-tête bascule le .fold voisin
+// SANS re-rendre la page — c'est ce qui permet l'animation de pliage.
+function bindFolds(attr, prefixe){
+  qall('[' + attr + ']').forEach(function (el) {
+    el.onclick = function (ev) {
+      if (ev.target.closest('[data-editrapide]')) return; // « modifier » garde son rôle
+      var fold = el.nextElementSibling;
+      if (!fold || !fold.classList.contains('fold')) return;
+      var ouvre = fold.classList.contains('closed');
+      fold.classList.toggle('closed', !ouvre);
+      var ch = el.querySelector('.foldchev'); if (ch) ch.classList.toggle('open', ouvre);
+      setFold(prefixe + el.getAttribute(attr), ouvre);
+    };
+  });
+}
 
 /* ---------- Utils ---------- */
 function $(id){ return document.getElementById(id); }
@@ -839,7 +906,13 @@ function setTab(t){
   ANIM_NEXT = true;
   qall('.side-item,.mobilenav .nv').forEach(function (n) { n.classList.toggle('on', n.getAttribute('data-tab') === t); });
   var pt = $('pagetitle'); if (pt) pt.textContent = TITLES[t] || '';
-  render();
+  // Fondu natif entre les vues (View Transition API, iOS 18+ / Chrome) —
+  // repli silencieux sur un rendu direct ailleurs.
+  if (document.startViewTransition && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    document.startViewTransition(function () { render(); });
+  } else {
+    render();
+  }
 }
 function render(){
   if (!DATA) return;
@@ -853,6 +926,9 @@ function render(){
   else if (TAB === 'epicerie') v.innerHTML = viewEpicerie();
   else if (TAB === 'ingredients') v.innerHTML = viewIngredients();
   else if (TAB === 'listes') v.innerHTML = viewListes();
+  // Badge : ce qu'il reste à acheter, sur l'onglet Épicerie
+  var reste = (DATA.epicerie || []).filter(function (i) { return !isTrue(i.Coche); }).length;
+  qall('[data-epibadge]').forEach(function (b) { b.textContent = reste > 99 ? '99+' : reste; b.classList.toggle('hide', !reste); });
   bind();
 }
 
@@ -994,16 +1070,20 @@ function viewEpicerie(){
   if (!lr.length) { h += '<div class="card muted small">Aucune liste rapide.</div>'; }
   lr.forEach(function (l) {
     var items = (DATA.listesRapidesItems || []).filter(function (i) { return String(i.RapideID) === String(l.RapideID); });
-    h += '<div class="card" style="margin-bottom:8px"><div class="row" style="margin-bottom:8px"><span class="grow" style="font-weight:600;font-size:14.5px">' + esc(l.Nom) + '</span>' +
-      '<span class="xdel clk" data-editrapide="' + esc(l.RapideID) + '" style="font-size:15px;color:var(--pine-deep)">modifier</span></div>';
+    var nSel = items.filter(function (it) { return MENU_SEL['QR_' + it.ItemID]; }).length;
+    var open = foldOpen('qr_' + l.RapideID, false); // repliées par défaut : on ouvre celle qu'on veut
+    h += '<div class="card" style="margin-bottom:8px"><div class="row clk" data-qrfold="' + esc(l.RapideID) + '"><span class="grow" style="font-weight:600;font-size:14.5px">' + esc(l.Nom) + '</span>' +
+      '<span class="ctchip">' + (nSel ? nSel + ' / ' : '') + items.length + '</span>' +
+      '<span class="xdel clk" data-editrapide="' + esc(l.RapideID) + '" style="font-size:13px;color:var(--pine-deep)">modifier</span>' +
+      '<span class="foldchev' + (open ? ' open' : '') + '">›</span></div>' +
+      '<div class="fold' + (open ? '' : ' closed') + '"><div style="padding-top:8px">';
     if (!items.length) h += '<div class="muted small" style="padding:2px 0 6px">Liste vide — touche « modifier ».</div>';
     items.forEach(function (it) {
       var k = 'QR_' + it.ItemID; var sel = MENU_SEL[k] === true;
       h += '<div class="row clk" data-qr="' + esc(it.ItemID) + '" style="padding:5px 0"><span class="chk ' + (sel ? 'on' : '') + '" style="width:20px;height:20px">' + (sel ? CHK : '') + '</span><span class="grow" style="font-size:13.5px">' + esc(it.Ingredient) + '</span><span class="small muted">' + esc(fmtNum(it.Quantite)) + ' ' + esc(it.Unite) + '</span></div>';
     });
-    var nSel = items.filter(function (it) { return MENU_SEL['QR_' + it.ItemID]; }).length;
     h += '<button class="btn ' + (nSel ? '' : 'ghost') + ' sm" style="width:100%;margin-top:8px" data-addqr="' + esc(l.RapideID) + '">' + (nSel ? 'Ajouter ' + nSel + ' à l\'épicerie' : 'Tout ajouter à l\'épicerie') + '</button>';
-    h += '</div>';
+    h += '</div></div></div>';
   });
 
   h += '</section><section class="pane-b">';
@@ -1022,11 +1102,14 @@ function rayBlock(ray, items){
   var done = items.filter(function (i) { return isTrue(i.Coche); }).length;
   var pct = items.length ? Math.round(done / items.length * 100) : 0;
   var complet = items.length && done === items.length;
-  var h = '<div class="rayhd' + (complet ? ' done' : '') + '" data-rayhd="' + esc(ray) + '"><span>' + esc(ray) + '</span><span class="rayprog"><i style="width:' + pct + '%"></i></span><span class="ct">' + (complet ? '✓' : done + '/' + items.length) + '</span></div>';
+  var open = foldOpen('ray_' + ray, true); // les rayons restent ouverts par défaut
+  var h = '<div class="rayhd' + (complet ? ' done' : '') + '" data-rayhd="' + esc(ray) + '" data-rayfold="' + esc(ray) + '"><span>' + esc(ray) + '</span><span class="rayprog"><i style="width:' + pct + '%"></i></span><span class="ct">' + (complet ? '✓' : done + '/' + items.length) + '</span><span class="foldchev' + (open ? ' open' : '') + '">›</span></div>';
+  h += '<div class="fold' + (open ? '' : ' closed') + '"><div>';
   items.forEach(function (it) {
     var dn = isTrue(it.Coche);
     h += '<div class="card tap epi-card ' + (dn ? 'done' : '') + '" data-rayof="' + esc(ray) + '"><div class="row"><div class="epi-main" data-epi="' + esc(it.ListeID) + '"><span class="chk ' + (dn ? 'on' : '') + '">' + (dn ? CHK : '') + '</span><div class="grow"><span class="itxt">' + esc(it.Ingredient) + '</span>' + (it.Source && String(it.Source).toLowerCase() !== 'manuel' ? '<div class="src">' + esc(it.Source) + '</div>' : '') + '</div></div><span class="epi-qty clk" data-qtyedit="' + esc(it.ListeID) + '">' + esc(fmtNum(it.Quantite)) + ' <span class="u">' + esc(plurUnite(it.Quantite, it.Unite)) + '</span></span><span class="xdel clk" data-delepi="' + esc(it.ListeID) + '">&times;</span></div></div>';
   });
+  h += '</div></div>';
   return h;
 }
 function refreshRayonCount(ray){
@@ -1310,6 +1393,8 @@ function bind(){
   };
   var mb = $('manBtn'); if (mb) mb.onclick = openManuel;
   var arp = $('addRapide'); if (arp) arp.onclick = openAddRapide;
+  bindFolds('data-qrfold', 'qr_');
+  bindFolds('data-rayfold', 'ray_');
   qall('[data-qr]').forEach(function (el) { el.onclick = function () { var k = 'QR_' + el.getAttribute('data-qr'); MENU_SEL[k] = !MENU_SEL[k]; render(); }; });
   qall('[data-editrapide]').forEach(function (el) { el.onclick = function () { openEditRapide(el.getAttribute('data-editrapide')); }; });
   qall('[data-addqr]').forEach(function (el) {
@@ -1916,6 +2001,11 @@ $('fab').onclick = function () { if (TAB === 'recettes') openRecette(); };
 $('sideNew').onclick = function () { setTab('recettes'); openRecette(); };
 qall('.side-item,.mobilenav .nv').forEach(function (n) { n.classList.toggle('on', n.getAttribute('data-tab') === TAB); });
 setTimeout(hideSplash, 6000);
+
+// Voile de la barre du haut : son filet n'apparaît qu'au défilement
+window.addEventListener('scroll', function () {
+  document.body.classList.toggle('scrolled', window.scrollY > 8);
+}, { passive: true });
 
 // Clavier mobile : garder le champ actif visible
 document.addEventListener('focusin', function (e) {
