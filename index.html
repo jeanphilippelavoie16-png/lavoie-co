@@ -156,6 +156,12 @@
   .impstep.err .lbl{color:var(--danger)}
   .impstep.err .sub{color:var(--danger)}
   @keyframes impspin{to{transform:rotate(360deg)}}
+  .ig-thumbs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 2px}
+  .ig-thumb{position:relative;width:58px;height:58px;border-radius:11px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:var(--sh-1);flex-shrink:0}
+  .ig-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .ig-thumb .rmv{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;
+    background:rgba(27,36,30,.72);color:#fff;font-size:13px;line-height:18px;text-align:center;cursor:pointer}
 
   /* créneaux dîner/souper dans une carte de jour */
   .slotrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-radius:9px}
@@ -1598,6 +1604,11 @@ function openImportIG(){
     '<div class="psub" style="margin-bottom:14px">Colle le lien du reel Instagram. Si la recette n\'est pas lisible depuis le lien, on te demandera de coller son texte.</div>' +
     '<div class="field"><label>Lien Instagram</label><input id="ig-url" inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://www.instagram.com/reel/…"></div>' +
     '<div class="field hide" id="ig-manual"><label>Texte de la recette (le commentaire du reel)</label><textarea id="ig-txt" rows="7" placeholder="Colle ici le texte complet de la recette…"></textarea></div>' +
+    '<div class="field"><label>Ou des captures d\'écran de la recette</label>' +
+      '<input type="file" id="ig-files" accept="image/*" multiple class="hide">' +
+      '<button class="btn ghost" id="ig-pick" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="15" rx="3"/><circle cx="12" cy="12.5" r="3.4"/><path d="M8.5 5l1.2-2h4.6l1.2 2"/></svg>Ajouter des captures d\'écran</button>' +
+      '<div class="ig-thumbs" id="ig-thumbs"></div>' +
+      '<div class="small muted">L\'IA lit le texte directement sur l\'image — pratique quand Instagram ne laisse pas copier le commentaire.</div></div>' +
     '<button class="btn" id="ig-go">Analyser</button>' +
     '<div class="impsteps" id="ig-steps">' +
       stepHtml(1, 'Lecture du lien', '') +
@@ -1615,8 +1626,42 @@ function openImportIG(){
     if (sub !== undefined) el.querySelector('.sub').textContent = sub;
   }
   var busy = false;
+  var igImages = []; // [{b64, thumb}] — compressées côté client
   function setBtn(label, disabled){ var b = $('ig-go'); if (b) { b.disabled = !!disabled; b.textContent = label; } }
   function reset(){ busy = false; setBtn('Analyser', false); }
+  // Réduit une photo à 1568 px max, JPEG — Safari décode aussi le HEIC.
+  function prepImage(file){
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        var img = new Image();
+        img.onload = function () {
+          try {
+            var MAX = 1568, k = Math.min(1, MAX / Math.max(img.width, img.height));
+            var c = document.createElement('canvas');
+            c.width = Math.max(1, Math.round(img.width * k));
+            c.height = Math.max(1, Math.round(img.height * k));
+            c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+            var du = c.toDataURL('image/jpeg', 0.82);
+            resolve({ b64: du.split(',')[1], thumb: du });
+          } catch (e) { reject(new Error('Image illisible')); }
+        };
+        img.onerror = function () { reject(new Error('Image illisible')); };
+        img.src = fr.result;
+      };
+      fr.onerror = function () { reject(new Error('Lecture du fichier impossible')); };
+      fr.readAsDataURL(file);
+    });
+  }
+  function renderThumbs(){
+    var c = $('ig-thumbs'); if (!c) return;
+    c.innerHTML = igImages.map(function (im, i) {
+      return '<div class="ig-thumb"><img src="' + im.thumb + '" alt=""><span class="rmv clk" data-igrm="' + i + '">&times;</span></div>';
+    }).join('');
+    c.querySelectorAll('[data-igrm]').forEach(function (el) {
+      el.onclick = function () { igImages.splice(+el.getAttribute('data-igrm'), 1); renderThumbs(); };
+    });
+  }
   function fail(stepIdx, err){
     reset();
     var msg = String(err && err.message || err);
@@ -1626,10 +1671,10 @@ function openImportIG(){
     setStep(stepIdx, 'err', msg);
     toast(msg, 'err');
   }
-  function structurer(texte, url){
+  function structurer(fn, args){
     setBtn('Analyse en cours…', true);
     setStep(2, 'on', 'l\'IA lit la recette… (10 à 30 s)');
-    apiCall('structurerRecetteTexte', [texte, url]).then(function (res) {
+    apiCall(fn, args).then(function (res) {
       isOffline = false; updateSync();
       if (res && res.recette) {
         var nIng = (res.recette.ingredients || []).length;
@@ -1641,10 +1686,23 @@ function openImportIG(){
       fail(2, new Error('Réponse inattendue du serveur'));
     }).catch(function (err) { fail(2, err); });
   }
+  $('ig-pick').onclick = function () { $('ig-files').click(); };
+  $('ig-files').onchange = function () {
+    var files = Array.prototype.slice.call(this.files || []);
+    this.value = '';
+    if (!files.length) return;
+    if (igImages.length + files.length > 4) { toast('Maximum 4 captures d\'écran', 'err'); files = files.slice(0, 4 - igImages.length); }
+    var reste = files.length;
+    files.forEach(function (f) {
+      prepImage(f).then(function (im) { igImages.push(im); })
+        .catch(function () { toast('Une image n\'a pas pu être lue', 'err'); })
+        .finally(function () { reste--; if (!reste) renderThumbs(); });
+    });
+  };
   $('ig-go').onclick = function () {
     if (busy) return;
     var url = $('ig-url').value.trim(), txt = $('ig-txt').value.trim();
-    if (!url && !txt) { toast('Colle un lien Instagram ou le texte de la recette', 'err'); return; }
+    if (!url && !txt && !igImages.length) { toast('Colle un lien, du texte, ou ajoute des captures d\'écran', 'err'); return; }
     // On tente TOUJOURS l'appel : le drapeau « hors ligne » de l'app peut
     // être périmé. Si le réseau est vraiment mort, fail() l'explique.
     // Deux appels courts plutôt qu'un long : Safari iOS coupe les
@@ -1654,16 +1712,21 @@ function openImportIG(){
     $('ig-hint').textContent = '';
     setStep(2, '', 'nom, ingrédients, quantités, étapes');
     setStep(3, '', 'la recette s\'ouvre pour vérification avant d\'être enregistrée');
-    if (txt) { setStep(1, 'ok', 'texte collé à la main'); structurer(txt, url); return; }
+    if (igImages.length) {
+      setStep(1, 'ok', igImages.length + ' capture' + (igImages.length > 1 ? 's' : '') + ' d\'écran fournie' + (igImages.length > 1 ? 's' : ''));
+      structurer('structurerRecetteImage', [igImages.map(function (im) { return { data: im.b64, mediaType: 'image/jpeg' }; }), url, txt]);
+      return;
+    }
+    if (txt) { setStep(1, 'ok', 'texte collé à la main'); structurer('structurerRecetteTexte', [txt, url]); return; }
     setBtn('Analyse en cours…', true);
     setStep(1, 'on', 'on demande la description publique du reel…');
     apiCall('lireLienIG', [url]).then(function (res) {
       isOffline = false; updateSync();
-      if (res && res.texte) { setStep(1, 'ok', 'description du reel récupérée'); structurer(res.texte, url); return; }
+      if (res && res.texte) { setStep(1, 'ok', 'description du reel récupérée'); structurer('structurerRecetteTexte', [res.texte, url]); return; }
       reset();
       setStep(1, 'err', 'Instagram bloque la lecture de ce lien');
       $('ig-manual').classList.remove('hide');
-      $('ig-hint').textContent = 'Pas grave : ouvre le reel, copie le texte de la recette (souvent le commentaire épinglé), colle-le ci-dessus et réanalyse.';
+      $('ig-hint').textContent = 'Pas grave : prends des captures d\'écran de la recette (le commentaire, ou la recette dans la vidéo) et ajoute-les ci-dessus — ou colle son texte si tu l\'as.';
       setTimeout(function () { var t = $('ig-txt'); if (t) t.focus(); }, 60);
     }).catch(function (err) { fail(1, err); });
   };
