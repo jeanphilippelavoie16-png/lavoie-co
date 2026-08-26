@@ -1572,38 +1572,43 @@ function openImportIG(){
     '<button class="btn" id="ig-go">Analyser</button>' +
     '<div class="small muted" id="ig-hint" style="margin-top:10px;text-align:center"></div>', true);
   var busy = false;
+  function setBtn(label, disabled){ var b = $('ig-go'); if (b) { b.disabled = !!disabled; b.textContent = label; } }
+  function reset(){ busy = false; setBtn('Analyser', false); }
+  function fail(err){
+    reset();
+    var msg = String(err && err.message || err);
+    if (/failed to fetch|load failed|networkerror|network request failed/i.test(msg)) {
+      msg = 'Impossible de joindre le serveur — vérifie ta connexion et réessaie.';
+    } else { isOffline = false; updateSync(); } // le serveur a répondu : on n'est pas hors ligne
+    toast(msg, 'err');
+  }
+  function structurer(texte, url){
+    setBtn('Structuration de la recette… (10 à 30 s)', true);
+    apiCall('structurerRecetteTexte', [texte, url]).then(function (res) {
+      isOffline = false; updateSync();
+      if (res && res.recette) { closeSheet(); openRecette(null, res.recette); return; }
+      reset(); toast('Réponse inattendue du serveur', 'err');
+    }).catch(fail);
+  }
   $('ig-go').onclick = function () {
     if (busy) return;
     var url = $('ig-url').value.trim(), txt = $('ig-txt').value.trim();
     if (!url && !txt) { toast('Colle un lien Instagram ou le texte de la recette', 'err'); return; }
     // On tente TOUJOURS l'appel : le drapeau « hors ligne » de l'app peut
-    // être périmé (il ne se rafraîchit qu'au battement de cœur). Si le
-    // réseau est vraiment mort, l'appel échoue et le catch l'explique.
+    // être périmé. Si le réseau est vraiment mort, fail() l'explique.
+    // Deux appels courts plutôt qu'un long : Safari iOS coupe les
+    // requêtes qui dépassent ~60 s.
     busy = true;
-    var btn = $('ig-go');
-    btn.disabled = true; btn.textContent = 'Analyse en cours… (10 à 30 s)';
-    function reset(){ busy = false; var b = $('ig-go'); if (b) { b.disabled = false; b.textContent = 'Analyser'; } }
-    // Appel direct (pas la file offline) : l'import est interactif et
-    // n'a de sens qu'avec une réponse immédiate.
-    apiCall('importerRecetteIG', [url, txt]).then(function (res) {
+    if (txt) { structurer(txt, url); return; }
+    setBtn('Lecture du lien…', true);
+    apiCall('lireLienIG', [url]).then(function (res) {
       isOffline = false; updateSync();
-      if (res && res.besoinTexte) {
-        reset();
-        $('ig-manual').classList.remove('hide');
-        $('ig-hint').textContent = 'Instagram n\'a pas laissé lire ce lien. Ouvre le reel, copie le texte de la recette (souvent le commentaire épinglé), puis colle-le ci-dessus.';
-        setTimeout(function () { var t = $('ig-txt'); if (t) t.focus(); }, 60);
-        return;
-      }
-      if (res && res.recette) { closeSheet(); openRecette(null, res.recette); return; }
-      reset(); toast('Réponse inattendue du serveur', 'err');
-    }).catch(function (err) {
+      if (res && res.texte) { structurer(res.texte, url); return; }
       reset();
-      var msg = String(err && err.message || err);
-      if (/failed to fetch|load failed|networkerror|network request failed/i.test(msg)) {
-        msg = 'Impossible de joindre le serveur — vérifie ta connexion et réessaie.';
-      } else { isOffline = false; updateSync(); } // le serveur a répondu : on n'est pas hors ligne
-      toast(msg, 'err');
-    });
+      $('ig-manual').classList.remove('hide');
+      $('ig-hint').textContent = 'Instagram n\'a pas laissé lire ce lien. Ouvre le reel, copie le texte de la recette (souvent le commentaire épinglé), puis colle-le ci-dessus.';
+      setTimeout(function () { var t = $('ig-txt'); if (t) t.focus(); }, 60);
+    }).catch(fail);
   };
 }
 
