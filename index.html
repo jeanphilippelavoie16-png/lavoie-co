@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.3.1 « La Carte »
+     LAVOIE & CO — v4.3.2 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -148,11 +148,6 @@
   .datechip.empty .d{color:#C9CCC5}
   .datechip .m{font-size:8px;color:var(--mut);text-transform:uppercase;letter-spacing:.22em;margin-top:3px;font-weight:600;padding-left:.22em}
   .datechip.empty .m{color:#C9CCC5}
-  /* Médaillon de recette : l'initiale en Marcellus sur un ton gourmand,
-     stable pour une même recette — l'œil la retrouve partout. */
-  .medal{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
-    font-family:var(--serif);flex-shrink:0;line-height:1;
-    box-shadow:inset 0 0 0 1px rgba(20,22,19,.06)}
   .mealname{font-size:15px;font-weight:600}
   .cook{font-size:11.5px;color:var(--mut);margin-top:1px}
   /* étapes visuelles de l'import Instagram */
@@ -224,6 +219,13 @@
   .anim .pane-a > *:nth-child(8){animation-delay:.28s}
   .anim .pane-a > *:nth-child(n+9){animation-delay:.32s}
   .anim .recgrid > .card,.anim .inggrid > .card{animation:cardIn .4s cubic-bezier(.22,1,.36,1) both}
+
+  /* Bulles d'épicerie : la teinte du rayon tant que c'est à acheter,
+     retour au neutre une fois coché (le !important bat la teinte en
+     ligne, posée par rayBlock). Le point de couleur signe l'en-tête. */
+  .epi-card.done{background:var(--card)!important;border-color:var(--line)!important}
+  .epi-card .chk{background:rgba(255,255,255,.75)}
+  .raydot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
   /* Rayon d'épicerie complété : l'en-tête se raye, le compte devient ✓ */
   .rayhd.done > span:first-child{color:var(--brass);text-decoration:line-through;
@@ -487,7 +489,7 @@
   <div class="sp-rule"></div>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.3.1</div>
+  <div class="sp-ver">v4.3.2</div>
 </div>
 
 <aside class="sidebar">
@@ -501,14 +503,14 @@
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.3.1</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.3.2</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.3.1"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.3.2"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -525,7 +527,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.3.1
+   LAVOIE & CO — Frontend v4.3.2
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -546,7 +548,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.3.1'
+  VERSION: '4.3.2'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -620,19 +622,23 @@ function plurUnite(qte, unite){
   return u + 's';
 }
 
-/* ---------- Médaillons de recette ---------- */
-// Six tons gourmands [fond, encre] : sauge, terre cuite, ocre, ardoise,
-// prune, avoine. Le choix est un hachage du nom → stable dans le temps.
-var MEDAL_TINTS = [
-  ['#E4EDE2', '#2E5C42'], ['#F4E3D7', '#9C5533'], ['#F2EACF', '#8A6D2B'],
-  ['#E0E8EF', '#3D5A73'], ['#EDE2ED', '#6D4A6D'], ['#EFE9DD', '#7A6A4F']
+/* ---------- Teintes de rayon (liste d'épicerie) ---------- */
+// Chaque rayon a sa couleur : les items À ACHETER portent la teinte de
+// leur rayon, un item coché redevient neutre et s'efface. Six tons
+// [fond, bordure, point] ; le choix suit l'ordre des rayons du classeur.
+var RAYON_TINTS = [
+  ['#E3EFE0', '#CDE0C8', '#4E7A5C'], ['#F7E7D9', '#EBD3BF', '#B06A42'],
+  ['#F5EDCF', '#E8DBAC', '#9A7F33'], ['#E1EAF2', '#CEDDEA', '#47698A'],
+  ['#F0E2F0', '#DFCADF', '#7D557D'], ['#F0EADB', '#E1D6BE', '#8A7A57']
 ];
-function medalHtml(nom, taille){
-  var s = String(nom == null || nom === '' ? '?' : nom).trim();
-  var hcode = 0;
-  for (var i = 0; i < s.length; i++) hcode = (hcode * 31 + s.charCodeAt(i)) % 9973;
-  var t = MEDAL_TINTS[hcode % MEDAL_TINTS.length];
-  return '<span class="medal" style="width:' + taille + 'px;height:' + taille + 'px;font-size:' + Math.round(taille * 0.46) + 'px;background:' + t[0] + ';color:' + t[1] + '">' + esc(s.charAt(0).toUpperCase()) + '</span>';
+var _rayIdx = null;
+function rayonTint(ray){
+  if (!_rayIdx) {
+    _rayIdx = {};
+    rayonsSorted().forEach(function (r, i) { _rayIdx[String(r.Rayon).trim()] = i % RAYON_TINTS.length; });
+  }
+  var i = _rayIdx.hasOwnProperty(ray) ? _rayIdx[ray] : (String(ray).length % RAYON_TINTS.length);
+  return RAYON_TINTS[i];
 }
 
 /* ---------- Accès aux données ---------- */
@@ -667,6 +673,7 @@ function lastCookedLabel(r){
 /* ---------- Persistance locale ---------- */
 function normalizeData(d){
   if (!d) return d;
+  _rayIdx = null; // l'ordre des rayons a pu changer côté serveur
   d.epicerieRepas = d.epicerieRepas || [];
   (d.soupers || []).forEach(function (s) { s.Repas = repasOf(s.Repas); });
   d.epicerieRepas.forEach(function (t) { t.Repas = repasOf(t.Repas); });
@@ -967,7 +974,7 @@ function viewMenu(){
     ['diner', 'souper'].forEach(function (rep) {
       var s = souperFor(iso, rep);
       if (s) {
-        h += '<div class="slotrow dropslot" draggable="true" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-dragday="' + esc(iso) + '" data-dragrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><div class="epi-main clk" data-mealday="' + esc(s.RecetteID) + '" style="flex:1;min-width:0">' + medalHtml(recetteNom(s.RecetteID), 26) + '<div class="grow"><div class="mealname trunc" style="font-size:14px">' + esc(recetteNom(s.RecetteID)) + (s.Cuisinier ? ' <span class="cook" style="display:inline">· ' + esc(s.Cuisinier) + '</span>' : '') + '</div></div></div><span class="dragh">⠿</span><span class="xdel clk" data-delsoup="' + esc(iso) + '" data-delrep="' + rep + '">&times;</span></div>';
+        h += '<div class="slotrow dropslot" draggable="true" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-dragday="' + esc(iso) + '" data-dragrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><div class="epi-main clk" data-mealday="' + esc(s.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc" style="font-size:14px">' + esc(recetteNom(s.RecetteID)) + (s.Cuisinier ? ' <span class="cook" style="display:inline">· ' + esc(s.Cuisinier) + '</span>' : '') + '</div></div></div><span class="dragh">⠿</span><span class="xdel clk" data-delsoup="' + esc(iso) + '" data-delrep="' + rep + '">&times;</span></div>';
       } else {
         h += '<div class="slotrow clk dropslot" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-addday="' + esc(iso) + '" data-addrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><span class="slotempty grow">Libre — touche pour ajouter</span><span class="chev">+</span></div>';
       }
@@ -995,7 +1002,7 @@ function recPickCard(r){
   var sel = MENU_SEL[String(r.RecetteID)] === true;
   var ings = ingredientsOf(r.RecetteID);
   var lc = lastCookedLabel(r);
-  return '<div class="card tap" draggable="true" data-dragrec="' + esc(r.RecetteID) + '" style="' + (sel ? 'border-color:var(--pine);background:var(--pine-ghost)' : '') + '" data-pick="' + esc(r.RecetteID) + '"><div class="row clk"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span>' + medalHtml(r.Nom, 36) + '<div class="grow"><div class="mealname">' + esc(r.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(r.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div></div></div>';
+  return '<div class="card tap" draggable="true" data-dragrec="' + esc(r.RecetteID) + '" style="' + (sel ? 'border-color:var(--pine);background:var(--pine-ghost)' : '') + '" data-pick="' + esc(r.RecetteID) + '"><div class="row clk"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(r.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div></div></div>';
 }
 
 /* ============ RECETTES ============ */
@@ -1025,7 +1032,7 @@ function viewRecettes(){
 function recDetailCard(x){
   var ings = ingredientsOf(x.RecetteID);
   var lc = lastCookedLabel(x);
-  return '<div class="card tap clk" draggable="true" data-recdetail="' + esc(x.RecetteID) + '" data-dragrec="' + esc(x.RecetteID) + '"><div class="row">' + medalHtml(x.Nom, 38) + '<div class="grow"><div class="mealname">' + esc(x.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(x.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((x.types || []).length ? '<div class="tagrow">' + x.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">›</span></div></div>';
+  return '<div class="card tap clk" draggable="true" data-recdetail="' + esc(x.RecetteID) + '" data-dragrec="' + esc(x.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(x.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(x.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((x.types || []).length ? '<div class="tagrow">' + x.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">›</span></div></div>';
 }
 function openRecipeDetail(rid){
   var r = recette(rid); if (!r) return;
@@ -1069,10 +1076,10 @@ function viewEpicerie(){
       var quand = REPAS_LBL[rep] + ' · ' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()];
       var tracked = mealTracked(x.Date, rep, x.RecetteID);
       if (tracked) {
-        h += '<div class="card tracked"><div class="row"><div class="epi-main clk" data-mealday="' + esc(x.RecetteID) + '" style="flex:1;min-width:0">' + medalHtml(recetteNom(x.RecetteID), 38) + '<div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="trackchip"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Dans la liste</span><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
+        h += '<div class="card tracked"><div class="row"><div class="epi-main clk" data-mealday="' + esc(x.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="trackchip"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Dans la liste</span><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
       } else {
         var k = 'EPI|' + x.RecetteID + '|' + x.Date + '|' + rep, sel = MENU_SEL[k] === true;
-        h += '<div class="card tap" style="' + (sel ? 'border-color:var(--pine);background:var(--pine-ghost)' : '') + '"><div class="row"><div class="epi-main clk" data-epimeal="' + esc(x.RecetteID) + '" data-epidate="' + esc(x.Date) + '" data-epirep="' + rep + '" style="flex:1;min-width:0"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span>' + medalHtml(recetteNom(x.RecetteID), 38) + '<div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
+        h += '<div class="card tap" style="' + (sel ? 'border-color:var(--pine);background:var(--pine-ghost)' : '') + '"><div class="row"><div class="epi-main clk" data-epimeal="' + esc(x.RecetteID) + '" data-epidate="' + esc(x.Date) + '" data-epirep="' + rep + '" style="flex:1;min-width:0"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
       }
     });
     var n = Object.keys(MENU_SEL).filter(function (k) { return k.indexOf('EPI|') === 0 && MENU_SEL[k]; }).length;
@@ -1123,11 +1130,12 @@ function rayBlock(ray, items){
   var pct = items.length ? Math.round(done / items.length * 100) : 0;
   var complet = items.length && done === items.length;
   var open = foldOpen('ray_' + ray, true); // les rayons restent ouverts par défaut
-  var h = '<div class="rayhd' + (complet ? ' done' : '') + '" data-rayhd="' + esc(ray) + '" data-rayfold="' + esc(ray) + '"><span>' + esc(ray) + '</span><span class="rayprog"><i style="width:' + pct + '%"></i></span><span class="ct">' + (complet ? '✓' : done + '/' + items.length) + '</span><span class="foldchev' + (open ? ' open' : '') + '">›</span></div>';
+  var tint = rayonTint(ray);
+  var h = '<div class="rayhd' + (complet ? ' done' : '') + '" data-rayhd="' + esc(ray) + '" data-rayfold="' + esc(ray) + '"><span class="raydot" style="background:' + tint[2] + '"></span><span>' + esc(ray) + '</span><span class="rayprog"><i style="width:' + pct + '%"></i></span><span class="ct">' + (complet ? '✓' : done + '/' + items.length) + '</span><span class="foldchev' + (open ? ' open' : '') + '">›</span></div>';
   h += '<div class="fold' + (open ? '' : ' closed') + '"><div>';
   items.forEach(function (it) {
     var dn = isTrue(it.Coche);
-    h += '<div class="card tap epi-card ' + (dn ? 'done' : '') + '" data-rayof="' + esc(ray) + '"><div class="row"><div class="epi-main" data-epi="' + esc(it.ListeID) + '"><span class="chk ' + (dn ? 'on' : '') + '">' + (dn ? CHK : '') + '</span><div class="grow"><span class="itxt">' + esc(it.Ingredient) + '</span>' + (it.Source && String(it.Source).toLowerCase() !== 'manuel' ? '<div class="src">' + esc(it.Source) + '</div>' : '') + '</div></div><span class="epi-qty clk" data-qtyedit="' + esc(it.ListeID) + '">' + esc(fmtNum(it.Quantite)) + ' <span class="u">' + esc(plurUnite(it.Quantite, it.Unite)) + '</span></span><span class="xdel clk" data-delepi="' + esc(it.ListeID) + '">&times;</span></div></div>';
+    h += '<div class="card tap epi-card ' + (dn ? 'done' : '') + '" data-rayof="' + esc(ray) + '" style="background:' + tint[0] + ';border-color:' + tint[1] + '"><div class="row"><div class="epi-main" data-epi="' + esc(it.ListeID) + '"><span class="chk ' + (dn ? 'on' : '') + '">' + (dn ? CHK : '') + '</span><div class="grow"><span class="itxt">' + esc(it.Ingredient) + '</span>' + (it.Source && String(it.Source).toLowerCase() !== 'manuel' ? '<div class="src">' + esc(it.Source) + '</div>' : '') + '</div></div><span class="epi-qty clk" data-qtyedit="' + esc(it.ListeID) + '">' + esc(fmtNum(it.Quantite)) + ' <span class="u">' + esc(plurUnite(it.Quantite, it.Unite)) + '</span></span><span class="xdel clk" data-delepi="' + esc(it.ListeID) + '">&times;</span></div></div>';
   });
   h += '</div></div>';
   return h;
@@ -1574,7 +1582,7 @@ function openDayPicker(iso, rep){
   rep = rep || 'souper';
   var d = parseYmd(iso), recs = (DATA.recettes || []);
   if (!recs.length) { alert('Crée d\'abord une recette.'); return; }
-  var list = recs.map(function (r) { return '<div class="card tap clk" data-dp="' + esc(r.RecetteID) + '"><div class="row">' + medalHtml(r.Nom, 34) + '<div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
+  var list = recs.map(function (r) { return '<div class="card tap clk" data-dp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
   showSheet(REPAS_LBL[rep] + ' · ' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()], '<label style="margin-bottom:8px">Choisis une recette</label>' + list + '<div class="field" style="margin-top:8px"><label>Qui cuisine ? (optionnel)</label><input id="dp-cook" placeholder="Marie, JP…"></div>', true);
   qall('[data-dp]').forEach(function (el) {
     el.onclick = function () {
