@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.3.2 « La Carte »
+     LAVOIE & CO — v4.4.0 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -28,8 +28,11 @@
     --paper:#F3F3ED; --card:#FFFFFF;
     --ink:#141613; --ink2:#3F443E; --mut:#8F928A;
     --line:#E2E2DA; --line2:#EBEBE4;
-    --pine:#1A4130; --pine-deep:#0F2E1F; --pine-ghost:#EDF1EC; --pine-line:#D5DED5;
-    --brass:#2E5C42; --brass-2:#7FA98F; --brass-ghost:#EDF1EC;
+    /* LE vert de l'app : céladon (celui de la carte du jour). Le pur
+       pour remplir (pastilles, coches, accents), le foncé — même
+       teinte — pour écrire sur fond clair (contraste 5,4:1). */
+    --pine:#9DC3AC; --pine-deep:#4E7360; --pine-ghost:#EAF1EC; --pine-line:#C9DCD0;
+    --brass:#4E7360; --brass-2:#9DC3AC; --brass-ghost:#EAF1EC;
     --danger:#A9452F; --danger-ghost:#F6E7E1;
     --side:#FFFFFF; --side-2:#F1F1EB; --side-text:#3F443E; --side-mut:#8F928A; --side-on:#141613;
     --serif:'Marcellus',ui-serif,'New York',Georgia,'Times New Roman',serif;
@@ -77,13 +80,24 @@
   .sp-word span:nth-child(7){animation-delay:.44s}
   .sp-word span:nth-child(8){animation-delay:.53s}
   .sp-word span:nth-child(9){animation-delay:.59s}
-  .sp-rule{width:132px;height:1px;background:var(--ink);animation:spRule .9s .55s cubic-bezier(.22,1,.36,1) both}
-  @keyframes spRule{from{width:0}}
+  /* La branche d'olivier : un trait céladon qui se dessine (dashoffset
+     1 → 0, pathLength normalisé). États de base = trait complet, pour
+     rester visible quand les animations sont coupées. */
+  .sp-dessin{width:170px;height:56px;overflow:visible;margin:-4px 0}
+  .sp-dessin path{fill:none;stroke:#9DC3AC;stroke-width:1.6;stroke-linecap:round;
+    stroke-dasharray:1;stroke-dashoffset:0}
+  .sp-dessin .tige{animation:spTrace 1.1s .85s cubic-bezier(.45,0,.2,1) both}
+  .sp-dessin .f1{animation:spTrace .5s 1.55s ease-out both}
+  .sp-dessin .f2{animation:spTrace .5s 1.72s ease-out both}
+  .sp-dessin .f3{animation:spTrace .5s 1.89s ease-out both}
+  .sp-dessin .f4{animation:spTrace .5s 2.06s ease-out both}
+  .sp-dessin .f5{animation:spTrace .5s 2.23s ease-out both}
+  @keyframes spTrace{from{stroke-dashoffset:1}}
   .sp-tag{font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--mut);
-    padding-left:.3em;animation:spRise .9s .75s cubic-bezier(.22,1,.36,1) both}
-  .sp-bar{width:132px;height:2px;background:var(--line);overflow:hidden;animation:spRise .9s .85s both}
+    padding-left:.3em;animation:spRise .9s 2.35s cubic-bezier(.22,1,.36,1) both}
+  .sp-bar{width:132px;height:2px;background:var(--line);overflow:hidden;animation:spRise .9s 2.5s both}
   .sp-bar i{display:block;height:100%;width:40%;background:var(--ink);animation:spLoad 1.4s ease-in-out infinite}
-  .sp-ver{font-size:10px;color:var(--mut);letter-spacing:.12em;animation:spRise .9s .95s both}
+  .sp-ver{font-size:10px;color:var(--mut);letter-spacing:.12em;animation:spRise .9s 2.65s both}
   @keyframes spRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
   @keyframes spLoad{0%{transform:translateX(-120%)}100%{transform:translateX(330%)}}
 
@@ -108,7 +122,7 @@
   .sync{margin-left:auto;display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);
     border-radius:30px;padding:5px 11px 5px 9px;font-size:11px;font-weight:600;color:var(--ink2);
     letter-spacing:.02em;box-shadow:var(--sh-1);white-space:nowrap}
-  .sdot{width:7px;height:7px;border-radius:50%;background:#6FAF7E;transition:background .2s;flex-shrink:0}
+  .sdot{width:7px;height:7px;border-radius:50%;background:#9DC3AC;transition:background .2s;flex-shrink:0}
   .sdot.busy{background:var(--brass);animation:pulse 1s infinite}
   .sdot.off{background:#C9803F;animation:none}
   @keyframes pulse{50%{opacity:.35}}
@@ -251,7 +265,7 @@
   /* Badge de navigation : ce qu'il reste à acheter, visible de partout. */
   .mobilenav .nv{position:relative}
   .navbadge{position:absolute;top:0;right:2px;min-width:16px;height:16px;border-radius:9px;
-    background:var(--pine);color:#fff;font-size:9px;font-weight:700;
+    background:var(--pine);color:var(--ink);font-size:9px;font-weight:700;
     display:flex;align-items:center;justify-content:center;padding:0 4px}
   .side-item .navbadge{position:static;margin-left:auto}
 
@@ -299,7 +313,7 @@
 
   .chk{width:24px;height:24px;border-radius:8px;border:2px solid var(--line);flex-shrink:0;display:flex;
     align-items:center;justify-content:center;background:var(--card);transition:all .13s}
-  .chk.on{background:var(--pine);border-color:var(--pine);color:#fff;animation:chkpop .18s ease}
+  .chk.on{background:var(--pine);border-color:var(--pine);color:var(--ink);animation:chkpop .18s ease}
   .chk svg{width:13px;height:13px}
   @keyframes chkpop{0%{transform:scale(.8)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
   .done .mealname,.done .itxt{text-decoration:line-through;color:var(--mut);text-decoration-color:#CCD2CD}
@@ -356,7 +370,7 @@
   .filt::-webkit-scrollbar,.pills::-webkit-scrollbar{display:none}
   .fchip,.pill{font-size:12.5px;padding:6px 13px;border-radius:30px;background:var(--card);border:1px solid var(--line);
     color:var(--ink2);white-space:nowrap;font-weight:500;cursor:pointer;transition:all .13s}
-  .fchip.on,.pill.on{background:var(--pine);color:#fff;border-color:var(--pine)}
+  .fchip.on,.pill.on{background:var(--pine);color:var(--ink);border-color:var(--pine)}
   .pill.addp{color:var(--pine-deep);border-style:dashed}
 
   .selbtn{position:sticky;bottom:calc(var(--navbar-h) + 8px);z-index:25;margin-top:6px}
@@ -376,7 +390,7 @@
 
   .tchip{font-size:13px;padding:8px 14px;border-radius:30px;background:var(--card);border:1px solid var(--line);
     color:var(--ink2);font-weight:500;cursor:pointer;transition:all .13s;display:inline-flex;align-items:center;gap:6px}
-  .tchip.on{background:var(--pine);color:#fff;border-color:var(--pine)}
+  .tchip.on{background:var(--pine);color:var(--ink);border-color:var(--pine)}
   .tchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 
   .ingrow{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:10px 12px;margin-bottom:8px}
@@ -486,10 +500,17 @@
 
 <div id="splash">
   <div class="sp-word"><span>L</span><span>a</span><span>v</span><span>o</span><span>i</span><span>e</span> <span class="et">&amp;</span> <span>C</span><span>o</span></div>
-  <div class="sp-rule"></div>
+  <svg class="sp-dessin" viewBox="0 0 170 56" aria-hidden="true">
+    <path class="tige" pathLength="1" d="M4 44 C 48 40, 112 30, 166 12"/>
+    <path class="f1" pathLength="1" d="M40 38 Q 32 24 44 18 Q 48 30 40 38"/>
+    <path class="f2" pathLength="1" d="M66 34 Q 62 48 76 50 Q 76 38 66 34"/>
+    <path class="f3" pathLength="1" d="M92 29 Q 86 15 98 10 Q 101 22 92 29"/>
+    <path class="f4" pathLength="1" d="M118 24 Q 115 37 128 39 Q 127 28 118 24"/>
+    <path class="f5" pathLength="1" d="M142 18 Q 138 6 148 3 Q 150 13 142 18"/>
+  </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.3.2</div>
+  <div class="sp-ver">v4.4.0</div>
 </div>
 
 <aside class="sidebar">
@@ -503,14 +524,14 @@
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.3.2</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.4.0</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.3.2"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.4.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -527,7 +548,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.3.2
+   LAVOIE & CO — Frontend v4.4.0
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -548,7 +569,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.3.2'
+  VERSION: '4.4.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -914,7 +935,9 @@ function load(){
   loadQueue();
   var cached = loadLocal();
   if (cached) { DATA = normalizeData(cached.data); REV = cached.rev || 0; render(); }
-  function finish(){ var wait = Math.max(0, 900 - (Date.now() - t0)); setTimeout(hideSplash, wait); }
+  // 3,2 s minimum : le temps que le mot-symbole se pose, que la branche
+  // d'olivier se dessine et que le filet de chargement respire.
+  function finish(){ var wait = Math.max(0, 3200 - (Date.now() - t0)); setTimeout(hideSplash, wait); }
   if (syncQueue.length) { finish(); updateSync(); flushQueue(); return; }
   pull().then(function () {
     finish();
