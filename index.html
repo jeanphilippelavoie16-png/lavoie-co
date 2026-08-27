@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.4.3 « La Carte »
+     LAVOIE & CO — v4.5.0 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -258,6 +258,23 @@
   .foldchev.open{transform:rotate(90deg)}
   .ctchip{font-size:10.5px;font-weight:700;color:var(--ink2);background:var(--line2);
     border-radius:20px;padding:3px 9px;letter-spacing:.03em;white-space:nowrap}
+
+  /* Épicerie : deux modes — Préparer / Magasiner. Le sélecteur en
+     pilule ne vit qu'au téléphone ; le bureau garde ses deux volets. */
+  .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;
+    margin:0 0 16px;box-shadow:var(--sh-1)}
+  .seg .sg{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:9px 12px;
+    border-radius:999px;font-weight:600;font-size:13.5px;color:var(--ink2);cursor:pointer;
+    transition:background .18s,color .18s}
+  .seg .sg.on{background:var(--ink);color:#fff}
+  .seg .sg.on .ctchip{background:rgba(255,255,255,.18);color:#fff}
+  .shopsum{display:flex;align-items:center;gap:14px;padding:14px 17px}
+  .shopsum .n{font-family:var(--serif);font-size:36px;line-height:1;color:var(--ink)}
+  @media(max-width:899px){
+    .mode-shop .pane-a{display:none}
+    .mode-prep .pane-b{display:none}
+  }
+  @media(min-width:900px){ .seg{display:none} }
 
   /* En-têtes de rayon collants : en magasin, le rayon reste lisible
      pendant qu'on défile ses items. */
@@ -520,7 +537,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.4.3</div>
+  <div class="sp-ver">v4.5.0</div>
 </div>
 
 <aside class="sidebar">
@@ -534,14 +551,14 @@
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.4.3</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.5.0</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.4.3"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.5.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -558,7 +575,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.4.3
+   LAVOIE & CO — Frontend v4.5.0
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -579,7 +596,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.4.3'
+  VERSION: '4.5.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -1090,9 +1107,10 @@ function openRecipeDetail(rid){
 
 /* ============ ÉPICERIE ============ */
 function viewEpicerie(){
-  var h = '<div class="ph">Épicerie</div><div class="psub">Ajoute des repas — la liste se construit sans rien effacer</div><div class="panes"><section class="pane-a">';
+  var e = (DATA.epicerie || []);
+  var resteN = e.filter(function (i) { return !isTrue(i.Coche); }).length;
+  var cochesN = e.length - resteN;
   var today = ymd(new Date());
-  var prepOpen = foldOpen('prep_haut', true);
   var all = (DATA.soupers || []).slice().sort(function (a, b) {
     if (a.Date !== b.Date) return a.Date < b.Date ? -1 : 1;
     return REPAS_ORD[repasOf(a.Repas)] - REPAS_ORD[repasOf(b.Repas)];
@@ -1101,12 +1119,14 @@ function viewEpicerie(){
   var passes = all.length - s.length;
   var selectable = s.filter(function (x) { return !mealTracked(x.Date, repasOf(x.Repas), x.RecetteID); });
 
-  // Toute la préparation (repas + listes rapides) se replie d'un geste :
-  // une fois la liste bâtie, on veut arriver direct sur elle en magasin.
-  h += '<div class="secthd clk" data-prepfold="haut" style="margin-top:0"><span class="t">Préparer la liste</span><span class="ln"></span>' +
-    (selectable.length ? '<span class="ctchip">' + selectable.length + ' repas à ajouter</span>' : '') +
-    '<span class="foldchev' + (prepOpen ? ' open' : '') + '">›</span></div>';
-  h += '<div class="fold' + (prepOpen ? '' : ' closed') + '"><div>';
+  // Deux modes, un geste : PRÉPARER (repas, ajouts, listes rapides) et
+  // MAGASINER (la liste, rien d'autre). Le choix est mémorisé ; par
+  // défaut on ouvre là où la vie se passe — la liste, si elle existe.
+  var mode = UI_FOLD['epi_mode'] === 'prep' || UI_FOLD['epi_mode'] === 'shop' ? UI_FOLD['epi_mode'] : (e.length ? 'shop' : 'prep');
+  var h = '<div class="ph">Épicerie</div><div class="psub">Ajoute des repas — la liste se construit sans rien effacer</div>';
+  h += '<div class="seg"><span class="sg' + (mode === 'prep' ? ' on' : '') + ' clk" data-segmode="prep">Préparer' + (selectable.length ? ' <span class="ctchip">' + selectable.length + '</span>' : '') + '</span>' +
+    '<span class="sg' + (mode === 'shop' ? ' on' : '') + ' clk" data-segmode="shop">Magasiner' + (resteN ? ' <span class="ctchip">' + resteN + '</span>' : '') + '</span></div>';
+  h += '<div class="panes mode-' + mode + '"><section class="pane-a">';
   h += '<div class="row" style="margin:0 4px 8px"><label style="margin:0" class="grow">Repas à magasiner</label>' + (selectable.length ? '<span class="small muted clk" id="epiSelAll" style="color:var(--pine-deep);font-weight:600">Tout cocher</span>' : '') + '</div>';
   if (!s.length) {
     h += '<div class="card muted small">Aucun repas à venir. Planifie des soupers dans le menu, ou ajoute des items à la main.' + (passes ? '<br><span style="font-size:11px">(' + passes + ' repas passés masqués)</span>' : '') + '</div>';
@@ -1153,16 +1173,21 @@ function viewEpicerie(){
     h += '</div></div></div>';
   });
 
-  h += '</div></div>'; // fin du volet « Préparer la liste »
   h += '</section><section class="pane-b">';
-  var e = (DATA.epicerie || []);
   if (e.length) {
-    h += '<div class="secthd" style="margin-top:0"><span class="t">Liste d\'épicerie</span><span class="ln"></span><button class="btn sec sm" id="cleanBtn">Nettoyer les cochés</button><button class="btn danger sm" id="cleanAllBtn" style="margin-left:6px">Tout effacer</button></div>';
+    // Le bandeau-résumé : le grand chiffre en exergue, la progression
+    // du panier — l'essentiel d'un coup d'œil, en tête de liste.
+    var pctG = Math.round(cochesN / e.length * 100);
+    h += '<div class="card shopsum"><span class="n" id="shopN">' + resteN + '</span><div class="grow"><div style="font-weight:600;font-size:14px">article' + (resteN > 1 ? 's' : '') + ' à acheter</div><div class="small muted" id="shopSub">' + (cochesN ? cochesN + ' coché' + (cochesN > 1 ? 's' : '') + ' · ' : '') + pctG + ' % du panier fait</div></div><span class="rayprog" style="flex:0 0 64px"><i id="shopBar" style="width:' + pctG + '%"></i></span></div>';
     var ordre = rayonsSorted().map(function (r) { return r.Rayon; }), byR = {}, seen = {};
     e.forEach(function (it) { (byR[it.Rayon] = byR[it.Rayon] || []).push(it); });
     ordre.forEach(function (ray) { if (byR[ray]) { seen[ray] = 1; h += rayBlock(ray, byR[ray]); } });
     Object.keys(byR).forEach(function (ray) { if (!seen[ray]) h += rayBlock(ray, byR[ray]); });
-  } else h += '<div class="empty">' + CREST_MINI + 'La liste est vide.<br>Ajoute des repas ou des items pour la bâtir.</div>';
+    // Les gestes destructeurs ferment la marche, discrets.
+    h += '<div class="row" style="justify-content:center;gap:24px;margin:20px 0 4px"><span class="small clk" id="cleanBtn" style="color:var(--ink2);font-weight:600">Nettoyer les cochés</span><span class="small clk" id="cleanAllBtn" style="color:var(--danger);font-weight:600">Tout effacer</span></div>';
+  } else {
+    h += '<div class="empty">' + CREST_MINI + 'La liste est vide.<br>Passe en mode « Préparer » pour la bâtir.<br><br><button class="btn sm" id="goPrep" style="margin:0 auto;width:auto">Préparer la liste</button></div>';
+  }
   h += '</section></div>';
   return h;
 }
@@ -1190,6 +1215,18 @@ function refreshRayonCount(ray){
   hd.classList.toggle('done', !!complet);
   var ct = hd.querySelector('.ct'); if (ct) ct.textContent = complet ? '✓' : done + '/' + items.length;
   var bar = hd.querySelector('.rayprog i'); if (bar) bar.style.width = (items.length ? Math.round(done / items.length * 100) : 0) + '%';
+}
+// Tient le bandeau-résumé et le badge de navigation à jour quand on
+// coche, sans re-rendu (le geste doit rester instantané en magasin).
+function refreshShopsum(){
+  var e = (DATA.epicerie || []);
+  var resteN = e.filter(function (i) { return !isTrue(i.Coche); }).length;
+  var cochesN = e.length - resteN;
+  var pctG = e.length ? Math.round(cochesN / e.length * 100) : 0;
+  var n = $('shopN'); if (n) n.textContent = resteN;
+  var sub = $('shopSub'); if (sub) sub.textContent = (cochesN ? cochesN + ' coché' + (cochesN > 1 ? 's' : '') + ' · ' : '') + pctG + ' % du panier fait';
+  var bar = $('shopBar'); if (bar) bar.style.width = pctG + '%';
+  qall('[data-epibadge]').forEach(function (b) { b.textContent = resteN > 99 ? '99+' : resteN; b.classList.toggle('hide', !resteN); });
 }
 function editQty(id, el){
   var it = epiItem(id); if (!it) return;
@@ -1464,7 +1501,13 @@ function bind(){
   var arp = $('addRapide'); if (arp) arp.onclick = openAddRapide;
   bindFolds('data-qrfold', 'qr_');
   bindFolds('data-rayfold', 'ray_');
-  bindFolds('data-prepfold', 'prep_');
+  qall('[data-segmode]').forEach(function (el) {
+    el.onclick = function () {
+      setFold('epi_mode', el.getAttribute('data-segmode'));
+      ANIM_NEXT = true; render();
+    };
+  });
+  var gp = $('goPrep'); if (gp) gp.onclick = function () { setFold('epi_mode', 'prep'); ANIM_NEXT = true; render(); };
   qall('[data-qr]').forEach(function (el) { el.onclick = function () { var k = 'QR_' + el.getAttribute('data-qr'); MENU_SEL[k] = !MENU_SEL[k]; render(); }; });
   qall('[data-editrapide]').forEach(function (el) { el.onclick = function () { openEditRapide(el.getAttribute('data-editrapide')); }; });
   qall('[data-addqr]').forEach(function (el) {
@@ -1514,6 +1557,7 @@ function bind(){
       el.querySelector('.chk').innerHTML = nv ? CHK : '';
       card.classList.toggle('done', nv);
       refreshRayonCount(ray);
+      refreshShopsum();
       queueEpi(id, nv);
     };
   });
