@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.4.0 « La Carte »
+     LAVOIE & CO — v4.4.1 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -510,7 +510,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.4.0</div>
+  <div class="sp-ver">v4.4.1</div>
 </div>
 
 <aside class="sidebar">
@@ -524,14 +524,14 @@
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.4.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.4.1</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.4.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.4.1"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -548,7 +548,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.4.0
+   LAVOIE & CO — Frontend v4.4.1
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -569,7 +569,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.4.0'
+  VERSION: '4.4.1'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -1082,6 +1082,7 @@ function openRecipeDetail(rid){
 function viewEpicerie(){
   var h = '<div class="ph">Épicerie</div><div class="psub">Ajoute des repas — la liste se construit sans rien effacer</div><div class="panes"><section class="pane-a">';
   var today = ymd(new Date());
+  var prepOpen = foldOpen('prep_haut', true);
   var all = (DATA.soupers || []).slice().sort(function (a, b) {
     if (a.Date !== b.Date) return a.Date < b.Date ? -1 : 1;
     return REPAS_ORD[repasOf(a.Repas)] - REPAS_ORD[repasOf(b.Repas)];
@@ -1090,6 +1091,12 @@ function viewEpicerie(){
   var passes = all.length - s.length;
   var selectable = s.filter(function (x) { return !mealTracked(x.Date, repasOf(x.Repas), x.RecetteID); });
 
+  // Toute la préparation (repas + listes rapides) se replie d'un geste :
+  // une fois la liste bâtie, on veut arriver direct sur elle en magasin.
+  h += '<div class="secthd clk" data-prepfold="haut" style="margin-top:0"><span class="t">Préparer la liste</span><span class="ln"></span>' +
+    (selectable.length ? '<span class="ctchip">' + selectable.length + ' repas à ajouter</span>' : '') +
+    '<span class="foldchev' + (prepOpen ? ' open' : '') + '">›</span></div>';
+  h += '<div class="fold' + (prepOpen ? '' : ' closed') + '"><div>';
   h += '<div class="row" style="margin:0 4px 8px"><label style="margin:0" class="grow">Repas à magasiner</label>' + (selectable.length ? '<span class="small muted clk" id="epiSelAll" style="color:var(--pine-deep);font-weight:600">Tout cocher</span>' : '') + '</div>';
   if (!s.length) {
     h += '<div class="card muted small">Aucun repas à venir. Planifie des soupers dans le menu, ou ajoute des items à la main.' + (passes ? '<br><span style="font-size:11px">(' + passes + ' repas passés masqués)</span>' : '') + '</div>';
@@ -1136,6 +1143,7 @@ function viewEpicerie(){
     h += '</div></div></div>';
   });
 
+  h += '</div></div>'; // fin du volet « Préparer la liste »
   h += '</section><section class="pane-b">';
   var e = (DATA.epicerie || []);
   if (e.length) {
@@ -1446,6 +1454,7 @@ function bind(){
   var arp = $('addRapide'); if (arp) arp.onclick = openAddRapide;
   bindFolds('data-qrfold', 'qr_');
   bindFolds('data-rayfold', 'ray_');
+  bindFolds('data-prepfold', 'prep_');
   qall('[data-qr]').forEach(function (el) { el.onclick = function () { var k = 'QR_' + el.getAttribute('data-qr'); MENU_SEL[k] = !MENU_SEL[k]; render(); }; });
   qall('[data-editrapide]').forEach(function (el) { el.onclick = function () { openEditRapide(el.getAttribute('data-editrapide')); }; });
   qall('[data-addqr]').forEach(function (el) {
