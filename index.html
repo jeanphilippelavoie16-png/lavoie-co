@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.4.1 « La Carte »
+     LAVOIE & CO — v4.4.2 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -311,10 +311,17 @@
   input::placeholder,textarea::placeholder{color:#B4BBB4}
   .field{margin-bottom:13px}
 
-  .chk{width:24px;height:24px;border-radius:8px;border:2px solid var(--line);flex-shrink:0;display:flex;
-    align-items:center;justify-content:center;background:var(--card);transition:all .13s}
-  .chk.on{background:var(--pine);border-color:var(--pine);color:var(--ink);animation:chkpop .18s ease}
-  .chk svg{width:13px;height:13px}
+  /* Cases à cocher : des cercles fins, comme un rond de serviette —
+     et le crochet SE DESSINE d'un trait, même geste que la branche
+     d'olivier du splash. */
+  .chk{width:25px;height:25px;border-radius:50%;border:1.5px solid #CBCBC1;flex-shrink:0;display:flex;
+    align-items:center;justify-content:center;background:var(--card);
+    transition:border-color .18s,background .18s,box-shadow .18s;
+    box-shadow:inset 0 1px 3px rgba(20,22,19,.05)}
+  .chk.on{background:var(--pine);border-color:var(--pine);color:var(--ink);animation:chkpop .22s ease;box-shadow:none}
+  .chk svg{width:12px;height:12px}
+  .chk.on svg path{stroke-dasharray:1;stroke-dashoffset:0;animation:chkdraw .35s .04s cubic-bezier(.4,0,.2,1) both}
+  @keyframes chkdraw{from{stroke-dashoffset:1}}
   @keyframes chkpop{0%{transform:scale(.8)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
   .done .mealname,.done .itxt{text-decoration:line-through;color:var(--mut);text-decoration-color:#CCD2CD}
 
@@ -490,6 +497,7 @@
     .ac-item:hover,.ac-new:hover{background:var(--pine-ghost)}
     .weeknav .arr:hover{background:var(--pine-ghost)}
     .epi-qty:hover{border-color:var(--line);background:var(--paper)}
+    .row:hover .chk:not(.on){border-color:var(--pine)}
   }
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
@@ -510,7 +518,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.4.1</div>
+  <div class="sp-ver">v4.4.2</div>
 </div>
 
 <aside class="sidebar">
@@ -524,14 +532,14 @@
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.4.1</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.4.2</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.4.1"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.4.2"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -548,7 +556,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.4.1
+   LAVOIE & CO — Frontend v4.4.2
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -569,7 +577,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.4.1'
+  VERSION: '4.4.2'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -579,7 +587,7 @@ var JOURS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 var JOURS_C = ['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
 var MOIS_L = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 var TITLES = { menu:'Menu', recettes:'Recettes', epicerie:'Épicerie', ingredients:'Ingrédients', listes:'Listes' };
-var CHK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>';
+var CHK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 13l4 4L19 7"/></svg>';
 var CREST_MINI = '<span class="crest"></span>'; // filet discret des états vides (l'écusson est retiré depuis v4.2)
 var UNITES = ['unité','g','kg','ml','L','c. à thé','c. à soupe','tasse','pincée','sac','boîte','paquet','pot','conserve','bouteille','lb','douzaine','tranche','gousse'];
 var UNIT_NOPLUR = { 'g':1,'kg':1,'ml':1,'l':1,'lb':1,'unité':1 };
