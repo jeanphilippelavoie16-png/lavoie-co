@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.6.0 « La Carte »
+     LAVOIE & CO — v4.7.0 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -138,6 +138,12 @@
   .brand .logo{font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:-.01em}
   .brand .logo .amp{color:var(--brass);font-weight:500;font-style:italic}
   .pagetitle{display:none;font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:-.01em}
+  /* Le cœur : collé à la marque, il s'emplit de céladon quand l'autre
+     a laissé quelque chose, et bat doucement jusqu'au « vu ». */
+  #goNous svg{transition:transform .2s}
+  #goNous.new svg path{fill:#9DC3AC}
+  #goNous.new svg{animation:coeurbat 2.2s ease-in-out infinite}
+  @keyframes coeurbat{0%,100%{transform:scale(1)}8%{transform:scale(1.18)}16%{transform:scale(1)}}
 
   main{padding:18px 14px 0;max-width:600px;margin:0 auto;padding-bottom:calc(var(--navbar-h) + 24px)}
   .ph{font-family:var(--serif);font-size:34px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px;line-height:1.1}
@@ -270,11 +276,18 @@
   .seg .sg.on .ctchip{background:rgba(255,255,255,.18);color:#fff}
   .shopsum{display:flex;align-items:center;gap:14px;padding:14px 17px}
   .shopsum .n{font-family:var(--serif);font-size:36px;line-height:1;color:var(--ink)}
+  /* Bande d'humeurs (Julie & JP) : visages au trait, l'actif en céladon */
+  .humband{display:flex;justify-content:space-between;gap:4px;background:var(--paper);
+    border-radius:999px;padding:6px 8px;margin-bottom:12px}
+  .hum{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:var(--mut);transition:background .18s,color .18s,transform .12s}
+  .hum:active{transform:scale(.9)}
+  .hum.on{background:var(--pine);color:var(--ink)}
   @media(max-width:899px){
     .mode-shop .pane-a{display:none}
     .mode-prep .pane-b{display:none}
   }
-  @media(min-width:900px){ .seg{display:none} }
+  @media(min-width:900px){ .seg-epi{display:none} }
 
   /* ---------- Calendrier familial ---------- */
   .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
@@ -415,8 +428,8 @@
     background:rgba(255,255,255,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     border:1px solid var(--line);border-radius:24px;box-shadow:var(--sh-2);
     display:flex;justify-content:space-around;align-items:center;padding:8px 6px}
-  .mobilenav .nv{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8.5px;color:var(--mut);
-    font-weight:700;padding:6px 6px;border-radius:15px;transition:color .15s,background .15s;letter-spacing:.01em;
+  .mobilenav .nv{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;color:var(--mut);
+    font-weight:700;padding:6px 8px;border-radius:15px;transition:color .15s,background .15s;letter-spacing:.01em;
     flex:1 1 0;min-width:0;overflow:hidden;white-space:nowrap}
   .mobilenav .nv.on{color:#fff;background:var(--ink)}
   .mobilenav .nv svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8}
@@ -579,7 +592,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.6.0</div>
+  <div class="sp-ver">v4.7.0</div>
 </div>
 
 <aside class="sidebar">
@@ -590,21 +603,20 @@
     <div class="side-item" data-tab="menu" role="button" tabindex="0"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 4v17"/></svg>Menu de la semaine</div>
     <div class="side-item" data-tab="recettes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 4h12a1 1 0 0 1 1 1v15l-7-3-7 3V5a1 1 0 0 1 1-1z"/></svg>Recettes</div>
     <div class="side-item" data-tab="epicerie" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Épicerie<span class="navbadge hide" data-epibadge></span></div>
-    <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
     <div class="side-item" data-tab="calendrier" role="button" tabindex="0"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendrier</div>
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.6.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.7.0</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
+    <span class="clk" id="goNous" role="button" aria-label="Julie et JP" style="padding:5px;display:flex"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="clk" id="goNous" role="button" aria-label="Julie et JP" style="margin-left:auto;padding:6px;display:flex"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
-    <span class="sync" style="margin-left:0" title="Lavoie &amp; Co v4.6.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.7.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -613,7 +625,6 @@
   <div class="nv" data-tab="menu" role="button" tabindex="0"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 4v17"/></svg>Menu</div>
   <div class="nv" data-tab="recettes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 4h12a1 1 0 0 1 1 1v15l-7-3-7 3V5a1 1 0 0 1 1-1z"/></svg>Recettes</div>
   <div class="nv" data-tab="epicerie" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Épicerie<span class="navbadge hide" data-epibadge></span></div>
-  <div class="nv" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
   <div class="nv" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   <div class="nv" data-tab="calendrier" role="button" tabindex="0"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Agenda</div>
 </nav>
@@ -622,7 +633,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.6.0
+   LAVOIE & CO — Frontend v4.7.0
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -643,7 +654,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.6.0'
+  VERSION: '4.7.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -1060,6 +1071,7 @@ function render(){
   // Badge : ce qu'il reste à acheter, sur l'onglet Épicerie
   var reste = (DATA.epicerie || []).filter(function (i) { return !isTrue(i.Coche); }).length;
   qall('[data-epibadge]').forEach(function (b) { b.textContent = reste > 99 ? '99+' : reste; b.classList.toggle('hide', !reste); });
+  majCoeur();
   bind();
 }
 
@@ -1114,8 +1126,12 @@ function recPickCard(r){
 /* ============ RECETTES ============ */
 function viewRecettes(){
   var r = (DATA.recettes || []);
-  var h = '<div class="ph">Mes recettes</div><div class="psub">' + r.length + ' recette' + (r.length > 1 ? 's' : '') + ' dans le carnet</div>';
-  h += '<button class="btn sec" id="igBtn" style="width:auto;padding:11px 16px;margin-bottom:16px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>Importer d\'Instagram</button>';
+  var cat = (DATA.catalogue || []);
+  var rmode = UI_FOLD['rec_mode'] === 'ing' ? 'ing' : 'carnet';
+  var h = '<div class="ph">Recettes</div><div class="psub">' + (rmode === 'ing' ? cat.length + ' ingrédients au catalogue — glisse-les entre rayons pour les reclasser' : r.length + ' recette' + (r.length > 1 ? 's' : '') + ' dans le carnet') + '</div>';
+  h += '<div class="seg"><span class="sg' + (rmode === 'carnet' ? ' on' : '') + ' clk" data-segrec="carnet">Carnet <span class="ctchip">' + r.length + '</span></span><span class="sg' + (rmode === 'ing' ? ' on' : '') + ' clk" data-segrec="ing">Ingrédients <span class="ctchip">' + cat.length + '</span></span></div>';
+  if (rmode === 'ing') { h += ingredientsBody(); return h; }
+  h += '<button class="btn sec sm" id="igBtn" style="margin-bottom:16px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>Importer d\'Instagram</button>';
   if (!r.length) { h += '<div class="empty">' + CREST_MINI + 'Le carnet est vide.<br>Touche « Nouvelle recette » pour commencer.</div>'; return h; }
   var types = (DATA.types || []);
   types.forEach(function (t) {
@@ -1180,10 +1196,10 @@ function viewEpicerie(){
   // défaut on ouvre là où la vie se passe — la liste, si elle existe.
   var mode = UI_FOLD['epi_mode'] === 'prep' || UI_FOLD['epi_mode'] === 'shop' ? UI_FOLD['epi_mode'] : (e.length ? 'shop' : 'prep');
   var h = '<div class="ph">Épicerie</div><div class="psub">Ajoute des repas — la liste se construit sans rien effacer</div>';
-  h += '<div class="seg"><span class="sg' + (mode === 'prep' ? ' on' : '') + ' clk" data-segmode="prep">Préparer' + (selectable.length ? ' <span class="ctchip">' + selectable.length + '</span>' : '') + '</span>' +
+  h += '<div class="seg seg-epi"><span class="sg' + (mode === 'prep' ? ' on' : '') + ' clk" data-segmode="prep">Préparer' + (selectable.length ? ' <span class="ctchip">' + selectable.length + '</span>' : '') + '</span>' +
     '<span class="sg' + (mode === 'shop' ? ' on' : '') + ' clk" data-segmode="shop">Magasiner' + (resteN ? ' <span class="ctchip">' + resteN + '</span>' : '') + '</span></div>';
   h += '<div class="panes mode-' + mode + '"><section class="pane-a">';
-  h += '<div class="row" style="margin:0 4px 8px"><label style="margin:0" class="grow">Repas à magasiner</label>' + (selectable.length ? '<span class="small muted clk" id="epiSelAll" style="color:var(--pine-deep);font-weight:600">Tout cocher</span>' : '') + '</div>';
+  h += '<div class="secthd" style="margin-top:0"><span class="t">Repas à magasiner</span><span class="ln"></span>' + (selectable.length ? '<span class="small clk" id="epiSelAll" style="color:var(--pine-deep);font-weight:600">Tout cocher</span>' : '') + '</div>';
   if (!s.length) {
     h += '<div class="card muted small">Aucun repas à venir. Planifie des soupers dans le menu, ou ajoute des items à la main.' + (passes ? '<br><span style="font-size:11px">(' + passes + ' repas passés masqués)</span>' : '') + '</div>';
   } else {
@@ -1199,13 +1215,13 @@ function viewEpicerie(){
       }
     });
     var n = Object.keys(MENU_SEL).filter(function (k) { return k.indexOf('EPI|') === 0 && MENU_SEL[k]; }).length;
-    if (selectable.length) {
-      h += '<button class="btn' + (n ? '' : ' sec') + '" style="margin:6px 0 4px" id="genBtn">' + (n ? 'Ajouter à la liste (' + n + ' repas)' : 'Choisis des repas à ajouter') + '</button>';
-    } else {
+    if (n) {
+      h += '<button class="btn" style="margin:6px 0 4px" id="genBtn">Ajouter à la liste (' + n + ' repas)</button>';
+    } else if (!selectable.length) {
       h += '<div class="card small" style="background:var(--pine-ghost);border-color:var(--pine-line);color:var(--pine-deep);font-weight:500">Tous les repas à venir sont déjà dans la liste.</div>';
     }
   }
-  h += '<button class="btn ghost" style="margin:10px 0 6px" id="manBtn">+ Ajouter un item à la main</button>';
+  h += '<div style="margin:10px 0 6px"><button class="btn ghost sm" id="manBtn">+ Ajouter un item à la main</button></div>';
 
   // Listes rapides
   var lr = (DATA.listesRapides || []);
@@ -1327,11 +1343,14 @@ function viewListes(){
   return h;
 }
 
-/* ============ INGRÉDIENTS ============ */
+/* ============ INGRÉDIENTS (sous-onglet de Recettes) ============ */
 function viewIngredients(){
   var cat = (DATA.catalogue || []);
-  var h = '<div class="ph">Ingrédients</div><div class="psub">' + cat.length + ' ingrédients · glisse-les entre rayons pour les reclasser</div>';
-  h += '<div style="display:flex;gap:9px;margin-bottom:16px;max-width:600px"><input id="ingSearch" placeholder="Rechercher un ingrédient…" value="' + esc(ING_SEARCH) + '" class="grow"><button class="btn" style="width:auto;padding:12px 18px" id="ingAdd">+ Ajouter</button></div>';
+  return '<div class="ph">Ingrédients</div><div class="psub">' + cat.length + ' ingrédients · glisse-les entre rayons pour les reclasser</div>' + ingredientsBody();
+}
+function ingredientsBody(){
+  var cat = (DATA.catalogue || []);
+  var h = '<div style="display:flex;gap:9px;margin-bottom:16px;max-width:600px"><input id="ingSearch" placeholder="Rechercher un ingrédient…" value="' + esc(ING_SEARCH) + '" class="grow"><button class="btn" style="width:auto;padding:12px 18px" id="ingAdd">+ Ajouter</button></div>';
   var nq = norm(ING_SEARCH);
   var ordre = rayonsSorted().map(function (r) { return r.Rayon; });
   var byR = {}, seen = {};
@@ -1551,6 +1570,39 @@ function nousEtats(f){
   ];
 }
 function nousRow(qui){ return (DATA.nous || []).filter(function (r) { return String(r.Qui).toLowerCase() === qui; })[0]; }
+// Les humeurs : des visages dessinés au trait, dans le style de l'app.
+var HUMEURS = [
+  { id: 'bien', lbl: 'Bien', d: '<circle cx="12" cy="12" r="9"/><path d="M8.6 10h.01M15.4 10h.01M8.5 14.3c1 1.2 2.2 1.8 3.5 1.8s2.5-.6 3.5-1.8"/>' },
+  { id: 'calme', lbl: 'Calme', d: '<circle cx="12" cy="12" r="9"/><path d="M7.6 10.6c.7-.7 1.6-.7 2.3 0M14.1 10.6c.7-.7 1.6-.7 2.3 0M9.2 15h5.6"/>' },
+  { id: 'fatigue', lbl: 'Fatigué', d: '<circle cx="12" cy="12" r="9"/><path d="M7.6 10.8h2.8M13.6 10.8h2.8M9.5 15.6c.8-.6 1.6-.9 2.5-.9s1.7.3 2.5.9"/>' },
+  { id: 'stresse', lbl: 'Stressé', d: '<circle cx="12" cy="12" r="9"/><path d="M8.6 10.6h.01M15.4 10.6h.01M7.6 7.9l2.2.9M16.4 7.9l-2.2.9M8.4 15.2c.6-.6 1.2.6 1.8 0s1.2.6 1.8 0 1.2.6 1.8 0 1.2.6 1.8 0"/>' },
+  { id: 'triste', lbl: 'Triste', d: '<circle cx="12" cy="12" r="9"/><path d="M8.6 10h.01M15.4 10h.01M8.7 15.8c.9-1.1 2-1.6 3.3-1.6s2.4.5 3.3 1.6M16 11.8c.5.8.8 1.5.8 2a.8.8 0 1 1-1.6 0c0-.5.3-1.2.8-2"/>' },
+  { id: 'fache', lbl: 'Fâché', d: '<circle cx="12" cy="12" r="9"/><path d="M7.6 8.4l2.8 1.3M16.4 8.4l-2.8 1.3M8.7 11.2h.01M15.3 11.2h.01M9 15.8c.9-.9 1.9-1.3 3-1.3s2.1.4 3 1.3"/>' }
+];
+function humeurSvg(hm, taille){
+  return '<svg viewBox="0 0 24 24" style="width:' + taille + 'px;height:' + taille + 'px" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + hm.d + '</svg>';
+}
+// Le « vu » vit sur CHAQUE appareil : le cœur se colore quand quelque
+// chose a bougé depuis le dernier « vu » de CE téléphone.
+var NOUS_VU_KEY = 'LCO_NOUS_VU';
+function nousDernier(){
+  var mx = 0;
+  (DATA && DATA.nous || []).forEach(function (r) {
+    var t = new Date(r.MisAJour || 0).getTime();
+    if (!isNaN(t) && t > mx) mx = t;
+  });
+  return mx;
+}
+function nousNonVu(){
+  var vu = 0;
+  try { vu = new Date(localStorage.getItem(NOUS_VU_KEY) || 0).getTime() || 0; } catch (e) {}
+  return nousDernier() > vu;
+}
+function marquerNousVu(){
+  try { localStorage.setItem(NOUS_VU_KEY, new Date().toISOString()); } catch (e) {}
+  majCoeur();
+}
+function majCoeur(){ var g = $('goNous'); if (g) g.classList.toggle('new', nousNonVu()); }
 function timeAgo(v){
   if (!v) return '';
   var d = new Date(v); if (isNaN(d.getTime())) return '';
@@ -1565,15 +1617,25 @@ function timeAgo(v){
 var COEUR = '<svg viewBox="0 0 24 24" style="width:26px;height:26px" fill="none" stroke="#9DC3AC" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>';
 function viewNous(){
   var h = '<div class="ph">Julie <span style="color:var(--pine)">&amp;</span> JP</div><div class="psub">Pour se dire les vraies affaires, même quand les mots sortent pas encore</div><div style="max-width:600px" class="pane-a">';
+  if (nousNonVu()) {
+    h += '<button class="btn ghost sm" id="nousVuBtn" style="margin-bottom:14px">Vu — merci de me l\'avoir dit 💚</button>';
+  }
   NOUS_PERS.forEach(function (p, i) {
     var r = nousRow(p.id) || {};
     var etat = (nousEtats(p.f).filter(function (e2) { return e2.id === String(r.Etat); })[0] || null);
     var quand = timeAgo(r.MisAJour);
+    var aContenu = !!(etat || r.Note);
     h += '<div class="card" style="padding:16px 18px"><div class="row" style="margin-bottom:10px"><span style="font-family:var(--serif);font-size:21px;letter-spacing:.02em" class="grow">' + p.nom + '</span>' + (quand ? '<span class="small muted">' + esc(quand) + '</span>' : '') + '</div>';
+    // La bande d'humeurs : touche un visage pour dire comment tu te
+    // sens — retouche-le pour l'effacer. Direct, sans passer par la feuille.
+    h += '<div class="humband">' + HUMEURS.map(function (hm) {
+      var on = String(r.Humeur || '') === hm.id;
+      return '<span class="hum clk' + (on ? ' on' : '') + '" data-hum="' + hm.id + '" data-quih="' + p.id + '" title="' + hm.lbl + '">' + humeurSvg(hm, 22) + '</span>';
+    }).join('') + '</div>';
     if (etat) h += '<div class="ttag" style="font-size:13px;padding:8px 14px;display:inline-block;margin-bottom:10px">' + esc(etat.txt) + '</div>';
-    else h += '<div class="small muted" style="margin-bottom:10px">Rien d\'affiché pour l\'instant.</div>';
     if (r.Note) h += '<div style="font-family:var(--serif);font-size:16px;font-style:italic;line-height:1.6;color:var(--ink2);margin-bottom:12px">« ' + esc(r.Note) + ' »</div>';
-    h += '<button class="btn ghost sm" data-nousedit="' + p.id + '">C\'est moi — modifier</button></div>';
+    if (!aContenu) h += '<div class="small muted" style="margin-bottom:10px">Rien d\'affiché pour l\'instant.</div>';
+    h += '<div class="row"><button class="btn ghost sm" data-nousedit="' + p.id + '">C\'est moi — modifier</button>' + (aContenu ? '<span class="small clk" data-nousclear="' + p.id + '" style="color:var(--danger);font-weight:600;margin-left:6px">Effacer</span>' : '') + '</div></div>';
     if (i === 0) h += '<div style="display:flex;justify-content:center;margin:2px 0 10px">' + COEUR + '</div>';
   });
   h += '<div class="small muted" style="text-align:center;margin-top:14px;line-height:1.7">L\'état et le mot restent affichés jusqu\'à ce que la personne les change.<br>Pas de notification, pas de pression — juste une porte ouverte.</div>';
@@ -1604,6 +1666,7 @@ function openNousEdit(qui){
     if (row) { row.Etat = sel; row.Note = note; row.MisAJour = new Date().toISOString(); }
     else DATA.nous.push({ Qui: qui, Etat: sel, Note: note, MisAJour: new Date().toISOString() });
     call('setNous', [qui, sel, note]);
+    marquerNousVu(); // on a évidemment vu son propre message
     closeSheet(); render(); toast('C\'est affiché 💚');
   };
 }
@@ -1788,6 +1851,12 @@ function bind(){
       ANIM_NEXT = true; render();
     };
   });
+  qall('[data-segrec]').forEach(function (el) {
+    el.onclick = function () {
+      setFold('rec_mode', el.getAttribute('data-segrec'));
+      ANIM_NEXT = true; render();
+    };
+  });
   var gp = $('goPrep'); if (gp) gp.onclick = function () { setFold('epi_mode', 'prep'); ANIM_NEXT = true; render(); };
 
   // --- Calendrier ---
@@ -1836,6 +1905,28 @@ function bind(){
 
   // --- Julie & JP ---
   qall('[data-nousedit]').forEach(function (el) { el.onclick = function () { openNousEdit(el.getAttribute('data-nousedit')); }; });
+  qall('[data-hum]').forEach(function (el) {
+    el.onclick = function () {
+      var qui = el.getAttribute('data-quih'), hum = el.getAttribute('data-hum');
+      var r = nousRow(qui);
+      var nv = (r && String(r.Humeur || '') === hum) ? '' : hum; // retouche = effacer
+      if (r) { r.Humeur = nv; r.MisAJour = new Date().toISOString(); }
+      else { DATA.nous.push({ Qui: qui, Etat: '', Note: '', Humeur: nv, MisAJour: new Date().toISOString() }); r = nousRow(qui); }
+      call('setNous', [qui, String(r.Etat || ''), String(r.Note || ''), nv]);
+      marquerNousVu(); render();
+    };
+  });
+  qall('[data-nousclear]').forEach(function (el) {
+    el.onclick = function () {
+      if (!confirm('Effacer l\'état et le mot affichés ?')) return;
+      var qui = el.getAttribute('data-nousclear');
+      var r = nousRow(qui);
+      if (r) { r.Etat = ''; r.Note = ''; r.MisAJour = new Date().toISOString(); }
+      call('setNous', [qui, '', '', null]);
+      marquerNousVu(); render();
+    };
+  });
+  var nvb = $('nousVuBtn'); if (nvb) nvb.onclick = function () { marquerNousVu(); render(); toast('Vu 💚'); };
   qall('[data-qr]').forEach(function (el) { el.onclick = function () { var k = 'QR_' + el.getAttribute('data-qr'); MENU_SEL[k] = !MENU_SEL[k]; render(); }; });
   qall('[data-editrapide]').forEach(function (el) { el.onclick = function () { openEditRapide(el.getAttribute('data-editrapide')); }; });
   qall('[data-addqr]').forEach(function (el) {
