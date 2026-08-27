@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.5.0 « La Carte »
+     LAVOIE & CO — v4.6.0 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -276,6 +276,47 @@
   }
   @media(min-width:900px){ .seg{display:none} }
 
+  /* ---------- Calendrier familial ---------- */
+  .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
+  .calhd7{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);
+    text-align:center;padding:4px 0}
+  .calc{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border-radius:14px 14px 14px 5px;font-size:14px;color:var(--ink2);background:var(--card);
+    border:1px solid var(--line);cursor:pointer;position:relative;gap:2px}
+  .calc.vide{background:transparent;border-color:transparent;cursor:default}
+  .calc.auj{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
+  .calc .evdot{display:flex;gap:3px;height:5px}
+  .calc .evdot i{width:5px;height:5px;border-radius:50%;background:var(--pine)}
+  .calc.auj .evdot i{background:#9DC3AC}
+  .calc .mdot{position:absolute;top:5px;right:7px;width:4px;height:4px;border-radius:50%;background:var(--brass-2)}
+
+  /* ---------- Le menu de chasse imprimable (aperçu + PDF) ---------- */
+  #chassePrint{position:fixed;inset:0;z-index:90;background:var(--paper);overflow-y:auto;
+    -webkit-overflow-scrolling:touch}
+  .chm{max-width:520px;margin:0 auto;padding:34px 26px 60px;text-align:center}
+  .chm .chm-word{font-family:var(--serif);font-size:13px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--mut);padding-left:.32em}
+  .chm .chm-titre{font-family:var(--serif);font-size:34px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink);margin:10px 0 2px;padding-left:.1em}
+  .chm .chm-sous{font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--pine-deep);
+    padding-left:.28em;margin-bottom:18px}
+  .chm .chm-filet{width:120px;height:1px;background:var(--ink);margin:16px auto}
+  .chm .chm-jour{margin:22px 0 4px;display:flex;align-items:center;gap:12px}
+  .chm .chm-jour .ln{flex:1;height:1px;background:var(--line)}
+  .chm .chm-jour .t{font-size:10.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--pine-deep)}
+  .chm .chm-plat{font-family:var(--serif);font-size:17px;color:var(--ink);margin:7px 0 0}
+  .chm .chm-plat .quoi{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--mut);display:block;margin-bottom:1px;font-family:var(--sans)}
+  .chm .chm-libre{color:#C2C5BD;font-style:italic;font-size:14px}
+  .chm-bar{position:sticky;top:0;z-index:5;display:flex;gap:10px;justify-content:center;
+    padding:14px;background:rgba(243,243,237,.94);backdrop-filter:blur(8px)}
+  @media print{
+    body > *{display:none!important}
+    body > #chassePrint{display:block!important;position:static;overflow:visible;background:#fff}
+    .chm-bar{display:none!important}
+    .chm{max-width:none}
+  }
+
   /* En-têtes de rayon collants : en magasin, le rayon reste lisible
      pendant qu'on défile ses items. */
   .rayhd{position:sticky;top:calc(44px + var(--safe-t));z-index:5;background:var(--paper);
@@ -374,8 +415,9 @@
     background:rgba(255,255,255,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     border:1px solid var(--line);border-radius:24px;box-shadow:var(--sh-2);
     display:flex;justify-content:space-around;align-items:center;padding:8px 6px}
-  .mobilenav .nv{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;color:var(--mut);
-    font-weight:700;padding:6px 10px;border-radius:15px;transition:color .15s,background .15s;letter-spacing:.02em}
+  .mobilenav .nv{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8.5px;color:var(--mut);
+    font-weight:700;padding:6px 6px;border-radius:15px;transition:color .15s,background .15s;letter-spacing:.01em;
+    flex:1 1 0;min-width:0;overflow:hidden;white-space:nowrap}
   .mobilenav .nv.on{color:#fff;background:var(--ink)}
   .mobilenav .nv svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8}
   .mobilenav .nv.on svg{stroke-width:2.2}
@@ -537,7 +579,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.5.0</div>
+  <div class="sp-ver">v4.6.0</div>
 </div>
 
 <aside class="sidebar">
@@ -550,15 +592,19 @@
     <div class="side-item" data-tab="epicerie" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Épicerie<span class="navbadge hide" data-epibadge></span></div>
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
+    <div class="side-item" data-tab="calendrier" role="button" tabindex="0"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendrier</div>
+    <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
+    <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.5.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.6.0</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.5.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="clk" id="goNous" role="button" aria-label="Julie et JP" style="margin-left:auto;padding:6px;display:flex"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
+    <span class="sync" style="margin-left:0" title="Lavoie &amp; Co v4.6.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -569,13 +615,14 @@
   <div class="nv" data-tab="epicerie" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Épicerie<span class="navbadge hide" data-epibadge></span></div>
   <div class="nv" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
   <div class="nv" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
+  <div class="nv" data-tab="calendrier" role="button" tabindex="0"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Agenda</div>
 </nav>
 
 <div class="fab clk hide" id="fab" role="button" aria-label="Nouvelle recette">+</div>
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.5.0
+   LAVOIE & CO — Frontend v4.6.0
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -596,7 +643,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.5.0'
+  VERSION: '4.6.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -605,7 +652,7 @@ var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
 var JOURS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 var JOURS_C = ['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
 var MOIS_L = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-var TITLES = { menu:'Menu', recettes:'Recettes', epicerie:'Épicerie', ingredients:'Ingrédients', listes:'Listes' };
+var TITLES = { menu:'Menu', recettes:'Recettes', epicerie:'Épicerie', ingredients:'Ingrédients', listes:'Listes', calendrier:'Calendrier', chasse:'Menu Chasse', nous:'Julie & JP' };
 var CHK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 13l4 4L19 7"/></svg>';
 var CREST_MINI = '<span class="crest"></span>'; // filet discret des états vides (l'écusson est retiré depuis v4.2)
 var UNITES = ['unité','g','kg','ml','L','c. à thé','c. à soupe','tasse','pincée','sac','boîte','paquet','pot','conserve','bouteille','lb','douzaine','tranche','gousse'];
@@ -723,6 +770,10 @@ function normalizeData(d){
   if (!d) return d;
   _rayIdx = null; // l'ordre des rayons a pu changer côté serveur
   d.epicerieRepas = d.epicerieRepas || [];
+  d.chasse = d.chasse || [];
+  d.evenements = d.evenements || [];
+  d.nous = d.nous || [];
+  d.chasse.forEach(function (c) { c.Repas = repasOf(c.Repas); });
   (d.soupers || []).forEach(function (s) { s.Repas = repasOf(s.Repas); });
   d.epicerieRepas.forEach(function (t) { t.Repas = repasOf(t.Repas); });
   return d;
@@ -1003,6 +1054,9 @@ function render(){
   else if (TAB === 'epicerie') v.innerHTML = viewEpicerie();
   else if (TAB === 'ingredients') v.innerHTML = viewIngredients();
   else if (TAB === 'listes') v.innerHTML = viewListes();
+  else if (TAB === 'calendrier') v.innerHTML = viewCalendrier();
+  else if (TAB === 'chasse') v.innerHTML = viewChasse();
+  else if (TAB === 'nous') v.innerHTML = viewNous();
   // Badge : ce qu'il reste à acheter, sur l'onglet Épicerie
   var reste = (DATA.epicerie || []).filter(function (i) { return !isTrue(i.Coche); }).length;
   qall('[data-epibadge]').forEach(function (b) { b.textContent = reste > 99 ? '99+' : reste; b.classList.toggle('hide', !reste); });
@@ -1016,6 +1070,8 @@ function viewMenu(){
   var sub = weekOffset === 0 ? 'Cette semaine' : (weekOffset === 1 ? 'Semaine prochaine' : (weekOffset === -1 ? 'Semaine dernière' : ''));
   var h = '<div class="ph">Le menu</div><div class="psub">Choisis tes recettes — elles se placent dans la semaine</div><div class="panes"><section class="pane-a">';
   h += '<div class="weeknav"><div class="arr clk" id="wPrev" role="button" aria-label="Semaine précédente">‹</div><div class="lbl">' + esc(lbl) + (sub ? '<span class="sm">' + esc(sub) + '</span>' : '') + '</div><div class="arr clk" id="wNext" role="button" aria-label="Semaine suivante">›</div></div>';
+  var nCh = (DATA.chasse || []).length;
+  h += '<div class="card tap clk" id="goChasse" style="padding:10px 15px"><div class="row"><span class="slotlbl" style="width:auto">Chasse</span><div class="grow mealname" style="font-size:14px">Menu Chasse — 8 jours de bois</div><span class="ctchip">' + nCh + ' / 16</span><span class="chev">›</span></div></div>';
   var isoAuj = ymd(new Date());
   dates.forEach(function (d) {
     var iso = ymd(d), wd = d.getDay();
@@ -1327,6 +1383,231 @@ function changeIngredientRayon(nom, nouveauRayon){
   render();
 }
 
+/* ============ MENU CHASSE ============ */
+function chasseFor(j, rep){ return (DATA.chasse || []).filter(function (c) { return String(c.Jour) === String(j) && repasOf(c.Repas) === rep; })[0]; }
+// Les repas du camp pas encore versés dans l'épicerie (pseudo-dates
+// CHASSE-J<n> : le suivi idempotent du serveur marche tel quel).
+function chasseUntracked(){
+  var out = [];
+  (DATA.chasse || []).forEach(function (c) {
+    var rep = repasOf(c.Repas);
+    if (!mealTracked('CHASSE-J' + c.Jour, rep, c.RecetteID)) out.push({ date: 'CHASSE-J' + c.Jour, repas: rep, recetteId: String(c.RecetteID) });
+  });
+  return out;
+}
+function viewChasse(){
+  var n = (DATA.chasse || []).length;
+  var aAjouter = chasseUntracked();
+  var h = '<div class="ph">Menu Chasse</div><div class="psub">8 jours de bois — monte le menu, l\'épicerie suit</div>';
+  h += '<div style="max-width:600px" class="pane-a">';
+  for (var j = 1; j <= 8; j++) {
+    var any = chasseFor(j, 'diner') || chasseFor(j, 'souper');
+    h += '<div class="card" style="padding:8px 13px"><div class="row"><div class="datechip' + (any ? '' : ' empty') + '"><span class="d">' + j + '</span><span class="m">JOUR</span></div><div class="grow">';
+    ['diner', 'souper'].forEach(function (rep) {
+      var c = chasseFor(j, rep);
+      if (c) {
+        h += '<div class="slotrow"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><div class="epi-main clk" data-mealday="' + esc(c.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc" style="font-size:14px">' + esc(recetteNom(c.RecetteID)) + '</div></div></div><span class="xdel clk" data-chdel="' + j + '" data-chrep="' + rep + '">&times;</span></div>';
+      } else {
+        h += '<div class="slotrow clk" data-chadd="' + j + '" data-chrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><span class="slotempty grow">Libre — touche pour ajouter</span><span class="chev">+</span></div>';
+      }
+    });
+    h += '</div></div></div>';
+  }
+  h += '<div class="btnrow" style="margin-top:14px">';
+  if (aAjouter.length) h += '<button class="btn" id="chAddEpi">Épicerie : + ' + aAjouter.length + ' repas</button>';
+  else if (n) h += '<button class="btn sec" disabled>Menu déjà dans l\'épicerie</button>';
+  h += '<button class="btn ghost" id="chPdf">Aperçu &amp; PDF</button></div>';
+  h += '</div>';
+  return h;
+}
+function openChassePicker(j, rep){
+  var recs = (DATA.recettes || []);
+  if (!recs.length) { alert('Crée d\'abord une recette.'); return; }
+  var list = recs.map(function (r) { return '<div class="card tap clk" data-chp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
+  showSheet(REPAS_LBL[rep] + ' · Jour ' + j, '<label style="margin-bottom:8px">Choisis une recette</label>' + list, true);
+  qall('[data-chp]').forEach(function (el) {
+    el.onclick = function () {
+      var rid = el.getAttribute('data-chp');
+      var ex = chasseFor(j, rep);
+      if (ex) {
+        if (String(ex.RecetteID) !== String(rid)) untrackDateLocal('CHASSE-J' + j, rep);
+        ex.RecetteID = rid;
+      } else DATA.chasse.push({ Jour: j, Repas: rep, RecetteID: rid });
+      call('setChasse', [j, rep, rid]);
+      closeSheet(); render();
+    };
+  });
+}
+// Le panache et la branche : les traits céladon du document imprimable.
+var PANACHE = '<svg viewBox="0 0 140 80" style="width:118px;height:67px" fill="none" stroke="#9DC3AC" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M66 76 C 64 60, 58 48, 46 42"/><path d="M56 52 C 50 44, 48 34, 52 26"/><path d="M48 43 C 42 36, 40 28, 44 20"/><path d="M61 62 C 55 58, 51 52, 51 45"/><path d="M74 76 C 76 60, 82 48, 94 42"/><path d="M84 52 C 90 44, 92 34, 88 26"/><path d="M92 43 C 98 36, 100 28, 96 20"/><path d="M79 62 C 85 58, 89 52, 89 45"/></svg>';
+var BRANCHE_MINI = '<svg viewBox="0 0 170 56" style="width:128px;height:42px" fill="none" stroke="#9DC3AC" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 44 C 48 40, 112 30, 166 12"/><path d="M40 38 Q 32 24 44 18 Q 48 30 40 38"/><path d="M66 34 Q 62 48 76 50 Q 76 38 66 34"/><path d="M92 29 Q 86 15 98 10 Q 101 22 92 29"/><path d="M118 24 Q 115 37 128 39 Q 127 28 118 24"/><path d="M142 18 Q 138 6 148 3 Q 150 13 142 18"/></svg>';
+// Aperçu plein écran du menu de chasse, façon carte de restaurant.
+// « Imprimer / PDF » passe par l'impression du navigateur : sur iPhone,
+// Partager → Imprimer → Enregistrer en PDF ; sur bureau, destination PDF.
+function openChassePdf(){
+  var old = $('chassePrint'); if (old) old.remove();
+  var body = '<div class="chm-bar"><button class="btn sm sec" id="chmClose">Fermer</button><button class="btn sm" id="chmPrint">Imprimer / Enregistrer en PDF</button></div>';
+  body += '<div class="chm">' + PANACHE +
+    '<div class="chm-word" style="margin-top:8px">Lavoie &amp; Co</div>' +
+    '<div class="chm-titre">Menu de chasse</div>' +
+    '<div class="chm-sous">Huit jours au camp</div>' +
+    '<div class="chm-filet"></div>';
+  for (var j = 1; j <= 8; j++) {
+    body += '<div class="chm-jour"><span class="ln"></span><span class="t">Jour ' + j + '</span><span class="ln"></span></div>';
+    ['diner', 'souper'].forEach(function (rep) {
+      var c = chasseFor(j, rep);
+      body += '<div class="chm-plat"><span class="quoi">' + REPAS_LBL[rep] + '</span>' + (c ? esc(recetteNom(c.RecetteID)) : '<span class="chm-libre">à improviser au camp</span>') + '</div>';
+    });
+  }
+  body += '<div class="chm-filet" style="margin-top:26px"></div>' + BRANCHE_MINI +
+    '<div class="chm-word" style="margin-top:10px">Bonne chasse</div></div>';
+  var o = document.createElement('div'); o.id = 'chassePrint'; o.innerHTML = body;
+  document.body.appendChild(o);
+  $('chmClose').onclick = function () { o.remove(); };
+  $('chmPrint').onclick = function () { window.print(); };
+}
+
+/* ============ CALENDRIER FAMILIAL ============ */
+var CAL_OFF = 0;
+function eventsOn(iso){ return (DATA.evenements || []).filter(function (ev) { return String(ev.Date) === iso; }); }
+function viewCalendrier(){
+  var now = new Date();
+  var m = new Date(now.getFullYear(), now.getMonth() + CAL_OFF, 1);
+  var y = m.getFullYear(), mo = m.getMonth();
+  var isoAuj = ymd(now);
+  var h = '<div class="ph">Calendrier</div><div class="psub">Les rendez-vous de la famille</div><div style="max-width:600px" class="pane-a">';
+  h += '<div class="weeknav"><div class="arr clk" id="calPrev" role="button" aria-label="Mois précédent">‹</div><div class="lbl">' + MOIS_L[mo].charAt(0).toUpperCase() + MOIS_L[mo].slice(1) + ' ' + y + '</div><div class="arr clk" id="calNext" role="button" aria-label="Mois suivant">›</div></div>';
+  h += '<div class="calgrid">';
+  ['D', 'L', 'M', 'M', 'J', 'V', 'S'].forEach(function (dd) { h += '<div class="calhd7">' + dd + '</div>'; });
+  var first = new Date(y, mo, 1).getDay();
+  var nb = new Date(y, mo + 1, 0).getDate();
+  for (var i = 0; i < first; i++) h += '<div class="calc vide"></div>';
+  for (var d2 = 1; d2 <= nb; d2++) {
+    var iso = ymd(new Date(y, mo, d2));
+    var evs = eventsOn(iso);
+    var repas = souperFor(iso, 'diner') || souperFor(iso, 'souper');
+    h += '<div class="calc clk' + (iso === isoAuj ? ' auj' : '') + '" data-caljour="' + iso + '">' + d2 +
+      (evs.length ? '<span class="evdot">' + evs.slice(0, 3).map(function () { return '<i></i>'; }).join('') + '</span>' : '') +
+      (repas ? '<span class="mdot"></span>' : '') + '</div>';
+  }
+  h += '</div>';
+  h += '<div class="small muted" style="margin:4px 4px 14px">point vert = rendez-vous · point doré = repas planifié</div>';
+  var futurs = (DATA.evenements || []).filter(function (ev) { return String(ev.Date) >= isoAuj; })
+    .sort(function (a, b) { return a.Date < b.Date ? -1 : 1; }).slice(0, 12);
+  h += '<div class="secthd"><span class="t">À venir</span><span class="ln"></span></div>';
+  if (!futurs.length) h += '<div class="empty">' + CREST_MINI + 'Rien à l\'horaire.<br>Touche un jour pour noter un rendez-vous.</div>';
+  futurs.forEach(function (ev) {
+    var d3 = parseYmd(ev.Date);
+    h += '<div class="card"><div class="row"><div class="datechip"><span class="d">' + d3.getDate() + '</span><span class="m">' + JOURS_C[d3.getDay()] + '</span></div><div class="grow"><div class="mealname">' + esc(ev.Titre) + '</div><div class="cook">' + JOURS[d3.getDay()] + ' ' + d3.getDate() + ' ' + MOIS_L[d3.getMonth()] + '</div></div><span class="xdel clk" data-delev="' + esc(ev.EvenementID) + '">&times;</span></div></div>';
+  });
+  h += '</div>';
+  return h;
+}
+function openJourCal(iso){
+  var d = parseYmd(iso);
+  var evs = eventsOn(iso);
+  var din = souperFor(iso, 'diner'), soup = souperFor(iso, 'souper');
+  var bodyH = '';
+  if (din || soup) {
+    bodyH += '<label style="margin-bottom:6px">Au menu ce jour-là</label>';
+    if (din) bodyH += '<div class="cook" style="margin-bottom:2px">Dîner · ' + esc(recetteNom(din.RecetteID)) + '</div>';
+    if (soup) bodyH += '<div class="cook">Souper · ' + esc(recetteNom(soup.RecetteID)) + '</div>';
+    bodyH += '<div style="height:12px"></div>';
+  }
+  bodyH += '<label style="margin-bottom:6px">Rendez-vous</label><div>';
+  if (!evs.length) bodyH += '<div class="muted small" style="margin-bottom:8px">Rien de noté ce jour-là.</div>';
+  evs.forEach(function (ev) { bodyH += '<div class="row" style="padding:6px 0"><span class="grow">' + esc(ev.Titre) + '</span><span class="xdel clk" data-delev2="' + esc(ev.EvenementID) + '">&times;</span></div>'; });
+  bodyH += '</div><div class="field" style="margin-top:10px"><div class="row"><input id="jc-titre" placeholder="Ex. Hockey d\'Émile 18 h" class="grow"><button class="btn" style="width:auto;padding:12px 18px" id="jc-add">+</button></div></div>';
+  showSheet(JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()], bodyH, true);
+  $('jc-add').onclick = function () {
+    var t = $('jc-titre').value.trim(); if (!t) return;
+    var id = cid('EV');
+    DATA.evenements.push({ EvenementID: id, Date: iso, Titre: t });
+    call('ajouterEvenement', [id, iso, t]);
+    closeSheet(); render(); toast('Noté au calendrier');
+  };
+  qall('[data-delev2]').forEach(function (el) {
+    el.onclick = function () {
+      var id = el.getAttribute('data-delev2');
+      DATA.evenements = DATA.evenements.filter(function (x) { return String(x.EvenementID) !== id; });
+      call('retirerEvenement', [id]);
+      closeSheet(); render();
+    };
+  });
+}
+
+/* ============ JULIE & JP ============ */
+// Un canal doux pour quand on n'est pas prêts à se parler : chacun
+// affiche un état (choisi dans une liste pensée pour ça) et un mot.
+var NOUS_PERS = [{ id: 'julie', nom: 'Julie', f: true }, { id: 'jp', nom: 'JP', f: false }];
+function nousEtats(f){
+  return [
+    { id: 'amour', txt: 'Je t\'aime, tout va bien' },
+    { id: 'calin', txt: (f ? 'Fâchée' : 'Fâché') + ', mais j\'ai besoin d\'un câlin' },
+    { id: 'air', txt: 'J\'ai besoin de décanter, mais je t\'aime' },
+    { id: 'parler', txt: (f ? 'Prête' : 'Prêt') + ' à en parler quand tu l\'es' },
+    { id: 'douceur', txt: 'Grosse journée — sois ' + (f ? 'doux' : 'douce') + ' avec moi' },
+    { id: 'excuse', txt: 'Je m\'excuse' }
+  ];
+}
+function nousRow(qui){ return (DATA.nous || []).filter(function (r) { return String(r.Qui).toLowerCase() === qui; })[0]; }
+function timeAgo(v){
+  if (!v) return '';
+  var d = new Date(v); if (isNaN(d.getTime())) return '';
+  var mins = Math.round((Date.now() - d.getTime()) / 60000);
+  if (mins < 2) return 'à l\'instant';
+  if (mins < 60) return 'il y a ' + mins + ' min';
+  var h2 = Math.round(mins / 60);
+  if (h2 < 24) return 'il y a ' + h2 + ' h';
+  var j2 = Math.round(h2 / 24);
+  return j2 === 1 ? 'hier' : 'il y a ' + j2 + ' jours';
+}
+var COEUR = '<svg viewBox="0 0 24 24" style="width:26px;height:26px" fill="none" stroke="#9DC3AC" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>';
+function viewNous(){
+  var h = '<div class="ph">Julie <span style="color:var(--pine)">&amp;</span> JP</div><div class="psub">Pour se dire les vraies affaires, même quand les mots sortent pas encore</div><div style="max-width:600px" class="pane-a">';
+  NOUS_PERS.forEach(function (p, i) {
+    var r = nousRow(p.id) || {};
+    var etat = (nousEtats(p.f).filter(function (e2) { return e2.id === String(r.Etat); })[0] || null);
+    var quand = timeAgo(r.MisAJour);
+    h += '<div class="card" style="padding:16px 18px"><div class="row" style="margin-bottom:10px"><span style="font-family:var(--serif);font-size:21px;letter-spacing:.02em" class="grow">' + p.nom + '</span>' + (quand ? '<span class="small muted">' + esc(quand) + '</span>' : '') + '</div>';
+    if (etat) h += '<div class="ttag" style="font-size:13px;padding:8px 14px;display:inline-block;margin-bottom:10px">' + esc(etat.txt) + '</div>';
+    else h += '<div class="small muted" style="margin-bottom:10px">Rien d\'affiché pour l\'instant.</div>';
+    if (r.Note) h += '<div style="font-family:var(--serif);font-size:16px;font-style:italic;line-height:1.6;color:var(--ink2);margin-bottom:12px">« ' + esc(r.Note) + ' »</div>';
+    h += '<button class="btn ghost sm" data-nousedit="' + p.id + '">C\'est moi — modifier</button></div>';
+    if (i === 0) h += '<div style="display:flex;justify-content:center;margin:2px 0 10px">' + COEUR + '</div>';
+  });
+  h += '<div class="small muted" style="text-align:center;margin-top:14px;line-height:1.7">L\'état et le mot restent affichés jusqu\'à ce que la personne les change.<br>Pas de notification, pas de pression — juste une porte ouverte.</div>';
+  h += '</div>';
+  return h;
+}
+function openNousEdit(qui){
+  var p = NOUS_PERS.filter(function (x) { return x.id === qui; })[0]; if (!p) return;
+  var r = nousRow(qui) || {};
+  var cur = String(r.Etat || '');
+  var chips = nousEtats(p.f).map(function (e2) {
+    return '<span class="tchip' + (cur === e2.id ? ' on' : '') + ' clk" data-netat="' + e2.id + '" style="display:block;text-align:left;margin-bottom:8px">' + esc(e2.txt) + '</span>';
+  }).join('');
+  showSheet(p.nom, '<label style="margin-bottom:8px">Comment tu te sens ? (touche pour choisir, retouche pour effacer)</label><div id="netats">' + chips + '</div>' +
+    '<div class="field" style="margin-top:14px"><label>Un mot pour l\'autre (optionnel)</label><textarea id="nnote" rows="3" placeholder="Ce que tu voudrais dire…">' + esc(r.Note || '') + '</textarea></div>' +
+    '<button class="btn" id="nsave">Afficher</button>', true);
+  var sel = cur;
+  qall('#netats [data-netat]').forEach(function (el) {
+    el.onclick = function () {
+      var id = el.getAttribute('data-netat');
+      sel = (sel === id) ? '' : id;
+      qall('#netats [data-netat]').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-netat') === sel); });
+    };
+  });
+  $('nsave').onclick = function () {
+    var note = $('nnote').value.trim();
+    var row = nousRow(qui);
+    if (row) { row.Etat = sel; row.Note = note; row.MisAJour = new Date().toISOString(); }
+    else DATA.nous.push({ Qui: qui, Etat: sel, Note: note, MisAJour: new Date().toISOString() });
+    call('setNous', [qui, sel, note]);
+    closeSheet(); render(); toast('C\'est affiché 💚');
+  };
+}
+
 /* ============ Drag & drop (bureau) ============ */
 var DRAG = null; // {type:'rec'|'day'|'ing', id, rep?}
 function untrackDateLocal(iso, rep){
@@ -1508,6 +1789,53 @@ function bind(){
     };
   });
   var gp = $('goPrep'); if (gp) gp.onclick = function () { setFold('epi_mode', 'prep'); ANIM_NEXT = true; render(); };
+
+  // --- Calendrier ---
+  var cp = $('calPrev'); if (cp) cp.onclick = function () { CAL_OFF--; render(); };
+  var cn = $('calNext'); if (cn) cn.onclick = function () { CAL_OFF++; render(); };
+  qall('[data-caljour]').forEach(function (el) { el.onclick = function () { openJourCal(el.getAttribute('data-caljour')); }; });
+  qall('[data-delev]').forEach(function (el) {
+    el.onclick = function () {
+      var id = el.getAttribute('data-delev');
+      DATA.evenements = DATA.evenements.filter(function (x) { return String(x.EvenementID) !== id; });
+      call('retirerEvenement', [id]); render();
+    };
+  });
+
+  // --- Menu Chasse ---
+  var gch = $('goChasse'); if (gch) gch.onclick = function () { setTab('chasse'); };
+  qall('[data-chadd]').forEach(function (el) { el.onclick = function () { openChassePicker(+el.getAttribute('data-chadd'), el.getAttribute('data-chrep')); }; });
+  qall('[data-chdel]').forEach(function (el) {
+    el.onclick = function (ev) {
+      ev.stopPropagation();
+      var j = el.getAttribute('data-chdel'), rep = el.getAttribute('data-chrep');
+      DATA.chasse = DATA.chasse.filter(function (c) { return !(String(c.Jour) === String(j) && repasOf(c.Repas) === rep); });
+      untrackDateLocal('CHASSE-J' + j, rep);
+      call('retirerChasse', [j, rep]); render();
+    };
+  });
+  var cae = $('chAddEpi');
+  if (cae) cae.onclick = function () {
+    var chosen = chasseUntracked();
+    if (!chosen.length) return;
+    var items = [];
+    chosen.forEach(function (m) {
+      DATA.epicerieRepas.push({ Date: m.date, RecetteID: m.recetteId, Repas: m.repas });
+      ingredientsOf(m.recetteId).forEach(function (ing) {
+        items.push({ ingredient: ing.Ingredient, quantite: num(ing.Quantite), unite: ing.Unite, rayon: ing.Rayon, source: recetteNom(m.recetteId) });
+      });
+    });
+    localMergeEpicerie(items);
+    render();
+    toast(chosen.length + ' repas de chasse ajouté' + (chosen.length > 1 ? 's' : '') + ' à l\'épicerie');
+    call('ajouterRepasEpicerie', [chosen], function (res) {
+      if (res && res.epicerie) { DATA.epicerie = res.epicerie; DATA.epicerieRepas = res.epicerieRepas || DATA.epicerieRepas; saveLocal(); if (!editingOpen() && !typingNow()) render(); }
+    });
+  };
+  var cpd = $('chPdf'); if (cpd) cpd.onclick = openChassePdf;
+
+  // --- Julie & JP ---
+  qall('[data-nousedit]').forEach(function (el) { el.onclick = function () { openNousEdit(el.getAttribute('data-nousedit')); }; });
   qall('[data-qr]').forEach(function (el) { el.onclick = function () { var k = 'QR_' + el.getAttribute('data-qr'); MENU_SEL[k] = !MENU_SEL[k]; render(); }; });
   qall('[data-editrapide]').forEach(function (el) { el.onclick = function () { openEditRapide(el.getAttribute('data-editrapide')); }; });
   qall('[data-addqr]').forEach(function (el) {
@@ -2113,6 +2441,7 @@ function closeSheet(){
 qall('.side-item,.mobilenav .nv').forEach(function (n) { n.onclick = function () { setTab(n.getAttribute('data-tab')); }; });
 $('fab').onclick = function () { if (TAB === 'recettes') openRecette(); };
 $('sideNew').onclick = function () { setTab('recettes'); openRecette(); };
+$('goNous').onclick = function () { setTab('nous'); };
 qall('.side-item,.mobilenav .nv').forEach(function (n) { n.classList.toggle('on', n.getAttribute('data-tab') === TAB); });
 setTimeout(hideSplash, 6000);
 
