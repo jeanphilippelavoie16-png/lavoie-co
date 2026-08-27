@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.4.2 « La Carte »
+     LAVOIE & CO — v4.4.3 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -146,8 +146,10 @@
   .panes{display:block}
   .recgrid{display:grid;grid-template-columns:1fr;gap:8px}
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 13px;
-    margin-bottom:8px;box-shadow:var(--sh-1)}
+  /* La signature des bulles : trois coins généreux, le bas-gauche
+     presque vif — le coin d'une carte de menu qu'on tourne. */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px 20px 20px 6px;padding:13px 15px;
+    margin-bottom:9px;box-shadow:var(--sh-1)}
   .card.tap{transition:transform .12s,box-shadow .16s,border-color .16s}
   .card.tap:active{transform:scale(.988)}
   .card.tracked{background:var(--pine-ghost);border-color:var(--pine-line)}
@@ -288,18 +290,18 @@
   .chev{color:#C6CCC6;font-size:19px}
 
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:15px}
-  .btn{background:var(--ink);color:#fff;border-radius:13px;padding:13px 18px;font-weight:600;width:100%;
+  .btn{background:var(--ink);color:#fff;border-radius:999px;padding:13px 20px;font-weight:600;width:100%;
     display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;
     transition:filter .15s,transform .1s,background .15s}
   .btn:active{transform:scale(.985);background:#000}
   .btn.sec{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:var(--sh-1)}
   .btn.ghost{background:var(--pine-ghost);color:var(--pine-deep)}
   .btn.danger{background:var(--card);color:var(--danger);border:1px solid var(--line)}
-  .btn.sm{padding:9px 14px;font-size:13.5px;width:auto;border-radius:10px}
+  .btn.sm{padding:9px 15px;font-size:13.5px;width:auto;border-radius:999px}
   .btn[disabled]{opacity:.5;pointer-events:none}
 
   .fab{position:fixed;bottom:calc(var(--navbar-h) + 14px);right:16px;z-index:40;width:56px;height:56px;
-    border-radius:18px;background:var(--ink);color:#fff;font-size:28px;font-weight:300;
+    border-radius:50%;background:var(--ink);color:#fff;font-size:28px;font-weight:300;
     display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(20,22,19,.24);
     transition:transform .12s}
   .fab:active{transform:scale(.93)}
@@ -362,8 +364,8 @@
   .mobilenav .nv.on svg{stroke-width:2.2}
 
   .weeknav{display:flex;align-items:center;justify-content:space-between;margin:0 2px 12px;background:var(--card);
-    border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:var(--sh-1)}
-  .weeknav .arr{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line);border-radius:999px;padding:6px;box-shadow:var(--sh-1)}
+  .weeknav .arr{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     font-size:20px;color:var(--pine-deep);cursor:pointer;transition:background .14s}
   .weeknav .arr:active{background:var(--pine-ghost)}
   .weeknav .lbl{font-weight:600;font-size:13.5px;text-align:center}
@@ -400,7 +402,7 @@
   .tchip.on{background:var(--pine);color:var(--ink);border-color:var(--pine)}
   .tchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 
-  .ingrow{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:10px 12px;margin-bottom:8px}
+  .ingrow{background:var(--card);border:1px solid var(--line);border-radius:15px 15px 15px 5px;padding:10px 12px;margin-bottom:8px}
   .ingrow .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
   .ingrow .nm{flex:1;font-weight:600;font-size:14.5px}
   .usel{font-size:15px;padding:11px 12px;width:100%} .ucustom{font-size:15px;padding:10px 12px;width:100%}
@@ -427,7 +429,7 @@
 
   /* étapes : édition */
   .stepedit{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--line);
-    border-radius:13px;padding:10px 12px;margin-bottom:7px}
+    border-radius:15px 15px 15px 5px;padding:10px 12px;margin-bottom:7px}
   .stepedit .steptxt{flex:1;font-size:14px;line-height:1.45;padding-top:3px}
   .stepedit .stepacts{display:flex;gap:6px;align-items:center;flex-shrink:0}
   .stepedit .stepup,.stepedit .stepdn{color:var(--mut);font-size:16px;width:22px;height:22px;display:flex;
@@ -518,7 +520,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.4.2</div>
+  <div class="sp-ver">v4.4.3</div>
 </div>
 
 <aside class="sidebar">
@@ -532,14 +534,14 @@
     <div class="side-item" data-tab="ingredients" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 8h18M5 8c0-3 3-5 7-5s7 2 7 5"/></svg>Ingrédients</div>
     <div class="side-item" data-tab="listes" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Listes</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.4.2</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.4.3</span></div>
 </aside>
 
 <div class="content">
   <header class="topbar">
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.4.2"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.4.3"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -556,7 +558,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.4.2
+   LAVOIE & CO — Frontend v4.4.3
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -577,7 +579,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.4.2'
+  VERSION: '4.4.3'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
