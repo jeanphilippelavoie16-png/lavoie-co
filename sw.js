@@ -1,5 +1,5 @@
 /* ================================================================
-   LAVOIE & CO — Service Worker v4.8.5
+   LAVOIE & CO — Service Worker v4.8.6
    ----------------------------------------------------------------
    Stratégie :
    - Navigation / HTML : réseau d'abord (les mises à jour arrivent
@@ -16,7 +16,7 @@
    Pour forcer une mise à jour chez tout le monde : change CACHE_NAME.
    ================================================================ */
 
-var CACHE_NAME = 'lco-cache-v4.8.5';
+var CACHE_NAME = 'lco-cache-v4.8.6';
 // Les critiques doivent TOUS réussir, sinon l'installation échoue et
 // l'ancienne version — avec son cache complet — reste en service.
 // Avant v4.8.1 le précache était tolérant pour tout : une mise à jour
@@ -91,7 +91,7 @@ self.addEventListener('fetch', function (event) {
     // est rangée sous les deux clés ('./' et './index.html') : l'app
     // s'ouvre parfois par l'une, parfois par l'autre (PWA vs onglet).
     //
-    // GARDE-FOU (v4.8.5) : avec une barre de réseau, fetch() ne tombe
+    // GARDE-FOU (v4.8.6) : avec une barre de réseau, fetch() ne tombe
     // pas en erreur — il PEND, parfois une minute, et le repli sur le
     // cache n'arrivait jamais. Écran blanc à l'épicerie. Après 2,5 s
     // sans réponse, on sert la copie en cache ; le réseau continue en

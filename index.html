@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.8.5 « La Carte »
+     LAVOIE & CO — v4.8.6 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -377,6 +377,16 @@
   .btn.ghost{background:var(--pine-ghost);color:var(--pine-deep)}
   .btn.danger{background:var(--card);color:var(--danger);border:1px solid var(--line)}
   .btn.sm{padding:9px 15px;font-size:13.5px;width:auto;border-radius:999px}
+  /* Garde des feuilles : la barre « fermer sans enregistrer ? » — pas
+     de confirm() natif, iOS le bloque en mode app installée. */
+  .garde-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:12px 0 2px;
+    padding:11px 13px;background:var(--danger-ghost);border:1px solid var(--danger);
+    border-radius:var(--r-sm);font-size:13.5px;line-height:1.35}
+  .garde-bar span{flex:1;min-width:150px}
+  .garde-bar .btn.sm{margin:0}
+  .garde-bar .btn.sm.danger{border-color:var(--danger)}
+  .garde-bar.pulse{animation:gardePulse .35s ease-out}
+  @keyframes gardePulse{0%{transform:scale(1)}35%{transform:scale(1.025)}100%{transform:scale(1)}}
   .btn[disabled]{opacity:.5;pointer-events:none}
 
   .fab{position:fixed;bottom:calc(var(--navbar-h) + 14px);right:16px;z-index:40;width:56px;height:56px;
@@ -600,7 +610,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.8.5</div>
+  <div class="sp-ver">v4.8.6</div>
 </div>
 
 <aside class="sidebar">
@@ -616,7 +626,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.8.5</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.8.6</span></div>
 </aside>
 
 <div class="content">
@@ -624,7 +634,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.8.5"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.8.6"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -641,7 +651,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.8.5
+   LAVOIE & CO — Frontend v4.8.6
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -662,7 +672,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.8.5'
+  VERSION: '4.8.6'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -2547,14 +2557,26 @@ function showSheet(title, inner, stacked){
   // Dès qu'un geste a modifié le contenu, fermer — par un clic à côté
   // OU par le X — demande confirmation. Une recette tapée au complet
   // s'est déjà perdue sur un clic échappé à côté de la fenêtre.
+  // PAS de confirm() natif : iOS le bloque en mode app installée et
+  // répond « non » tout seul — la feuille devenait infermable (v4.8.6).
   var touche = false;
   o.addEventListener('input', function () { touche = true; }, true);
   o.addEventListener('change', function () { touche = true; }, true);
   function fermer(){
     // data-garde : armé par les feuilles qui arrivent déjà remplies
     // (recette importée d'Instagram) — là aussi, du travail à protéger.
-    if ((touche || o.hasAttribute('data-garde')) && !confirm('Fermer sans enregistrer ? Ce qui est tapé sera perdu.')) return;
-    o.remove();
+    if (!(touche || o.hasAttribute('data-garde'))) { o.remove(); return; }
+    var deja = o.querySelector('.garde-bar');
+    if (deja) { deja.classList.remove('pulse'); void deja.offsetWidth; deja.classList.add('pulse'); return; }
+    var bar = document.createElement('div');
+    bar.className = 'garde-bar pulse';
+    bar.innerHTML = '<span>Fermer sans enregistrer&nbsp;? Ce qui est tapé sera perdu.</span>' +
+      '<button class="btn sm garde-non" type="button">Continuer</button>' +
+      '<button class="btn sm danger garde-oui" type="button">Fermer</button>';
+    var shd = o.querySelector('.shd');
+    shd.parentNode.insertBefore(bar, shd.nextSibling);
+    bar.querySelector('.garde-oui').onclick = function () { o.remove(); };
+    bar.querySelector('.garde-non').onclick = function () { bar.remove(); };
   }
   o.onclick = function (e) { if (e.target === o) fermer(); };
   document.body.appendChild(o);
