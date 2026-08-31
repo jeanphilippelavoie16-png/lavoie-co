@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.8.6 « La Carte »
+     LAVOIE & CO — v4.9.0 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -174,7 +174,7 @@
   .datechip.empty .m{color:#C9CCC5}
   .mealname{font-size:15px;font-weight:600}
   .cook{font-size:11.5px;color:var(--mut);margin-top:1px}
-  /* étapes visuelles de l'import Instagram */
+  /* étapes visuelles de l'import de recette (Internet) */
   .impsteps{margin:18px 2px 6px;display:none}
   .impsteps.show{display:block}
   .impstep{display:flex;align-items:flex-start;gap:12px;position:relative;padding-bottom:20px}
@@ -610,7 +610,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.8.6</div>
+  <div class="sp-ver">v4.9.0</div>
 </div>
 
 <aside class="sidebar">
@@ -626,7 +626,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.8.6</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.9.0</span></div>
 </aside>
 
 <div class="content">
@@ -634,7 +634,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.8.6"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.9.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -651,7 +651,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.8.6
+   LAVOIE & CO — Frontend v4.9.0
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -672,7 +672,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.8.6'
+  VERSION: '4.9.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -1152,7 +1152,7 @@ function viewRecettes(){
   var h = '<div class="ph">Recettes</div><div class="psub">' + (rmode === 'ing' ? cat.length + ' ingrédients au catalogue — glisse-les entre rayons pour les reclasser' : r.length + ' recette' + (r.length > 1 ? 's' : '') + ' dans le carnet') + '</div>';
   h += '<div class="seg"><span class="sg' + (rmode === 'carnet' ? ' on' : '') + ' clk" data-segrec="carnet">Carnet <span class="ctchip">' + r.length + '</span></span><span class="sg' + (rmode === 'ing' ? ' on' : '') + ' clk" data-segrec="ing">Ingrédients <span class="ctchip">' + cat.length + '</span></span></div>';
   if (rmode === 'ing') { h += ingredientsBody(); return h; }
-  h += '<button class="btn sec sm" id="igBtn" style="margin-bottom:16px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>Importer d\'Instagram</button>';
+  h += '<button class="btn sec sm" id="igBtn" style="margin-bottom:16px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 2.6 2.8 15.4 0 18M12 3c-2.8 2.6-2.8 15.4 0 18"/></svg>Importer d\'Internet</button>';
   if (!r.length) { h += '<div class="empty">' + CREST_MINI + 'Le carnet est vide.<br>Touche « Nouvelle recette » pour commencer.</div>'; return h; }
   var types = (DATA.types || []);
   types.forEach(function (t) {
@@ -2270,25 +2270,28 @@ function bindUniteSelect(idBase){
   sel.onchange = function () { if (sel.value === '__custom__') { cust.style.display = ''; cust.focus(); } else { cust.style.display = 'none'; } };
 }
 
-/* ============ Import Instagram ============ */
-// Flux : coller le lien → le serveur tente de lire la description
-// publique du reel. Si Instagram bloque, on demande de coller le texte
-// (le commentaire du reel). Dans les deux cas l'API Claude structure le
-// texte en brouillon, qui s'ouvre dans l'éditeur de recette pour
-// révision — rien n'est enregistré avant « Enregistrer la recette ».
+/* ============ Import d'Internet ============ */
+// Flux : coller N'IMPORTE QUEL lien → le serveur tente de lire la
+// recette sur la page (lireLienWeb ; les reels Instagram passent par
+// lireLienIG). Si le site bloque, on demande de coller le texte ou des
+// captures d'écran. Dans tous les cas l'API Claude structure le texte
+// en brouillon, qui s'ouvre dans l'éditeur de recette pour révision —
+// rien n'est enregistré avant « Enregistrer la recette ».
+// Le navigateur ne peut PAS lire les autres sites lui-même (CORS) :
+// la lecture du lien vit forcément côté Apps Script.
 function openImportIG(){
   function stepHtml(i, lbl, sub){
     return '<div class="impstep" data-step="' + i + '"><span class="num">' + i + '</span><div><div class="lbl">' + lbl + '</div><div class="sub">' + sub + '</div></div></div>';
   }
   showSheet('Importer une recette',
-    '<div class="psub" style="margin-bottom:14px">Colle le lien du reel Instagram. Si la recette n\'est pas lisible depuis le lien, on te demandera de coller son texte.</div>' +
-    '<div class="field"><label>Lien Instagram</label><input id="ig-url" inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://www.instagram.com/reel/…"></div>' +
+    '<div class="psub" style="margin-bottom:14px">Colle n\'importe quel lien de recette — site web, blogue, reel Instagram. Si la recette n\'est pas lisible depuis le lien, on te demandera de coller son texte.</div>' +
+    '<div class="field"><label>Lien de la recette</label><input id="ig-url" inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://…"></div>' +
     '<div class="field hide" id="ig-manual"><label>Texte de la recette (le commentaire du reel)</label><textarea id="ig-txt" rows="7" placeholder="Colle ici le texte complet de la recette…"></textarea></div>' +
     '<div class="field"><label>Ou des captures d\'écran de la recette</label>' +
       '<input type="file" id="ig-files" accept="image/*" multiple class="hide">' +
       '<button class="btn ghost" id="ig-pick" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="15" rx="3"/><circle cx="12" cy="12.5" r="3.4"/><path d="M8.5 5l1.2-2h4.6l1.2 2"/></svg>Ajouter des captures d\'écran</button>' +
       '<div class="ig-thumbs" id="ig-thumbs"></div>' +
-      '<div class="small muted">L\'IA lit le texte directement sur l\'image — pratique quand Instagram ne laisse pas copier le commentaire.</div></div>' +
+      '<div class="small muted">L\'IA lit le texte directement sur l\'image — pratique quand le site ne laisse pas copier la recette.</div></div>' +
     '<button class="btn" id="ig-go">Analyser</button>' +
     '<div class="impsteps" id="ig-steps">' +
       stepHtml(1, 'Lecture du lien', '') +
@@ -2399,16 +2402,31 @@ function openImportIG(){
     }
     if (txt) { setStep(1, 'ok', 'texte collé à la main'); structurer('structurerRecetteTexte', [txt, url]); return; }
     setBtn('Analyse en cours…', true);
-    setStep(1, 'on', 'on demande la description publique du reel…');
-    apiCall('lireLienIG', [url]).then(function (res) {
-      isOffline = false; updateSync();
-      if (res && res.texte) { setStep(1, 'ok', 'description du reel récupérée'); structurer('structurerRecetteTexte', [res.texte, url]); return; }
+    var estIG = /instagram\.com/i.test(url);
+    setStep(1, 'on', estIG ? 'on demande la description publique du reel…' : 'on va lire la page…');
+    function lectureRatee(){
       reset();
-      setStep(1, 'err', 'Instagram bloque la lecture de ce lien');
+      setStep(1, 'err', 'Ce lien ne se laisse pas lire automatiquement');
       $('ig-manual').classList.remove('hide');
-      $('ig-hint').textContent = 'Pas grave : prends des captures d\'écran de la recette (le commentaire, ou la recette dans la vidéo) et ajoute-les ci-dessus — ou colle son texte si tu l\'as.';
+      $('ig-hint').textContent = 'Pas grave : prends des captures d\'écran de la recette et ajoute-les ci-dessus — ou colle son texte si tu l\'as.';
       setTimeout(function () { var t = $('ig-txt'); if (t) t.focus(); }, 60);
-    }).catch(function (err) { fail(1, err); });
+    }
+    // Cascade : lireLienWeb (page web générique) puis lireLienIG en
+    // secours. « Fonction inconnue » = serveur pas encore à jour : on
+    // passe à la suivante au lieu d'afficher une erreur.
+    function tenterLecture(fns){
+      var fn = fns.shift();
+      apiCall(fn, [url]).then(function (res) {
+        isOffline = false; updateSync();
+        if (res && res.texte) { setStep(1, 'ok', 'recette récupérée du lien'); structurer('structurerRecetteTexte', [res.texte, url]); return; }
+        if (fns.length) { tenterLecture(fns); return; }
+        lectureRatee();
+      }).catch(function (err) {
+        if (err && err.server && fns.length) { tenterLecture(fns); return; }
+        fail(1, err);
+      });
+    }
+    tenterLecture(estIG ? ['lireLienIG'] : ['lireLienWeb', 'lireLienIG']);
   };
 }
 
@@ -2558,7 +2576,7 @@ function showSheet(title, inner, stacked){
   // OU par le X — demande confirmation. Une recette tapée au complet
   // s'est déjà perdue sur un clic échappé à côté de la fenêtre.
   // PAS de confirm() natif : iOS le bloque en mode app installée et
-  // répond « non » tout seul — la feuille devenait infermable (v4.8.6).
+  // répond « non » tout seul — la feuille devenait infermable (v4.9.0).
   var touche = false;
   o.addEventListener('input', function () { touche = true; }, true);
   o.addEventListener('change', function () { touche = true; }, true);
