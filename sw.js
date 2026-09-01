@@ -1,5 +1,5 @@
 /* ================================================================
-   LAVOIE & CO — Service Worker v4.9.0
+   LAVOIE & CO — Service Worker v4.9.1
    ----------------------------------------------------------------
    Stratégie :
    - Navigation / HTML : réseau d'abord (les mises à jour arrivent
@@ -16,7 +16,7 @@
    Pour forcer une mise à jour chez tout le monde : change CACHE_NAME.
    ================================================================ */
 
-var CACHE_NAME = 'lco-cache-v4.9.0';
+var CACHE_NAME = 'lco-cache-v4.9.1';
 // Les critiques doivent TOUS réussir, sinon l'installation échoue et
 // l'ancienne version — avec son cache complet — reste en service.
 // Avant v4.8.1 le précache était tolérant pour tout : une mise à jour

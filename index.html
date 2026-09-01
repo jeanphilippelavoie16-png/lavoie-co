@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.9.0 « La Carte »
+     LAVOIE & CO — v4.9.1 « La Carte »
      Refonte : l'esthétique d'une carte de restaurant contemporain.
      Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
      est un mot-symbole en capitales espacées (Marcellus, repli Georgia
@@ -610,7 +610,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.9.0</div>
+  <div class="sp-ver">v4.9.1</div>
 </div>
 
 <aside class="sidebar">
@@ -626,7 +626,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.9.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.9.1</span></div>
 </aside>
 
 <div class="content">
@@ -634,7 +634,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.9.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v4.9.1"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -651,7 +651,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.9.0
+   LAVOIE & CO — Frontend v4.9.1
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -672,7 +672,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.9.0'
+  VERSION: '4.9.1'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -1396,7 +1396,7 @@ function openAddIngredient(){
   showSheet('Ajouter un ingrédient', '<div class="field"><label>Nom</label><input id="ia-nom" placeholder="Ex. Sauce poisson"></div><div class="field"><label>Rayon au magasin</label><select id="ia-ray">' + rayOpts + '</select></div><button class="btn" id="ia-save">Ajouter au catalogue</button>', true);
   $('ia-save').onclick = function () {
     var n = $('ia-nom').value.trim(), r = $('ia-ray').value;
-    if (!n) { alert('Nom requis'); return; }
+    if (!n) { toast('Écris d\'abord un nom', 'err'); $('ia-nom').focus(); return; }
     if (DATA.catalogue.some(function (c) { return norm(c.Ingredient) === norm(n); })) { toast('Cet ingrédient existe déjà'); return; }
     DATA.catalogue.push({ Ingredient: n, Rayon: r });
     call('creerIngredientCatalogue', [n, r]);
@@ -1409,7 +1409,7 @@ function openEditIngredient(nom){
   showSheet('Modifier l\'ingrédient', '<div class="field"><label>Nom</label><input id="ie-nom" value="' + esc(c.Ingredient) + '"></div><div class="field"><label>Rayon au magasin</label><select id="ie-ray">' + rayOpts + '</select></div><button class="btn" id="ie-save">Enregistrer</button>', true);
   $('ie-save').onclick = function () {
     var nn = $('ie-nom').value.trim(), nr = $('ie-ray').value;
-    if (!nn) { alert('Nom requis'); return; }
+    if (!nn) { toast('Écris d\'abord un nom', 'err'); $('ie-nom').focus(); return; }
     var anc = c.Ingredient; c.Ingredient = nn; c.Rayon = nr;
     call('modifierIngredientCatalogue', [anc, nn, nr]);
     closeSheet(); render(); toast('Ingrédient modifié');
@@ -1462,7 +1462,7 @@ function viewChasse(){
 }
 function openChassePicker(j, rep){
   var recs = (DATA.recettes || []);
-  if (!recs.length) { alert('Crée d\'abord une recette.'); return; }
+  if (!recs.length) { toast('Crée d\'abord une recette', 'err'); return; }
   var list = recs.map(function (r) { return '<div class="card tap clk" data-chp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
   showSheet(REPAS_LBL[rep] + ' · Jour ' + j, '<label style="margin-bottom:8px">Choisis une recette</label>' + list, true);
   qall('[data-chp]').forEach(function (el) {
@@ -2109,7 +2109,7 @@ function promptNewIngredient(nom, cb){
   showSheet('Nouvel ingrédient', '<div class="field"><label>Nom</label><input id="ni-nom" value="' + esc(nom) + '"></div><div class="field"><label>Rayon au magasin</label><select id="ni-ray">' + rayOpts + '</select></div><button class="btn" id="ni-save">Créer et utiliser</button>', true);
   $('ni-save').onclick = function () {
     var n = $('ni-nom').value.trim(), r = $('ni-ray').value;
-    if (!n) { alert('Nom requis'); return; }
+    if (!n) { toast('Écris d\'abord un nom', 'err'); $('ni-nom').focus(); return; }
     DATA.catalogue.push({ Ingredient: n, Rayon: r });
     call('creerIngredientCatalogue', [n, r]);
     closeSheet(); cb(n, r);
@@ -2120,7 +2120,7 @@ function promptNewIngredient(nom, cb){
 function openDayPicker(iso, rep){
   rep = rep || 'souper';
   var d = parseYmd(iso), recs = (DATA.recettes || []);
-  if (!recs.length) { alert('Crée d\'abord une recette.'); return; }
+  if (!recs.length) { toast('Crée d\'abord une recette', 'err'); return; }
   var list = recs.map(function (r) { return '<div class="card tap clk" data-dp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
   showSheet(REPAS_LBL[rep] + ' · ' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()], '<label style="margin-bottom:8px">Choisis une recette</label>' + list + '<div class="field" style="margin-top:8px"><label>Qui cuisine ? (optionnel)</label><input id="dp-cook" placeholder="Marie, JP…"></div>', true);
   qall('[data-dp]').forEach(function (el) {
@@ -2189,14 +2189,28 @@ function bindTypeChips(){
   qall('#rTypes [data-type]').forEach(function (el) { el.onclick = function () { var t = el.getAttribute('data-type'); REC_TYPES[t] = !REC_TYPES[t]; el.classList.toggle('on', REC_TYPES[t]); }; });
   var nw = $('rTypeNew');
   if (nw) nw.onclick = function () {
-    var name = prompt('Nouveau groupe :'); if (!name) return;
-    name = name.trim(); if (!name) return;
-    if ((DATA.types || []).indexOf(name) < 0) DATA.types.push(name);
-    REC_TYPES[name] = true;
-    call('creerType', [name]);
-    var cont = $('rTypes');
-    cont.innerHTML = (DATA.types || []).map(function (t) { return '<span class="tchip ' + (REC_TYPES[t] ? 'on' : '') + ' clk" data-type="' + esc(t) + '">' + esc(t) + '</span>'; }).join('') + '<span class="tchip clk" id="rTypeNew" style="border-style:dashed">+ Groupe</span>';
-    bindTypeChips();
+    // prompt() échoue en silence sur iOS installé et Chrome PC (v4.9.1) :
+    // le chip « + Groupe » devient un champ de saisie en place.
+    var inp = document.createElement('input');
+    inp.placeholder = 'Nom du groupe';
+    inp.style.cssText = 'width:150px;font-size:16px;padding:5px 10px';
+    nw.replaceWith(inp);
+    inp.focus();
+    var fini = false;
+    function done(commit){
+      if (fini) return; fini = true;
+      var name = inp.value.trim();
+      if (commit && name) {
+        if ((DATA.types || []).indexOf(name) < 0) DATA.types.push(name);
+        REC_TYPES[name] = true;
+        call('creerType', [name]);
+      }
+      var cont = $('rTypes');
+      cont.innerHTML = (DATA.types || []).map(function (t) { return '<span class="tchip ' + (REC_TYPES[t] ? 'on' : '') + ' clk" data-type="' + esc(t) + '">' + esc(t) + '</span>'; }).join('') + '<span class="tchip clk" id="rTypeNew" style="border-style:dashed">+ Groupe</span>';
+      bindTypeChips();
+    }
+    inp.onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); done(true); } else if (e.key === 'Escape') { done(false); } };
+    inp.onblur = function () { done(true); };
   };
 }
 function renderRecIngs(){
@@ -2221,9 +2235,9 @@ function syncRecIngs(){
   });
 }
 function saveRecette(){
-  var nom = $('rn').value.trim(); if (!nom) { alert('Nom requis'); return; }
+  var nom = $('rn').value.trim(); if (!nom) { toast('Donne un nom à la recette', 'err'); $('rn').focus(); return; }
   syncRecIngs();
-  if (!REC_INGS.length) { alert('Ajoute au moins un ingrédient'); return; }
+  if (!REC_INGS.length) { toast('Ajoute au moins un ingrédient', 'err'); return; }
   var types = Object.keys(REC_TYPES).filter(function (t) { return REC_TYPES[t]; });
   var portions = $('rp').value;
   var ings = REC_INGS.map(function (g) { return { ingredient: g.ingredient, rayon: g.rayon, quantite: String(g.quantite || '0').replace(',', '.'), unite: (g.unite || '').trim() }; });
@@ -2442,7 +2456,7 @@ function openManuel(){
     setTimeout(function () { $('mQty').focus(); }, 60);
   }, true);
   $('mSave').onclick = function () {
-    if (!picked.nom) { alert('Choisis un ingrédient'); return; }
+    if (!picked.nom) { toast('Choisis d\'abord un ingrédient', 'err'); return; }
     var q = $('mQty').value.replace(',', '.') || 0, u = uniteSelectVal('mu');
     var id = cid('E');
     // Optimiste : fusion locale (le serveur fait la même chose)
@@ -2464,7 +2478,7 @@ function openManuel(){
 function openAddListe(){
   showSheet('Nouvelle liste', '<div class="field"><label>Nom de la liste</label><input id="nl-nom" placeholder="Ex. Costco, Pharmacie, Quincaillerie…"></div><button class="btn" id="nl-save">Créer la liste</button>', true);
   $('nl-save').onclick = function () {
-    var n = $('nl-nom').value.trim(); if (!n) { alert('Nom requis'); return; }
+    var n = $('nl-nom').value.trim(); if (!n) { toast('Donne un nom à la liste', 'err'); $('nl-nom').focus(); return; }
     var id = cid('L');
     DATA.listes.push({ ListeID: id, Nom: n, Type: 'custom' });
     curListe = id;
@@ -2477,7 +2491,7 @@ function openAddListe(){
 function openAddRapide(){
   showSheet('Nouvelle liste rapide', '<div class="field"><label>Nom de la liste</label><input id="qr-nom" placeholder="Ex. Déjeuner, Collations, Produits ménagers…"></div><button class="btn" id="qr-save">Créer la liste</button>', true);
   $('qr-save').onclick = function () {
-    var n = $('qr-nom').value.trim(); if (!n) { alert('Nom requis'); return; }
+    var n = $('qr-nom').value.trim(); if (!n) { toast('Donne un nom à la liste', 'err'); $('qr-nom').focus(); return; }
     var id = cid('QR');
     DATA.listesRapides.push({ RapideID: id, Nom: n });
     call('creerListeRapide', [id, n]);
