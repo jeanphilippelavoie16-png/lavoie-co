@@ -100,6 +100,22 @@
   .sp-dessin .f4{animation:spTrace .5s 2.06s ease-out both}
   .sp-dessin .f5{animation:spTrace .5s 2.23s ease-out both}
   @keyframes spTrace{from{stroke-dashoffset:1}}
+  /* Un mot sur la famille : les mots se posent un à un, puis on laisse lire */
+  #splash{cursor:pointer}
+  .sp-poeme{margin:6px 0 0;max-width:min(460px,86vw);padding:0 6px;text-align:center}
+  .sp-poeme blockquote{margin:0;font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:clamp(17px,4.7vw,21px);line-height:1.55;letter-spacing:-.005em;
+    color:color-mix(in srgb,var(--on-dark) 90%,transparent);text-wrap:balance}
+  .sp-poeme .w{display:inline-block;opacity:0;animation:spMot .95s var(--ease) forwards}
+  @keyframes spMot{from{opacity:0;transform:translateY(9px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+  .sp-poeme figcaption{margin-top:16px;font-size:9.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--champ);opacity:0;transition:opacity .9s ease}
+  .sp-poeme figcaption.on{opacity:.85}
+  .sp-skip{font-size:10.5px;letter-spacing:.08em;color:color-mix(in srgb,var(--on-dark) 38%,transparent);
+    opacity:0;transition:opacity .8s ease;margin-top:-8px}
+  .sp-skip.on{opacity:1}
+  .sp-bar.prog i{animation:none;width:0;transition-property:width;transition-timing-function:linear}
+  @media(prefers-reduced-motion:reduce){ .sp-poeme .w{opacity:1} }
   .sp-tag{font-family:var(--serif);font-style:italic;font-size:16px;color:color-mix(in srgb,var(--on-dark) 70%,transparent);
     animation:spRise .9s 2.35s var(--ease) both}
   .sp-bar{width:120px;height:1px;background:rgba(255,255,255,.12);overflow:hidden;animation:spRise .9s 2.5s both}
@@ -678,8 +694,9 @@
     <path class="f4" pathLength="1" d="M118 24 Q 115 37 128 39 Q 127 28 118 24"/>
     <path class="f5" pathLength="1" d="M142 18 Q 138 6 148 3 Q 150 13 142 18"/>
   </svg>
-  <div class="sp-tag">Cuisine &amp; planification familiales</div>
-  <div class="sp-bar"><i></i></div>
+  <figure class="sp-poeme" id="spPoeme"><blockquote id="spTexte"></blockquote><figcaption id="spAuteur"></figcaption></figure>
+  <div class="sp-bar" id="spBar"><i></i></div>
+  <div class="sp-skip" id="spSkip">Touche pour continuer</div>
   <div class="sp-ver">v5.4.0</div>
 </div>
 
@@ -1344,16 +1361,106 @@ function toast(msg, kind){
 
 function hideSplash(){ if (splashHidden) return; splashHidden = true; var s = $('splash'); if (s) { s.classList.add('gone'); setTimeout(function () { s.remove(); }, 550); } }
 
+/* ---------- Au chargement : un mot sur la famille ---------- */
+// Des proverbes et des extraits de poèmes sur la force d'une famille
+// unie et sur le beau défi d'élever des enfants. Un au hasard (jamais
+// deux fois de suite le même) : les mots se posent un à un, puis
+// l'écran reste le temps de lire. Toucher l'écran passe tout de suite.
+var MOTS_FAMILLE = [
+  { t: 'Il faut tout un village pour élever un enfant.', a: 'Proverbe africain' },
+  { t: 'Seul, on va plus vite.\nEnsemble, on va plus loin.', a: 'Proverbe africain' },
+  { t: 'Toute puissance est faible, à moins que d\'être unie.', a: 'Jean de La Fontaine, Le Vieillard et ses Enfants' },
+  { t: 'Travaillez, prenez de la peine :\nc\'est le fonds qui manque le moins.', a: 'Jean de La Fontaine, Le Laboureur et ses Enfants' },
+  { t: 'Lorsque l\'enfant paraît, le cercle de famille\napplaudit à grands cris. Son doux regard qui brille\nfait briller tous les yeux.', a: 'Victor Hugo, Les Feuilles d\'automne' },
+  { t: 'Chaque enfant qu\'on enseigne est un homme qu\'on gagne.', a: 'Victor Hugo' },
+  { t: 'Vos enfants ne sont pas vos enfants.\nIls sont les fils et les filles de l\'appel de la Vie à elle-même.\nIls viennent à travers vous mais non de vous.', a: 'Khalil Gibran, Le Prophète' },
+  { t: 'Vous êtes les arcs par qui vos enfants, comme des flèches vivantes, sont projetés.', a: 'Khalil Gibran, Le Prophète' },
+  { t: 'Aimer, ce n\'est pas se regarder l\'un l\'autre,\nc\'est regarder ensemble dans la même direction.', a: 'Antoine de Saint-Exupéry, Terre des hommes' },
+  { t: 'Toutes les grandes personnes ont d\'abord été des enfants.\n(Mais peu d\'entre elles s\'en souviennent.)', a: 'Antoine de Saint-Exupéry, Le Petit Prince' },
+  { t: 'On ne voit bien qu\'avec le cœur.\nL\'essentiel est invisible pour les yeux.', a: 'Antoine de Saint-Exupéry, Le Petit Prince' },
+  { t: 'Un frère est un ami donné par la nature.', a: 'Gabriel-Marie Legouvé' },
+  { t: 'Élever un enfant, c\'est lui apprendre à se passer de nous.', a: 'Ernest Legouvé' },
+  { t: 'La famille est la patrie du cœur.', a: 'Giuseppe Mazzini' },
+  { t: 'Les enfants ont plus besoin de modèles que de critiques.', a: 'Joseph Joubert' },
+  { t: 'On façonne les plantes par la culture,\net les hommes par l\'éducation.', a: 'Jean-Jacques Rousseau, Émile' },
+  { t: 'Respectez l\'enfance, et ne vous pressez point de la juger, soit en bien, soit en mal.', a: 'Jean-Jacques Rousseau, Émile' },
+  { t: 'Les racines de l\'éducation sont amères,\nmais ses fruits sont doux.', a: 'Aristote' },
+  { t: 'L\'esprit n\'est pas un vase qu\'on remplit,\nmais un feu qu\'on allume.', a: 'D\'après Plutarque' },
+  { t: 'Les jours sont longs, mais les années sont courtes.', a: 'Gretchen Rubin' },
+  { t: 'Avoir un enfant, c\'est décider pour toujours que son cœur marchera en dehors de son corps.', a: 'Elizabeth Stone' },
+  { t: 'Il n\'y a que deux choses durables que l\'on puisse léguer à ses enfants :\ndes racines et des ailes.', a: 'Hodding Carter' },
+  { t: 'Les enfants sont les mains par lesquelles nous saisissons le ciel.', a: 'Henry Ward Beecher' },
+  { t: 'La chose la plus importante qu\'un père puisse faire pour ses enfants,\nc\'est d\'aimer leur mère.', a: 'Theodore Hesburgh' },
+  { t: 'Que pouvez-vous faire pour la paix dans le monde ?\nRentrez chez vous et aimez votre famille.', a: 'Mère Teresa' },
+  { t: 'Les enfants apprennent ce qu\'ils vivent.', a: 'Dorothy Law Nolte' },
+  { t: 'Il n\'y a pas de famille parfaite.\nNous n\'avons pas de parents parfaits, nous ne sommes pas parfaits.', a: 'Pape François' },
+  { t: 'Le bonheur est la seule chose qui se double si on le partage.', a: 'Albert Schweitzer' },
+  { t: 'Petits enfants, petits soucis ;\ngrands enfants, grands soucis.', a: 'Proverbe yiddish' },
+  { t: 'Tombe sept fois, relève-toi huit.', a: 'Proverbe japonais' },
+  { t: 'Quand tu bois de l\'eau, pense à la source.', a: 'Proverbe chinois' },
+  { t: 'Là où l\'on s\'aime, il ne fait jamais nuit.', a: 'Proverbe africain' },
+  { t: 'La patience est un arbre dont la racine est amère,\net dont les fruits sont très doux.', a: 'Proverbe persan' },
+  { t: 'Une société grandit quand les vieillards plantent des arbres\nà l\'ombre desquels ils savent qu\'ils ne s\'assiéront jamais.', a: 'Proverbe grec' },
+  { t: 'Nous n\'héritons pas de la terre de nos ancêtres,\nnous l\'empruntons à nos enfants.', a: 'Proverbe' },
+  { t: 'L\'union fait la force.', a: 'Proverbe' },
+  { t: 'Petit à petit, l\'oiseau fait son nid.', a: 'Proverbe' },
+  { t: 'Les petits ruisseaux font les grandes rivières.', a: 'Proverbe' },
+  { t: 'Après la pluie, le beau temps.', a: 'Proverbe' },
+  { t: 'La famille, c\'est comme les branches d\'un arbre :\nnous grandissons dans des directions différentes,\nmais nos racines restent les mêmes.', a: 'Anonyme' },
+  { t: 'La famille, c\'est là où la vie commence\net où l\'amour ne finit jamais.', a: 'Anonyme' },
+  { t: 'Parent : le plus beau métier du monde,\net le seul qui s\'apprend en le faisant.', a: 'Dicton' }
+];
+var SPLASH = { t0: Date.now(), finPoeme: 6000, poemeFini: false, pret: false };
+function montrerPoeme(){
+  var box = $('spTexte'); if (!box) return;
+  var n = MOTS_FAMILLE.length, i = Math.floor(Math.random() * n), der = -1;
+  try { der = parseInt(localStorage.getItem('LCO_POEME'), 10); } catch (e) {}
+  if (n > 1 && i === der) i = (i + 1 + Math.floor(Math.random() * (n - 1))) % n;
+  try { localStorage.setItem('LCO_POEME', String(i)); } catch (e) {}
+  var q = MOTS_FAMILLE[i];
+  // Rythme : le texte commence pendant que la branche se dessine ; un
+  // mot toutes les 70 à 150 ms. Temps de lecture : ~70 ms par lettre
+  // depuis le premier mot, au moins 2,5 s après le dernier mot posé.
+  var DEBUT = 1100, nbMots = q.t.split(/\s+/).length;
+  var pas = Math.max(70, Math.min(150, 4200 / nbMots)), k = 0;
+  box.innerHTML = q.t.split('\n').map(function (ligne) {
+    return ligne.split(' ').map(function (m) {
+      return '<span class="w" style="animation-delay:' + Math.round(DEBUT + (k++) * pas) + 'ms">' + esc(m) + '</span>';
+    }).join(' ');
+  }).join('<br>');
+  $('spAuteur').textContent = q.a;
+  var finMots = DEBUT + nbMots * pas + 900;
+  var finLecture = Math.max(finMots + 2500, DEBUT + q.t.length * 70, 5500);
+  SPLASH.finPoeme = finLecture;
+  setTimeout(function () { var a = $('spAuteur'); if (a) a.classList.add('on'); var sk = $('spSkip'); if (sk) sk.classList.add('on'); }, finMots - 300);
+  // La barre de chargement suit la lecture : pleine quand le texte est lu.
+  var bar = $('spBar');
+  if (bar) {
+    bar.classList.add('prog');
+    var bi = bar.querySelector('i'); bi.style.transitionDuration = finLecture + 'ms';
+    requestAnimationFrame(function () { requestAnimationFrame(function () { bi.style.width = '100%'; }); });
+  }
+  setTimeout(function () { SPLASH.poemeFini = true; tenterFinSplash(); }, finLecture);
+  // Filet de sécurité : sans réseau au tout premier lancement, on ne
+  // garde pas l'écran plus de 4 s après la lecture.
+  setTimeout(hideSplash, finLecture + 4000);
+}
+// L'écran s'efface quand le texte est lu ET que les données sont là.
+function tenterFinSplash(){ if (SPLASH.poemeFini && SPLASH.pret) hideSplash(); }
+// Toucher l'écran de chargement le passe, à tout moment.
+(function () { var sp = $('splash'); if (sp) sp.addEventListener('click', hideSplash); })();
+montrerPoeme();
+
 /* ---------- Chargement initial ---------- */
 function load(){
-  var t0 = Date.now();
   loadQueue();
   var cached = loadLocal();
   if (cached) { DATA = normalizeData(cached.data); REV = cached.rev || 0; render(); }
-  // 4,5 s minimum : la dernière pièce (le numéro de version) finit de
-  // monter à ~3,55 s — à 3,2 s elle se faisait couper en plein geste.
-  // On laisse l'animation complète, puis une respiration.
-  function finish(){ var wait = Math.max(0, 4500 - (Date.now() - t0)); setTimeout(hideSplash, wait); }
+  // L'écran de chargement attend la fin de la lecture du mot sur la
+  // famille (montrerPoeme) : ici on signale seulement que les données
+  // sont prêtes. Avec une copie locale, elles le sont tout de suite.
+  function finish(){ SPLASH.pret = true; tenterFinSplash(); }
+  if (cached) finish();
   if (syncQueue.length) { finish(); updateSync(); flushQueue(); return; }
   pull().then(function () {
     finish();
@@ -2956,7 +3063,6 @@ $('fab').onclick = function () { if (TAB === 'recettes') openRecette(); else if 
 $('sideNew').onclick = function () { setTab('recettes'); openRecette(); };
 $('goNous').onclick = function () { setTab('nous'); };
 qall('.side-item,.mobilenav .nv').forEach(function (n) { n.classList.toggle('on', n.getAttribute('data-tab') === TAB); });
-setTimeout(hideSplash, 6000);
 
 // Voile de la barre du haut : son filet n'apparaît qu'au défilement
 window.addEventListener('scroll', function () {
