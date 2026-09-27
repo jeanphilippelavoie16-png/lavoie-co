@@ -436,9 +436,6 @@
     display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px color-mix(in srgb,var(--bg) 90%,transparent),0 14px 30px color-mix(in srgb,var(--pri) 35%,transparent);
     transition:transform .12s}
   .fab:active{transform:scale(.93)}
-  /* Sur l'Épicerie, le bouton flottant porte son nom : « Ajouter » */
-  .fab.ext{width:auto;padding:0 22px 0 18px;gap:8px;font-size:15.5px;font-weight:600;letter-spacing:-.005em}
-  .fab.ext svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
   /* Le bouton flottant ne doit jamais cacher le × du dernier article */
   body.has-fab main{padding-bottom:calc(var(--navbar-h) + 100px)}
 
@@ -1383,16 +1380,12 @@ function setTab(t){
     render();
   }
 }
-// Le bouton flottant suit l'onglet : nouvelle recette, ou article d'épicerie.
+// Le bouton flottant « + » suit l'onglet : nouvelle recette, ou article d'épicerie.
 function majFab(){
   var fab = $('fab'), epi = TAB === 'epicerie', vis = TAB === 'recettes' || epi;
   fab.classList.toggle('hide', !vis);
   document.body.classList.toggle('has-fab', vis);
-  if (fab.classList.contains('ext') !== epi) {
-    fab.classList.toggle('ext', epi);
-    fab.innerHTML = epi ? PLUS_SVG + 'Ajouter' : '+';
-    fab.setAttribute('aria-label', epi ? 'Ajouter un article à l\'épicerie' : 'Nouvelle recette');
-  }
+  fab.setAttribute('aria-label', epi ? 'Ajouter un article à l\'épicerie' : 'Nouvelle recette');
 }
 function render(){
   if (!DATA) return;
