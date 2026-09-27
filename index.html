@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v5.3.0 « Porcelaine »
+     LAVOIE & CO — v5.4.0 « Porcelaine »
      Direction : sobre et épuré. Porcelaine chaude, noir profond,
      une seule touche de sable. Titres en Bodoni Moda, interface en
      Inter, mot-symbole en Marcellus.
@@ -310,13 +310,21 @@
   .seg .sg.on{color:var(--ink)}
   .seg .sg.on::after{transform:scaleX(1)}
   .seg .sg.on .ctchip{background:var(--wine);color:var(--on-pri)}
-  .shopsum{display:flex;align-items:center;gap:16px;padding:18px 20px;
+  .shopsum{display:flex;flex-direction:column;gap:16px;padding:18px 20px;
     background:linear-gradient(150deg,var(--pri-2) 0%,var(--pri-deep) 60%,var(--pri-deep) 100%)!important;border-color:transparent!important;color:var(--on-pri);
     box-shadow:0 4px 10px color-mix(in srgb,var(--pri) 16%,transparent)!important;margin-bottom:20px}
   .shopsum .n{font-family:var(--serif);font-size:48px;font-weight:500;line-height:.9;color:var(--champ-soft)}
   .shopsum .muted{color:color-mix(in srgb,var(--on-pri) 65%,transparent)}
   .shopsum .rayprog{background:rgba(255,255,255,.18)}
   .shopsum .rayprog i{background:var(--champ-soft)}
+  .shopsum .top{display:flex;align-items:center;gap:16px}
+  /* Ajouter un article : LE geste de la liste — sable sur noir, pleine largeur */
+  .shopadd{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:13px 16px;
+    border-radius:999px;background:var(--acc-soft);color:var(--dark);font-weight:650;font-size:15px;letter-spacing:-.005em;
+    box-shadow:0 1px 0 rgba(255,255,255,.35) inset;transition:transform .1s,filter .15s}
+  .shopadd:active{transform:scale(.985)}
+  .shopadd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+  @media(hover:hover){ .shopadd:hover{filter:brightness(1.05)} }
   /* Bande d'humeurs */
   .humband{display:flex;justify-content:space-between;gap:4px;background:var(--paper);
     border-radius:999px;padding:6px 8px;margin-bottom:12px;border:1px solid var(--line2)}
@@ -428,6 +436,11 @@
     display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px color-mix(in srgb,var(--bg) 90%,transparent),0 14px 30px color-mix(in srgb,var(--pri) 35%,transparent);
     transition:transform .12s}
   .fab:active{transform:scale(.93)}
+  /* Sur l'Épicerie, le bouton flottant porte son nom : « Ajouter » */
+  .fab.ext{width:auto;padding:0 22px 0 18px;gap:8px;font-size:15.5px;font-weight:600;letter-spacing:-.005em}
+  .fab.ext svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+  /* Le bouton flottant ne doit jamais cacher le × du dernier article */
+  body.has-fab main{padding-bottom:calc(var(--navbar-h) + 100px)}
 
   label{font-size:10.5px;font-weight:650;color:var(--champ-ink);display:block;margin:0 0 6px;
     text-transform:uppercase;letter-spacing:.14em}
@@ -461,7 +474,9 @@
   .grphd .ln{flex:1;height:1px;background:var(--line)}
   .grphd .ct{font-family:var(--sans);font-style:normal;font-size:11px;color:var(--champ-ink);font-weight:650}
 
-  .epi-card{padding:9px 12px;box-shadow:none;background:var(--card)!important;border-color:var(--line)!important}
+  .epi-card{padding:9px 12px;box-shadow:none;background:var(--card);border-color:var(--line)}
+  /* La bulle pâle du rayon (le coché, lui, redevient neutre : voir .epi-card.done) */
+  .epi-card.tinted{background:var(--tint,var(--card));border-color:var(--tint-b,var(--line))}
   .epi-main{display:flex;align-items:center;gap:11px;flex:1;min-width:0;cursor:pointer}
   .epi-qty{font-size:13.5px;color:var(--ink2);font-weight:650;white-space:nowrap;cursor:pointer;font-variant-numeric:tabular-nums;
     padding:4px 8px;border-radius:9px;border:1px solid transparent;transition:border-color .15s,background .15s}
@@ -668,7 +683,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v5.3.0</div>
+  <div class="sp-ver">v5.4.0</div>
 </div>
 
 <aside class="sidebar">
@@ -684,7 +699,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.3.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.4.0</span></div>
 </aside>
 
 <div class="content">
@@ -692,7 +707,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.3.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.4.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -709,7 +724,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v5.3.0
+   LAVOIE & CO — Frontend v5.4.0
    ----------------------------------------------------------------
    v5.3 — le sync réparé (voir aussi le serveur Code.gs v5.3) :
    - Un téléchargement qui revient APRÈS un geste local est jeté : il
@@ -742,7 +757,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '5.3.0'
+  VERSION: '5.4.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -753,6 +768,7 @@ var JOURS_C = ['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
 var MOIS_L = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 var TITLES = { menu:'Menu', recettes:'Recettes', epicerie:'Épicerie', ingredients:'Ingrédients', listes:'Listes', calendrier:'Calendrier', chasse:'Menu Chasse', nous:'Julie & JP' };
 var CHK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 13l4 4L19 7"/></svg>';
+var PLUS_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
 var CREST_MINI = '<span class="crest"></span>'; // filet discret des états vides (l'écusson est retiré depuis v4.2)
 var UNITES = ['unité','g','kg','ml','L','c. à thé','c. à soupe','tasse','pincée','sac','boîte','paquet','pot','conserve','bouteille','lb','douzaine','tranche','gousse'];
 var UNIT_NOPLUR = { 'g':1,'kg':1,'ml':1,'l':1,'lb':1,'unité':1 };
@@ -819,22 +835,37 @@ function plurUnite(qte, unite){
 }
 
 /* ---------- Teintes de rayon (liste d'épicerie) ---------- */
-// Chaque rayon a sa couleur : les items À ACHETER portent la teinte de
-// leur rayon, un item coché redevient neutre et s'efface. Six tons
-// [fond, bordure, point] ; le choix suit l'ordre des rayons du classeur.
-var RAYON_TINTS = [
-  ['#EEF3EB', '#D9E4D4', '#4F7A5A'], ['#FAF0E6', '#EEDBC8', '#A8663D'],
-  ['#F8F2E0', '#EADDB8', '#9A7C2E'], ['#EDF1F5', '#D6DFE8', '#4A6885'],
-  ['#F5EEF3', '#E3D3DF', '#7A5476'], ['#F4EFE5', '#E2D8C6', '#86754F']
+// Chaque rayon a sa bulle pâle : les items À ACHETER portent la teinte
+// de leur rayon, un item coché redevient neutre et s'efface.
+// v5.4 : palette Porcelaine — des tons de marché sourds et chauds
+// (sauge, blé, argile, ardoise, crème, givre) qui tiennent à côté du
+// noir et du sable. Le rayon est reconnu par son nom ; un rayon inconnu
+// prend une teinte de réserve selon son rang. [fond, bordure, point]
+var TEINTES = {
+  sauge:   ['#EEF2E9', '#DCE4D3', '#6D8663'],   // fruits et légumes
+  ble:     ['#F7F0E4', '#E9DCC5', '#A8875A'],   // pain
+  argile:  ['#F7ECE7', '#ECD8CF', '#A86D5C'],   // viandes
+  ardoise: ['#EDF0F3', '#DAE0E6', '#5F7386'],   // rangée
+  creme:   ['#F8F4E2', '#EAE1C0', '#A38E48'],   // produits laitiers
+  givre:   ['#EAF2F3', '#D4E3E5', '#5A878D'],   // congélateur
+  lavande: ['#F2EEF5', '#E0D8E8', '#7B6B8E'],
+  peche:   ['#F9EEE6', '#EDD9C8', '#B07A52']
+};
+var TEINTES_MOTS = [
+  [/fruit|legume/, 'sauge'], [/pain|boulang/, 'ble'], [/viande|poisson|boucher|charcut/, 'argile'],
+  [/laitier|fromage|oeuf/, 'creme'], [/congel|surgel/, 'givre'], [/rangee|sec|conserve/, 'ardoise']
 ];
+var TEINTES_RESERVE = ['lavande', 'peche', 'sauge', 'ble', 'argile', 'ardoise', 'creme', 'givre'];
 var _rayIdx = null;
 function rayonTint(ray){
+  var n = norm(ray);
+  for (var k = 0; k < TEINTES_MOTS.length; k++) if (TEINTES_MOTS[k][0].test(n)) return TEINTES[TEINTES_MOTS[k][1]];
   if (!_rayIdx) {
     _rayIdx = {};
-    rayonsSorted().forEach(function (r, i) { _rayIdx[String(r.Rayon).trim()] = i % RAYON_TINTS.length; });
+    rayonsSorted().forEach(function (r, i) { _rayIdx[String(r.Rayon).trim()] = i; });
   }
-  var i = _rayIdx.hasOwnProperty(ray) ? _rayIdx[ray] : (String(ray).length % RAYON_TINTS.length);
-  return RAYON_TINTS[i];
+  var i = _rayIdx.hasOwnProperty(ray) ? _rayIdx[ray] : String(ray).length;
+  return TEINTES[TEINTES_RESERVE[i % TEINTES_RESERVE.length]];
 }
 
 /* ---------- Accès aux données ---------- */
@@ -1352,10 +1383,21 @@ function setTab(t){
     render();
   }
 }
+// Le bouton flottant suit l'onglet : nouvelle recette, ou article d'épicerie.
+function majFab(){
+  var fab = $('fab'), epi = TAB === 'epicerie', vis = TAB === 'recettes' || epi;
+  fab.classList.toggle('hide', !vis);
+  document.body.classList.toggle('has-fab', vis);
+  if (fab.classList.contains('ext') !== epi) {
+    fab.classList.toggle('ext', epi);
+    fab.innerHTML = epi ? PLUS_SVG + 'Ajouter' : '+';
+    fab.setAttribute('aria-label', epi ? 'Ajouter un article à l\'épicerie' : 'Nouvelle recette');
+  }
+}
 function render(){
   if (!DATA) return;
   flushEpi(); flushLi();
-  $('fab').classList.toggle('hide', TAB !== 'recettes');
+  majFab();
   var v = $('view');
   v.classList.remove('anim');
   if (ANIM_NEXT) { void v.offsetWidth; v.classList.add('anim'); ANIM_NEXT = false; }
@@ -1562,7 +1604,8 @@ function viewEpicerie(){
     // Le bandeau-résumé : le grand chiffre en exergue, la progression
     // du panier — l'essentiel d'un coup d'œil, en tête de liste.
     var pctG = Math.round(cochesN / e.length * 100);
-    h += '<div class="card shopsum"><span class="n" id="shopN">' + resteN + '</span><div class="grow"><div style="font-weight:600;font-size:14px">article' + (resteN > 1 ? 's' : '') + ' à acheter</div><div class="small muted" id="shopSub">' + (cochesN ? cochesN + ' coché' + (cochesN > 1 ? 's' : '') + ' · ' : '') + pctG + ' % du panier fait</div></div><span class="rayprog" style="flex:0 0 64px"><i id="shopBar" style="width:' + pctG + '%"></i></span></div>';
+    h += '<div class="card shopsum"><div class="top"><span class="n" id="shopN">' + resteN + '</span><div class="grow"><div style="font-weight:600;font-size:14px">article' + (resteN > 1 ? 's' : '') + ' à acheter</div><div class="small muted" id="shopSub">' + (cochesN ? cochesN + ' coché' + (cochesN > 1 ? 's' : '') + ' · ' : '') + pctG + ' % du panier fait</div></div><span class="rayprog" style="flex:0 0 64px"><i id="shopBar" style="width:' + pctG + '%"></i></span></div>' +
+      '<button class="shopadd" id="shopAdd" type="button">' + PLUS_SVG + 'Ajouter un article</button></div>';
     var ordre = rayonsSorted().map(function (r) { return r.Rayon; }), byR = {}, seen = {};
     e.forEach(function (it) { (byR[it.Rayon] = byR[it.Rayon] || []).push(it); });
     ordre.forEach(function (ray) { if (byR[ray]) { seen[ray] = 1; h += rayBlock(ray, byR[ray]); } });
@@ -1570,7 +1613,7 @@ function viewEpicerie(){
     // Les gestes destructeurs ferment la marche, discrets.
     h += '<div class="row" style="justify-content:center;gap:24px;margin:20px 0 4px"><span class="small clk" id="cleanBtn" style="color:var(--ink2);font-weight:600">Nettoyer les cochés</span><span class="small clk" id="cleanAllBtn" style="color:var(--danger);font-weight:600">Tout effacer</span></div>';
   } else {
-    h += '<div class="empty">' + CREST_MINI + 'La liste est vide.<br>Passe en mode « Préparer » pour la bâtir.<br><br><button class="btn sm" id="goPrep" style="margin:0 auto;width:auto">Préparer la liste</button></div>';
+    h += '<div class="empty">' + CREST_MINI + 'La liste est vide.<br>Ajoute un article, ou passe en mode « Préparer » pour y verser les repas.<br><br><div class="btnrow" style="justify-content:center;flex-wrap:wrap"><button class="btn sm" id="shopAdd" type="button">+ Ajouter un article</button><button class="btn ghost sm" id="goPrep">Préparer la liste</button></div></div>';
   }
   h += '</section></div>';
   return h;
@@ -1585,7 +1628,7 @@ function rayBlock(ray, items){
   h += '<div class="fold' + (open ? '' : ' closed') + '"><div>';
   items.forEach(function (it) {
     var dn = isTrue(it.Coche);
-    h += '<div class="card tap epi-card ' + (dn ? 'done' : '') + '" data-rayof="' + esc(ray) + '" style="background:' + tint[0] + ';border-color:' + tint[1] + '"><div class="row"><div class="epi-main" data-epi="' + esc(it.ListeID) + '"><span class="chk ' + (dn ? 'on' : '') + '">' + (dn ? CHK : '') + '</span><div class="grow"><span class="itxt">' + esc(it.Ingredient) + '</span>' + (it.Source && String(it.Source).toLowerCase() !== 'manuel' ? '<div class="src">' + esc(it.Source) + '</div>' : '') + '</div></div><span class="epi-qty clk" data-qtyedit="' + esc(it.ListeID) + '">' + esc(fmtNum(it.Quantite)) + ' <span class="u">' + esc(plurUnite(it.Quantite, it.Unite)) + '</span></span><span class="xdel clk" data-delepi="' + esc(it.ListeID) + '">&times;</span></div></div>';
+    h += '<div class="card tap epi-card tinted' + (dn ? ' done' : '') + '" data-rayof="' + esc(ray) + '" style="--tint:' + tint[0] + ';--tint-b:' + tint[1] + '"><div class="row"><div class="epi-main" data-epi="' + esc(it.ListeID) + '"><span class="chk ' + (dn ? 'on' : '') + '">' + (dn ? CHK : '') + '</span><div class="grow"><span class="itxt">' + esc(it.Ingredient) + '</span>' + (it.Source && String(it.Source).toLowerCase() !== 'manuel' ? '<div class="src">' + esc(it.Source) + '</div>' : '') + '</div></div><span class="epi-qty clk" data-qtyedit="' + esc(it.ListeID) + '">' + esc(fmtNum(it.Quantite)) + ' <span class="u">' + esc(plurUnite(it.Quantite, it.Unite)) + '</span></span><span class="xdel clk" data-delepi="' + esc(it.ListeID) + '">&times;</span></div></div>';
   });
   h += '</div></div>';
   return h;
@@ -2188,6 +2231,7 @@ function bind(){
     };
   });
   var gp = $('goPrep'); if (gp) gp.onclick = function () { setFold('epi_mode', 'prep'); ANIM_NEXT = true; render(); };
+  var sad = $('shopAdd'); if (sad) sad.onclick = openManuel;
 
   // --- Calendrier ---
   var cp = $('calPrev'); if (cp) cp.onclick = function () { CAL_OFF--; render(); };
@@ -2741,9 +2785,9 @@ function openImportIG(){
 
 /* ============ Ajout manuel épicerie ============ */
 function openManuel(){
-  showSheet('Ajouter à l\'épicerie', '<label>Ingrédient</label><div id="mAc" style="margin-bottom:14px"></div><div id="mPicked" class="hide"><div class="card" style="margin-bottom:14px"><div class="row"><div class="grow"><div class="mealname" id="mNom" style="font-size:15px"></div><div class="cook" id="mRay"></div></div></div></div><div style="display:flex;gap:8px;margin-bottom:6px;align-items:flex-start"><input id="mQty" inputmode="decimal" placeholder="Qté" style="flex:.8"><div style="flex:1.4">' + uniteSelectHtml('mu', '') + '</div></div><button class="btn" id="mSave" style="margin-top:10px">Ajouter à la liste</button></div>', true);
+  showSheet('Ajouter à l\'épicerie', '<label>Ingrédient</label><div id="mAc" style="margin-bottom:14px"></div><div id="mPicked" class="hide"><div class="card" style="margin-bottom:14px"><div class="row"><div class="grow"><div class="mealname" id="mNom" style="font-size:15px"></div><div class="cook" id="mRay"></div></div></div></div><div style="display:flex;gap:8px;margin-bottom:6px;align-items:flex-start"><input id="mQty" inputmode="decimal" placeholder="Qté (1)" style="flex:.8"><div style="flex:1.4">' + uniteSelectHtml('mu', '') + '</div></div><button class="btn" id="mSave" style="margin-top:10px">Ajouter à la liste</button></div>', true);
   var picked = { nom: '', ray: '' };
-  acWidget($('mAc'), 'Chercher ou créer un ingrédient…', function (nom, ray) {
+  var mInp = acWidget($('mAc'), 'Chercher ou créer un ingrédient…', function (nom, ray) {
     picked.nom = nom; picked.ray = ray;
     $('mNom').textContent = nom; $('mRay').textContent = 'Rayon : ' + ray;
     $('mPicked').classList.remove('hide');
@@ -2752,14 +2796,18 @@ function openManuel(){
   }, true);
   $('mSave').onclick = function () {
     if (!picked.nom) { toast('Choisis d\'abord un ingrédient', 'err'); return; }
-    var q = $('mQty').value.replace(',', '.') || 0, u = uniteSelectVal('mu');
+    var q = $('mQty').value.replace(',', '.') || 1, u = uniteSelectVal('mu'); // vide = 1
     // Le MÊME id à l'écran et au serveur (avant v5.3, la ligne locale
     // prenait un autre id : cochée avant la réponse, la coche se perdait).
     var id = cid('E');
     localMergeEpicerie([{ ingredient: picked.nom, quantite: num(q), unite: u, rayon: picked.ray, source: 'manuel', prefId: id }]);
     call('ajouterItemEpicerie', [id, picked.nom, q, u, picked.ray]);
-    closeSheet(); render();
+    closeSheet(); render(); toast('« ' + picked.nom + ' » ajouté à la liste');
   };
+  $('mQty').onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); $('mSave').click(); } };
+  // Le clavier s'ouvre tout de suite (focus dans le même geste que le
+  // tap, qu'iOS accepte) : on tape le nom, on choisit, c'est ajouté.
+  mInp.focus();
 }
 
 /* ============ Nouvelle liste custom ============ */
@@ -2911,7 +2959,7 @@ function closeSheet(){
 
 /* ============ Init ============ */
 qall('.side-item,.mobilenav .nv').forEach(function (n) { n.onclick = function () { setTab(n.getAttribute('data-tab')); }; });
-$('fab').onclick = function () { if (TAB === 'recettes') openRecette(); };
+$('fab').onclick = function () { if (TAB === 'recettes') openRecette(); else if (TAB === 'epicerie') openManuel(); };
 $('sideNew').onclick = function () { setTab('recettes'); openRecette(); };
 $('goNous').onclick = function () { setTab('nous'); };
 qall('.side-item,.mobilenav .nv').forEach(function (n) { n.classList.toggle('on', n.getAttribute('data-tab') === TAB); });
