@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v5.5.0 « Porcelaine »
+     LAVOIE & CO — v5.6.0 « Porcelaine »
      Direction : sobre et épuré. Porcelaine chaude, noir profond,
      une seule touche de sable. Titres en Bodoni Moda, interface en
      Inter, mot-symbole en Marcellus.
@@ -437,6 +437,11 @@
     text-transform:uppercase;color:var(--champ-ink);background:var(--champ-ghost);border:1px solid var(--champ-line);
     border-radius:20px;padding:3px 9px;white-space:nowrap}
   .trackchip svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:3}
+  .xlist{padding:4px 14px}
+  .xrow{display:flex;align-items:center;gap:12px;padding:10px 0}
+  .xrow + .xrow{border-top:1px solid var(--line2)}
+  .xico{width:32px;height:32px;border-radius:50%;background:var(--acc-ghost);color:var(--acc-ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .xico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .xdel{color:var(--faint);font-size:20px;padding:2px 6px;line-height:1;cursor:pointer;transition:color .15s}
   .xdel:active{color:var(--danger)}
   .chev{color:var(--faint);font-size:19px}
@@ -711,7 +716,7 @@
   <figure class="sp-poeme" id="spPoeme"><blockquote id="spTexte"></blockquote><figcaption id="spAuteur"></figcaption></figure>
   <div class="sp-bar" id="spBar"><i></i></div>
   <div class="sp-skip" id="spSkip">Touche pour continuer</div>
-  <div class="sp-ver">v5.5.0</div>
+  <div class="sp-ver">v5.6.0</div>
 </div>
 
 <aside class="sidebar">
@@ -727,7 +732,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.5.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.6.0</span></div>
 </aside>
 
 <div class="content">
@@ -735,7 +740,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.5.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.6.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -752,7 +757,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v5.5.0
+   LAVOIE & CO — Frontend v5.6.0
    ----------------------------------------------------------------
    v5.3 — le sync réparé (voir aussi le serveur Code.gs v5.3) :
    - Un téléchargement qui revient APRÈS un geste local est jeté : il
@@ -785,7 +790,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '5.5.0'
+  VERSION: '5.6.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -901,6 +906,13 @@ function rayonTint(ray){
 
 /* ---------- Accès aux données ---------- */
 function recette(rid){ return (DATA.recettes || []).filter(function (x) { return String(x.RecetteID) === String(rid); })[0]; }
+// Les articles « à côté » du Menu Chasse (chips, eau…) sont rangés
+// comme de mini-recettes d'un seul ingrédient, de type « Extra chasse » :
+// elles profitent ainsi du suivi « déjà dans l'épicerie » du serveur,
+// sans rien changer au serveur. On les cache du carnet et des sélecteurs.
+var TYPE_EXTRA = 'Extra chasse';
+function estArticleChasse(r){ return !!r && (r.types || []).indexOf(TYPE_EXTRA) >= 0; }
+function recettesCarnet(){ return (DATA.recettes || []).filter(function (r) { return !estArticleChasse(r); }); }
 function recetteNom(rid){ var r = recette(rid); return r ? r.Nom : '(supprimée)'; }
 function ingredientsOf(rid){ return (DATA.ingredients || []).filter(function (i) { return String(i.RecetteID) === String(rid); }); }
 function rayonsSorted(){ return (DATA.rayons || []).slice().sort(function (a, b) { return a.Ordre - b.Ordre; }); }
@@ -1092,7 +1104,7 @@ function loadQueue(){
 function saveQueue(){ try { localStorage.setItem(QKEY, JSON.stringify(syncQueue)); } catch (e) {} }
 function pendingCount(){ return syncQueue.length + Object.keys(pendEpi).length + Object.keys(pendLi).length; }
 
-function editingOpen(){ return !!($('ov') || $('ov2')); }
+function editingOpen(){ return !!($('ov') || $('ov2') || $('ov3')); }
 function typingNow(){ var a = document.activeElement; return !!(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)); }
 // On ne remplace les données locales par celles du serveur QUE si rien n'est en cours.
 function canPull(){
@@ -1598,7 +1610,7 @@ function viewMenu(){
   var sub = weekOffset === 0 ? 'Cette semaine' : (weekOffset === 1 ? 'Semaine prochaine' : (weekOffset === -1 ? 'Semaine dernière' : ''));
   var h = '<div class="ph">Le menu</div><div class="psub">Choisis tes recettes — elles se placent dans la semaine</div><div class="panes"><section class="pane-a">';
   h += '<div class="weeknav"><div class="arr clk" id="wPrev" role="button" aria-label="Semaine précédente">‹</div><div class="lbl">' + esc(lbl) + (sub ? '<span class="sm">' + esc(sub) + '</span>' : '') + '</div><div class="arr clk" id="wNext" role="button" aria-label="Semaine suivante">›</div></div>';
-  var nCh = (DATA.chasse || []).length;
+  var nCh = (DATA.chasse || []).filter(function (c) { return !estExtraChasse(c); }).length;
   h += '<div class="card tap clk chasse-cta" id="goChasse"><div class="row"><div class="grow"><div class="eyebrow">Au camp</div><div class="mealname">Menu Chasse — 8 jours de bois</div></div><span class="ctchip">' + nCh + ' / 16</span><span class="chev">›</span></div></div>';
   var isoAuj = ymd(new Date());
   h += '<div class="week">';
@@ -1618,7 +1630,7 @@ function viewMenu(){
   });
   h += '</div>';
   h += '</section><section class="pane-b">';
-  var recs = (DATA.recettes || []);
+  var recs = recettesCarnet();
   h += '<div class="secthd"><span class="t">Mes recettes</span><span class="ln"></span></div>';
   if (!recs.length) { h += '<div class="empty">' + CREST_MINI + 'Aucune recette.<br>Crée-en une dans l\'onglet Recettes.</div></section></div>'; return h; }
   var types = (DATA.types || []);
@@ -1651,7 +1663,7 @@ function recPickCard(r){
 
 /* ============ RECETTES ============ */
 function viewRecettes(){
-  var r = (DATA.recettes || []);
+  var r = recettesCarnet();
   var cat = (DATA.catalogue || []);
   var rmode = UI_FOLD['rec_mode'] === 'ing' ? 'ing' : 'carnet';
   var h = '<div class="ph">Recettes</div><div class="psub">' + (rmode === 'ing' ? cat.length + ' ingrédients au catalogue — glisse-les entre rayons pour les reclasser' : r.length + ' recette' + (r.length > 1 ? 's' : '') + ' dans le carnet') + '</div>';
@@ -1935,6 +1947,43 @@ function changeIngredientRayon(nom, nouveauRayon){
 
 /* ============ MENU CHASSE ============ */
 function chasseFor(j, rep){ return (DATA.chasse || []).filter(function (c) { return String(c.Jour) === String(j) && repasOf(c.Repas) === rep; })[0]; }
+// « À côté du menu » : des lignes Chasse dont le Jour n'est pas 1 à 8
+// mais un code de 2 caractères (x7, k2…). Hors de la grille, donc hors
+// du menu imprimé ; mais suivies comme les autres (CHASSE-Jx7 tient dans
+// les 10 caractères de date du suivi serveur) et versées à l'épicerie.
+function estExtraChasse(c){ return !/^\d+$/.test(String(c.Jour)); }
+function codeExtraChasse(){
+  var pris = {}; (DATA.chasse || []).forEach(function (c) { pris[String(c.Jour)] = 1; });
+  var L = 'xyzwvutsrqpnmkhgfdcba', C = '0123456789abcdefghijklmnopqrstuvwxyz';
+  for (var k = 0; k < 3000; k++) {
+    var code = L.charAt(Math.floor(Math.random() * L.length)) + C.charAt(Math.floor(Math.random() * C.length));
+    if (!pris[code]) return code;
+  }
+  return 'x' + Date.now().toString(36).slice(-1);
+}
+var ICO_ASSIETTE = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3.5"/></svg>';
+var ICO_SAC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 8z"/><path d="M9.5 8V6.5a2.5 2.5 0 0 1 5 0V8"/></svg>';
+function vueExtrasChasse(){
+  var extras = (DATA.chasse || []).filter(estExtraChasse);
+  var h = '<div class="secthd"><span class="t">À côté du menu</span><span class="ln"></span>' + (extras.length ? '<span class="ctchip">' + extras.length + '</span>' : '') + '</div>';
+  h += '<div class="small muted" style="margin:-4px 2px 12px;line-height:1.55">Pas au menu imprimé, mais dans l\'épicerie : un repas de plus, les chips, l\'eau…</div>';
+  if (extras.length) {
+    h += '<div class="card xlist">';
+    extras.forEach(function (c) {
+      var r = recette(c.RecetteID), article = estArticleChasse(r), ing = article ? ingredientsOf(c.RecetteID)[0] : null;
+      var nom = article ? (ing ? ing.Ingredient : 'Article') : recetteNom(c.RecetteID);
+      var detail = article ? (ing ? qteTexte(ing) : '') + (ing && ing.Rayon ? ' · ' + ing.Rayon : '') : 'Repas';
+      var dans = mealTracked('CHASSE-J' + c.Jour, repasOf(c.Repas), c.RecetteID);
+      h += '<div class="xrow"><span class="xico">' + (article ? ICO_SAC : ICO_ASSIETTE) + '</span>' +
+        '<div class="grow' + (article ? '' : ' clk') + '"' + (article ? '' : ' data-mealday="' + esc(c.RecetteID) + '"') + '><div class="mealname trunc">' + esc(nom) + '</div><div class="cook">' + esc(detail) + '</div></div>' +
+        (dans ? '<span class="trackchip"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Épicerie</span>' : '') +
+        '<span class="xdel clk" data-chxdel="' + esc(c.Jour) + '" title="Retirer">&times;</span></div>';
+    });
+    h += '</div>';
+  }
+  h += '<div class="btnrow" style="flex-wrap:wrap;margin:2px 0 4px"><button class="btn ghost sm" id="chXRepas">+ Un repas</button><button class="btn ghost sm" id="chXArticle">+ Un article (chips, eau…)</button></div>';
+  return h;
+}
 // Les repas du camp pas encore versés dans l'épicerie (pseudo-dates
 // CHASSE-J<n> : le suivi idempotent du serveur marche tel quel).
 function chasseUntracked(){
@@ -1963,15 +2012,15 @@ function viewChasse(){
     });
     h += '</div></div></div>';
   }
-  h += '</div><div class="btnrow" style="margin-top:14px">';
-  if (aAjouter.length) h += '<button class="btn" id="chAddEpi">Épicerie : + ' + aAjouter.length + ' repas</button>';
-  else if (n) h += '<button class="btn sec" disabled>Menu déjà dans l\'épicerie</button>';
+  h += '</div>' + vueExtrasChasse() + '<div class="btnrow" style="margin-top:18px;flex-direction:column">';
+  if (aAjouter.length) h += '<button class="btn" id="chAddEpi">Envoyer à l\'épicerie (' + aAjouter.length + ')</button>';
+  else if (n) h += '<button class="btn sec" disabled>Tout est déjà dans l\'épicerie</button>';
   h += '<button class="btn ghost" id="chPdf">Aperçu &amp; PDF</button></div>';
   h += '</div>';
   return h;
 }
 function openChassePicker(j, rep){
-  var recs = trierParNom(DATA.recettes || []);
+  var recs = trierParNom(recettesCarnet());
   if (!recs.length) { toast('Crée d\'abord une recette', 'err'); return; }
   var list = recs.map(function (r) { return '<div class="card tap clk" data-q="' + esc(recHay(r)) + '" data-chp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
   showSheet(REPAS_LBL[rep] + ' · Jour ' + j, searchBox('chQ', '', 'Chercher une recette ou un ingrédient') + '<div id="chList">' + list + '<div class="empty small srch-vide hide">Aucune recette ne correspond à « <span></span> ».</div></div>', true);
@@ -1988,6 +2037,56 @@ function openChassePicker(j, rep){
       closeSheet(); render();
     };
   });
+}
+// « + Un repas » à côté du menu : une recette du carnet, hors grille.
+function openChasseExtraRepas(){
+  var recs = trierParNom(recettesCarnet());
+  if (!recs.length) { toast('Crée d\'abord une recette', 'err'); return; }
+  var list = recs.map(function (r) { return '<div class="card tap clk" data-q="' + esc(recHay(r)) + '" data-chxp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
+  showSheet('Un repas à côté', '<div class="psub" style="margin-bottom:12px">Pas au menu, mais ses ingrédients iront à l\'épicerie.</div>' + searchBox('chxQ', '', 'Chercher une recette ou un ingrédient') + '<div id="chxList">' + list + '<div class="empty small srch-vide hide">Aucune recette ne correspond à « <span></span> ».</div></div>', true);
+  bindSearch('chxQ', '#chxList');
+  qall('[data-chxp]').forEach(function (el) {
+    el.onclick = function () {
+      var rid = el.getAttribute('data-chxp'), code = codeExtraChasse();
+      DATA.chasse.push({ Jour: code, Repas: 'souper', RecetteID: rid });
+      call('setChasse', [code, 'souper', rid]);
+      closeSheet(); render(); toast('« ' + recetteNom(rid) + ' » ajouté à côté du menu');
+    };
+  });
+}
+// « + Un article » : chips, eau, glace… tout ce qui n'est pas dans une
+// recette. La feuille reste ouverte pour enchaîner les articles.
+function openChasseArticle(){
+  showSheet('Un article pour le camp', '<div class="psub" style="margin-bottom:12px">Chips, eau, glace… Pas au menu, mais dans l\'épicerie.</div><label>Article</label><div id="caAc" style="margin-bottom:14px"></div><div id="caPicked" class="hide"><div class="card" style="margin-bottom:14px"><div class="row"><div class="grow"><div class="mealname" id="caNom" style="font-size:15px"></div><div class="cook" id="caRay"></div></div></div></div><div style="display:flex;gap:8px;margin-bottom:6px;align-items:flex-start"><input id="caQty" inputmode="decimal" placeholder="Qté (1)" style="flex:.8"><div style="flex:1.4">' + uniteSelectHtml('cau', '') + '</div></div><button class="btn" id="caSave" style="margin-top:10px">Ajouter à côté du menu</button></div>', true);
+  var picked = { nom: '', ray: '' };
+  var inp = acWidget($('caAc'), 'Chercher ou créer un article…', function (nom, ray) {
+    picked.nom = nom; picked.ray = ray;
+    $('caNom').textContent = nom; $('caRay').textContent = 'Rayon : ' + ray;
+    $('caPicked').classList.remove('hide');
+    bindUniteSelect('cau');
+    setTimeout(function () { var q = $('caQty'); if (q) q.focus(); }, 60);
+  }, true);
+  // Rien à protéger à la fermeture : chaque article est enregistré dès « Ajouter ».
+  qall('#ov2 input, #ov2 select').forEach(function (el) { el.setAttribute('data-libre', ''); });
+  $('caSave').onclick = function () {
+    if (!picked.nom) { toast('Choisis d\'abord un article', 'err'); return; }
+    var q = $('caQty').value.replace(',', '.') || 1, u = uniteSelectVal('cau');
+    var rid = cid('RX'), code = codeExtraChasse();
+    DATA.recettes.push({ RecetteID: rid, Nom: TYPE_EXTRA, Portions: 1, Notes: '', Types: TYPE_EXTRA, types: [TYPE_EXTRA], etapes: [], lastCooked: '' });
+    DATA.ingredients.push({ RecetteID: rid, Ingredient: picked.nom, Quantite: fmtNum(num(q)), Unite: u, Rayon: picked.ray });
+    if (!DATA.catalogue.some(function (c) { return norm(c.Ingredient) === norm(picked.nom); })) DATA.catalogue.push({ Ingredient: picked.nom, Rayon: picked.ray });
+    DATA.chasse.push({ Jour: code, Repas: 'souper', RecetteID: rid });
+    call('ajouterRecette', [{ id: rid, nom: TYPE_EXTRA, portions: 1, notes: '', types: [TYPE_EXTRA], etapes: [], ingredients: [{ ingredient: picked.nom, rayon: picked.ray, quantite: String(q), unite: u }] }]);
+    call('setChasse', [code, 'souper', rid]);
+    render(); toast('« ' + picked.nom + ' » ajouté à côté du menu');
+    // Prêt pour le suivant
+    picked.nom = ''; picked.ray = '';
+    $('caPicked').classList.add('hide'); $('caQty').value = ''; inp.value = '';
+    var us = $('cau-sel'), uc = $('cau-cust'); if (us) us.value = ''; if (uc) { uc.value = ''; uc.style.display = 'none'; }
+    inp.focus();
+  };
+  $('caQty').onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); $('caSave').click(); } };
+  inp.focus();
 }
 // Le panache et la branche : les traits céladon du document imprimable.
 var PANACHE = '<svg viewBox="0 0 140 80" style="width:118px;height:67px;stroke:var(--acc)" fill="none" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M66 76 C 64 60, 58 48, 46 42"/><path d="M56 52 C 50 44, 48 34, 52 26"/><path d="M48 43 C 42 36, 40 28, 44 20"/><path d="M61 62 C 55 58, 51 52, 51 45"/><path d="M74 76 C 76 60, 82 48, 94 42"/><path d="M84 52 C 90 44, 92 34, 88 26"/><path d="M92 43 C 98 36, 100 28, 96 20"/><path d="M79 62 C 85 58, 89 52, 89 45"/></svg>';
@@ -2448,10 +2547,29 @@ function bind(){
     });
     var nouveaux = localMergeEpicerie(items);
     render();
-    toast(chosen.length + ' repas de chasse ajouté' + (chosen.length > 1 ? 's' : '') + ' à l\'épicerie');
+    toast(chosen.length + ' élément' + (chosen.length > 1 ? 's' : '') + ' de chasse envoyé' + (chosen.length > 1 ? 's' : '') + ' à l\'épicerie');
     call('ajouterRepasEpicerie', [chosen, nouveaux]);
   };
   var cpd = $('chPdf'); if (cpd) cpd.onclick = openChassePdf;
+  var cxr = $('chXRepas'); if (cxr) cxr.onclick = openChasseExtraRepas;
+  var cxa = $('chXArticle'); if (cxa) cxa.onclick = openChasseArticle;
+  qall('[data-chxdel]').forEach(function (el) {
+    el.onclick = function (ev) {
+      ev.stopPropagation();
+      var code = el.getAttribute('data-chxdel');
+      var c = (DATA.chasse || []).filter(function (x) { return String(x.Jour) === code; })[0]; if (!c) return;
+      var rid = String(c.RecetteID), article = estArticleChasse(recette(rid));
+      DATA.chasse = DATA.chasse.filter(function (x) { return String(x.Jour) !== code; });
+      untrackDateLocal('CHASSE-J' + code, repasOf(c.Repas));
+      call('retirerChasse', [code, repasOf(c.Repas)]);
+      if (article) { // la mini-recette de l'article part avec lui
+        DATA.recettes = DATA.recettes.filter(function (x) { return String(x.RecetteID) !== rid; });
+        DATA.ingredients = DATA.ingredients.filter(function (x) { return String(x.RecetteID) !== rid; });
+        call('supprimerRecette', [rid]);
+      }
+      render();
+    };
+  });
 
   // --- Julie & JP ---
   qall('[data-nousedit]').forEach(function (el) { el.onclick = function () { openNousEdit(el.getAttribute('data-nousedit')); }; });
@@ -2622,7 +2740,7 @@ function acWidget(container, placeholder, onPick, allowCreate){
 }
 function promptNewIngredient(nom, cb){
   var rayOpts = rayonsSorted().map(function (r) { return '<option>' + esc(r.Rayon) + '</option>'; }).join('');
-  showSheet('Nouvel ingrédient', '<div class="field"><label>Nom</label><input id="ni-nom" value="' + esc(nom) + '"></div><div class="field"><label>Rayon au magasin</label><select id="ni-ray">' + rayOpts + '</select></div><button class="btn" id="ni-save">Créer et utiliser</button>', true);
+  showSheet('Nouvel ingrédient', '<div class="field"><label>Nom</label><input id="ni-nom" value="' + esc(nom) + '"></div><div class="field"><label>Rayon au magasin</label><select id="ni-ray">' + rayOpts + '</select></div><button class="btn" id="ni-save">Créer et utiliser</button>', $('ov2') ? 3 : true);
   $('ni-save').onclick = function () {
     var n = $('ni-nom').value.trim(), r = $('ni-ray').value;
     if (!n) { toast('Écris d\'abord un nom', 'err'); $('ni-nom').focus(); return; }
@@ -2635,7 +2753,7 @@ function promptNewIngredient(nom, cb){
 /* ============ Picker jour ============ */
 function openDayPicker(iso, rep){
   rep = rep || 'souper';
-  var d = parseYmd(iso), recs = trierParNom(DATA.recettes || []);
+  var d = parseYmd(iso), recs = trierParNom(recettesCarnet());
   if (!recs.length) { toast('Crée d\'abord une recette', 'err'); return; }
   var list = recs.map(function (r) { return '<div class="card tap clk" data-q="' + esc(recHay(r)) + '" data-dp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
   showSheet(REPAS_LBL[rep] + ' · ' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()], '<div class="field"><label>Qui cuisine ? (optionnel)</label><input id="dp-cook" placeholder="Julie, JP…"></div>' + searchBox('dpQ', '', 'Chercher une recette ou un ingrédient') + '<div id="dpList">' + list + '<div class="empty small srch-vide hide">Aucune recette ne correspond à « <span></span> ».</div></div>', true);
@@ -3316,7 +3434,7 @@ function openManuel(){
     $('mNom').textContent = nom; $('mRay').textContent = 'Rayon : ' + ray;
     $('mPicked').classList.remove('hide');
     bindUniteSelect('mu');
-    setTimeout(function () { $('mQty').focus(); }, 60);
+    setTimeout(function () { var f = $('mQty'); if (f) f.focus(); }, 60);
   }, true);
   $('mSave').onclick = function () {
     if (!picked.nom) { toast('Choisis d\'abord un ingrédient', 'err'); return; }
@@ -3395,7 +3513,7 @@ function rebindEditRapide(rid){
     var inp = document.querySelector('#qre-ac .ac-inp'); if (inp) inp.value = nom;
     $('qre-qty').classList.remove('hide');
     var rl = $('qre-rl'); if (rl) rl.textContent = 'Rayon : ' + ray;
-    setTimeout(function () { $('qre-q').focus(); }, 50);
+    setTimeout(function () { var f = $('qre-q'); if (f) f.focus(); }, 50);
   }, true);
   var addB = $('qre-add');
   if (addB) addB.onclick = function () {
@@ -3439,12 +3557,15 @@ function refreshEditRapide(rid){
 }
 
 /* ============ Modal ============ */
+// stacked : false = 1er niveau, true = par-dessus, 3 = par-dessus une
+// feuille déjà empilée (créer un ingrédient depuis « Ajouter à
+// l'épicerie » remplaçait cette feuille et plantait — avant v5.6).
 function showSheet(title, inner, stacked){
-  var id = stacked ? 'ov2' : 'ov';
+  var id = stacked === 3 ? 'ov3' : stacked ? 'ov2' : 'ov';
   var old = $(id); if (old) old.remove();
   var o = document.createElement('div');
   o.className = 'overlay'; o.id = id;
-  if (stacked) o.style.zIndex = '70';
+  if (stacked) o.style.zIndex = stacked === 3 ? '75' : '70';
   o.innerHTML = '<div class="sheet"><div class="grab"></div><div class="shd"><span class="t">' + esc(title) + '</span><span class="x clk">&times;</span></div>' + inner + '</div>';
   // Dès qu'un geste a modifié le contenu, fermer — par un clic à côté
   // OU par le X — demande confirmation. Une recette tapée au complet
@@ -3477,6 +3598,7 @@ function showSheet(title, inner, stacked){
   o.querySelector('.x').onclick = fermer;
 }
 function closeSheet(){
+  var o3 = $('ov3'); if (o3) { o3.remove(); return; }
   var o2 = $('ov2'); if (o2) { o2.remove(); return; }
   var o = $('ov'); if (o) o.remove();
 }
