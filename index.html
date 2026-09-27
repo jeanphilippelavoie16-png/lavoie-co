@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v5.2.0 « Porcelaine »
+     LAVOIE & CO — v5.3.0 « Porcelaine »
      Direction : sobre et épuré. Porcelaine chaude, noir profond,
      une seule touche de sable. Titres en Bodoni Moda, interface en
      Inter, mot-symbole en Marcellus.
@@ -549,6 +549,20 @@
   .ac-new:active{background:var(--wine-ghost)}
   .ac-new svg{width:17px;height:17px}
 
+  /* ---------- Recherche (recettes, ingrédients) ---------- */
+  .search{position:relative;margin:0 0 14px}
+  .search .mag{position:absolute;left:16px;top:50%;width:17px;height:17px;transform:translateY(-50%);
+    fill:none;stroke:var(--mut);stroke-width:1.8;stroke-linecap:round;pointer-events:none}
+  .search input{padding:12px 46px 12px 44px;border-radius:999px;box-shadow:var(--sh-1);-webkit-appearance:none;appearance:none}
+  .search input::-webkit-search-cancel-button,.search input::-webkit-search-decoration{-webkit-appearance:none;display:none}
+  .search .sx{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;background:var(--paper-2);color:var(--ink2);font-size:18px;line-height:1;cursor:pointer}
+  .search:not(.has) .sx{display:none}
+  .ingtools{display:flex;gap:9px;align-items:center;margin-bottom:16px;max-width:600px}
+  .ingtools .search{flex:1;margin:0}
+  /* Dans une feuille, la recherche reste en haut pendant qu'on défile */
+  .sheet .search{position:sticky;top:-8px;z-index:3;background:var(--paper);padding:6px 0 10px;margin:-6px 0 6px}
+  .srch-vide{padding:26px 16px}
   .empty{text-align:center;color:var(--mut);padding:44px 24px;font-size:14px;line-height:1.7}
   .empty .crest{width:7px;height:7px;background:var(--champ);transform:rotate(45deg);margin:0 auto 18px;display:block}
   .clk{cursor:pointer} .hide{display:none!important}
@@ -607,6 +621,8 @@
     .sheet{border-radius:26px;max-width:580px;min-height:340px;max-height:88vh;padding:28px 32px 32px;
       box-shadow:var(--sh-pop);animation:pop .26s var(--ease)}
     .sheet.tall{min-height:520px}
+    .sheet .search{top:-28px}
+    main .search{max-width:640px}
     @keyframes pop{from{transform:scale(.965);opacity:.4}to{transform:scale(1);opacity:1}}
     .sp-word{font-size:38px}
     .rayhd{top:64px}
@@ -652,7 +668,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v5.2.0</div>
+  <div class="sp-ver">v5.3.0</div>
 </div>
 
 <aside class="sidebar">
@@ -668,7 +684,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.2.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.3.0</span></div>
 </aside>
 
 <div class="content">
@@ -676,7 +692,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v5.2.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.3.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -693,8 +709,20 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v5.2.0
+   LAVOIE & CO — Frontend v5.3.0
    ----------------------------------------------------------------
+   v5.3 — le sync réparé (voir aussi le serveur Code.gs v5.3) :
+   - Un téléchargement qui revient APRÈS un geste local est jeté : il
+     effaçait de l'écran le repas qu'on venait d'ajouter.
+   - Un instantané plus vieux que notre dernière écriture est refusé,
+     et un pull de confirmation passe ~17 s après la dernière modif.
+   - Chaque op part avec un opId : rejouée après une coupure, le
+     serveur ne la refait pas (plus de quantités doublées).
+   - Délai max par appel : un fetch qui pend ne bloque plus la file.
+   - Erreurs passagères (serveur occupé, Google débordé) : rejouées
+     avec un délai croissant, au lieu d'être jetées.
+   - Épicerie : les lignes créées ici gardent le même ID au serveur,
+     et les coches en attente partent toujours avant l'ajout suivant.
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
    - File d'attente persistante (outbox) : toutes les modifications
@@ -714,7 +742,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '5.2.0'
+  VERSION: '5.3.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -737,7 +765,7 @@ function repasOf(v){ return norm(v) === 'diner' ? 'diner' : 'souper'; }
 /* ---------- État ---------- */
 var DATA = null, REV = 0, TAB = 'menu';
 var curListe = null, weekOffset = 0;
-var MENU_SEL = {}, MENU_FILTER = '', ING_SEARCH = '';
+var MENU_SEL = {}, MENU_FILTER = '', ING_SEARCH = '', MENU_Q = '', CARNET_Q = '';
 var REC_INGS = [], REC_TYPES = {}, REC_STEPS = [], EDIT_RID = null, REC_NOTES = '';
 var LKEY = 'LCO_DATA_V4', QKEY = 'LCO_QUEUE_V4';
 var LKEY_OLD = 'LCO_DATA_CACHE_v1', QKEY_OLD = 'LCO_SYNC_QUEUE_v1';
@@ -838,6 +866,58 @@ function lastCookedLabel(r){
   return 'il y a ' + Math.floor(days / 30) + ' mois';
 }
 
+/* ---------- Recherche ---------- */
+// Filtre en direct dans la page, SANS re-rendu : le clavier reste
+// ouvert et le curseur ne saute pas. Chaque carte porte data-q (nom,
+// groupes et ingrédients, normalisés) ; tous les mots tapés doivent s'y
+// trouver — « poulet riz » trouve le sauté au poulet.
+var LOUPE = '<svg class="mag" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg>';
+function searchBox(id, val, ph){
+  return '<div class="search' + (val ? ' has' : '') + '"><input id="' + id + '" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="' + esc(ph) + '" placeholder="' + esc(ph) + '" value="' + esc(val) + '">' + LOUPE + '<span class="sx clk" role="button" aria-label="Effacer la recherche">&times;</span></div>';
+}
+function recHay(r){
+  return norm([r.Nom].concat(r.types || [], ingredientsOf(r.RecetteID).map(function (i) { return i.Ingredient; })).join(' '));
+}
+function filtrerListe(root, q){
+  if (typeof root === 'string') root = document.querySelector(root);
+  if (!root) return;
+  var mots = norm(q).split(' ').filter(Boolean), vus = 0;
+  qallIn(root, '[data-q]').forEach(function (el) {
+    var hay = el.getAttribute('data-q'), ok = mots.every(function (m) { return hay.indexOf(m) >= 0; });
+    el.classList.toggle('hide', !ok); if (ok) vus++;
+  });
+  // Un groupe (ou rayon) sans résultat disparaît le temps de la recherche.
+  qallIn(root, '[data-grp]').forEach(function (g) {
+    var grille = g.nextElementSibling;
+    var nb = grille ? grille.querySelectorAll('[data-q]:not(.hide)').length : 0;
+    var garde = !mots.length || nb > 0;
+    g.classList.toggle('hide', !garde); if (grille) grille.classList.toggle('hide', !garde);
+    // Le compteur du groupe suit la recherche, puis retrouve son total.
+    var ct = g.querySelector('.ct');
+    if (ct) {
+      if (!ct.hasAttribute('data-tot')) ct.setAttribute('data-tot', ct.textContent);
+      ct.textContent = mots.length ? nb : ct.getAttribute('data-tot');
+    }
+  });
+  var vide = root.querySelector('.srch-vide');
+  if (vide) { vide.classList.toggle('hide', !(mots.length && !vus)); var sp = vide.querySelector('span'); if (sp) sp.textContent = String(q).trim(); }
+}
+function qallIn(root, sel){ return Array.prototype.slice.call(root.querySelectorAll(sel)); }
+function bindSearch(id, scope, onChange){
+  var inp = $(id); if (!inp) return;
+  var box = inp.parentNode;
+  function go(){ if (onChange) onChange(inp.value); box.classList.toggle('has', !!inp.value); filtrerListe(scope, inp.value); }
+  inp.oninput = go;
+  inp.onkeydown = function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); inp.blur(); }          // ferme le clavier, garde le filtre
+    else if (e.key === 'Escape') { inp.value = ''; go(); }
+  };
+  var sx = box.querySelector('.sx');
+  if (sx) sx.onclick = function () { inp.value = ''; go(); inp.focus(); };
+  if (inp.value) filtrerListe(scope, inp.value);
+}
+function trierParNom(recs){ return recs.slice().sort(function (a, b) { return String(a.Nom).localeCompare(String(b.Nom), 'fr', { sensitivity: 'base' }); }); }
+
 /* ---------- Persistance locale ---------- */
 function normalizeData(d){
   if (!d) return d;
@@ -862,17 +942,42 @@ function loadLocal(){
 }
 
 /* ---------- Transport ---------- */
-function apiCall(fn, args){
+// Délai max d'un appel de sync. Sur une barre de réseau, fetch() peut
+// PENDRE des minutes : la file restait figée sur « Sync · 3 » et plus
+// rien ne passait. Après ce délai l'appel compte comme raté et il est
+// rejoué — sans danger, le serveur reconnaît l'opId.
+var API_TIMEOUT = 45000;
+// Erreurs où le serveur n'a rien écrit et où il suffit de réessayer.
+var TRANSITOIRE = /occup|verrou|timed out|trop longtemps|too many|simultan|Service .*(indisponible|unavailable|error|erreur)|Address unavailable|réessayer|try again|internal error|erreur interne|exceeded maximum execution/i;
+function erreurServeur(msg, retry){
+  var e = new Error(msg || 'Erreur serveur');
+  if (retry || TRANSITOIRE.test(e.message)) e.transient = true; else e.server = true;
+  return e;
+}
+// Rend l'enveloppe complète { ok, result, rev } : la révision sert à
+// refuser les instantanés plus vieux que nos propres écritures.
+function apiRaw(fn, args, opts){
+  opts = opts || {};
   if (!HOSTED) {
     return new Promise(function (resolve, reject) {
-      google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[fn].apply(google.script.run, args || []);
+      google.script.run
+        .withSuccessHandler(function (res) { resolve({ ok: true, result: res }); })
+        .withFailureHandler(function (err) {
+          var msg = String(err && err.message || err);
+          // Coupure réseau dans l'iframe : on garde l'op en file (pas un refus).
+          reject(/NetworkError|HTTP 0|network/i.test(msg) ? new Error(msg) : erreurServeur(msg));
+        })[fn].apply(google.script.run, args || []);
     });
   }
+  var body = { fn: fn, args: args || [], token: CONFIG.APP_TOKEN };
+  if (opts.opId) body.opId = opts.opId;
+  var ctl = (typeof AbortController === 'function') ? new AbortController() : null, minuteur = null;
   // POST text/plain = « simple request » : pas de preflight CORS, aucune limite d'URL.
-  return fetch(CONFIG.API_URL, {
+  var req = fetch(CONFIG.API_URL, {
     method: 'POST', redirect: 'follow',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ fn: fn, args: args || [], token: CONFIG.APP_TOKEN })
+    body: JSON.stringify(body),
+    signal: ctl ? ctl.signal : undefined
   }).then(function (r) {
     return r.text().then(function (txt) {
       var j;
@@ -882,11 +987,21 @@ function apiCall(fn, args){
         err.soft = (r.status >= 200 && r.status < 500); // config probable, pas un problème réseau
         throw err;
       }
-      if (!j || !j.ok) { var e2 = new Error((j && j.error) || 'Erreur serveur'); e2.server = true; throw e2; }
-      return j.result;
+      if (!j || !j.ok) throw erreurServeur(j && j.error, j && j.retry);
+      return j;
     });
   });
+  if (!opts.timeout) return req;
+  var delai = new Promise(function (_, reject) {
+    minuteur = setTimeout(function () { if (ctl) { try { ctl.abort(); } catch (e) {} } reject(new Error('Délai dépassé')); }, opts.timeout);
+  });
+  return Promise.race([req, delai]).then(
+    function (j) { clearTimeout(minuteur); return j; },
+    function (e) { clearTimeout(minuteur); throw e; });
 }
+function apiCall(fn, args){ return apiRaw(fn, args).then(function (j) { return j.result; }); }
+// Le serveur a répondu (même par un refus) : on n'est pas hors ligne.
+function aRepondu(err){ return !!(err && (err.server || err.transient || err.soft)); }
 
 /* ================================================================
    MOTEUR DE SYNC
@@ -895,6 +1010,12 @@ var syncQueue = [], flushing = false, inflight = 0, pulling = false, hbBusy = fa
 var NEEDS_PULL = false;
 var queueCallbacks = {};
 var pendEpi = {}, epiT = null, pendLi = {}, liT = null;
+// v5.3 — garde-fous de fusion :
+var LOCAL_GEN = 0;     // +1 à chaque geste local : un pull parti avant est périmé
+var MIN_REV = 0;       // révision serveur de notre dernière écriture confirmée
+var retryT = null;     // nouvel essai différé (erreur passagère)
+var pullT = null, confirmT = null, pullRejets = 0;
+var SERVEUR_V = '';
 
 function loadQueue(){
   try { syncQueue = JSON.parse(localStorage.getItem(QKEY) || '[]'); if (!Array.isArray(syncQueue)) syncQueue = []; } catch (e) { syncQueue = []; }
@@ -903,7 +1024,7 @@ function loadQueue(){
     var old = JSON.parse(localStorage.getItem(QKEY_OLD) || '[]');
     if (Array.isArray(old) && old.length) { syncQueue = old.concat(syncQueue); localStorage.removeItem(QKEY_OLD); }
   } catch (e) {}
-  syncQueue.forEach(function (it) { if (typeof it.tries !== 'number') it.tries = 0; });
+  syncQueue.forEach(function (it) { if (typeof it.tries !== 'number') it.tries = 0; if (!it.id) it.id = cid('q'); });
   saveQueue();
 }
 function saveQueue(){ try { localStorage.setItem(QKEY, JSON.stringify(syncQueue)); } catch (e) {} }
@@ -917,6 +1038,10 @@ function canPull(){
     !Object.keys(pendEpi).length && !Object.keys(pendLi).length &&
     !syncQueue.length && !flushing && !pulling;
 }
+function planifierPull(ms){
+  clearTimeout(pullT);
+  pullT = setTimeout(function () { pullT = null; if (NEEDS_PULL && canPull()) pull(); }, ms);
+}
 
 function enqueue(fn, args, onDone){
   var qid = cid('q');
@@ -925,57 +1050,149 @@ function enqueue(fn, args, onDone){
   saveQueue(); updateSync();
   flushQueue();
 }
+function nouvelEssai(ms){
+  clearTimeout(retryT);
+  retryT = setTimeout(function () { retryT = null; flushQueue(); }, ms);
+}
+function retirerDeLaFile(item){
+  var i = syncQueue.indexOf(item);
+  if (i >= 0) syncQueue.splice(i, 1);
+  delete queueCallbacks[item.id];
+  saveQueue();
+}
 
-// Vide la file vers le serveur, dans l'ordre.
+// Vide la file vers le serveur, dans l'ordre, une op à la fois.
 // Réseau coupé → on garde tout et on réessaie plus tard.
+// Erreur passagère → nouvel essai avec un délai croissant.
 // Op refusée par le serveur → on la retire (la file ne bloque jamais) et on avertit.
 function flushQueue(){
   if (flushing || !syncQueue.length) return;
+  clearTimeout(retryT); retryT = null;
   flushing = true; inflight++; updateSync();
   var item = syncQueue[0];
-  apiCall(item.fn, item.args).then(function (res) {
-    syncQueue.shift(); saveQueue(); isOffline = false;
+  apiRaw(item.fn, item.args, { opId: item.id, timeout: API_TIMEOUT }).then(function (j) {
+    var res = j.result, cb = queueCallbacks[item.id];
+    retirerDeLaFile(item); isOffline = false;
     flushing = false; inflight = Math.max(0, inflight - 1);
-    var cb = queueCallbacks[item.id];
-    if (cb) { delete queueCallbacks[item.id]; try { cb(res); } catch (e) {} }
+    if (typeof j.rev === 'number') MIN_REV = Math.max(MIN_REV, j.rev);
+    apresEcriture(item, res);
+    if (cb) { try { cb(res); } catch (e) {} }
     if (syncQueue.length) { updateSync(); flushQueue(); }
-    else { NEEDS_PULL = true; updateSync(); if (canPull()) pull(); }
+    else { finDeFile(); }
   }).catch(function (err) {
     flushing = false; inflight = Math.max(0, inflight - 1);
     item.tries = (item.tries || 0) + 1;
     if (err && err.server) {
       // Refus logique du serveur : on ne bloque pas les modifications suivantes.
-      syncQueue.shift(); saveQueue(); delete queueCallbacks[item.id];
+      isOffline = false;
+      retirerDeLaFile(item);
       toast('Modification refusée : ' + err.message, 'err');
       updateSync();
-      if (syncQueue.length) flushQueue(); else { NEEDS_PULL = true; if (canPull()) pull(); }
+      if (syncQueue.length) flushQueue(); else finDeFile();
       return;
     }
-    if (err && err.soft && item.tries >= 8) {
-      // Réponse anormale répétée (ex. déploiement mal configuré) : on abandonne cet appel.
-      syncQueue.shift(); saveQueue(); delete queueCallbacks[item.id];
-      toast('Une modification n\'a pas pu être envoyée (' + err.message + ')', 'err');
-      updateSync();
-      if (syncQueue.length) flushQueue();
+    if (err && (err.transient || err.soft)) {
+      isOffline = false;
+      if (item.tries >= (err.soft ? 8 : 10)) {
+        // Réponse anormale répétée pendant plusieurs minutes : on abandonne cet appel.
+        retirerDeLaFile(item);
+        toast('Une modification n\'a pas pu être envoyée (' + err.message + ')', 'err');
+        updateSync();
+        if (syncQueue.length) flushQueue(); else finDeFile();
+        return;
+      }
+      saveQueue(); updateSync();
+      nouvelEssai(Math.min(60000, 1500 * Math.pow(2, item.tries - 1)));
       return;
     }
-    // Probablement hors ligne : on garde la file, le heartbeat réessaiera.
+    // Probablement hors ligne (ou délai dépassé) : on garde la file, le heartbeat réessaiera.
     isOffline = true; saveQueue(); updateSync();
+  });
+}
+// File vidée : on relit le serveur tout de suite, puis une seconde fois
+// ~17 s plus tard. Le 2e passage rattrape un vieux serveur (v4.9) qui
+// pouvait garder 15 s en cache un instantané sans notre dernier ajout.
+function finDeFile(){
+  NEEDS_PULL = true; updateSync();
+  if (canPull()) pull();
+  clearTimeout(confirmT);
+  confirmT = setTimeout(function () { confirmT = null; NEEDS_PULL = true; if (canPull()) pull(); }, 17000);
+}
+
+// Après un ajout à l'épicerie, le serveur renvoie la liste complète.
+// Une ligne créée ici avec un ID provisoire prend l'ID du serveur —
+// et les coches / quantités en attente qui visaient l'ancien ID suivent.
+// (Un serveur v5.3 garde nos ID : il n'y a alors rien à remapper.)
+function apresEcriture(item, res){
+  var rows = null;
+  if (item.fn === 'ajouterItemsEpicerie' || item.fn === 'genererEpicerie') rows = res;
+  else if (item.fn === 'ajouterRepasEpicerie') rows = res && res.epicerie;
+  else if (item.fn === 'ajouterItemEpicerie') rows = res ? [res] : null;
+  if (Array.isArray(rows)) adopterIdsEpicerie(rows);
+}
+function adopterIdsEpicerie(rows){
+  if (!DATA || !DATA.epicerie) return;
+  var srvIds = {}, srvParCle = {};
+  rows.forEach(function (r) {
+    if (!r || !r.ListeID) return;
+    srvIds[String(r.ListeID)] = 1;
+    srvParCle[norm(r.Ingredient) + '|' + norm(r.Unite)] = String(r.ListeID);
+  });
+  var map = {}, n = 0;
+  DATA.epicerie.forEach(function (e) {
+    var id = String(e.ListeID); if (srvIds[id]) return;
+    var nv = srvParCle[norm(e.Ingredient) + '|' + norm(e.Unite)];
+    if (nv && nv !== id) { map[id] = nv; e.ListeID = nv; n++; }
+  });
+  if (!n) return;
+  Object.keys(pendEpi).forEach(function (k) { if (map[k]) { pendEpi[map[k]] = pendEpi[k]; delete pendEpi[k]; } });
+  syncQueue.forEach(function (it) {
+    if (it.fn === 'setEpicerieCochesBatch' && Array.isArray(it.args[0])) {
+      it.args[0].forEach(function (u) { if (u && map[u.id]) u.id = map[u.id]; });
+    } else if ((it.fn === 'setEpicerieQuantite' || it.fn === 'retirerEpicerieItem' || it.fn === 'setEpicerieCoche') && map[it.args[0]]) {
+      it.args[0] = map[it.args[0]];
+    }
+  });
+  saveQueue(); saveLocal();
+  // Les cartes déjà à l'écran portent encore l'ancien ID.
+  ['data-epi', 'data-qtyedit', 'data-delepi'].forEach(function (a) {
+    qall('[' + a + ']').forEach(function (el) { var v = el.getAttribute(a); if (map[v]) el.setAttribute(a, map[v]); });
   });
 }
 
 // Télécharge les données complètes du serveur (seulement quand c'est sûr).
 function pull(){
   if (pulling) return Promise.resolve();
+  clearTimeout(pullT); pullT = null;
   pulling = true; updateSync();
-  return apiCall('getAllData', []).then(function (d) {
+  var gen0 = LOCAL_GEN;
+  return apiRaw('getAllData', [], { timeout: API_TIMEOUT }).then(function (j) {
+    var d = j.result;
     isOffline = false;
+    if (!d || typeof d !== 'object') return;
+    var rev = (typeof d.rev === 'number') ? d.rev : 0;
+    if (DATA) {
+      // Un geste a eu lieu pendant le téléchargement (ou une feuille est
+      // ouverte) : ces données sont déjà en retard sur l'écran. Avant
+      // v5.3 elles l'écrasaient — le repas ajouté disparaissait.
+      if (LOCAL_GEN !== gen0 || pendingCount() || flushing || editingOpen() || typingNow()) { NEEDS_PULL = true; return; }
+      // Instantané antérieur à notre dernière écriture confirmée (cache
+      // serveur) : on le refuse et on redemande un peu plus tard.
+      if (rev && rev < MIN_REV) {
+        if (pullRejets < 8) { pullRejets++; NEEDS_PULL = true; planifierPull(2500); return; }
+        MIN_REV = rev; // compteur remis à zéro au serveur : on s'aligne au lieu d'attendre à chaque fois
+      }
+    }
+    pullRejets = 0;
+    var avant = DATA ? JSON.stringify(DATA) : '';
     DATA = normalizeData(d);
-    REV = (typeof d.rev === 'number') ? d.rev : REV;
+    REV = rev || REV;
     NEEDS_PULL = false;
     saveLocal();
-    if (!editingOpen() && !typingNow()) render();
-  }).catch(function () { isOffline = true; })
+    // Rien n'a changé : pas de re-rendu (un re-rendu en plein toucher
+    // avalait le tap — « j'appuie et rien ne se passe »).
+    if (JSON.stringify(DATA) !== avant) render();
+  }).catch(function (err) { if (!aRepondu(err)) isOffline = true; })
     .finally(function () { pulling = false; updateSync(); });
 }
 
@@ -986,13 +1203,16 @@ function heartbeat(){
   if (document.visibilityState !== 'visible') return;
   if (Object.keys(pendEpi).length) { flushEpi(); return; }
   if (Object.keys(pendLi).length) { flushLi(); return; }
-  if (syncQueue.length) { if (!flushing) flushQueue(); return; }
+  if (syncQueue.length) { if (!flushing && !retryT) flushQueue(); return; }
   if (hbBusy || pulling) return;
   hbBusy = true;
-  apiCall('getRev', []).then(function (r) {
+  apiRaw('getRev', [], { timeout: 15000 }).then(function (j) {
+    var r = j.result;
     isOffline = false;
+    SERVEUR_V = (r && r.serveur) ? String(r.serveur) : 'ancien (à redéployer)';
+    var sp = $('syncPill'); if (sp) sp.title = 'Lavoie & Co v' + CONFIG.VERSION + ' · serveur ' + SERVEUR_V;
     if (r && typeof r.rev === 'number' && r.rev !== REV) NEEDS_PULL = true;
-  }).catch(function () { isOffline = true; })
+  }).catch(function (err) { if (!aRepondu(err)) isOffline = true; })
     .finally(function () {
       hbBusy = false; updateSync();
       if (NEEDS_PULL && canPull()) pull();
@@ -1001,6 +1221,11 @@ function heartbeat(){
 
 // Toute modification passe par ici : file persistante + copie locale.
 function call(fn, args, onDone){
+  // Les coches en attente partent AVANT toute autre modification :
+  // l'ordre des gestes est l'ordre d'arrivée au serveur.
+  if (fn !== 'setEpicerieCochesBatch') flushEpi();
+  if (fn !== 'setListeItemCochesBatch') flushLi();
+  LOCAL_GEN++;
   enqueue(fn, args, onDone);
   if (DATA) saveLocal();
 }
@@ -1019,9 +1244,9 @@ function updateSync(){
 
 /* ---------- Coches en lot (700 ms de regroupement) ---------- */
 function flushEpi(){ var ks = Object.keys(pendEpi); if (!ks.length) return; var arr = ks.map(function (k) { return { id: k, coche: pendEpi[k] }; }); pendEpi = {}; call('setEpicerieCochesBatch', [arr]); }
-function queueEpi(id, val){ pendEpi[id] = val; clearTimeout(epiT); epiT = setTimeout(flushEpi, 700); updateSync(); }
+function queueEpi(id, val){ LOCAL_GEN++; pendEpi[id] = val; clearTimeout(epiT); epiT = setTimeout(flushEpi, 700); updateSync(); }
 function flushLi(){ var ks = Object.keys(pendLi); if (!ks.length) return; var arr = ks.map(function (k) { return { id: k, coche: pendLi[k] }; }); pendLi = {}; call('setListeItemCochesBatch', [arr]); }
-function queueLi(id, val){ pendLi[id] = val; clearTimeout(liT); liT = setTimeout(flushLi, 700); updateSync(); }
+function queueLi(id, val){ LOCAL_GEN++; pendLi[id] = val; clearTimeout(liT); liT = setTimeout(flushLi, 700); updateSync(); }
 
 /* ---------- Fusion locale de l'épicerie (miroir du serveur) ---------- */
 function srcAdd(cur, add){
@@ -1047,8 +1272,11 @@ function sortEpicerieLocal(){
     return ra !== rb ? ra - rb : String(a.Ingredient).localeCompare(String(b.Ingredient));
   });
 }
+// Retourne { 'ingredient|unite' : ID } des lignes CRÉÉES — envoyé au
+// serveur (prefIds) pour qu'il garde les mêmes ID que l'écran.
 function localMergeEpicerie(items){
-  var byKey = {};
+  flushEpi(); // les coches en attente partent avant cet ajout (même ordre qu'au serveur)
+  var byKey = {}, nouveaux = {};
   (DATA.epicerie || []).forEach(function (e) { byKey[norm(e.Ingredient) + '|' + norm(e.Unite)] = e; });
   (items || []).forEach(function (it) {
     var nom = String(it.ingredient || '').trim(); if (!nom) return;
@@ -1056,17 +1284,25 @@ function localMergeEpicerie(items){
     var key = norm(nom) + '|' + norm(unite);
     var src = String(it.source || 'manuel').trim();
     var ex = byKey[key];
-    if (ex) {
+    if (ex && isTrue(ex.Coche)) {
+      // Déjà dans le panier : nouveau besoin, nouvelle quantité, décoché
+      // (même règle que le serveur v5.3).
+      ex.Quantite = fmtNum(num(it.quantite));
+      ex.Coche = false;
+      ex.Source = src || 'manuel';
+      if (it.rayon) ex.Rayon = String(it.rayon).trim();
+    } else if (ex) {
       ex.Quantite = fmtNum(num(ex.Quantite) + num(it.quantite));
       ex.Source = srcAdd(ex.Source, src);
       if (!ex.Rayon && it.rayon) ex.Rayon = String(it.rayon).trim();
     } else {
-      var row = { ListeID: cid('E'), Ingredient: nom, Quantite: fmtNum(num(it.quantite)),
+      var row = { ListeID: it.prefId || cid('E'), Ingredient: nom, Quantite: fmtNum(num(it.quantite)),
         Unite: unite, Rayon: String(it.rayon || '').trim(), Source: src, Coche: false };
-      DATA.epicerie.push(row); byKey[key] = row;
+      DATA.epicerie.push(row); byKey[key] = row; nouveaux[key] = row.ListeID;
     }
   });
   sortEpicerieLocal();
+  return nouveaux;
 }
 
 /* ---------- Toast ---------- */
@@ -1169,13 +1405,14 @@ function viewMenu(){
   h += '<div class="secthd"><span class="t">Mes recettes</span><span class="ln"></span></div>';
   if (!recs.length) { h += '<div class="empty">' + CREST_MINI + 'Aucune recette.<br>Crée-en une dans l\'onglet Recettes.</div></section></div>'; return h; }
   var types = (DATA.types || []);
+  h += searchBox('menuQ', MENU_Q, 'Chercher une recette ou un ingrédient');
   h += '<div class="filt"><span class="fchip ' + (MENU_FILTER === '' ? 'on' : '') + ' clk" data-filt="">Toutes</span>';
   types.forEach(function (t) { h += '<span class="fchip ' + (MENU_FILTER === t ? 'on' : '') + ' clk" data-filt="' + esc(t) + '">' + esc(t) + '</span>'; });
-  h += '</div><div class="recgrid">';
+  h += '</div><div id="menuRecs"><div class="recgrid">';
   var filtered = recs.filter(function (r) { return !MENU_FILTER || (r.types || []).indexOf(MENU_FILTER) >= 0; });
   if (!filtered.length) h += '<div class="empty small">Aucune recette de ce type.</div>';
   filtered.forEach(function (r) { h += recPickCard(r); });
-  h += '</div>';
+  h += '</div><div class="empty small srch-vide hide">Aucune recette ne correspond à « <span></span> ».</div></div>';
   var n = Object.keys(MENU_SEL).filter(function (k) { return MENU_SEL[k] && k.indexOf('EPI|') !== 0 && k.indexOf('QR_') !== 0; }).length;
   if (n > 0) h += '<div class="selbtn"><div class="btnrow"><button class="btn" id="addMenuSouper">→ Soupers (' + n + ')</button><button class="btn ghost" id="addMenuDiner">→ Dîners (' + n + ')</button></div></div>';
   h += '</section></div>';
@@ -1192,7 +1429,7 @@ function recPickCard(r){
   var sel = MENU_SEL[String(r.RecetteID)] === true;
   var ings = ingredientsOf(r.RecetteID);
   var lc = lastCookedLabel(r);
-  return '<div class="card tap' + (sel ? ' sel' : '') + '" draggable="true" data-dragrec="' + esc(r.RecetteID) + '" data-pick="' + esc(r.RecetteID) + '"><div class="row clk">' + monoTile(r, sel) + '<div class="grow"><div class="mealname">' + esc(r.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(r.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div></div></div>';
+  return '<div class="card tap' + (sel ? ' sel' : '') + '" draggable="true" data-q="' + esc(recHay(r)) + '" data-dragrec="' + esc(r.RecetteID) + '" data-pick="' + esc(r.RecetteID) + '"><div class="row clk">' + monoTile(r, sel) + '<div class="grow"><div class="mealname">' + esc(r.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(r.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div></div></div>';
 }
 
 /* ============ RECETTES ============ */
@@ -1205,11 +1442,13 @@ function viewRecettes(){
   if (rmode === 'ing') { h += ingredientsBody(); return h; }
   h += '<button class="btn sec sm" id="igBtn" style="margin-bottom:16px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 2.6 2.8 15.4 0 18M12 3c-2.8 2.6-2.8 15.4 0 18"/></svg>Importer d\'Internet</button>';
   if (!r.length) { h += '<div class="empty">' + CREST_MINI + 'Le carnet est vide.<br>Touche « Nouvelle recette » pour commencer.</div>'; return h; }
+  h += searchBox('carnetQ', CARNET_Q, 'Chercher dans le carnet (nom, ingrédient…)');
+  h += '<div id="carnet">';
   var types = (DATA.types || []);
   types.forEach(function (t) {
     var inGroup = r.filter(function (x) { return (x.types || []).indexOf(t) >= 0; });
     if (!inGroup.length) return;
-    h += '<div class="grphd">' + esc(t) + '<span class="ln"></span><span class="ct">' + inGroup.length + '</span>' +
+    h += '<div class="grphd" data-grp>' + esc(t) + '<span class="ln"></span><span class="ct">' + inGroup.length + '</span>' +
       '<button class="btn ghost sm" style="margin-left:4px" data-addgroup="' + esc(t) + '">+ Recette</button></div>';
     h += '<div class="recgrid">';
     inGroup.forEach(function (x) { h += recDetailCard(x); });
@@ -1217,16 +1456,17 @@ function viewRecettes(){
   });
   var sans = r.filter(function (x) { return !(x.types || []).length; });
   if (sans.length) {
-    h += '<div class="grphd">Sans groupe<span class="ln"></span><span class="ct">' + sans.length + '</span></div><div class="recgrid">';
+    h += '<div class="grphd" data-grp>Sans groupe<span class="ln"></span><span class="ct">' + sans.length + '</span></div><div class="recgrid">';
     sans.forEach(function (x) { h += recDetailCard(x); });
     h += '</div>';
   }
+  h += '<div class="empty small srch-vide hide">Aucune recette ne correspond à « <span></span> ».</div></div>';
   return h;
 }
 function recDetailCard(x){
   var ings = ingredientsOf(x.RecetteID);
   var lc = lastCookedLabel(x);
-  return '<div class="card tap clk" draggable="true" data-recdetail="' + esc(x.RecetteID) + '" data-dragrec="' + esc(x.RecetteID) + '"><div class="row">' + monoTile(x, false) + '<div class="grow"><div class="mealname">' + esc(x.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(x.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((x.types || []).length ? '<div class="tagrow">' + x.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">›</span></div></div>';
+  return '<div class="card tap clk" draggable="true" data-q="' + esc(recHay(x)) + '" data-recdetail="' + esc(x.RecetteID) + '" data-dragrec="' + esc(x.RecetteID) + '"><div class="row">' + monoTile(x, false) + '<div class="grow"><div class="mealname">' + esc(x.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(x.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((x.types || []).length ? '<div class="tagrow">' + x.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">›</span></div></div>';
 }
 function openRecipeDetail(rid){
   var r = recette(rid); if (!r) return;
@@ -1422,24 +1662,24 @@ function viewIngredients(){
 }
 function ingredientsBody(){
   var cat = (DATA.catalogue || []);
-  var h = '<div style="display:flex;gap:9px;margin-bottom:16px;max-width:600px"><input id="ingSearch" placeholder="Rechercher un ingrédient…" value="' + esc(ING_SEARCH) + '" class="grow"><button class="btn" style="width:auto;padding:12px 18px" id="ingAdd">+ Ajouter</button></div>';
-  var nq = norm(ING_SEARCH);
+  var h = '<div class="ingtools">' + searchBox('ingSearch', ING_SEARCH, 'Chercher un ingrédient') + '<button class="btn" style="width:auto;padding:12px 18px;flex-shrink:0" id="ingAdd">+ Ajouter</button></div><div id="ingList">';
   var ordre = rayonsSorted().map(function (r) { return r.Rayon; });
   var byR = {}, seen = {};
-  cat.forEach(function (c) { if (nq && norm(c.Ingredient).indexOf(nq) < 0) return; (byR[c.Rayon] = byR[c.Rayon] || []).push(c); });
+  cat.forEach(function (c) { (byR[c.Rayon] = byR[c.Rayon] || []).push(c); });
   function block(ray){
     var items = (byR[ray] || []).slice().sort(function (a, b) { return String(a.Ingredient).localeCompare(String(b.Ingredient)); });
-    var hh = '<div class="grphd dropray" data-dropray="' + esc(ray) + '">' + esc(ray) + '<span class="ln"></span><span class="ct">' + items.length + '</span></div>';
+    var hh = '<div class="grphd dropray" data-grp data-dropray="' + esc(ray) + '">' + esc(ray) + '<span class="ln"></span><span class="ct">' + items.length + '</span></div>';
     hh += '<div class="inggrid">';
     if (!items.length) hh += '<div class="muted small" style="padding:4px 6px">—</div>';
     items.forEach(function (c) {
-      hh += '<div class="card tap epi-card ingcard" draggable="true" data-draging="' + esc(c.Ingredient) + '" data-ingray="' + esc(c.Rayon) + '"><div class="row"><span class="dragh">⠿</span><span class="grow itxt clk" data-ingedit="' + esc(c.Ingredient) + '">' + esc(c.Ingredient) + '</span><span class="xdel clk" data-ingdel="' + esc(c.Ingredient) + '">&times;</span></div></div>';
+      hh += '<div class="card tap epi-card ingcard" draggable="true" data-q="' + esc(norm(c.Ingredient)) + '" data-draging="' + esc(c.Ingredient) + '" data-ingray="' + esc(c.Rayon) + '"><div class="row"><span class="dragh">⠿</span><span class="grow itxt clk" data-ingedit="' + esc(c.Ingredient) + '">' + esc(c.Ingredient) + '</span><span class="xdel clk" data-ingdel="' + esc(c.Ingredient) + '">&times;</span></div></div>';
     });
     hh += '</div>';
     return hh;
   }
   ordre.forEach(function (ray) { seen[ray] = 1; h += block(ray); });
   Object.keys(byR).forEach(function (ray) { if (!seen[ray]) h += block(ray); });
+  h += '<div class="empty small srch-vide hide">Aucun ingrédient ne correspond à « <span></span> ».</div></div>';
   return h;
 }
 function openAddIngredient(){
@@ -1512,10 +1752,11 @@ function viewChasse(){
   return h;
 }
 function openChassePicker(j, rep){
-  var recs = (DATA.recettes || []);
+  var recs = trierParNom(DATA.recettes || []);
   if (!recs.length) { toast('Crée d\'abord une recette', 'err'); return; }
-  var list = recs.map(function (r) { return '<div class="card tap clk" data-chp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
-  showSheet(REPAS_LBL[rep] + ' · Jour ' + j, '<label style="margin-bottom:8px">Choisis une recette</label>' + list, true);
+  var list = recs.map(function (r) { return '<div class="card tap clk" data-q="' + esc(recHay(r)) + '" data-chp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
+  showSheet(REPAS_LBL[rep] + ' · Jour ' + j, searchBox('chQ', '', 'Chercher une recette ou un ingrédient') + '<div id="chList">' + list + '<div class="empty small srch-vide hide">Aucune recette ne correspond à « <span></span> ».</div></div>', true);
+  bindSearch('chQ', '#chList');
   qall('[data-chp]').forEach(function (el) {
     el.onclick = function () {
       var rid = el.getAttribute('data-chp');
@@ -1823,8 +2064,9 @@ function bindDragDrop(){
 /* ============ BIND ============ */
 function bind(){
   // --- Ingrédients ---
-  var isr = $('ingSearch');
-  if (isr) isr.oninput = function () { ING_SEARCH = isr.value; var pos = isr.selectionStart; render(); var n = $('ingSearch'); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) {} } };
+  bindSearch('ingSearch', '#ingList', function (v) { ING_SEARCH = v; });
+  bindSearch('menuQ', '#menuRecs', function (v) { MENU_Q = v; });
+  bindSearch('carnetQ', '#carnet', function (v) { CARNET_Q = v; });
   var iad = $('ingAdd'); if (iad) iad.onclick = openAddIngredient;
   qall('[data-ingedit]').forEach(function (el) { el.onclick = function () { openEditIngredient(el.getAttribute('data-ingedit')); }; });
   qall('[data-ingdel]').forEach(function (el) {
@@ -1856,15 +2098,22 @@ function bind(){
   function fillMenu(rep){
     var ids = Object.keys(MENU_SEL).filter(function (k) { return MENU_SEL[k] && k.indexOf('EPI|') !== 0 && k.indexOf('QR_') !== 0; });
     if (!ids.length) return;
-    var dates = weekDates(weekOffset), empties = dates.map(ymd).filter(function (iso) { return !souperFor(iso, rep); });
+    // Cette semaine : on ne remplit que les jours à venir. Avant v5.3 les
+    // recettes tombaient sur les jours DÉJÀ PASSÉS (dimanche, lundi…) —
+    // invisibles pour la suite et absentes de l'épicerie.
+    var auj = ymd(new Date());
+    var dates = weekDates(weekOffset), empties = dates.map(ymd).filter(function (iso) { return !souperFor(iso, rep) && (weekOffset !== 0 || iso >= auj); });
     var assigns = [], i = 0;
     for (; i < ids.length && i < empties.length; i++) assigns.push({ date: empties[i], recetteId: ids[i], cuisinier: '', repas: rep });
     var overflow = ids.length - empties.length;
     assigns.forEach(function (a) { DATA.soupers.push({ Date: a.date, RecetteID: a.recetteId, Cuisinier: '', Repas: rep }); });
     if (assigns.length) call('setSoupersBatch', [assigns]);
-    MENU_SEL = {}; render();
+    // Seules les recettes choisies se désélectionnent (pas les repas
+    // cochés dans l'Épicerie ni les listes rapides).
+    ids.forEach(function (k) { delete MENU_SEL[k]; });
+    render();
     var mot = rep === 'diner' ? 'dîner' : 'souper';
-    if (overflow > 0) toast(overflow + ' repas non placé' + (overflow > 1 ? 's' : '') + ' — plus de ' + mot + 's libres cette semaine');
+    if (overflow > 0) toast(overflow + ' repas non placé' + (overflow > 1 ? 's' : '') + ' — plus de ' + mot + 's libres ' + (weekOffset === 0 ? 'd\'ici samedi' : 'cette semaine'));
     else toast(assigns.length + ' ' + mot + (assigns.length > 1 ? 's' : '') + ' ajouté' + (assigns.length > 1 ? 's' : '') + ' au menu');
   }
   var ams = $('addMenuSouper'); if (ams) ams.onclick = function () { fillMenu('souper'); };
@@ -1913,17 +2162,13 @@ function bind(){
         items.push({ ingredient: ing.Ingredient, quantite: num(ing.Quantite), unite: ing.Unite, rayon: ing.Rayon, source: recetteNom(m.recetteId) });
       });
     });
-    localMergeEpicerie(items);
+    var nouveaux = localMergeEpicerie(items);
     render();
     toast(chosen.length + ' repas ajouté' + (chosen.length > 1 ? 's' : '') + ' à la liste');
-    call('ajouterRepasEpicerie', [chosen], function (res) {
-      if (res && res.epicerie) {
-        DATA.epicerie = res.epicerie;
-        DATA.epicerieRepas = res.epicerieRepas || DATA.epicerieRepas;
-        if (res.ignores > 0) toast(res.ignores + ' repas étai' + (res.ignores > 1 ? 'ent' : 't') + ' déjà dans la liste');
-        saveLocal();
-        if (!editingOpen() && !typingNow()) render();
-      }
+    // Pas de remplacement de la liste par la réponse : d'autres gestes ont
+    // pu suivre entre-temps. Le pull de fin de file fait foi.
+    call('ajouterRepasEpicerie', [chosen, nouveaux], function (res) {
+      if (res && res.ignores > 0) toast(res.ignores + ' repas étai' + (res.ignores > 1 ? 'ent' : 't') + ' déjà dans la liste');
     });
   };
   var mb = $('manBtn'); if (mb) mb.onclick = openManuel;
@@ -1979,12 +2224,10 @@ function bind(){
         items.push({ ingredient: ing.Ingredient, quantite: num(ing.Quantite), unite: ing.Unite, rayon: ing.Rayon, source: recetteNom(m.recetteId) });
       });
     });
-    localMergeEpicerie(items);
+    var nouveaux = localMergeEpicerie(items);
     render();
     toast(chosen.length + ' repas de chasse ajouté' + (chosen.length > 1 ? 's' : '') + ' à l\'épicerie');
-    call('ajouterRepasEpicerie', [chosen], function (res) {
-      if (res && res.epicerie) { DATA.epicerie = res.epicerie; DATA.epicerieRepas = res.epicerieRepas || DATA.epicerieRepas; saveLocal(); if (!editingOpen() && !typingNow()) render(); }
-    });
+    call('ajouterRepasEpicerie', [chosen, nouveaux]);
   };
   var cpd = $('chPdf'); if (cpd) cpd.onclick = openChassePdf;
 
@@ -2023,13 +2266,13 @@ function bind(){
       if (!chosen.length) { toast('Liste vide'); return; }
       var payload = chosen.map(function (it) { return { ingredient: it.Ingredient, quantite: String(it.Quantite).replace(',', '.'), unite: it.Unite, rayon: it.Rayon }; });
       // Optimiste : fusion locale immédiate
-      localMergeEpicerie(payload.map(function (p) { return { ingredient: p.ingredient, quantite: num(p.quantite), unite: p.unite, rayon: p.rayon, source: 'manuel' }; }));
+      var nouveaux = localMergeEpicerie(payload.map(function (p) { return { ingredient: p.ingredient, quantite: num(p.quantite), unite: p.unite, rayon: p.rayon, source: 'manuel' }; }));
+      // Les lignes créées ici gardent leur ID au serveur (v5.3)
+      payload.forEach(function (p) { var k = norm(p.ingredient) + '|' + norm(p.unite); if (nouveaux[k]) p.prefId = nouveaux[k]; });
       chosen.forEach(function (it) { delete MENU_SEL['QR_' + it.ItemID]; });
       render();
       toast(chosen.length + ' item' + (chosen.length > 1 ? 's' : '') + ' ajouté' + (chosen.length > 1 ? 's' : '') + ' à l\'épicerie');
-      call('ajouterItemsEpicerie', [payload], function (rows) {
-        if (rows) { DATA.epicerie = rows; saveLocal(); if (!editingOpen() && !typingNow()) render(); }
-      });
+      call('ajouterItemsEpicerie', [payload]);
     };
   });
 
@@ -2040,7 +2283,7 @@ function bind(){
     if (!nb) { toast('Aucun élément coché'); return; }
     if (!confirm('Retirer les ' + nb + ' élément' + (nb > 1 ? 's' : '') + ' coché' + (nb > 1 ? 's' : '') + ' de la liste ?')) return;
     DATA.epicerie = (DATA.epicerie || []).filter(function (it) { return !isTrue(it.Coche); });
-    call('nettoyerEpicerieCochee', [], function (rows) { if (rows) { DATA.epicerie = rows; saveLocal(); if (!editingOpen() && !typingNow()) render(); } });
+    call('nettoyerEpicerieCochee', []);
     render(); toast(nb + ' élément' + (nb > 1 ? 's' : '') + ' retiré' + (nb > 1 ? 's' : ''));
   };
   var cab = $('cleanAllBtn');
@@ -2049,7 +2292,7 @@ function bind(){
     if (!nb) { toast('La liste est déjà vide'); return; }
     if (!confirm('Effacer toute la liste d\'épicerie (' + nb + ' élément' + (nb > 1 ? 's' : '') + ') ?\nLes repas pourront être ajoutés à nouveau.')) return;
     DATA.epicerie = []; DATA.epicerieRepas = [];
-    call('viderEpicerie', [], function (rows) { DATA.epicerie = rows || []; saveLocal(); if (!editingOpen() && !typingNow()) render(); });
+    call('viderEpicerie', []);
     render(); toast('Liste vidée');
   };
   qall('[data-epi]').forEach(function (el) {
@@ -2170,10 +2413,11 @@ function promptNewIngredient(nom, cb){
 /* ============ Picker jour ============ */
 function openDayPicker(iso, rep){
   rep = rep || 'souper';
-  var d = parseYmd(iso), recs = (DATA.recettes || []);
+  var d = parseYmd(iso), recs = trierParNom(DATA.recettes || []);
   if (!recs.length) { toast('Crée d\'abord une recette', 'err'); return; }
-  var list = recs.map(function (r) { return '<div class="card tap clk" data-dp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
-  showSheet(REPAS_LBL[rep] + ' · ' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()], '<label style="margin-bottom:8px">Choisis une recette</label>' + list + '<div class="field" style="margin-top:8px"><label>Qui cuisine ? (optionnel)</label><input id="dp-cook" placeholder="Marie, JP…"></div>', true);
+  var list = recs.map(function (r) { return '<div class="card tap clk" data-q="' + esc(recHay(r)) + '" data-dp="' + esc(r.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">+</span></div></div>'; }).join('');
+  showSheet(REPAS_LBL[rep] + ' · ' + JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()], '<div class="field"><label>Qui cuisine ? (optionnel)</label><input id="dp-cook" placeholder="Julie, JP…"></div>' + searchBox('dpQ', '', 'Chercher une recette ou un ingrédient') + '<div id="dpList">' + list + '<div class="empty small srch-vide hide">Aucune recette ne correspond à « <span></span> ».</div></div>', true);
+  bindSearch('dpQ', '#dpList');
   qall('[data-dp]').forEach(function (el) {
     el.onclick = function () {
       var rid = el.getAttribute('data-dp'), cook = $('dp-cook').value.trim();
@@ -2509,18 +2753,11 @@ function openManuel(){
   $('mSave').onclick = function () {
     if (!picked.nom) { toast('Choisis d\'abord un ingrédient', 'err'); return; }
     var q = $('mQty').value.replace(',', '.') || 0, u = uniteSelectVal('mu');
+    // Le MÊME id à l'écran et au serveur (avant v5.3, la ligne locale
+    // prenait un autre id : cochée avant la réponse, la coche se perdait).
     var id = cid('E');
-    // Optimiste : fusion locale (le serveur fait la même chose)
-    localMergeEpicerie([{ ingredient: picked.nom, quantite: num(q), unite: u, rayon: picked.ray, source: 'manuel' }]);
-    call('ajouterItemEpicerie', [id, picked.nom, q, u, picked.ray], function (row) {
-      if (row && row.ListeID) {
-        var key = norm(row.Ingredient) + '|' + norm(row.Unite);
-        var loc = (DATA.epicerie || []).filter(function (e) { return norm(e.Ingredient) + '|' + norm(e.Unite) === key; })[0];
-        if (loc) { loc.ListeID = row.ListeID; loc.Quantite = row.Quantite; loc.Source = row.Source; loc.Coche = isTrue(row.Coche); }
-        saveLocal();
-        if (!editingOpen() && !typingNow()) render();
-      }
-    });
+    localMergeEpicerie([{ ingredient: picked.nom, quantite: num(q), unite: u, rayon: picked.ray, source: 'manuel', prefId: id }]);
+    call('ajouterItemEpicerie', [id, picked.nom, q, u, picked.ray]);
     closeSheet(); render();
   };
 }
@@ -2643,8 +2880,10 @@ function showSheet(title, inner, stacked){
   // PAS de confirm() natif : iOS le bloque en mode app installée et
   // répond « non » tout seul — la feuille devenait infermable (v4.9.0).
   var touche = false;
-  o.addEventListener('input', function () { touche = true; }, true);
-  o.addEventListener('change', function () { touche = true; }, true);
+  // Chercher une recette n'est pas « du travail à protéger ».
+  function marque(e){ if (!(e.target && e.target.type === 'search')) touche = true; }
+  o.addEventListener('input', marque, true);
+  o.addEventListener('change', marque, true);
   function fermer(){
     // data-garde : armé par les feuilles qui arrivent déjà remplies
     // (recette importée d'Instagram) — là aussi, du travail à protéger.
