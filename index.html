@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v5.4.0 « Porcelaine »
+     LAVOIE & CO — v5.5.0 « Porcelaine »
      Direction : sobre et épuré. Porcelaine chaude, noir profond,
      une seule touche de sable. Titres en Bodoni Moda, interface en
      Inter, mot-symbole en Marcellus.
@@ -341,6 +341,20 @@
   .shopadd:active{transform:scale(.985)}
   .shopadd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
   @media(hover:hover){ .shopadd:hover{filter:brightness(1.05)} }
+  .shopacts{display:flex;gap:10px;align-items:stretch}
+  .shopacts .shopadd{flex:1;width:auto}
+  /* Exporter : le rond « partage » à côté de l'ajout */
+  .shopexp{flex:0 0 50px;border-radius:999px;border:1px solid color-mix(in srgb,var(--acc-soft) 60%,transparent);
+    color:var(--acc-soft);background:transparent;display:flex;align-items:center;justify-content:center;transition:background .15s}
+  .shopexp:active{background:rgba(255,255,255,.08)}
+  .shopexp svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .exp-opt{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink);text-transform:none;letter-spacing:0;margin:0 0 14px;cursor:pointer}
+  .exp-opt input{width:20px;height:20px;margin:0;accent-color:var(--pri);flex-shrink:0}
+  .exp-resume{font-size:12.5px;color:var(--mut);margin:-4px 0 14px}
+  .exp-apercu{white-space:pre-wrap;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;line-height:1.5;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;padding:12px 14px;max-height:190px;overflow:auto;margin:0 0 16px;color:var(--ink2)}
+  .exp-acts{display:flex;flex-direction:column;gap:9px}
+  .exp-acts .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
   /* Bande d'humeurs */
   .humband{display:flex;justify-content:space-between;gap:4px;background:var(--paper);
     border-radius:999px;padding:6px 8px;margin-bottom:12px;border:1px solid var(--line2)}
@@ -697,7 +711,7 @@
   <figure class="sp-poeme" id="spPoeme"><blockquote id="spTexte"></blockquote><figcaption id="spAuteur"></figcaption></figure>
   <div class="sp-bar" id="spBar"><i></i></div>
   <div class="sp-skip" id="spSkip">Touche pour continuer</div>
-  <div class="sp-ver">v5.4.0</div>
+  <div class="sp-ver">v5.5.0</div>
 </div>
 
 <aside class="sidebar">
@@ -713,7 +727,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.4.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.5.0</span></div>
 </aside>
 
 <div class="content">
@@ -721,7 +735,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.4.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.5.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -738,7 +752,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v5.4.0
+   LAVOIE & CO — Frontend v5.5.0
    ----------------------------------------------------------------
    v5.3 — le sync réparé (voir aussi le serveur Code.gs v5.3) :
    - Un téléchargement qui revient APRÈS un geste local est jeté : il
@@ -771,7 +785,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '5.4.0'
+  VERSION: '5.5.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -783,6 +797,9 @@ var MOIS_L = ['janvier','février','mars','avril','mai','juin','juillet','août'
 var TITLES = { menu:'Menu', recettes:'Recettes', epicerie:'Épicerie', ingredients:'Ingrédients', listes:'Listes', calendrier:'Calendrier', chasse:'Menu Chasse', nous:'Julie & JP' };
 var CHK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 13l4 4L19 7"/></svg>';
 var PLUS_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+var PARTAGE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3.5M7.5 8L12 3.5 16.5 8"/><path d="M5.5 11.5v7.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5v-7.5"/></svg>';
+var DOC_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>';
+var COPIE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>';
 var CREST_MINI = '<span class="crest"></span>'; // filet discret des états vides (l'écusson est retiré depuis v4.2)
 var UNITES = ['unité','g','kg','ml','L','c. à thé','c. à soupe','tasse','pincée','sac','boîte','paquet','pot','conserve','bouteille','lb','douzaine','tranche','gousse'];
 var UNIT_NOPLUR = { 'g':1,'kg':1,'ml':1,'l':1,'lb':1,'unité':1 };
@@ -1763,13 +1780,14 @@ function viewEpicerie(){
     // du panier — l'essentiel d'un coup d'œil, en tête de liste.
     var pctG = Math.round(cochesN / e.length * 100);
     h += '<div class="card shopsum"><div class="top"><span class="n" id="shopN">' + resteN + '</span><div class="grow"><div style="font-weight:600;font-size:14px">article' + (resteN > 1 ? 's' : '') + ' à acheter</div><div class="small muted" id="shopSub">' + (cochesN ? cochesN + ' coché' + (cochesN > 1 ? 's' : '') + ' · ' : '') + pctG + ' % du panier fait</div></div><span class="rayprog" style="flex:0 0 64px"><i id="shopBar" style="width:' + pctG + '%"></i></span></div>' +
-      '<button class="shopadd" id="shopAdd" type="button">' + PLUS_SVG + 'Ajouter un article</button></div>';
+      '<div class="shopacts"><button class="shopadd" id="shopAdd" type="button">' + PLUS_SVG + 'Ajouter un article</button>' +
+      '<button class="shopexp" id="shopExp" type="button" aria-label="Exporter la liste" title="Exporter la liste">' + PARTAGE_SVG + '</button></div></div>';
     var ordre = rayonsSorted().map(function (r) { return r.Rayon; }), byR = {}, seen = {};
     e.forEach(function (it) { (byR[it.Rayon] = byR[it.Rayon] || []).push(it); });
     ordre.forEach(function (ray) { if (byR[ray]) { seen[ray] = 1; h += rayBlock(ray, byR[ray]); } });
     Object.keys(byR).forEach(function (ray) { if (!seen[ray]) h += rayBlock(ray, byR[ray]); });
     // Les gestes destructeurs ferment la marche, discrets.
-    h += '<div class="row" style="justify-content:center;gap:24px;margin:20px 0 4px"><span class="small clk" id="cleanBtn" style="color:var(--ink2);font-weight:600">Nettoyer les cochés</span><span class="small clk" id="cleanAllBtn" style="color:var(--danger);font-weight:600">Tout effacer</span></div>';
+    h += '<div class="row" style="justify-content:center;gap:24px;margin:20px 0 4px"><span class="small clk" id="exportBtn" style="color:var(--ink2);font-weight:600">Exporter (PDF)</span><span class="small clk" id="cleanBtn" style="color:var(--ink2);font-weight:600">Nettoyer les cochés</span><span class="small clk" id="cleanAllBtn" style="color:var(--danger);font-weight:600">Tout effacer</span></div>';
   } else {
     h += '<div class="empty">' + CREST_MINI + 'La liste est vide.<br>Ajoute un article, ou passe en mode « Préparer » pour y verser les repas.<br><br><div class="btnrow" style="justify-content:center;flex-wrap:wrap"><button class="btn sm" id="shopAdd" type="button">+ Ajouter un article</button><button class="btn ghost sm" id="goPrep">Préparer la liste</button></div></div>';
   }
@@ -2390,6 +2408,8 @@ function bind(){
   });
   var gp = $('goPrep'); if (gp) gp.onclick = function () { setFold('epi_mode', 'prep'); ANIM_NEXT = true; render(); };
   var sad = $('shopAdd'); if (sad) sad.onclick = openManuel;
+  var sex = $('shopExp'); if (sex) sex.onclick = openExport;
+  var exb = $('exportBtn'); if (exb) exb.onclick = openExport;
 
   // --- Calendrier ---
   var cp = $('calPrev'); if (cp) cp.onclick = function () { CAL_OFF--; render(); };
@@ -2941,6 +2961,352 @@ function openImportIG(){
   };
 }
 
+/* ============ Exporter la liste d'épicerie ============ */
+// Trois sorties : un PDF « liste de kitting » (comme en usine : n° de
+// kit, zones, codes, cases à cocher, signatures), le texte à partager
+// (texto, courriel, Notes) ou à copier.
+function epicerieParRayon(avecCoches){
+  var e = (DATA.epicerie || []).filter(function (i) { return avecCoches || !isTrue(i.Coche); });
+  var ordre = rayonsSorted().map(function (r) { return String(r.Rayon); }), byR = {}, vus = {}, out = [];
+  e.forEach(function (it) { var r = String(it.Rayon || '').trim() || 'Autres'; (byR[r] = byR[r] || []).push(it); });
+  ordre.forEach(function (r) { if (byR[r]) { vus[r] = 1; out.push({ ray: r, items: byR[r] }); } });
+  Object.keys(byR).forEach(function (r) { if (!vus[r]) out.push({ ray: r, items: byR[r] }); });
+  return out;
+}
+function qteTexte(it){
+  var n = num(it.Quantite), u = plurUnite(it.Quantite, it.Unite);
+  return (n ? fmtNum(it.Quantite) : '') + (u ? (n ? ' ' : '') + u : '');
+}
+function dateLongue(d){ return JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_L[d.getMonth()] + ' ' + d.getFullYear(); }
+function listeTexte(avecCoches){
+  var grp = epicerieParRayon(avecCoches), n = 0;
+  grp.forEach(function (g) { n += g.items.length; });
+  var L = ['Épicerie — ' + dateLongue(new Date()), n + ' article' + (n > 1 ? 's' : ''), ''];
+  grp.forEach(function (g) {
+    L.push(g.ray.toUpperCase());
+    g.items.forEach(function (it) { var q = qteTexte(it); L.push((isTrue(it.Coche) ? '☑ ' : '☐ ') + it.Ingredient + (q ? ' — ' + q : '')); });
+    L.push('');
+  });
+  return L.join('\n').trim();
+}
+// Code de zone : initiales du rayon (Fruits et légumes → FL, Viandes → VI).
+function codeZone(ray){
+  var mots = norm(ray).replace(/[^a-z0-9 ]/g, ' ').split(' ').filter(function (m) { return m && ['et', 'de', 'des', 'du', 'la', 'le', 'les', 'l', 'd', 'a'].indexOf(m) < 0; });
+  if (!mots.length) return 'ZZ';
+  return (mots.length > 1 ? mots[0].charAt(0) + mots[1].charAt(0) : mots[0].slice(0, 2)).toUpperCase();
+}
+function copierTexte(txt, repli){
+  function secours(){
+    if (!repli) { toast('Copie impossible ici', 'err'); return; }
+    var r = document.createRange(); r.selectNodeContents(repli);
+    var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    toast(ok ? 'Liste copiée' : 'Texte sélectionné : copie-le', ok ? '' : 'err');
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { toast('Liste copiée'); }, secours);
+  else secours();
+}
+function openExport(){
+  var e = DATA.epicerie || [];
+  var reste = e.filter(function (i) { return !isTrue(i.Coche); }).length;
+  var avec = !reste; // tout est coché : on exporte quand même la liste complète
+  showSheet('Exporter la liste',
+    '<label class="exp-opt"><input type="checkbox" id="exAvec" data-libre' + (avec ? ' checked' : '') + '> Inclure les articles déjà cochés</label>' +
+    '<div class="exp-resume" id="exResume"></div>' +
+    '<pre class="exp-apercu" id="exTexte"></pre>' +
+    '<div class="exp-acts">' +
+      '<button class="btn" id="exPdf" type="button">' + DOC_SVG + 'PDF — liste de kitting</button>' +
+      (navigator.share ? '<button class="btn sec" id="exPartager" type="button">' + PARTAGE_SVG + 'Partager en texte</button>' : '') +
+      '<button class="btn sec" id="exCopier" type="button">' + COPIE_SVG + 'Copier le texte</button>' +
+    '</div>', true);
+  function maj(){
+    var grp = epicerieParRayon(avec), n = 0; grp.forEach(function (g) { n += g.items.length; });
+    $('exResume').textContent = n + ' ligne' + (n > 1 ? 's' : '') + ' · ' + grp.length + ' zone' + (grp.length > 1 ? 's' : '');
+    $('exTexte').textContent = listeTexte(avec);
+  }
+  $('exAvec').onchange = function () { avec = this.checked; maj(); };
+  maj();
+  $('exPdf').onclick = function () { exporterPdf(avec); };
+  var ep = $('exPartager');
+  if (ep) ep.onclick = function () {
+    navigator.share({ title: 'Liste d\'épicerie', text: listeTexte(avec) }).catch(function (err) { if (!err || err.name !== 'AbortError') copierTexte(listeTexte(avec), $('exTexte')); });
+  };
+  $('exCopier').onclick = function () { copierTexte(listeTexte(avec), $('exTexte')); };
+}
+function exporterPdf(avec){
+  var d = new Date();
+  var octets = kittingPdf(avec, d);
+  var nom = 'Lavoie-Co_Kitting_' + ymd(d) + '.pdf';
+  var blob = new Blob([octets], { type: 'application/pdf' });
+  var fichier = null; try { fichier = new File([blob], nom, { type: 'application/pdf' }); } catch (e) {}
+  // Téléphone : la feuille de partage (Enregistrer dans Fichiers, Imprimer,
+  // Courriel, Messages…). Ordinateur : téléchargement direct.
+  var tactile = window.matchMedia && matchMedia('(pointer:coarse)').matches;
+  if (tactile && fichier && navigator.canShare && navigator.canShare({ files: [fichier] })) {
+    navigator.share({ files: [fichier], title: 'Liste de kitting — épicerie' }).catch(function (err) { if (!err || err.name !== 'AbortError') telechargerBlob(blob, nom); });
+    return;
+  }
+  telechargerBlob(blob, nom);
+}
+function telechargerBlob(blob, nom){
+  var url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = nom; a.rel = 'noopener';
+  document.body.appendChild(a); a.click();
+  setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 8000);
+  toast('PDF prêt : ' + nom);
+}
+
+/* ---------- PDF maison (aucune librairie : marche hors ligne) ----------
+   Lettre US (612 × 792 pt), polices PDF standard en WinAnsi (accents
+   français inclus). Largeurs des glyphes : métriques Adobe officielles,
+   pour aligner les quantités à droite et couper proprement les noms. */
+var PDF_LARG = {
+  H: [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584,761,556,0,222,556,333,1000,556,556,333,1000,667,333,1000,0,611,0,0,222,222,333,333,350,556,1000,333,1000,500,333,944,0,500,667,278,333,556,556,556,556,260,556,333,737,370,556,584,333,737,333,400,584,333,333,333,556,537,278,333,333,365,556,834,834,834,611,667,667,667,667,667,667,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,500,556,556,556,556,278,278,278,278,556,556,556,556,556,556,556,584,611,556,556,556,556,500,556,500],
+  HB: [278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584,761,556,0,278,556,500,1000,556,556,333,1000,667,333,1000,0,611,0,0,278,278,500,500,350,556,1000,333,1000,556,333,944,0,500,667,278,333,556,556,556,556,280,556,333,737,370,556,584,333,737,333,400,584,333,333,333,611,556,278,333,333,365,556,834,834,834,611,722,722,722,722,722,722,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,556,556,556,556,556,278,278,278,278,611,611,611,611,611,611,611,584,611,611,611,611,611,556,611,556],
+  T: [250,333,408,500,500,833,778,180,333,333,500,564,250,333,250,278,500,500,500,500,500,500,500,500,500,500,278,278,564,564,564,444,921,722,667,667,722,611,556,722,722,333,389,722,611,889,722,722,556,722,667,556,611,722,722,944,722,722,611,333,278,333,469,500,333,444,500,444,500,444,333,500,500,278,278,500,278,778,500,500,500,500,333,389,278,500,500,722,500,500,444,480,200,480,541,761,500,0,333,500,444,1000,500,500,333,1000,556,333,889,0,611,0,0,333,333,444,444,350,500,1000,333,980,389,333,722,0,444,722,250,333,500,500,500,500,200,500,333,760,276,500,564,333,760,333,400,564,300,300,333,500,453,250,333,300,310,500,750,750,750,444,722,722,722,722,722,722,889,667,611,611,611,611,333,333,333,333,722,722,722,722,722,722,722,564,722,722,722,722,722,722,556,500,444,444,444,444,444,444,667,444,444,444,444,444,278,278,278,278,500,500,500,500,500,500,500,564,500,500,500,500,500,500,500,500],
+  TI: [250,333,420,500,500,833,778,214,333,333,500,675,250,333,250,278,500,500,500,500,500,500,500,500,500,500,333,333,675,675,675,500,920,611,611,667,722,611,611,722,722,333,444,667,556,833,667,722,611,722,611,500,556,722,611,833,611,556,556,389,278,389,422,500,333,500,500,444,500,444,278,500,500,278,278,444,278,722,500,500,500,500,389,389,278,500,444,667,444,444,389,400,275,400,541,761,500,0,333,500,556,889,500,500,333,1000,500,333,944,0,556,0,0,333,333,556,556,350,500,889,333,980,389,333,667,0,389,556,250,389,500,500,500,500,275,500,333,760,276,500,675,333,760,333,400,675,300,300,333,500,523,250,333,300,310,500,750,750,750,500,611,611,611,611,611,611,889,667,611,611,611,611,333,333,333,333,722,667,722,722,722,722,722,675,722,722,722,722,722,556,611,500,500,500,500,500,500,500,667,444,444,444,444,444,278,278,278,278,500,500,500,500,500,500,500,675,500,500,500,500,500,444,500,444]
+};
+var WINANSI = { '€':128,'‚':130,'ƒ':131,'„':132,'…':133,'†':134,'‡':135,'ˆ':136,'‰':137,'Š':138,'‹':139,'Œ':140,'Ž':142,'‘':145,'’':146,'“':147,'”':148,'•':149,'–':150,'—':151,'˜':152,'™':153,'š':154,'›':155,'œ':156,'ž':158,'Ÿ':159 };
+function pdfCode(ch){
+  var c = ch.charCodeAt(0);
+  if ((c >= 32 && c < 127) || (c >= 160 && c <= 255)) return c;
+  if (WINANSI[ch]) return WINANSI[ch];
+  if (c === 8239 || c === 8201 || c === 8202) return 32;         // espaces fines
+  var sans = ch.normalize('NFD').replace(/[̀-ͯ]/g, '');  // lettre accentuée hors WinAnsi
+  if (sans && sans !== ch) return pdfCode(sans.charAt(0));
+  return -1;                                                      // emoji & co : omis
+}
+function pdfOctets(s){
+  var o = ''; Array.from(String(s == null ? '' : s)).forEach(function (ch) { var c = pdfCode(ch); if (c >= 0) o += String.fromCharCode(c); });
+  return o;
+}
+function pdfLargeur(s, f, t, cs){
+  var o = pdfOctets(s), w = 0, L = PDF_LARG[f];
+  for (var i = 0; i < o.length; i++) w += f === 'C' ? 600 : (L[o.charCodeAt(i) - 32] || 0);
+  return w * t / 1000 + (cs || 0) * Math.max(0, o.length - 1);
+}
+function pdfCouper(s, f, t, max){
+  s = String(s || '');
+  if (pdfLargeur(s, f, t) <= max) return s;
+  while (s.length > 1 && pdfLargeur(s + '…', f, t) > max) s = s.slice(0, -1);
+  return s.replace(/[\s,;·-]+$/, '') + '…';
+}
+function pdfRgb(hex){ var h = hex.replace('#', ''); return [0, 2, 4].map(function (i) { return (parseInt(h.substr(i, 2), 16) / 255).toFixed(3); }).join(' '); }
+function PdfDoc(){ this.pages = []; this.ops = null; }
+PdfDoc.prototype.page = function () { this.ops = []; this.pages.push(this.ops); };
+PdfDoc.prototype.texte = function (x, y, s, f, t, coul, o) {
+  o = o || {};
+  var cs = o.cs || 0, w = pdfLargeur(s, f, t, cs);
+  if (o.align === 'droite') x -= w; else if (o.align === 'centre') x -= w / 2;
+  this.ops.push('BT /' + f + ' ' + t + ' Tf ' + cs + ' Tc ' + pdfRgb(coul || '#141414') + ' rg ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Td (' +
+    pdfOctets(s).replace(/[\\()]/g, '\\$&') + ') Tj ET');
+  return w;
+};
+PdfDoc.prototype.rect = function (x, y, w, h, rempli, trait, ep) {
+  var o = 'q ';
+  if (rempli) o += pdfRgb(rempli) + ' rg ';
+  if (trait) o += pdfRgb(trait) + ' RG ' + (ep || .6) + ' w ';
+  o += x.toFixed(2) + ' ' + y.toFixed(2) + ' ' + w.toFixed(2) + ' ' + h.toFixed(2) + ' re ' + (rempli && trait ? 'B' : rempli ? 'f' : 'S') + ' Q';
+  this.ops.push(o);
+};
+PdfDoc.prototype.ligne = function (x1, y1, x2, y2, coul, ep, pointille) {
+  this.ops.push('q ' + pdfRgb(coul) + ' RG ' + (ep || .5) + ' w ' + (pointille ? '[' + pointille + '] 0 d ' : '') +
+    x1.toFixed(2) + ' ' + y1.toFixed(2) + ' m ' + x2.toFixed(2) + ' ' + y2.toFixed(2) + ' l S Q');
+};
+PdfDoc.prototype.rond = function (cx, cy, r, coul) {
+  var k = .5523 * r, f = function (v) { return v.toFixed(2); };
+  this.ops.push('q ' + pdfRgb(coul) + ' rg ' + f(cx + r) + ' ' + f(cy) + ' m ' +
+    f(cx + r) + ' ' + f(cy + k) + ' ' + f(cx + k) + ' ' + f(cy + r) + ' ' + f(cx) + ' ' + f(cy + r) + ' c ' +
+    f(cx - k) + ' ' + f(cy + r) + ' ' + f(cx - r) + ' ' + f(cy + k) + ' ' + f(cx - r) + ' ' + f(cy) + ' c ' +
+    f(cx - r) + ' ' + f(cy - k) + ' ' + f(cx - k) + ' ' + f(cy - r) + ' ' + f(cx) + ' ' + f(cy - r) + ' c ' +
+    f(cx + k) + ' ' + f(cy - r) + ' ' + f(cx + r) + ' ' + f(cy - k) + ' ' + f(cx + r) + ' ' + f(cy) + ' c f Q');
+};
+// La branche d'olivier du logo, tracée depuis les mêmes chemins que
+// l'écran de chargement (les courbes Q deviennent des C).
+PdfDoc.prototype.branche = function (ox, oy, s, coul) {
+  var chemins = ['M4 44 C48 40 112 30 166 12', 'M40 38 Q32 24 44 18 Q48 30 40 38', 'M66 34 Q62 48 76 50 Q76 38 66 34',
+    'M92 29 Q86 15 98 10 Q101 22 92 29', 'M118 24 Q115 37 128 39 Q127 28 118 24', 'M142 18 Q138 6 148 3 Q150 13 142 18'];
+  var X = function (x) { return (ox + x * s).toFixed(2); }, Y = function (y) { return (oy - y * s).toFixed(2); };
+  var o = 'q ' + pdfRgb(coul) + ' RG ' + (1.4 * s).toFixed(2) + ' w 1 J 1 j ';
+  chemins.forEach(function (d) {
+    var t = d.match(/[MCQ]|-?\d+(?:\.\d+)?/g), i = 0, cx = 0, cy = 0, cmd = '';
+    while (i < t.length) {
+      if (/[MCQ]/.test(t[i])) cmd = t[i++];
+      if (cmd === 'M') { cx = +t[i++]; cy = +t[i++]; o += X(cx) + ' ' + Y(cy) + ' m '; }
+      else if (cmd === 'C') { var a = t.slice(i, i + 6).map(Number); i += 6; o += X(a[0]) + ' ' + Y(a[1]) + ' ' + X(a[2]) + ' ' + Y(a[3]) + ' ' + X(a[4]) + ' ' + Y(a[5]) + ' c '; cx = a[4]; cy = a[5]; }
+      else if (cmd === 'Q') {
+        var q = t.slice(i, i + 4).map(Number); i += 4;
+        var c1x = cx + 2 / 3 * (q[0] - cx), c1y = cy + 2 / 3 * (q[1] - cy), c2x = q[2] + 2 / 3 * (q[0] - q[2]), c2y = q[3] + 2 / 3 * (q[1] - q[3]);
+        o += X(c1x) + ' ' + Y(c1y) + ' ' + X(c2x) + ' ' + Y(c2y) + ' ' + X(q[2]) + ' ' + Y(q[3]) + ' c ';
+        cx = q[2]; cy = q[3];
+      } else i++;
+    }
+    o += 'S ';
+  });
+  this.ops.push(o + 'Q');
+};
+PdfDoc.prototype.octets = function (titre) {
+  var objs = [], polices = { H: 'Helvetica', HB: 'Helvetica-Bold', T: 'Times-Roman', TI: 'Times-Italic', C: 'Courier' };
+  var cles = Object.keys(polices), nbPages = this.pages.length;
+  // 1 catalogue, 2 pages, 3..7 polices, puis (page, contenu) × n, puis info
+  objs[1] = '<< /Type /Catalog /Pages 2 0 R >>';
+  var kids = [];
+  cles.forEach(function (k, i) { objs[3 + i] = '<< /Type /Font /Subtype /Type1 /BaseFont /' + polices[k] + ' /Encoding /WinAnsiEncoding >>'; });
+  var res = '<< /Font << ' + cles.map(function (k, i) { return '/' + k + ' ' + (3 + i) + ' 0 R'; }).join(' ') + ' >> >>';
+  this.pages.forEach(function (ops, p) {
+    var np = 8 + p * 2, nc = np + 1, flux = ops.join('\n');
+    kids.push(np + ' 0 R');
+    objs[np] = '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources ' + res + ' /Contents ' + nc + ' 0 R >>';
+    objs[nc] = '<< /Length ' + flux.length + ' >>\nstream\n' + flux + '\nendstream';
+  });
+  objs[2] = '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + nbPages + ' >>';
+  var ni = 8 + nbPages * 2;
+  objs[ni] = '<< /Title (' + pdfOctets(titre).replace(/[\\()]/g, '\\$&') + ') /Author (Lavoie & Co) /Creator (Lavoie & Co v' + CONFIG.VERSION + ') >>';
+  var out = '%PDF-1.4\n%âãÏÓ\n', offs = [];
+  for (var n = 1; n <= ni; n++) { offs[n] = out.length; out += n + ' 0 obj\n' + objs[n] + '\nendobj\n'; }
+  var xref = out.length;
+  out += 'xref\n0 ' + (ni + 1) + '\n0000000000 65535 f \n';
+  for (n = 1; n <= ni; n++) out += ('000000000' + offs[n]).slice(-10) + ' 00000 n \n';
+  out += 'trailer\n<< /Size ' + (ni + 1) + ' /Root 1 0 R /Info ' + ni + ' 0 R >>\nstartxref\n' + xref + '\n%%EOF';
+  var b = new Uint8Array(out.length);
+  for (var i = 0; i < out.length; i++) b[i] = out.charCodeAt(i) & 255;
+  return b;
+};
+
+// La liste de kitting : en-tête avec logo et fiche du kit, signatures,
+// tableau par zone (une zone = un rayon, dans l'ordre du magasin), codes
+// d'article, cases « prélevé », contrôle final et pied de page numéroté.
+function kittingPdf(avec, d){
+  var INK = '#141414', GRIS = '#8D8B86', GRIS2 = '#4A4A48', FILET = '#E2DED7', SABLE = '#B39570', NOIR = '#1C1C1C', ZEBRE = '#FAF9F6';
+  var M = 40, D = 572, BAS = 64;
+  var grp = epicerieParRayon(avec), nbL = 0, nbC = 0;
+  grp.forEach(function (g) { nbL += g.items.length; g.items.forEach(function (it) { if (isTrue(it.Coche)) nbC++; }); });
+  var noKit = 'KIT-' + ymd(d).slice(2).replace(/-/g, '') + '-' + pad(d.getHours()) + pad(d.getMinutes());
+  var doc = new PdfDoc(), y = 0;
+  var COL = { box: M + 5, no: M + 22, code: M + 44, art: M + 92, qte: M + 358, un: M + 366, src: M + 420 };
+
+  function logo(x, yb, grand){
+    var t = grand ? 17 : 11, cs = grand ? 4.2 : 2.6;
+    var w1 = doc.texte(x, yb, 'LAVOIE', 'T', t, INK, { cs: cs });
+    var w2 = doc.texte(x + w1 + cs * 2.2, yb, '&', 'TI', t * 1.08, SABLE);
+    doc.texte(x + w1 + cs * 2.2 + w2 + cs * 2.2, yb, 'CO', 'T', t, INK, { cs: cs });
+  }
+  function enteteTableau(){
+    doc.rect(M, y - 18, D - M, 18, NOIR);
+    var o = { cs: .9 }, yt = y - 12;
+    doc.texte(COL.box - 1, yt, 'OK', 'HB', 6.5, '#FFFFFF', o);
+    doc.texte(COL.no, yt, 'N°', 'HB', 6.5, '#FFFFFF', o);
+    doc.texte(COL.code, yt, 'CODE', 'HB', 6.5, '#FFFFFF', o);
+    doc.texte(COL.art, yt, 'ARTICLE', 'HB', 6.5, '#FFFFFF', o);
+    doc.texte(COL.qte, yt, 'QTÉ', 'HB', 6.5, '#FFFFFF', { cs: .9, align: 'droite' });
+    doc.texte(COL.un, yt, 'UNITÉ', 'HB', 6.5, '#FFFFFF', o);
+    doc.texte(COL.src, yt, 'PROVENANCE', 'HB', 6.5, '#FFFFFF', o);
+    y -= 18;
+  }
+  function nouvellePage(suite){
+    doc.page();
+    y = 752;
+    if (!suite) return;
+    logo(M, y - 10, false);
+    doc.texte(D, y - 10, 'LISTE DE KITTING · ' + noKit + ' (suite)', 'HB', 8, GRIS2, { cs: .8, align: 'droite' });
+    doc.ligne(M, y - 20, D, y - 20, INK, 1);
+    y -= 34;
+    enteteTableau();
+  }
+  function place(h){ if (y - h < BAS) nouvellePage(true); }
+
+  // ---- Page 1 : en-tête ----
+  nouvellePage(false);
+  logo(M, 730, true);
+  doc.branche(M + 2, 722, .62, SABLE);
+  doc.texte(M, 676, 'CUISINE & PLANIFICATION FAMILIALES', 'H', 6.5, GRIS, { cs: 1.3 });
+  doc.texte(D, 731, 'LISTE DE KITTING', 'HB', 18, INK, { cs: 1.4, align: 'droite' });
+  doc.texte(D, 716, 'Épicerie · approvisionnement du foyer', 'H', 9, GRIS, { align: 'droite' });
+  // Fiche du kit : 2 × 2 cases
+  var fx = D - 250, fw = 125, fh = 24, fy = 700;
+  [['N° DE KIT', noKit], ['DATE', d.getDate() + ' ' + MOIS_L[d.getMonth()] + ' ' + d.getFullYear()],
+   ['LIGNES', nbL + (nbC ? ' (' + nbC + ' déjà prélevée' + (nbC > 1 ? 's' : '') + ')' : '')], ['ZONES', String(grp.length)]].forEach(function (c, i) {
+    var cx = fx + (i % 2) * fw, cy = fy - Math.floor(i / 2) * fh;
+    doc.rect(cx, cy - fh, fw, fh, null, FILET, .6);
+    doc.texte(cx + 7, cy - 9, c[0], 'HB', 5.8, GRIS, { cs: .9 });
+    doc.texte(cx + 7, cy - 19.5, pdfCouper(c[1], 'HB', 8.6, fw - 12), 'HB', 8.6, INK);
+  });
+  doc.ligne(M, 640, D, 640, INK, 1.4);
+  doc.ligne(M, 637.2, D, 637.2, SABLE, .6);
+  // Signatures
+  var sw = (D - M) / 4;
+  ['PRÉPARÉ PAR', 'VÉRIFIÉ PAR', 'DÉBUT', 'FIN'].forEach(function (lbl, i) {
+    var sx = M + i * sw;
+    doc.texte(sx, 620, lbl, 'HB', 6, GRIS, { cs: .9 });
+    doc.ligne(sx + pdfLargeur(lbl, 'HB', 6, .9) + 6, 619, sx + sw - 14, 619, '#BDB8AF', .6);
+  });
+  y = 600;
+  enteteTableau();
+
+  // ---- Tableau par zone ----
+  var ligneNo = 0;
+  if (!grp.length) {
+    doc.texte((M + D) / 2, y - 40, 'Aucun article à préparer.', 'TI', 13, GRIS, { align: 'centre' });
+    y -= 60;
+  }
+  grp.forEach(function (g, zi) {
+    place(20 + 17);
+    var tint = rayonTint(g.ray), code = codeZone(g.ray);
+    doc.rect(M, y - 20, D - M, 20, tint[0]);
+    doc.rond(M + 9, y - 10, 3.2, tint[2]);
+    doc.texte(M + 18, y - 13.2, 'ZONE ' + (zi + 1) + ' · ' + g.ray.toUpperCase(), 'HB', 7.8, INK, { cs: .9 });
+    doc.texte(D - 8, y - 13.2, code + ' · ' + g.items.length + ' ligne' + (g.items.length > 1 ? 's' : ''), 'H', 7.4, GRIS2, { align: 'droite' });
+    y -= 20;
+    g.items.forEach(function (it, ii) {
+      place(17);
+      ligneNo++;
+      var fait = isTrue(it.Coche), h = 17, yb = y - 11.6;
+      if (ii % 2) doc.rect(M, y - h, D - M, h, ZEBRE);
+      doc.rect(COL.box, y - 12.8, 8.6, 8.6, null, fait ? SABLE : GRIS2, .8);
+      if (fait) doc.ops.push('q ' + pdfRgb(SABLE) + ' RG 1.2 w 1 J 1 j ' + (COL.box + 1.8).toFixed(2) + ' ' + (y - 8.6).toFixed(2) + ' m ' + (COL.box + 3.7).toFixed(2) + ' ' + (y - 10.9).toFixed(2) + ' l ' + (COL.box + 7.2).toFixed(2) + ' ' + (y - 5.6).toFixed(2) + ' l S Q');
+      var tc = fait ? GRIS : INK;
+      doc.texte(COL.no, yb, pad(ligneNo), 'C', 7.8, GRIS);
+      doc.texte(COL.code, yb, code + '-' + pad(ii + 1), 'C', 7.8, fait ? GRIS : GRIS2);
+      doc.texte(COL.art, yb, pdfCouper(it.Ingredient, 'H', 9.2, COL.qte - COL.art - 34), 'H', 9.2, tc);
+      var n = num(it.Quantite);
+      if (n) doc.texte(COL.qte, yb, fmtNum(it.Quantite), 'HB', 9.2, tc, { align: 'droite' });
+      doc.texte(COL.un, yb, pdfCouper(plurUnite(it.Quantite, it.Unite), 'H', 8, COL.src - COL.un - 6), 'H', 8, fait ? GRIS : GRIS2);
+      var src = String(it.Source || '').trim(), srcTxt = !src || src.toLowerCase() === 'manuel' ? 'Ajout manuel' : src;
+      doc.texte(COL.src, yb, pdfCouper(srcTxt, 'H', 7.2, D - COL.src - 4), 'H', 7.2, GRIS);
+      doc.ligne(M, y - h, D, y - h, FILET, .5);
+      y -= h;
+    });
+    y -= 6;
+  });
+
+  // ---- Contrôle final ----
+  place(84);
+  y -= 10;
+  doc.rect(M, y - 66, D - M, 66, null, INK, .8);
+  doc.texte(M + 12, y - 16, 'CONTRÔLE DU KIT', 'HB', 7.5, INK, { cs: 1 });
+  doc.texte(D - 12, y - 16, 'Total : ' + nbL + ' ligne' + (nbL > 1 ? 's' : '') + ' · ' + grp.length + ' zone' + (grp.length > 1 ? 's' : ''), 'H', 8, GRIS2, { align: 'droite' });
+  var cw = (D - M - 24) / 3;
+  ['Prélevées', 'Manquantes', 'Signature'].forEach(function (lbl, i) {
+    var cx = M + 12 + i * cw;
+    doc.texte(cx, y - 44, lbl, 'H', 8, GRIS2);
+    doc.ligne(cx + pdfLargeur(lbl, 'H', 8) + 6, y - 45, cx + cw - 12, y - 45, '#BDB8AF', .6);
+  });
+  doc.texte(M + 12, y - 58, 'Cocher chaque ligne au prélèvement. Toute rupture : noter la ligne et la remplacer au besoin.', 'TI', 7.6, GRIS);
+  y -= 66;
+
+  // ---- Pieds de page (numérotés une fois le total connu) ----
+  var total = doc.pages.length, quand = pad(d.getHours()) + ' h ' + pad(d.getMinutes());
+  doc.pages.forEach(function (ops, i) {
+    doc.ops = ops;
+    doc.ligne(M, 44, D, 44, FILET, .6);
+    doc.texte(M, 32, 'Lavoie & Co · Liste de kitting ' + noKit, 'H', 7, GRIS);
+    doc.texte((M + D) / 2, 32, 'Généré le ' + dateLongue(d) + ' à ' + quand, 'H', 7, GRIS, { align: 'centre' });
+    doc.texte(D, 32, 'Page ' + (i + 1) + ' / ' + total, 'HB', 7, GRIS2, { align: 'droite' });
+  });
+  // (Le titre du fichier est en PDFDocEncoding : pas de tiret long.)
+  return doc.octets('Liste de kitting ' + noKit + ' - Lavoie & Co');
+}
+
 /* ============ Ajout manuel épicerie ============ */
 function openManuel(){
   showSheet('Ajouter à l\'épicerie', '<label>Ingrédient</label><div id="mAc" style="margin-bottom:14px"></div><div id="mPicked" class="hide"><div class="card" style="margin-bottom:14px"><div class="row"><div class="grow"><div class="mealname" id="mNom" style="font-size:15px"></div><div class="cook" id="mRay"></div></div></div></div><div style="display:flex;gap:8px;margin-bottom:6px;align-items:flex-start"><input id="mQty" inputmode="decimal" placeholder="Qté (1)" style="flex:.8"><div style="flex:1.4">' + uniteSelectHtml('mu', '') + '</div></div><button class="btn" id="mSave" style="margin-top:10px">Ajouter à la liste</button></div>', true);
@@ -3087,7 +3453,7 @@ function showSheet(title, inner, stacked){
   // répond « non » tout seul — la feuille devenait infermable (v4.9.0).
   var touche = false;
   // Chercher une recette n'est pas « du travail à protéger ».
-  function marque(e){ if (!(e.target && e.target.type === 'search')) touche = true; }
+  function marque(e){ if (!(e.target && (e.target.type === 'search' || e.target.hasAttribute('data-libre')))) touche = true; }
   o.addEventListener('input', marque, true);
   o.addEventListener('change', marque, true);
   function fermer(){
