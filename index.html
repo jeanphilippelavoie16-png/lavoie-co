@@ -6,10 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Lavoie &amp; Co</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#F3F3ED">
+<meta name="theme-color" content="#F6F5F2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&display=swap" rel="stylesheet">
 <!-- iOS : installation plein écran + icône d'accueil -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,60 +17,70 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v4.9.1 « La Carte »
-     Refonte : l'esthétique d'une carte de restaurant contemporain.
-     Porcelaine + encre + vert bouteille. Plus d'écusson : la marque
-     est un mot-symbole en capitales espacées (Marcellus, repli Georgia
-     hors ligne). Deux couleurs, deux sens : l'ENCRE agit (boutons,
-     navigation), le VERT constate (coché, sélectionné, progression).
+     LAVOIE & CO — v5.2.0 « Porcelaine »
+     Direction : sobre et épuré. Porcelaine chaude, noir profond,
+     une seule touche de sable. Titres en Bodoni Moda, interface en
+     Inter, mot-symbole en Marcellus.
+     Toute la palette tient dans le bloc :root ci-dessous — changer
+     une couleur là la change partout (ombres et teintes comprises,
+     via color-mix). Les anciens noms de variables restent en alias.
      ================================================================ */
   :root{
-    --paper:#F3F3ED; --card:#FFFFFF;
-    --ink:#141613; --ink2:#3F443E; --mut:#8F928A;
-    --line:#E2E2DA; --line2:#EBEBE4;
-    /* LE vert de l'app : céladon (celui de la carte du jour). Le pur
-       pour remplir (pastilles, coches, accents), le foncé — même
-       teinte — pour écrire sur fond clair (contraste 5,4:1). */
-    --pine:#9DC3AC; --pine-deep:#4E7360; --pine-ghost:#EAF1EC; --pine-line:#C9DCD0;
-    --brass:#4E7360; --brass-2:#9DC3AC; --brass-ghost:#EAF1EC;
-    --danger:#A9452F; --danger-ghost:#F6E7E1;
-    --side:#FFFFFF; --side-2:#F1F1EB; --side-text:#3F443E; --side-mut:#8F928A; --side-on:#141613;
-    --serif:'Marcellus',ui-serif,'New York',Georgia,'Times New Roman',serif;
-    --sans:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-    --r-lg:20px; --r:15px; --r-sm:11px;
-    --sh-1:0 1px 2px rgba(20,22,19,.05),0 8px 20px rgba(20,22,19,.05);
-    --sh-2:0 10px 28px rgba(20,22,19,.08);
-    --sh-pop:0 22px 52px rgba(20,22,19,.16);
+    /* Palette — tout le reste de la feuille en découle */
+    --bg:#F6F5F2; --bg-2:#EDEBE6; --card:#FFFFFF;
+    --ink:#141414; --ink2:#4A4A48; --mut:#8D8B86;
+    --line:#E6E3DD; --line2:#F0EEE9; --line-strong:#D5D1C9; --faint:#C3BFB7;
+    --pri:#1C1C1C; --pri-2:#333333; --pri-deep:#000000; --on-pri:#FFFFFF; --pri-ghost:#F0EFEC; --pri-line:#D6D3CD;
+    --dark:#1C1C1C; --dark-2:#2E2E2E; --on-dark:#F6F4EF;
+    --acc:#B39570; --acc-soft:#D8C6A8; --acc-ink:#86694A; --acc-ghost:#F7F3EC; --acc-line:#E6DCCC;
+    --danger:#B23A2B; --danger-ghost:#FBEAE6;
+    /* Alias (noms utilisés ailleurs dans le code) */
+    --paper:var(--bg); --paper-2:var(--bg-2);
+    --wine:var(--pri); --wine-2:var(--pri-2); --wine-deep:var(--pri-deep); --wine-ghost:var(--pri-ghost); --wine-line:var(--pri-line);
+    --night:var(--dark); --night-2:var(--dark-2); --night-3:var(--dark-2);
+    --champ:var(--acc); --champ-soft:var(--acc-soft); --champ-ink:var(--acc-ink); --champ-ghost:var(--acc-ghost); --champ-line:var(--acc-line);
+    --forest:var(--pri); --forest-2:var(--pri-2); --forest-deep:var(--dark);
+    --gold:var(--acc); --gold-soft:var(--acc-soft); --gold-ink:var(--acc-ink); --gold-ghost:var(--acc-ghost); --gold-line:var(--acc-line);
+    --pine:var(--pri); --pine-deep:var(--pri); --pine-ghost:var(--pri-ghost); --pine-line:var(--pri-line);
+    --brass:var(--acc-ink); --brass-2:var(--acc-soft); --brass-ghost:var(--acc-ghost);
+    --side-text:color-mix(in srgb,var(--on-dark) 66%,transparent); --side-mut:color-mix(in srgb,var(--on-dark) 42%,transparent); --side-on:var(--on-dark);
+    --serif:'Bodoni Moda','Didot','Bodoni 72',ui-serif,Georgia,'Times New Roman',serif;
+    --mark:'Marcellus',ui-serif,Georgia,serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --r-lg:24px; --r:18px; --r-sm:12px;
+    --sh-1:0 1px 1px color-mix(in srgb,var(--dark) 3%,transparent),0 6px 18px color-mix(in srgb,var(--dark) 5%,transparent);
+    --sh-2:0 2px 4px color-mix(in srgb,var(--dark) 4%,transparent),0 18px 40px color-mix(in srgb,var(--dark) 10%,transparent);
+    --sh-pop:0 28px 70px color-mix(in srgb,var(--dark) 28%,transparent);
+    --ease:cubic-bezier(.22,1,.36,1);
     --safe-b:env(safe-area-inset-bottom); --safe-t:env(safe-area-inset-top);
-    --nav-w:264px;
-    --navbar-h:calc(86px + var(--safe-b));
+    --nav-w:268px;
+    --navbar-h:calc(84px + var(--safe-b));
+    --maxw:1240px;
   }
-  /* Le mot-symbole : capitales espacées, & en vert. Le padding-left
-     compense l'espacement de la dernière lettre pour centrer à l'œil. */
-  .wordmark{font-family:var(--serif);font-weight:400;letter-spacing:.32em;text-transform:uppercase;
+
+  .wordmark{font-family:var(--mark);font-weight:400;letter-spacing:.32em;text-transform:uppercase;
     color:var(--ink);white-space:nowrap}
-  .wordmark .et{color:var(--pine)}
+  .wordmark .et{color:var(--acc);font-family:var(--serif);font-style:italic;letter-spacing:0;margin:0 .12em 0 -.1em}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);
-    font-family:var(--sans);font-size:16px;line-height:1.42;
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  ::selection{background:var(--pine-ghost)}
-  :focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
+    font-family:var(--sans);font-size:15px;line-height:1.45;letter-spacing:-.006em;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+    font-feature-settings:'cv11','ss01';font-variant-numeric:lining-nums}
+  ::selection{background:var(--champ-ghost)}
+  :focus-visible{outline:2px solid var(--champ);outline-offset:2px;border-radius:6px}
   input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 
-  /* ---------- SPLASH : le mot-symbole et son filet qui se trace ---------- */
-  #splash{position:fixed;inset:0;z-index:200;background:var(--paper);
+  /* ---------- SPLASH : nuit, champagne ---------- */
+  #splash{position:fixed;inset:0;z-index:200;
+    background:radial-gradient(110% 70% at 50% 35%,var(--dark-2) 0%,var(--dark) 62%,color-mix(in srgb,var(--dark) 70%,#000) 100%);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
-    transition:opacity .45s ease,visibility .45s}
+    transition:opacity .55s ease,visibility .55s}
   #splash.gone{opacity:0;visibility:hidden}
-  .sp-word{font-family:var(--serif);font-size:29px;letter-spacing:.32em;text-transform:uppercase;
-    color:var(--ink);padding-left:.32em}
-  .sp-word .et{color:var(--pine)}
-  /* Révélation lettre par lettre : chaque lettre monte et se défloute.
-     Les états de base sont les états FINAUX — si les animations sont
-     coupées (réduction des mouvements), tout reste visible. */
-  .sp-word span{display:inline-block;animation:spLetter .65s cubic-bezier(.22,1,.36,1) both}
-  @keyframes spLetter{from{opacity:0;transform:translateY(18px);filter:blur(7px)}}
+  .sp-word{font-family:var(--mark);font-size:28px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--on-dark);padding-left:.34em}
+  .sp-word .et{color:var(--champ);font-family:var(--serif);font-style:italic;letter-spacing:0}
+  .sp-word span{display:inline-block;animation:spLetter .7s var(--ease) both}
+  @keyframes spLetter{from{opacity:0;transform:translateY(16px);filter:blur(6px)}}
   .sp-word span:nth-child(1){animation-delay:.05s}
   .sp-word span:nth-child(2){animation-delay:.11s}
   .sp-word span:nth-child(3){animation-delay:.17s}
@@ -80,11 +90,8 @@
   .sp-word span:nth-child(7){animation-delay:.44s}
   .sp-word span:nth-child(8){animation-delay:.53s}
   .sp-word span:nth-child(9){animation-delay:.59s}
-  /* La branche d'olivier : un trait céladon qui se dessine (dashoffset
-     1 → 0, pathLength normalisé). États de base = trait complet, pour
-     rester visible quand les animations sont coupées. */
   .sp-dessin{width:170px;height:56px;overflow:visible;margin:-4px 0}
-  .sp-dessin path{fill:none;stroke:#9DC3AC;stroke-width:1.6;stroke-linecap:round;
+  .sp-dessin path{fill:none;stroke:var(--champ);stroke-width:1.4;stroke-linecap:round;
     stroke-dasharray:1;stroke-dashoffset:0}
   .sp-dessin .tige{animation:spTrace 1.1s .85s cubic-bezier(.45,0,.2,1) both}
   .sp-dessin .f1{animation:spTrace .5s 1.55s ease-out both}
@@ -93,87 +100,101 @@
   .sp-dessin .f4{animation:spTrace .5s 2.06s ease-out both}
   .sp-dessin .f5{animation:spTrace .5s 2.23s ease-out both}
   @keyframes spTrace{from{stroke-dashoffset:1}}
-  .sp-tag{font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--mut);
-    padding-left:.3em;animation:spRise .9s 2.35s cubic-bezier(.22,1,.36,1) both}
-  .sp-bar{width:132px;height:2px;background:var(--line);overflow:hidden;animation:spRise .9s 2.5s both}
-  .sp-bar i{display:block;height:100%;width:40%;background:var(--ink);animation:spLoad 1.4s ease-in-out infinite}
-  .sp-ver{font-size:10px;color:var(--mut);letter-spacing:.12em;animation:spRise .9s 2.65s both}
+  .sp-tag{font-family:var(--serif);font-style:italic;font-size:16px;color:color-mix(in srgb,var(--on-dark) 70%,transparent);
+    animation:spRise .9s 2.35s var(--ease) both}
+  .sp-bar{width:120px;height:1px;background:rgba(255,255,255,.12);overflow:hidden;animation:spRise .9s 2.5s both}
+  .sp-bar i{display:block;height:100%;width:40%;background:var(--champ);animation:spLoad 1.4s ease-in-out infinite}
+  .sp-ver{font-size:10px;color:color-mix(in srgb,var(--on-dark) 40%,transparent);letter-spacing:.2em;animation:spRise .9s 2.65s both}
   @keyframes spRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
   @keyframes spLoad{0%{transform:translateX(-120%)}100%{transform:translateX(330%)}}
 
-  /* ---------- Barre latérale (bureau) : panneau clair, filet à droite ---------- */
+  /* ---------- Barre latérale (bureau) : bleu nuit ---------- */
   .sidebar{display:none}
-  .side-logo{padding:6px 4px 2px}
-  .side-tag{font-size:9px;color:var(--side-mut);text-transform:uppercase;letter-spacing:.24em;padding:6px 5px 22px;font-weight:600}
-  .side-new{margin:0 0 20px;width:100%;background:var(--ink);color:#fff;border-radius:13px;padding:12px;
-    font-weight:600;font-size:14.5px;display:flex;align-items:center;justify-content:center;gap:7px;
+  .side-logo{padding:8px 6px 2px}
+  .side-logo .wordmark{color:var(--on-dark)}
+  .side-logo .wordmark .et{color:var(--champ)}
+  .side-tag{font-size:9.5px;color:var(--champ);text-transform:uppercase;letter-spacing:.26em;padding:8px 7px 28px;font-weight:600;opacity:.75}
+  .side-new{margin:0 0 24px;width:100%;
+    background:var(--on-dark);color:var(--dark);border-radius:12px;padding:12px;
+    font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;
+    box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 10px 24px rgba(0,0,0,.3);
     transition:filter .15s,transform .1s}
   .side-new:active{transform:scale(.98)}
-  .side-nav{display:flex;flex-direction:column;gap:3px;flex:1}
-  .side-item{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:11px;color:var(--side-text);
-    font-weight:500;font-size:14.5px;cursor:pointer;transition:background .14s,color .14s}
-  .side-item svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;flex-shrink:0}
-  .side-item.on{background:var(--side-on);color:#fff}
-  .side-foot{display:flex;align-items:center;gap:8px;padding:12px 8px 4px;border-top:1px solid var(--line);
+  .side-nav{display:flex;flex-direction:column;gap:2px;flex:1}
+  .side-item{position:relative;display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:11px;color:var(--side-text);
+    font-weight:500;font-size:14px;cursor:pointer;transition:background .15s,color .15s}
+  .side-item svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;flex-shrink:0;opacity:.85}
+  .side-item.on{background:rgba(255,255,255,.06);color:var(--side-on)}
+  .side-item.on svg{stroke:var(--champ);opacity:1}
+  .side-item.on::after{content:'';position:absolute;right:14px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--champ)}
+  .side-foot{display:flex;align-items:center;gap:8px;padding:14px 8px 4px;border-top:1px solid rgba(255,255,255,.08);
     font-size:12px;color:var(--side-mut);font-weight:500}
-  .side-foot .sver{margin-left:auto;font-size:10.5px;letter-spacing:.04em;opacity:.8}
+  .side-foot .sver{margin-left:auto;font-size:10.5px;letter-spacing:.06em;opacity:.8}
 
   /* ---------- Pastille de sync ---------- */
   .sync{margin-left:auto;display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);
     border-radius:30px;padding:5px 11px 5px 9px;font-size:11px;font-weight:600;color:var(--ink2);
-    letter-spacing:.02em;box-shadow:var(--sh-1);white-space:nowrap}
-  .sdot{width:7px;height:7px;border-radius:50%;background:#9DC3AC;transition:background .2s;flex-shrink:0}
-  .sdot.busy{background:var(--brass);animation:pulse 1s infinite}
-  .sdot.off{background:#C9803F;animation:none}
+    letter-spacing:.01em;white-space:nowrap}
+  .sdot{width:7px;height:7px;border-radius:50%;background:#5E9A76;transition:background .2s;flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(94,154,118,.16)}
+  .sdot.busy{background:var(--champ);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 20%,transparent);animation:pulse 1s infinite}
+  .sdot.off{background:#C9803F;box-shadow:0 0 0 3px rgba(201,128,63,.16);animation:none}
   @keyframes pulse{50%{opacity:.35}}
 
   /* ---------- Contenu ---------- */
   .content{min-height:100vh}
-  .topbar{position:sticky;top:0;z-index:30;background:rgba(243,243,237,.92);
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-    padding:calc(11px + var(--safe-t)) 16px 10px;border-bottom:1px solid transparent;
+  .topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 84%,transparent);
+    backdrop-filter:saturate(1.5) blur(16px);-webkit-backdrop-filter:saturate(1.5) blur(16px);
+    padding:calc(12px + var(--safe-t)) 18px 11px;border-bottom:1px solid transparent;
     transition:border-color .25s,box-shadow .25s;
     display:flex;align-items:center;gap:10px}
   .brand{display:flex;align-items:center;gap:9px}
-  .brand .logo{font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:-.01em}
-  .brand .logo .amp{color:var(--brass);font-weight:500;font-style:italic}
-  .pagetitle{display:none;font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:-.01em}
-  /* Le cœur : collé à la marque, il s'emplit de céladon quand l'autre
-     a laissé quelque chose, et bat doucement jusqu'au « vu ».
-     Boîte FIXE centrée : le battement (scale sur le svg, bloc) se fait
-     à l'intérieur sans bouger la ligne ni les voisins. */
-  #goNous{display:flex;align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0}
+  .pagetitle{display:none}
+  #goNous{display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex-shrink:0;border-radius:50%}
   #goNous svg{display:block;transform-origin:center}
-  #goNous.new svg path{fill:#9DC3AC}
+  #goNous svg path{stroke:var(--wine)}
+  #goNous.new svg path{fill:var(--wine)}
   #goNous.new svg{animation:coeurbat 2.2s ease-in-out infinite}
   @keyframes coeurbat{0%,100%{transform:scale(1)}8%{transform:scale(1.16)}16%{transform:scale(1)}}
 
-  main{padding:18px 14px 0;max-width:600px;margin:0 auto;padding-bottom:calc(var(--navbar-h) + 24px)}
-  .ph{font-family:var(--serif);font-size:34px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px;line-height:1.1}
-  .psub{color:var(--mut);font-size:13px;margin:0 0 18px;letter-spacing:.01em}
+  main{padding:10px 16px 0;max-width:620px;margin:0 auto;padding-bottom:calc(var(--navbar-h) + 28px)}
+  /* Titre de page en Bodoni, précédé d'un losange champagne */
+  .ph{font-family:var(--serif);font-size:42px;font-weight:500;letter-spacing:-.025em;margin:0 0 6px;line-height:1.02;color:var(--ink)}
+  .ph::before{content:'';display:block;width:7px;height:7px;background:var(--champ);transform:rotate(45deg);margin:10px 0 18px 2px}
+  .psub{color:var(--mut);font-size:13.5px;margin:0 0 22px;line-height:1.5}
 
   .panes{display:block}
-  .recgrid{display:grid;grid-template-columns:1fr;gap:8px}
+  .recgrid{display:grid;grid-template-columns:1fr;gap:10px}
 
-  /* Les bulles : arrondi uniforme et généreux — doux, propre, moderne. */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:13px 15px;
-    margin-bottom:9px;box-shadow:var(--sh-1)}
-  .card.tap{transition:transform .12s,box-shadow .16s,border-color .16s}
-  .card.tap:active{transform:scale(.988)}
-  .card.tracked{background:var(--pine-ghost);border-color:var(--pine-line)}
-  .row{display:flex;align-items:center;gap:11px} .grow{flex:1;min-width:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;
+    margin-bottom:10px;box-shadow:var(--sh-1)}
+  .card.tap{transition:transform .16s var(--ease),box-shadow .22s,border-color .22s,background .22s}
+  .card.tap:active{transform:scale(.985)}
+  .card.tracked{background:var(--acc-ghost);border-color:var(--champ-line)}
+  .card.sel{border-color:var(--wine);background:color-mix(in srgb,var(--pri) 4%,var(--card));box-shadow:0 0 0 1px var(--wine),0 10px 24px color-mix(in srgb,var(--pri) 10%,transparent)}
+  .row{display:flex;align-items:center;gap:12px} .grow{flex:1;min-width:0}
   .trunc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .muted{color:var(--mut)} .small{font-size:12.5px}
 
-  /* La date en exergue : chiffre en caractère de titre, comme sur une
-     carte — pas de boîte, le contraste fait le travail. */
-  .datechip{display:flex;flex-direction:column;align-items:center;justify-content:center;width:44px;height:44px;flex-shrink:0}
-  .datechip .d{font-family:var(--serif);font-size:24px;color:var(--ink);line-height:1}
-  .datechip.empty .d{color:#C9CCC5}
-  .datechip .m{font-size:8px;color:var(--mut);text-transform:uppercase;letter-spacing:.22em;margin-top:3px;font-weight:600;padding-left:.22em}
-  .datechip.empty .m{color:#C9CCC5}
-  .mealname{font-size:15px;font-weight:600}
-  .cook{font-size:11.5px;color:var(--mut);margin-top:1px}
+  .datechip{display:flex;flex-direction:column;align-items:center;justify-content:center;width:48px;min-height:46px;flex-shrink:0}
+  .datechip .d{font-family:var(--serif);font-size:30px;font-weight:500;color:var(--ink);line-height:.95;letter-spacing:-.02em}
+  .datechip.empty{padding:0;font-size:inherit;line-height:inherit}
+  .datechip.empty .d{color:var(--faint)}
+  .datechip .m{font-size:8.5px;color:var(--champ-ink);text-transform:uppercase;letter-spacing:.22em;margin-top:5px;font-weight:650;padding-left:.22em}
+  .datechip.empty .m{color:var(--faint)}
+  .mealname{font-size:15px;font-weight:600;letter-spacing:-.012em;color:var(--ink)}
+  .cook{font-size:12px;color:var(--mut);margin-top:2px}
+
+  /* Monogramme : médaillon rond, initiale Bodoni italique */
+  .mono{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-style:italic;font-size:22px;font-weight:500;line-height:1;
+    background:var(--bg-2);color:var(--ink);
+    box-shadow:inset 0 0 0 1px var(--line);transition:background .2s,color .2s,box-shadow .2s}
+  .mono svg{width:17px;height:17px}
+  .mono.on{background:var(--wine);color:var(--on-pri);box-shadow:0 8px 18px color-mix(in srgb,var(--pri) 28%,transparent)}
+  .mono.on svg path{stroke-dasharray:1;stroke-dashoffset:0;animation:chkdraw .35s .04s cubic-bezier(.4,0,.2,1) both}
+  /* monogrammes neutres : une seule teinte, sobre */
+
   /* étapes visuelles de l'import de recette (Internet) */
   .impsteps{margin:18px 2px 6px;display:none}
   .impsteps.show{display:block}
@@ -181,156 +202,173 @@
   .impstep:last-child{padding-bottom:0}
   .impstep::before{content:'';position:absolute;left:13px;top:32px;bottom:4px;width:2px;background:var(--line);border-radius:2px}
   .impstep:last-child::before{display:none}
-  .impstep.ok::before{background:linear-gradient(180deg,var(--brass-2),var(--brass))}
+  .impstep.ok::before{background:linear-gradient(180deg,var(--champ-soft),var(--champ))}
   .impstep .num{position:relative;width:28px;height:28px;border-radius:50%;background:var(--card);border:2px solid var(--line);
-    color:var(--mut);font-family:var(--serif);font-size:13.5px;font-weight:700;display:flex;align-items:center;
+    color:var(--mut);font-family:var(--serif);font-size:14px;font-weight:600;display:flex;align-items:center;
     justify-content:center;flex-shrink:0;transition:background .25s,border-color .25s,color .25s}
   .impstep .num svg{width:14px;height:14px}
   .impstep .lbl{font-size:14px;font-weight:600;color:var(--mut);padding-top:3px;transition:color .25s}
   .impstep .sub{font-size:11.5px;color:var(--mut);margin-top:1px;font-weight:400;line-height:1.45}
-  .impstep.on .num{border-color:var(--pine);color:var(--pine-deep);background:var(--pine-ghost)}
+  .impstep.on .num{border-color:var(--wine);color:var(--wine);background:var(--wine-ghost)}
   .impstep.on .num::after{content:'';position:absolute;inset:-7px;border-radius:50%;border:2px solid transparent;
-    border-top-color:var(--brass);animation:impspin .9s linear infinite}
+    border-top-color:var(--champ);animation:impspin .9s linear infinite}
   .impstep.on .lbl{color:var(--ink)}
-  .impstep.ok .num{background:linear-gradient(135deg,var(--brass-2),var(--brass));border-color:transparent;color:#fff;
-    box-shadow:0 1px 4px rgba(180,134,62,.45)}
+  .impstep.ok .num{background:linear-gradient(135deg,var(--champ-soft),var(--champ));border-color:transparent;color:#fff;
+    box-shadow:0 2px 6px color-mix(in srgb,var(--acc) 35%,transparent)}
   .impstep.ok .lbl{color:var(--ink)}
   .impstep.err .num{background:var(--danger-ghost);border-color:var(--danger);color:var(--danger)}
   .impstep.err .lbl{color:var(--danger)}
   .impstep.err .sub{color:var(--danger)}
   @keyframes impspin{to{transform:rotate(360deg)}}
   .ig-thumbs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 2px}
-  .ig-thumb{position:relative;width:58px;height:58px;border-radius:11px;overflow:hidden;
+  .ig-thumb{position:relative;width:58px;height:58px;border-radius:12px;overflow:hidden;
     border:1px solid var(--line);box-shadow:var(--sh-1);flex-shrink:0}
   .ig-thumb img{width:100%;height:100%;object-fit:cover;display:block}
   .ig-thumb .rmv{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;
-    background:rgba(27,36,30,.72);color:#fff;font-size:13px;line-height:18px;text-align:center;cursor:pointer}
+    background:color-mix(in srgb,var(--dark) 75%,transparent);color:#fff;font-size:13px;line-height:18px;text-align:center;cursor:pointer}
 
-  /* créneaux dîner/souper dans une carte de jour */
-  .slotrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-radius:9px}
-  .slotrow + .slotrow{border-top:1px solid var(--line2)}
-  .slotlbl{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--brass);
-    width:48px;flex-shrink:0}
-  .slotempty{color:var(--mut);font-size:13px;font-weight:500}
-  .slotrow.dragover{background:var(--pine-ghost);box-shadow:0 0 0 3px var(--pine-ghost)}
+  /* ---------- La semaine : un carnet unique, un jour par ligne ---------- */
+  .week{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-1);
+    padding:6px;margin-bottom:12px}
+  .day{padding:6px 12px 6px 6px;border-radius:18px;position:relative}
+  .day + .day::before{content:'';position:absolute;left:14px;right:14px;top:0;height:1px;background:var(--line)}
+  .day.today + .day::before,.day + .day.today::before{display:none}
+  .card.day{padding:6px 12px 6px 8px}
+  .slotrow{display:flex;align-items:center;gap:10px;padding:7px 0;min-height:40px}
+  .slotrow + .slotrow{border-top:1px dashed var(--line2)}
+  .slotlbl{font-size:9px;font-weight:650;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);
+    width:50px;flex-shrink:0}
+  .slotempty{color:var(--faint);font-family:var(--serif);font-style:italic;font-size:15px;font-weight:400;letter-spacing:0}
+  .slotrow.dragover{background:var(--wine-ghost);box-shadow:0 0 0 3px var(--wine-ghost);border-radius:10px}
+  .slotrow .mealname{font-size:14.5px}
 
-  /* La carte du jour : aujourd'hui s'inverse — l'encre devient le fond.
-     C'est le punch de la page, et c'est de l'information : le jour qui
-     compte se lit avant tous les autres. */
-  .card.today{background:var(--ink);border-color:var(--ink);color:#FBFBF9;
-    box-shadow:0 14px 30px rgba(20,22,19,.22)}
-  .card.today .datechip .d{color:#fff}
-  .card.today .datechip .m{color:rgba(255,255,255,.55)}
-  .card.today .slotlbl{color:#9DC3AC}
-  .card.today .slotempty{color:rgba(255,255,255,.42)}
-  .card.today .mealname{color:#FBFBF9}
-  .card.today .cook{color:rgba(255,255,255,.55)}
-  .card.today .slotrow + .slotrow{border-top-color:rgba(255,255,255,.14)}
-  .card.today .chev,.card.today .xdel,.card.today .dragh{color:rgba(255,255,255,.4)}
-  .card.today .xdel:active{color:#FF8A70}
-  .card.today .slotrow.dragover{background:rgba(255,255,255,.14);box-shadow:none}
+  /* Aujourd'hui : la ligne passe au bleu nuit, date champagne */
+  .today{background:linear-gradient(160deg,var(--dark-2) 0%,var(--dark) 100%);color:var(--on-dark);
+    box-shadow:0 14px 30px color-mix(in srgb,var(--dark) 28%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--acc) 18%,transparent)}
+  .card.today{border-color:transparent}
+  .today .datechip .d{color:var(--champ-soft)}
+  .today .datechip .m{color:var(--dark);background:var(--acc-soft);border-radius:20px;padding:2px 6px 2px 8px;letter-spacing:.18em;margin-top:6px}
+  .today .slotlbl{color:color-mix(in srgb,var(--acc-soft) 80%,transparent)}
+  .today .slotempty{color:color-mix(in srgb,var(--on-dark) 42%,transparent)}
+  .today .mealname{color:var(--on-dark)}
+  .today .cook{color:color-mix(in srgb,var(--on-dark) 55%,transparent)}
+  .today .slotrow + .slotrow{border-top-color:rgba(255,255,255,.12)}
+  .today .chev,.today .xdel,.today .dragh{color:color-mix(in srgb,var(--on-dark) 40%,transparent)}
+  .today .xdel:active{color:#FF9C84}
+  .today .slotrow.dragover{background:rgba(255,255,255,.1);box-shadow:none}
 
-  /* Entrée orchestrée : les cartes montent en cascade au changement
-     d'onglet — et seulement là, jamais à chaque coche. */
-  @keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-  .anim .pane-a > *{animation:cardIn .45s cubic-bezier(.22,1,.36,1) both}
-  .anim .pane-a > *:nth-child(2){animation-delay:.04s}
-  .anim .pane-a > *:nth-child(3){animation-delay:.08s}
-  .anim .pane-a > *:nth-child(4){animation-delay:.12s}
-  .anim .pane-a > *:nth-child(5){animation-delay:.16s}
-  .anim .pane-a > *:nth-child(6){animation-delay:.2s}
-  .anim .pane-a > *:nth-child(7){animation-delay:.24s}
-  .anim .pane-a > *:nth-child(8){animation-delay:.28s}
-  .anim .pane-a > *:nth-child(n+9){animation-delay:.32s}
-  .anim .recgrid > .card,.anim .inggrid > .card{animation:cardIn .4s cubic-bezier(.22,1,.36,1) both}
+  /* Accès au Menu Chasse : billet champagne */
+  .card.chasse-cta{display:block;padding:13px 16px;background:var(--champ-ghost);border-color:var(--champ-line);box-shadow:none}
+  .chasse-cta .eyebrow{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--champ-ink)}
+  .chasse-cta .mealname{font-family:var(--serif);font-size:18px;font-weight:500;letter-spacing:-.01em;line-height:1.2;margin-top:2px}
+  .chasse-cta .ctchip{background:var(--card);color:var(--champ-ink);border:1px solid var(--champ-line)}
+  .chasse-cta .chev{color:var(--champ-ink)}
 
-  /* Bulles d'épicerie : la teinte du rayon tant que c'est à acheter,
-     retour au neutre une fois coché (le !important bat la teinte en
-     ligne, posée par rayBlock). Le point de couleur signe l'en-tête. */
-  .epi-card.done{background:var(--card)!important;border-color:var(--line)!important}
-  .epi-card .chk{background:rgba(255,255,255,.75)}
+  @keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .anim .pane-a > *{animation:cardIn .5s var(--ease) both}
+  .anim .pane-a > *:nth-child(2){animation-delay:.035s}
+  .anim .pane-a > *:nth-child(3){animation-delay:.07s}
+  .anim .pane-a > *:nth-child(4){animation-delay:.105s}
+  .anim .pane-a > *:nth-child(5){animation-delay:.14s}
+  .anim .pane-a > *:nth-child(6){animation-delay:.175s}
+  .anim .pane-a > *:nth-child(7){animation-delay:.21s}
+  .anim .pane-a > *:nth-child(8){animation-delay:.245s}
+  .anim .pane-a > *:nth-child(n+9){animation-delay:.28s}
+  .anim .week > .day{animation:cardIn .5s var(--ease) both}
+  .anim .week > .day:nth-child(2){animation-delay:.05s}
+  .anim .week > .day:nth-child(3){animation-delay:.1s}
+  .anim .week > .day:nth-child(4){animation-delay:.15s}
+  .anim .week > .day:nth-child(5){animation-delay:.2s}
+  .anim .week > .day:nth-child(6){animation-delay:.25s}
+  .anim .week > .day:nth-child(n+7){animation-delay:.3s}
+  .anim .recgrid > .card,.anim .inggrid > .card{animation:cardIn .45s var(--ease) both}
+
+  /* Épicerie */
+  .epi-card.done{background:var(--card)!important;border-color:var(--line)!important;box-shadow:none;opacity:.7}
+  .epi-card .chk{background:rgba(255,255,255,.9)}
   .raydot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .rayhd.done > span:nth-child(2){color:var(--mut);text-decoration:line-through;
+    text-decoration-thickness:1px;text-decoration-color:var(--champ)}
+  .rayhd.done .ct{color:var(--champ-ink);font-weight:700}
 
-  /* Rayon d'épicerie complété : l'en-tête se raye, le compte devient ✓ */
-  .rayhd.done > span:first-child{color:var(--brass);text-decoration:line-through;
-    text-decoration-thickness:1px;text-decoration-color:var(--brass-2)}
-  .rayhd.done .ct{color:var(--brass);font-weight:700}
-
-  /* ---------- Accordéons (listes rapides, rayons) ---------- */
-  /* Pliage moderne : grid 1fr → 0fr, le contenu glisse sans mesurer sa hauteur. */
-  .fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .32s cubic-bezier(.22,1,.36,1)}
+  /* ---------- Accordéons ---------- */
+  .fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .34s var(--ease)}
   .fold.closed{grid-template-rows:0fr}
   .fold > div{overflow:hidden;min-width:0}
-  .foldchev{color:#C2C5BD;font-size:17px;display:inline-block;padding:0 2px;
-    transform:rotate(0);transition:transform .25s cubic-bezier(.22,1,.36,1)}
+  .foldchev{color:var(--faint);font-size:17px;display:inline-block;padding:0 2px;
+    transform:rotate(0);transition:transform .25s var(--ease)}
   .foldchev.open{transform:rotate(90deg)}
-  .ctchip{font-size:10.5px;font-weight:700;color:var(--ink2);background:var(--line2);
-    border-radius:20px;padding:3px 9px;letter-spacing:.03em;white-space:nowrap}
+  .ctchip{font-size:10.5px;font-weight:650;color:var(--ink2);background:var(--paper-2);
+    border-radius:20px;padding:3px 9px;letter-spacing:.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
 
-  /* Épicerie : deux modes — Préparer / Magasiner. Le sélecteur en
-     pilule ne vit qu'au téléphone ; le bureau garde ses deux volets. */
-  .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;
-    margin:0 0 16px;box-shadow:var(--sh-1)}
-  .seg .sg{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:9px 12px;
-    border-radius:999px;font-weight:600;font-size:13.5px;color:var(--ink2);cursor:pointer;
-    transition:background .18s,color .18s}
-  .seg .sg.on{background:var(--ink);color:#fff}
-  .seg .sg.on .ctchip{background:rgba(255,255,255,.18);color:#fff}
-  .shopsum{display:flex;align-items:center;gap:14px;padding:14px 17px}
-  .shopsum .n{font-family:var(--serif);font-size:36px;line-height:1;color:var(--ink)}
-  /* Bande d'humeurs (Julie & JP) : visages au trait, l'actif en céladon */
+  /* Sélecteur segmenté : soulignement, façon onglets de magazine */
+  .seg{display:flex;gap:6px;background:transparent;border:none;border-bottom:1px solid var(--line);border-radius:0;padding:0;margin:0 0 20px}
+  .seg .sg{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 8px 13px;position:relative;
+    font-weight:600;font-size:13.5px;color:var(--mut);cursor:pointer;transition:color .2s}
+  .seg .sg::after{content:'';position:absolute;left:18%;right:18%;bottom:-1px;height:2px;border-radius:2px;background:var(--wine);
+    transform:scaleX(0);transition:transform .3s var(--ease)}
+  .seg .sg.on{color:var(--ink)}
+  .seg .sg.on::after{transform:scaleX(1)}
+  .seg .sg.on .ctchip{background:var(--wine);color:var(--on-pri)}
+  .shopsum{display:flex;align-items:center;gap:16px;padding:18px 20px;
+    background:linear-gradient(150deg,var(--pri-2) 0%,var(--pri-deep) 60%,var(--pri-deep) 100%)!important;border-color:transparent!important;color:var(--on-pri);
+    box-shadow:0 4px 10px color-mix(in srgb,var(--pri) 16%,transparent)!important;margin-bottom:20px}
+  .shopsum .n{font-family:var(--serif);font-size:48px;font-weight:500;line-height:.9;color:var(--champ-soft)}
+  .shopsum .muted{color:color-mix(in srgb,var(--on-pri) 65%,transparent)}
+  .shopsum .rayprog{background:rgba(255,255,255,.18)}
+  .shopsum .rayprog i{background:var(--champ-soft)}
+  /* Bande d'humeurs */
   .humband{display:flex;justify-content:space-between;gap:4px;background:var(--paper);
-    border-radius:999px;padding:6px 8px;margin-bottom:12px}
-  .hum{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    border-radius:999px;padding:6px 8px;margin-bottom:12px;border:1px solid var(--line2)}
+  .hum{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     color:var(--mut);transition:background .18s,color .18s,transform .12s}
   .hum:active{transform:scale(.9)}
-  .hum.on{background:var(--pine);color:var(--ink)}
+  .hum.on{background:var(--wine);color:var(--on-pri)}
   @media(max-width:899px){
     .mode-shop .pane-a{display:none}
     .mode-prep .pane-b{display:none}
   }
   @media(min-width:900px){ .seg-epi{display:none} }
 
-  /* ---------- Calendrier familial ---------- */
-  .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
-  .calhd7{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);
-    text-align:center;padding:4px 0}
+  /* ---------- Calendrier ---------- */
+  .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:10px;box-shadow:var(--sh-1)}
+  .calhd7{font-size:9.5px;font-weight:650;letter-spacing:.16em;text-transform:uppercase;color:var(--champ-ink);
+    text-align:center;padding:4px 0 6px}
   .calc{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    border-radius:12px;font-size:14px;color:var(--ink2);background:var(--card);
-    border:1px solid var(--line);cursor:pointer;position:relative;gap:2px}
-  .calc.vide{background:transparent;border-color:transparent;cursor:default}
-  .calc.auj{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
-  .calc .evdot{display:flex;gap:3px;height:5px}
-  .calc .evdot i{width:5px;height:5px;border-radius:50%;background:var(--pine)}
-  .calc.auj .evdot i{background:#9DC3AC}
-  .calc .mdot{position:absolute;top:5px;right:7px;width:4px;height:4px;border-radius:50%;background:var(--brass-2)}
+    border-radius:50%;font-family:var(--serif);font-size:17px;font-weight:500;color:var(--ink);background:transparent;
+    border:1px solid transparent;cursor:pointer;position:relative;gap:1px;transition:background .15s,transform .12s}
+  .calc:active{transform:scale(.94)}
+  .calc.vide{cursor:default}
+  .calc.auj{background:var(--night);color:var(--champ-soft);box-shadow:0 8px 18px color-mix(in srgb,var(--dark) 25%,transparent)}
+  .calc .evdot{display:flex;gap:3px;height:4px}
+  .calc .evdot i{width:4px;height:4px;border-radius:50%;background:var(--wine)}
+  .calc.auj .evdot i{background:var(--on-pri)}
+  .calc .mdot{position:absolute;top:5px;right:6px;width:5px;height:5px;border-radius:50%;background:var(--champ)}
 
-  /* ---------- Le menu de chasse imprimable (aperçu + PDF) ----------
-     Pensé pour tenir sur UNE page : boissons en deux colonnes, puis
-     les huit jours en grille 2 × 4. Plats en Cormorant Garamond
-     italique — l'écriture des cartes de grands restaurants. */
+  /* ---------- Le menu de chasse imprimable ---------- */
   #chassePrint{position:fixed;inset:0;z-index:90;background:var(--paper);overflow-y:auto;
     -webkit-overflow-scrolling:touch}
   .chm{max-width:560px;margin:0 auto;padding:26px 22px 44px;text-align:center;
     font-family:'Cormorant Garamond',Georgia,serif}
-  .chm .chm-titre{font-family:var(--serif);font-size:30px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink);margin:8px 0 2px;padding-left:.16em}
+  .chm .chm-titre{font-family:var(--mark);font-size:30px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--night);margin:8px 0 2px;padding-left:.16em}
   .chm .chm-sous{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;
-    color:var(--pine-deep);padding-left:.3em;margin-bottom:4px}
-  .chm .chm-filet{width:110px;height:1px;background:var(--ink);margin:14px auto}
+    color:var(--wine);padding-left:.3em;margin-bottom:4px}
+  .chm .chm-filet{width:110px;height:1px;background:var(--champ);margin:14px auto}
   .chm-2col{display:grid;grid-template-columns:1fr 1fr;gap:2px 24px;align-items:start}
   .chm-sec{font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
-    color:var(--pine-deep);margin:8px 0 5px;padding-left:.26em}
+    color:var(--wine);margin:8px 0 5px;padding-left:.26em}
   .chm-item{font-size:17px;font-style:italic;font-weight:500;color:var(--ink2);line-height:1.5}
   .chm .chm-jour{margin:13px 0 1px;display:flex;align-items:center;gap:10px}
-  .chm .chm-jour .ln{flex:1;height:1px;background:var(--line)}
-  .chm .chm-jour .t{font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--pine-deep)}
+  .chm .chm-jour .ln{flex:1;height:1px;background:var(--champ-line)}
+  .chm .chm-jour .t{font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--night)}
   .chm .chm-plat{font-size:17px;font-weight:500;font-style:italic;color:var(--ink);margin:4px 0 0;line-height:1.3}
   .chm .chm-plat .quoi{font-size:8px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--mut);display:block;margin-bottom:0;font-family:var(--sans);font-style:normal}
-  .chm .chm-libre{color:#C2C5BD;font-size:15px}
+    color:var(--champ-ink);display:block;margin-bottom:0;font-family:var(--sans);font-style:normal}
+  .chm .chm-libre{color:var(--faint);font-size:15px}
   .chm-bar{position:sticky;top:0;z-index:5;display:flex;gap:10px;justify-content:center;
-    padding:14px;background:rgba(243,243,237,.94);backdrop-filter:blur(8px)}
+    padding:14px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   @media print{
     body > *{display:none!important}
     body > #chassePrint{display:block!important;position:static;overflow:visible;background:#fff}
@@ -338,47 +376,43 @@
     .chm{max-width:none;padding:8px 10px}
   }
 
-  /* En-têtes de rayon collants : en magasin, le rayon reste lisible
-     pendant qu'on défile ses items. */
-  .rayhd{position:sticky;top:calc(44px + var(--safe-t));z-index:5;background:var(--paper);
-    cursor:pointer;padding:7px 5px;margin:12px 0 4px}
+  .rayhd{position:sticky;top:calc(52px + var(--safe-t));z-index:5;background:var(--paper);
+    cursor:pointer;padding:8px 5px;margin:12px 0 4px}
 
-  /* Badge de navigation : ce qu'il reste à acheter, visible de partout. */
   .mobilenav .nv{position:relative}
-  .navbadge{position:absolute;top:0;right:2px;min-width:16px;height:16px;border-radius:9px;
-    background:var(--pine);color:var(--ink);font-size:9px;font-weight:700;
-    display:flex;align-items:center;justify-content:center;padding:0 4px}
-  .side-item .navbadge{position:static;margin-left:auto}
+  .navbadge{position:absolute;top:1px;right:calc(50% - 22px);min-width:17px;height:17px;border-radius:9px;
+    background:var(--wine);color:var(--on-pri);font-size:9.5px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;padding:0 5px;box-shadow:0 0 0 2px var(--night)}
+  .side-item .navbadge{position:static;margin-left:auto;margin-right:12px;box-shadow:none;background:var(--acc-soft);color:var(--dark)}
 
-  /* Voile de la barre du haut : le filet n'apparaît qu'au défilement. */
-  body.scrolled .topbar{border-bottom-color:var(--line);box-shadow:0 8px 24px rgba(20,22,19,.05)}
+  body.scrolled .topbar{border-bottom-color:var(--line);box-shadow:0 10px 30px color-mix(in srgb,var(--dark) 5%,transparent)}
 
-  /* Barre de défilement discrète (bureau) */
   ::-webkit-scrollbar{width:11px}
-  ::-webkit-scrollbar-thumb{background:#DADAD3;border-radius:8px;border:3px solid var(--paper)}
+  ::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:8px;border:3px solid var(--paper)}
   ::-webkit-scrollbar-track{background:transparent}
-  .lastcook{color:var(--brass);font-weight:600}
-  .tagrow{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
-  .ttag{font-size:10px;padding:2.5px 8px;border-radius:20px;background:var(--pine-ghost);color:var(--pine-deep);font-weight:600}
-  .trackchip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.06em;
-    text-transform:uppercase;color:var(--brass);background:var(--brass-ghost);border:1px solid var(--brass-2);
+  .lastcook{color:var(--acc-ink);font-weight:600}
+  .tagrow{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+  .ttag{font-size:11px;padding:2px 9px;border-radius:20px;background:transparent;border:1px solid var(--line);color:var(--ink2);
+    font-weight:550}
+  .tagrow .ttag{font-size:9.5px;font-weight:650;letter-spacing:.06em;text-transform:uppercase}
+  .trackchip{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--champ-ink);background:var(--champ-ghost);border:1px solid var(--champ-line);
     border-radius:20px;padding:3px 9px;white-space:nowrap}
   .trackchip svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:3}
-  .xdel{color:#C6CCC6;font-size:20px;padding:2px 6px;line-height:1;cursor:pointer;transition:color .15s}
+  .xdel{color:var(--faint);font-size:20px;padding:2px 6px;line-height:1;cursor:pointer;transition:color .15s}
   .xdel:active{color:var(--danger)}
-  .chev{color:#C6CCC6;font-size:19px}
+  .chev{color:var(--faint);font-size:19px}
 
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:15px}
-  .btn{background:var(--ink);color:#fff;border-radius:999px;padding:13px 20px;font-weight:600;width:100%;
-    display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;
-    transition:filter .15s,transform .1s,background .15s}
-  .btn:active{transform:scale(.985);background:#000}
+  .btn{background:var(--wine);color:var(--on-pri);border-radius:999px;padding:13px 20px;font-weight:600;width:100%;
+    display:flex;align-items:center;justify-content:center;gap:8px;font-size:14.5px;letter-spacing:.005em;
+    box-shadow:0 1px 0 rgba(255,255,255,.12) inset,0 8px 18px color-mix(in srgb,var(--pri) 22%,transparent);
+    transition:filter .15s,transform .1s,background .15s,box-shadow .15s}
+  .btn:active{transform:scale(.985);background:var(--wine-deep)}
   .btn.sec{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:var(--sh-1)}
-  .btn.ghost{background:var(--pine-ghost);color:var(--pine-deep)}
-  .btn.danger{background:var(--card);color:var(--danger);border:1px solid var(--line)}
-  .btn.sm{padding:9px 15px;font-size:13.5px;width:auto;border-radius:999px}
-  /* Garde des feuilles : la barre « fermer sans enregistrer ? » — pas
-     de confirm() natif, iOS le bloque en mode app installée. */
+  .btn.ghost{background:var(--paper-2);color:var(--ink);box-shadow:none}
+  .btn.danger{background:var(--card);color:var(--danger);border:1px solid var(--line);box-shadow:none}
+  .btn.sm{padding:8px 15px;font-size:13px;width:auto;border-radius:999px}
   .garde-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:12px 0 2px;
     padding:11px 13px;background:var(--danger-ghost);border:1px solid var(--danger);
     border-radius:var(--r-sm);font-size:13.5px;line-height:1.35}
@@ -387,209 +421,217 @@
   .garde-bar .btn.sm.danger{border-color:var(--danger)}
   .garde-bar.pulse{animation:gardePulse .35s ease-out}
   @keyframes gardePulse{0%{transform:scale(1)}35%{transform:scale(1.025)}100%{transform:scale(1)}}
-  .btn[disabled]{opacity:.5;pointer-events:none}
+  .btn[disabled]{opacity:.5;pointer-events:none;box-shadow:none}
 
-  .fab{position:fixed;bottom:calc(var(--navbar-h) + 14px);right:16px;z-index:40;width:56px;height:56px;
-    border-radius:50%;background:var(--ink);color:#fff;font-size:28px;font-weight:300;
-    display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(20,22,19,.24);
+  .fab{position:fixed;bottom:calc(var(--navbar-h) + 16px);right:18px;z-index:40;width:58px;height:58px;
+    border-radius:50%;background:var(--wine);color:var(--on-pri);font-size:30px;font-weight:300;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px color-mix(in srgb,var(--bg) 90%,transparent),0 14px 30px color-mix(in srgb,var(--pri) 35%,transparent);
     transition:transform .12s}
   .fab:active{transform:scale(.93)}
 
-  label{font-size:12px;font-weight:600;color:var(--ink2);display:block;margin:0 0 5px}
-  input,select,textarea{font-family:inherit;font-size:16px;width:100%;padding:12px 13px;border:1px solid var(--line);
-    border-radius:12px;background:var(--card);color:var(--ink);transition:border-color .15s,box-shadow .15s}
-  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pine);box-shadow:0 0 0 3px var(--pine-ghost)}
-  input::placeholder,textarea::placeholder{color:#B4BBB4}
-  .field{margin-bottom:13px}
+  label{font-size:10.5px;font-weight:650;color:var(--champ-ink);display:block;margin:0 0 6px;
+    text-transform:uppercase;letter-spacing:.14em}
+  input,select,textarea{font-family:inherit;font-size:16px;width:100%;padding:12px 14px;border:1px solid var(--line);
+    border-radius:13px;background:var(--card);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--wine);box-shadow:0 0 0 4px color-mix(in srgb,var(--pri) 9%,transparent)}
+  input::placeholder,textarea::placeholder{color:var(--faint)}
+  .field{margin-bottom:14px}
 
-  /* Cases à cocher : des cercles fins, comme un rond de serviette —
-     et le crochet SE DESSINE d'un trait, même geste que la branche
-     d'olivier du splash. */
-  .chk{width:25px;height:25px;border-radius:50%;border:1.5px solid #CBCBC1;flex-shrink:0;display:flex;
-    align-items:center;justify-content:center;background:var(--card);
-    transition:border-color .18s,background .18s,box-shadow .18s;
-    box-shadow:inset 0 1px 3px rgba(20,22,19,.05)}
-  .chk.on{background:var(--pine);border-color:var(--pine);color:var(--ink);animation:chkpop .22s ease;box-shadow:none}
+  .chk{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line-strong);flex-shrink:0;display:flex;
+    align-items:center;justify-content:center;background:var(--card);color:var(--on-pri);
+    transition:border-color .18s,background .18s,box-shadow .18s}
+  .chk.on{background:var(--wine);border-color:var(--wine);animation:chkpop .22s ease}
   .chk svg{width:12px;height:12px}
   .chk.on svg path{stroke-dasharray:1;stroke-dashoffset:0;animation:chkdraw .35s .04s cubic-bezier(.4,0,.2,1) both}
   @keyframes chkdraw{from{stroke-dashoffset:1}}
   @keyframes chkpop{0%{transform:scale(.8)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
-  .done .mealname,.done .itxt{text-decoration:line-through;color:var(--mut);text-decoration-color:#CCD2CD}
+  .done .mealname,.done .itxt{text-decoration:line-through;color:var(--mut);text-decoration-color:var(--line-strong)}
 
-  /* En-têtes de rayon : filet de laiton qui se remplit à mesure qu'on coche */
-  .rayhd{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;color:var(--pine-deep);
-    text-transform:uppercase;letter-spacing:.11em;margin:20px 5px 8px}
+  .rayhd{display:flex;align-items:center;gap:10px;font-size:10.5px;font-weight:700;color:var(--ink);
+    text-transform:uppercase;letter-spacing:.14em;margin:22px 5px 8px}
   .rayhd:first-child{margin-top:4px}
-  .rayprog{flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
-  .rayprog i{display:block;height:100%;background:linear-gradient(90deg,var(--brass-2),var(--brass));
-    border-radius:3px;transition:width .3s ease}
+  .rayprog{flex:1;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+  .rayprog i{display:block;height:100%;background:var(--champ);border-radius:2px;transition:width .35s var(--ease)}
   .rayhd .ct{color:var(--mut);font-weight:600;letter-spacing:0;font-size:11px}
 
-  .grphd{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:700;color:var(--pine-deep);
-    text-transform:uppercase;letter-spacing:.11em;margin:20px 5px 8px}
+  .grphd{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:20px;font-weight:500;font-style:italic;color:var(--ink);
+    letter-spacing:-.01em;margin:28px 4px 12px}
   .grphd:first-child{margin-top:4px}
+  .grphd .btn{font-family:var(--sans);font-style:normal;letter-spacing:0}
   .grphd .ln{flex:1;height:1px;background:var(--line)}
-  .grphd .ct{color:var(--mut);font-weight:600;letter-spacing:0}
+  .grphd .ct{font-family:var(--sans);font-style:normal;font-size:11px;color:var(--champ-ink);font-weight:650}
 
-  /* épicerie compacte */
-  .epi-card{padding:8px 11px}
-  .epi-main{display:flex;align-items:center;gap:10px;flex:1;min-width:0;cursor:pointer}
-  .epi-qty{font-size:14px;color:var(--ink2);font-weight:700;white-space:nowrap;cursor:pointer;
+  .epi-card{padding:9px 12px;box-shadow:none;background:var(--card)!important;border-color:var(--line)!important}
+  .epi-main{display:flex;align-items:center;gap:11px;flex:1;min-width:0;cursor:pointer}
+  .epi-qty{font-size:13.5px;color:var(--ink2);font-weight:650;white-space:nowrap;cursor:pointer;font-variant-numeric:tabular-nums;
     padding:4px 8px;border-radius:9px;border:1px solid transparent;transition:border-color .15s,background .15s}
   .epi-qty .u{font-weight:500;color:var(--mut);margin-left:2px}
-  .epi-qty .qtyin{width:52px;padding:4px 6px;font-size:14px;font-weight:700;text-align:right;
-    border:1px solid var(--pine);border-radius:8px}
+  .epi-qty .qtyin{width:56px;padding:4px 6px;font-size:14px;font-weight:700;text-align:right;
+    border:1px solid var(--wine);border-radius:8px}
+  .itxt{font-weight:500}
   .src{font-size:10.5px;color:var(--mut);margin-top:1px}
 
-  /* ---------- Nav mobile flottante ---------- */
-  .mobilenav{position:fixed;bottom:calc(10px + var(--safe-b));left:10px;right:10px;z-index:30;
-    background:rgba(255,255,255,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-    border:1px solid var(--line);border-radius:24px;box-shadow:var(--sh-2);
-    display:flex;justify-content:space-around;align-items:center;padding:8px 6px}
-  .mobilenav .nv{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;color:var(--mut);
-    font-weight:700;padding:6px 8px;border-radius:15px;transition:color .15s,background .15s;letter-spacing:.01em;
+  /* ---------- Nav mobile : îlot ivoire, pastille nuit ---------- */
+  .mobilenav{position:fixed;bottom:calc(10px + var(--safe-b));left:12px;right:12px;z-index:30;
+    background:rgba(255,255,255,.82);backdrop-filter:saturate(1.6) blur(20px);-webkit-backdrop-filter:saturate(1.6) blur(20px);
+    border:1px solid color-mix(in srgb,var(--line) 90%,transparent);border-radius:28px;
+    box-shadow:0 20px 44px color-mix(in srgb,var(--dark) 16%,transparent),0 2px 6px color-mix(in srgb,var(--dark) 6%,transparent);
+    display:flex;justify-content:space-around;align-items:center;padding:6px}
+  .mobilenav .nv{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;color:var(--mut);
+    font-weight:600;padding:8px 6px 7px;border-radius:22px;transition:color .2s,background .2s;letter-spacing:.02em;
     flex:1 1 0;min-width:0;overflow:hidden;white-space:nowrap}
-  .mobilenav .nv.on{color:#fff;background:var(--ink)}
-  .mobilenav .nv svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8}
-  .mobilenav .nv.on svg{stroke-width:2.2}
+  .mobilenav .nv.on{color:var(--on-dark);background:var(--night);box-shadow:0 8px 18px color-mix(in srgb,var(--dark) 25%,transparent)}
+  .mobilenav .nv svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7}
+  .mobilenav .nv.on svg{stroke:var(--champ-soft)}
+  .mobilenav .navbadge{box-shadow:0 0 0 2px #fff}
 
-  .weeknav{display:flex;align-items:center;justify-content:space-between;margin:0 2px 12px;background:var(--card);
-    border:1px solid var(--line);border-radius:999px;padding:6px;box-shadow:var(--sh-1)}
-  .weeknav .arr{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-    font-size:20px;color:var(--pine-deep);cursor:pointer;transition:background .14s}
-  .weeknav .arr:active{background:var(--pine-ghost)}
-  .weeknav .lbl{font-weight:600;font-size:13.5px;text-align:center}
-  .weeknav .lbl .sm{display:block;font-size:10.5px;color:var(--mut);font-weight:500}
+  .weeknav{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px;background:transparent;
+    border:none;padding:0 0 4px}
+  .weeknav .arr{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:21px;color:var(--ink);cursor:pointer;transition:background .14s;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh-1)}
+  .weeknav .arr:active{background:var(--paper-2)}
+  .weeknav .lbl{font-family:var(--serif);font-weight:500;font-size:19px;text-align:center;letter-spacing:-.01em;line-height:1.15}
+  .weeknav .lbl .sm{display:block;font-family:var(--sans);font-size:9.5px;color:var(--wine);font-weight:650;
+    text-transform:uppercase;letter-spacing:.18em;margin-top:3px}
 
-  .secthd{display:flex;align-items:center;gap:10px;margin:22px 4px 11px}
-  .secthd .t{font-family:var(--serif);font-size:16.5px;font-weight:700;letter-spacing:-.01em}
+  .secthd{display:flex;align-items:center;gap:10px;margin:24px 2px 12px}
+  .secthd .t{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-.015em}
   .secthd .ln{flex:1;height:1px;background:var(--line)}
 
-  .filt,.pills{display:flex;gap:7px;overflow-x:auto;padding:1px 2px 12px;-webkit-overflow-scrolling:touch}
+  .filt,.pills{display:flex;gap:7px;overflow-x:auto;padding:1px 2px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .filt::-webkit-scrollbar,.pills::-webkit-scrollbar{display:none}
-  .fchip,.pill{font-size:12.5px;padding:6px 13px;border-radius:30px;background:var(--card);border:1px solid var(--line);
-    color:var(--ink2);white-space:nowrap;font-weight:500;cursor:pointer;transition:all .13s}
-  .fchip.on,.pill.on{background:var(--pine);color:var(--ink);border-color:var(--pine)}
-  .pill.addp{color:var(--pine-deep);border-style:dashed}
+  .fchip,.pill{font-size:12.5px;padding:7px 14px;border-radius:30px;background:var(--card);border:1px solid var(--line);
+    color:var(--ink2);white-space:nowrap;font-weight:550;cursor:pointer;transition:all .15s}
+  .fchip.on,.pill.on{background:var(--night);color:var(--on-dark);border-color:var(--night)}
+  .pill.addp{color:var(--wine);border-style:dashed;border-color:var(--wine-line);background:transparent}
 
-  .selbtn{position:sticky;bottom:calc(var(--navbar-h) + 8px);z-index:25;margin-top:6px}
+  .selbtn{position:sticky;bottom:calc(var(--navbar-h) + 10px);z-index:25;margin-top:8px}
+  .selbtn .btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line-strong);box-shadow:var(--sh-2)}
 
-  .overlay{position:fixed;inset:0;background:rgba(22,32,25,.46);z-index:50;display:flex;align-items:flex-end;
-    justify-content:center;animation:fade .18s ease;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+  .overlay{position:fixed;inset:0;background:color-mix(in srgb,var(--dark) 45%,transparent);z-index:50;display:flex;align-items:flex-end;
+    justify-content:center;animation:fade .2s ease;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
   @keyframes fade{from{opacity:0}to{opacity:1}}
-  .sheet{background:var(--paper);width:100%;max-width:540px;max-height:92vh;overflow-y:auto;
-    border-radius:26px 26px 0 0;padding:8px 18px calc(120px + var(--safe-b));
-    animation:up .28s cubic-bezier(.22,1,.36,1)}
-  @keyframes up{from{transform:translateY(40px)}to{transform:translateY(0)}}
-  .grab{width:38px;height:4px;background:#D5D9D3;border-radius:3px;margin:8px auto 14px}
-  .shd{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-  .shd .t{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:-.01em}
-  .shd .x{font-size:25px;color:var(--mut);cursor:pointer;padding:4px;line-height:1}
+  .sheet{background:var(--paper);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;
+    border-radius:30px 30px 0 0;padding:8px 20px calc(120px + var(--safe-b));
+    box-shadow:0 -10px 40px color-mix(in srgb,var(--dark) 20%,transparent);
+    animation:up .34s var(--ease)}
+  @keyframes up{from{transform:translateY(48px)}to{transform:translateY(0)}}
+  .grab{width:40px;height:4px;background:var(--line-strong);border-radius:3px;margin:8px auto 16px}
+  .shd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
+  .shd .t{font-family:var(--serif);font-size:28px;font-weight:500;letter-spacing:-.02em;line-height:1.1}
+  .shd .x{font-size:22px;color:var(--ink2);cursor:pointer;line-height:1;width:34px;height:34px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--paper-2);transition:background .15s}
   .btnrow{display:flex;gap:9px}
 
-  .tchip{font-size:13px;padding:8px 14px;border-radius:30px;background:var(--card);border:1px solid var(--line);
-    color:var(--ink2);font-weight:500;cursor:pointer;transition:all .13s;display:inline-flex;align-items:center;gap:6px}
-  .tchip.on{background:var(--pine);color:var(--ink);border-color:var(--pine)}
+  .tchip{font-size:13px;padding:9px 14px;border-radius:30px;background:var(--card);border:1px solid var(--line);
+    color:var(--ink2);font-weight:500;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+  .tchip.on{background:var(--night);color:var(--on-dark);border-color:var(--night)}
   .tchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 
-  .ingrow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+  .ingrow{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:10px 12px;margin-bottom:8px}
   .ingrow .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
   .ingrow .nm{flex:1;font-weight:600;font-size:14.5px}
   .usel{font-size:15px;padding:11px 12px;width:100%} .ucustom{font-size:15px;padding:10px 12px;width:100%}
-  .ingrow .ray{font-size:10.5px;color:var(--pine-deep);background:var(--pine-ghost);padding:3px 9px;border-radius:20px;
+  .ingrow .ray{font-size:10.5px;color:var(--champ-ink);background:var(--champ-ghost);padding:3px 9px;border-radius:20px;
     font-weight:600;white-space:nowrap}
-  .ingrow .rm{color:#C6CCC6;font-size:19px;cursor:pointer;padding:0 2px}
+  .ingrow .rm{color:var(--faint);font-size:19px;cursor:pointer;padding:0 2px}
   .ingrow .bot{display:flex;gap:8px} .ingrow .bot input{padding:9px 11px}
 
   .ac{position:relative}
-  .ac-list{position:absolute;left:0;right:0;top:calc(100% + 5px);z-index:60;background:var(--card);
-    border:1px solid var(--line);border-radius:13px;box-shadow:var(--sh-pop);max-height:min(210px,40vh);
+  .ac-list{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:60;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-pop);max-height:min(210px,40vh);
     overflow-y:auto;padding:5px}
-  .ac-item{padding:11px 12px;border-radius:9px;display:flex;align-items:center;gap:10px;cursor:pointer}
-  .ac-item:active{background:var(--pine-ghost)}
+  .ac-item{padding:11px 12px;border-radius:10px;display:flex;align-items:center;gap:10px;cursor:pointer}
+  .ac-item:active{background:var(--wine-ghost)}
   .ac-item .nm{flex:1;font-size:15px} .ac-item .ray{font-size:11px;color:var(--mut)}
-  .ac-new{padding:11px 12px;border-radius:9px;display:flex;align-items:center;gap:9px;cursor:pointer;
-    color:var(--pine-deep);font-weight:600;border-top:1px solid var(--line2);margin-top:3px}
-  .ac-new:active{background:var(--pine-ghost)}
+  .ac-new{padding:11px 12px;border-radius:10px;display:flex;align-items:center;gap:9px;cursor:pointer;
+    color:var(--wine);font-weight:600;border-top:1px solid var(--line2);margin-top:3px}
+  .ac-new:active{background:var(--wine-ghost)}
   .ac-new svg{width:17px;height:17px}
 
-  .empty{text-align:center;color:var(--mut);padding:40px 24px;font-size:14px;line-height:1.7}
-  .empty .crest{width:36px;height:1px;background:var(--line);margin:0 auto 16px;display:block}
+  .empty{text-align:center;color:var(--mut);padding:44px 24px;font-size:14px;line-height:1.7}
+  .empty .crest{width:7px;height:7px;background:var(--champ);transform:rotate(45deg);margin:0 auto 18px;display:block}
   .clk{cursor:pointer} .hide{display:none!important}
 
-  /* étapes : édition */
   .stepedit{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--line);
-    border-radius:14px;padding:10px 12px;margin-bottom:7px}
-  .stepedit .steptxt{flex:1;font-size:14px;line-height:1.45;padding-top:3px}
+    border-radius:15px;padding:10px 12px;margin-bottom:7px}
+  .stepedit .steptxt{flex:1;font-size:14px;line-height:1.5;padding-top:3px}
   .stepedit .stepacts{display:flex;gap:6px;align-items:center;flex-shrink:0}
   .stepedit .stepup,.stepedit .stepdn{color:var(--mut);font-size:16px;width:22px;height:22px;display:flex;
     align-items:center;justify-content:center;border-radius:6px}
-  .stepedit .stepup:active,.stepedit .stepdn:active{background:var(--pine-ghost)}
-  .stepnum{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--pine);color:#fff;
-    font-family:var(--serif);font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
-  /* étapes : affichage détail */
+  .stepedit .stepup:active,.stepedit .stepdn:active{background:var(--wine-ghost)}
+  .stepnum{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:transparent;color:var(--wine);border:1px solid var(--wine-line);
+    font-family:var(--serif);font-style:italic;font-size:16px;font-weight:500;display:flex;align-items:center;justify-content:center}
   .steplist{display:flex;flex-direction:column;gap:2px}
-  .steprow{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--line2)}
+  .steprow{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--line2)}
   .steprow:last-child{border-bottom:none}
-  .steprow .stepnum{background:linear-gradient(135deg,var(--brass-2),var(--brass));
-    box-shadow:0 1px 4px rgba(180,134,62,.45)}
-  .stepbody{flex:1;font-size:14.5px;line-height:1.55;padding-top:3px}
+  .stepbody{flex:1;font-size:14.5px;line-height:1.6;padding-top:4px}
 
-  .dragh{display:none;color:#C6CCC6;font-size:17px;cursor:grab;padding:0 2px}
-  .dropday.dragover{border-color:var(--pine);background:var(--pine-ghost);box-shadow:0 0 0 3px var(--pine-ghost)}
-  .dropray.dragover{background:var(--pine-ghost);border-radius:9px;padding-left:6px;padding-right:6px;color:var(--pine-deep)}
+  .dragh{display:none;color:var(--faint);font-size:17px;cursor:grab;padding:0 2px}
+  .dropday.dragover{border-color:var(--wine);background:var(--wine-ghost);box-shadow:0 0 0 3px var(--wine-ghost)}
+  .dropray.dragover{background:var(--wine-ghost);border-radius:9px;padding-left:6px;padding-right:6px;color:var(--wine)}
   .inggrid{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:6px}
-  .ingcard{padding:9px 12px}
+  .ingcard{padding:10px 13px}
   @media(min-width:680px){ .inggrid{grid-template-columns:1fr 1fr} }
   @media(min-width:1080px){ .inggrid{grid-template-columns:1fr 1fr 1fr} }
   .dragging{opacity:.45}
   @media(min-width:900px){ .dragh{display:inline} [data-dragrec]{cursor:grab} [data-draging]{cursor:grab} }
 
   .toast{position:fixed;bottom:calc(var(--navbar-h) + 18px);left:50%;transform:translateX(-50%);z-index:80;
-    background:var(--ink);color:#fff;font-size:13.5px;font-weight:500;padding:11px 18px;border-radius:30px;
-    box-shadow:var(--sh-pop);max-width:90%;text-align:center;animation:tin .2s ease}
-  .toast.err{background:var(--danger)}
-  @keyframes tin{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
-
-  /* Marcellus n'existe qu'en une graisse : jamais de faux gras, et un
-     léger espacement positif — les titres respirent comme sur une carte. */
-  .ph,.pagetitle,.shd .t,.secthd .t,.stepnum,.impstep .num{font-weight:400;letter-spacing:.02em}
+    background:var(--night);color:var(--on-dark);font-size:13.5px;font-weight:500;padding:12px 20px;border-radius:30px;
+    border:1px solid color-mix(in srgb,var(--acc) 25%,transparent);box-shadow:var(--sh-pop);max-width:90%;text-align:center;animation:tin .25s var(--ease)}
+  .toast.err{background:var(--danger);border-color:transparent}
+  @keyframes tin{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
 
   /* ============ BUREAU ============ */
   @media(min-width:900px){
     .sidebar{display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:var(--nav-w);
-      background:var(--side);border-right:1px solid var(--line);padding:24px 16px calc(16px + var(--safe-b));z-index:40}
+      background:radial-gradient(140% 60% at 0% 0%,var(--dark-2) 0%,var(--dark) 55%,color-mix(in srgb,var(--dark) 80%,#000) 100%);
+      padding:30px 16px calc(18px + var(--safe-b));z-index:40;
+      box-shadow:inset -1px 0 0 color-mix(in srgb,var(--acc) 14%,transparent)}
     .mobilenav{display:none}
     .fab{display:none!important}
     .content{margin-left:var(--nav-w)}
-    .topbar{padding:20px 36px;background:var(--paper)}
-    .brand{display:none} .pagetitle{display:block}
-    main{max-width:1120px;margin:0 auto;padding:30px 36px 60px}
-    .ph{font-size:42px} .psub{font-size:14.5px;margin-bottom:24px}
-    .card{padding:14px 16px;margin-bottom:9px} .epi-card{padding:11px 14px}
-    .toast{bottom:32px} .selbtn{position:static}
-    .panes{display:grid;grid-template-columns:minmax(330px,360px) 1fr;gap:32px;align-items:start}
-    .pane-a{position:sticky;top:96px}
+    .topbar{padding:18px max(40px,calc((100% - var(--maxw)) / 2 + 40px));background:color-mix(in srgb,var(--bg) 84%,transparent)}
+    .brand{display:none}
+    .pagetitle{display:block;font-size:10.5px;font-weight:650;letter-spacing:.22em;text-transform:uppercase;color:var(--mut)}
+    main{max-width:var(--maxw);margin:0 auto;padding:18px 40px 64px}
+    .ph{font-size:60px} .psub{font-size:14.5px;margin-bottom:32px}
+    .card{padding:14px 16px;margin-bottom:10px} .card.day{padding:7px 14px 7px 10px} .epi-card{padding:11px 14px}
+    .toast{bottom:32px} .selbtn{position:sticky;bottom:20px}
+    .panes{display:grid;grid-template-columns:minmax(360px,390px) 1fr;gap:44px;align-items:start}
+    .pane-a{position:sticky;top:84px}
     .recgrid{grid-template-columns:1fr 1fr;gap:12px}
+    .recgrid > .card{margin-bottom:0}
     .overlay{align-items:center} .grab{display:none}
-    .sheet{border-radius:22px;max-width:560px;min-height:340px;max-height:90vh;padding-bottom:28px;
-      animation:pop .22s cubic-bezier(.22,1,.36,1)}
+    .sheet{border-radius:26px;max-width:580px;min-height:340px;max-height:88vh;padding:28px 32px 32px;
+      box-shadow:var(--sh-pop);animation:pop .26s var(--ease)}
     .sheet.tall{min-height:520px}
-    @keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:scale(1);opacity:1}}
-    .sp-word{font-size:40px}
+    @keyframes pop{from{transform:scale(.965);opacity:.4}to{transform:scale(1);opacity:1}}
+    .sp-word{font-size:38px}
+    .rayhd{top:64px}
   }
-  @media(min-width:1280px){ .recgrid{grid-template-columns:1fr 1fr 1fr} }
+  @media(min-width:1560px){ .recgrid{grid-template-columns:1fr 1fr 1fr} }
   @media(hover:hover){
-    .card.tap:hover{transform:translateY(-2px);box-shadow:var(--sh-2);border-color:var(--pine-line)}
-    .side-item:hover{background:var(--side-2);color:var(--ink)}
-    .side-new:hover{filter:brightness(1.07)}
-    .btn:hover{filter:brightness(1.05)} .btn.sec:hover,.btn.danger:hover{background:var(--pine-ghost)}
-    .fchip:hover,.pill:hover,.tchip:hover{border-color:var(--pine)}
+    .card.tap:hover{transform:translateY(-2px);box-shadow:var(--sh-2);border-color:var(--line-strong)}
+    .card.sel:hover{border-color:var(--wine)}
+    .side-item:hover{background:rgba(255,255,255,.04);color:var(--side-on)}
+    .side-new:hover{filter:brightness(1.1)}
+    .btn:hover{filter:brightness(1.1)} .btn.sec:hover,.btn.danger:hover{background:var(--paper)}
+    .btn.ghost:hover{filter:none;background:var(--line)}
+    .fchip:hover,.pill:hover,.tchip:hover{border-color:var(--ink2)}
+    .fchip.on:hover,.pill.on:hover,.tchip.on:hover{border-color:var(--night)}
     .xdel:hover{color:var(--danger)}
-    .ac-item:hover,.ac-new:hover{background:var(--pine-ghost)}
-    .weeknav .arr:hover{background:var(--pine-ghost)}
+    .ac-item:hover,.ac-new:hover{background:var(--wine-ghost)}
+    .weeknav .arr:hover{background:var(--paper-2)}
     .epi-qty:hover{border-color:var(--line);background:var(--paper)}
-    .row:hover .chk:not(.on){border-color:var(--pine)}
+    .row:hover .chk:not(.on){border-color:var(--wine)}
+    .calc:not(.vide):not(.auj):hover{background:var(--paper-2)}
+    .shd .x:hover{background:var(--line)}
+    .day:not(.today):hover{background:color-mix(in srgb,var(--bg) 55%,var(--card))}
+    .slotrow.clk:hover .slotempty{color:var(--wine)}
+    .today .slotrow.clk:hover .slotempty{color:var(--champ-soft)}
+    .seg .sg:hover{color:var(--ink)}
   }
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
@@ -610,7 +652,7 @@
   </svg>
   <div class="sp-tag">Cuisine &amp; planification familiales</div>
   <div class="sp-bar"><i></i></div>
-  <div class="sp-ver">v4.9.1</div>
+  <div class="sp-ver">v5.2.0</div>
 </div>
 
 <aside class="sidebar">
@@ -626,7 +668,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v4.9.1</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.2.0</span></div>
 </aside>
 
 <div class="content">
@@ -634,7 +676,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" title="Lavoie &amp; Co v4.9.1"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" title="Lavoie &amp; Co v5.2.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -651,7 +693,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v4.9.1
+   LAVOIE & CO — Frontend v5.2.0
    ----------------------------------------------------------------
    Moteur de sync v4 :
    - Transport POST text/plain (aucune limite d'URL, pas de preflight)
@@ -672,7 +714,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '4.9.1'
+  VERSION: '5.2.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -753,9 +795,9 @@ function plurUnite(qte, unite){
 // leur rayon, un item coché redevient neutre et s'efface. Six tons
 // [fond, bordure, point] ; le choix suit l'ordre des rayons du classeur.
 var RAYON_TINTS = [
-  ['#E3EFE0', '#CDE0C8', '#4E7A5C'], ['#F7E7D9', '#EBD3BF', '#B06A42'],
-  ['#F5EDCF', '#E8DBAC', '#9A7F33'], ['#E1EAF2', '#CEDDEA', '#47698A'],
-  ['#F0E2F0', '#DFCADF', '#7D557D'], ['#F0EADB', '#E1D6BE', '#8A7A57']
+  ['#EEF3EB', '#D9E4D4', '#4F7A5A'], ['#FAF0E6', '#EEDBC8', '#A8663D'],
+  ['#F8F2E0', '#EADDB8', '#9A7C2E'], ['#EDF1F5', '#D6DFE8', '#4A6885'],
+  ['#F5EEF3', '#E3D3DF', '#7A5476'], ['#F4EFE5', '#E2D8C6', '#86754F']
 ];
 var _rayIdx = null;
 function rayonTint(ray){
@@ -1104,22 +1146,24 @@ function viewMenu(){
   var h = '<div class="ph">Le menu</div><div class="psub">Choisis tes recettes — elles se placent dans la semaine</div><div class="panes"><section class="pane-a">';
   h += '<div class="weeknav"><div class="arr clk" id="wPrev" role="button" aria-label="Semaine précédente">‹</div><div class="lbl">' + esc(lbl) + (sub ? '<span class="sm">' + esc(sub) + '</span>' : '') + '</div><div class="arr clk" id="wNext" role="button" aria-label="Semaine suivante">›</div></div>';
   var nCh = (DATA.chasse || []).length;
-  h += '<div class="card tap clk" id="goChasse" style="padding:10px 15px"><div class="row"><span class="slotlbl" style="width:auto">Chasse</span><div class="grow mealname" style="font-size:14px">Menu Chasse — 8 jours de bois</div><span class="ctchip">' + nCh + ' / 16</span><span class="chev">›</span></div></div>';
+  h += '<div class="card tap clk chasse-cta" id="goChasse"><div class="row"><div class="grow"><div class="eyebrow">Au camp</div><div class="mealname">Menu Chasse — 8 jours de bois</div></div><span class="ctchip">' + nCh + ' / 16</span><span class="chev">›</span></div></div>';
   var isoAuj = ymd(new Date());
+  h += '<div class="week">';
   dates.forEach(function (d) {
     var iso = ymd(d), wd = d.getDay();
     var any = souperFor(iso, 'diner') || souperFor(iso, 'souper');
-    h += '<div class="card' + (iso === isoAuj ? ' today' : '') + '" style="padding:8px 13px"><div class="row"><div class="datechip' + (any ? '' : ' empty') + '"><span class="d">' + d.getDate() + '</span><span class="m">' + (iso === isoAuj ? 'AUJ.' : JOURS_C[wd]) + '</span></div><div class="grow">';
+    h += '<div class="day' + (iso === isoAuj ? ' today' : '') + '"><div class="row"><div class="datechip' + (any ? '' : ' empty') + '"><span class="d">' + d.getDate() + '</span><span class="m">' + (iso === isoAuj ? 'AUJ.' : JOURS_C[wd]) + '</span></div><div class="grow">';
     ['diner', 'souper'].forEach(function (rep) {
       var s = souperFor(iso, rep);
       if (s) {
-        h += '<div class="slotrow dropslot" draggable="true" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-dragday="' + esc(iso) + '" data-dragrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><div class="epi-main clk" data-mealday="' + esc(s.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc" style="font-size:14px">' + esc(recetteNom(s.RecetteID)) + (s.Cuisinier ? ' <span class="cook" style="display:inline">· ' + esc(s.Cuisinier) + '</span>' : '') + '</div></div></div><span class="dragh">⠿</span><span class="xdel clk" data-delsoup="' + esc(iso) + '" data-delrep="' + rep + '">&times;</span></div>';
+        h += '<div class="slotrow dropslot" draggable="true" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-dragday="' + esc(iso) + '" data-dragrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><div class="epi-main clk" data-mealday="' + esc(s.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc">' + esc(recetteNom(s.RecetteID)) + (s.Cuisinier ? ' <span class="cook" style="display:inline">· ' + esc(s.Cuisinier) + '</span>' : '') + '</div></div></div><span class="dragh">⠿</span><span class="xdel clk" data-delsoup="' + esc(iso) + '" data-delrep="' + rep + '">&times;</span></div>';
       } else {
-        h += '<div class="slotrow clk dropslot" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-addday="' + esc(iso) + '" data-addrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><span class="slotempty grow">Libre — touche pour ajouter</span><span class="chev">+</span></div>';
+        h += '<div class="slotrow clk dropslot" data-dropday="' + esc(iso) + '" data-droprep="' + rep + '" data-addday="' + esc(iso) + '" data-addrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><span class="slotempty grow">Libre</span><span class="chev">+</span></div>';
       }
     });
     h += '</div></div></div>';
   });
+  h += '</div>';
   h += '</section><section class="pane-b">';
   var recs = (DATA.recettes || []);
   h += '<div class="secthd"><span class="t">Mes recettes</span><span class="ln"></span></div>';
@@ -1137,11 +1181,18 @@ function viewMenu(){
   h += '</section></div>';
   return h;
 }
+// Monogramme : l'initiale de la recette, teintée selon son premier type.
+function monoTile(r, sel){
+  var types = (DATA.types || []), t0 = (r.types || [])[0];
+  var i = t0 != null && types.indexOf(t0) >= 0 ? types.indexOf(t0) : String(r.Nom || '').length;
+  var ini = String(r.Nom || '?').trim().charAt(0).toUpperCase() || '?';
+  return '<span class="mono t' + (i % 6) + (sel ? ' on' : '') + '" aria-hidden="true">' + (sel ? CHK : esc(ini)) + '</span>';
+}
 function recPickCard(r){
   var sel = MENU_SEL[String(r.RecetteID)] === true;
   var ings = ingredientsOf(r.RecetteID);
   var lc = lastCookedLabel(r);
-  return '<div class="card tap" draggable="true" data-dragrec="' + esc(r.RecetteID) + '" style="' + (sel ? 'border-color:var(--pine);background:var(--pine-ghost)' : '') + '" data-pick="' + esc(r.RecetteID) + '"><div class="row clk"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span><div class="grow"><div class="mealname">' + esc(r.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(r.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div></div></div>';
+  return '<div class="card tap' + (sel ? ' sel' : '') + '" draggable="true" data-dragrec="' + esc(r.RecetteID) + '" data-pick="' + esc(r.RecetteID) + '"><div class="row clk">' + monoTile(r, sel) + '<div class="grow"><div class="mealname">' + esc(r.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(r.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((r.types || []).length ? '<div class="tagrow">' + r.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div></div></div>';
 }
 
 /* ============ RECETTES ============ */
@@ -1175,7 +1226,7 @@ function viewRecettes(){
 function recDetailCard(x){
   var ings = ingredientsOf(x.RecetteID);
   var lc = lastCookedLabel(x);
-  return '<div class="card tap clk" draggable="true" data-recdetail="' + esc(x.RecetteID) + '" data-dragrec="' + esc(x.RecetteID) + '"><div class="row"><div class="grow"><div class="mealname">' + esc(x.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(x.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((x.types || []).length ? '<div class="tagrow">' + x.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">›</span></div></div>';
+  return '<div class="card tap clk" draggable="true" data-recdetail="' + esc(x.RecetteID) + '" data-dragrec="' + esc(x.RecetteID) + '"><div class="row">' + monoTile(x, false) + '<div class="grow"><div class="mealname">' + esc(x.Nom) + '</div><div class="cook">' + ings.length + ' ingrédient' + (ings.length > 1 ? 's' : '') + ' · ' + esc(x.Portions) + ' portions' + (lc ? ' · <span class="lastcook">' + esc(lc) + '</span>' : '') + '</div>' + ((x.types || []).length ? '<div class="tagrow">' + x.types.map(function (t) { return '<span class="ttag">' + esc(t) + '</span>'; }).join('') + '</div>' : '') + '</div><span class="chev">›</span></div></div>';
 }
 function openRecipeDetail(rid){
   var r = recette(rid); if (!r) return;
@@ -1232,7 +1283,7 @@ function viewEpicerie(){
         h += '<div class="card tracked"><div class="row"><div class="epi-main clk" data-mealday="' + esc(x.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="trackchip"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Dans la liste</span><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
       } else {
         var k = 'EPI|' + x.RecetteID + '|' + x.Date + '|' + rep, sel = MENU_SEL[k] === true;
-        h += '<div class="card tap" style="' + (sel ? 'border-color:var(--pine);background:var(--pine-ghost)' : '') + '"><div class="row"><div class="epi-main clk" data-epimeal="' + esc(x.RecetteID) + '" data-epidate="' + esc(x.Date) + '" data-epirep="' + rep + '" style="flex:1;min-width:0"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
+        h += '<div class="card tap' + (sel ? ' sel' : '') + '"><div class="row"><div class="epi-main clk" data-epimeal="' + esc(x.RecetteID) + '" data-epidate="' + esc(x.Date) + '" data-epirep="' + rep + '" style="flex:1;min-width:0"><span class="chk ' + (sel ? 'on' : '') + '">' + (sel ? CHK : '') + '</span><div class="grow"><div class="mealname trunc">' + esc(recetteNom(x.RecetteID)) + '</div><div class="cook">' + esc(quand) + '</div></div></div><span class="xdel clk" data-epidel="' + esc(x.Date) + '" data-epidelrep="' + rep + '" title="Retirer du menu">&times;</span></div></div>';
       }
     });
     var n = Object.keys(MENU_SEL).filter(function (k) { return k.indexOf('EPI|') === 0 && MENU_SEL[k]; }).length;
@@ -1439,21 +1490,21 @@ function viewChasse(){
   var n = (DATA.chasse || []).length;
   var aAjouter = chasseUntracked();
   var h = '<div class="ph">Menu Chasse</div><div class="psub">8 jours de bois — monte le menu, l\'épicerie suit</div>';
-  h += '<div style="max-width:600px" class="pane-a">';
+  h += '<div style="max-width:600px" class="pane-a"><div class="week">';
   for (var j = 1; j <= 8; j++) {
     var any = chasseFor(j, 'diner') || chasseFor(j, 'souper');
-    h += '<div class="card" style="padding:8px 13px"><div class="row"><div class="datechip' + (any ? '' : ' empty') + '"><span class="d">' + j + '</span><span class="m">JOUR</span></div><div class="grow">';
+    h += '<div class="day"><div class="row"><div class="datechip' + (any ? '' : ' empty') + '"><span class="d">' + j + '</span><span class="m">JOUR</span></div><div class="grow">';
     ['diner', 'souper'].forEach(function (rep) {
       var c = chasseFor(j, rep);
       if (c) {
-        h += '<div class="slotrow"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><div class="epi-main clk" data-mealday="' + esc(c.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc" style="font-size:14px">' + esc(recetteNom(c.RecetteID)) + '</div></div></div><span class="xdel clk" data-chdel="' + j + '" data-chrep="' + rep + '">&times;</span></div>';
+        h += '<div class="slotrow"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><div class="epi-main clk" data-mealday="' + esc(c.RecetteID) + '" style="flex:1;min-width:0"><div class="grow"><div class="mealname trunc">' + esc(recetteNom(c.RecetteID)) + '</div></div></div><span class="xdel clk" data-chdel="' + j + '" data-chrep="' + rep + '">&times;</span></div>';
       } else {
-        h += '<div class="slotrow clk" data-chadd="' + j + '" data-chrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><span class="slotempty grow">Libre — touche pour ajouter</span><span class="chev">+</span></div>';
+        h += '<div class="slotrow clk" data-chadd="' + j + '" data-chrep="' + rep + '"><span class="slotlbl">' + REPAS_LBL[rep] + '</span><span class="slotempty grow">Libre</span><span class="chev">+</span></div>';
       }
     });
     h += '</div></div></div>';
   }
-  h += '<div class="btnrow" style="margin-top:14px">';
+  h += '</div><div class="btnrow" style="margin-top:14px">';
   if (aAjouter.length) h += '<button class="btn" id="chAddEpi">Épicerie : + ' + aAjouter.length + ' repas</button>';
   else if (n) h += '<button class="btn sec" disabled>Menu déjà dans l\'épicerie</button>';
   h += '<button class="btn ghost" id="chPdf">Aperçu &amp; PDF</button></div>';
@@ -1479,8 +1530,8 @@ function openChassePicker(j, rep){
   });
 }
 // Le panache et la branche : les traits céladon du document imprimable.
-var PANACHE = '<svg viewBox="0 0 140 80" style="width:118px;height:67px" fill="none" stroke="#9DC3AC" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M66 76 C 64 60, 58 48, 46 42"/><path d="M56 52 C 50 44, 48 34, 52 26"/><path d="M48 43 C 42 36, 40 28, 44 20"/><path d="M61 62 C 55 58, 51 52, 51 45"/><path d="M74 76 C 76 60, 82 48, 94 42"/><path d="M84 52 C 90 44, 92 34, 88 26"/><path d="M92 43 C 98 36, 100 28, 96 20"/><path d="M79 62 C 85 58, 89 52, 89 45"/></svg>';
-var BRANCHE_MINI = '<svg viewBox="0 0 170 56" style="width:128px;height:42px" fill="none" stroke="#9DC3AC" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 44 C 48 40, 112 30, 166 12"/><path d="M40 38 Q 32 24 44 18 Q 48 30 40 38"/><path d="M66 34 Q 62 48 76 50 Q 76 38 66 34"/><path d="M92 29 Q 86 15 98 10 Q 101 22 92 29"/><path d="M118 24 Q 115 37 128 39 Q 127 28 118 24"/><path d="M142 18 Q 138 6 148 3 Q 150 13 142 18"/></svg>';
+var PANACHE = '<svg viewBox="0 0 140 80" style="width:118px;height:67px;stroke:var(--acc)" fill="none" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M66 76 C 64 60, 58 48, 46 42"/><path d="M56 52 C 50 44, 48 34, 52 26"/><path d="M48 43 C 42 36, 40 28, 44 20"/><path d="M61 62 C 55 58, 51 52, 51 45"/><path d="M74 76 C 76 60, 82 48, 94 42"/><path d="M84 52 C 90 44, 92 34, 88 26"/><path d="M92 43 C 98 36, 100 28, 96 20"/><path d="M79 62 C 85 58, 89 52, 89 45"/></svg>';
+var BRANCHE_MINI = '<svg viewBox="0 0 170 56" style="width:128px;height:42px;stroke:var(--acc)" fill="none" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 44 C 48 40, 112 30, 166 12"/><path d="M40 38 Q 32 24 44 18 Q 48 30 40 38"/><path d="M66 34 Q 62 48 76 50 Q 76 38 66 34"/><path d="M92 29 Q 86 15 98 10 Q 101 22 92 29"/><path d="M118 24 Q 115 37 128 39 Q 127 28 118 24"/><path d="M142 18 Q 138 6 148 3 Q 150 13 142 18"/></svg>';
 // Aperçu plein écran du menu de chasse, façon carte de restaurant.
 // « Imprimer / PDF » passe par l'impression du navigateur : sur iPhone,
 // Partager → Imprimer → Enregistrer en PDF ; sur bureau, destination PDF.
@@ -1544,7 +1595,7 @@ function viewCalendrier(){
       (repas ? '<span class="mdot"></span>' : '') + '</div>';
   }
   h += '</div>';
-  h += '<div class="small muted" style="margin:4px 4px 14px">point vert = rendez-vous · point doré = repas planifié</div>';
+  h += '<div class="small muted" style="margin:4px 4px 14px">point foncé = rendez-vous · point sable = repas planifié</div>';
   var futurs = (DATA.evenements || []).filter(function (ev) { return String(ev.Date) >= isoAuj; })
     .sort(function (a, b) { return a.Date < b.Date ? -1 : 1; }).slice(0, 12);
   h += '<div class="secthd"><span class="t">À venir</span><span class="ln"></span></div>';
@@ -1648,18 +1699,18 @@ function timeAgo(v){
   var j2 = Math.round(h2 / 24);
   return j2 === 1 ? 'hier' : 'il y a ' + j2 + ' jours';
 }
-var COEUR = '<svg viewBox="0 0 24 24" style="width:26px;height:26px" fill="none" stroke="#9DC3AC" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>';
+var COEUR = '<svg viewBox="0 0 24 24" style="width:26px;height:26px;stroke:var(--pri)" fill="none" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>';
 function viewNous(){
-  var h = '<div class="ph">Julie <span style="color:var(--pine)">&amp;</span> JP</div><div class="psub">Pour se dire les vraies affaires, même quand les mots sortent pas encore</div><div style="max-width:600px" class="pane-a">';
+  var h = '<div class="ph">Julie <span style="color:var(--acc);font-style:italic">&amp;</span> JP</div><div class="psub">Pour se dire les vraies affaires, même quand les mots sortent pas encore</div><div style="max-width:600px" class="pane-a">';
   if (nousNonVu()) {
-    h += '<button class="btn ghost sm" id="nousVuBtn" style="margin-bottom:14px">Vu — merci de me l\'avoir dit 💚</button>';
+    h += '<button class="btn ghost sm" id="nousVuBtn" style="margin-bottom:14px">Vu — merci de me l\'avoir dit ❤️</button>';
   }
   NOUS_PERS.forEach(function (p, i) {
     var r = nousRow(p.id) || {};
     var etat = (nousEtats(p.f).filter(function (e2) { return e2.id === String(r.Etat); })[0] || null);
     var quand = timeAgo(r.MisAJour);
     var aContenu = !!(etat || r.Note);
-    h += '<div class="card" style="padding:16px 18px"><div class="row" style="margin-bottom:10px"><span style="font-family:var(--serif);font-size:21px;letter-spacing:.02em" class="grow">' + p.nom + '</span>' + (quand ? '<span class="small muted">' + esc(quand) + '</span>' : '') + '</div>';
+    h += '<div class="card" style="padding:16px 18px"><div class="row" style="margin-bottom:10px"><span style="font-family:var(--serif);font-size:26px;font-weight:600" class="grow">' + p.nom + '</span>' + (quand ? '<span class="small muted">' + esc(quand) + '</span>' : '') + '</div>';
     // La bande d'humeurs : touche un visage pour dire comment tu te
     // sens — retouche-le pour l'effacer. Direct, sans passer par la feuille.
     h += '<div class="humband">' + HUMEURS.map(function (hm) {
@@ -1701,7 +1752,7 @@ function openNousEdit(qui){
     else DATA.nous.push({ Qui: qui, Etat: sel, Note: note, MisAJour: new Date().toISOString() });
     call('setNous', [qui, sel, note]);
     marquerNousVu(); // on a évidemment vu son propre message
-    closeSheet(); render(); toast('C\'est affiché 💚');
+    closeSheet(); render(); toast('C\'est affiché ❤️');
   };
 }
 
@@ -1960,7 +2011,7 @@ function bind(){
       marquerNousVu(); render();
     };
   });
-  var nvb = $('nousVuBtn'); if (nvb) nvb.onclick = function () { marquerNousVu(); render(); toast('Vu 💚'); };
+  var nvb = $('nousVuBtn'); if (nvb) nvb.onclick = function () { marquerNousVu(); render(); toast('Vu ❤️'); };
   qall('[data-qr]').forEach(function (el) { el.onclick = function () { var k = 'QR_' + el.getAttribute('data-qr'); MENU_SEL[k] = !MENU_SEL[k]; render(); }; });
   qall('[data-editrapide]').forEach(function (el) { el.onclick = function () { openEditRapide(el.getAttribute('data-editrapide')); }; });
   qall('[data-addqr]').forEach(function (el) {
