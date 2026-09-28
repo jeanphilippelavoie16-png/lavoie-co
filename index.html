@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v5.7.0 « Porcelaine »
+     LAVOIE & CO — v5.7.1 « Porcelaine »
      Direction : sobre et épuré. Porcelaine chaude, noir profond,
      une seule touche de sable. Titres en Bodoni Moda, interface en
      Inter, mot-symbole en Marcellus.
@@ -723,7 +723,7 @@
   <figure class="sp-poeme" id="spPoeme"><blockquote id="spTexte"></blockquote><figcaption id="spAuteur"></figcaption></figure>
   <div class="sp-bar" id="spBar"><i></i></div>
   <div class="sp-skip" id="spSkip">Touche pour continuer</div>
-  <div class="sp-ver">v5.7.0</div>
+  <div class="sp-ver">v5.7.1</div>
 </div>
 
 <aside class="sidebar">
@@ -739,7 +739,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.7.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.7.1</span></div>
 </aside>
 
 <div class="content">
@@ -747,7 +747,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.7.0 · touche pour synchroniser" role="button" aria-label="État de la synchronisation — touche pour synchroniser"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.7.1 · touche pour synchroniser" role="button" aria-label="État de la synchronisation — touche pour synchroniser"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -764,7 +764,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v5.7.0
+   LAVOIE & CO — Frontend v5.7.1
    ----------------------------------------------------------------
    v5.7 — sync en direct, à deux en même temps (serveur Code.gs v5.4) :
    - Chaque geste part tout de suite ; ce qui s'accumule pendant un
@@ -811,7 +811,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '5.7.0'
+  VERSION: '5.7.1'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -1052,7 +1052,19 @@ function erreurServeur(msg, retry){
 }
 // Rend l'enveloppe complète { ok, result, rev } : la révision sert à
 // refuser les instantanés plus vieux que nos propres écritures.
+// Diagnostic (v5.7.1) : durée des derniers appels et dernier problème,
+// montrés quand on touche la pastille de sync.
+var DIAG = { appels: [], erreur: null };
 function apiRaw(fn, args, opts){
+  var t0 = Date.now();
+  function noter(err){
+    DIAG.appels.push({ fn: fn, ms: Date.now() - t0, ok: !err });
+    if (DIAG.appels.length > 30) DIAG.appels.shift();
+    if (err) DIAG.erreur = { fn: fn, msg: String(err && err.message || err), t: Date.now(), ms: Date.now() - t0 };
+  }
+  return apiRawBrut(fn, args, opts).then(function (j) { noter(null); return j; }, function (e) { noter(e); throw e; });
+}
+function apiRawBrut(fn, args, opts){
   opts = opts || {};
   if (!HOSTED) {
     return new Promise(function (resolve, reject) {
@@ -1461,7 +1473,7 @@ function pull(frais){
       MIN_REV = rev; // compteur remis à zéro au serveur : on s'aligne au lieu d'attendre à chaque fois
     }
     recevoirDonnees(d);
-  }).catch(function (err) { if (!aRepondu(err)) isOffline = true; })
+  }).catch(function (err) { isOffline = !aRepondu(err); })
     .finally(function () { pulling = false; updateSync(); });
 }
 
@@ -1486,7 +1498,10 @@ function heartbeat(force){
   // ce qui est plus récent qu'elles (pas 100 Ko toutes les 4 s).
   var connu = (SNAP_ATTENTE && typeof SNAP_ATTENTE.rev === 'number') ? SNAP_ATTENTE.rev : REV;
   hbBusy = true;
-  apiRaw('getRev', [connu], { timeout: 15000 }).then(function (j) {
+  // 45 s (et non 15) : quand quelque chose a changé, la réponse porte
+  // toutes les données, et Google met parfois 10-20 s à les lire. À 15 s,
+  // l'appel expirait et l'app se croyait « hors ligne ».
+  apiRaw('getRev', [connu], { timeout: API_TIMEOUT }).then(function (j) {
     var r = j.result;
     isOffline = false;
     SERVEUR_V = (r && r.serveur) ? String(r.serveur) : 'ancien (à redéployer)';
@@ -1495,7 +1510,7 @@ function heartbeat(force){
     if (r && r.donnees) { if (!recevoirDonnees(r.donnees) && !SNAP_ATTENTE) NEEDS_PULL = true; }
     else if (r && typeof r.rev === 'number' && r.rev !== connu) NEEDS_PULL = true;
     else if (r && typeof r.rev === 'number' && !SNAP_ATTENTE) NEEDS_PULL = false;
-  }).catch(function (err) { if (!aRepondu(err)) isOffline = true; })
+  }).catch(function (err) { isOffline = !aRepondu(err); }) // le serveur a répondu (même une erreur) : pas hors ligne
     .finally(function () {
       hbBusy = false; updateSync();
       // Vieux serveur (getRev sans données) : on tire l'instantané.
@@ -1508,7 +1523,7 @@ function heartbeat(force){
 // dans Google Sheets (ex. restauration d'une version).
 function forcerSync(){
   flushEpi(); flushLi();
-  toast('Synchronisation…');
+  toast('Synchronisation… ' + resumeDiag());
   if (syncQueue.length) {
     clearTimeout(retryT); retryT = null;
     flushQueue();
@@ -1516,7 +1531,18 @@ function forcerSync(){
     if (flushing) { FRAIS_APRES = true; return; }
   }
   // …ou tout de suite s'il n'y a rien à envoyer.
-  pull(true).then(function () { if (!isOffline) toast('À jour ✓'); });
+  pull(true).then(function () { toast(isOffline ? 'Pas de réponse du serveur. ' + resumeDiag() : 'À jour ✓'); });
+}
+// « Serveur 5.4.0 · réponse 3,2 s · dernier souci : Délai dépassé (getRev) il y a 2 min »
+function resumeDiag(){
+  var ok = DIAG.appels.filter(function (a) { return a.ok; });
+  var moy = ok.length ? ok.reduce(function (s, a) { return s + a.ms; }, 0) / ok.length : 0;
+  var t = [];
+  if (SERVEUR_V) t.push('Serveur ' + SERVEUR_V);
+  if (moy) t.push('réponse ' + String(Math.round(moy / 100) / 10).replace('.', ',') + ' s');
+  var e = DIAG.erreur;
+  if (e && Date.now() - e.t < 30 * 60000) t.push('dernier souci : ' + e.msg + ' (' + e.fn + ', ' + timeAgo(new Date(e.t).toISOString()) + ')');
+  return t.join(' · ');
 }
 
 // Toute modification passe par ici : file persistante + copie locale.
@@ -1533,7 +1559,10 @@ function call(fn, args, onDone){
 function updateSync(){
   var pend = pendingCount();
   var txt = 'Synchronisé', cls = '';
-  if (isOffline) { txt = pend ? ('Hors ligne · ' + pend + ' en attente') : 'Hors ligne'; cls = 'off'; }
+  // « Hors ligne » seulement si le téléphone l'est vraiment. Sinon c'est
+  // Google qui tarde à répondre : l'app réessaie toute seule.
+  var etiq = (navigator.onLine === false) ? 'Hors ligne' : 'Connexion lente';
+  if (isOffline) { txt = pend ? (etiq + ' · ' + pend + ' en attente') : etiq; cls = 'off'; }
   else if (pend || flushing || inflight > 0) { txt = 'Sync · ' + Math.max(pend, 1); cls = 'busy'; }
   else if (pulling) { txt = 'Mise à jour…'; cls = 'busy'; }
   var t = $('syncTxt'); if (t) t.textContent = txt;
@@ -1646,11 +1675,19 @@ var REJEU = {
     localMergeEpicerie(items, true, prefIds);
   },
   effacerEpicerieIds: function (ids, suivis, lot, seulCoches) {
-    var s = pourIds(ids);
+    var s = pourIds(ids), avant = DATA.epicerie.length;
     DATA.epicerie = DATA.epicerie.filter(function (x) { return !(s[String(x.ListeID)] && (!seulCoches || isTrue(x.Coche))); });
     if (suivis && suivis.length) {
       var t = {}; suivis.forEach(function (m) { t[cleSuivi(m.date, m.repas, m.recetteId)] = 1; });
       DATA.epicerieRepas = DATA.epicerieRepas.filter(function (x) { return !t[cleSuivi(x.Date, x.Repas, x.RecetteID)]; });
+    }
+    // La carte « Restaurer » vise CE lot tout de suite. Avant, elle
+    // montrait l'effacement d'avant jusqu'à la réponse du serveur (un
+    // article restauré au lieu de 79).
+    var n = avant - DATA.epicerie.length;
+    if (lot && n > 0 && !(DATA.corbeille || []).some(function (x) { return x.lot === lot; })) {
+      DATA.corbeille = [{ lot: lot, quand: new Date(this.ts || Date.now()).toISOString(), appareil: appareil(), epicerie: n, suivis: (suivis || []).length, liste: 0 }]
+        .concat(DATA.corbeille || []);
     }
   },
   restaurerLot: function (lot, lignes, suivis, items) {
@@ -1665,6 +1702,7 @@ var REJEU = {
       if (!mealTracked(m.date, repasOf(m.repas), m.recetteId)) DATA.epicerieRepas.push({ Date: m.date, RecetteID: m.recetteId, Repas: repasOf(m.repas) });
     });
     (items || []).forEach(function (it) { if (!liItem(it.ItemID)) DATA.listeItems.push(JSON.parse(JSON.stringify(it))); });
+    DATA.corbeille = (DATA.corbeille || []).filter(function (x) { return x.lot !== lot; });
     sortEpicerieLocal();
   },
   viderEpicerie: function () { DATA.epicerie = []; DATA.epicerieRepas = []; },
