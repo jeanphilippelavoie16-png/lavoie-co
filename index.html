@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v5.7.1 « Porcelaine »
+     LAVOIE & CO — v5.7.2 « Porcelaine »
      Direction : sobre et épuré. Porcelaine chaude, noir profond,
      une seule touche de sable. Titres en Bodoni Moda, interface en
      Inter, mot-symbole en Marcellus.
@@ -723,7 +723,7 @@
   <figure class="sp-poeme" id="spPoeme"><blockquote id="spTexte"></blockquote><figcaption id="spAuteur"></figcaption></figure>
   <div class="sp-bar" id="spBar"><i></i></div>
   <div class="sp-skip" id="spSkip">Touche pour continuer</div>
-  <div class="sp-ver">v5.7.1</div>
+  <div class="sp-ver">v5.7.2</div>
 </div>
 
 <aside class="sidebar">
@@ -739,7 +739,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.7.1</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.7.2</span></div>
 </aside>
 
 <div class="content">
@@ -747,7 +747,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.7.1 · touche pour synchroniser" role="button" aria-label="État de la synchronisation — touche pour synchroniser"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.7.2 · touche pour synchroniser" role="button" aria-label="État de la synchronisation — touche pour synchroniser"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -764,7 +764,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v5.7.1
+   LAVOIE & CO — Frontend v5.7.2
    ----------------------------------------------------------------
    v5.7 — sync en direct, à deux en même temps (serveur Code.gs v5.4) :
    - Chaque geste part tout de suite ; ce qui s'accumule pendant un
@@ -811,7 +811,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '5.7.1'
+  VERSION: '5.7.2'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -1052,7 +1052,7 @@ function erreurServeur(msg, retry){
 }
 // Rend l'enveloppe complète { ok, result, rev } : la révision sert à
 // refuser les instantanés plus vieux que nos propres écritures.
-// Diagnostic (v5.7.1) : durée des derniers appels et dernier problème,
+// Diagnostic (v5.7.2) : durée des derniers appels et dernier problème,
 // montrés quand on touche la pastille de sync.
 var DIAG = { appels: [], erreur: null };
 function apiRaw(fn, args, opts){
@@ -1095,8 +1095,13 @@ function apiRawBrut(fn, args, opts){
       var j;
       try { j = JSON.parse(txt); }
       catch (e) {
-        var err = new Error('Réponse invalide du serveur (' + r.status + ')');
-        err.soft = (r.status >= 200 && r.status < 500); // config probable, pas un problème réseau
+        // Page d'erreur de Google au lieu de notre JSON (404 « impossible
+        // d'ouvrir le fichier », 5xx…) : Google débordé. On réessaie plus
+        // tard, sans jamais jeter la modification. Le début de la page est
+        // gardé pour le diagnostic de la pastille.
+        var titre = String(txt || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 90);
+        var err = new Error('Google a répondu ' + r.status + (titre ? ' « ' + titre + ' »' : ''));
+        err.transient = true;
         throw err;
       }
       if (!j || !j.ok) throw erreurServeur(j && j.error, j && j.retry);
@@ -1135,7 +1140,16 @@ var MIN_REV = 0;       // révision serveur de notre dernière écriture confirm
 var retryT = null;     // nouvel essai différé (erreur passagère)
 var pullT = null, pullRejets = 0;
 var SERVEUR_V = '';
-var HB_MS = 4000;      // app ouverte : « du nouveau ? » toutes les 4 s
+// v5.7.2 — rythme économe : Google répond en ~9 s et renvoie des 404 quand
+// on le bombarde. « Du nouveau ? » toutes les 5 s quand ça bouge (un geste
+// ici ou un changement de l'autre dans les 2 dernières minutes), toutes
+// les 15 s sinon, et on ralentit (jusqu'à 60 s) quand Google hoquette.
+var HB_MS = 5000, HB_CALME = 15000;
+var hbErreurs = 0, dernierMouvement = Date.now(), prochainBattement = 0;
+function delaiBattement(){
+  if (hbErreurs) return Math.min(60000, HB_MS * Math.pow(2, hbErreurs - 1));
+  return (Date.now() - dernierMouvement < 120000) ? HB_MS : HB_CALME;
+}
 var LOT_MAX = 25;      // gestes par envoi groupé
 var LOT_OK = HOSTED ? null : false; // null = inconnu (on essaie) · false = vieux serveur, une op à la fois
 var SNAP_ATTENTE = null; // données reçues pendant qu'on tape / qu'une feuille est ouverte
@@ -1184,6 +1198,7 @@ function planifierPull(ms){
 }
 
 function enqueue(fn, args, onDone){
+  dernierMouvement = Date.now(); // on s'active : « du nouveau ? » plus souvent
   var qid = cid('q');
   syncQueue.push({ fn: fn, args: args || [], id: qid, ts: Date.now(), tries: 0 });
   if (onDone) queueCallbacks[qid] = onDone;
@@ -1286,15 +1301,11 @@ function flushQueue(){
       return;
     }
     if (err && (err.transient || err.soft)) {
+      // Google occupé ou en erreur passagère : on garde la modification et
+      // on réessaie (au plus toutes les 60 s). Avant v5.7.2, après ~10
+      // essais elle était jetée — un après-midi où Google hoquette, des
+      // ajouts se perdaient.
       isOffline = false;
-      if (item.tries >= (err.soft ? 8 : 10)) {
-        // Réponse anormale répétée pendant plusieurs minutes : on abandonne cet appel.
-        retirerDeLaFile(item);
-        toast('Une modification n\'a pas pu être envoyée (' + err.message + ')', 'err');
-        updateSync();
-        if (syncQueue.length) flushQueue(); else finDeFile(false);
-        return;
-      }
       saveQueue(); updateSync();
       nouvelEssai(Math.min(60000, 1500 * Math.pow(2, item.tries - 1)));
       return;
@@ -1413,7 +1424,7 @@ function recevoirDonnees(d){
     // quand même ceci au cas où l'envoi échouerait (réseau du magasin).
     // S'il pend depuis plus de 8 s, on n'attend plus : on affiche, nos
     // gestes (encore en file) rejoués par-dessus.
-    if (flushing && Date.now() - flushDebut < 8000) { SNAP_VOL = d; NEEDS_PULL = true; return false; }
+    if (flushing && Date.now() - flushDebut < 20000) { SNAP_VOL = d; NEEDS_PULL = true; return false; }
     // On tape, ou une feuille est ouverte : on garde ça pour la fermeture
     // (un re-rendu ferait perdre le champ et le clavier).
     if (editingOpen() || typingNow()) { SNAP_ATTENTE = d; return false; }
@@ -1433,7 +1444,7 @@ function recevoirDonnees(d){
   saveLocal();
   // Rien n'a changé : pas de re-rendu (un re-rendu en plein toucher
   // avalait le tap — « j'appuie et rien ne se passe »).
-  if (JSON.stringify(DATA) !== avantTxt) { render(); majCoeur(); }
+  if (JSON.stringify(DATA) !== avantTxt) { dernierMouvement = Date.now(); render(); majCoeur(); }
   return true;
 }
 function rejouerEnAttente(){
@@ -1492,7 +1503,7 @@ function heartbeat(force){
   // de 8 s), ou si des gestes attendent un nouvel essai, on continue de
   // RECEVOIR : nos gestes sont rejoués par-dessus ce qui arrive.
   if (hbBusy || pulling) return;
-  if (flushing && Date.now() - flushDebut < 8000) return;
+  if (flushing && Date.now() - flushDebut < 20000) return; // un seul appel à la fois (sauf envoi coincé)
   if (SNAP_ATTENTE && !editingOpen() && !typingNow()) { appliquerAttente(); return; }
   // Données déjà reçues et gardées pendant une saisie : on ne demande que
   // ce qui est plus récent qu'elles (pas 100 Ko toutes les 4 s).
@@ -1510,9 +1521,11 @@ function heartbeat(force){
     if (r && r.donnees) { if (!recevoirDonnees(r.donnees) && !SNAP_ATTENTE) NEEDS_PULL = true; }
     else if (r && typeof r.rev === 'number' && r.rev !== connu) NEEDS_PULL = true;
     else if (r && typeof r.rev === 'number' && !SNAP_ATTENTE) NEEDS_PULL = false;
-  }).catch(function (err) { isOffline = !aRepondu(err); }) // le serveur a répondu (même une erreur) : pas hors ligne
+    hbErreurs = 0;
+  }).catch(function (err) { isOffline = !aRepondu(err); hbErreurs++; }) // le serveur a répondu (même une erreur) : pas hors ligne
     .finally(function () {
       hbBusy = false; updateSync();
+      prochainBattement = Date.now() + delaiBattement();
       // Vieux serveur (getRev sans données) : on tire l'instantané.
       if (NEEDS_PULL && !SNAP_ATTENTE && !/^5\.(4|5|6|7|8|9)|^[6-9]\./.test(SERVEUR_V) && canPull()) pull();
     });
@@ -1573,9 +1586,9 @@ function updateSync(){
 
 /* ---------- Coches en lot (700 ms de regroupement) ---------- */
 function flushEpi(){ var ks = Object.keys(pendEpi); if (!ks.length) return; var arr = ks.map(function (k) { return { id: k, coche: pendEpi[k] }; }); pendEpi = {}; call('setEpicerieCochesBatch', [arr]); }
-function queueEpi(id, val){ pendEpi[id] = val; clearTimeout(epiT); epiT = setTimeout(flushEpi, 450); updateSync(); }
+function queueEpi(id, val){ dernierMouvement = Date.now(); pendEpi[id] = val; clearTimeout(epiT); epiT = setTimeout(flushEpi, 450); updateSync(); }
 function flushLi(){ var ks = Object.keys(pendLi); if (!ks.length) return; var arr = ks.map(function (k) { return { id: k, coche: pendLi[k] }; }); pendLi = {}; call('setListeItemCochesBatch', [arr]); }
-function queueLi(id, val){ pendLi[id] = val; clearTimeout(liT); liT = setTimeout(flushLi, 450); updateSync(); }
+function queueLi(id, val){ dernierMouvement = Date.now(); pendLi[id] = val; clearTimeout(liT); liT = setTimeout(flushLi, 450); updateSync(); }
 
 /* ---------- Fusion locale de l'épicerie (miroir du serveur) ---------- */
 function srcAdd(cur, add){
@@ -4121,7 +4134,7 @@ $('syncPill').onclick = forcerSync;
 
 // ❤️ Battement de cœur (4 s, app visible) : envoie la file en attente,
 // et demande « du nouveau ? » — le nouveau vient dans la même réponse.
-setInterval(heartbeat, HB_MS);
+setInterval(function () { if (Date.now() >= prochainBattement) heartbeat(); }, 1000);
 
 // Service Worker (offline + mises à jour auto) — seulement en mode hébergé (GitHub Pages)
 if (HOSTED && 'serviceWorker' in navigator) {
