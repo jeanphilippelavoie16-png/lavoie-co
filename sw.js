@@ -1,5 +1,5 @@
 /* ================================================================
-   LAVOIE & CO — Service Worker v5.7.2
+   LAVOIE & CO — Service Worker v6.0.0
    ----------------------------------------------------------------
    Stratégie :
    - Navigation / HTML : réseau d'abord (les mises à jour arrivent
@@ -16,7 +16,7 @@
    Pour forcer une mise à jour chez tout le monde : change CACHE_NAME.
    ================================================================ */
 
-var CACHE_NAME = 'lco-cache-v5.7.2';
+var CACHE_NAME = 'lco-cache-v6.0.0';
 // Les critiques doivent TOUS réussir, sinon l'installation échoue et
 // l'ancienne version — avec son cache complet — reste en service.
 // Avant v4.8.1 le précache était tolérant pour tout : une mise à jour
@@ -66,7 +66,10 @@ self.addEventListener('fetch', function (event) {
   // Tout le reste — surtout les appels API vers script.google.com —
   // passe direct au réseau.
   if (url.origin !== self.location.origin) {
-    if (FONT_HOSTS.indexOf(url.hostname) >= 0) {
+    // v6 : le SDK Firebase (www.gstatic.com/firebasejs/<version>/…) est
+    // mis en cache comme les polices — l'app démarre même sans réseau.
+    var sdkFirebase = url.hostname === 'www.gstatic.com' && url.pathname.indexOf('/firebasejs/') === 0;
+    if (FONT_HOSTS.indexOf(url.hostname) >= 0 || sdkFirebase) {
       event.respondWith(
         caches.match(req).then(function (hit) {
           return hit || fetch(req).then(function (res) {
