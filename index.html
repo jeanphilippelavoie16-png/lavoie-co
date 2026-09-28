@@ -1127,6 +1127,8 @@ var HB_MS = 4000;      // app ouverte : « du nouveau ? » toutes les 4 s
 var LOT_MAX = 25;      // gestes par envoi groupé
 var LOT_OK = HOSTED ? null : false; // null = inconnu (on essaie) · false = vieux serveur, une op à la fois
 var SNAP_ATTENTE = null; // données reçues pendant qu'on tape / qu'une feuille est ouverte
+var SNAP_VOL = null;     // données reçues pendant qu'un envoi pend
+var flushDebut = 0;      // début de l'envoi en cours
 var CORB = {};         // copies locales des lots effacés (bouton « Annuler »)
 
 // Nom de l'appareil, noté au Journal du serveur : « JP · iPhone ».
@@ -1201,7 +1203,7 @@ var EXACTS = { setEpicerieCochesBatch: 1, setEpicerieCoche: 1, setEpicerieQuanti
 function flushQueue(){
   if (flushing || !syncQueue.length) return;
   clearTimeout(retryT); retryT = null;
-  flushing = true; inflight++; updateSync();
+  flushing = true; inflight++; flushDebut = Date.now(); updateSync();
   var parLot = LOT_OK !== false;
   var lot = syncQueue.slice(0, parLot ? LOT_MAX : 1);
   var envoi;
@@ -1220,6 +1222,7 @@ function flushQueue(){
   }
   envoi.then(function (r) {
     flushing = false; inflight = Math.max(0, inflight - 1); isOffline = false;
+    SNAP_VOL = null; // la réponse de l'envoi est plus fraîche
     if (typeof r.rev === 'number') MIN_REV = Math.max(MIN_REV, r.rev);
     var attente = 0, passes = 0;
     for (var i = 0; i < lot.length; i++) {
@@ -1250,6 +1253,10 @@ function flushQueue(){
     else finDeFile(aJour);
   }).catch(function (err) {
     flushing = false; inflight = Math.max(0, inflight - 1);
+    // Envoi raté : les données reçues pendant qu'il pendait s'affichent
+    // (nos gestes, toujours en file, sont rejoués par-dessus).
+    var sv = SNAP_VOL; SNAP_VOL = null;
+    if (sv) recevoirDonnees(sv);
     // Serveur d'avant v5.4 (pas encore redéployé) : une op à la fois.
     if (parLot && err && err.server && /Fonction inconnue\s*:\s*lot\b/.test(err.message)) {
       LOT_OK = false; isOffline = false; flushQueue(); return;
@@ -1280,14 +1287,22 @@ function flushQueue(){
       nouvelEssai(Math.min(60000, 1500 * Math.pow(2, item.tries - 1)));
       return;
     }
-    // Probablement hors ligne (ou délai dépassé) : on garde la file, le heartbeat réessaiera.
+    // Probablement hors ligne (ou délai dépassé) : on garde la file et on
+    // réessaie un peu plus tard. Pendant cette pause, le battement de cœur
+    // continue de RECEVOIR : un envoi coincé ne bloque plus l'arrivée de
+    // ce que l'autre ajoute.
+    // (Hors ligne ne compte pas dans les essais qui font abandonner une op.)
+    item.tries = Math.max(0, item.tries - 1); item.hl = (item.hl || 0) + 1;
     isOffline = true; saveQueue(); updateSync();
+    nouvelEssai(Math.min(10000, 2000 * Math.pow(2, Math.min(item.hl, 4) - 1)));
   });
 }
 // File vidée. Si la réponse n'a pas déjà mis l'écran à jour (vieux
 // serveur), on vérifie tout de suite s'il y a du nouveau.
+var FRAIS_APRES = false; // « synchroniser » touché pendant un envoi
 function finDeFile(aJour){
   updateSync();
+  if (FRAIS_APRES) { FRAIS_APRES = false; pull(true); return; }
   if (aJour) return;
   NEEDS_PULL = true;
   heartbeat(true);
@@ -1382,8 +1397,11 @@ function recevoirDonnees(d){
   if (DATA) {
     // Plus vieux que notre dernière écriture confirmée : ne sert à rien.
     if (rev && rev < MIN_REV) { NEEDS_PULL = true; return false; }
-    // Un envoi est en vol : sa réponse apportera plus frais.
-    if (flushing) { NEEDS_PULL = true; return false; }
+    // Un envoi est en vol : sa réponse apportera plus frais. On garde
+    // quand même ceci au cas où l'envoi échouerait (réseau du magasin).
+    // S'il pend depuis plus de 8 s, on n'attend plus : on affiche, nos
+    // gestes (encore en file) rejoués par-dessus.
+    if (flushing && Date.now() - flushDebut < 8000) { SNAP_VOL = d; NEEDS_PULL = true; return false; }
     // On tape, ou une feuille est ouverte : on garde ça pour la fermeture
     // (un re-rendu ferait perdre le champ et le clavier).
     if (editingOpen() || typingNow()) { SNAP_ATTENTE = d; return false; }
@@ -1455,8 +1473,14 @@ function heartbeat(force){
   if (document.visibilityState !== 'visible' && !force) return;
   if (Object.keys(pendEpi).length) flushEpi();
   if (Object.keys(pendLi).length) flushLi();
-  if (syncQueue.length) { if (!flushing && !retryT) flushQueue(); return; }
-  if (hbBusy || pulling || flushing) return;
+  // Retour dans l'app / réseau revenu : pas d'attente, on renvoie tout de suite.
+  if (force && retryT && syncQueue.length) { clearTimeout(retryT); retryT = null; }
+  if (syncQueue.length && !flushing && !retryT) flushQueue();
+  // Un envoi en vol : sa réponse apporte le nouveau. Mais s'il pend (plus
+  // de 8 s), ou si des gestes attendent un nouvel essai, on continue de
+  // RECEVOIR : nos gestes sont rejoués par-dessus ce qui arrive.
+  if (hbBusy || pulling) return;
+  if (flushing && Date.now() - flushDebut < 8000) return;
   if (SNAP_ATTENTE && !editingOpen() && !typingNow()) { appliquerAttente(); return; }
   // Données déjà reçues et gardées pendant une saisie : on ne demande que
   // ce qui est plus récent qu'elles (pas 100 Ko toutes les 4 s).
@@ -1484,8 +1508,14 @@ function heartbeat(force){
 // dans Google Sheets (ex. restauration d'une version).
 function forcerSync(){
   flushEpi(); flushLi();
-  if (syncQueue.length) { flushQueue(); toast('Envoi en cours…'); return; }
   toast('Synchronisation…');
+  if (syncQueue.length) {
+    clearTimeout(retryT); retryT = null;
+    flushQueue();
+    // Relecture complète dès que l'envoi a répondu (finDeFile)…
+    if (flushing) { FRAIS_APRES = true; return; }
+  }
+  // …ou tout de suite s'il n'y a rien à envoyer.
   pull(true).then(function () { if (!isOffline) toast('À jour ✓'); });
 }
 
