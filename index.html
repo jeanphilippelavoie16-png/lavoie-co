@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v5.7.2 « Porcelaine »
+     LAVOIE & CO — v6.0.0 « Porcelaine »
      Direction : sobre et épuré. Porcelaine chaude, noir profond,
      une seule touche de sable. Titres en Bodoni Moda, interface en
      Inter, mot-symbole en Marcellus.
@@ -723,7 +723,7 @@
   <figure class="sp-poeme" id="spPoeme"><blockquote id="spTexte"></blockquote><figcaption id="spAuteur"></figcaption></figure>
   <div class="sp-bar" id="spBar"><i></i></div>
   <div class="sp-skip" id="spSkip">Touche pour continuer</div>
-  <div class="sp-ver">v5.7.2</div>
+  <div class="sp-ver">v6.0.0</div>
 </div>
 
 <aside class="sidebar">
@@ -739,7 +739,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.7.2</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v6.0.0</span></div>
 </aside>
 
 <div class="content">
@@ -747,7 +747,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.7.2 · touche pour synchroniser" role="button" aria-label="État de la synchronisation — touche pour synchroniser"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" id="syncPill" title="Lavoie &amp; Co v6.0.0 · touche pour synchroniser" role="button" aria-label="État de la synchronisation — touche pour synchroniser"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -764,7 +764,7 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v5.7.2
+   LAVOIE & CO — Frontend v6.0.0
    ----------------------------------------------------------------
    v5.7 — sync en direct, à deux en même temps (serveur Code.gs v5.4) :
    - Chaque geste part tout de suite ; ce qui s'accumule pendant un
@@ -811,8 +811,14 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '5.7.2'
+  VERSION: '6.0.0',
+  // v6 — Firebase (Firestore) : la base de données en temps réel qui
+  // remplace la feuille pour la synchro. Vide = ancien moteur (Apps Script).
+  FIREBASE: null
 };
+// Tests : un Firebase simulé (émulateur) peut être injecté avant le script.
+if (window.LCO_FB_TEST) CONFIG.FIREBASE = window.LCO_FB_TEST.config;
+var MOTEUR_FB = !!(CONFIG.FIREBASE && CONFIG.FIREBASE.projectId);
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
 
@@ -1025,6 +1031,11 @@ function normalizeData(d){
   d.chasse.forEach(function (c) { c.Repas = repasOf(c.Repas); });
   (d.soupers || []).forEach(function (s) { s.Repas = repasOf(s.Repas); });
   d.epicerieRepas.forEach(function (t) { t.Repas = repasOf(t.Repas); });
+  // « Dernière fois cuisiné » : calculé ici (v6 : plus de serveur pour le faire).
+  var der = {};
+  (d.soupers || []).forEach(function (s) { var r = String(s.RecetteID); if (!der[r] || s.Date > der[r]) der[r] = s.Date; });
+  (d.recettes || []).forEach(function (r) { r.lastCooked = der[String(r.RecetteID)] || ''; });
+  if (d._corb) d.corbeille = resumeCorb(d._corb);
   return d;
 }
 function saveLocal(){ try { localStorage.setItem(LKEY, JSON.stringify({ t: Date.now(), rev: REV, data: DATA })); } catch (e) {} }
@@ -1052,7 +1063,7 @@ function erreurServeur(msg, retry){
 }
 // Rend l'enveloppe complète { ok, result, rev } : la révision sert à
 // refuser les instantanés plus vieux que nos propres écritures.
-// Diagnostic (v5.7.2) : durée des derniers appels et dernier problème,
+// Diagnostic (v5.7.1) : durée des derniers appels et dernier problème,
 // montrés quand on touche la pastille de sync.
 var DIAG = { appels: [], erreur: null };
 function apiRaw(fn, args, opts){
@@ -1228,6 +1239,7 @@ var EXACTS = { setEpicerieCochesBatch: 1, setEpicerieCoche: 1, setEpicerieQuanti
 // Erreur passagère → nouvel essai avec un délai croissant.
 // Op refusée par le serveur → on la retire (la file ne bloque jamais) et on avertit.
 function flushQueue(){
+  if (MOTEUR_FB) return flushFirebase();
   if (flushing || !syncQueue.length) return;
   clearTimeout(retryT); retryT = null;
   flushing = true; inflight++; flushDebut = Date.now(); updateSync();
@@ -1325,6 +1337,7 @@ function flushQueue(){
 var FRAIS_APRES = false; // « synchroniser » touché pendant un envoi
 function finDeFile(aJour){
   updateSync();
+  if (MOTEUR_FB) return; // Firebase : l'écoute apporte déjà tout
   if (FRAIS_APRES) { FRAIS_APRES = false; pull(true); return; }
   if (aJour) return;
   NEEDS_PULL = true;
@@ -1422,9 +1435,10 @@ function recevoirDonnees(d){
     if (rev && rev < MIN_REV) { NEEDS_PULL = true; return false; }
     // Un envoi est en vol : sa réponse apportera plus frais. On garde
     // quand même ceci au cas où l'envoi échouerait (réseau du magasin).
-    // S'il pend depuis plus de 8 s, on n'attend plus : on affiche, nos
+    // S'il pend depuis plus de 20 s, on n'attend plus : on affiche, nos
     // gestes (encore en file) rejoués par-dessus.
-    if (flushing && Date.now() - flushDebut < 20000) { SNAP_VOL = d; NEEDS_PULL = true; return false; }
+    // (Firebase : pas d'ambiguïté — l'instantané dit quels gestes il contient.)
+    if (!MOTEUR_FB && flushing && Date.now() - flushDebut < 20000) { SNAP_VOL = d; NEEDS_PULL = true; return false; }
     // On tape, ou une feuille est ouverte : on garde ça pour la fermeture
     // (un re-rendu ferait perdre le champ et le clavier).
     if (editingOpen() || typingNow()) { SNAP_ATTENTE = d; return false; }
@@ -1450,6 +1464,7 @@ function recevoirDonnees(d){
 function rejouerEnAttente(){
   for (var i = 0; i < syncQueue.length; i++) {
     var it = syncQueue[i], f = REJEU[it.fn];
+    if (OPS_FAITES[it.id]) continue; // déjà dans l'instantané Firebase
     if (!f) return false;
     try { f.apply(it, it.args || []); } catch (e) { return false; }
   }
@@ -1460,6 +1475,7 @@ function rejouerEnAttente(){
 // Données gardées pendant une saisie : appliquées dès qu'on a fini.
 function appliquerAttente(){
   if (!DATA || editingOpen() || typingNow()) return;
+  if (MOTEUR_FB) { if (SNAP_ATTENTE) { SNAP_ATTENTE = null; recevoirFirebase(); } return; }
   var s = SNAP_ATTENTE;
   if (s) { SNAP_ATTENTE = null; recevoirDonnees(s); }
   // Et ce qui a pu arriver depuis (petite réponse si rien de neuf).
@@ -1499,6 +1515,8 @@ function heartbeat(force){
   // Retour dans l'app / réseau revenu : pas d'attente, on renvoie tout de suite.
   if (force && retryT && syncQueue.length) { clearTimeout(retryT); retryT = null; }
   if (syncQueue.length && !flushing && !retryT) flushQueue();
+  // Firebase : rien à demander, l'écoute en direct apporte le nouveau.
+  if (MOTEUR_FB) { if (!FB_PRET && !FB_DEMARRAGE) demarrerFirebase(); return; }
   // Un envoi en vol : sa réponse apporte le nouveau. Mais s'il pend (plus
   // de 8 s), ou si des gestes attendent un nouvel essai, on continue de
   // RECEVOIR : nos gestes sont rejoués par-dessus ce qui arrive.
@@ -1536,6 +1554,20 @@ function heartbeat(force){
 // dans Google Sheets (ex. restauration d'une version).
 function forcerSync(){
   flushEpi(); flushLi();
+  if (MOTEUR_FB) {
+    clearTimeout(retryT); retryT = null;
+    if (!FB_PRET) { toast('Connexion à Firebase… ' + resumeDiag()); demarrerFirebase(); return; }
+    if (syncQueue.length) flushQueue();
+    toast('Synchronisation… ' + resumeDiag());
+    FB.col.get({ source: 'server' }).then(function (snap) {
+      traiterInstantaneFb(snap);
+      toast(syncQueue.length ? 'Envoi en cours (' + syncQueue.length + ')…' : 'À jour ✓');
+    }).catch(function (e) {
+      DIAG.erreur = { fn: 'relecture', msg: String(e && e.message || e), t: Date.now(), ms: 0 };
+      toast('Firebase injoignable pour l\'instant. ' + resumeDiag());
+    });
+    return;
+  }
   toast('Synchronisation… ' + resumeDiag());
   if (syncQueue.length) {
     clearTimeout(retryT); retryT = null;
@@ -1569,6 +1601,251 @@ function call(fn, args, onDone){
   if (DATA) saveLocal();
 }
 
+/* ================================================================
+   MOTEUR FIREBASE (v6) — la synchro en temps réel
+   ----------------------------------------------------------------
+   Toute la base vit dans Firestore, collection « lavoie » : un
+   document par table (le tableau en JSON), plus « ops » (les derniers
+   gestes appliqués), « corbeille », « journal » et « meta ».
+   - Chaque envoi = UNE transaction : Firebase relit l'état à jour, y
+     applique nos gestes avec les mêmes règles que l'écran (REJEU) et
+     écrit le tout d'un coup. Deux téléphones en même temps : Firebase
+     reprend la transaction de l'un sur l'état de l'autre — rien ne
+     s'écrase, rien ne se perd.
+   - Chaque geste porte un identifiant (opId) noté dans « ops » : un
+     envoi répété après une coupure n'est jamais appliqué deux fois.
+   - L'app ÉCOUTE la collection : ce que l'autre fait arrive en moins
+     d'une seconde, sans rien demander à personne.
+   - La première fois, les données de la feuille Google sont copiées
+     dans Firebase (une seule fois, par un seul téléphone).
+   ================================================================ */
+var FB = null;               // { db, auth, col } une fois connecté
+var FB_SDK = 'https://www.gstatic.com/firebasejs/12.19.0/';
+var FB_TABLES = ['recettes', 'ingredients', 'soupers', 'listes', 'listeItems', 'rayons', 'epicerie', 'epicerieRepas',
+  'catalogue', 'types', 'listesRapides', 'listesRapidesItems', 'chasse', 'evenements', 'nous'];
+var FB_BASE = null;          // dernier état reçu de Firebase { table: lignes, _corb }
+var OPS_FAITES = {};         // opIds déjà appliqués dans Firebase (jamais rejoués)
+var FB_PRET = false, FB_DEMARRAGE = null, FB_ECHECS = 0, MIGRATION = null;
+// Documents lus/écrits par chaque geste (un geste absent d'ici : tout).
+var FB_DEP = {
+  setEpicerieCochesBatch: ['epicerie'], setEpicerieCoche: ['epicerie'], setEpicerieQuantite: ['epicerie'], retirerEpicerieItem: ['epicerie'],
+  ajouterItemEpicerie: ['epicerie', 'rayons', 'catalogue'], ajouterItemsEpicerie: ['epicerie', 'rayons'],
+  ajouterRepasEpicerie: ['epicerie', 'epicerieRepas', 'rayons', 'ingredients', 'recettes'],
+  effacerEpicerieIds: ['epicerie', 'epicerieRepas', 'corbeille'], restaurerLot: ['epicerie', 'epicerieRepas', 'listeItems', 'rayons', 'corbeille'],
+  viderEpicerie: ['epicerie', 'epicerieRepas'], nettoyerEpicerieCochee: ['epicerie'],
+  ajouterListeItem: ['listeItems'], setListeItemCochesBatch: ['listeItems'], retirerListeItem: ['listeItems'],
+  nettoyerListeIds: ['listeItems', 'corbeille'], nettoyerListeCochee: ['listeItems'],
+  setSouper: ['soupers', 'epicerieRepas'], setSoupersBatch: ['soupers', 'epicerieRepas'], retirerSouper: ['soupers', 'epicerieRepas'],
+  setChasse: ['chasse', 'epicerieRepas'], retirerChasse: ['chasse', 'epicerieRepas'],
+  ajouterEvenement: ['evenements'], retirerEvenement: ['evenements'], setNous: ['nous'],
+  ajouterRecette: ['recettes', 'ingredients', 'catalogue'], modifierRecette: ['recettes', 'ingredients', 'catalogue'], supprimerRecette: ['recettes', 'ingredients'],
+  creerIngredientCatalogue: ['catalogue'], modifierIngredientCatalogue: ['catalogue'], supprimerIngredientCatalogue: ['catalogue'], creerType: ['types'],
+  creerListe: ['listes'], supprimerListe: ['listes', 'listeItems'], creerListeRapide: ['listesRapides'], renommerListeRapide: ['listesRapides'],
+  supprimerListeRapide: ['listesRapides', 'listesRapidesItems'], ajouterItemRapide: ['listesRapidesItems', 'catalogue'], retirerItemRapide: ['listesRapidesItems']
+};
+var JOURNALISER = { ajouterRepasEpicerie: 1, ajouterItemEpicerie: 1, ajouterItemsEpicerie: 1, retirerEpicerieItem: 1,
+  effacerEpicerieIds: 1, restaurerLot: 1, viderEpicerie: 1, nettoyerEpicerieCochee: 1, nettoyerListeIds: 1,
+  nettoyerListeCochee: 1, supprimerListe: 1, supprimerRecette: 1 };
+
+function chargerScript(src){
+  return new Promise(function (ok, ko) {
+    var s = document.createElement('script');
+    s.src = src; s.async = false;
+    s.onload = ok; s.onerror = function () { ko(new Error('chargement impossible (' + src.split('/').pop() + ')')); };
+    document.head.appendChild(s);
+  });
+}
+function demarrerFirebase(){
+  if (FB_DEMARRAGE) return FB_DEMARRAGE;
+  SERVEUR_V = 'Firebase';
+  var t0 = Date.now();
+  FB_DEMARRAGE = (window.firebase && firebase.firestore ? Promise.resolve() :
+    chargerScript(FB_SDK + 'firebase-app-compat.js').then(function () {
+      return Promise.all([chargerScript(FB_SDK + 'firebase-auth-compat.js'), chargerScript(FB_SDK + 'firebase-firestore-compat.js')]);
+    })).then(function () {
+    if (!FB) {
+      if (!firebase.apps.length) firebase.initializeApp(CONFIG.FIREBASE);
+      var db = firebase.firestore(), auth = firebase.auth();
+      var emu = window.LCO_FB_TEST && window.LCO_FB_TEST.emu;
+      if (emu) { db.useEmulator(emu.host, emu.firestore); auth.useEmulator('http://' + emu.host + ':' + emu.auth, { disableWarnings: true }); }
+      FB = { db: db, auth: auth, col: db.collection('lavoie') };
+    }
+    // Compte anonyme (gardé par le navigateur) : les règles Firebase
+    // n'ouvrent la base qu'aux appareils connectés.
+    return new Promise(function (ok, ko) {
+      var fin = FB.auth.onAuthStateChanged(function (u) {
+        fin();
+        if (u) ok(u); else FB.auth.signInAnonymously().then(function (c) { ok(c.user); }, ko);
+      }, ko);
+    });
+  }).then(function () {
+    DIAG.appels.push({ fn: 'connexion', ms: Date.now() - t0, ok: true });
+    ecouterFirebase();
+  }).catch(function (e) {
+    DIAG.erreur = { fn: 'connexion Firebase', msg: String(e && e.message || e), t: Date.now(), ms: Date.now() - t0 };
+    FB_DEMARRAGE = null; isOffline = true; updateSync();
+    setTimeout(function () { if (!FB_PRET) demarrerFirebase(); }, 10000);
+  });
+  return FB_DEMARRAGE;
+}
+function lireJson(doc, defaut){
+  try { return doc && typeof doc.json === 'string' ? JSON.parse(doc.json) : defaut; } catch (e) { return defaut; }
+}
+// Un instantané de la collection (écoute ou relecture) → état de base.
+function traiterInstantaneFb(snap){
+  var docs = {};
+  snap.forEach(function (doc) { docs[doc.id] = doc.data(); });
+  if (!docs.meta) { migrerVersFirebase(); return false; }
+  var base = {};
+  FB_TABLES.forEach(function (t) { base[t] = lireJson(docs[t], []); });
+  base._corb = lireJson(docs.corbeille, []);
+  var ops = {};
+  lireJson(docs.ops, []).forEach(function (id) { ops[id] = 1; });
+  FB_BASE = base; OPS_FAITES = ops;
+  FB_PRET = true; FB_ECHECS = 0; isOffline = false;
+  recevoirFirebase();
+  if (!SPLASH.pret) { SPLASH.pret = true; tenterFinSplash(); }
+  if (syncQueue.length && !flushing) flushQueue();
+  updateSync();
+  return true;
+}
+function ecouterFirebase(){
+  if (FB.stop) FB.stop();
+  FB.stop = FB.col.onSnapshot(traiterInstantaneFb, function (err) {
+    DIAG.erreur = { fn: 'écoute Firebase', msg: String(err && err.message || err), t: Date.now(), ms: 0 };
+    isOffline = true; updateSync();
+    setTimeout(ecouterFirebase, 5000);
+  });
+}
+// L'état Firebase + nos gestes pas encore appliqués là-bas → l'écran.
+function recevoirFirebase(){
+  if (!FB_BASE) return;
+  recevoirDonnees(JSON.parse(JSON.stringify(FB_BASE)));
+}
+
+// Première ouverture de la v6 : copie de la feuille Google dans Firebase.
+// Une transaction garantit qu'un seul téléphone la fait.
+function migrerVersFirebase(){
+  if (MIGRATION) return MIGRATION;
+  var t0 = Date.now();
+  toast('Première fois : copie de tes données vers Firebase…');
+  MIGRATION = apiRaw('getAllData', [true], { timeout: 90000 }).then(function (j) {
+    var d = j.result;
+    if (!d || !Array.isArray(d.epicerie) || !Array.isArray(d.recettes)) throw new Error('feuille illisible');
+    var metaRef = FB.col.doc('meta');
+    return FB.db.runTransaction(function (tx) {
+      return tx.get(metaRef).then(function (m) {
+        if (m.exists) return false; // l'autre téléphone l'a fait entre-temps
+        FB_TABLES.forEach(function (t) { tx.set(FB.col.doc(t), { json: JSON.stringify(d[t] || []) }); });
+        tx.set(FB.col.doc('ops'), { json: '[]' });
+        tx.set(FB.col.doc('corbeille'), { json: '[]' });
+        tx.set(FB.col.doc('journal'), { json: JSON.stringify([{ q: new Date().toISOString(), a: appareil(), f: 'migration', d: 'Copie de la feuille Google' }]) });
+        tx.set(metaRef, { migre: true, quand: new Date().toISOString(), appareil: appareil(), source: 'Google Sheets', rev: d.rev || 0 });
+        return true;
+      });
+    });
+  }).then(function (fait) {
+    DIAG.appels.push({ fn: 'migration', ms: Date.now() - t0, ok: true });
+    if (fait) toast('Tes données sont maintenant dans Firebase ✓');
+  }).catch(function (e) {
+    DIAG.erreur = { fn: 'copie vers Firebase', msg: String(e && e.message || e), t: Date.now(), ms: Date.now() - t0 };
+    MIGRATION = null;
+    setTimeout(function () { if (!FB_PRET) migrerVersFirebase(); }, 15000); // la feuille finira par répondre
+  });
+  return MIGRATION;
+}
+
+// Envoi : les gestes en attente, appliqués dans UNE transaction.
+function flushFirebase(){
+  if (flushing || !syncQueue.length || !FB || !FB_PRET) return;
+  clearTimeout(retryT); retryT = null;
+  flushing = true; inflight++; flushDebut = Date.now(); updateSync();
+  var lot = syncQueue.slice(0, LOT_MAX), res = null, t0 = Date.now();
+  // On ne relit que les documents touchés par ces gestes (une coche : la
+  // liste d'épicerie, pas les 540 ingrédients du catalogue).
+  var besoin = { ops: 1 };
+  lot.forEach(function (it) {
+    (FB_DEP[it.fn] || FB_TABLES.concat(['corbeille'])).forEach(function (t) { besoin[t] = 1; });
+    if (JOURNALISER[it.fn]) besoin.journal = 1;
+  });
+  var noms = Object.keys(besoin);
+  FB.db.runTransaction(function (tx) {
+    return Promise.all(noms.map(function (n) { return tx.get(FB.col.doc(n)); })).then(function (docs) {
+      var avant = {}, W = {};
+      docs.forEach(function (doc, i) { avant[noms[i]] = doc.exists ? String(doc.data().json || '') : ''; });
+      var lues = FB_TABLES.filter(function (t) { return besoin[t]; });
+      lues.forEach(function (t) { W[t] = avant[t] ? JSON.parse(avant[t]) : []; });
+      if (besoin.corbeille) W._corb = avant.corbeille ? JSON.parse(avant.corbeille) : [];
+      var faits = avant.ops ? JSON.parse(avant.ops) : [], deja = {};
+      faits.forEach(function (id) { deja[id] = 1; });
+      var journal = avant.journal ? JSON.parse(avant.journal) : [];
+      res = appliquerLotFb(W, lot, deja, faits, journal);
+      // Seul ce qui a été lu peut être réécrit (jamais une table absente).
+      lues.forEach(function (t) {
+        var js = JSON.stringify(W[t]);
+        if (js !== avant[t]) tx.set(FB.col.doc(t), { json: js });
+      });
+      if (besoin.corbeille) {
+        var limite = Date.now() - 14 * 86400000;
+        var corb = JSON.stringify(W._corb.filter(function (L) { return new Date(L.quand).getTime() > limite; }).slice(0, 12));
+        if (corb !== avant.corbeille) tx.set(FB.col.doc('corbeille'), { json: corb });
+      }
+      var ops = JSON.stringify(faits.slice(-600));
+      if (ops !== avant.ops) tx.set(FB.col.doc('ops'), { json: ops });
+      if (besoin.journal) {
+        var jr = JSON.stringify(journal.slice(-200));
+        if (jr !== avant.journal) tx.set(FB.col.doc('journal'), { json: jr });
+      }
+    });
+  }).then(function () {
+    DIAG.appels.push({ fn: 'envoi', ms: Date.now() - t0, ok: true });
+    if (DIAG.appels.length > 30) DIAG.appels.shift();
+    flushing = false; inflight = Math.max(0, inflight - 1); isOffline = false; FB_ECHECS = 0;
+    lot.forEach(function (item, i) {
+      var x = res[i] || { ok: true };
+      var cb = queueCallbacks[item.id];
+      retirerDeLaFile(item);
+      if (x.ok) { if (cb) { try { cb(x.result); } catch (e) {} } }
+      else toast('Modification refusée : ' + x.error, 'err');
+    });
+    saveQueue(); updateSync();
+    if (syncQueue.length) flushFirebase(); else finDeFile(true);
+  }).catch(function (err) {
+    flushing = false; inflight = Math.max(0, inflight - 1); FB_ECHECS++;
+    DIAG.erreur = { fn: 'envoi', msg: String(err && err.message || err), t: Date.now(), ms: Date.now() - t0 };
+    // Hors ligne / Firebase injoignable : on garde tout et on réessaie.
+    isOffline = true; saveQueue(); updateSync();
+    nouvelEssai(Math.min(30000, 2000 * Math.pow(2, Math.min(FB_ECHECS, 4) - 1)));
+  });
+}
+// Applique un lot de gestes sur l'état W (celui de la transaction) avec
+// les règles de l'écran. Un geste déjà appliqué (opId connu) est sauté ;
+// un geste qui plante est annulé seul, sans toucher aux autres.
+function appliquerLotFb(W, lot, deja, faits, journal){
+  var sauve = DATA, res = [];
+  DATA = W;
+  try {
+    lot.forEach(function (it) {
+      if (deja[it.id]) { res.push({ ok: true, deja: true }); return; }
+      var f = REJEU[it.fn];
+      if (!f) { res.push({ ok: false, error: 'geste inconnu (' + it.fn + ')' }); return; }
+      var copie = JSON.stringify(W);
+      try {
+        var r = f.apply(it, it.args || []);
+        res.push({ ok: true, result: r });
+        faits.push(it.id); deja[it.id] = 1;
+        if (JOURNALISER[it.fn]) journal.push({ q: new Date(it.ts || Date.now()).toISOString(), a: appareil(), f: it.fn, d: JSON.stringify(it.args || []).slice(0, 160) });
+      } catch (e) {
+        var c = JSON.parse(copie);
+        Object.keys(W).forEach(function (k) { delete W[k]; });
+        Object.keys(c).forEach(function (k) { W[k] = c[k]; });
+        res.push({ ok: false, error: String(e && e.message || e) });
+      }
+    });
+  } finally { DATA = sauve; }
+  return res;
+}
+
 function updateSync(){
   var pend = pendingCount();
   var txt = 'Synchronisé', cls = '';
@@ -1576,6 +1853,7 @@ function updateSync(){
   // Google qui tarde à répondre : l'app réessaie toute seule.
   var etiq = (navigator.onLine === false) ? 'Hors ligne' : 'Connexion lente';
   if (isOffline) { txt = pend ? (etiq + ' · ' + pend + ' en attente') : etiq; cls = 'off'; }
+  else if (MOTEUR_FB && !FB_PRET) { txt = 'Connexion…'; cls = 'busy'; }
   else if (pend || flushing || inflight > 0) { txt = 'Sync · ' + Math.max(pend, 1); cls = 'busy'; }
   else if (pulling) { txt = 'Mise à jour…'; cls = 'busy'; }
   var t = $('syncTxt'); if (t) t.textContent = txt;
@@ -1669,6 +1947,7 @@ var REJEU = {
   ajouterItemEpicerie: function (id, nom, q, u, ray) {
     if (id && epiItem(id)) return; // déjà passé (même règle que le serveur)
     localMergeEpicerie([{ ingredient: nom, quantite: num(q), unite: u, rayon: ray, source: 'manuel', prefId: id }], true);
+    auCatalogue(nom, ray);
   },
   ajouterItemsEpicerie: function (items) {
     localMergeEpicerie((items || []).map(function (p) {
@@ -1676,23 +1955,38 @@ var REJEU = {
     }), true);
   },
   ajouterRepasEpicerie: function (repas, prefIds) {
-    var items = [];
+    var items = [], ajoutes = 0, ignores = 0;
     (repas || []).forEach(function (m) {
       var rep = repasOf(m.repas);
-      if (mealTracked(m.date, rep, m.recetteId)) return; // l'autre l'a déjà ajouté : le serveur l'ignorera
+      if (mealTracked(m.date, rep, m.recetteId)) { ignores++; return; } // l'autre l'a déjà ajouté : ignoré
+      ajoutes++;
       DATA.epicerieRepas.push({ Date: m.date, RecetteID: m.recetteId, Repas: rep });
       ingredientsOf(m.recetteId).forEach(function (ing) {
         items.push({ ingredient: ing.Ingredient, quantite: num(ing.Quantite), unite: ing.Unite, rayon: ing.Rayon, source: recetteNom(m.recetteId) });
       });
     });
     localMergeEpicerie(items, true, prefIds);
+    return { ajoutes: ajoutes, ignores: ignores };
   },
   effacerEpicerieIds: function (ids, suivis, lot, seulCoches) {
-    var s = pourIds(ids), avant = DATA.epicerie.length;
-    DATA.epicerie = DATA.epicerie.filter(function (x) { return !(s[String(x.ListeID)] && (!seulCoches || isTrue(x.Coche))); });
+    var s = pourIds(ids), avant = DATA.epicerie.length, partis = [], suivisPartis = [];
+    DATA.epicerie = DATA.epicerie.filter(function (x) {
+      var part = s[String(x.ListeID)] && (!seulCoches || isTrue(x.Coche));
+      if (part) partis.push(x);
+      return !part;
+    });
     if (suivis && suivis.length) {
       var t = {}; suivis.forEach(function (m) { t[cleSuivi(m.date, m.repas, m.recetteId)] = 1; });
-      DATA.epicerieRepas = DATA.epicerieRepas.filter(function (x) { return !t[cleSuivi(x.Date, x.Repas, x.RecetteID)]; });
+      DATA.epicerieRepas = DATA.epicerieRepas.filter(function (x) {
+        var part = t[cleSuivi(x.Date, x.Repas, x.RecetteID)];
+        if (part) suivisPartis.push({ date: String(x.Date), recetteId: String(x.RecetteID), repas: repasOf(x.Repas) });
+        return !part;
+      });
+    }
+    // v6 : la corbeille complète vit dans Firebase (DATA._corb) — de quoi
+    // restaurer d'un téléphone ce que l'autre a effacé.
+    if (DATA._corb && lot && (partis.length || suivisPartis.length) && !DATA._corb.some(function (x) { return x.lot === lot; })) {
+      DATA._corb.unshift({ lot: lot, quand: new Date(this.ts || Date.now()).toISOString(), appareil: appareil(), lignes: partis, suivis: suivisPartis, items: [] });
     }
     // La carte « Restaurer » vise CE lot tout de suite. Avant, elle
     // montrait l'effacement d'avant jusqu'à la réponse du serveur (un
@@ -1704,6 +1998,14 @@ var REJEU = {
     }
   },
   restaurerLot: function (lot, lignes, suivis, items) {
+    // v6 : le lot est dans la corbeille Firebase → on en reprend le contenu.
+    if (DATA._corb) {
+      var L = DATA._corb.filter(function (x) { return x.lot === lot; })[0];
+      if (L) {
+        lignes = L.lignes || []; suivis = L.suivis || []; items = L.items || [];
+        DATA._corb = DATA._corb.filter(function (x) { return x.lot !== lot; });
+      }
+    }
     var cles = {};
     DATA.epicerie.forEach(function (e) { cles[norm(e.Ingredient) + '|' + norm(e.Unite)] = 1; });
     (lignes || []).forEach(function (r) {
@@ -1724,7 +2026,17 @@ var REJEU = {
   ajouterListeItem: function (id, listeId, texte) { if (!liItem(id)) DATA.listeItems.push({ ItemID: id, ListeID: listeId, Texte: texte, Coche: false }); },
   setListeItemCochesBatch: function (arr) { (arr || []).forEach(function (u) { var x = liItem(u.id); if (x) x.Coche = u.coche === true; }); },
   retirerListeItem: function (id) { DATA.listeItems = DATA.listeItems.filter(function (x) { return String(x.ItemID) !== String(id); }); },
-  nettoyerListeIds: function (ids) { var s = pourIds(ids); DATA.listeItems = DATA.listeItems.filter(function (x) { return !(s[String(x.ItemID)] && isTrue(x.Coche)); }); },
+  nettoyerListeIds: function (ids, lot) {
+    var s = pourIds(ids), partis = [];
+    DATA.listeItems = DATA.listeItems.filter(function (x) {
+      var part = s[String(x.ItemID)] && isTrue(x.Coche);
+      if (part) partis.push(x);
+      return !part;
+    });
+    if (DATA._corb && lot && partis.length && !DATA._corb.some(function (x) { return x.lot === lot; })) {
+      DATA._corb.unshift({ lot: lot, quand: new Date(this.ts || Date.now()).toISOString(), appareil: appareil(), lignes: [], suivis: [], items: partis });
+    }
+  },
   nettoyerListeCochee: function (lid) { DATA.listeItems = DATA.listeItems.filter(function (x) { return !(String(x.ListeID) === String(lid) && isTrue(x.Coche)); }); },
   // Menu (un créneau qui change de recette n'est plus « dans la liste »)
   setSouper: function (date, rid, cook, rep) { REJEU.setSoupersBatch([{ date: date, recetteId: rid, cuisinier: cook, repas: rep }]); },
@@ -1780,8 +2092,66 @@ var REJEU = {
   supprimerRecette: function (rid) {
     DATA.recettes = DATA.recettes.filter(function (x) { return String(x.RecetteID) !== String(rid); });
     DATA.ingredients = DATA.ingredients.filter(function (x) { return String(x.RecetteID) !== String(rid); });
+  },
+  // Catalogue, groupes de recettes (v6 : mêmes règles que l'ancien serveur)
+  creerIngredientCatalogue: function (nom, rayon) { auCatalogue(nom, rayon); },
+  modifierIngredientCatalogue: function (ancien, nouveau, rayon) {
+    var c = DATA.catalogue.filter(function (x) { return norm(x.Ingredient) === norm(ancien); })[0];
+    if (c) { c.Ingredient = String(nouveau).trim(); c.Rayon = String(rayon).trim(); }
+  },
+  supprimerIngredientCatalogue: function (nom) {
+    var fait = false;
+    DATA.catalogue = DATA.catalogue.filter(function (x) {
+      if (!fait && norm(x.Ingredient) === norm(nom)) { fait = true; return false; }
+      return true;
+    });
+  },
+  creerType: function (nom) {
+    nom = String(nom || '').trim(); if (!nom) return;
+    if (!DATA.types.some(function (t) { return String(t).toLowerCase().trim() === nom.toLowerCase(); })) DATA.types.push(nom);
+  },
+  // Listes et listes rapides
+  creerListe: function (id, nom, type) {
+    if (!DATA.listes.some(function (l) { return String(l.ListeID) === String(id); })) DATA.listes.push({ ListeID: id, Nom: nom, Type: type || 'custom' });
+  },
+  supprimerListe: function (id) {
+    DATA.listes = DATA.listes.filter(function (l) { return String(l.ListeID) !== String(id); });
+    DATA.listeItems = DATA.listeItems.filter(function (i) { return String(i.ListeID) !== String(id); });
+  },
+  creerListeRapide: function (id, nom) {
+    if (!DATA.listesRapides.some(function (l) { return String(l.RapideID) === String(id); })) DATA.listesRapides.push({ RapideID: id, Nom: nom });
+  },
+  renommerListeRapide: function (id, nom) {
+    DATA.listesRapides.forEach(function (l) { if (String(l.RapideID) === String(id)) l.Nom = nom; });
+  },
+  supprimerListeRapide: function (id) {
+    DATA.listesRapides = DATA.listesRapides.filter(function (l) { return String(l.RapideID) !== String(id); });
+    DATA.listesRapidesItems = DATA.listesRapidesItems.filter(function (i) { return String(i.RapideID) !== String(id); });
+  },
+  ajouterItemRapide: function (id, rid, ing, q, u, ray) {
+    if (!DATA.listesRapidesItems.some(function (i) { return String(i.ItemID) === String(id); })) {
+      DATA.listesRapidesItems.push({ ItemID: id, RapideID: rid, Ingredient: ing, Quantite: fmtNum(num(q)), Unite: u, Rayon: ray });
+    }
+    auCatalogue(ing, ray);
+  },
+  retirerItemRapide: function (id) {
+    DATA.listesRapidesItems = DATA.listesRapidesItems.filter(function (i) { return String(i.ItemID) !== String(id); });
   }
 };
+// Ajoute un ingrédient au catalogue (ou met à jour son rayon).
+function auCatalogue(nom, rayon){
+  nom = String(nom || '').trim(); rayon = String(rayon || '').trim();
+  if (!nom) return;
+  var c = DATA.catalogue.filter(function (x) { return norm(x.Ingredient) === norm(nom); })[0];
+  if (c) { if (rayon) c.Rayon = rayon; }
+  else DATA.catalogue.push({ Ingredient: nom, Rayon: rayon });
+}
+// Résumé de la corbeille Firebase pour la carte « Restaurer » (plus récent d'abord).
+function resumeCorb(corb){
+  return (corb || []).map(function (L) {
+    return { lot: L.lot, quand: L.quand, appareil: L.appareil || '', epicerie: (L.lignes || []).length, suivis: (L.suivis || []).length, liste: (L.items || []).length };
+  });
+}
 // Efface des lignes d'épicerie PAR ID (et oublie des repas du suivi),
 // avec « Annuler » : le lot part à la corbeille du serveur.
 function effacerEpicerie(lignes, suivis, seulCoches, msg){
@@ -1990,6 +2360,17 @@ function load(){
   // sont prêtes. Avec une copie locale, elles le sont tout de suite.
   function finish(){ SPLASH.pret = true; tenterFinSplash(); }
   if (cached) finish();
+  // v6 : Firebase — connexion, écoute en direct ; la file part dès que prêt.
+  if (MOTEUR_FB) {
+    updateSync();
+    demarrerFirebase();
+    if (!cached) setTimeout(function () {
+      if (DATA) return;
+      finish();
+      $('view').innerHTML = '<div class="empty">' + CREST_MINI + 'Pas de connexion et aucune donnée enregistrée.<br>Connecte-toi à Internet une première fois pour charger tes données.<br><br><button class="btn sm" onclick="location.reload()" style="margin:0 auto;width:auto">Réessayer</button></div>';
+    }, 20000);
+    return;
+  }
   // Des gestes attendent : leur envoi rapporte aussi le nouveau.
   if (syncQueue.length) { updateSync(); flushQueue(); }
   // Copie locale : on ne télécharge tout que si quelque chose a changé.
@@ -4094,6 +4475,7 @@ document.addEventListener('focusin', function (e) {
 var dernierAdieu = 0;
 function envoyerAvantFermeture(){
   flushEpi(); flushLi(); // (ce qui lance aussi l'envoi normal)
+  if (MOTEUR_FB) return; // Firebase : l'envoi part tout de suite et prend une fraction de seconde
   if (!syncQueue.length || !HOSTED) return;
   if (Date.now() - dernierAdieu < 1500) return; // pagehide + visibilitychange : une fois suffit
   dernierAdieu = Date.now();
