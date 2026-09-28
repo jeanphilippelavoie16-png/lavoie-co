@@ -813,10 +813,20 @@ var CONFIG = {
   APP_TOKEN: '',
   VERSION: '6.0.0',
   // v6 — Firebase (Firestore) : la base de données en temps réel qui
-  // remplace la feuille pour la synchro. Vide = ancien moteur (Apps Script).
-  FIREBASE: null
+  // remplace la feuille pour la synchro. null = ancien moteur (Apps Script).
+  // Ces valeurs ne sont pas secrètes : elles identifient le projet ; l'accès
+  // est protégé par les règles Firestore (appareils connectés seulement).
+  FIREBASE: {
+    apiKey: 'AIzaSyDon2VkOU-sPN5EuuVStWXyz76L-wrWOGQ',
+    authDomain: 'lavoie-co.firebaseapp.com',
+    projectId: 'lavoie-co',
+    storageBucket: 'lavoie-co.firebasestorage.app',
+    messagingSenderId: '623142685749',
+    appId: '1:623142685749:web:3ef70c0b811efa2141757c'
+  }
 };
-// Tests : un Firebase simulé (émulateur) peut être injecté avant le script.
+// Tests : un Firebase simulé (émulateur) — ou aucun (config: null) — peut
+// être injecté avant le script.
 if (window.LCO_FB_TEST) CONFIG.FIREBASE = window.LCO_FB_TEST.config;
 var MOTEUR_FB = !!(CONFIG.FIREBASE && CONFIG.FIREBASE.projectId);
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
