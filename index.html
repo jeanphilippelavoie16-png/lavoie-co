@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
   /* ================================================================
-     LAVOIE & CO — v5.6.0 « Porcelaine »
+     LAVOIE & CO — v5.7.0 « Porcelaine »
      Direction : sobre et épuré. Porcelaine chaude, noir profond,
      une seule touche de sable. Titres en Bodoni Moda, interface en
      Inter, mot-symbole en Marcellus.
@@ -642,6 +642,13 @@
     background:var(--night);color:var(--on-dark);font-size:13.5px;font-weight:500;padding:12px 20px;border-radius:30px;
     border:1px solid color-mix(in srgb,var(--acc) 25%,transparent);box-shadow:var(--sh-pop);max-width:90%;text-align:center;animation:tin .25s var(--ease)}
   .toast.err{background:var(--danger);border-color:transparent}
+  .toast.act{display:flex;align-items:center;gap:14px;padding:8px 8px 8px 20px;text-align:left;z-index:81}
+  .toast.act button{flex:none;background:transparent;border:1px solid color-mix(in srgb,var(--on-dark) 35%,transparent);color:var(--on-dark);
+    font:inherit;font-weight:700;padding:8px 14px;border-radius:22px;cursor:pointer}
+  .restaure{margin:14px auto 0;max-width:360px;text-align:center}
+  .pane-a > .restaure{margin:0 auto 18px}
+  @media(min-width:900px){ .restaure.seulmobile{display:none} }
+  #syncPill{cursor:pointer}
   @keyframes tin{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
 
   /* ============ BUREAU ============ */
@@ -716,7 +723,7 @@
   <figure class="sp-poeme" id="spPoeme"><blockquote id="spTexte"></blockquote><figcaption id="spAuteur"></figcaption></figure>
   <div class="sp-bar" id="spBar"><i></i></div>
   <div class="sp-skip" id="spSkip">Touche pour continuer</div>
-  <div class="sp-ver">v5.6.0</div>
+  <div class="sp-ver">v5.7.0</div>
 </div>
 
 <aside class="sidebar">
@@ -732,7 +739,7 @@
     <div class="side-item" data-tab="chasse" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 21v-8M12 13c-1.8-2.6-4.6-2.8-6.5-5.8M12 13c1.8-2.6 4.6-2.8 6.5-5.8M8.6 10.4C7.8 8.6 8 6.2 9.6 4.6M15.4 10.4c.8-1.8.6-4.2-1-5.8"/></svg>Menu Chasse</div>
     <div class="side-item" data-tab="nous" role="button" tabindex="0"><svg viewBox="0 0 24 24"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg>Julie &amp; JP</div>
   </nav>
-  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.6.0</span></div>
+  <div class="side-foot"><span class="sdot" id="sdot"></span><span id="sfoot">Synchronisé</span><span class="sver">v5.7.0</span></div>
 </aside>
 
 <div class="content">
@@ -740,7 +747,7 @@
     <div class="brand"><span class="wordmark" style="font-size:13.5px">Lavoie <span class="et">&amp;</span> Co</span></div>
     <span class="clk" id="goNous" role="button" aria-label="Julie et JP"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pine-deep)" stroke-width="1.7" stroke-linecap="round"><path d="M12 20 C 3.5 14.5, 2.8 7.5, 7.2 5.8 C 10 4.8, 12 7, 12 9 C 12 7, 14 4.8, 16.8 5.8 C 21.2 7.5, 20.5 14.5, 12 20"/></svg></span>
     <span class="pagetitle" id="pagetitle">Menu</span>
-    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.6.0"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
+    <span class="sync" id="syncPill" title="Lavoie &amp; Co v5.7.0 · touche pour synchroniser" role="button" aria-label="État de la synchronisation — touche pour synchroniser"><span class="sdot" id="syncDot"></span><span id="syncTxt">·</span></span>
   </header>
   <main id="view"></main>
 </div>
@@ -757,8 +764,22 @@
 
 <script>
 /* ================================================================
-   LAVOIE & CO — Frontend v5.6.0
+   LAVOIE & CO — Frontend v5.7.0
    ----------------------------------------------------------------
+   v5.7 — sync en direct, à deux en même temps (serveur Code.gs v5.4) :
+   - Chaque geste part tout de suite ; ce qui s'accumule pendant un
+     envoi part d'un bloc (un seul aller-retour, dans l'ordre).
+   - App ouverte : « du nouveau ? » toutes les 4 s, et le nouveau vient
+     dans la même réponse. Retour dans l'app : vérifié sur-le-champ.
+   - Les données de l'autre s'affichent même pendant nos envois : nos
+     gestes pas encore confirmés sont rejoués par-dessus (REJEU).
+   - Envoi en keepalive : fermer l'app juste après un ajout ne le
+     garde plus prisonnier du téléphone.
+   - « Tout effacer » / « Nettoyer » effacent PAR ID ce qu'on voit :
+     les ajouts de l'autre restent. Corbeille + « Annuler » /
+     « Restaurer ». Un vieil effacement resté en file est annulé.
+   - Vieux serveur (pas encore redéployé) : tout marche encore, une op
+     à la fois (repli automatique).
    v5.3 — le sync réparé (voir aussi le serveur Code.gs v5.3) :
    - Un téléchargement qui revient APRÈS un geste local est jeté : il
      effaçait de l'écran le repas qu'on venait d'ajouter.
@@ -790,7 +811,7 @@ var CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbwJAJddKu42tH8ROtPpNpsRbspXa23cX8MqzoSkZUrXfTTe95QN-Bx-O3flOP4f1L7z/exec',
   // Jeton partagé optionnel — doit être identique à Script Properties → APP_TOKEN. Vide = désactivé.
   APP_TOKEN: '',
-  VERSION: '5.6.0'
+  VERSION: '5.7.0'
 };
 // Hébergé ailleurs (GitHub Pages) vs iframe Apps Script
 var HOSTED = !(/script\.google\.com|googleusercontent/.test(location.hostname));
@@ -919,6 +940,7 @@ function rayonsSorted(){ return (DATA.rayons || []).slice().sort(function (a, b)
 function catalogue(){ return (DATA.catalogue || []).slice().sort(function (a, b) { return String(a.Ingredient).localeCompare(String(b.Ingredient)); }); }
 function souperFor(iso, rep){ rep = rep || 'souper'; return (DATA.soupers || []).filter(function (s) { return s.Date === iso && repasOf(s.Repas) === rep; })[0]; }
 function epiItem(id){ return (DATA.epicerie || []).filter(function (x) { return String(x.ListeID) === String(id); })[0]; }
+function liItem(id){ return (DATA.listeItems || []).filter(function (x) { return String(x.ItemID) === String(id); })[0]; }
 function liste(id){ return (DATA.listes || []).filter(function (l) { return String(l.ListeID) === String(id); })[0]; }
 function mealTracked(date, rep, rid){
   return (DATA.epicerieRepas || []).some(function (t) {
@@ -1043,14 +1065,18 @@ function apiRaw(fn, args, opts){
         })[fn].apply(google.script.run, args || []);
     });
   }
-  var body = { fn: fn, args: args || [], token: CONFIG.APP_TOKEN };
+  var body = { fn: fn, args: args || [], token: CONFIG.APP_TOKEN, appareil: appareil() };
   if (opts.opId) body.opId = opts.opId;
+  var txt = JSON.stringify(body);
   var ctl = (typeof AbortController === 'function') ? new AbortController() : null, minuteur = null;
   // POST text/plain = « simple request » : pas de preflight CORS, aucune limite d'URL.
+  // keepalive (v5.7) : l'envoi continue même si on ferme l'app ou qu'on
+  // change d'app pendant qu'il part (limite du navigateur : 64 Ko).
   var req = fetch(CONFIG.API_URL, {
     method: 'POST', redirect: 'follow',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(body),
+    body: txt,
+    keepalive: !!opts.keepalive && txt.length < 60000,
     signal: ctl ? ctl.signal : undefined
   }).then(function (r) {
     return r.text().then(function (txt) {
@@ -1080,16 +1106,35 @@ function aRepondu(err){ return !!(err && (err.server || err.transient || err.sof
 /* ================================================================
    MOTEUR DE SYNC
    ================================================================ */
+// v5.7 — sync « en direct » :
+//  - chaque geste part TOUT DE SUITE ; ce qui s'accumule pendant un envoi
+//    part d'un bloc au suivant (lot : un seul aller-retour, dans l'ordre) ;
+//  - la réponse d'un lot apporte les ajouts de l'autre téléphone ;
+//  - app ouverte, on vérifie toutes les 4 s s'il y a du nouveau (et le
+//    nouveau vient dans la même réponse) ;
+//  - un instantané du serveur n'efface plus jamais un geste pas encore
+//    confirmé : on le rejoue par-dessus (REJEU). Avant, l'instantané
+//    était jeté — on ne voyait rien de l'autre tant qu'on touchait l'écran.
 var syncQueue = [], flushing = false, inflight = 0, pulling = false, hbBusy = false;
 var NEEDS_PULL = false;
 var queueCallbacks = {};
 var pendEpi = {}, epiT = null, pendLi = {}, liT = null;
-// v5.3 — garde-fous de fusion :
-var LOCAL_GEN = 0;     // +1 à chaque geste local : un pull parti avant est périmé
 var MIN_REV = 0;       // révision serveur de notre dernière écriture confirmée
 var retryT = null;     // nouvel essai différé (erreur passagère)
-var pullT = null, confirmT = null, pullRejets = 0;
+var pullT = null, pullRejets = 0;
 var SERVEUR_V = '';
+var HB_MS = 4000;      // app ouverte : « du nouveau ? » toutes les 4 s
+var LOT_MAX = 25;      // gestes par envoi groupé
+var LOT_OK = HOSTED ? null : false; // null = inconnu (on essaie) · false = vieux serveur, une op à la fois
+var SNAP_ATTENTE = null; // données reçues pendant qu'on tape / qu'une feuille est ouverte
+var CORB = {};         // copies locales des lots effacés (bouton « Annuler »)
+
+// Nom de l'appareil, noté au Journal du serveur : « JP · iPhone ».
+function appareil(){
+  var ua = navigator.userAgent || '', t = /iPad/.test(ua) ? 'iPad' : /iPhone|iPod/.test(ua) ? 'iPhone' : /Android/.test(ua) ? 'Android' : /Mac/.test(ua) ? 'Mac' : /Windows/.test(ua) ? 'PC' : 'Web';
+  var moi = ''; try { moi = localStorage.getItem('LCO_MOI') || ''; } catch (e) {}
+  return (moi === 'julie' ? 'Julie · ' : moi === 'jp' ? 'JP · ' : '') + t;
+}
 
 function loadQueue(){
   try { syncQueue = JSON.parse(localStorage.getItem(QKEY) || '[]'); if (!Array.isArray(syncQueue)) syncQueue = []; } catch (e) { syncQueue = []; }
@@ -1099,6 +1144,16 @@ function loadQueue(){
     if (Array.isArray(old) && old.length) { syncQueue = old.concat(syncQueue); localStorage.removeItem(QKEY_OLD); }
   } catch (e) {}
   syncQueue.forEach(function (it) { if (typeof it.tries !== 'number') it.tries = 0; if (!it.id) it.id = cid('q'); });
+  // Un « Tout effacer » / « Nettoyer » d'une version d'avant v5.7 resté en
+  // file (app fermée avant l'envoi) vidait, à la réouverture, tout ce que
+  // l'autre avait ajouté entre-temps. Vieux de plus de 2 min : annulé.
+  var vieux = syncQueue.filter(function (it) {
+    return /^(viderEpicerie|nettoyerEpicerieCochee|nettoyerListeCochee)$/.test(it.fn) && Date.now() - (it.ts || 0) > 120000;
+  });
+  if (vieux.length) {
+    syncQueue = syncQueue.filter(function (it) { return vieux.indexOf(it) < 0; });
+    setTimeout(function () { toast('Un effacement resté en attente a été annulé : la liste de l\'autre est gardée'); }, 1500);
+  }
   saveQueue();
 }
 function saveQueue(){ try { localStorage.setItem(QKEY, JSON.stringify(syncQueue)); } catch (e) {} }
@@ -1106,12 +1161,9 @@ function pendingCount(){ return syncQueue.length + Object.keys(pendEpi).length +
 
 function editingOpen(){ return !!($('ov') || $('ov2') || $('ov3')); }
 function typingNow(){ var a = document.activeElement; return !!(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)); }
-// On ne remplace les données locales par celles du serveur QUE si rien n'est en cours.
-function canPull(){
-  return !editingOpen() && !typingNow() &&
-    !Object.keys(pendEpi).length && !Object.keys(pendLi).length &&
-    !syncQueue.length && !flushing && !pulling;
-}
+// Télécharger ne gêne plus rien (les gestes en attente sont rejoués
+// par-dessus) ; on évite seulement de doubler un envoi ou un pull.
+function canPull(){ return !flushing && !pulling; }
 function planifierPull(ms){
   clearTimeout(pullT);
   pullT = setTimeout(function () { pullT = null; if (NEEDS_PULL && canPull()) pull(); }, ms);
@@ -1135,7 +1187,14 @@ function retirerDeLaFile(item){
   saveQueue();
 }
 
-// Vide la file vers le serveur, dans l'ordre, une op à la fois.
+// Gestes dont l'effet local est EXACTEMENT celui du serveur : après un
+// lot qui n'en contient que de ceux-là, pas besoin de recharger les
+// données (sauf si l'autre a écrit entre-temps — le serveur le sait).
+var EXACTS = { setEpicerieCochesBatch: 1, setEpicerieCoche: 1, setEpicerieQuantite: 1, retirerEpicerieItem: 1,
+  setListeItemCochesBatch: 1, retirerListeItem: 1, ajouterListeItem: 1, setNous: 1, ajouterEvenement: 1, retirerEvenement: 1 };
+
+// Vide la file vers le serveur, dans l'ordre. Serveur v5.4 : tout ce qui
+// attend part d'un bloc (lot) ; vieux serveur : une op à la fois.
 // Réseau coupé → on garde tout et on réessaie plus tard.
 // Erreur passagère → nouvel essai avec un délai croissant.
 // Op refusée par le serveur → on la retire (la file ne bloque jamais) et on avertit.
@@ -1143,26 +1202,68 @@ function flushQueue(){
   if (flushing || !syncQueue.length) return;
   clearTimeout(retryT); retryT = null;
   flushing = true; inflight++; updateSync();
-  var item = syncQueue[0];
-  apiRaw(item.fn, item.args, { opId: item.id, timeout: API_TIMEOUT }).then(function (j) {
-    var res = j.result, cb = queueCallbacks[item.id];
-    retirerDeLaFile(item); isOffline = false;
-    flushing = false; inflight = Math.max(0, inflight - 1);
-    if (typeof j.rev === 'number') MIN_REV = Math.max(MIN_REV, j.rev);
-    apresEcriture(item, res);
-    if (cb) { try { cb(res); } catch (e) {} }
-    if (syncQueue.length) { updateSync(); flushQueue(); }
-    else { finDeFile(); }
+  var parLot = LOT_OK !== false;
+  var lot = syncQueue.slice(0, parLot ? LOT_MAX : 1);
+  var envoi;
+  if (parLot) {
+    var exact = lot.every(function (it) { return EXACTS[it.fn]; });
+    var depuis = REV;
+    envoi = apiRaw('lot', [lot.map(function (it) { return { fn: it.fn, args: it.args, opId: it.id }; }), exact ? { depuis: depuis } : { donnees: true }],
+      { timeout: API_TIMEOUT }).then(function (j) {
+      LOT_OK = true;
+      return { res: Array.isArray(j.result) ? j.result : [], rev: j.rev, donnees: j.donnees, leger: exact && !j.donnees };
+    });
+  } else {
+    envoi = apiRaw(lot[0].fn, lot[0].args, { opId: lot[0].id, timeout: API_TIMEOUT }).then(function (j) {
+      return { res: [{ ok: true, result: j.result }], rev: j.rev };
+    });
+  }
+  envoi.then(function (r) {
+    flushing = false; inflight = Math.max(0, inflight - 1); isOffline = false;
+    if (typeof r.rev === 'number') MIN_REV = Math.max(MIN_REV, r.rev);
+    var attente = 0, passes = 0;
+    for (var i = 0; i < lot.length; i++) {
+      var item = lot[i], x = r.res[i];
+      if (!x) break; // pas tenté : le serveur s'est arrêté sur une erreur passagère
+      if (x.ok) {
+        var cb = queueCallbacks[item.id];
+        retirerDeLaFile(item);
+        apresEcriture(item, x.result);
+        if (cb) { try { cb(x.result); } catch (e) {} }
+        passes++;
+        continue;
+      }
+      var err = erreurServeur(x.error, x.retry);
+      if (err.transient) { item.tries = (item.tries || 0) + 1; attente = Math.min(60000, 1500 * Math.pow(2, item.tries - 1)); break; }
+      if (remplacerParRepli(item, x.error)) break;
+      retirerDeLaFile(item);
+      toast('Modification refusée : ' + x.error, 'err');
+    }
+    // Réponse légère (que des gestes exacts, personne d'autre n'a écrit) :
+    // l'écran est déjà juste, il est maintenant à cette révision.
+    var aJour = !!r.donnees || (r.leger && passes === lot.length && typeof r.rev === 'number' && !!DATA);
+    if (r.donnees) recevoirDonnees(r.donnees);
+    else if (aJour) { REV = r.rev; saveLocal(); }
+    saveQueue(); updateSync();
+    if (attente) { nouvelEssai(attente); return; }
+    if (syncQueue.length) flushQueue();
+    else finDeFile(aJour);
   }).catch(function (err) {
     flushing = false; inflight = Math.max(0, inflight - 1);
+    // Serveur d'avant v5.4 (pas encore redéployé) : une op à la fois.
+    if (parLot && err && err.server && /Fonction inconnue\s*:\s*lot\b/.test(err.message)) {
+      LOT_OK = false; isOffline = false; flushQueue(); return;
+    }
+    var item = lot[0];
     item.tries = (item.tries || 0) + 1;
     if (err && err.server) {
-      // Refus logique du serveur : on ne bloque pas les modifications suivantes.
       isOffline = false;
+      if (remplacerParRepli(item, err.message)) { flushQueue(); return; }
+      // Refus logique du serveur : on ne bloque pas les modifications suivantes.
       retirerDeLaFile(item);
       toast('Modification refusée : ' + err.message, 'err');
       updateSync();
-      if (syncQueue.length) flushQueue(); else finDeFile();
+      if (syncQueue.length) flushQueue(); else finDeFile(false);
       return;
     }
     if (err && (err.transient || err.soft)) {
@@ -1172,7 +1273,7 @@ function flushQueue(){
         retirerDeLaFile(item);
         toast('Une modification n\'a pas pu être envoyée (' + err.message + ')', 'err');
         updateSync();
-        if (syncQueue.length) flushQueue(); else finDeFile();
+        if (syncQueue.length) flushQueue(); else finDeFile(false);
         return;
       }
       saveQueue(); updateSync();
@@ -1183,14 +1284,52 @@ function flushQueue(){
     isOffline = true; saveQueue(); updateSync();
   });
 }
-// File vidée : on relit le serveur tout de suite, puis une seconde fois
-// ~17 s plus tard. Le 2e passage rattrape un vieux serveur (v4.9) qui
-// pouvait garder 15 s en cache un instantané sans notre dernier ajout.
-function finDeFile(){
-  NEEDS_PULL = true; updateSync();
-  if (canPull()) pull();
-  clearTimeout(confirmT);
-  confirmT = setTimeout(function () { confirmT = null; NEEDS_PULL = true; if (canPull()) pull(); }, 17000);
+// File vidée. Si la réponse n'a pas déjà mis l'écran à jour (vieux
+// serveur), on vérifie tout de suite s'il y a du nouveau.
+function finDeFile(aJour){
+  updateSync();
+  if (aJour) return;
+  NEEDS_PULL = true;
+  heartbeat(true);
+}
+
+// Serveur d'avant v5.4 : les nouvelles fonctions n'existent pas encore.
+// L'op est remplacée, à sa place dans la file, par son équivalent ancien
+// (effacer par ID → retirer chaque ligne ; restaurer → rajouter).
+var REPLIS = {
+  effacerEpicerieIds: function (ids) {
+    return (ids || []).map(function (id) { return { fn: 'retirerEpicerieItem', args: [id] }; });
+  },
+  nettoyerListeIds: function (ids) {
+    return (ids || []).map(function (id) { return { fn: 'retirerListeItem', args: [id] }; });
+  },
+  restaurerLot: function (lot, lignes, suivis, items) {
+    var ops = [];
+    lignes = lignes || []; items = items || [];
+    if (lignes.length) {
+      ops.push({ fn: 'ajouterItemsEpicerie', args: [lignes.map(function (r) {
+        return { ingredient: r.Ingredient, quantite: String(r.Quantite).replace(',', '.'), unite: r.Unite, rayon: r.Rayon, prefId: r.ListeID };
+      })] });
+      var c = lignes.filter(function (r) { return isTrue(r.Coche); }).map(function (r) { return { id: r.ListeID, coche: true }; });
+      if (c.length) ops.push({ fn: 'setEpicerieCochesBatch', args: [c] });
+    }
+    items.forEach(function (it) { ops.push({ fn: 'ajouterListeItem', args: [it.ItemID, it.ListeID, it.Texte] }); });
+    var ci = items.filter(function (it) { return isTrue(it.Coche); }).map(function (it) { return { id: it.ItemID, coche: true }; });
+    if (ci.length) ops.push({ fn: 'setListeItemCochesBatch', args: [ci] });
+    return ops;
+  }
+};
+function remplacerParRepli(item, msg){
+  var m = /Fonction inconnue\s*:\s*(\w+)/.exec(String(msg || ''));
+  if (!m || m[1] !== item.fn || !REPLIS[item.fn]) return false;
+  var i = syncQueue.indexOf(item); if (i < 0) return false;
+  var nv = REPLIS[item.fn].apply(null, item.args || []).map(function (o, k) {
+    return { fn: o.fn, args: o.args, id: item.id + '_' + k, ts: item.ts, tries: 0 };
+  });
+  syncQueue.splice.apply(syncQueue, [i, 1].concat(nv));
+  delete queueCallbacks[item.id];
+  saveQueue();
+  return true;
 }
 
 // Après un ajout à l'épicerie, le serveur renvoie la liste complète.
@@ -1234,63 +1373,120 @@ function adopterIdsEpicerie(rows){
   });
 }
 
-// Télécharge les données complètes du serveur (seulement quand c'est sûr).
-function pull(){
+// Applique un instantané du serveur SANS perdre les gestes pas encore
+// confirmés : ils sont rejoués par-dessus (REJEU). Rend true si l'écran
+// a pris ces données.
+function recevoirDonnees(d){
+  if (!d || typeof d !== 'object' || !Array.isArray(d.epicerie)) return false;
+  var rev = (typeof d.rev === 'number') ? d.rev : 0;
+  if (DATA) {
+    // Plus vieux que notre dernière écriture confirmée : ne sert à rien.
+    if (rev && rev < MIN_REV) { NEEDS_PULL = true; return false; }
+    // Un envoi est en vol : sa réponse apportera plus frais.
+    if (flushing) { NEEDS_PULL = true; return false; }
+    // On tape, ou une feuille est ouverte : on garde ça pour la fermeture
+    // (un re-rendu ferait perdre le champ et le clavier).
+    if (editingOpen() || typingNow()) { SNAP_ATTENTE = d; return false; }
+  }
+  var avantTxt = DATA ? JSON.stringify(DATA) : '', ancien = DATA;
+  DATA = normalizeData(JSON.parse(JSON.stringify(d)));
+  if (!rejouerEnAttente()) {
+    // Un geste en attente qu'on ne sait pas rejouer (recette modifiée…) :
+    // on garde l'écran tel quel ; la réponse de son envoi fera foi.
+    // (Premier chargement, rien à garder : on prend quand même.)
+    NEEDS_PULL = true;
+    if (ancien) { DATA = ancien; return false; }
+  }
+  REV = rev || REV;
+  if (ancien || !syncQueue.length) NEEDS_PULL = false;
+  SNAP_ATTENTE = null; pullRejets = 0;
+  saveLocal();
+  // Rien n'a changé : pas de re-rendu (un re-rendu en plein toucher
+  // avalait le tap — « j'appuie et rien ne se passe »).
+  if (JSON.stringify(DATA) !== avantTxt) { render(); majCoeur(); }
+  return true;
+}
+function rejouerEnAttente(){
+  for (var i = 0; i < syncQueue.length; i++) {
+    var it = syncQueue[i], f = REJEU[it.fn];
+    if (!f) return false;
+    try { f.apply(it, it.args || []); } catch (e) { return false; }
+  }
+  Object.keys(pendEpi).forEach(function (id) { var x = epiItem(id); if (x) x.Coche = pendEpi[id]; });
+  Object.keys(pendLi).forEach(function (id) { var x = liItem(id); if (x) x.Coche = pendLi[id]; });
+  return true;
+}
+// Données gardées pendant une saisie : appliquées dès qu'on a fini.
+function appliquerAttente(){
+  if (!DATA || editingOpen() || typingNow()) return;
+  var s = SNAP_ATTENTE;
+  if (s) { SNAP_ATTENTE = null; recevoirDonnees(s); }
+  // Et ce qui a pu arriver depuis (petite réponse si rien de neuf).
+  if ((s || NEEDS_PULL) && !flushing) heartbeat(true);
+}
+
+// Télécharge les données complètes (premier chargement, vieux serveur,
+// ou « frais » : relire la feuille en ignorant le cache du serveur).
+function pull(frais){
   if (pulling) return Promise.resolve();
   clearTimeout(pullT); pullT = null;
   pulling = true; updateSync();
-  var gen0 = LOCAL_GEN;
-  return apiRaw('getAllData', [], { timeout: API_TIMEOUT }).then(function (j) {
+  return apiRaw('getAllData', frais ? [true] : [], { timeout: API_TIMEOUT }).then(function (j) {
     var d = j.result;
     isOffline = false;
     if (!d || typeof d !== 'object') return;
     var rev = (typeof d.rev === 'number') ? d.rev : 0;
-    if (DATA) {
-      // Un geste a eu lieu pendant le téléchargement (ou une feuille est
-      // ouverte) : ces données sont déjà en retard sur l'écran. Avant
-      // v5.3 elles l'écrasaient — le repas ajouté disparaissait.
-      if (LOCAL_GEN !== gen0 || pendingCount() || flushing || editingOpen() || typingNow()) { NEEDS_PULL = true; return; }
-      // Instantané antérieur à notre dernière écriture confirmée (cache
-      // serveur) : on le refuse et on redemande un peu plus tard.
-      if (rev && rev < MIN_REV) {
-        if (pullRejets < 8) { pullRejets++; NEEDS_PULL = true; planifierPull(2500); return; }
-        MIN_REV = rev; // compteur remis à zéro au serveur : on s'aligne au lieu d'attendre à chaque fois
-      }
+    // Instantané antérieur à notre dernière écriture confirmée (cache
+    // serveur) : on le refuse et on redemande un peu plus tard.
+    if (DATA && rev && rev < MIN_REV) {
+      if (pullRejets < 8) { pullRejets++; NEEDS_PULL = true; planifierPull(2500); return; }
+      MIN_REV = rev; // compteur remis à zéro au serveur : on s'aligne au lieu d'attendre à chaque fois
     }
-    pullRejets = 0;
-    var avant = DATA ? JSON.stringify(DATA) : '';
-    DATA = normalizeData(d);
-    REV = rev || REV;
-    NEEDS_PULL = false;
-    saveLocal();
-    // Rien n'a changé : pas de re-rendu (un re-rendu en plein toucher
-    // avalait le tap — « j'appuie et rien ne se passe »).
-    if (JSON.stringify(DATA) !== avant) render();
+    recevoirDonnees(d);
   }).catch(function (err) { if (!aRepondu(err)) isOffline = true; })
     .finally(function () { pulling = false; updateSync(); });
 }
 
-// Battement de cœur (10 s, app visible) :
-// 1) envoyer ce qui attend ; 2) vérifier la révision serveur (ultraléger) ;
-// 3) tirer les données complètes seulement si elles ont changé.
-function heartbeat(){
-  if (document.visibilityState !== 'visible') return;
-  if (Object.keys(pendEpi).length) { flushEpi(); return; }
-  if (Object.keys(pendLi).length) { flushLi(); return; }
+// Battement de cœur (4 s, app visible) :
+// 1) envoyer ce qui attend (sa réponse apporte le nouveau) ;
+// 2) sinon demander « du nouveau depuis REV ? » — serveur v5.4 : le
+//    nouveau vient dans la même réponse ; vieux serveur : on le tire.
+function heartbeat(force){
+  if (document.visibilityState !== 'visible' && !force) return;
+  if (Object.keys(pendEpi).length) flushEpi();
+  if (Object.keys(pendLi).length) flushLi();
   if (syncQueue.length) { if (!flushing && !retryT) flushQueue(); return; }
-  if (hbBusy || pulling) return;
+  if (hbBusy || pulling || flushing) return;
+  if (SNAP_ATTENTE && !editingOpen() && !typingNow()) { appliquerAttente(); return; }
+  // Données déjà reçues et gardées pendant une saisie : on ne demande que
+  // ce qui est plus récent qu'elles (pas 100 Ko toutes les 4 s).
+  var connu = (SNAP_ATTENTE && typeof SNAP_ATTENTE.rev === 'number') ? SNAP_ATTENTE.rev : REV;
   hbBusy = true;
-  apiRaw('getRev', [], { timeout: 15000 }).then(function (j) {
+  apiRaw('getRev', [connu], { timeout: 15000 }).then(function (j) {
     var r = j.result;
     isOffline = false;
     SERVEUR_V = (r && r.serveur) ? String(r.serveur) : 'ancien (à redéployer)';
-    var sp = $('syncPill'); if (sp) sp.title = 'Lavoie & Co v' + CONFIG.VERSION + ' · serveur ' + SERVEUR_V;
-    if (r && typeof r.rev === 'number' && r.rev !== REV) NEEDS_PULL = true;
+    if (HOSTED) LOT_OK = /^5\.(4|5|6|7|8|9)|^[6-9]\./.test(SERVEUR_V); // envoi groupé : serveur v5.4+
+    var sp = $('syncPill'); if (sp) sp.title = 'Lavoie & Co v' + CONFIG.VERSION + ' · serveur ' + SERVEUR_V + ' · touche pour synchroniser';
+    if (r && r.donnees) { if (!recevoirDonnees(r.donnees) && !SNAP_ATTENTE) NEEDS_PULL = true; }
+    else if (r && typeof r.rev === 'number' && r.rev !== connu) NEEDS_PULL = true;
+    else if (r && typeof r.rev === 'number' && !SNAP_ATTENTE) NEEDS_PULL = false;
   }).catch(function (err) { if (!aRepondu(err)) isOffline = true; })
     .finally(function () {
       hbBusy = false; updateSync();
-      if (NEEDS_PULL && canPull()) pull();
+      // Vieux serveur (getRev sans données) : on tire l'instantané.
+      if (NEEDS_PULL && !SNAP_ATTENTE && !/^5\.(4|5|6|7|8|9)|^[6-9]\./.test(SERVEUR_V) && canPull()) pull();
     });
+}
+
+// Bouton « synchroniser » (touche la pastille) : envoie tout, puis relit
+// la feuille en ignorant le cache — utile après une retouche à la main
+// dans Google Sheets (ex. restauration d'une version).
+function forcerSync(){
+  flushEpi(); flushLi();
+  if (syncQueue.length) { flushQueue(); toast('Envoi en cours…'); return; }
+  toast('Synchronisation…');
+  pull(true).then(function () { if (!isOffline) toast('À jour ✓'); });
 }
 
 // Toute modification passe par ici : file persistante + copie locale.
@@ -1299,7 +1495,7 @@ function call(fn, args, onDone){
   // l'ordre des gestes est l'ordre d'arrivée au serveur.
   if (fn !== 'setEpicerieCochesBatch') flushEpi();
   if (fn !== 'setListeItemCochesBatch') flushLi();
-  LOCAL_GEN++;
+  if (fn === 'setNous') { try { localStorage.setItem('LCO_MOI', String(args[0] || '')); } catch (e) {} }
   enqueue(fn, args, onDone);
   if (DATA) saveLocal();
 }
@@ -1318,9 +1514,9 @@ function updateSync(){
 
 /* ---------- Coches en lot (700 ms de regroupement) ---------- */
 function flushEpi(){ var ks = Object.keys(pendEpi); if (!ks.length) return; var arr = ks.map(function (k) { return { id: k, coche: pendEpi[k] }; }); pendEpi = {}; call('setEpicerieCochesBatch', [arr]); }
-function queueEpi(id, val){ LOCAL_GEN++; pendEpi[id] = val; clearTimeout(epiT); epiT = setTimeout(flushEpi, 700); updateSync(); }
+function queueEpi(id, val){ pendEpi[id] = val; clearTimeout(epiT); epiT = setTimeout(flushEpi, 450); updateSync(); }
 function flushLi(){ var ks = Object.keys(pendLi); if (!ks.length) return; var arr = ks.map(function (k) { return { id: k, coche: pendLi[k] }; }); pendLi = {}; call('setListeItemCochesBatch', [arr]); }
-function queueLi(id, val){ LOCAL_GEN++; pendLi[id] = val; clearTimeout(liT); liT = setTimeout(flushLi, 700); updateSync(); }
+function queueLi(id, val){ pendLi[id] = val; clearTimeout(liT); liT = setTimeout(flushLi, 450); updateSync(); }
 
 /* ---------- Fusion locale de l'épicerie (miroir du serveur) ---------- */
 function srcAdd(cur, add){
@@ -1348,8 +1544,11 @@ function sortEpicerieLocal(){
 }
 // Retourne { 'ingredient|unite' : ID } des lignes CRÉÉES — envoyé au
 // serveur (prefIds) pour qu'il garde les mêmes ID que l'écran.
-function localMergeEpicerie(items){
-  flushEpi(); // les coches en attente partent avant cet ajout (même ordre qu'au serveur)
+// rejeu (v5.7) : appelé par REJEU sur des données fraîches — pas d'envoi
+// de coches ; prefIds : les ID déjà donnés à ces lignes à l'écran.
+function localMergeEpicerie(items, rejeu, prefIds){
+  if (!rejeu) flushEpi(); // les coches en attente partent avant cet ajout (même ordre qu'au serveur)
+  prefIds = prefIds || {};
   var byKey = {}, nouveaux = {};
   (DATA.epicerie || []).forEach(function (e) { byKey[norm(e.Ingredient) + '|' + norm(e.Unite)] = e; });
   (items || []).forEach(function (it) {
@@ -1370,7 +1569,8 @@ function localMergeEpicerie(items){
       ex.Source = srcAdd(ex.Source, src);
       if (!ex.Rayon && it.rayon) ex.Rayon = String(it.rayon).trim();
     } else {
-      var row = { ListeID: it.prefId || cid('E'), Ingredient: nom, Quantite: fmtNum(num(it.quantite)),
+      var voulu = it.prefId || prefIds[key];
+      var row = { ListeID: (voulu && !epiItem(voulu)) ? voulu : cid('E'), Ingredient: nom, Quantite: fmtNum(num(it.quantite)),
         Unite: unite, Rayon: String(it.rayon || '').trim(), Source: src, Coche: false };
       DATA.epicerie.push(row); byKey[key] = row; nouveaux[key] = row.ListeID;
     }
@@ -1379,7 +1579,168 @@ function localMergeEpicerie(items){
   return nouveaux;
 }
 
+/* ---------- Rejeu des gestes en attente (v5.7) ----------
+   Quand des données arrivent du serveur alors que des gestes ne sont
+   pas encore confirmés, chaque geste est refait par-dessus, avec la même
+   règle que le serveur. Ainsi on voit les ajouts de l'autre SANS perdre
+   les siens. `this` = l'élément de la file (this.ts = heure du geste).
+   Un geste absent d'ici (recettes, catalogue…) ne se rejoue pas : les
+   données attendent alors qu'il soit confirmé (quelques secondes). */
+function pourIds(ids){ var s = {}; (ids || []).forEach(function (i) { s[String(i)] = 1; }); return s; }
+function cleSuivi(date, rep, rid){ return String(date) + '|' + repasOf(rep) + '|' + String(rid); }
+var REJEU = {
+  // Épicerie
+  setEpicerieCochesBatch: function (arr) { (arr || []).forEach(function (u) { var x = epiItem(u.id); if (x) x.Coche = u.coche === true; }); },
+  setEpicerieCoche: function (id, c) { var x = epiItem(id); if (x) x.Coche = c === true; },
+  setEpicerieQuantite: function (id, q) { var x = epiItem(id); if (x) x.Quantite = fmtNum(Math.round(num(q) * 1000) / 1000); },
+  retirerEpicerieItem: function (id) { DATA.epicerie = DATA.epicerie.filter(function (x) { return String(x.ListeID) !== String(id); }); },
+  ajouterItemEpicerie: function (id, nom, q, u, ray) {
+    if (id && epiItem(id)) return; // déjà passé (même règle que le serveur)
+    localMergeEpicerie([{ ingredient: nom, quantite: num(q), unite: u, rayon: ray, source: 'manuel', prefId: id }], true);
+  },
+  ajouterItemsEpicerie: function (items) {
+    localMergeEpicerie((items || []).map(function (p) {
+      return { ingredient: p.ingredient, quantite: num(p.quantite), unite: p.unite, rayon: p.rayon, source: 'manuel', prefId: p.prefId };
+    }), true);
+  },
+  ajouterRepasEpicerie: function (repas, prefIds) {
+    var items = [];
+    (repas || []).forEach(function (m) {
+      var rep = repasOf(m.repas);
+      if (mealTracked(m.date, rep, m.recetteId)) return; // l'autre l'a déjà ajouté : le serveur l'ignorera
+      DATA.epicerieRepas.push({ Date: m.date, RecetteID: m.recetteId, Repas: rep });
+      ingredientsOf(m.recetteId).forEach(function (ing) {
+        items.push({ ingredient: ing.Ingredient, quantite: num(ing.Quantite), unite: ing.Unite, rayon: ing.Rayon, source: recetteNom(m.recetteId) });
+      });
+    });
+    localMergeEpicerie(items, true, prefIds);
+  },
+  effacerEpicerieIds: function (ids, suivis, lot, seulCoches) {
+    var s = pourIds(ids);
+    DATA.epicerie = DATA.epicerie.filter(function (x) { return !(s[String(x.ListeID)] && (!seulCoches || isTrue(x.Coche))); });
+    if (suivis && suivis.length) {
+      var t = {}; suivis.forEach(function (m) { t[cleSuivi(m.date, m.repas, m.recetteId)] = 1; });
+      DATA.epicerieRepas = DATA.epicerieRepas.filter(function (x) { return !t[cleSuivi(x.Date, x.Repas, x.RecetteID)]; });
+    }
+  },
+  restaurerLot: function (lot, lignes, suivis, items) {
+    var cles = {};
+    DATA.epicerie.forEach(function (e) { cles[norm(e.Ingredient) + '|' + norm(e.Unite)] = 1; });
+    (lignes || []).forEach(function (r) {
+      var k = norm(r.Ingredient) + '|' + norm(r.Unite);
+      if (epiItem(r.ListeID) || cles[k]) return;
+      cles[k] = 1; DATA.epicerie.push(JSON.parse(JSON.stringify(r)));
+    });
+    (suivis || []).forEach(function (m) {
+      if (!mealTracked(m.date, repasOf(m.repas), m.recetteId)) DATA.epicerieRepas.push({ Date: m.date, RecetteID: m.recetteId, Repas: repasOf(m.repas) });
+    });
+    (items || []).forEach(function (it) { if (!liItem(it.ItemID)) DATA.listeItems.push(JSON.parse(JSON.stringify(it))); });
+    sortEpicerieLocal();
+  },
+  viderEpicerie: function () { DATA.epicerie = []; DATA.epicerieRepas = []; },
+  nettoyerEpicerieCochee: function () { DATA.epicerie = DATA.epicerie.filter(function (x) { return !isTrue(x.Coche); }); },
+  // Listes
+  ajouterListeItem: function (id, listeId, texte) { if (!liItem(id)) DATA.listeItems.push({ ItemID: id, ListeID: listeId, Texte: texte, Coche: false }); },
+  setListeItemCochesBatch: function (arr) { (arr || []).forEach(function (u) { var x = liItem(u.id); if (x) x.Coche = u.coche === true; }); },
+  retirerListeItem: function (id) { DATA.listeItems = DATA.listeItems.filter(function (x) { return String(x.ItemID) !== String(id); }); },
+  nettoyerListeIds: function (ids) { var s = pourIds(ids); DATA.listeItems = DATA.listeItems.filter(function (x) { return !(s[String(x.ItemID)] && isTrue(x.Coche)); }); },
+  nettoyerListeCochee: function (lid) { DATA.listeItems = DATA.listeItems.filter(function (x) { return !(String(x.ListeID) === String(lid) && isTrue(x.Coche)); }); },
+  // Menu (un créneau qui change de recette n'est plus « dans la liste »)
+  setSouper: function (date, rid, cook, rep) { REJEU.setSoupersBatch([{ date: date, recetteId: rid, cuisinier: cook, repas: rep }]); },
+  setSoupersBatch: function (arr) {
+    (arr || []).forEach(function (a) {
+      var rep = repasOf(a.repas), s = souperFor(a.date, rep);
+      if (s) {
+        if (String(s.RecetteID) !== String(a.recetteId)) untrackDateLocal(a.date, rep);
+        s.RecetteID = a.recetteId; s.Cuisinier = a.cuisinier || '';
+      } else DATA.soupers.push({ Date: a.date, RecetteID: a.recetteId, Cuisinier: a.cuisinier || '', Repas: rep });
+    });
+  },
+  retirerSouper: function (date, rep) {
+    rep = repasOf(rep);
+    DATA.soupers = DATA.soupers.filter(function (s) { return !(s.Date === date && repasOf(s.Repas) === rep); });
+    untrackDateLocal(date, rep);
+  },
+  setChasse: function (j, rep, rid) {
+    rep = repasOf(rep);
+    var ex = chasseFor(j, rep);
+    if (ex) { if (String(ex.RecetteID) !== String(rid)) untrackDateLocal('CHASSE-J' + j, rep); ex.RecetteID = rid; }
+    else DATA.chasse.push({ Jour: j, Repas: rep, RecetteID: rid });
+  },
+  retirerChasse: function (j, rep) {
+    rep = repasOf(rep);
+    DATA.chasse = DATA.chasse.filter(function (c) { return !(String(c.Jour) === String(j) && repasOf(c.Repas) === rep); });
+    untrackDateLocal('CHASSE-J' + j, rep);
+  },
+  // Calendrier, Julie & JP
+  ajouterEvenement: function (id, date, titre) {
+    if (!DATA.evenements.some(function (x) { return String(x.EvenementID) === String(id); })) DATA.evenements.push({ EvenementID: id, Date: date, Titre: String(titre || '').trim() });
+  },
+  retirerEvenement: function (id) { DATA.evenements = DATA.evenements.filter(function (x) { return String(x.EvenementID) !== String(id); }); },
+  setNous: function (qui, etat, note, humeur) {
+    var q = String(qui || '').toLowerCase().trim(), r = nousRow(q);
+    if (!r) { r = { Qui: q, Etat: '', Note: '', Humeur: '' }; DATA.nous.push(r); }
+    r.Etat = String(etat || ''); r.Note = String(note || ''); r.MisAJour = new Date(this.ts || Date.now()).toISOString();
+    if (!(humeur === null || typeof humeur === 'undefined')) r.Humeur = String(humeur);
+  },
+  // Recettes (articles « à côté » du Menu Chasse, carnet)
+  ajouterRecette: function (p) {
+    if (recette(p.id)) return REJEU.modifierRecette(p);
+    DATA.recettes.push({ RecetteID: p.id, Nom: p.nom, Portions: num(p.portions) || 4, Notes: p.notes || '', Types: (p.types || []).join(', '),
+      types: (p.types || []).slice(), etapes: (p.etapes || []).slice(), lastCooked: '' });
+    ingredientsRejeu(p);
+  },
+  modifierRecette: function (p) {
+    var r = recette(p.id); if (!r) return;
+    r.Nom = p.nom; r.Portions = num(p.portions) || 4; r.types = (p.types || []).slice(); r.Types = r.types.join(', '); r.etapes = (p.etapes || []).slice();
+    DATA.ingredients = DATA.ingredients.filter(function (i) { return String(i.RecetteID) !== String(p.id); });
+    ingredientsRejeu(p);
+  },
+  supprimerRecette: function (rid) {
+    DATA.recettes = DATA.recettes.filter(function (x) { return String(x.RecetteID) !== String(rid); });
+    DATA.ingredients = DATA.ingredients.filter(function (x) { return String(x.RecetteID) !== String(rid); });
+  }
+};
+// Efface des lignes d'épicerie PAR ID (et oublie des repas du suivi),
+// avec « Annuler » : le lot part à la corbeille du serveur.
+function effacerEpicerie(lignes, suivis, seulCoches, msg){
+  var lot = cid('LOT'), ids = lignes.map(function (x) { return String(x.ListeID); });
+  CORB[lot] = { lignes: JSON.parse(JSON.stringify(lignes)), suivis: suivis, items: [] };
+  REJEU.effacerEpicerieIds(ids, suivis, lot, seulCoches);
+  call('effacerEpicerieIds', [ids, suivis, lot, seulCoches]);
+  render();
+  toastAction(msg, 'Annuler', function () { restaurerLotUi(lot, 'Remis dans la liste'); });
+}
+// Remet un lot : tout de suite à l'écran si on en a la copie (effacé
+// d'ici), sinon à la réponse du serveur (effacé par l'autre téléphone).
+function restaurerLotUi(lot, msg){
+  var c = CORB[lot] || { lignes: [], suivis: [], items: [] };
+  REJEU.restaurerLot(lot, c.lignes, c.suivis, c.items);
+  DATA.corbeille = (DATA.corbeille || []).filter(function (x) { return x.lot !== lot; });
+  call('restaurerLot', [lot, c.lignes, c.suivis, c.items]);
+  delete CORB[lot];
+  render(); toast(msg);
+}
+function ingredientsRejeu(p){
+  (p.ingredients || []).forEach(function (ing) {
+    DATA.ingredients.push({ RecetteID: p.id, Ingredient: ing.ingredient, Quantite: fmtNum(num(ing.quantite)), Unite: ing.unite, Rayon: ing.rayon });
+    if (!DATA.catalogue.some(function (c) { return norm(c.Ingredient) === norm(ing.ingredient); })) DATA.catalogue.push({ Ingredient: ing.ingredient, Rayon: ing.rayon });
+  });
+}
+
 /* ---------- Toast ---------- */
+// Avec un bouton (« Annuler ») : reste plus longtemps, un seul à la fois.
+function toastAction(msg, lbl, fn){
+  qall('.toast.act').forEach(function (x) { x.remove(); });
+  var t = document.createElement('div');
+  t.className = 'toast act';
+  t.innerHTML = '<span>' + esc(msg) + '</span><button type="button">' + esc(lbl) + '</button>';
+  document.body.appendChild(t);
+  var fini = false;
+  function fermer(){ if (fini) return; fini = true; t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(function () { t.remove(); }, 300); }
+  t.querySelector('button').onclick = function () { fermer(); fn(); };
+  setTimeout(fermer, 6500);
+}
 function toast(msg, kind){
   var t = document.createElement('div');
   t.className = 'toast' + (kind === 'err' ? ' err' : '');
@@ -1548,7 +1909,10 @@ function load(){
   // sont prêtes. Avec une copie locale, elles le sont tout de suite.
   function finish(){ SPLASH.pret = true; tenterFinSplash(); }
   if (cached) finish();
-  if (syncQueue.length) { finish(); updateSync(); flushQueue(); return; }
+  // Des gestes attendent : leur envoi rapporte aussi le nouveau.
+  if (syncQueue.length) { updateSync(); flushQueue(); }
+  // Copie locale : on ne télécharge tout que si quelque chose a changé.
+  if (cached) { if (!syncQueue.length) heartbeat(true); return; }
   pull().then(function () {
     finish();
     if (!DATA) {
@@ -1740,6 +2104,8 @@ function viewEpicerie(){
   h += '<div class="seg seg-epi"><span class="sg' + (mode === 'prep' ? ' on' : '') + ' clk" data-segmode="prep">Préparer' + (selectable.length ? ' <span class="ctchip">' + selectable.length + '</span>' : '') + '</span>' +
     '<span class="sg' + (mode === 'shop' ? ' on' : '') + ' clk" data-segmode="shop">Magasiner' + (resteN ? ' <span class="ctchip">' + resteN + '</span>' : '') + '</span></div>';
   h += '<div class="panes mode-' + mode + '"><section class="pane-a">';
+  // Liste vide : on bascule sur « Préparer » — le « Restaurer » doit s'y voir aussi (téléphone).
+  if (!e.length) h += restaureHtml(true, 'seulmobile');
   h += '<div class="secthd" style="margin-top:0"><span class="t">Repas à magasiner</span><span class="ln"></span>' + (selectable.length ? '<span class="small clk" id="epiSelAll" style="color:var(--pine-deep);font-weight:600">Tout cocher</span>' : '') + '</div>';
   if (!s.length) {
     h += '<div class="card muted small">Aucun repas à venir. Planifie des soupers dans le menu, ou ajoute des items à la main.' + (passes ? '<br><span style="font-size:11px">(' + passes + ' repas passés masqués)</span>' : '') + '</div>';
@@ -1803,8 +2169,21 @@ function viewEpicerie(){
   } else {
     h += '<div class="empty">' + CREST_MINI + 'La liste est vide.<br>Ajoute un article, ou passe en mode « Préparer » pour y verser les repas.<br><br><div class="btnrow" style="justify-content:center;flex-wrap:wrap"><button class="btn sm" id="shopAdd" type="button">+ Ajouter un article</button><button class="btn ghost sm" id="goPrep">Préparer la liste</button></div></div>';
   }
+  h += restaureHtml(!e.length);
   h += '</section></div>';
   return h;
+}
+// « Restaurer » : le dernier lot effacé (par n'importe quel téléphone),
+// gardé 7 jours par le serveur. Liste vide : toujours proposé ; sinon
+// seulement pendant 2 h (un « Tout effacer » par erreur de l'autre).
+function restaureHtml(vide, cls){
+  var l = (DATA.corbeille || []).filter(function (x) { return x.epicerie > 0; })[0];
+  if (!l) return '';
+  var age = Date.now() - new Date(l.quand).getTime();
+  if (!vide && !(age < 2 * 3600000)) return '';
+  var qui = l.appareil ? ' par ' + esc(l.appareil) : '';
+  return '<div class="card small restaure' + (cls ? ' ' + cls : '') + '"><div class="muted" style="margin-bottom:8px">' + l.epicerie + ' article' + (l.epicerie > 1 ? 's' : '') + ' effacé' + (l.epicerie > 1 ? 's' : '') + ' ' + esc(timeAgo(l.quand)) + qui + '</div>' +
+    '<button class="btn ghost sm" data-restaure="' + esc(l.lot) + '" type="button" style="margin:0 auto">Restaurer ces articles</button></div>';
 }
 function rayBlock(ray, items){
   var done = items.filter(function (i) { return isTrue(i.Coche); }).length;
@@ -2617,24 +2996,26 @@ function bind(){
   });
 
   // --- Épicerie : liste ---
+  // v5.7 : on efface PAR ID ce qu'on voit — ce que l'autre ajoute au même
+  // moment reste. Tout part à la corbeille du serveur : « Annuler ».
   var cb = $('cleanBtn');
   if (cb) cb.onclick = function () {
-    var nb = (DATA.epicerie || []).filter(function (it) { return isTrue(it.Coche); }).length;
+    var coches = (DATA.epicerie || []).filter(function (it) { return isTrue(it.Coche); });
+    var nb = coches.length;
     if (!nb) { toast('Aucun élément coché'); return; }
-    if (!confirm('Retirer les ' + nb + ' élément' + (nb > 1 ? 's' : '') + ' coché' + (nb > 1 ? 's' : '') + ' de la liste ?')) return;
-    DATA.epicerie = (DATA.epicerie || []).filter(function (it) { return !isTrue(it.Coche); });
-    call('nettoyerEpicerieCochee', []);
-    render(); toast(nb + ' élément' + (nb > 1 ? 's' : '') + ' retiré' + (nb > 1 ? 's' : ''));
+    effacerEpicerie(coches, [], true, nb + ' élément' + (nb > 1 ? 's' : '') + ' retiré' + (nb > 1 ? 's' : ''));
   };
   var cab = $('cleanAllBtn');
   if (cab) cab.onclick = function () {
     var nb = (DATA.epicerie || []).length;
     if (!nb) { toast('La liste est déjà vide'); return; }
-    if (!confirm('Effacer toute la liste d\'épicerie (' + nb + ' élément' + (nb > 1 ? 's' : '') + ') ?\nLes repas pourront être ajoutés à nouveau.')) return;
-    DATA.epicerie = []; DATA.epicerieRepas = [];
-    call('viderEpicerie', []);
-    render(); toast('Liste vidée');
+    if (!confirm('Effacer toute la liste d\'épicerie (' + nb + ' élément' + (nb > 1 ? 's' : '') + ') ?\nLes repas pourront être ajoutés à nouveau. Tu pourras annuler.')) return;
+    var suivis = (DATA.epicerieRepas || []).map(function (t) { return { date: String(t.Date), recetteId: String(t.RecetteID), repas: repasOf(t.Repas) }; });
+    effacerEpicerie(DATA.epicerie.slice(), suivis, false, 'Liste vidée');
   };
+  qall('[data-restaure]').forEach(function (b) {
+    b.onclick = function () { restaurerLotUi(b.getAttribute('data-restaure'), 'Liste restaurée'); };
+  });
   qall('[data-epi]').forEach(function (el) {
     el.onclick = function () {
       var id = el.getAttribute('data-epi'), card = el.closest('.card'), ray = card.getAttribute('data-rayof');
@@ -2671,11 +3052,14 @@ function bind(){
   };
   var clz = $('cleanListe');
   if (clz) clz.onclick = function () {
-    var nb = (DATA.listeItems || []).filter(function (i) { return String(i.ListeID) === String(curListe) && isTrue(i.Coche); }).length;
+    var coches = (DATA.listeItems || []).filter(function (i) { return String(i.ListeID) === String(curListe) && isTrue(i.Coche); });
+    var nb = coches.length;
     if (!nb) { toast('Aucun élément coché'); return; }
-    if (!confirm('Retirer les ' + nb + ' élément' + (nb > 1 ? 's' : '') + ' coché' + (nb > 1 ? 's' : '') + ' ?')) return;
-    DATA.listeItems = (DATA.listeItems || []).filter(function (i) { return !(String(i.ListeID) === String(curListe) && isTrue(i.Coche)); });
-    call('nettoyerListeCochee', [curListe]); render(); toast(nb + ' retiré' + (nb > 1 ? 's' : ''));
+    var lot = cid('LOT'), ids = coches.map(function (i) { return String(i.ItemID); });
+    CORB[lot] = { lignes: [], suivis: [], items: JSON.parse(JSON.stringify(coches)) };
+    REJEU.nettoyerListeIds(ids);
+    call('nettoyerListeIds', [ids, lot]); render();
+    toastAction(nb + ' retiré' + (nb > 1 ? 's' : ''), 'Annuler', function () { restaurerLotUi(lot, 'Remis dans la liste'); });
   };
   qall('[data-li]').forEach(function (el) {
     el.onclick = function () {
@@ -3623,18 +4007,53 @@ document.addEventListener('focusin', function (e) {
   }
 });
 
-// Avant de masquer/fermer : envoyer les coches en attente
-window.addEventListener('pagehide', function () { flushEpi(); flushLi(); if (syncQueue.length) flushQueue(); });
+// Avant de masquer/fermer l'app : TOUT part maintenant, en keepalive —
+// l'envoi survit à la fermeture. Avant v5.7, ce qu'on venait d'ajouter
+// restait sur le téléphone jusqu'à sa réouverture : l'autre ne voyait rien.
+var dernierAdieu = 0;
+function envoyerAvantFermeture(){
+  flushEpi(); flushLi(); // (ce qui lance aussi l'envoi normal)
+  if (!syncQueue.length || !HOSTED) return;
+  if (Date.now() - dernierAdieu < 1500) return; // pagehide + visibilitychange : une fois suffit
+  dernierAdieu = Date.now();
+  // Copie « keepalive » de toute la file, dans l'ordre : elle part même si
+  // le téléphone met l'app en veille. Si l'envoi normal passe aussi, le
+  // serveur reconnaît les opId : rien n'est fait deux fois. La réponse
+  // est ignorée — au retour, la file repart et le serveur confirme.
+  if (LOT_OK !== false) {
+    var lot = syncQueue.slice(0, LOT_MAX).map(function (it) { return { fn: it.fn, args: it.args, opId: it.id }; });
+    apiRaw('lot', [lot, {}], { keepalive: true }).catch(function () {});
+  } else {
+    var it = syncQueue[0];
+    apiRaw(it.fn, it.args, { opId: it.id, keepalive: true }).catch(function () {});
+  }
+}
+window.addEventListener('pagehide', envoyerAvantFermeture);
 document.addEventListener('visibilitychange', function () {
-  if (document.visibilityState === 'hidden') { flushEpi(); flushLi(); }
-  else { heartbeat(); }
+  if (document.visibilityState === 'hidden') envoyerAvantFermeture();
+  else heartbeat(); // de retour dans l'app : le nouveau, tout de suite
 });
+window.addEventListener('pageshow', function (e) { if (e.persisted) heartbeat(); });
+window.addEventListener('focus', function () { heartbeat(); });
 window.addEventListener('online', function () { isOffline = false; updateSync(); flushQueue(); heartbeat(); });
 window.addEventListener('offline', function () { isOffline = true; updateSync(); });
+// Fin de saisie ou feuille fermée (peu importe comment) : les données
+// arrivées entre-temps s'affichent tout de suite.
+document.addEventListener('focusout', function () { setTimeout(appliquerAttente, 60); });
+if (window.MutationObserver) {
+  new MutationObserver(function (ms) {
+    for (var i = 0; i < ms.length; i++) {
+      for (var k = 0; k < ms[i].removedNodes.length; k++) {
+        if (/^ov[23]?$/.test(ms[i].removedNodes[k].id || '')) { setTimeout(appliquerAttente, 60); return; }
+      }
+    }
+  }).observe(document.body, { childList: true });
+}
+$('syncPill').onclick = forcerSync;
 
-// ❤️ Battement de cœur (10 s, app visible) : envoie la file en attente,
-// vérifie la révision serveur, et tire les données seulement si nécessaire.
-setInterval(heartbeat, 10000);
+// ❤️ Battement de cœur (4 s, app visible) : envoie la file en attente,
+// et demande « du nouveau ? » — le nouveau vient dans la même réponse.
+setInterval(heartbeat, HB_MS);
 
 // Service Worker (offline + mises à jour auto) — seulement en mode hébergé (GitHub Pages)
 if (HOSTED && 'serviceWorker' in navigator) {
