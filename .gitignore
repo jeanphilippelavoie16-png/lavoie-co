@@ -4,4 +4,3 @@ serveur/
 # Relevé : tuiles régénérables par releve/livrables/outils/pretraitement.py
 releve/travail/prep/
 __pycache__/
-releve/travail/photos/
