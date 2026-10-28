@@ -1,0 +1,2718 @@
+{
+  "projet": {
+    "nom": "Résidence factice — 12, rue de l'Exemple, Ville-Test",
+    "unites": "pouces (affichage pi-po, métrique entre parenthèses)",
+    "origine": "coin extérieur avant-gauche de la fondation, vu de la rue ; x le long de la façade, y vers l'arrière",
+    "convention_cotation": "hors-tout extérieur ; cloisons à l'axe ; ouvertures à l'axe",
+    "ancres": [],
+    "nord": {
+      "angle_deg": 35,
+      "source": "flèche du nord du plan d'implantation",
+      "photo": "P5"
+    },
+    "photos": [
+      {
+        "id": "P1",
+        "description": "Sous-sol, gros plan"
+      },
+      {
+        "id": "P3",
+        "description": "RDC, gros plan"
+      },
+      {
+        "id": "P5",
+        "description": "Implantation"
+      }
+    ],
+    "date": "2026-01-15",
+    "revision": "R0"
+  },
+  "niveaux": [
+    {
+      "id": "SS",
+      "nom": "Sous-sol",
+      "feuille": "A-100",
+      "photos_sources": [
+        "P1",
+        "P7"
+      ],
+      "hauteur_plafond": {
+        "valeur": 84,
+        "source": "LU",
+        "photo": "P1",
+        "note": "7'-0\" écrit en coupe sommaire"
+      },
+      "murs": [
+        {
+          "id": "mur-SS-001",
+          "type": "fondation",
+          "porteur": "oui",
+          "indices_porteur": [
+            "fondation de béton 10\" (P1)"
+          ],
+          "epaisseur": {
+            "valeur": 10,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "x1": 0,
+          "y1": 5,
+          "x2": 456,
+          "y2": 5
+        },
+        {
+          "id": "mur-SS-002",
+          "type": "fondation",
+          "porteur": "oui",
+          "indices_porteur": [
+            "fondation de béton 10\" (P1)"
+          ],
+          "epaisseur": {
+            "valeur": 10,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "x1": 451,
+          "y1": 5,
+          "x2": 451,
+          "y2": 375
+        },
+        {
+          "id": "mur-SS-003",
+          "type": "fondation",
+          "porteur": "oui",
+          "indices_porteur": [
+            "fondation de béton 10\" (P1)"
+          ],
+          "epaisseur": {
+            "valeur": 10,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "x1": 456,
+          "y1": 375,
+          "x2": 0,
+          "y2": 375
+        },
+        {
+          "id": "mur-SS-004",
+          "type": "fondation",
+          "porteur": "oui",
+          "indices_porteur": [
+            "fondation de béton 10\" (P1)"
+          ],
+          "epaisseur": {
+            "valeur": 10,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "x1": 5,
+          "y1": 375,
+          "x2": 5,
+          "y2": 5
+        },
+        {
+          "id": "mur-SS-005",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [
+            "aligné sous le mur RDC mur-RDC-005"
+          ],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "x1": 200,
+          "y1": 10,
+          "x2": 200,
+          "y2": 370
+        },
+        {
+          "id": "mur-SS-006",
+          "type": "fondation",
+          "porteur": "inconnu",
+          "indices_porteur": [
+            "mur du caveau, béton (P1)"
+          ],
+          "epaisseur": {
+            "valeur": 8,
+            "source": "PRÉSUMÉ",
+            "photo": null,
+            "note": "épaisseur non cotée ; béton 8\" usuel"
+          },
+          "x1": 10,
+          "y1": 250,
+          "x2": 197.75,
+          "y2": 250
+        },
+        {
+          "id": "mur-SS-007",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "x1": 300,
+          "y1": 260,
+          "x2": 446,
+          "y2": 260
+        },
+        {
+          "id": "mur-SS-008",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "x1": 300,
+          "y1": 260,
+          "x2": 300,
+          "y2": 370
+        }
+      ],
+      "ouvertures": [
+        {
+          "id": "ouv-SS-001",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-SS-001",
+          "position": {
+            "valeur": 100,
+            "source": "DÉDUIT",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 32,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 18,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "texte_original": "32x18"
+        },
+        {
+          "id": "ouv-SS-002",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-SS-001",
+          "position": {
+            "valeur": 340,
+            "source": "DÉDUIT",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 32,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 18,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "texte_original": "32x18"
+        },
+        {
+          "id": "ouv-SS-003",
+          "type": "fenetre",
+          "operation": "fixe",
+          "mur_id": "mur-SS-004",
+          "position": {
+            "valeur": 225,
+            "source": "ESTIMÉ",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 24,
+            "source": "ESTIMÉ",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 12,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "texte_original": "SOUPIRAIL"
+        },
+        {
+          "id": "ouv-SS-004",
+          "type": "porte",
+          "operation": "battante",
+          "mur_id": "mur-SS-005",
+          "position": {
+            "valeur": 110,
+            "source": "DÉDUIT",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 30,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "debut",
+            "ouvre_vers": "gauche"
+          },
+          "texte_original": "2'-6\"x6'-8\""
+        },
+        {
+          "id": "ouv-SS-005",
+          "type": "arche",
+          "operation": "aucune",
+          "mur_id": "mur-SS-005",
+          "position": {
+            "valeur": 200,
+            "source": "DÉDUIT",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 36,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-SS-006",
+          "type": "porte",
+          "operation": "battante",
+          "mur_id": "mur-SS-006",
+          "position": {
+            "valeur": 150,
+            "source": "DÉDUIT",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 30,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 78,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "fin",
+            "ouvre_vers": "droite"
+          },
+          "texte_original": "2'-6\""
+        },
+        {
+          "id": "ouv-SS-007",
+          "type": "porte",
+          "operation": "double",
+          "mur_id": "mur-SS-008",
+          "position": {
+            "valeur": 60,
+            "source": "DÉDUIT",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 48,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "debut",
+            "ouvre_vers": "droite"
+          },
+          "texte_original": "2-2'-0\""
+        },
+        {
+          "id": "ouv-SS-008",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-SS-003",
+          "position": {
+            "valeur": 76,
+            "source": "DÉDUIT",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 32,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 18,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-SS-009",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-SS-002",
+          "position": {
+            "valeur": 125,
+            "source": "ESTIMÉ",
+            "photo": "P1",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 32,
+            "source": "ESTIMÉ",
+            "photo": "P1"
+          },
+          "hauteur": {
+            "valeur": 18,
+            "source": "LU",
+            "photo": "P1"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        }
+      ],
+      "pieces": [
+        {
+          "id": "piece-SS-FAM",
+          "nom": "Salle familiale",
+          "nom_original": "FAMILY ROOM",
+          "polygone": [
+            [
+              10,
+              10
+            ],
+            [
+              197.75,
+              10
+            ],
+            [
+              197.75,
+              246
+            ],
+            [
+              10,
+              246
+            ]
+          ],
+          "superficie": {
+            "valeur": 307.7,
+            "source": "DÉDUIT",
+            "photo": null,
+            "note": "187.75 × 236 / 144"
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "dimensions": {
+            "x": {
+              "valeur": 187.75,
+              "source": "LU",
+              "photo": "P1"
+            },
+            "y": {
+              "valeur": 236,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          }
+        },
+        {
+          "id": "piece-SS-CAV",
+          "nom": "Caveau à légumes",
+          "nom_original": "VEGETABLE CELLAR",
+          "polygone": [
+            [
+              10,
+              254
+            ],
+            [
+              197.75,
+              254
+            ],
+            [
+              197.75,
+              370
+            ],
+            [
+              10,
+              370
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "piece-SS-ATE",
+          "nom": "Atelier",
+          "nom_original": "WORKSHOP",
+          "polygone": [
+            [
+              202.25,
+              10
+            ],
+            [
+              446,
+              10
+            ],
+            [
+              446,
+              257.75
+            ],
+            [
+              297.75,
+              257.75
+            ],
+            [
+              297.75,
+              370
+            ],
+            [
+              202.25,
+              370
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "piece-SS-MEC",
+          "nom": "Salle mécanique",
+          "nom_original": "FURNACE ROOM",
+          "polygone": [
+            [
+              302.25,
+              262.25
+            ],
+            [
+              446,
+              262.25
+            ],
+            [
+              446,
+              370
+            ],
+            [
+              302.25,
+              370
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        }
+      ],
+      "elements": [
+        {
+          "id": "elem-SS-ESC",
+          "type": "escalier",
+          "nom": "Escalier",
+          "nom_original": "ESCALIER",
+          "position": {
+            "x": 220.25,
+            "y": 310,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 120,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            },
+            "largeur": {
+              "valeur": 36,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          },
+          "escalier": {
+            "nb_contremarches": {
+              "valeur": 14,
+              "source": "LU",
+              "photo": "P1"
+            },
+            "fleche": "MONTE",
+            "direction": "+y",
+            "texte_original": "14 C.M. UP"
+          }
+        },
+        {
+          "id": "elem-SS-FOUR",
+          "type": "fournaise",
+          "nom": "Fournaise",
+          "nom_original": "FURNACE",
+          "position": {
+            "x": 400,
+            "y": 320,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 30,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            },
+            "largeur": {
+              "valeur": 24,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          }
+        },
+        {
+          "id": "elem-SS-CE",
+          "type": "chauffe-eau",
+          "nom": "Chauffe-eau",
+          "nom_original": "HOT WATER TANK",
+          "position": {
+            "x": 335,
+            "y": 345,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 22,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            },
+            "largeur": {
+              "valeur": 22,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          }
+        },
+        {
+          "id": "elem-SS-RES",
+          "type": "reservoir-huile",
+          "nom": "Réservoir à l'huile",
+          "nom_original": "OIL TANK",
+          "position": {
+            "x": 432,
+            "y": 200,
+            "rotation_deg": 90
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 60,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            },
+            "largeur": {
+              "valeur": 27,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          }
+        },
+        {
+          "id": "elem-SS-LAV",
+          "type": "laveuse",
+          "nom": "Laveuse",
+          "nom_original": "LAVEUSE",
+          "position": {
+            "x": 420,
+            "y": 26,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 27,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 27,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-SS-SEC",
+          "type": "secheuse",
+          "nom": "Sécheuse",
+          "nom_original": "SÉCHEUSE",
+          "position": {
+            "x": 390,
+            "y": 26,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 27,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 27,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-SS-BAC",
+          "type": "bac-lavage",
+          "nom": "Bac de lavage",
+          "nom_original": "LAUNDRY TUBS",
+          "position": {
+            "x": 355,
+            "y": 22,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 24,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            },
+            "largeur": {
+              "valeur": 20,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          }
+        },
+        {
+          "id": "elem-SS-PAN",
+          "type": "panneau-electrique",
+          "nom": "Panneau électrique",
+          "nom_original": "PANNEAU ÉLECTRIQUE",
+          "position": {
+            "x": 443,
+            "y": 90,
+            "rotation_deg": 90
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 16,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 4,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-SS-CHE",
+          "type": "cheminee",
+          "nom": "Cheminée",
+          "nom_original": "CHIMNEY",
+          "position": {
+            "x": 22,
+            "y": 130,
+            "rotation_deg": 90
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 30,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            },
+            "largeur": {
+              "valeur": 24,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          }
+        },
+        {
+          "id": "elem-SS-ETA",
+          "type": "autre",
+          "nom": "Établi",
+          "nom_original": "WORK BENCH",
+          "position": {
+            "x": 280,
+            "y": 22,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 72,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            },
+            "largeur": {
+              "valeur": 24,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          }
+        },
+        {
+          "id": "elem-SS-DRA",
+          "type": "drain",
+          "nom": "Drain de plancher",
+          "nom_original": "F.D.",
+          "position": {
+            "x": 330,
+            "y": 150,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 6,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            },
+            "largeur": {
+              "valeur": 6,
+              "source": "ESTIMÉ",
+              "photo": "P1"
+            }
+          }
+        }
+      ],
+      "structure": [
+        {
+          "id": "str-SS-P01",
+          "type": "poutre",
+          "dimension": {
+            "texte_original": "8\"x10\"",
+            "valeur": "8x10",
+            "source": "LU",
+            "photo": "P1"
+          },
+          "sens": "x",
+          "geometrie": {
+            "x1": 10,
+            "y1": 190,
+            "x2": 446,
+            "y2": 190
+          }
+        },
+        {
+          "id": "str-SS-C01",
+          "type": "colonne",
+          "dimension": {
+            "texte_original": "4\" STEEL COL.",
+            "valeur": "4\" Ø",
+            "source": "LU",
+            "photo": "P1"
+          },
+          "sens": null,
+          "geometrie": {
+            "x": 120,
+            "y": 190,
+            "largeur": 4,
+            "profondeur": 4
+          }
+        },
+        {
+          "id": "str-SS-C02",
+          "type": "colonne",
+          "dimension": {
+            "texte_original": "4\" STEEL COL.",
+            "valeur": "4\" Ø",
+            "source": "LU",
+            "photo": "P1"
+          },
+          "sens": null,
+          "geometrie": {
+            "x": 330,
+            "y": 190,
+            "largeur": 4,
+            "profondeur": 4
+          }
+        },
+        {
+          "id": "str-SS-S01",
+          "type": "semelle",
+          "dimension": {
+            "texte_original": "24\"x24\"x10\"",
+            "valeur": "24x24x10",
+            "source": "LU",
+            "photo": "P1"
+          },
+          "sens": null,
+          "geometrie": {
+            "x": 120,
+            "y": 190,
+            "largeur": 24,
+            "profondeur": 24
+          }
+        },
+        {
+          "id": "str-SS-S02",
+          "type": "semelle",
+          "dimension": {
+            "texte_original": "24\"x24\"x10\"",
+            "valeur": "24x24x10",
+            "source": "LU",
+            "photo": "P1"
+          },
+          "sens": null,
+          "geometrie": {
+            "x": 330,
+            "y": 190,
+            "largeur": 24,
+            "profondeur": 24
+          }
+        },
+        {
+          "id": "str-SS-J01",
+          "type": "solives",
+          "dimension": {
+            "texte_original": "2\"x8\" @ 16\" C/C",
+            "valeur": "2x8",
+            "source": "LU",
+            "photo": "P1"
+          },
+          "sens": "y",
+          "geometrie": {
+            "x1": 10,
+            "y1": 10,
+            "x2": 446,
+            "y2": 370,
+            "espacement": {
+              "valeur": 16,
+              "source": "LU",
+              "photo": "P1"
+            }
+          }
+        }
+      ],
+      "cotes": [
+        {
+          "id": "cote-SS-001",
+          "texte_original": "38'-0\"",
+          "valeur": 456,
+          "lecture_1": "38'-0\"",
+          "lecture_2": "38'-0\"",
+          "statut": "confirmee",
+          "photo": "P1",
+          "emplacement": "chaîne avant, hors-tout",
+          "px": [
+            812,
+            2950
+          ],
+          "mesure": "hors-tout façade avant"
+        },
+        {
+          "id": "cote-SS-002",
+          "texte_original": "31'-10\"",
+          "valeur": 382,
+          "lecture_1": "31'-10\"",
+          "lecture_2": "31'-8\"",
+          "statut": "conflit",
+          "photo": "P1",
+          "emplacement": "chaîne droite, hors-tout",
+          "px": [
+            1620,
+            1400
+          ],
+          "mesure": "hors-tout latéral droit"
+        },
+        {
+          "id": "cote-SS-003",
+          "texte_original": "20'-0\"",
+          "valeur": 240,
+          "lecture_1": "20'-0\"",
+          "lecture_2": "20'-0\"",
+          "statut": "confirmee",
+          "photo": "P1",
+          "emplacement": "chaîne avant, 1re ligne",
+          "px": [
+            900,
+            2900
+          ],
+          "mesure": "entre axes des fenêtres ouv-SS-001 et ouv-SS-002"
+        }
+      ],
+      "notes": [
+        {
+          "id": "note-SS-01",
+          "texte_original": "ALL FOOTINGS 20\"x8\"",
+          "interpretation": "Toutes les semelles de fondation : 20 po × 8 po.",
+          "photo": "P1"
+        },
+        {
+          "id": "note-SS-02",
+          "texte_original": "EARTH FLOOR IN CELLAR",
+          "interpretation": "Plancher de terre battue dans le caveau à légumes.",
+          "photo": "P7"
+        }
+      ],
+      "lignes_cote": [
+        {
+          "id": "lc-SS-001",
+          "p1": [
+            0,
+            0
+          ],
+          "p2": [
+            456,
+            0
+          ],
+          "direction": "x",
+          "facade": "avant",
+          "rang": 3,
+          "source": "LU",
+          "statut": "confirmee",
+          "ref": "cote-SS-001",
+          "valeur_attendue": 456,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-002",
+          "p1": [
+            0,
+            0
+          ],
+          "p2": [
+            200,
+            0
+          ],
+          "direction": "x",
+          "facade": "avant",
+          "rang": 2,
+          "source": "LU",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": 200,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-003",
+          "p1": [
+            200,
+            0
+          ],
+          "p2": [
+            456,
+            0
+          ],
+          "direction": "x",
+          "facade": "avant",
+          "rang": 2,
+          "source": "DÉDUIT",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-004",
+          "p1": [
+            0,
+            0
+          ],
+          "p2": [
+            100,
+            0
+          ],
+          "direction": "x",
+          "facade": "avant",
+          "rang": 1,
+          "source": "ESTIMÉ",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-005",
+          "p1": [
+            100,
+            0
+          ],
+          "p2": [
+            340,
+            0
+          ],
+          "direction": "x",
+          "facade": "avant",
+          "rang": 1,
+          "source": "LU",
+          "statut": "confirmee",
+          "ref": "cote-SS-003",
+          "valeur_attendue": 240,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-006",
+          "p1": [
+            340,
+            0
+          ],
+          "p2": [
+            456,
+            0
+          ],
+          "direction": "x",
+          "facade": "avant",
+          "rang": 1,
+          "source": "DÉDUIT",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-007",
+          "p1": [
+            0,
+            0
+          ],
+          "p2": [
+            0,
+            380
+          ],
+          "direction": "y",
+          "facade": "gauche",
+          "rang": 3,
+          "source": "LU",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": 380,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-008",
+          "p1": [
+            0,
+            0
+          ],
+          "p2": [
+            0,
+            250
+          ],
+          "direction": "y",
+          "facade": "gauche",
+          "rang": 2,
+          "source": "PRÉSUMÉ",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-009",
+          "p1": [
+            0,
+            250
+          ],
+          "p2": [
+            0,
+            380
+          ],
+          "direction": "y",
+          "facade": "gauche",
+          "rang": 2,
+          "source": "DÉDUIT",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": 128,
+          "repere": "ecart-002"
+        },
+        {
+          "id": "lc-SS-010",
+          "p1": [
+            456,
+            0
+          ],
+          "p2": [
+            456,
+            380
+          ],
+          "direction": "y",
+          "facade": "droite",
+          "rang": 3,
+          "source": "LU",
+          "statut": "conflit",
+          "ref": "cote-SS-002",
+          "valeur_attendue": 382,
+          "repere": "ecart-001"
+        },
+        {
+          "id": "lc-SS-011",
+          "p1": [
+            456,
+            0
+          ],
+          "p2": [
+            456,
+            260
+          ],
+          "direction": "y",
+          "facade": "droite",
+          "rang": 2,
+          "source": "DÉDUIT",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-012",
+          "p1": [
+            456,
+            260
+          ],
+          "p2": [
+            456,
+            380
+          ],
+          "direction": "y",
+          "facade": "droite",
+          "rang": 2,
+          "source": "DÉDUIT",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-013",
+          "p1": [
+            0,
+            380
+          ],
+          "p2": [
+            456,
+            380
+          ],
+          "direction": "x",
+          "facade": "arriere",
+          "rang": 3,
+          "source": "DÉDUIT",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-014",
+          "p1": [
+            0,
+            380
+          ],
+          "p2": [
+            380,
+            380
+          ],
+          "direction": "x",
+          "facade": "arriere",
+          "rang": 1,
+          "source": "DÉDUIT",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-015",
+          "p1": [
+            380,
+            380
+          ],
+          "p2": [
+            456,
+            380
+          ],
+          "direction": "x",
+          "facade": "arriere",
+          "rang": 1,
+          "source": "ESTIMÉ",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null
+        },
+        {
+          "id": "lc-SS-016",
+          "p1": [
+            10,
+            320
+          ],
+          "p2": [
+            197.75,
+            320
+          ],
+          "direction": "x",
+          "facade": "int",
+          "rang": 1,
+          "source": "ESTIMÉ",
+          "statut": "confirmee",
+          "ref": null,
+          "valeur_attendue": null,
+          "repere": null,
+          "decalage": 0
+        }
+      ]
+    },
+    {
+      "id": "RDC",
+      "nom": "Rez-de-chaussée",
+      "feuille": "A-101",
+      "photos_sources": [
+        "P3",
+        "P4",
+        "P6"
+      ],
+      "hauteur_plafond": {
+        "valeur": 96,
+        "source": "PRÉSUMÉ",
+        "photo": null,
+        "note": "8'-0\" usuel, non coté"
+      },
+      "murs": [
+        {
+          "id": "mur-RDC-001",
+          "type": "ext",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 6,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 0,
+          "y1": 3,
+          "x2": 456,
+          "y2": 3
+        },
+        {
+          "id": "mur-RDC-002",
+          "type": "ext",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 6,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 453,
+          "y1": 0,
+          "x2": 453,
+          "y2": 380
+        },
+        {
+          "id": "mur-RDC-003",
+          "type": "ext",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 6,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 456,
+          "y1": 377,
+          "x2": 0,
+          "y2": 377
+        },
+        {
+          "id": "mur-RDC-004",
+          "type": "ext",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 6,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 3,
+          "y1": 380,
+          "x2": 3,
+          "y2": 0
+        },
+        {
+          "id": "mur-RDC-005",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [
+            "au-dessus de mur-SS-005",
+            "axe porteur d'origine à proximité (P2)"
+          ],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 200,
+          "y1": 6,
+          "x2": 200,
+          "y2": 374
+        },
+        {
+          "id": "mur-RDC-006",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "PRÉSUMÉ",
+            "photo": null,
+            "note": "cloison 2x3 + gypse, usuel"
+          },
+          "x1": 6,
+          "y1": 152.25,
+          "x2": 197.75,
+          "y2": 152.25
+        },
+        {
+          "id": "mur-RDC-007",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "PRÉSUMÉ",
+            "photo": null,
+            "note": "cloison 2x3 + gypse, usuel"
+          },
+          "x1": 6,
+          "y1": 232.25,
+          "x2": 197.75,
+          "y2": 232.25
+        },
+        {
+          "id": "mur-RDC-008",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 202.25,
+          "y1": 202.25,
+          "x2": 450,
+          "y2": 202.25
+        },
+        {
+          "id": "mur-RDC-009",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 260,
+          "y1": 6,
+          "x2": 260,
+          "y2": 72.25
+        },
+        {
+          "id": "mur-RDC-010",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 257.75,
+          "y1": 72.25,
+          "x2": 342.25,
+          "y2": 72.25
+        },
+        {
+          "id": "mur-RDC-011",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 340,
+          "y1": 6,
+          "x2": 340,
+          "y2": 72.25
+        },
+        {
+          "id": "mur-RDC-012",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 6,
+          "y1": 348,
+          "x2": 120,
+          "y2": 348
+        },
+        {
+          "id": "mur-RDC-013",
+          "type": "int",
+          "porteur": "inconnu",
+          "indices_porteur": [],
+          "epaisseur": {
+            "valeur": 4.5,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "x1": 120,
+          "y1": 348,
+          "x2": 120,
+          "y2": 374
+        }
+      ],
+      "ouvertures": [
+        {
+          "id": "ouv-RDC-001",
+          "type": "porte",
+          "operation": "battante",
+          "mur_id": "mur-RDC-001",
+          "position": {
+            "valeur": 300,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 36,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "fin",
+            "ouvre_vers": "gauche"
+          },
+          "texte_original": "3'-0\"x6'-8\""
+        },
+        {
+          "id": "ouv-RDC-002",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-RDC-001",
+          "position": {
+            "valeur": 100,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 36,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 48,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-RDC-003",
+          "type": "fenetre",
+          "operation": "fixe",
+          "mur_id": "mur-RDC-001",
+          "position": {
+            "valeur": 400,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 60,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 54,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "texte_original": "PICTURE WINDOW"
+        },
+        {
+          "id": "ouv-RDC-004",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-RDC-004",
+          "position": {
+            "valeur": 305,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 36,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 48,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-RDC-005",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-RDC-004",
+          "position": {
+            "valeur": 188,
+            "source": "ESTIMÉ",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 24,
+            "source": "ESTIMÉ",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 36,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-RDC-006",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-RDC-004",
+          "position": {
+            "valeur": 90,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 36,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 48,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-RDC-007",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-RDC-002",
+          "position": {
+            "valeur": 60,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 48,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 48,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-RDC-008",
+          "type": "porte",
+          "operation": "double",
+          "mur_id": "mur-RDC-002",
+          "position": {
+            "valeur": 140,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 60,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "debut",
+            "ouvre_vers": "gauche"
+          }
+        },
+        {
+          "id": "ouv-RDC-009",
+          "type": "fenetre",
+          "operation": "coulissante",
+          "mur_id": "mur-RDC-002",
+          "position": {
+            "valeur": 290,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 36,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 42,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-RDC-010",
+          "type": "porte-patio",
+          "operation": "coulissante",
+          "mur_id": "mur-RDC-003",
+          "position": {
+            "valeur": 126,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 60,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "texte_original": "6'-0\" PATIO"
+        },
+        {
+          "id": "ouv-RDC-011",
+          "type": "porte",
+          "operation": "battante",
+          "mur_id": "mur-RDC-005",
+          "position": {
+            "valeur": 114,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 30,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "debut",
+            "ouvre_vers": "gauche"
+          }
+        },
+        {
+          "id": "ouv-RDC-012",
+          "type": "porte",
+          "operation": "battante",
+          "mur_id": "mur-RDC-005",
+          "position": {
+            "valeur": 186,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 28,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "fin",
+            "ouvre_vers": "gauche"
+          }
+        },
+        {
+          "id": "ouv-RDC-013",
+          "type": "porte",
+          "operation": "battante",
+          "mur_id": "mur-RDC-005",
+          "position": {
+            "valeur": 284,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 30,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "debut",
+            "ouvre_vers": "gauche"
+          }
+        },
+        {
+          "id": "ouv-RDC-014",
+          "type": "arche",
+          "operation": "aucune",
+          "mur_id": "mur-RDC-008",
+          "position": {
+            "valeur": 120,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 48,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 84,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "ouv-RDC-015",
+          "type": "porte",
+          "operation": "battante",
+          "mur_id": "mur-RDC-010",
+          "position": {
+            "valeur": 42.25,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 32,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "debut",
+            "ouvre_vers": "gauche"
+          }
+        },
+        {
+          "id": "ouv-RDC-016",
+          "type": "porte",
+          "operation": "pliante",
+          "mur_id": "mur-RDC-012",
+          "position": {
+            "valeur": 57,
+            "source": "DÉDUIT",
+            "photo": "P3",
+            "note": "centre de l'ouverture, depuis (x1,y1)"
+          },
+          "largeur": {
+            "valeur": 48,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "hauteur": {
+            "valeur": 80,
+            "source": "LU",
+            "photo": "P3"
+          },
+          "allege": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "sens": {
+            "charniere": "debut",
+            "ouvre_vers": "droite"
+          }
+        }
+      ],
+      "pieces": [
+        {
+          "id": "piece-RDC-CH1",
+          "nom": "Chambre 1",
+          "nom_original": "BEDROOM",
+          "polygone": [
+            [
+              6,
+              6
+            ],
+            [
+              197.75,
+              6
+            ],
+            [
+              197.75,
+              150
+            ],
+            [
+              6,
+              150
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "piece-RDC-SDB",
+          "nom": "Salle de bain",
+          "nom_original": "BATH",
+          "polygone": [
+            [
+              6,
+              154.5
+            ],
+            [
+              197.75,
+              154.5
+            ],
+            [
+              197.75,
+              230
+            ],
+            [
+              6,
+              230
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "piece-RDC-CH2",
+          "nom": "Chambre 2",
+          "nom_original": "BEDROOM",
+          "polygone": [
+            [
+              6,
+              234.5
+            ],
+            [
+              197.75,
+              234.5
+            ],
+            [
+              197.75,
+              374
+            ],
+            [
+              122.25,
+              374
+            ],
+            [
+              122.25,
+              345.75
+            ],
+            [
+              6,
+              345.75
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "piece-RDC-GR",
+          "nom": "Garde-robe",
+          "nom_original": "CLO.",
+          "polygone": [
+            [
+              6,
+              350.25
+            ],
+            [
+              117.75,
+              350.25
+            ],
+            [
+              117.75,
+              374
+            ],
+            [
+              6,
+              374
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "piece-RDC-VES",
+          "nom": "Vestibule",
+          "nom_original": "VEST.",
+          "polygone": [
+            [
+              262.25,
+              6
+            ],
+            [
+              337.75,
+              6
+            ],
+            [
+              337.75,
+              70
+            ],
+            [
+              262.25,
+              70
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          }
+        },
+        {
+          "id": "piece-RDC-SAL",
+          "nom": "Salon",
+          "nom_original": "LIVING ROOM",
+          "polygone": [
+            [
+              202.25,
+              6
+            ],
+            [
+              257.75,
+              6
+            ],
+            [
+              257.75,
+              74.5
+            ],
+            [
+              342.25,
+              74.5
+            ],
+            [
+              342.25,
+              6
+            ],
+            [
+              450,
+              6
+            ],
+            [
+              450,
+              200
+            ],
+            [
+              202.25,
+              200
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": null,
+            "source": "ILLISIBLE",
+            "photo": null
+          },
+          "dimensions": {
+            "x": {
+              "valeur": 247.75,
+              "source": "DÉDUIT",
+              "photo": "P3",
+              "note": "38'-0\" − murs"
+            },
+            "y": {
+              "valeur": 194,
+              "source": "LU",
+              "photo": "P3"
+            }
+          }
+        },
+        {
+          "id": "piece-RDC-CUI",
+          "nom": "Cuisine / salle à manger",
+          "nom_original": "KITCHEN - DINING",
+          "polygone": [
+            [
+              202.25,
+              204.5
+            ],
+            [
+              450,
+              204.5
+            ],
+            [
+              450,
+              374
+            ],
+            [
+              202.25,
+              374
+            ]
+          ],
+          "superficie": {
+            "valeur": null,
+            "source": "DÉDUIT",
+            "photo": null
+          },
+          "hauteur_plafond": {
+            "valeur": 96,
+            "source": "PRÉSUMÉ",
+            "photo": null
+          }
+        }
+      ],
+      "elements": [
+        {
+          "id": "elem-RDC-ESC",
+          "type": "escalier",
+          "nom": "Escalier",
+          "nom_original": "ESCALIER",
+          "position": {
+            "x": 220.25,
+            "y": 310,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 120,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            },
+            "largeur": {
+              "valeur": 36,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            }
+          },
+          "escalier": {
+            "nb_contremarches": {
+              "valeur": 14,
+              "source": "LU",
+              "photo": "P3"
+            },
+            "fleche": "DESCEND",
+            "direction": "-y",
+            "texte_original": "14 C.M. DN"
+          }
+        },
+        {
+          "id": "elem-RDC-BAI",
+          "type": "baignoire",
+          "nom": "Baignoire",
+          "nom_original": "BAIGNOIRE",
+          "position": {
+            "x": 21,
+            "y": 192,
+            "rotation_deg": 270
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 60,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 30,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-TOI",
+          "type": "toilette",
+          "nom": "Toilette",
+          "nom_original": "TOILETTE",
+          "position": {
+            "x": 65,
+            "y": 216,
+            "rotation_deg": 180
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 20,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 28,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-LAB",
+          "type": "lavabo",
+          "nom": "Lavabo",
+          "nom_original": "LAVABO",
+          "position": {
+            "x": 110,
+            "y": 221,
+            "rotation_deg": 180
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 20,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 18,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-CHE",
+          "type": "cheminee",
+          "nom": "Cheminée",
+          "nom_original": "CHEMINÉE",
+          "position": {
+            "x": 18,
+            "y": 130,
+            "rotation_deg": 90
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 30,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            },
+            "largeur": {
+              "valeur": 24,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-TRA",
+          "type": "trappe",
+          "nom": "Trappe d'accès à l'entretoit",
+          "nom_original": "TRAPPE D'ACCÈS À L'ENTRETOIT",
+          "position": {
+            "x": 150,
+            "y": 100,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 22,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 30,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-COM",
+          "type": "comptoir",
+          "nom": "Comptoir",
+          "nom_original": "COMPTOIR",
+          "position": {
+            "x": 437.5,
+            "y": 275,
+            "rotation_deg": 90
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 90,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            },
+            "largeur": {
+              "valeur": 25,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-EVI",
+          "type": "evier",
+          "nom": "Évier double",
+          "nom_original": "ÉVIER DOUBLE",
+          "position": {
+            "x": 437.5,
+            "y": 280,
+            "rotation_deg": 90
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 32,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            },
+            "largeur": {
+              "valeur": 20,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-CUIS",
+          "type": "cuisiniere",
+          "nom": "Cuisinière",
+          "nom_original": "CUISINIÈRE",
+          "position": {
+            "x": 390,
+            "y": 218,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 30,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 26,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-REF",
+          "type": "refrigerateur",
+          "nom": "Réfrigérateur",
+          "nom_original": "RÉFRIGÉRATEUR",
+          "position": {
+            "x": 435,
+            "y": 357,
+            "rotation_deg": 180
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 30,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            },
+            "largeur": {
+              "valeur": 30,
+              "source": "PRÉSUMÉ",
+              "photo": null
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-ARM",
+          "type": "armoires",
+          "nom": "Armoires",
+          "nom_original": "ARMOIRES",
+          "position": {
+            "x": 268,
+            "y": 362,
+            "rotation_deg": 180
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 48,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            },
+            "largeur": {
+              "valeur": 24,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-PER",
+          "type": "perron",
+          "nom": "Perron de béton",
+          "nom_original": "CONC. STOOP",
+          "position": {
+            "x": 300,
+            "y": -36,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 96,
+              "source": "LU",
+              "photo": "P3"
+            },
+            "largeur": {
+              "valeur": 72,
+              "source": "LU",
+              "photo": "P3"
+            }
+          }
+        },
+        {
+          "id": "elem-RDC-MAR",
+          "type": "marches-ext",
+          "nom": "Marches",
+          "nom_original": "MARCHES",
+          "position": {
+            "x": 300,
+            "y": -84,
+            "rotation_deg": 0
+          },
+          "dimensions": {
+            "longueur": {
+              "valeur": 72,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            },
+            "largeur": {
+              "valeur": 24,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            }
+          },
+          "escalier": {
+            "nb_contremarches": {
+              "valeur": 3,
+              "source": "ESTIMÉ",
+              "photo": "P3"
+            },
+            "fleche": "MONTE",
+            "direction": "+y"
+          }
+        }
+      ],
+      "structure": [
+        {
+          "id": "str-RDC-A01",
+          "type": "axe",
+          "dimension": {
+            "texte_original": "AXE PORTEUR D'ORIGINE",
+            "valeur": null,
+            "source": "LU",
+            "photo": "P2"
+          },
+          "sens": "x",
+          "geometrie": {
+            "x1": 6,
+            "y1": 190,
+            "x2": 450,
+            "y2": 190
+          },
+          "note": "axe signalé par l'ingénieur (P2)"
+        },
+        {
+          "id": "str-RDC-J01",
+          "type": "solives",
+          "dimension": {
+            "texte_original": "2x6 @ 16\"",
+            "valeur": "2x6",
+            "source": "ESTIMÉ",
+            "photo": "P2"
+          },
+          "sens": "y",
+          "geometrie": {
+            "x1": 202.25,
+            "y1": 6,
+            "x2": 450,
+            "y2": 374,
+            "espacement": 16
+          }
+        }
+      ],
+      "cotes": [
+        {
+          "id": "cote-RDC-001",
+          "texte_original": "38'-0\"",
+          "valeur": 456,
+          "lecture_1": "38'-0\"",
+          "lecture_2": "38'-0\"",
+          "statut": "confirmee",
+          "photo": "P3",
+          "emplacement": "chaîne avant, hors-tout",
+          "px": [
+            800,
+            2900
+          ],
+          "mesure": "hors-tout"
+        }
+      ],
+      "notes": [
+        {
+          "id": "note-RDC-01",
+          "texte_original": "TRUSS 5/12",
+          "interpretation": "Fermes de toit, pente 5/12 (croquis 2016).",
+          "photo": "P2"
+        }
+      ]
+    }
+  ],
+  "ecarts": [
+    {
+      "id": "ecart-001",
+      "niveau": "SS",
+      "description": "Hors-tout latéral droit : 31'-10\" lu sur P1, 31'-8\" sur P7.",
+      "impact": "moyen",
+      "hypothese_retenue": "31'-8\" (cohérent avec le côté gauche)",
+      "a_valider_sur_place": "Mesurer le mur latéral droit de la fondation, extérieur.",
+      "photo": "P1",
+      "statut": "ouvert",
+      "position": [
+        451,
+        300
+      ]
+    },
+    {
+      "id": "ecart-002",
+      "niveau": "SS",
+      "description": "Position du mur du caveau non cotée ; déduite par différence.",
+      "impact": "faible",
+      "hypothese_retenue": "axe à 20'-10\" de la façade avant",
+      "a_valider_sur_place": "Mesurer de la façade avant au mur du caveau.",
+      "photo": "P1",
+      "statut": "ouvert"
+    },
+    {
+      "id": "ecart-003",
+      "niveau": "RDC",
+      "description": "Colonnes d'origine retirées selon le croquis 2016 ; appui de l'axe porteur inconnu.",
+      "impact": "critique",
+      "hypothese_retenue": "aucune (à vérifier)",
+      "a_valider_sur_place": "Ouvrir le plafond le long de l'axe et vérifier l'appui.",
+      "photo": "P2",
+      "statut": "ouvert",
+      "position": [
+        200,
+        190
+      ]
+    }
+  ]
+}
