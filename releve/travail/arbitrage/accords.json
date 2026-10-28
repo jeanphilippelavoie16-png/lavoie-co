@@ -1,0 +1,2723 @@
+[
+ {
+  "id": "cote-SS-001",
+  "feuille": "SS",
+  "texte_original": "38'-0\"",
+  "valeur": 456,
+  "lecture_1": "38'-0\"",
+  "lecture_2": "38'-0\"",
+  "photo": "P1",
+  "px": [
+   1311,
+   122
+  ],
+  "emplacement": "chaîne arrière (haut), rang 3 (hors-tout), ligne la plus éloignée du mur",
+  "mesure": "hors-tout x de la fondation principale, nu ext. mur gauche (mur-SS-004) au nu ext. mur droit (mur-SS-002)",
+  "ref_lecture_1": [
+   "cote-SS-001"
+  ],
+  "n_lecture_2": 1,
+  "mesure_lecture_2": "nu ext. mur gauche → nu ext. mur droit (largeur totale)",
+  "distance_px": 15.0
+ },
+ {
+  "id": "cote-SS-002",
+  "feuille": "SS",
+  "texte_original": "18'-3\"",
+  "valeur": 219,
+  "lecture_1": "18'-3\"",
+  "lecture_2": "18'-3\"",
+  "photo": "P1",
+  "px": [
+   915,
+   150
+  ],
+  "emplacement": "chaîne arrière, rang 2, 1er segment depuis la gauche",
+  "mesure": "du nu ext. du mur gauche (mur-SS-004) au nu ext. du mur gauche du caveau à légumes (mur-SS-005)",
+  "ref_lecture_1": [
+   "cote-SS-002"
+  ],
+  "n_lecture_2": 2,
+  "mesure_lecture_2": "nu ext. mur gauche → nu ext. mur gauche du caveau à légumes",
+  "distance_px": 2.0
+ },
+ {
+  "id": "cote-SS-003",
+  "feuille": "SS",
+  "texte_original": "9'-0\"",
+  "valeur": 108,
+  "lecture_1": "9'-0\"",
+  "lecture_2": "9'-0\"",
+  "photo": "P1",
+  "px": [
+   1361,
+   140
+  ],
+  "emplacement": "chaîne arrière, rang 2, 2e segment (devant le caveau)",
+  "mesure": "largeur hors-tout du caveau à légumes : nu ext. mur-SS-005 au nu ext. mur-SS-007",
+  "ref_lecture_1": [
+   "cote-SS-003"
+  ],
+  "n_lecture_2": 3,
+  "mesure_lecture_2": "nu ext. → nu ext. des murs latéraux du caveau à légumes",
+  "distance_px": 0.0
+ },
+ {
+  "id": "cote-SS-007",
+  "feuille": "SS",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10\"",
+  "photo": "P1",
+  "px": [
+   1517,
+   248
+  ],
+  "emplacement": "caveau à légumes, mur droit, cote horizontale entre deux points",
+  "mesure": "épaisseur du mur droit du caveau (mur-SS-007)",
+  "ref_lecture_1": [
+   "cote-SS-007"
+  ],
+  "n_lecture_2": 8,
+  "mesure_lecture_2": "épaisseur du mur de fondation du caveau",
+  "distance_px": 3.2
+ },
+ {
+  "id": "cote-SS-008",
+  "feuille": "SS",
+  "texte_original": "22\"",
+  "valeur": 22,
+  "lecture_1": "22\"",
+  "lecture_2": "22\"",
+  "photo": "P1",
+  "px": [
+   1567,
+   217
+  ],
+  "emplacement": "caveau à légumes, côté droit, cote horizontale sur les tiretés de semelle",
+  "mesure": "largeur de la semelle sous le mur droit du caveau (tireté int. au tireté ext.)",
+  "ref_lecture_1": [
+   "cote-SS-008"
+  ],
+  "n_lecture_2": 7,
+  "mesure_lecture_2": "largeur de la semelle du mur du caveau",
+  "distance_px": 3.0
+ },
+ {
+  "id": "cote-SS-009",
+  "feuille": "SS",
+  "texte_original": "5'-0\"",
+  "valeur": 60,
+  "lecture_1": "5'-0\"",
+  "lecture_2": "5'-0\"",
+  "photo": "P1",
+  "px": [
+   1587,
+   267
+  ],
+  "emplacement": "cote verticale à droite du caveau, entre le nu ext. du mur arrière principal et la ligne d'attache du dos du caveau",
+  "mesure": "saillie du caveau : du nu ext. du mur arrière (mur-SS-003) au nu ext. du mur du fond du caveau (mur-SS-006)",
+  "ref_lecture_1": [
+   "cote-SS-009"
+  ],
+  "n_lecture_2": 9,
+  "mesure_lecture_2": "profondeur (saillie) du caveau depuis le mur arrière (nu ext.)",
+  "distance_px": 5.8
+ },
+ {
+  "id": "cote-SS-011",
+  "feuille": "SS",
+  "texte_original": "31'-8\"",
+  "valeur": 380,
+  "lecture_1": "31'-8\"",
+  "lecture_2": "31'-8\"",
+  "photo": "P1",
+  "px": [
+   272,
+   950
+  ],
+  "emplacement": "chaîne gauche, rang 3 (hors-tout)",
+  "mesure": "hors-tout y de la fondation principale, nu ext. mur avant (mur-SS-001) au nu ext. mur arrière (mur-SS-003)",
+  "ref_lecture_1": [
+   "cote-SS-011"
+  ],
+  "n_lecture_2": 13,
+  "mesure_lecture_2": "nu ext. mur arrière → nu ext. mur avant (profondeur totale)",
+  "distance_px": 5.0
+ },
+ {
+  "id": "cote-SS-012",
+  "feuille": "SS",
+  "texte_original": "16'-8\"",
+  "valeur": 200,
+  "lecture_1": "16'-8\"",
+  "lecture_2": "16'-8\"",
+  "photo": "P1",
+  "px": [
+   417,
+   675
+  ],
+  "emplacement": "chaîne gauche, rang 2, 1er segment depuis l'arrière",
+  "mesure": "du nu ext. du mur arrière (mur-SS-003) à l'axe de la fenêtre gauche haute ouv-SS-006",
+  "ref_lecture_1": [
+   "cote-SS-012"
+  ],
+  "n_lecture_2": 14,
+  "mesure_lecture_2": "nu ext. mur arrière → axe fenêtre gauche supérieure",
+  "distance_px": 7.1
+ },
+ {
+  "id": "cote-SS-013",
+  "feuille": "SS",
+  "texte_original": "4'-0\"",
+  "valeur": 48,
+  "lecture_1": "4'-0\"",
+  "lecture_2": "4'-0\"",
+  "photo": "P1",
+  "px": [
+   392,
+   1030
+  ],
+  "emplacement": "chaîne gauche, rang 2, 2e segment depuis l'arrière",
+  "mesure": "de l'axe de la fenêtre ouv-SS-006 à la face avant (côté rue) du massif de cheminée (mur-SS-011)",
+  "ref_lecture_1": [
+   "cote-SS-013"
+  ],
+  "n_lecture_2": 15,
+  "mesure_lecture_2": "axe fenêtre gauche supérieure → repère au bas (côté avant) de la cheminée",
+  "distance_px": 5.0
+ },
+ {
+  "id": "cote-SS-015",
+  "feuille": "SS",
+  "texte_original": "4'-0\"",
+  "valeur": 48,
+  "lecture_1": "4'-0\"",
+  "lecture_2": "4'-0\"",
+  "photo": "P1",
+  "px": [
+   370,
+   1457
+  ],
+  "emplacement": "chaîne gauche, rang 2, dernier segment (côté rue)",
+  "mesure": "de l'axe de la fenêtre ouv-SS-007 au nu ext. du mur avant (mur-SS-001)",
+  "ref_lecture_1": [
+   "cote-SS-015"
+  ],
+  "n_lecture_2": 17,
+  "mesure_lecture_2": "axe fenêtre gauche inférieure → nu ext. mur avant",
+  "distance_px": 1.0
+ },
+ {
+  "id": "cote-SS-018",
+  "feuille": "SS",
+  "texte_original": "22\"",
+  "valeur": 22,
+  "lecture_1": "22\"",
+  "lecture_2": "22\"",
+  "photo": "P1",
+  "px": [
+   605,
+   642
+  ],
+  "emplacement": "mur gauche, côté intérieur, cote horizontale entre les tiretés de semelle",
+  "mesure": "largeur de la semelle du mur de fondation gauche (tireté ext. au tireté int.)",
+  "ref_lecture_1": [
+   "cote-SS-018"
+  ],
+  "n_lecture_2": 20,
+  "mesure_lecture_2": "largeur de la semelle",
+  "distance_px": 2.0
+ },
+ {
+  "id": "cote-SS-019",
+  "feuille": "SS",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10\"",
+  "photo": "P1",
+  "px": [
+   605,
+   686
+  ],
+  "emplacement": "mur gauche, côté intérieur, juste sous la cote 22\"",
+  "mesure": "épaisseur du mur de fondation gauche (mur-SS-004)",
+  "ref_lecture_1": [
+   "cote-SS-019"
+  ],
+  "n_lecture_2": 21,
+  "mesure_lecture_2": "épaisseur du mur de fondation",
+  "distance_px": 2.8
+ },
+ {
+  "id": "cote-SS-020",
+  "feuille": "SS",
+  "texte_original": "31'-8\"",
+  "valeur": 380,
+  "lecture_1": "31'-8\"",
+  "lecture_2": "31'-8\"",
+  "photo": "P1",
+  "px": [
+   2172,
+   975
+  ],
+  "emplacement": "chaîne droite, rang 3 (hors-tout)",
+  "mesure": "hors-tout y, nu ext. mur avant au nu ext. mur arrière, côté droit",
+  "ref_lecture_1": [
+   "cote-SS-020"
+  ],
+  "n_lecture_2": 42,
+  "mesure_lecture_2": "nu ext. mur arrière → nu ext. mur avant",
+  "distance_px": 20.0
+ },
+ {
+  "id": "cote-SS-021",
+  "feuille": "SS",
+  "texte_original": "6'-0\"",
+  "valeur": 72,
+  "lecture_1": "6'-0\"",
+  "lecture_2": "6'-0\"",
+  "photo": "P1",
+  "px": [
+   2005,
+   465
+  ],
+  "emplacement": "chaîne droite, rang 2, 1er segment depuis l'arrière",
+  "mesure": "du nu ext. du mur arrière (mur-SS-003) à l'axe (meneau) de la fenêtre droite haute ouv-SS-003",
+  "ref_lecture_1": [
+   "cote-SS-021"
+  ],
+  "n_lecture_2": 43,
+  "mesure_lecture_2": "nu ext. mur arrière → axe fenêtre droite supérieure",
+  "distance_px": 10.4
+ },
+ {
+  "id": "cote-SS-022",
+  "feuille": "SS",
+  "texte_original": "10'-8\"",
+  "valeur": 128,
+  "lecture_1": "10'-8\"",
+  "lecture_2": "10'-8\"",
+  "photo": "P1",
+  "px": [
+   2022,
+   765
+  ],
+  "emplacement": "chaîne droite, rang 2, 2e segment",
+  "mesure": "de l'axe de la fenêtre ouv-SS-003 à l'axe de la fenêtre droite basse ouv-SS-004",
+  "ref_lecture_1": [
+   "cote-SS-022"
+  ],
+  "n_lecture_2": 44,
+  "mesure_lecture_2": "axe fenêtre droite sup. → axe fenêtre droite médiane (3'-0\")",
+  "distance_px": 4.2
+ },
+ {
+  "id": "cote-SS-026",
+  "feuille": "SS",
+  "texte_original": "3'-0\"",
+  "valeur": 36,
+  "lecture_1": "3'-0\"",
+  "lecture_2": "3'-0\"",
+  "photo": "P1",
+  "px": [
+   1952,
+   975
+  ],
+  "emplacement": "chaîne droite, rang 1, fenêtre basse",
+  "mesure": "largeur de la fenêtre droite basse ouv-SS-004",
+  "ref_lecture_1": [
+   "cote-SS-026"
+  ],
+  "n_lecture_2": 48,
+  "mesure_lecture_2": "largeur de la fenêtre",
+  "distance_px": 10.2
+ },
+ {
+  "id": "cote-SS-027",
+  "feuille": "SS",
+  "texte_original": "13'-6\"",
+  "valeur": 162,
+  "lecture_1": "13'-6\"",
+  "lecture_2": "13'-6\"",
+  "photo": "P1",
+  "px": [
+   727,
+   1757
+  ],
+  "emplacement": "chaîne avant (bas), rang 3, 1er segment depuis la gauche",
+  "mesure": "du nu ext. du mur gauche au nu ext. du mur gauche de l'excroissance sous le perron (mur-SS-008)",
+  "ref_lecture_1": [
+   "cote-SS-027"
+  ],
+  "n_lecture_2": 51,
+  "mesure_lecture_2": "nu ext. mur gauche → nu ext. gauche de l'excroissance du perron",
+  "distance_px": 1.4
+ },
+ {
+  "id": "cote-SS-028",
+  "feuille": "SS",
+  "texte_original": "6'-0\"",
+  "valeur": 72,
+  "lecture_1": "6'-0\"",
+  "lecture_2": "6'-0\"",
+  "photo": "P1",
+  "px": [
+   1117,
+   1762
+  ],
+  "emplacement": "chaîne avant, rang 3, 2e segment",
+  "mesure": "largeur hors-tout de l'excroissance de fondation sous le perron (mur-SS-008 à mur-SS-010)",
+  "ref_lecture_1": [
+   "cote-SS-028"
+  ],
+  "n_lecture_2": 52,
+  "mesure_lecture_2": "largeur hors-tout de l'excroissance de fondation sous le perron",
+  "distance_px": 1.4
+ },
+ {
+  "id": "cote-SS-029",
+  "feuille": "SS",
+  "texte_original": "12'-4\"",
+  "valeur": 148,
+  "lecture_1": "12'-4\"",
+  "lecture_2": "12'-4\"",
+  "photo": "P1",
+  "px": [
+   1477,
+   1765
+  ],
+  "emplacement": "chaîne avant, rang 3, 3e segment",
+  "mesure": "du nu ext. du mur droit du perron (mur-SS-010) à l'axe (meneau) de la fenêtre avant ouv-SS-002",
+  "ref_lecture_1": [
+   "cote-SS-029"
+  ],
+  "n_lecture_2": 53,
+  "mesure_lecture_2": "nu ext. droit du perron → axe fenêtre avant",
+  "distance_px": 4.5
+ },
+ {
+  "id": "cote-SS-030",
+  "feuille": "SS",
+  "texte_original": "6'-2\"",
+  "valeur": 74,
+  "lecture_1": "6'-2\"",
+  "lecture_2": "6'-2\"",
+  "photo": "P1",
+  "px": [
+   1842,
+   1760
+  ],
+  "emplacement": "chaîne avant, rang 3, 4e segment",
+  "mesure": "de l'axe de la fenêtre avant ouv-SS-002 au nu ext. du mur droit (mur-SS-002)",
+  "ref_lecture_1": [
+   "cote-SS-030"
+  ],
+  "n_lecture_2": 54,
+  "mesure_lecture_2": "axe fenêtre avant → nu ext. mur droit",
+  "distance_px": 2.0
+ },
+ {
+  "id": "cote-SS-031",
+  "feuille": "SS",
+  "texte_original": "6'-2\"",
+  "valeur": 74,
+  "lecture_1": "6'-2\"",
+  "lecture_2": "6'-2\"",
+  "photo": "P1",
+  "px": [
+   1840,
+   1650
+  ],
+  "emplacement": "chaîne avant, rang 2 (isolée)",
+  "mesure": "de l'axe de la fenêtre avant ouv-SS-002 au nu ext. du mur droit — doublon de cote-SS-030",
+  "ref_lecture_1": [
+   "cote-SS-031"
+  ],
+  "n_lecture_2": 55,
+  "mesure_lecture_2": "axe fenêtre avant → nu ext. mur droit",
+  "distance_px": 6.0
+ },
+ {
+  "id": "cote-SS-032",
+  "feuille": "SS",
+  "texte_original": "6'-3\"",
+  "valeur": 75,
+  "lecture_1": "6'-3\"",
+  "lecture_2": "6'-3\"",
+  "photo": "P1",
+  "px": [
+   1715,
+   1572
+  ],
+  "emplacement": "chaîne avant, rang 1, sous la fenêtre avant",
+  "mesure": "largeur de la fenêtre avant ouv-SS-002",
+  "ref_lecture_1": [
+   "cote-SS-032"
+  ],
+  "n_lecture_2": 56,
+  "mesure_lecture_2": "largeur de la fenêtre (baie double)",
+  "distance_px": 11.0
+ },
+ {
+  "id": "cote-SS-033",
+  "feuille": "SS",
+  "texte_original": "4'-0\"",
+  "valeur": 48,
+  "lecture_1": "4'-0\"",
+  "lecture_2": "4'-0\"",
+  "photo": "P1",
+  "px": [
+   1302,
+   1625
+  ],
+  "emplacement": "cote verticale à droite de l'excroissance du perron",
+  "mesure": "saillie de l'excroissance sous le perron : nu ext. mur avant (mur-SS-001) au nu ext. du mur avant du perron (mur-SS-009)",
+  "ref_lecture_1": [
+   "cote-SS-033"
+  ],
+  "n_lecture_2": 57,
+  "mesure_lecture_2": "saillie de l'excroissance de fondation devant le mur avant (nu ext. → nu ext.)",
+  "distance_px": 4.1
+ },
+ {
+  "id": "cote-SS-034",
+  "feuille": "SS",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10",
+  "photo": "P1",
+  "px": [
+   1312,
+   1520
+  ],
+  "emplacement": "mur avant, cote verticale entre deux points, dans l'axe de la chaîne intérieure",
+  "mesure": "épaisseur du mur de fondation avant (mur-SS-001)",
+  "ref_lecture_1": [
+   "cote-SS-034"
+  ],
+  "n_lecture_2": 34,
+  "mesure_lecture_2": "épaisseur du mur avant",
+  "distance_px": 4.1
+ },
+ {
+  "id": "cote-SS-035",
+  "feuille": "SS",
+  "texte_original": "18\"",
+  "valeur": 18,
+  "lecture_1": "18\"",
+  "lecture_2": "18\"",
+  "photo": "P1",
+  "px": [
+   1090,
+   1576
+  ],
+  "emplacement": "excroissance du perron, cote horizontale dans le coin arrière-gauche",
+  "mesure": "largeur de la semelle sous le mur gauche du perron (tireté ext. au tireté int.)",
+  "ref_lecture_1": [
+   "cote-SS-035"
+  ],
+  "n_lecture_2": 58,
+  "mesure_lecture_2": "largeur de la semelle du mur du perron",
+  "distance_px": 4.0
+ },
+ {
+  "id": "cote-SS-037",
+  "feuille": "SS",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10",
+  "photo": "P1",
+  "px": [
+   540,
+   812
+  ],
+  "emplacement": "chaîne intérieure horizontale au-dessus de la poutre arrière, 1er segment (mur gauche)",
+  "mesure": "épaisseur du mur gauche (mur-SS-004)",
+  "ref_lecture_1": [
+   "cote-SS-037"
+  ],
+  "n_lecture_2": 22,
+  "mesure_lecture_2": "épaisseur du mur gauche (nu ext. → nu int.)",
+  "distance_px": 2.0
+ },
+ {
+  "id": "cote-SS-039",
+  "feuille": "SS",
+  "texte_original": "8\"",
+  "valeur": 8,
+  "lecture_1": "8\"",
+  "lecture_2": "8\"",
+  "photo": "P1",
+  "px": [
+   935,
+   807
+  ],
+  "emplacement": "chaîne intérieure horizontale, 3e segment",
+  "mesure": "largeur de la colonne str-SS-C01",
+  "ref_lecture_1": [
+   "cote-SS-039"
+  ],
+  "n_lecture_2": 24,
+  "mesure_lecture_2": "largeur de la colonne 1",
+  "distance_px": 2.2
+ },
+ {
+  "id": "cote-SS-040",
+  "feuille": "SS",
+  "texte_original": "7'-4\"",
+  "valeur": 88,
+  "lecture_1": "7'-4\"",
+  "lecture_2": "7'-4\"",
+  "photo": "P1",
+  "px": [
+   1080,
+   810
+  ],
+  "emplacement": "chaîne intérieure horizontale, 4e segment",
+  "mesure": "de la face droite de str-SS-C01 à la face gauche de str-SS-C02 (entre-colonnes)",
+  "ref_lecture_1": [
+   "cote-SS-040"
+  ],
+  "n_lecture_2": 25,
+  "mesure_lecture_2": "entre colonne 1 et colonne 2 (faces)",
+  "distance_px": 6.3
+ },
+ {
+  "id": "cote-SS-041",
+  "feuille": "SS",
+  "texte_original": "8\"",
+  "valeur": 8,
+  "lecture_1": "8\"",
+  "lecture_2": "8\"",
+  "photo": "P1",
+  "px": [
+   1225,
+   812
+  ],
+  "emplacement": "chaîne intérieure horizontale, 5e segment (sur le pli du papier)",
+  "mesure": "largeur de la colonne str-SS-C02",
+  "ref_lecture_1": [
+   "cote-SS-041"
+  ],
+  "n_lecture_2": 26,
+  "mesure_lecture_2": "largeur de la colonne 2",
+  "distance_px": 8.0
+ },
+ {
+  "id": "cote-SS-042",
+  "feuille": "SS",
+  "texte_original": "7'-4\"",
+  "valeur": 88,
+  "lecture_1": "7'-4\"",
+  "lecture_2": "7'-4\"",
+  "photo": "P1",
+  "px": [
+   1307,
+   804
+  ],
+  "emplacement": "chaîne intérieure horizontale, 6e segment",
+  "mesure": "de la face droite de str-SS-C02 à la face gauche de str-SS-C03",
+  "ref_lecture_1": [
+   "cote-SS-042"
+  ],
+  "n_lecture_2": 27,
+  "mesure_lecture_2": "entre colonne 2 et colonne 3 (faces)",
+  "distance_px": 5.1
+ },
+ {
+  "id": "cote-SS-043",
+  "feuille": "SS",
+  "texte_original": "8\"",
+  "valeur": 8,
+  "lecture_1": "8\"",
+  "lecture_2": "8\"",
+  "photo": "P1",
+  "px": [
+   1517,
+   805
+  ],
+  "emplacement": "chaîne intérieure horizontale, 7e segment",
+  "mesure": "largeur de la colonne str-SS-C03",
+  "ref_lecture_1": [
+   "cote-SS-043"
+  ],
+  "n_lecture_2": 28,
+  "mesure_lecture_2": "largeur de la colonne 3",
+  "distance_px": 1.0
+ },
+ {
+  "id": "cote-SS-045",
+  "feuille": "SS",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10",
+  "photo": "P1",
+  "px": [
+   1907,
+   810
+  ],
+  "emplacement": "chaîne intérieure horizontale, dernier segment (mur droit)",
+  "mesure": "épaisseur du mur droit (mur-SS-002)",
+  "ref_lecture_1": [
+   "cote-SS-045"
+  ],
+  "n_lecture_2": 30,
+  "mesure_lecture_2": "épaisseur du mur droit",
+  "distance_px": 4.5
+ },
+ {
+  "id": "cote-SS-047",
+  "feuille": "SS",
+  "texte_original": "3'-11\"",
+  "valeur": 47,
+  "lecture_1": "3'-11\"",
+  "lecture_2": "3'-11\"",
+  "photo": "P1",
+  "px": [
+   1312,
+   952
+  ],
+  "emplacement": "chaîne intérieure verticale, 2e segment",
+  "mesure": "entre les axes des deux poutres str-SS-P01 et str-SS-P02",
+  "ref_lecture_1": [
+   "cote-SS-047"
+  ],
+  "n_lecture_2": 32,
+  "mesure_lecture_2": "axe poutre arrière → axe poutre avant (entre les deux POUTRES 8\"x10\")",
+  "distance_px": 6.1
+ },
+ {
+  "id": "cote-SS-048",
+  "feuille": "SS",
+  "texte_original": "12'-3\"",
+  "valeur": 147,
+  "lecture_1": "12'-3\"",
+  "lecture_2": "12'-3\"",
+  "photo": "P1",
+  "px": [
+   1316,
+   1300
+  ],
+  "emplacement": "chaîne intérieure verticale, 3e segment",
+  "mesure": "de l'axe de la poutre avant str-SS-P02 au nu int. du mur avant (mur-SS-001)",
+  "ref_lecture_1": [
+   "cote-SS-048"
+  ],
+  "n_lecture_2": 33,
+  "mesure_lecture_2": "axe poutre avant → nu int. mur avant",
+  "distance_px": 37.0
+ },
+ {
+  "id": "cote-SS-049",
+  "feuille": "SS",
+  "texte_original": "PORTE 2'-6\"",
+  "valeur": 30,
+  "lecture_1": "PORTE 2'-6\"",
+  "lecture_2": "PORTE 2'-6\"",
+  "photo": "P1",
+  "px": [
+   1408,
+   380
+  ],
+  "emplacement": "étiquette de la porte du mur arrière vers le caveau",
+  "mesure": "largeur de la porte ouv-SS-008",
+  "ref_lecture_1": [
+   "cote-SS-049"
+  ],
+  "n_lecture_2": 11,
+  "mesure_lecture_2": "largeur de la porte du caveau",
+  "distance_px": 12.0
+ },
+ {
+  "id": "cote-SS-050",
+  "feuille": "SS",
+  "texte_original": "PORTE 2'-8\"",
+  "valeur": 32,
+  "lecture_1": "PORTE 2'-8\"",
+  "lecture_2": "PORTE 2'-8\"",
+  "photo": "P1",
+  "px": [
+   1795,
+   1281
+  ],
+  "emplacement": "étiquette de la porte du mur droit",
+  "mesure": "largeur de la porte ouv-SS-005",
+  "ref_lecture_1": [
+   "cote-SS-050"
+  ],
+  "n_lecture_2": 49,
+  "mesure_lecture_2": "largeur de la porte",
+  "distance_px": 30.0
+ },
+ {
+  "id": "cote-SS-051",
+  "feuille": "SS",
+  "texte_original": "SOLIVES 2\"x10\" @ 20\" c/c",
+  "valeur": "SOLIVES:2x10@20",
+  "lecture_1": "SOLIVES 2\"x10\" @ 20\" c/c",
+  "lecture_2": "SOLIVES 2\"x10\" @ 20\" c/c",
+  "photo": "P1",
+  "px": [
+   1207,
+   657
+  ],
+  "emplacement": "note des solives, ligne 2",
+  "mesure": "entraxe des solives 2\"x10\" (str-SS-S01) — étiquette str-SS-S01",
+  "ref_lecture_1": [
+   "cote-SS-051",
+   "str-SS-S01"
+  ],
+  "n_lecture_2": 38,
+  "mesure_lecture_2": "solives 2\"x10\" espacées de 20\" c/c (valeur = espacement)",
+  "distance_px": 40.7
+ },
+ {
+  "id": "cote-SS-053",
+  "feuille": "SS",
+  "texte_original": "POUTRE 8\"x10\"",
+  "valeur": "POUTRE:8x10",
+  "lecture_1": "POUTRE 8\"x10\"",
+  "lecture_2": "POUTRE 8\"x10\"",
+  "photo": "P1",
+  "px": [
+   1087,
+   867
+  ],
+  "emplacement": "Poutre arrière ; axe y=204 DÉDUIT (10 + 12'-3\" + 3'-11\" = 370 − 13'-10\"). Trait unique d'un mur à l'autre ; appuis dans les murs non détaillés. Repose sur str-SS-C01 à C03. Matériau non écrit (« COL. BOIS » pour les colonnes seulement).",
+  "mesure": "membrure str-SS-P01 (poutre)",
+  "ref_lecture_1": [
+   "str-SS-P01"
+  ],
+  "n_lecture_2": 35,
+  "mesure_lecture_2": "section de poutre 8\" x 10\"",
+  "distance_px": 63.1
+ },
+ {
+  "id": "cote-SS-054",
+  "feuille": "SS",
+  "texte_original": "POUTRE 8\"x10\"",
+  "valeur": "POUTRE:8x10",
+  "lecture_1": "POUTRE 8\"x10\"",
+  "lecture_2": "POUTRE 8\"x10\"",
+  "photo": "P1",
+  "px": null,
+  "emplacement": "Poutre avant ; axe y=157 DÉDUIT (10 + 12'-3\"). Repose sur str-SS-C04 à C06.",
+  "mesure": "membrure str-SS-P02 (poutre)",
+  "ref_lecture_1": [
+   "str-SS-P02"
+  ],
+  "n_lecture_2": 36,
+  "mesure_lecture_2": "section de poutre 8\" x 10\"",
+  "distance_px": 120
+ },
+ {
+  "id": "cote-SS-055",
+  "feuille": "SS",
+  "texte_original": "COL. BOIS, 8\"x8\"",
+  "valeur": "COLONNE:8x8",
+  "lecture_1": "COL. BOIS, 8\"x8\"",
+  "lecture_2": "COL. BOIS, 8\"x8\"",
+  "photo": "P1",
+  "px": [
+   1110,
+   940
+  ],
+  "emplacement": "Colonne de bois 8\"x8\" (une seule étiquette pour toutes). x : 10 + 9'-10\" + 4 (chaîne des poutres). Dessinée : carré hachuré dans un carré plus grand (≈14 po ESTIMÉ, probablement base/semelle de colonne — non écrit).",
+  "mesure": "membrure str-SS-C01 (colonne)",
+  "ref_lecture_1": [
+   "str-SS-C01",
+   "str-SS-C02",
+   "str-SS-C03",
+   "str-SS-C04",
+   "str-SS-C05",
+   "str-SS-C06"
+  ],
+  "n_lecture_2": 37,
+  "mesure_lecture_2": "section de colonne de bois 8\" x 8\"",
+  "distance_px": 20.1
+ },
+ {
+  "id": "cote-SS-056",
+  "feuille": "SS",
+  "texte_original": "14 C.M.",
+  "valeur": 14,
+  "lecture_1": "14 C.M.",
+  "lecture_2": "14 C.M.",
+  "photo": "P1",
+  "px": [
+   1435,
+   757
+  ],
+  "emplacement": "14 contremarches (escalier).",
+  "mesure": "14 contremarches (escalier).",
+  "ref_lecture_1": [
+   "note-SS-20"
+  ],
+  "n_lecture_2": 39,
+  "mesure_lecture_2": "nombre de contremarches",
+  "distance_px": 22.0
+ },
+ {
+  "id": "cote-SS-057",
+  "feuille": "SS",
+  "texte_original": "ECHELLE: 1/4\" = 1'-0\"",
+  "valeur": "1/4\"=1'0\"",
+  "lecture_1": "ECHELLE: 1/4\" = 1'-0\"",
+  "lecture_2": "ÉCHELLE: 1/4\" = 1'-0\"",
+  "photo": "P1",
+  "px": [
+   2330,
+   1762
+  ],
+  "emplacement": "Échelle 1/4 po = 1 pi (1:48). Dessin non fidèle à l'échelle : les cotes écrites priment.",
+  "mesure": "Échelle 1/4 po = 1 pi (1:48). Dessin non fidèle à l'échelle : les cotes écrites priment.",
+  "ref_lecture_1": [
+   "note-SS-02"
+  ],
+  "n_lecture_2": 60,
+  "mesure_lecture_2": "échelle du dessin (1/48)",
+  "distance_px": 18.2
+ },
+ {
+  "id": "cote-RDC-001",
+  "feuille": "RDC",
+  "texte_original": "31'-8\"",
+  "valeur": 380,
+  "lecture_1": "31'-8\"",
+  "lecture_2": "31'-8\"",
+  "photo": "P3",
+  "px": [
+   232,
+   1019
+  ],
+  "emplacement": "chaîne ext. côté gauche, rang 3 (la plus éloignée du mur), hors-tout",
+  "mesure": "profondeur hors-tout : nu ext. mur avant → nu ext. mur arrière",
+  "ref_lecture_1": [
+   "cote-RDC-001"
+  ],
+  "n_lecture_2": 16,
+  "mesure_lecture_2": "profondeur hors-tout, face ext. arrière → face ext. avant",
+  "distance_px": 65.3
+ },
+ {
+  "id": "cote-RDC-002",
+  "feuille": "RDC",
+  "texte_original": "15'-9\"",
+  "valeur": 189,
+  "lecture_1": "15'-9\"",
+  "lecture_2": "15'-9\"",
+  "photo": "P3",
+  "px": [
+   358,
+   586
+  ],
+  "emplacement": "chaîne ext. côté gauche, rang 2, segment arrière",
+  "mesure": "nu ext. mur arrière → axe (centre) de la fenêtre de la S. de bain (ouv-RDC-006)",
+  "ref_lecture_1": [
+   "cote-RDC-002"
+  ],
+  "n_lecture_2": 14,
+  "mesure_lecture_2": "coin ext. arrière-gauche → axe fenêtre salle de bain",
+  "distance_px": 5.7
+ },
+ {
+  "id": "cote-RDC-003",
+  "feuille": "RDC",
+  "texte_original": "15'-11\"",
+  "valeur": 191,
+  "lecture_1": "15'-11\"",
+  "lecture_2": "15'-11\"",
+  "photo": "P3",
+  "px": [
+   327,
+   1250
+  ],
+  "emplacement": "chaîne ext. côté gauche, rang 2, segment avant",
+  "mesure": "nu ext. mur avant → axe de la fenêtre de la S. de bain (ouv-RDC-006)",
+  "ref_lecture_1": [
+   "cote-RDC-003"
+  ],
+  "n_lecture_2": 15,
+  "mesure_lecture_2": "axe fenêtre salle de bain → coin ext. avant-gauche",
+  "distance_px": 7.1
+ },
+ {
+  "id": "cote-RDC-004",
+  "feuille": "RDC",
+  "texte_original": "3'-0\"",
+  "valeur": 36,
+  "lecture_1": "3'-0\"",
+  "lecture_2": "3'-0\"",
+  "photo": "P3",
+  "px": [
+   399,
+   892
+  ],
+  "emplacement": "chaîne ext. côté gauche, rang 1 (ouvertures)",
+  "mesure": "largeur de la fenêtre de la S. de bain (ouv-RDC-006), entre ses jambages",
+  "ref_lecture_1": [
+   "cote-RDC-004"
+  ],
+  "n_lecture_2": 17,
+  "mesure_lecture_2": "largeur fenêtre",
+  "distance_px": 11.3
+ },
+ {
+  "id": "cote-RDC-005",
+  "feuille": "RDC",
+  "texte_original": "31'-8\"",
+  "valeur": 380,
+  "lecture_1": "31'-8\"",
+  "lecture_2": "31'-8\"",
+  "photo": "P3",
+  "px": [
+   2257,
+   916
+  ],
+  "emplacement": "chaîne ext. côté droit, rang 3, hors-tout",
+  "mesure": "profondeur hors-tout : nu ext. mur avant → nu ext. mur arrière",
+  "ref_lecture_1": [
+   "cote-RDC-005"
+  ],
+  "n_lecture_2": 20,
+  "mesure_lecture_2": "profondeur hors-tout",
+  "distance_px": 11.0
+ },
+ {
+  "id": "cote-RDC-006",
+  "feuille": "RDC",
+  "texte_original": "16'-8\"",
+  "valeur": 200,
+  "lecture_1": "16'-8\"",
+  "lecture_2": "16 8\"",
+  "photo": "P3",
+  "px": [
+   2157,
+   651
+  ],
+  "emplacement": "chaîne ext. côté droit, rang 2, segment arrière",
+  "mesure": "nu ext. mur arrière → axe de la fenêtre latérale de la cuisine (ouv-RDC-007)",
+  "ref_lecture_1": [
+   "cote-RDC-006"
+  ],
+  "n_lecture_2": 18,
+  "mesure_lecture_2": "coin ext. arrière-droit → axe fenêtre côté droit (salle à manger)",
+  "distance_px": 11.4
+ },
+ {
+  "id": "cote-RDC-007",
+  "feuille": "RDC",
+  "texte_original": "15'-0\"",
+  "valeur": 180,
+  "lecture_1": "15'-0\"",
+  "lecture_2": "15'-0\"",
+  "photo": "P3",
+  "px": [
+   2167,
+   1238
+  ],
+  "emplacement": "chaîne ext. côté droit, rang 2, segment avant",
+  "mesure": "nu ext. mur avant → axe de la fenêtre latérale de la cuisine (ouv-RDC-007)",
+  "ref_lecture_1": [
+   "cote-RDC-007"
+  ],
+  "n_lecture_2": 19,
+  "mesure_lecture_2": "axe fenêtre côté droit → coin ext. avant-droit",
+  "distance_px": 20.1
+ },
+ {
+  "id": "cote-RDC-008",
+  "feuille": "RDC",
+  "texte_original": "3'-0\"",
+  "valeur": 36,
+  "lecture_1": "3'-0\"",
+  "lecture_2": "3'-0\"",
+  "photo": "P3",
+  "px": [
+   2105,
+   970
+  ],
+  "emplacement": "chaîne ext. côté droit, rang 1 (ouvertures)",
+  "mesure": "largeur de la fenêtre latérale de la cuisine (ouv-RDC-007)",
+  "ref_lecture_1": [
+   "cote-RDC-008"
+  ],
+  "n_lecture_2": 21,
+  "mesure_lecture_2": "largeur fenêtre",
+  "distance_px": 5.1
+ },
+ {
+  "id": "cote-RDC-009",
+  "feuille": "RDC",
+  "texte_original": "38'-0\"",
+  "valeur": 456,
+  "lecture_1": "38'-0\"",
+  "lecture_2": "38'-0\"",
+  "photo": "P3",
+  "px": [
+   1296,
+   1894
+  ],
+  "emplacement": "chaîne ext. avant, rang 3, hors-tout",
+  "mesure": "largeur hors-tout : nu ext. mur gauche → nu ext. mur droit",
+  "ref_lecture_1": [
+   "cote-RDC-009"
+  ],
+  "n_lecture_2": 28,
+  "mesure_lecture_2": "largeur hors-tout, face ext. gauche → face ext. droite",
+  "distance_px": 10.3
+ },
+ {
+  "id": "cote-RDC-010",
+  "feuille": "RDC",
+  "texte_original": "8'-2\"",
+  "valeur": 98,
+  "lecture_1": "8'-2\"",
+  "lecture_2": "8'-2\"",
+  "photo": "P3",
+  "px": [
+   620,
+   1740
+  ],
+  "emplacement": "chaîne ext. avant, rang 2, 1er segment depuis la gauche",
+  "mesure": "nu ext. mur gauche → axe de la fenêtre de la chambre avant (ouv-RDC-001)",
+  "ref_lecture_1": [
+   "cote-RDC-010"
+  ],
+  "n_lecture_2": 24,
+  "mesure_lecture_2": "coin ext. avant-gauche → axe fenêtre chambre avant",
+  "distance_px": 4.5
+ },
+ {
+  "id": "cote-RDC-011",
+  "feuille": "RDC",
+  "texte_original": "8'-5\"",
+  "valeur": 101,
+  "lecture_1": "8'-5\"",
+  "lecture_2": "8'-5\"",
+  "photo": "P3",
+  "px": [
+   987,
+   1750
+  ],
+  "emplacement": "chaîne ext. avant, rang 2, 2e segment",
+  "mesure": "axe fenêtre chambre avant (ouv-RDC-001) → axe de la porte d'entrée avant (ouv-RDC-010)",
+  "ref_lecture_1": [
+   "cote-RDC-011"
+  ],
+  "n_lecture_2": 25,
+  "mesure_lecture_2": "axe fenêtre chambre avant → axe porte d'entrée (repère dans le perron)",
+  "distance_px": 11.0
+ },
+ {
+  "id": "cote-RDC-012",
+  "feuille": "RDC",
+  "texte_original": "14'-10\"",
+  "valeur": 178,
+  "lecture_1": "14'-10\"",
+  "lecture_2": "14'-10\"",
+  "photo": "P3",
+  "px": [
+   1565,
+   1750
+  ],
+  "emplacement": "chaîne ext. avant, rang 2, 3e segment",
+  "mesure": "axe porte d'entrée avant (ouv-RDC-010) → axe fenêtre du salon (ouv-RDC-002)",
+  "ref_lecture_1": [
+   "cote-RDC-012"
+  ],
+  "n_lecture_2": 26,
+  "mesure_lecture_2": "axe porte d'entrée → axe fenêtre salon",
+  "distance_px": 4.5
+ },
+ {
+  "id": "cote-RDC-013",
+  "feuille": "RDC",
+  "texte_original": "6'-7\"",
+  "valeur": 79,
+  "lecture_1": "6'-7\"",
+  "lecture_2": "6'-7\"",
+  "photo": "P3",
+  "px": [
+   1937,
+   1725
+  ],
+  "emplacement": "chaîne ext. avant, rang 2, 4e segment (droite)",
+  "mesure": "axe fenêtre du salon (ouv-RDC-002) → nu ext. mur droit",
+  "ref_lecture_1": [
+   "cote-RDC-013"
+  ],
+  "n_lecture_2": 27,
+  "mesure_lecture_2": "axe fenêtre salon → coin ext. avant-droit",
+  "distance_px": 1.4
+ },
+ {
+  "id": "cote-RDC-016",
+  "feuille": "RDC",
+  "texte_original": "18'-3\"",
+  "valeur": 219,
+  "lecture_1": "18'-3\"",
+  "lecture_2": "18'-3\"",
+  "photo": "P6",
+  "px": [
+   850,
+   19
+  ],
+  "emplacement": "chaîne ext. arrière, rang 3 (le plus éloigné), 1er segment depuis la gauche — absente de P3 (haut coupé)",
+  "mesure": "nu ext. mur gauche → nu ext. du mur gauche du volume de l'entrée arrière",
+  "ref_lecture_1": [
+   "cote-RDC-016"
+  ],
+  "n_lecture_2": 9,
+  "mesure_lecture_2": "coin ext. arrière-gauche → face ext. gauche du vestibule arrière",
+  "distance_px": 18.1
+ },
+ {
+  "id": "cote-RDC-017",
+  "feuille": "RDC",
+  "texte_original": "9'-0\"",
+  "valeur": 108,
+  "lecture_1": "9'-0\"",
+  "lecture_2": "9'-0\"",
+  "photo": "P6",
+  "px": [
+   1332,
+   22
+  ],
+  "emplacement": "chaîne ext. arrière, rang 3, 2e segment — absente de P3",
+  "mesure": "largeur hors-tout du volume de l'entrée arrière (nu ext. gauche → nu ext. droit)",
+  "ref_lecture_1": [
+   "cote-RDC-017"
+  ],
+  "n_lecture_2": 10,
+  "mesure_lecture_2": "largeur hors-tout du vestibule arrière (face ext. à face ext.)",
+  "distance_px": 5.8
+ },
+ {
+  "id": "cote-RDC-019",
+  "feuille": "RDC",
+  "texte_original": "8'-2\"",
+  "valeur": 98,
+  "lecture_1": "8'-2\"",
+  "lecture_2": "8'-2\"",
+  "photo": "P3",
+  "px": [
+   679,
+   84
+  ],
+  "emplacement": "chaîne ext. arrière, rang 2 (axes des ouvertures), 1er segment depuis la gauche",
+  "mesure": "nu ext. mur gauche → axe de la fenêtre de la chambre arrière (ouv-RDC-003)",
+  "ref_lecture_1": [
+   "cote-RDC-019"
+  ],
+  "n_lecture_2": 1,
+  "mesure_lecture_2": "coin ext. arrière-gauche → axe fenêtre chambre arrière",
+  "distance_px": 4.5
+ },
+ {
+  "id": "cote-RDC-021",
+  "feuille": "RDC",
+  "texte_original": "8'-0\"",
+  "valeur": 96,
+  "lecture_1": "8'-0\"",
+  "lecture_2": "8'-0\"",
+  "photo": "P3",
+  "px": [
+   1406,
+   106
+  ],
+  "emplacement": "chaîne ext. arrière, rang 2, 3e segment (écrit dans l'entrée arrière, à côté de « ARMOIRES »)",
+  "mesure": "axe fenêtre chambre d'utilité (ouv-RDC-004) → axe fenêtre de l'entrée arrière (ouv-RDC-008)",
+  "ref_lecture_1": [
+   "cote-RDC-021"
+  ],
+  "n_lecture_2": 3,
+  "mesure_lecture_2": "axe fenêtre ch. d'utilité → axe porte arrière 2'-10\"x6'-10\" / fenêtre du vestibule",
+  "distance_px": 2.2
+ },
+ {
+  "id": "cote-RDC-022",
+  "feuille": "RDC",
+  "texte_original": "6'-10\"",
+  "valeur": 82,
+  "lecture_1": "6'-10\"",
+  "lecture_2": "6'-10'",
+  "photo": "P3",
+  "px": [
+   1687,
+   115
+  ],
+  "emplacement": "chaîne ext. arrière, rang 2, 4e segment (écrit sur les marches arrière)",
+  "mesure": "axe fenêtre de l'entrée arrière (ouv-RDC-008) → axe fenêtre de la cuisine (ouv-RDC-005)",
+  "ref_lecture_1": [
+   "cote-RDC-022"
+  ],
+  "n_lecture_2": 4,
+  "mesure_lecture_2": "axe porte/fenêtre vestibule → axe fenêtre cuisine",
+  "distance_px": 2.0
+ },
+ {
+  "id": "cote-RDC-024",
+  "feuille": "RDC",
+  "texte_original": "6'-3\"",
+  "valeur": 75,
+  "lecture_1": "6'-3\"",
+  "lecture_2": "6'-3\"",
+  "photo": "P3",
+  "px": [
+   843,
+   156
+  ],
+  "emplacement": "chaîne ext. arrière, rang 1 (ouvertures), gauche",
+  "mesure": "largeur de la fenêtre de la chambre arrière (ouv-RDC-003)",
+  "ref_lecture_1": [
+   "cote-RDC-024"
+  ],
+  "n_lecture_2": 6,
+  "mesure_lecture_2": "largeur fenêtre (jambage à jambage)",
+  "distance_px": 5.0
+ },
+ {
+  "id": "cote-RDC-025",
+  "feuille": "RDC",
+  "texte_original": "3'-0\"",
+  "valeur": 36,
+  "lecture_1": "3'-0\"",
+  "lecture_2": "3'-0\"",
+  "photo": "P3",
+  "px": [
+   1175,
+   191
+  ],
+  "emplacement": "chaîne ext. arrière, rang 1 (ouvertures)",
+  "mesure": "largeur de la fenêtre de la chambre d'utilité (ouv-RDC-004)",
+  "ref_lecture_1": [
+   "cote-RDC-025"
+  ],
+  "n_lecture_2": 7,
+  "mesure_lecture_2": "largeur fenêtre",
+  "distance_px": 1.4
+ },
+ {
+  "id": "cote-RDC-028",
+  "feuille": "RDC",
+  "texte_original": "6'-3\"",
+  "valeur": 75,
+  "lecture_1": "6'-3\"",
+  "lecture_2": "6'-3\"",
+  "photo": "P3",
+  "px": [
+   1800,
+   212
+  ],
+  "emplacement": "chaîne ext. arrière, rang 1 (ouvertures), droite",
+  "mesure": "largeur de la fenêtre de la cuisine (ouv-RDC-005)",
+  "ref_lecture_1": [
+   "cote-RDC-028"
+  ],
+  "n_lecture_2": 8,
+  "mesure_lecture_2": "largeur fenêtre",
+  "distance_px": 2.2
+ },
+ {
+  "id": "cote-RDC-029",
+  "feuille": "RDC",
+  "texte_original": "9'-0\"",
+  "valeur": 108,
+  "lecture_1": "9'-0\"",
+  "lecture_2": "9'-0\"",
+  "photo": "P3",
+  "px": [
+   675,
+   805
+  ],
+  "emplacement": "chaîne int. en x (y≈18'), 1er segment depuis la gauche (écrit dans un petit cadre dans la S. de bain)",
+  "mesure": "nu ext. mur gauche → cloison droite de la S. de bain (mur-RDC-011)",
+  "ref_lecture_1": [
+   "cote-RDC-029"
+  ],
+  "n_lecture_2": 29,
+  "mesure_lecture_2": "face ext. mur gauche → cloison droite de la SDB (repère x≈844 px)",
+  "distance_px": 4.2
+ },
+ {
+  "id": "cote-RDC-030",
+  "feuille": "RDC",
+  "texte_original": "3'-2\"",
+  "valeur": 38,
+  "lecture_1": "3'-2\"",
+  "lecture_2": "3'-2\"",
+  "photo": "P3",
+  "px": [
+   910,
+   804
+  ],
+  "emplacement": "chaîne int. en x, 2e segment",
+  "mesure": "cloison droite S. de bain (mur-RDC-011) → cloison gauche de la colonne des G.R. (mur-RDC-013/014)",
+  "ref_lecture_1": [
+   "cote-RDC-030"
+  ],
+  "n_lecture_2": 30,
+  "mesure_lecture_2": "cloison SDB → cloison des garde-robes (x≈992 px)",
+  "distance_px": 2.2
+ },
+ {
+  "id": "cote-RDC-031",
+  "feuille": "RDC",
+  "texte_original": "2'-5\"",
+  "valeur": 29,
+  "lecture_1": "2'-5\"",
+  "lecture_2": "2'-5\"",
+  "photo": "P3",
+  "px": [
+   1062,
+   800
+  ],
+  "emplacement": "chaîne int. en x, 3e segment (alcôve / porte de la ch. d'utilité)",
+  "mesure": "cloison gauche colonne G.R. (mur-RDC-013) → cloison droite colonne G.R. (mur-RDC-015)",
+  "ref_lecture_1": [
+   "cote-RDC-031"
+  ],
+  "n_lecture_2": 31,
+  "mesure_lecture_2": "cloison G.R. → repère x≈1103 px (cloison/jambage côté passage)",
+  "distance_px": 12.0
+ },
+ {
+  "id": "cote-RDC-032",
+  "feuille": "RDC",
+  "texte_original": "8'-4\"",
+  "valeur": 100,
+  "lecture_1": "8'-4\"",
+  "lecture_2": "8'-4\"",
+  "photo": "P3",
+  "px": [
+   1250,
+   823
+  ],
+  "emplacement": "chaîne int. en x, 4e segment (ch. d'utilité)",
+  "mesure": "cloison mur-RDC-015 → cloison gauche de l'escalier (mur-RDC-021)",
+  "ref_lecture_1": [
+   "cote-RDC-032"
+  ],
+  "n_lecture_2": 32,
+  "mesure_lecture_2": "repère x≈1103 → mur de l'escalier (x≈1446)",
+  "distance_px": 5.8
+ },
+ {
+  "id": "cote-RDC-033",
+  "feuille": "RDC",
+  "texte_original": "3'-5\"",
+  "valeur": 41,
+  "lecture_1": "3'-5\"",
+  "lecture_2": "3'-5\"",
+  "photo": "P3",
+  "px": [
+   1519,
+   803
+  ],
+  "emplacement": "chaîne int. en x, 5e segment (écrit sous « BALAIS »)",
+  "mesure": "cloison gauche escalier (mur-RDC-021) → cloison droite escalier (mur-RDC-022) : largeur escalier/BALAIS",
+  "ref_lecture_1": [
+   "cote-RDC-033"
+  ],
+  "n_lecture_2": 33,
+  "mesure_lecture_2": "mur escalier → mur escalier/cuisine (largeur escalier/balais)",
+  "distance_px": 9.2
+ },
+ {
+  "id": "cote-RDC-034",
+  "feuille": "RDC",
+  "texte_original": "11'-8\"",
+  "valeur": 140,
+  "lecture_1": "11'-8\"",
+  "lecture_2": "11'-8\"",
+  "photo": "P3",
+  "px": [
+   1815,
+   820
+  ],
+  "emplacement": "chaîne int. en x, 6e segment (cuisine)",
+  "mesure": "cloison droite escalier (mur-RDC-022) → nu ext. mur droit",
+  "ref_lecture_1": [
+   "cote-RDC-034"
+  ],
+  "n_lecture_2": 34,
+  "mesure_lecture_2": "mur escalier côté cuisine → face ext. mur droit",
+  "distance_px": 3.2
+ },
+ {
+  "id": "cote-RDC-035",
+  "feuille": "RDC",
+  "texte_original": "13'-1\"",
+  "valeur": 157,
+  "lecture_1": "13'-1\"",
+  "lecture_2": "13'-1\"",
+  "photo": "P3",
+  "px": [
+   617,
+   617
+  ],
+  "emplacement": "chaîne int. en y (x≈5'), segment arrière (chambre arrière)",
+  "mesure": "nu ext. mur arrière → cloison chambre arr./S. de bain (mur-RDC-010)",
+  "ref_lecture_1": [
+   "cote-RDC-035"
+  ],
+  "n_lecture_2": 39,
+  "mesure_lecture_2": "face ext. mur arrière → cloison chambre/SDB",
+  "distance_px": 5.4
+ },
+ {
+  "id": "cote-RDC-036",
+  "feuille": "RDC",
+  "texte_original": "5'-6\"",
+  "valeur": 66,
+  "lecture_1": "5'-6\"",
+  "lecture_2": "5'-6\"",
+  "photo": "P3",
+  "px": [
+   600,
+   923
+  ],
+  "emplacement": "chaîne int. en y (x≈5'), segment du milieu (S. de bain)",
+  "mesure": "cloison mur-RDC-010 → cloison mur-RDC-012 (profondeur S. de bain)",
+  "ref_lecture_1": [
+   "cote-RDC-036"
+  ],
+  "n_lecture_2": 40,
+  "mesure_lecture_2": "cloison chambre arr./SDB → cloison SDB/chambre av.",
+  "distance_px": 17.1
+ },
+ {
+  "id": "cote-RDC-037",
+  "feuille": "RDC",
+  "texte_original": "13'-1\"",
+  "valeur": 157,
+  "lecture_1": "13'-1\"",
+  "lecture_2": "13'-1\"",
+  "photo": "P3",
+  "px": [
+   589,
+   1275
+  ],
+  "emplacement": "chaîne int. en y (x≈5'), segment avant (chambre avant)",
+  "mesure": "nu ext. mur avant → cloison S. de bain/chambre avant (mur-RDC-012)",
+  "ref_lecture_1": [
+   "cote-RDC-037"
+  ],
+  "n_lecture_2": 41,
+  "mesure_lecture_2": "cloison SDB → face ext. mur avant",
+  "distance_px": 6.1
+ },
+ {
+  "id": "cote-RDC-039",
+  "feuille": "RDC",
+  "texte_original": "2'-5\"",
+  "valeur": 29,
+  "lecture_1": "2'-5\"",
+  "lecture_2": "2'-5\"",
+  "photo": "P3",
+  "px": [
+   1050,
+   1350
+  ],
+  "emplacement": "chaîne int. en x (y≈7'), 2e segment (G.R. avant)",
+  "mesure": "cloison mur-RDC-026 → cloison mur-RDC-027 (profondeur G.R./LIN./VEST.)",
+  "ref_lecture_1": [
+   "cote-RDC-039"
+  ],
+  "n_lecture_2": 36,
+  "mesure_lecture_2": "profondeur G.R. entre cloisons",
+  "distance_px": 2.2
+ },
+ {
+  "id": "cote-RDC-040",
+  "feuille": "RDC",
+  "texte_original": "3'-11\"",
+  "valeur": 47,
+  "lecture_1": "3'-11\"",
+  "lecture_2": "3'-11\"",
+  "photo": "P3",
+  "px": [
+   1190,
+   1342
+  ],
+  "emplacement": "chaîne int. en x (y≈7'), 3e segment (hall)",
+  "mesure": "cloison mur-RDC-027 → cloison hall/salon (mur-RDC-025) : largeur du hall",
+  "ref_lecture_1": [
+   "cote-RDC-040"
+  ],
+  "n_lecture_2": 37,
+  "mesure_lecture_2": "largeur du hall entre cloisons",
+  "distance_px": 4.1
+ },
+ {
+  "id": "cote-RDC-041",
+  "feuille": "RDC",
+  "texte_original": "19'-6\"",
+  "valeur": 234,
+  "lecture_1": "19'-6\"",
+  "lecture_2": "19'-6\"",
+  "photo": "P3",
+  "px": [
+   1713,
+   1347
+  ],
+  "emplacement": "chaîne int. en x (y≈7'), 4e segment (salon)",
+  "mesure": "cloison hall/salon (mur-RDC-025) → nu ext. mur droit",
+  "ref_lecture_1": [
+   "cote-RDC-041"
+  ],
+  "n_lecture_2": 38,
+  "mesure_lecture_2": "cloison hall/salon → face ext. mur droit",
+  "distance_px": 6.1
+ },
+ {
+  "id": "cote-RDC-042",
+  "feuille": "RDC",
+  "texte_original": "14'-8\"",
+  "valeur": 176,
+  "lecture_1": "14'-8\"",
+  "lecture_2": "14'-8\"",
+  "photo": "P3",
+  "px": [
+   1325,
+   608
+  ],
+  "emplacement": "chaîne int. en y (x≈23'), segment arrière (ch. d'utilité)",
+  "mesure": "nu ext. mur arrière → cloison avant de la ch. d'utilité (mur-RDC-020)",
+  "ref_lecture_1": [
+   "cote-RDC-042"
+  ],
+  "n_lecture_2": 43,
+  "mesure_lecture_2": "face ext. mur arrière → cloison ch. d'utilité/passage",
+  "distance_px": 3.6
+ },
+ {
+  "id": "cote-RDC-043",
+  "feuille": "RDC",
+  "texte_original": "3'-11\"",
+  "valeur": 47,
+  "lecture_1": "3'-11\"",
+  "lecture_2": "3'-11\"",
+  "photo": "P3",
+  "px": [
+   1322,
+   962
+  ],
+  "emplacement": "chaîne int. en y (x≈23'), segment du milieu (PASSAGE)",
+  "mesure": "cloison mur-RDC-020 → cloison salon/passage (mur-RDC-024) : largeur du passage",
+  "ref_lecture_1": [
+   "cote-RDC-043"
+  ],
+  "n_lecture_2": 44,
+  "mesure_lecture_2": "largeur du passage",
+  "distance_px": 13.3
+ },
+ {
+  "id": "cote-RDC-044",
+  "feuille": "RDC",
+  "texte_original": "13'-1\"",
+  "valeur": 157,
+  "lecture_1": "13'-1\"",
+  "lecture_2": "13-1",
+  "photo": "P3",
+  "px": [
+   1320,
+   1303
+  ],
+  "emplacement": "chaîne int. en y (x≈23'), segment avant (salon, côté gauche)",
+  "mesure": "nu ext. mur avant → cloison salon/passage (mur-RDC-024)",
+  "ref_lecture_1": [
+   "cote-RDC-044"
+  ],
+  "n_lecture_2": 45,
+  "mesure_lecture_2": "cloison passage/salon → face ext. mur avant",
+  "distance_px": 7.3
+ },
+ {
+  "id": "cote-RDC-046",
+  "feuille": "RDC",
+  "texte_original": "13'-1\"",
+  "valeur": 157,
+  "lecture_1": "13'-1\"",
+  "lecture_2": "13'-1\"",
+  "photo": "P3",
+  "px": [
+   1877,
+   1293
+  ],
+  "emplacement": "chaîne int. en y (x≈35'), segment avant (salon, côté droit)",
+  "mesure": "nu ext. mur avant → cloison salon/cuisine (mur-RDC-024)",
+  "ref_lecture_1": [
+   "cote-RDC-046"
+  ],
+  "n_lecture_2": 47,
+  "mesure_lecture_2": "arche → face ext. mur avant",
+  "distance_px": 3.6
+ },
+ {
+  "id": "cote-RDC-049",
+  "feuille": "RDC",
+  "texte_original": "ARCHE 6'-0\"",
+  "valeur": 72,
+  "lecture_1": "ARCHE 6'-0\"",
+  "lecture_2": "ARCHE 6'-0\"",
+  "photo": "P3",
+  "px": [
+   1890,
+   1047
+  ],
+  "emplacement": "texte horizontal dans la cloison salon/cuisine (mur-RDC-024)",
+  "mesure": "largeur de l'arche salon/cuisine (ouv-RDC-013)",
+  "ref_lecture_1": [
+   "cote-RDC-049"
+  ],
+  "n_lecture_2": 64,
+  "mesure_lecture_2": "largeur de l'arche",
+  "distance_px": 6.7
+ },
+ {
+  "id": "cote-RDC-052",
+  "feuille": "RDC",
+  "texte_original": "2'-10\"x6'-10\"",
+  "valeur": [
+   34,
+   82
+  ],
+  "lecture_1": "2'-10\"x6'-10\"",
+  "lecture_2": "2'-10\"x6'-10\"",
+  "photo": "P3",
+  "px": [
+   1544,
+   93
+  ],
+  "emplacement": "porte extérieure arrière (de l'entrée arrière vers les marches arrière) ; pentures côté arrière (y≈425), ouvre vers l'intérieur de l'entrée (-x)",
+  "mesure": "largeur x hauteur de ouv-RDC-027 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-027"
+  ],
+  "n_lecture_2": 48,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 100.1
+ },
+ {
+  "id": "cote-RDC-053",
+  "feuille": "RDC",
+  "texte_original": "2'-8\"x6'-8\"",
+  "valeur": [
+   32,
+   80
+  ],
+  "lecture_1": "2'-8\"x6'-8\"",
+  "lecture_2": "2'-8\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   1481,
+   318
+  ],
+  "emplacement": "porte entrée arrière → palier de l'escalier (dans l'alignement du mur arrière principal) ; pentures côté gauche (x≈278), ouvre vers le palier (-y)",
+  "mesure": "largeur x hauteur de ouv-RDC-026 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-026"
+  ],
+  "n_lecture_2": 49,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 60.6
+ },
+ {
+  "id": "cote-RDC-054",
+  "feuille": "RDC",
+  "texte_original": "2'-8\"x6'-8\"",
+  "valeur": [
+   32,
+   80
+  ],
+  "lecture_1": "2'-8\"x6'-8\"",
+  "lecture_2": "2'-8x6'-8\"",
+  "photo": "P3",
+  "px": [
+   1649,
+   305
+  ],
+  "emplacement": "porte palier d'escalier → cuisine ; pentures côté arrière (y≈372), ouvre dans la cuisine (+x)",
+  "mesure": "largeur x hauteur de ouv-RDC-025 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-025"
+  ],
+  "n_lecture_2": 50,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 66.5
+ },
+ {
+  "id": "cote-RDC-055",
+  "feuille": "RDC",
+  "texte_original": "2'-4\"x6'-8\"",
+  "valeur": [
+   28,
+   80
+  ],
+  "lecture_1": "2'-4\"x6'-8\"",
+  "lecture_2": "2'-4\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   945,
+   348
+  ],
+  "emplacement": "porte du G.R. arrière de la chambre arrière ; pentures sur le montant central (côté avant, y≈345), ouvre dans la chambre (-x)",
+  "mesure": "largeur x hauteur de ouv-RDC-019 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-019"
+  ],
+  "n_lecture_2": 51,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 75.7
+ },
+ {
+  "id": "cote-RDC-056",
+  "feuille": "RDC",
+  "texte_original": "2'-4\"x6'-8\"",
+  "valeur": [
+   28,
+   80
+  ],
+  "lecture_1": "2'-4\"x6'-8\"",
+  "lecture_2": "2'-4\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   928,
+   397
+  ],
+  "emplacement": "porte du 2e G.R. de la chambre arrière ; pentures sur le montant central (côté arrière, y≈332), ouvre dans la chambre (-x)",
+  "mesure": "largeur x hauteur de ouv-RDC-020 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-020"
+  ],
+  "n_lecture_2": 52,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 100.4
+ },
+ {
+  "id": "cote-RDC-057",
+  "feuille": "RDC",
+  "texte_original": "2'-4\"x6'-8\"",
+  "valeur": [
+   28,
+   80
+  ],
+  "lecture_1": "2'-4\"x6'-8\"",
+  "lecture_2": "2'-4\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   1156,
+   673
+  ],
+  "emplacement": "porte du G.R. de la chambre d'utilité ; pentures côté avant (y≈253), ouvre dans la ch. d'utilité (+x)",
+  "mesure": "largeur x hauteur de ouv-RDC-018 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-018"
+  ],
+  "n_lecture_2": 53,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 66.0
+ },
+ {
+  "id": "cote-RDC-058",
+  "feuille": "RDC",
+  "texte_original": "2'-6\"x6'-8\"",
+  "valeur": [
+   30,
+   80
+  ],
+  "lecture_1": "2'-6\"x6'-8\"",
+  "lecture_2": "2'-6\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   971,
+   808
+  ],
+  "emplacement": "porte de la chambre arrière au bout du dégagement ; pentures côté droit (x≈143, contre la colonne des G.R.), ouvre dans la chambre (+y)",
+  "mesure": "largeur x hauteur de ouv-RDC-016 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-016"
+  ],
+  "n_lecture_2": 54,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 49.7
+ },
+ {
+  "id": "cote-RDC-060",
+  "feuille": "RDC",
+  "texte_original": "2'-6\"x6'-8\"",
+  "valeur": [
+   30,
+   80
+  ],
+  "lecture_1": "2'-6\"x6'-8\"",
+  "lecture_2": "2'-6\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   778,
+   995
+  ],
+  "emplacement": "porte de la S. de bain ; pentures côté avant (y≈164), ouvre dans la S. de bain (-x)",
+  "mesure": "largeur x hauteur de ouv-RDC-015 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-015"
+  ],
+  "n_lecture_2": 56,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 86.8
+ },
+ {
+  "id": "cote-RDC-062",
+  "feuille": "RDC",
+  "texte_original": "2'-6\"x6'-8\"",
+  "valeur": [
+   30,
+   80
+  ],
+  "lecture_1": "2'-6\"x6'-8\"",
+  "lecture_2": "2'-6\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   963,
+   1096
+  ],
+  "emplacement": "porte de la chambre avant depuis le dégagement ; pentures côté droit (x≈143), ouvre dans la chambre (vers l'avant, -y)",
+  "mesure": "largeur x hauteur de ouv-RDC-014 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-014"
+  ],
+  "n_lecture_2": 58,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 72.7
+ },
+ {
+  "id": "cote-RDC-063",
+  "feuille": "RDC",
+  "texte_original": "2'-6\"x6'-8\"",
+  "valeur": [
+   30,
+   80
+  ],
+  "lecture_1": "2'-6\"x6'-8\"",
+  "lecture_2": "2'-6\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   923,
+   1321
+  ],
+  "emplacement": "porte du G.R. de la chambre avant ; pentures côté avant (y≈78), ouvre dans la chambre (-x)",
+  "mesure": "largeur x hauteur de ouv-RDC-021 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-021"
+  ],
+  "n_lecture_2": 59,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 78.3
+ },
+ {
+  "id": "cote-RDC-065",
+  "feuille": "RDC",
+  "texte_original": "2'-10\"x6'-10\"",
+  "valeur": [
+   34,
+   82
+  ],
+  "lecture_1": "2'-10\"x6'-10\"",
+  "lecture_2": "2'-10\"x6'-10\"",
+  "photo": "P3",
+  "px": [
+   1221,
+   1541
+  ],
+  "emplacement": "porte d'entrée avant (hall/entrée) ; pentures côté droit (côté salon, x≈216), le vantail s'ouvre vers l'intérieur et se range le long de la cloison du salon ; donne sur le perron de béton",
+  "mesure": "largeur x hauteur de ouv-RDC-010 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-010"
+  ],
+  "n_lecture_2": 61,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 82.8
+ },
+ {
+  "id": "cote-RDC-066",
+  "feuille": "RDC",
+  "texte_original": "2'-4\"x6'-8\"",
+  "valeur": [
+   28,
+   80
+  ],
+  "lecture_1": "2'-4\"x6'-8\"",
+  "lecture_2": "2'-4\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   1456,
+   945
+  ],
+  "emplacement": "porte du BALAIS (sous l'escalier) ; pentures côté gauche (x≈279), ouvre vers le passage (-y)",
+  "mesure": "largeur x hauteur de ouv-RDC-023 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-023"
+  ],
+  "n_lecture_2": 62,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 99.1
+ },
+ {
+  "id": "cote-RDC-067",
+  "feuille": "RDC",
+  "texte_original": "2'-8\"x6'-8\"",
+  "valeur": [
+   32,
+   80
+  ],
+  "lecture_1": "2'-8\"x6'-8\"",
+  "lecture_2": "2'-8\"x6'-8\"",
+  "photo": "P3",
+  "px": [
+   1531,
+   1002
+  ],
+  "emplacement": "porte passage → cuisine ; pentures côté avant (y≈166), ouvre vers le passage (-x)",
+  "mesure": "largeur x hauteur de ouv-RDC-024 (porte)",
+  "ref_lecture_1": [
+   "ouv-RDC-024"
+  ],
+  "n_lecture_2": 63,
+  "mesure_lecture_2": "porte LxH (largeur x hauteur)",
+  "distance_px": 81.4
+ },
+ {
+  "id": "cote-RDC-068",
+  "feuille": "RDC",
+  "texte_original": "LINTEAU 2-2\"x8\"",
+  "valeur": "LINTEAU:2-2x8",
+  "lecture_1": "LINTEAU 2-2\"x8\"",
+  "lecture_2": "LINTEAU 2-2\"x8\"",
+  "photo": "P3",
+  "px": [
+   800,
+   266
+  ],
+  "emplacement": "linteau de ouv-RDC-003 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)",
+  "mesure": "membrure str-RDC-L03 (linteau)",
+  "ref_lecture_1": [
+   "str-RDC-L03"
+  ],
+  "n_lecture_2": 66,
+  "mesure_lecture_2": "linteau 2 pièces 2\"x8\"",
+  "distance_px": 43.3
+ },
+ {
+  "id": "cote-RDC-069",
+  "feuille": "RDC",
+  "texte_original": "LIN. 2-2\"x6\"",
+  "valeur": "LINTEAU:2-2x6",
+  "lecture_1": "LIN. 2-2\"x6\"",
+  "lecture_2": "LIN. 2-2x6",
+  "photo": "P3",
+  "px": [
+   1190,
+   297
+  ],
+  "emplacement": "linteau de ouv-RDC-004 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)",
+  "mesure": "membrure str-RDC-L04 (linteau)",
+  "ref_lecture_1": [
+   "str-RDC-L04"
+  ],
+  "n_lecture_2": 67,
+  "mesure_lecture_2": "linteau 2 pièces 2\"x6\"",
+  "distance_px": 33.7
+ },
+ {
+  "id": "cote-RDC-071",
+  "feuille": "RDC",
+  "texte_original": "LIN. 2-2\"x6\"",
+  "valeur": "LINTEAU:2-2x6",
+  "lecture_1": "LIN. 2-2\"x6\"",
+  "lecture_2": "LIN. 2-2\"x6\"",
+  "photo": "P3",
+  "px": [
+   447,
+   880
+  ],
+  "emplacement": "linteau de ouv-RDC-006 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)",
+  "mesure": "membrure str-RDC-L06 (linteau)",
+  "ref_lecture_1": [
+   "str-RDC-L06"
+  ],
+  "n_lecture_2": 69,
+  "mesure_lecture_2": "linteau 2 pièces 2\"x6\"",
+  "distance_px": 38.5
+ },
+ {
+  "id": "cote-RDC-072",
+  "feuille": "RDC",
+  "texte_original": "LIN. 2-2\"x6\"",
+  "valeur": "LINTEAU:2-2x6",
+  "lecture_1": "LIN. 2-2\"x6\"",
+  "lecture_2": "LIN. 2-2\"x6\"",
+  "photo": "P3",
+  "px": [
+   2027,
+   960
+  ],
+  "emplacement": "linteau de ouv-RDC-007 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)",
+  "mesure": "membrure str-RDC-L07 (linteau)",
+  "ref_lecture_1": [
+   "str-RDC-L07"
+  ],
+  "n_lecture_2": 70,
+  "mesure_lecture_2": "linteau 2 pièces 2\"x6\"",
+  "distance_px": 35.8
+ },
+ {
+  "id": "cote-RDC-073",
+  "feuille": "RDC",
+  "texte_original": "LINTEAU 2-2\"x8\"",
+  "valeur": "LINTEAU:2-2x8",
+  "lecture_1": "LINTEAU 2-2\"x8\"",
+  "lecture_2": "LINTEAU 2-2\"x8\"",
+  "photo": "P3",
+  "px": [
+   808,
+   1597
+  ],
+  "emplacement": "linteau de ouv-RDC-001 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)",
+  "mesure": "membrure str-RDC-L01 (linteau)",
+  "ref_lecture_1": [
+   "str-RDC-L01"
+  ],
+  "n_lecture_2": 71,
+  "mesure_lecture_2": "linteau 2 pièces 2\"x8\"",
+  "distance_px": 15.3
+ },
+ {
+  "id": "cote-RDC-074",
+  "feuille": "RDC",
+  "texte_original": "LINTEAU 2-2\"x10\"",
+  "valeur": "LINTEAU:2-2x10",
+  "lecture_1": "LINTEAU 2-2\"x10\"",
+  "lecture_2": "LINTEAU 2-2\"x10\"",
+  "photo": "P3",
+  "px": [
+   1824,
+   1585
+  ],
+  "emplacement": "linteau de ouv-RDC-002 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)",
+  "mesure": "membrure str-RDC-L02 (linteau)",
+  "ref_lecture_1": [
+   "str-RDC-L02"
+  ],
+  "n_lecture_2": 72,
+  "mesure_lecture_2": "linteau 2 pièces 2\"x10\"",
+  "distance_px": 25.9
+ },
+ {
+  "id": "cote-RDC-075",
+  "feuille": "RDC",
+  "texte_original": "SOLIVES 2\"x7\" @ 16\" c/c",
+  "valeur": "SOLIVES:2x7@16",
+  "lecture_1": "SOLIVES 2\"x7\" @ 16\" c/c",
+  "lecture_2": "SOLIVES 2\"x7\" @ 16\" c/c",
+  "photo": "P3",
+  "px": [
+   1361,
+   520
+  ],
+  "emplacement": "écrit dans la chambre d'utilité, trait à deux butées orienté en y (avant-arrière) → solives parallèles à y ; probablement solives de plafond (non précisé)",
+  "mesure": "membrure str-RDC-S01 (solives)",
+  "ref_lecture_1": [
+   "str-RDC-S01"
+  ],
+  "n_lecture_2": 73,
+  "mesure_lecture_2": "solives de plafond/plancher 2\"x7\" à 16\" c/c",
+  "distance_px": 91.0
+ },
+ {
+  "id": "cote-RDC-077",
+  "feuille": "RDC",
+  "texte_original": "POUTRE 6\"x10\" FLUSH",
+  "valeur": "POUTRE:6x10",
+  "lecture_1": "POUTRE 6\"x10\" FLUSH",
+  "lecture_2": "POUTRE 6\"x10\" FLUSH",
+  "photo": "P3",
+  "px": [
+   1880,
+   867
+  ],
+  "emplacement": "poutre affleurante (« FLUSH ») traversant la cuisine de la cloison d'escalier au mur droit ; position y NON cotée (ESTIMÉ ≈ 17'-8\" du nu ext. avant) ; dans l'alignement de la cloison avant de la ch. d'utilité (y=204) à ~8 po près",
+  "mesure": "membrure str-RDC-P01 (poutre)",
+  "ref_lecture_1": [
+   "str-RDC-P01"
+  ],
+  "n_lecture_2": 75,
+  "mesure_lecture_2": "poutre encastrée 6\"x10\"",
+  "distance_px": 52.5
+ },
+ {
+  "id": "cote-RDC-078",
+  "feuille": "RDC",
+  "texte_original": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
+  "valeur": "BARRE:½@10",
+  "lecture_1": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
+  "lecture_2": "REN. AVEC BARRE ½\"ø @ 10\" c/c",
+  "photo": "P3",
+  "px": null,
+  "emplacement": "perron en béton renforcé (armé) de barres de ½ po de diamètre espacées de 10 po centre à centre",
+  "mesure": "perron en béton renforcé (armé) de barres de ½ po de diamètre espacées de 10 po centre à centre",
+  "ref_lecture_1": [
+   "note-RDC-04"
+  ],
+  "n_lecture_2": 76,
+  "mesure_lecture_2": "armature du perron : barres ½\" à 10\" c/c",
+  "distance_px": 120
+ },
+ {
+  "id": "cote-RDC-079",
+  "feuille": "RDC",
+  "texte_original": "2.R. 14 C.M.",
+  "valeur": 14,
+  "lecture_1": "2.R. 14 C.M.",
+  "lecture_2": "14 C.M.",
+  "photo": "P3",
+  "px": null,
+  "emplacement": "escalier de 14 contremarches vers le sous-sol ; préfixe « 2.R. » (ou « E.R. ») non interprété",
+  "mesure": "escalier de 14 contremarches vers le sous-sol ; préfixe « 2.R. » (ou « E.R. ») non interprété",
+  "ref_lecture_1": [
+   "note-RDC-08"
+  ],
+  "n_lecture_2": 77,
+  "mesure_lecture_2": "nombre de contremarches",
+  "distance_px": 120
+ },
+ {
+  "id": "cote-RDC-080",
+  "feuille": "RDC",
+  "texte_original": "ÉCHELLE : 1/4\" = 1'-0\"",
+  "valeur": "1/4\"=1'0\"",
+  "lecture_1": "ÉCHELLE : 1/4\" = 1'-0\"",
+  "lecture_2": "ÉCHELLE: 1/4\" = 1'-0\"",
+  "photo": "P6",
+  "px": null,
+  "emplacement": "échelle 1:48 ; le dessin n'est pas fiable pour la mesure (les cotes priment), quoique l'homographie montre une bonne concordance (±3 po)",
+  "mesure": "échelle 1:48 ; le dessin n'est pas fiable pour la mesure (les cotes priment), quoique l'homographie montre une bonne concordance (±3 po)",
+  "ref_lecture_1": [
+   "note-RDC-02"
+  ],
+  "n_lecture_2": 84,
+  "mesure_lecture_2": "échelle du dessin",
+  "distance_px": 120
+ },
+ {
+  "id": "cote-P2-001",
+  "feuille": "P2",
+  "texte_original": "38'",
+  "valeur": 456,
+  "lecture_1": "38'",
+  "lecture_2": "38'",
+  "photo": "P2",
+  "px": [
+   1060,
+   190
+  ],
+  "emplacement": "chaîne hors-tout arrière (haut de l'image), entre les bulles 1 et 7",
+  "mesure": "longueur hors-tout de la façade : nu ext. gauche (ligne 1) → nu ext. droit (ligne 7)",
+  "ref_lecture_1": [
+   "cote-P2-001"
+  ],
+  "n_lecture_2": 1,
+  "mesure_lecture_2": "hors-tout façade : ligne 1 (nu ext. mur gauche) à ligne 7 (nu ext. mur droit)",
+  "distance_px": 3.2
+ },
+ {
+  "id": "cote-P2-003",
+  "feuille": "P2",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10\"",
+  "photo": "P2",
+  "px": [
+   382,
+   1582
+  ],
+  "emplacement": "chaîne avant (bas), 1er segment à gauche, depuis la ligne 1",
+  "mesure": "épaisseur du mur ext. gauche (ligne 1 → nu int.)",
+  "ref_lecture_1": [
+   "cote-P2-003"
+  ],
+  "n_lecture_2": 3,
+  "mesure_lecture_2": "épaisseur du mur latéral gauche (ligne 1 = nu ext.)",
+  "distance_px": 1.0
+ },
+ {
+  "id": "cote-P2-004",
+  "feuille": "P2",
+  "texte_original": "11' 4\"",
+  "valeur": 136,
+  "lecture_1": "11' 4\"",
+  "lecture_2": "11' 4\"",
+  "photo": "P2",
+  "px": [
+   620,
+   1597
+  ],
+  "emplacement": "chaîne avant, 2e segment",
+  "mesure": "nu int. mur gauche → ligne 2",
+  "ref_lecture_1": [
+   "cote-P2-004"
+  ],
+  "n_lecture_2": 4,
+  "mesure_lecture_2": "nu int. mur gauche à ligne 2",
+  "distance_px": 3.6
+ },
+ {
+  "id": "cote-P2-005",
+  "feuille": "P2",
+  "texte_original": "2' 5\"",
+  "valeur": 29,
+  "lecture_1": "2' 5\"",
+  "lecture_2": "2' 5\"",
+  "photo": "P2",
+  "px": [
+   865,
+   1597
+  ],
+  "emplacement": "chaîne avant, ligne 2 → ligne 3",
+  "mesure": "ligne 2 → ligne 3 (profondeur des placards en H)",
+  "ref_lecture_1": [
+   "cote-P2-005"
+  ],
+  "n_lecture_2": 5,
+  "mesure_lecture_2": "ligne 2 à ligne 3",
+  "distance_px": 3.6
+ },
+ {
+  "id": "cote-P2-006",
+  "feuille": "P2",
+  "texte_original": "3' 11\"",
+  "valeur": 47,
+  "lecture_1": "3' 11\"",
+  "lecture_2": "3' 11\"",
+  "photo": "P2",
+  "px": [
+   985,
+   1597
+  ],
+  "emplacement": "chaîne avant, ligne 3 → ligne 4",
+  "mesure": "ligne 3 → ligne 4 (zone hall/vestibule ; ouverture pâle dans le mur avant x≈183–216 po)",
+  "ref_lecture_1": [
+   "cote-P2-006"
+  ],
+  "n_lecture_2": 6,
+  "mesure_lecture_2": "ligne 3 à ligne 4",
+  "distance_px": 3.0
+ },
+ {
+  "id": "cote-P2-007",
+  "feuille": "P2",
+  "texte_original": "4' 5\"",
+  "valeur": 53,
+  "lecture_1": "4' 5\"",
+  "lecture_2": "4' 5\"",
+  "photo": "P2",
+  "px": [
+   1127,
+   1602
+  ],
+  "emplacement": "chaîne avant, ligne 4 → ligne 5",
+  "mesure": "ligne 4 → ligne 5",
+  "ref_lecture_1": [
+   "cote-P2-007"
+  ],
+  "n_lecture_2": 7,
+  "mesure_lecture_2": "ligne 4 à ligne 5",
+  "distance_px": 3.6
+ },
+ {
+  "id": "cote-P2-008",
+  "feuille": "P2",
+  "texte_original": "3' 5\"",
+  "valeur": 41,
+  "lecture_1": "3' 5\"",
+  "lecture_2": "3' 5\"",
+  "photo": "P2",
+  "px": [
+   1280,
+   1605
+  ],
+  "emplacement": "chaîne avant, ligne 5 → ligne 6",
+  "mesure": "ligne 5 → ligne 6 (= largeur de la cage d'escalier d'origine, fond pâle)",
+  "ref_lecture_1": [
+   "cote-P2-008"
+  ],
+  "n_lecture_2": 8,
+  "mesure_lecture_2": "ligne 5 à ligne 6",
+  "distance_px": 2.2
+ },
+ {
+  "id": "cote-P2-009",
+  "feuille": "P2",
+  "texte_original": "10' 10\"",
+  "valeur": 130,
+  "lecture_1": "10' 10\"",
+  "lecture_2": "10' 10\"",
+  "photo": "P2",
+  "px": [
+   1537,
+   1617
+  ],
+  "emplacement": "chaîne avant, ligne 6 → tic du nu int. droit",
+  "mesure": "ligne 6 → nu int. du mur droit",
+  "ref_lecture_1": [
+   "cote-P2-009"
+  ],
+  "n_lecture_2": 9,
+  "mesure_lecture_2": "ligne 6 à nu int. mur droit",
+  "distance_px": 2.8
+ },
+ {
+  "id": "cote-P2-010",
+  "feuille": "P2",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10\"",
+  "photo": "P2",
+  "px": [
+   1732,
+   1585
+  ],
+  "emplacement": "chaîne avant, dernier segment à droite",
+  "mesure": "épaisseur du mur ext. droit (nu int. → ligne 7)",
+  "ref_lecture_1": [
+   "cote-P2-010"
+  ],
+  "n_lecture_2": 10,
+  "mesure_lecture_2": "épaisseur du mur latéral droit (ligne 7 = nu ext.)",
+  "distance_px": 2.8
+ },
+ {
+  "id": "cote-P2-011",
+  "feuille": "P2",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10\"",
+  "photo": "P2",
+  "px": [
+   1887,
+   373
+  ],
+  "emplacement": "chaîne droite, en haut, sous la bulle D",
+  "mesure": "épaisseur du mur arrière (D → nu int.)",
+  "ref_lecture_1": [
+   "cote-P2-011"
+  ],
+  "n_lecture_2": 11,
+  "mesure_lecture_2": "épaisseur du mur arrière (ligne D = nu ext.)",
+  "distance_px": 36.0
+ },
+ {
+  "id": "cote-P2-012",
+  "feuille": "P2",
+  "texte_original": "13' 10\"",
+  "valeur": 166,
+  "lecture_1": "13' 10\"",
+  "lecture_2": "13' 10\"",
+  "photo": "P2",
+  "px": [
+   1917,
+   647
+  ],
+  "emplacement": "chaîne droite, nu int. arrière → C",
+  "mesure": "nu int. mur arrière → axe C",
+  "ref_lecture_1": [
+   "cote-P2-012"
+  ],
+  "n_lecture_2": 12,
+  "mesure_lecture_2": "nu int. mur arrière à ligne C (axe porteur d'origine)",
+  "distance_px": 9.2
+ },
+ {
+  "id": "cote-P2-013",
+  "feuille": "P2",
+  "texte_original": "3' 11\"",
+  "valeur": 47,
+  "lecture_1": "3' 11\"",
+  "lecture_2": "3' 11\"",
+  "photo": "P2",
+  "px": [
+   1913,
+   987
+  ],
+  "emplacement": "chaîne droite, C → B",
+  "mesure": "entraxe des deux « axes porteurs à l'origine » C et B",
+  "ref_lecture_1": [
+   "cote-P2-013"
+  ],
+  "n_lecture_2": 13,
+  "mesure_lecture_2": "ligne C à ligne B (entre les deux axes porteurs d'origine)",
+  "distance_px": 2.2
+ },
+ {
+  "id": "cote-P2-014",
+  "feuille": "P2",
+  "texte_original": "12' 3\"",
+  "valeur": 147,
+  "lecture_1": "12' 3\"",
+  "lecture_2": "12' 3\"",
+  "photo": "P2",
+  "px": [
+   1910,
+   1269
+  ],
+  "emplacement": "chaîne droite, B → nu int. avant",
+  "mesure": "axe B → nu int. du mur avant",
+  "ref_lecture_1": [
+   "cote-P2-014"
+  ],
+  "n_lecture_2": 14,
+  "mesure_lecture_2": "ligne B à nu int. mur avant",
+  "distance_px": 1.4
+ },
+ {
+  "id": "cote-P2-015",
+  "feuille": "P2",
+  "texte_original": "10\"",
+  "valeur": 10,
+  "lecture_1": "10\"",
+  "lecture_2": "10\"",
+  "photo": "P2",
+  "px": [
+   1850,
+   1525
+  ],
+  "emplacement": "chaîne droite, en bas, au-dessus de la bulle A",
+  "mesure": "épaisseur du mur avant (nu int. → A)",
+  "ref_lecture_1": [
+   "cote-P2-015"
+  ],
+  "n_lecture_2": 15,
+  "mesure_lecture_2": "épaisseur du mur avant (ligne A = nu ext., côté rue)",
+  "distance_px": 16.0
+ },
+ {
+  "id": "cote-P2-016",
+  "feuille": "P2",
+  "texte_original": "5 / 12",
+  "valeur": "5/12",
+  "lecture_1": "5 / 12",
+  "lecture_2": "5 / 12",
+  "photo": "P2",
+  "px": [
+   2280,
+   590
+  ],
+  "emplacement": "triangle de pente sur la ferme de toit (à droite du plan)",
+  "mesure": "pente du toit 5/12 (≈22,6°) — rapport, pas une longueur",
+  "ref_lecture_1": [
+   "cote-P2-016"
+  ],
+  "n_lecture_2": 16,
+  "mesure_lecture_2": "pente du toit 5 dans 12",
+  "distance_px": 20.6
+ },
+ {
+  "id": "cote-P2-023",
+  "feuille": "P2",
+  "texte_original": "Fissure ± 1,2 m au plafond de stucco",
+  "valeur": 47.2,
+  "lecture_1": "Fissure ± 1,2 m au plafond de stucco",
+  "lecture_2": "Fissure ± 1,2 m au plafond de stucco",
+  "photo": "P2",
+  "px": [
+   1522,
+   1368
+  ],
+  "emplacement": "x≈319 po (≈ ligne 6), y≈31→67 po (longueur dessinée ≈37 po, ESTIMÉ ; texte : ± 1,2 m ≈ 47 po)",
+  "mesure": "Trait tireté rouge vertical (parallèle à y) dans le salon.",
+  "ref_lecture_1": [
+   "P2.annotations"
+  ],
+  "n_lecture_2": 17,
+  "mesure_lecture_2": "longueur approx. de la fissure au plafond du salon",
+  "distance_px": 61.1
+ },
+ {
+  "id": "cote-P5-001",
+  "feuille": "P5",
+  "texte_original": "38'-0\"",
+  "valeur": 456,
+  "lecture_1": "38'-0\"",
+  "lecture_2": "38'-0\"",
+  "photo": "P5",
+  "px": [
+   875,
+   1218
+  ],
+  "emplacement": "au-dessus de la façade de la maison",
+  "mesure": "largeur de la maison (façade sur l'av. Laurier)",
+  "ref_lecture_1": [
+   "cote-P5-001"
+  ],
+  "n_lecture_2": 40,
+  "mesure_lecture_2": "largeur de la maison (façade)",
+  "distance_px": 44.1
+ },
+ {
+  "id": "cote-P5-004",
+  "feuille": "P5",
+  "texte_original": "9'",
+  "valeur": 108,
+  "lecture_1": "9'",
+  "lecture_2": "9'",
+  "photo": "P5",
+  "px": [
+   1080,
+   1220
+  ],
+  "emplacement": "à droite de la maison, prolongement de la façade, flèche vers la ligne de lot droite",
+  "mesure": "marge latérale droite à l'avant (coin avant-droit → ligne de lot droite)",
+  "ref_lecture_1": [
+   "cote-P5-004"
+  ],
+  "n_lecture_2": 41,
+  "mesure_lecture_2": "marge latérale droite : mur droit à la limite droite du lot (au mur avant)",
+  "distance_px": 16.8
+ },
+ {
+  "id": "cote-P5-005",
+  "feuille": "P5",
+  "texte_original": "9'",
+  "valeur": 108,
+  "lecture_1": "9'",
+  "lecture_2": "9'",
+  "photo": "P5",
+  "px": [
+   1066,
+   889
+  ],
+  "emplacement": "à droite de la maison, prolongement du mur arrière, flèche vers la ligne de lot droite",
+  "mesure": "marge latérale droite à l'arrière",
+  "ref_lecture_1": [
+   "cote-P5-005"
+  ],
+  "n_lecture_2": 38,
+  "mesure_lecture_2": "marge latérale droite : mur droit de la maison à la limite droite du lot (au mur arrière)",
+  "distance_px": 2.0
+ },
+ {
+  "id": "cote-P5-006",
+  "feuille": "P5",
+  "texte_original": "40'",
+  "valeur": 480,
+  "lecture_1": "40'",
+  "lecture_2": "40'",
+  "photo": "P5",
+  "px": [
+   557,
+   1429
+  ],
+  "emplacement": "écrit verticalement le long de la ligne de lot gauche, devant la maison",
+  "mesure": "marge avant (rue → façade), côté gauche",
+  "ref_lecture_1": [
+   "cote-P5-006"
+  ],
+  "n_lecture_2": 42,
+  "mesure_lecture_2": "marge avant (rue à mur avant), côté gauche",
+  "distance_px": 1.4
+ },
+ {
+  "id": "cote-P5-007",
+  "feuille": "P5",
+  "texte_original": "40'",
+  "valeur": 480,
+  "lecture_1": "40'",
+  "lecture_2": "40'",
+  "photo": "P5",
+  "px": [
+   1112,
+   1421
+  ],
+  "emplacement": "écrit verticalement près de la ligne de lot droite, à côté de « ALLÉE »",
+  "mesure": "marge avant, côté droit",
+  "ref_lecture_1": [
+   "cote-P5-007"
+  ],
+  "n_lecture_2": 43,
+  "mesure_lecture_2": "marge avant (rue à mur avant), côté droit",
+  "distance_px": 11.4
+ },
+ {
+  "id": "cote-P5-009",
+  "feuille": "P5",
+  "texte_original": "50.27'",
+  "valeur": 603.24,
+  "lecture_1": "50.27'",
+  "lecture_2": "50.27'",
+  "photo": "P5",
+  "px": [
+   882,
+   502
+  ],
+  "emplacement": "ligne arrière du lot",
+  "mesure": "largeur du lot à l'arrière",
+  "ref_lecture_1": [
+   "cote-P5-009"
+  ],
+  "n_lecture_2": 31,
+  "mesure_lecture_2": "largeur arrière du lot",
+  "distance_px": 7.6
+ },
+ {
+  "id": "cote-P5-010",
+  "feuille": "P5",
+  "texte_original": "115.17'",
+  "valeur": 1382.04,
+  "lecture_1": "115.17'",
+  "lecture_2": "115.17'",
+  "photo": "P5",
+  "px": [
+   558,
+   960
+  ],
+  "emplacement": "écrit verticalement le long de la ligne de lot gauche (oblique)",
+  "mesure": "longueur de la ligne latérale gauche du lot",
+  "ref_lecture_1": [
+   "cote-P5-010"
+  ],
+  "n_lecture_2": 35,
+  "mesure_lecture_2": "profondeur du lot côté gauche",
+  "distance_px": 20.0
+ },
+ {
+  "id": "cote-P5-011",
+  "feuille": "P5",
+  "texte_original": "112.28'",
+  "valeur": 1347.36,
+  "lecture_1": "112.28'",
+  "lecture_2": "112,28'",
+  "photo": "P5",
+  "px": [
+   1140,
+   966
+  ],
+  "emplacement": "écrit verticalement le long de la ligne de lot droite",
+  "mesure": "longueur de la ligne latérale droite du lot (dessinée ⟂ à la rue)",
+  "ref_lecture_1": [
+   "cote-P5-011"
+  ],
+  "n_lecture_2": 36,
+  "mesure_lecture_2": "profondeur du lot côté droit",
+  "distance_px": 10.0
+ }
+]
