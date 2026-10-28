@@ -18,7 +18,22 @@
   ],
   "n_lecture_2": 1,
   "mesure_lecture_2": "nu ext. mur gauche → nu ext. mur droit (largeur totale)",
-  "distance_px": 15.0
+  "distance_px": 15.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1311,
+    122
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1296,
+    122
+   ]
+  }
  },
  {
   "id": "cote-SS-002",
@@ -39,7 +54,22 @@
   ],
   "n_lecture_2": 2,
   "mesure_lecture_2": "nu ext. mur gauche → nu ext. mur gauche du caveau à légumes",
-  "distance_px": 2.0
+  "distance_px": 2.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    915,
+    150
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    913,
+    150
+   ]
+  }
  },
  {
   "id": "cote-SS-003",
@@ -60,7 +90,22 @@
   ],
   "n_lecture_2": 3,
   "mesure_lecture_2": "nu ext. → nu ext. des murs latéraux du caveau à légumes",
-  "distance_px": 0.0
+  "distance_px": 0.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1361,
+    140
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1361,
+    140
+   ]
+  }
  },
  {
   "id": "cote-SS-007",
@@ -81,7 +126,22 @@
   ],
   "n_lecture_2": 8,
   "mesure_lecture_2": "épaisseur du mur de fondation du caveau",
-  "distance_px": 3.2
+  "distance_px": 3.2,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1517,
+    248
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1514,
+    247
+   ]
+  }
  },
  {
   "id": "cote-SS-008",
@@ -102,7 +162,22 @@
   ],
   "n_lecture_2": 7,
   "mesure_lecture_2": "largeur de la semelle du mur du caveau",
-  "distance_px": 3.0
+  "distance_px": 3.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1567,
+    217
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1570,
+    217
+   ]
+  }
  },
  {
   "id": "cote-SS-009",
@@ -123,7 +198,22 @@
   ],
   "n_lecture_2": 9,
   "mesure_lecture_2": "profondeur (saillie) du caveau depuis le mur arrière (nu ext.)",
-  "distance_px": 5.8
+  "distance_px": 5.8,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1587,
+    267
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1590,
+    262
+   ]
+  }
  },
  {
   "id": "cote-SS-011",
@@ -144,7 +234,22 @@
   ],
   "n_lecture_2": 13,
   "mesure_lecture_2": "nu ext. mur arrière → nu ext. mur avant (profondeur totale)",
-  "distance_px": 5.0
+  "distance_px": 5.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    272,
+    950
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    272,
+    945
+   ]
+  }
  },
  {
   "id": "cote-SS-012",
@@ -165,7 +270,22 @@
   ],
   "n_lecture_2": 14,
   "mesure_lecture_2": "nu ext. mur arrière → axe fenêtre gauche supérieure",
-  "distance_px": 7.1
+  "distance_px": 7.1,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    417,
+    675
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    412,
+    670
+   ]
+  }
  },
  {
   "id": "cote-SS-013",
@@ -186,7 +306,22 @@
   ],
   "n_lecture_2": 15,
   "mesure_lecture_2": "axe fenêtre gauche supérieure → repère au bas (côté avant) de la cheminée",
-  "distance_px": 5.0
+  "distance_px": 5.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    392,
+    1030
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    395,
+    1026
+   ]
+  }
  },
  {
   "id": "cote-SS-015",
@@ -207,7 +342,22 @@
   ],
   "n_lecture_2": 17,
   "mesure_lecture_2": "axe fenêtre gauche inférieure → nu ext. mur avant",
-  "distance_px": 1.0
+  "distance_px": 1.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    370,
+    1457
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    370,
+    1458
+   ]
+  }
  },
  {
   "id": "cote-SS-018",
@@ -228,7 +378,22 @@
   ],
   "n_lecture_2": 20,
   "mesure_lecture_2": "largeur de la semelle",
-  "distance_px": 2.0
+  "distance_px": 2.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    605,
+    642
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    607,
+    642
+   ]
+  }
  },
  {
   "id": "cote-SS-019",
@@ -249,7 +414,22 @@
   ],
   "n_lecture_2": 21,
   "mesure_lecture_2": "épaisseur du mur de fondation",
-  "distance_px": 2.8
+  "distance_px": 2.8,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    605,
+    686
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    607,
+    684
+   ]
+  }
  },
  {
   "id": "cote-SS-020",
@@ -270,7 +450,22 @@
   ],
   "n_lecture_2": 42,
   "mesure_lecture_2": "nu ext. mur arrière → nu ext. mur avant",
-  "distance_px": 20.0
+  "distance_px": 20.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    2172,
+    975
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    2172,
+    955
+   ]
+  }
  },
  {
   "id": "cote-SS-021",
@@ -291,7 +486,22 @@
   ],
   "n_lecture_2": 43,
   "mesure_lecture_2": "nu ext. mur arrière → axe fenêtre droite supérieure",
-  "distance_px": 10.4
+  "distance_px": 10.4,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    2005,
+    465
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    2008,
+    475
+   ]
+  }
  },
  {
   "id": "cote-SS-022",
@@ -312,7 +522,22 @@
   ],
   "n_lecture_2": 44,
   "mesure_lecture_2": "axe fenêtre droite sup. → axe fenêtre droite médiane (3'-0\")",
-  "distance_px": 4.2
+  "distance_px": 4.2,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    2022,
+    765
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    2019,
+    762
+   ]
+  }
  },
  {
   "id": "cote-SS-026",
@@ -333,7 +558,22 @@
   ],
   "n_lecture_2": 48,
   "mesure_lecture_2": "largeur de la fenêtre",
-  "distance_px": 10.2
+  "distance_px": 10.2,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1952,
+    975
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1954,
+    965
+   ]
+  }
  },
  {
   "id": "cote-SS-027",
@@ -354,7 +594,22 @@
   ],
   "n_lecture_2": 51,
   "mesure_lecture_2": "nu ext. mur gauche → nu ext. gauche de l'excroissance du perron",
-  "distance_px": 1.4
+  "distance_px": 1.4,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    727,
+    1757
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    728,
+    1756
+   ]
+  }
  },
  {
   "id": "cote-SS-028",
@@ -375,7 +630,22 @@
   ],
   "n_lecture_2": 52,
   "mesure_lecture_2": "largeur hors-tout de l'excroissance de fondation sous le perron",
-  "distance_px": 1.4
+  "distance_px": 1.4,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1117,
+    1762
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1116,
+    1763
+   ]
+  }
  },
  {
   "id": "cote-SS-029",
@@ -396,7 +666,22 @@
   ],
   "n_lecture_2": 53,
   "mesure_lecture_2": "nu ext. droit du perron → axe fenêtre avant",
-  "distance_px": 4.5
+  "distance_px": 4.5,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1477,
+    1765
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1481,
+    1763
+   ]
+  }
  },
  {
   "id": "cote-SS-030",
@@ -417,7 +702,22 @@
   ],
   "n_lecture_2": 54,
   "mesure_lecture_2": "axe fenêtre avant → nu ext. mur droit",
-  "distance_px": 2.0
+  "distance_px": 2.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1842,
+    1760
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1844,
+    1760
+   ]
+  }
  },
  {
   "id": "cote-SS-031",
@@ -438,7 +738,22 @@
   ],
   "n_lecture_2": 55,
   "mesure_lecture_2": "axe fenêtre avant → nu ext. mur droit",
-  "distance_px": 6.0
+  "distance_px": 6.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1840,
+    1650
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1846,
+    1650
+   ]
+  }
  },
  {
   "id": "cote-SS-032",
@@ -459,7 +774,22 @@
   ],
   "n_lecture_2": 56,
   "mesure_lecture_2": "largeur de la fenêtre (baie double)",
-  "distance_px": 11.0
+  "distance_px": 11.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1715,
+    1572
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1726,
+    1571
+   ]
+  }
  },
  {
   "id": "cote-SS-033",
@@ -480,7 +810,22 @@
   ],
   "n_lecture_2": 57,
   "mesure_lecture_2": "saillie de l'excroissance de fondation devant le mur avant (nu ext. → nu ext.)",
-  "distance_px": 4.1
+  "distance_px": 4.1,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1302,
+    1625
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1306,
+    1626
+   ]
+  }
  },
  {
   "id": "cote-SS-034",
@@ -501,7 +846,22 @@
   ],
   "n_lecture_2": 34,
   "mesure_lecture_2": "épaisseur du mur avant",
-  "distance_px": 4.1
+  "distance_px": 4.1,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1312,
+    1520
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1313,
+    1516
+   ]
+  }
  },
  {
   "id": "cote-SS-035",
@@ -522,7 +882,22 @@
   ],
   "n_lecture_2": 58,
   "mesure_lecture_2": "largeur de la semelle du mur du perron",
-  "distance_px": 4.0
+  "distance_px": 4.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1090,
+    1576
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1086,
+    1576
+   ]
+  }
  },
  {
   "id": "cote-SS-037",
@@ -543,7 +918,22 @@
   ],
   "n_lecture_2": 22,
   "mesure_lecture_2": "épaisseur du mur gauche (nu ext. → nu int.)",
-  "distance_px": 2.0
+  "distance_px": 2.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    540,
+    812
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    538,
+    812
+   ]
+  }
  },
  {
   "id": "cote-SS-039",
@@ -564,7 +954,22 @@
   ],
   "n_lecture_2": 24,
   "mesure_lecture_2": "largeur de la colonne 1",
-  "distance_px": 2.2
+  "distance_px": 2.2,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    935,
+    807
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    937,
+    808
+   ]
+  }
  },
  {
   "id": "cote-SS-040",
@@ -585,7 +990,22 @@
   ],
   "n_lecture_2": 25,
   "mesure_lecture_2": "entre colonne 1 et colonne 2 (faces)",
-  "distance_px": 6.3
+  "distance_px": 6.3,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1080,
+    810
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1086,
+    812
+   ]
+  }
  },
  {
   "id": "cote-SS-041",
@@ -606,7 +1026,22 @@
   ],
   "n_lecture_2": 26,
   "mesure_lecture_2": "largeur de la colonne 2",
-  "distance_px": 8.0
+  "distance_px": 8.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1225,
+    812
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1233,
+    812
+   ]
+  }
  },
  {
   "id": "cote-SS-042",
@@ -627,7 +1062,22 @@
   ],
   "n_lecture_2": 27,
   "mesure_lecture_2": "entre colonne 2 et colonne 3 (faces)",
-  "distance_px": 5.1
+  "distance_px": 5.1,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1307,
+    804
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1306,
+    809
+   ]
+  }
  },
  {
   "id": "cote-SS-043",
@@ -648,7 +1098,22 @@
   ],
   "n_lecture_2": 28,
   "mesure_lecture_2": "largeur de la colonne 3",
-  "distance_px": 1.0
+  "distance_px": 1.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1517,
+    805
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1517,
+    806
+   ]
+  }
  },
  {
   "id": "cote-SS-045",
@@ -669,7 +1134,22 @@
   ],
   "n_lecture_2": 30,
   "mesure_lecture_2": "épaisseur du mur droit",
-  "distance_px": 4.5
+  "distance_px": 4.5,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1907,
+    810
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1911,
+    812
+   ]
+  }
  },
  {
   "id": "cote-SS-047",
@@ -690,7 +1170,22 @@
   ],
   "n_lecture_2": 32,
   "mesure_lecture_2": "axe poutre arrière → axe poutre avant (entre les deux POUTRES 8\"x10\")",
-  "distance_px": 6.1
+  "distance_px": 6.1,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1312,
+    952
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1313,
+    946
+   ]
+  }
  },
  {
   "id": "cote-SS-048",
@@ -711,7 +1206,22 @@
   ],
   "n_lecture_2": 33,
   "mesure_lecture_2": "axe poutre avant → nu int. mur avant",
-  "distance_px": 37.0
+  "distance_px": 37.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1316,
+    1300
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1316,
+    1263
+   ]
+  }
  },
  {
   "id": "cote-SS-049",
@@ -732,7 +1242,22 @@
   ],
   "n_lecture_2": 11,
   "mesure_lecture_2": "largeur de la porte du caveau",
-  "distance_px": 12.0
+  "distance_px": 12.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1408,
+    380
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1420,
+    380
+   ]
+  }
  },
  {
   "id": "cote-SS-050",
@@ -753,7 +1278,22 @@
   ],
   "n_lecture_2": 49,
   "mesure_lecture_2": "largeur de la porte",
-  "distance_px": 30.0
+  "distance_px": 30.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1795,
+    1281
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1765,
+    1281
+   ]
+  }
  },
  {
   "id": "cote-SS-051",
@@ -775,10 +1315,25 @@
   ],
   "n_lecture_2": 38,
   "mesure_lecture_2": "solives 2\"x10\" espacées de 20\" c/c (valeur = espacement)",
-  "distance_px": 40.7
+  "distance_px": 40.7,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1207,
+    657
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1170,
+    640
+   ]
+  }
  },
  {
-  "id": "cote-SS-053",
+  "id": "cote-SS-052",
   "feuille": "SS",
   "texte_original": "POUTRE 8\"x10\"",
   "valeur": "POUTRE:8x10",
@@ -796,10 +1351,25 @@
   ],
   "n_lecture_2": 35,
   "mesure_lecture_2": "section de poutre 8\" x 10\"",
-  "distance_px": 63.1
+  "distance_px": 63.1,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1087,
+    867
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1150,
+    870
+   ]
+  }
  },
  {
-  "id": "cote-SS-054",
+  "id": "cote-SS-053",
   "feuille": "SS",
   "texte_original": "POUTRE 8\"x10\"",
   "valeur": "POUTRE:8x10",
@@ -814,10 +1384,22 @@
   ],
   "n_lecture_2": 36,
   "mesure_lecture_2": "section de poutre 8\" x 10\"",
-  "distance_px": 120
+  "distance_px": 120,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": null,
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1150,
+    1016
+   ]
+  }
  },
  {
-  "id": "cote-SS-055",
+  "id": "cote-SS-054",
   "feuille": "SS",
   "texte_original": "COL. BOIS, 8\"x8\"",
   "valeur": "COLONNE:8x8",
@@ -840,10 +1422,25 @@
   ],
   "n_lecture_2": 37,
   "mesure_lecture_2": "section de colonne de bois 8\" x 8\"",
-  "distance_px": 20.1
+  "distance_px": 20.1,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1110,
+    940
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1130,
+    938
+   ]
+  }
  },
  {
-  "id": "cote-SS-056",
+  "id": "cote-SS-055",
   "feuille": "SS",
   "texte_original": "14 C.M.",
   "valeur": 14,
@@ -861,10 +1458,25 @@
   ],
   "n_lecture_2": 39,
   "mesure_lecture_2": "nombre de contremarches",
-  "distance_px": 22.0
+  "distance_px": 22.0,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    1435,
+    757
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    1436,
+    735
+   ]
+  }
  },
  {
-  "id": "cote-SS-057",
+  "id": "cote-SS-056",
   "feuille": "SS",
   "texte_original": "ECHELLE: 1/4\" = 1'-0\"",
   "valeur": "1/4\"=1'0\"",
@@ -882,7 +1494,22 @@
   ],
   "n_lecture_2": 60,
   "mesure_lecture_2": "échelle du dessin (1/48)",
-  "distance_px": 18.2
+  "distance_px": 18.2,
+  "px_lecture_1": {
+   "photo": "P1",
+   "px": [
+    2330,
+    1762
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P1",
+   "px": [
+    2312,
+    1765
+   ]
+  }
  },
  {
   "id": "cote-RDC-001",
@@ -903,7 +1530,22 @@
   ],
   "n_lecture_2": 16,
   "mesure_lecture_2": "profondeur hors-tout, face ext. arrière → face ext. avant",
-  "distance_px": 65.3
+  "distance_px": 65.3,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    232,
+    1019
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    245,
+    955
+   ]
+  }
  },
  {
   "id": "cote-RDC-002",
@@ -924,7 +1566,22 @@
   ],
   "n_lecture_2": 14,
   "mesure_lecture_2": "coin ext. arrière-gauche → axe fenêtre salle de bain",
-  "distance_px": 5.7
+  "distance_px": 5.7,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    358,
+    586
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    362,
+    590
+   ]
+  }
  },
  {
   "id": "cote-RDC-003",
@@ -945,7 +1602,22 @@
   ],
   "n_lecture_2": 15,
   "mesure_lecture_2": "axe fenêtre salle de bain → coin ext. avant-gauche",
-  "distance_px": 7.1
+  "distance_px": 7.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    327,
+    1250
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    320,
+    1251
+   ]
+  }
  },
  {
   "id": "cote-RDC-004",
@@ -966,7 +1638,22 @@
   ],
   "n_lecture_2": 17,
   "mesure_lecture_2": "largeur fenêtre",
-  "distance_px": 11.3
+  "distance_px": 11.3,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    399,
+    892
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    407,
+    900
+   ]
+  }
  },
  {
   "id": "cote-RDC-005",
@@ -987,7 +1674,22 @@
   ],
   "n_lecture_2": 20,
   "mesure_lecture_2": "profondeur hors-tout",
-  "distance_px": 11.0
+  "distance_px": 11.0,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    2257,
+    916
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    2257,
+    905
+   ]
+  }
  },
  {
   "id": "cote-RDC-006",
@@ -1008,7 +1710,22 @@
   ],
   "n_lecture_2": 18,
   "mesure_lecture_2": "coin ext. arrière-droit → axe fenêtre côté droit (salle à manger)",
-  "distance_px": 11.4
+  "distance_px": 11.4,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    2157,
+    651
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    2154,
+    640
+   ]
+  }
  },
  {
   "id": "cote-RDC-007",
@@ -1029,7 +1746,22 @@
   ],
   "n_lecture_2": 19,
   "mesure_lecture_2": "axe fenêtre côté droit → coin ext. avant-droit",
-  "distance_px": 20.1
+  "distance_px": 20.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    2167,
+    1238
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    2169,
+    1258
+   ]
+  }
  },
  {
   "id": "cote-RDC-008",
@@ -1050,7 +1782,22 @@
   ],
   "n_lecture_2": 21,
   "mesure_lecture_2": "largeur fenêtre",
-  "distance_px": 5.1
+  "distance_px": 5.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    2105,
+    970
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    2104,
+    975
+   ]
+  }
  },
  {
   "id": "cote-RDC-009",
@@ -1071,7 +1818,22 @@
   ],
   "n_lecture_2": 28,
   "mesure_lecture_2": "largeur hors-tout, face ext. gauche → face ext. droite",
-  "distance_px": 10.3
+  "distance_px": 10.3,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1296,
+    1894
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1301,
+    1903
+   ]
+  }
  },
  {
   "id": "cote-RDC-010",
@@ -1092,7 +1854,22 @@
   ],
   "n_lecture_2": 24,
   "mesure_lecture_2": "coin ext. avant-gauche → axe fenêtre chambre avant",
-  "distance_px": 4.5
+  "distance_px": 4.5,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    620,
+    1740
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    618,
+    1736
+   ]
+  }
  },
  {
   "id": "cote-RDC-011",
@@ -1113,7 +1890,22 @@
   ],
   "n_lecture_2": 25,
   "mesure_lecture_2": "axe fenêtre chambre avant → axe porte d'entrée (repère dans le perron)",
-  "distance_px": 11.0
+  "distance_px": 11.0,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    987,
+    1750
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    998,
+    1751
+   ]
+  }
  },
  {
   "id": "cote-RDC-012",
@@ -1134,7 +1926,22 @@
   ],
   "n_lecture_2": 26,
   "mesure_lecture_2": "axe porte d'entrée → axe fenêtre salon",
-  "distance_px": 4.5
+  "distance_px": 4.5,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1565,
+    1750
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1569,
+    1748
+   ]
+  }
  },
  {
   "id": "cote-RDC-013",
@@ -1155,7 +1962,22 @@
   ],
   "n_lecture_2": 27,
   "mesure_lecture_2": "axe fenêtre salon → coin ext. avant-droit",
-  "distance_px": 1.4
+  "distance_px": 1.4,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1937,
+    1725
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1936,
+    1726
+   ]
+  }
  },
  {
   "id": "cote-RDC-016",
@@ -1176,7 +1998,22 @@
   ],
   "n_lecture_2": 9,
   "mesure_lecture_2": "coin ext. arrière-gauche → face ext. gauche du vestibule arrière",
-  "distance_px": 18.1
+  "distance_px": 18.1,
+  "px_lecture_1": {
+   "photo": "P6",
+   "px": [
+    850,
+    19
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P4",
+   "px": [
+    806,
+    20
+   ]
+  }
  },
  {
   "id": "cote-RDC-017",
@@ -1197,7 +2034,22 @@
   ],
   "n_lecture_2": 10,
   "mesure_lecture_2": "largeur hors-tout du vestibule arrière (face ext. à face ext.)",
-  "distance_px": 5.8
+  "distance_px": 5.8,
+  "px_lecture_1": {
+   "photo": "P6",
+   "px": [
+    1332,
+    22
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P4",
+   "px": [
+    1270,
+    22
+   ]
+  }
  },
  {
   "id": "cote-RDC-019",
@@ -1218,7 +2070,22 @@
   ],
   "n_lecture_2": 1,
   "mesure_lecture_2": "coin ext. arrière-gauche → axe fenêtre chambre arrière",
-  "distance_px": 4.5
+  "distance_px": 4.5,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    679,
+    84
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    683,
+    82
+   ]
+  }
  },
  {
   "id": "cote-RDC-021",
@@ -1239,7 +2106,22 @@
   ],
   "n_lecture_2": 3,
   "mesure_lecture_2": "axe fenêtre ch. d'utilité → axe porte arrière 2'-10\"x6'-10\" / fenêtre du vestibule",
-  "distance_px": 2.2
+  "distance_px": 2.2,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1406,
+    106
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1408,
+    105
+   ]
+  }
  },
  {
   "id": "cote-RDC-022",
@@ -1260,7 +2142,22 @@
   ],
   "n_lecture_2": 4,
   "mesure_lecture_2": "axe porte/fenêtre vestibule → axe fenêtre cuisine",
-  "distance_px": 2.0
+  "distance_px": 2.0,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1687,
+    115
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1689,
+    115
+   ]
+  }
  },
  {
   "id": "cote-RDC-024",
@@ -1281,7 +2178,22 @@
   ],
   "n_lecture_2": 6,
   "mesure_lecture_2": "largeur fenêtre (jambage à jambage)",
-  "distance_px": 5.0
+  "distance_px": 5.0,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    843,
+    156
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    840,
+    160
+   ]
+  }
  },
  {
   "id": "cote-RDC-025",
@@ -1302,7 +2214,22 @@
   ],
   "n_lecture_2": 7,
   "mesure_lecture_2": "largeur fenêtre",
-  "distance_px": 1.4
+  "distance_px": 1.4,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1175,
+    191
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1176,
+    192
+   ]
+  }
  },
  {
   "id": "cote-RDC-028",
@@ -1323,7 +2250,22 @@
   ],
   "n_lecture_2": 8,
   "mesure_lecture_2": "largeur fenêtre",
-  "distance_px": 2.2
+  "distance_px": 2.2,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1800,
+    212
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1799,
+    210
+   ]
+  }
  },
  {
   "id": "cote-RDC-029",
@@ -1344,7 +2286,22 @@
   ],
   "n_lecture_2": 29,
   "mesure_lecture_2": "face ext. mur gauche → cloison droite de la SDB (repère x≈844 px)",
-  "distance_px": 4.2
+  "distance_px": 4.2,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    675,
+    805
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    678,
+    802
+   ]
+  }
  },
  {
   "id": "cote-RDC-030",
@@ -1365,7 +2322,22 @@
   ],
   "n_lecture_2": 30,
   "mesure_lecture_2": "cloison SDB → cloison des garde-robes (x≈992 px)",
-  "distance_px": 2.2
+  "distance_px": 2.2,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    910,
+    804
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    908,
+    805
+   ]
+  }
  },
  {
   "id": "cote-RDC-031",
@@ -1386,7 +2358,22 @@
   ],
   "n_lecture_2": 31,
   "mesure_lecture_2": "cloison G.R. → repère x≈1103 px (cloison/jambage côté passage)",
-  "distance_px": 12.0
+  "distance_px": 12.0,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1062,
+    800
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1063,
+    812
+   ]
+  }
  },
  {
   "id": "cote-RDC-032",
@@ -1407,7 +2394,22 @@
   ],
   "n_lecture_2": 32,
   "mesure_lecture_2": "repère x≈1103 → mur de l'escalier (x≈1446)",
-  "distance_px": 5.8
+  "distance_px": 5.8,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1250,
+    823
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1253,
+    818
+   ]
+  }
  },
  {
   "id": "cote-RDC-033",
@@ -1428,7 +2430,22 @@
   ],
   "n_lecture_2": 33,
   "mesure_lecture_2": "mur escalier → mur escalier/cuisine (largeur escalier/balais)",
-  "distance_px": 9.2
+  "distance_px": 9.2,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1519,
+    803
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1521,
+    812
+   ]
+  }
  },
  {
   "id": "cote-RDC-034",
@@ -1449,7 +2466,22 @@
   ],
   "n_lecture_2": 34,
   "mesure_lecture_2": "mur escalier côté cuisine → face ext. mur droit",
-  "distance_px": 3.2
+  "distance_px": 3.2,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1815,
+    820
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1816,
+    817
+   ]
+  }
  },
  {
   "id": "cote-RDC-035",
@@ -1470,7 +2502,22 @@
   ],
   "n_lecture_2": 39,
   "mesure_lecture_2": "face ext. mur arrière → cloison chambre/SDB",
-  "distance_px": 5.4
+  "distance_px": 5.4,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    617,
+    617
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    612,
+    615
+   ]
+  }
  },
  {
   "id": "cote-RDC-036",
@@ -1491,7 +2538,22 @@
   ],
   "n_lecture_2": 40,
   "mesure_lecture_2": "cloison chambre arr./SDB → cloison SDB/chambre av.",
-  "distance_px": 17.1
+  "distance_px": 17.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    600,
+    923
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    598,
+    940
+   ]
+  }
  },
  {
   "id": "cote-RDC-037",
@@ -1512,7 +2574,22 @@
   ],
   "n_lecture_2": 41,
   "mesure_lecture_2": "cloison SDB → face ext. mur avant",
-  "distance_px": 6.1
+  "distance_px": 6.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    589,
+    1275
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    590,
+    1281
+   ]
+  }
  },
  {
   "id": "cote-RDC-039",
@@ -1533,7 +2610,22 @@
   ],
   "n_lecture_2": 36,
   "mesure_lecture_2": "profondeur G.R. entre cloisons",
-  "distance_px": 2.2
+  "distance_px": 2.2,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1050,
+    1350
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1048,
+    1349
+   ]
+  }
  },
  {
   "id": "cote-RDC-040",
@@ -1554,7 +2646,22 @@
   ],
   "n_lecture_2": 37,
   "mesure_lecture_2": "largeur du hall entre cloisons",
-  "distance_px": 4.1
+  "distance_px": 4.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1190,
+    1342
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1186,
+    1341
+   ]
+  }
  },
  {
   "id": "cote-RDC-041",
@@ -1575,7 +2682,22 @@
   ],
   "n_lecture_2": 38,
   "mesure_lecture_2": "cloison hall/salon → face ext. mur droit",
-  "distance_px": 6.1
+  "distance_px": 6.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1713,
+    1347
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1719,
+    1348
+   ]
+  }
  },
  {
   "id": "cote-RDC-042",
@@ -1596,7 +2718,22 @@
   ],
   "n_lecture_2": 43,
   "mesure_lecture_2": "face ext. mur arrière → cloison ch. d'utilité/passage",
-  "distance_px": 3.6
+  "distance_px": 3.6,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1325,
+    608
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1328,
+    610
+   ]
+  }
  },
  {
   "id": "cote-RDC-043",
@@ -1617,7 +2754,22 @@
   ],
   "n_lecture_2": 44,
   "mesure_lecture_2": "largeur du passage",
-  "distance_px": 13.3
+  "distance_px": 13.3,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1322,
+    962
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1335,
+    965
+   ]
+  }
  },
  {
   "id": "cote-RDC-044",
@@ -1638,7 +2790,22 @@
   ],
   "n_lecture_2": 45,
   "mesure_lecture_2": "cloison passage/salon → face ext. mur avant",
-  "distance_px": 7.3
+  "distance_px": 7.3,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1320,
+    1303
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1318,
+    1296
+   ]
+  }
  },
  {
   "id": "cote-RDC-046",
@@ -1659,7 +2826,22 @@
   ],
   "n_lecture_2": 47,
   "mesure_lecture_2": "arche → face ext. mur avant",
-  "distance_px": 3.6
+  "distance_px": 3.6,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1877,
+    1293
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1879,
+    1296
+   ]
+  }
  },
  {
   "id": "cote-RDC-049",
@@ -1680,10 +2862,25 @@
   ],
   "n_lecture_2": 64,
   "mesure_lecture_2": "largeur de l'arche",
-  "distance_px": 6.7
+  "distance_px": 6.7,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1890,
+    1047
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1884,
+    1050
+   ]
+  }
  },
  {
-  "id": "cote-RDC-052",
+  "id": "cote-RDC-050",
   "feuille": "RDC",
   "texte_original": "2'-10\"x6'-10\"",
   "valeur": [
@@ -1704,10 +2901,25 @@
   ],
   "n_lecture_2": 48,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 100.1
+  "distance_px": 100.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1615.4,
+    163.2
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1544,
+    93
+   ]
+  }
  },
  {
-  "id": "cote-RDC-053",
+  "id": "cote-RDC-051",
   "feuille": "RDC",
   "texte_original": "2'-8\"x6'-8\"",
   "valeur": [
@@ -1728,10 +2940,25 @@
   ],
   "n_lecture_2": 49,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 60.6
+  "distance_px": 60.6,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1525.6,
+    276.9
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1481,
+    318
+   ]
+  }
  },
  {
-  "id": "cote-RDC-054",
+  "id": "cote-RDC-052",
   "feuille": "RDC",
   "texte_original": "2'-8\"x6'-8\"",
   "valeur": [
@@ -1752,10 +2979,25 @@
   ],
   "n_lecture_2": 50,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 66.5
+  "distance_px": 66.5,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1597.1,
+    346.6
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1649,
+    305
+   ]
+  }
  },
  {
-  "id": "cote-RDC-055",
+  "id": "cote-RDC-053",
   "feuille": "RDC",
   "texte_original": "2'-4\"x6'-8\"",
   "valeur": [
@@ -1776,10 +3018,25 @@
   ],
   "n_lecture_2": 51,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 75.7
+  "distance_px": 75.7,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1008.5,
+    306.8
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    945,
+    348
+   ]
+  }
  },
  {
-  "id": "cote-RDC-056",
+  "id": "cote-RDC-054",
   "feuille": "RDC",
   "texte_original": "2'-4\"x6'-8\"",
   "valeur": [
@@ -1800,10 +3057,25 @@
   ],
   "n_lecture_2": 52,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 100.4
+  "distance_px": 100.4,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1005.1,
+    461.3
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    928,
+    397
+   ]
+  }
  },
  {
-  "id": "cote-RDC-057",
+  "id": "cote-RDC-055",
   "feuille": "RDC",
   "texte_original": "2'-4\"x6'-8\"",
   "valeur": [
@@ -1824,10 +3096,25 @@
   ],
   "n_lecture_2": 53,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 66.0
+  "distance_px": 66.0,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1104.6,
+    631.6
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1156,
+    673
+   ]
+  }
  },
  {
-  "id": "cote-RDC-058",
+  "id": "cote-RDC-056",
   "feuille": "RDC",
   "texte_original": "2'-6\"x6'-8\"",
   "valeur": [
@@ -1848,10 +3135,25 @@
   ],
   "n_lecture_2": 54,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 49.7
+  "distance_px": 49.7,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    928.1,
+    833.0
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    971,
+    808
+   ]
+  }
  },
  {
-  "id": "cote-RDC-060",
+  "id": "cote-RDC-058",
   "feuille": "RDC",
   "texte_original": "2'-6\"x6'-8\"",
   "valeur": [
@@ -1872,10 +3174,25 @@
   ],
   "n_lecture_2": 56,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 86.8
+  "distance_px": 86.8,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    855.8,
+    956.4
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    778,
+    995
+   ]
+  }
  },
  {
-  "id": "cote-RDC-062",
+  "id": "cote-RDC-060",
   "feuille": "RDC",
   "texte_original": "2'-6\"x6'-8\"",
   "valeur": [
@@ -1896,10 +3213,25 @@
   ],
   "n_lecture_2": 58,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 72.7
+  "distance_px": 72.7,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    923.0,
+    1035.3
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    963,
+    1096
+   ]
+  }
  },
  {
-  "id": "cote-RDC-063",
+  "id": "cote-RDC-061",
   "feuille": "RDC",
   "texte_original": "2'-6\"x6'-8\"",
   "valeur": [
@@ -1920,10 +3252,25 @@
   ],
   "n_lecture_2": 59,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 78.3
+  "distance_px": 78.3,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    986.8,
+    1275.6
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    923,
+    1321
+   ]
+  }
  },
  {
-  "id": "cote-RDC-065",
+  "id": "cote-RDC-063",
   "feuille": "RDC",
   "texte_original": "2'-10\"x6'-10\"",
   "valeur": [
@@ -1944,10 +3291,25 @@
   ],
   "n_lecture_2": 61,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 82.8
+  "distance_px": 82.8,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1175.1,
+    1609.9
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1221,
+    1541
+   ]
+  }
  },
  {
-  "id": "cote-RDC-066",
+  "id": "cote-RDC-064",
   "feuille": "RDC",
   "texte_original": "2'-4\"x6'-8\"",
   "valeur": [
@@ -1968,10 +3330,25 @@
   ],
   "n_lecture_2": 62,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 99.1
+  "distance_px": 99.1,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1526.5,
+    875.3
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1456,
+    945
+   ]
+  }
  },
  {
-  "id": "cote-RDC-067",
+  "id": "cote-RDC-065",
   "feuille": "RDC",
   "texte_original": "2'-8\"x6'-8\"",
   "valeur": [
@@ -1992,10 +3369,25 @@
   ],
   "n_lecture_2": 63,
   "mesure_lecture_2": "porte LxH (largeur x hauteur)",
-  "distance_px": 81.4
+  "distance_px": 81.4,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1598.1,
+    956.0
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1531,
+    1002
+   ]
+  }
  },
  {
-  "id": "cote-RDC-068",
+  "id": "cote-RDC-066",
   "feuille": "RDC",
   "texte_original": "LINTEAU 2-2\"x8\"",
   "valeur": "LINTEAU:2-2x8",
@@ -2013,10 +3405,25 @@
   ],
   "n_lecture_2": 66,
   "mesure_lecture_2": "linteau 2 pièces 2\"x8\"",
-  "distance_px": 43.3
+  "distance_px": 43.3,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    840.0,
+    249.5
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    800,
+    266
+   ]
+  }
  },
  {
-  "id": "cote-RDC-069",
+  "id": "cote-RDC-067",
   "feuille": "RDC",
   "texte_original": "LIN. 2-2\"x6\"",
   "valeur": "LINTEAU:2-2x6",
@@ -2034,10 +3441,25 @@
   ],
   "n_lecture_2": 67,
   "mesure_lecture_2": "linteau 2 pièces 2\"x6\"",
-  "distance_px": 33.7
+  "distance_px": 33.7,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1188.1,
+    263.4
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1190,
+    297
+   ]
+  }
  },
  {
-  "id": "cote-RDC-071",
+  "id": "cote-RDC-069",
   "feuille": "RDC",
   "texte_original": "LIN. 2-2\"x6\"",
   "valeur": "LINTEAU:2-2x6",
@@ -2055,10 +3477,25 @@
   ],
   "n_lecture_2": 69,
   "mesure_lecture_2": "linteau 2 pièces 2\"x6\"",
-  "distance_px": 38.5
+  "distance_px": 38.5,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    479.5,
+    900.7
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    447,
+    880
+   ]
+  }
  },
  {
-  "id": "cote-RDC-072",
+  "id": "cote-RDC-070",
   "feuille": "RDC",
   "texte_original": "LIN. 2-2\"x6\"",
   "valeur": "LINTEAU:2-2x6",
@@ -2076,10 +3513,25 @@
   ],
   "n_lecture_2": 70,
   "mesure_lecture_2": "linteau 2 pièces 2\"x6\"",
-  "distance_px": 35.8
+  "distance_px": 35.8,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    2060.7,
+    972.1
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    2027,
+    960
+   ]
+  }
  },
  {
-  "id": "cote-RDC-073",
+  "id": "cote-RDC-071",
   "feuille": "RDC",
   "texte_original": "LINTEAU 2-2\"x8\"",
   "valeur": "LINTEAU:2-2x8",
@@ -2097,10 +3549,25 @@
   ],
   "n_lecture_2": 71,
   "mesure_lecture_2": "linteau 2 pièces 2\"x8\"",
-  "distance_px": 15.3
+  "distance_px": 15.3,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    800.0,
+    1610.1
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    808,
+    1597
+   ]
+  }
  },
  {
-  "id": "cote-RDC-074",
+  "id": "cote-RDC-072",
   "feuille": "RDC",
   "texte_original": "LINTEAU 2-2\"x10\"",
   "valeur": "LINTEAU:2-2x10",
@@ -2118,10 +3585,25 @@
   ],
   "n_lecture_2": 72,
   "mesure_lecture_2": "linteau 2 pièces 2\"x10\"",
-  "distance_px": 25.9
+  "distance_px": 25.9,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1816.0,
+    1609.6
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1824,
+    1585
+   ]
+  }
  },
  {
-  "id": "cote-RDC-075",
+  "id": "cote-RDC-073",
   "feuille": "RDC",
   "texte_original": "SOLIVES 2\"x7\" @ 16\" c/c",
   "valeur": "SOLIVES:2x7@16",
@@ -2139,10 +3621,61 @@
   ],
   "n_lecture_2": 73,
   "mesure_lecture_2": "solives de plafond/plancher 2\"x7\" à 16\" c/c",
-  "distance_px": 91.0
+  "distance_px": 91.0,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1281.9,
+    564.9
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1361,
+    520
+   ]
+  }
  },
  {
-  "id": "cote-RDC-077",
+  "id": "cote-RDC-074",
+  "feuille": "RDC",
+  "texte_original": "SOLIVES 2\"x7\" @ 16\" c/c",
+  "valeur": "SOLIVES:2x7@16",
+  "lecture_1": "SOLIVES 2\"x7\" @ 16\" c/c",
+  "lecture_2": "SOLIVES 2\"x7\" @ 16\" c/c",
+  "photo": "P3",
+  "px": [
+   1481,
+   1290
+  ],
+  "emplacement": "écrit dans le salon, trait à deux butées orienté en y ; probablement solives de plafond",
+  "mesure": "membrure str-RDC-S02 (solives)",
+  "ref_lecture_1": [
+   "str-RDC-S02"
+  ],
+  "n_lecture_2": 74,
+  "mesure_lecture_2": "solives 2\"x7\" à 16\" c/c",
+  "distance_px": null,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1670.2,
+    1325.6
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1481,
+    1290
+   ]
+  }
+ },
+ {
+  "id": "cote-RDC-075",
   "feuille": "RDC",
   "texte_original": "POUTRE 6\"x10\" FLUSH",
   "valeur": "POUTRE:6x10",
@@ -2160,10 +3693,25 @@
   ],
   "n_lecture_2": 75,
   "mesure_lecture_2": "poutre encastrée 6\"x10\"",
-  "distance_px": 52.5
+  "distance_px": 52.5,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": [
+    1829.8,
+    851.6
+   ],
+   "estime": true
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1880,
+    867
+   ]
+  }
  },
  {
-  "id": "cote-RDC-078",
+  "id": "cote-RDC-076",
   "feuille": "RDC",
   "texte_original": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
   "valeur": "BARRE:½@10",
@@ -2178,10 +3726,22 @@
   ],
   "n_lecture_2": 76,
   "mesure_lecture_2": "armature du perron : barres ½\" à 10\" c/c",
-  "distance_px": 120
+  "distance_px": 120,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": null,
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1181,
+    1712
+   ]
+  }
  },
  {
-  "id": "cote-RDC-079",
+  "id": "cote-RDC-077",
   "feuille": "RDC",
   "texte_original": "2.R. 14 C.M.",
   "valeur": 14,
@@ -2196,10 +3756,22 @@
   ],
   "n_lecture_2": 77,
   "mesure_lecture_2": "nombre de contremarches",
-  "distance_px": 120
+  "distance_px": 120,
+  "px_lecture_1": {
+   "photo": "P3",
+   "px": null,
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P3",
+   "px": [
+    1514,
+    505
+   ]
+  }
  },
  {
-  "id": "cote-RDC-080",
+  "id": "cote-RDC-078",
   "feuille": "RDC",
   "texte_original": "ÉCHELLE : 1/4\" = 1'-0\"",
   "valeur": "1/4\"=1'0\"",
@@ -2214,7 +3786,19 @@
   ],
   "n_lecture_2": 84,
   "mesure_lecture_2": "échelle du dessin",
-  "distance_px": 120
+  "distance_px": 120,
+  "px_lecture_1": {
+   "photo": "P6",
+   "px": null,
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P4",
+   "px": [
+    2134,
+    1452
+   ]
+  }
  },
  {
   "id": "cote-P2-001",
@@ -2235,7 +3819,22 @@
   ],
   "n_lecture_2": 1,
   "mesure_lecture_2": "hors-tout façade : ligne 1 (nu ext. mur gauche) à ligne 7 (nu ext. mur droit)",
-  "distance_px": 3.2
+  "distance_px": 3.2,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1060,
+    190
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1057,
+    189
+   ]
+  }
  },
  {
   "id": "cote-P2-003",
@@ -2256,7 +3855,22 @@
   ],
   "n_lecture_2": 3,
   "mesure_lecture_2": "épaisseur du mur latéral gauche (ligne 1 = nu ext.)",
-  "distance_px": 1.0
+  "distance_px": 1.0,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    382,
+    1582
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    383,
+    1582
+   ]
+  }
  },
  {
   "id": "cote-P2-004",
@@ -2277,7 +3891,22 @@
   ],
   "n_lecture_2": 4,
   "mesure_lecture_2": "nu int. mur gauche à ligne 2",
-  "distance_px": 3.6
+  "distance_px": 3.6,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    620,
+    1597
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    618,
+    1600
+   ]
+  }
  },
  {
   "id": "cote-P2-005",
@@ -2298,7 +3927,22 @@
   ],
   "n_lecture_2": 5,
   "mesure_lecture_2": "ligne 2 à ligne 3",
-  "distance_px": 3.6
+  "distance_px": 3.6,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    865,
+    1597
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    863,
+    1600
+   ]
+  }
  },
  {
   "id": "cote-P2-006",
@@ -2319,7 +3963,22 @@
   ],
   "n_lecture_2": 6,
   "mesure_lecture_2": "ligne 3 à ligne 4",
-  "distance_px": 3.0
+  "distance_px": 3.0,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    985,
+    1597
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    985,
+    1600
+   ]
+  }
  },
  {
   "id": "cote-P2-007",
@@ -2340,7 +3999,22 @@
   ],
   "n_lecture_2": 7,
   "mesure_lecture_2": "ligne 4 à ligne 5",
-  "distance_px": 3.6
+  "distance_px": 3.6,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1127,
+    1602
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1124,
+    1604
+   ]
+  }
  },
  {
   "id": "cote-P2-008",
@@ -2361,7 +4035,22 @@
   ],
   "n_lecture_2": 8,
   "mesure_lecture_2": "ligne 5 à ligne 6",
-  "distance_px": 2.2
+  "distance_px": 2.2,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1280,
+    1605
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1279,
+    1607
+   ]
+  }
  },
  {
   "id": "cote-P2-009",
@@ -2382,7 +4071,22 @@
   ],
   "n_lecture_2": 9,
   "mesure_lecture_2": "ligne 6 à nu int. mur droit",
-  "distance_px": 2.8
+  "distance_px": 2.8,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1537,
+    1617
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1539,
+    1619
+   ]
+  }
  },
  {
   "id": "cote-P2-010",
@@ -2403,7 +4107,22 @@
   ],
   "n_lecture_2": 10,
   "mesure_lecture_2": "épaisseur du mur latéral droit (ligne 7 = nu ext.)",
-  "distance_px": 2.8
+  "distance_px": 2.8,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1732,
+    1585
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1730,
+    1587
+   ]
+  }
  },
  {
   "id": "cote-P2-011",
@@ -2424,7 +4143,22 @@
   ],
   "n_lecture_2": 11,
   "mesure_lecture_2": "épaisseur du mur arrière (ligne D = nu ext.)",
-  "distance_px": 36.0
+  "distance_px": 36.0,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1887,
+    373
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1851,
+    374
+   ]
+  }
  },
  {
   "id": "cote-P2-012",
@@ -2445,7 +4179,22 @@
   ],
   "n_lecture_2": 12,
   "mesure_lecture_2": "nu int. mur arrière à ligne C (axe porteur d'origine)",
-  "distance_px": 9.2
+  "distance_px": 9.2,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1917,
+    647
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1911,
+    640
+   ]
+  }
  },
  {
   "id": "cote-P2-013",
@@ -2466,7 +4215,22 @@
   ],
   "n_lecture_2": 13,
   "mesure_lecture_2": "ligne C à ligne B (entre les deux axes porteurs d'origine)",
-  "distance_px": 2.2
+  "distance_px": 2.2,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1913,
+    987
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1911,
+    988
+   ]
+  }
  },
  {
   "id": "cote-P2-014",
@@ -2487,7 +4251,22 @@
   ],
   "n_lecture_2": 14,
   "mesure_lecture_2": "ligne B à nu int. mur avant",
-  "distance_px": 1.4
+  "distance_px": 1.4,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1910,
+    1269
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1911,
+    1270
+   ]
+  }
  },
  {
   "id": "cote-P2-015",
@@ -2508,7 +4287,22 @@
   ],
   "n_lecture_2": 15,
   "mesure_lecture_2": "épaisseur du mur avant (ligne A = nu ext., côté rue)",
-  "distance_px": 16.0
+  "distance_px": 16.0,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1850,
+    1525
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1834,
+    1526
+   ]
+  }
  },
  {
   "id": "cote-P2-016",
@@ -2529,7 +4323,22 @@
   ],
   "n_lecture_2": 16,
   "mesure_lecture_2": "pente du toit 5 dans 12",
-  "distance_px": 20.6
+  "distance_px": 20.6,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    2280,
+    590
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    2260,
+    585
+   ]
+  }
  },
  {
   "id": "cote-P2-023",
@@ -2550,7 +4359,22 @@
   ],
   "n_lecture_2": 17,
   "mesure_lecture_2": "longueur approx. de la fissure au plafond du salon",
-  "distance_px": 61.1
+  "distance_px": 61.1,
+  "px_lecture_1": {
+   "photo": "P2",
+   "px": [
+    1522,
+    1368
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P2",
+   "px": [
+    1574,
+    1336
+   ]
+  }
  },
  {
   "id": "cote-P5-001",
@@ -2571,7 +4395,22 @@
   ],
   "n_lecture_2": 40,
   "mesure_lecture_2": "largeur de la maison (façade)",
-  "distance_px": 44.1
+  "distance_px": 44.1,
+  "px_lecture_1": {
+   "photo": "P5",
+   "px": [
+    875,
+    1218
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P5",
+   "px": [
+    831,
+    1215
+   ]
+  }
  },
  {
   "id": "cote-P5-004",
@@ -2592,7 +4431,22 @@
   ],
   "n_lecture_2": 41,
   "mesure_lecture_2": "marge latérale droite : mur droit à la limite droite du lot (au mur avant)",
-  "distance_px": 16.8
+  "distance_px": 16.8,
+  "px_lecture_1": {
+   "photo": "P5",
+   "px": [
+    1080,
+    1220
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P5",
+   "px": [
+    1064,
+    1215
+   ]
+  }
  },
  {
   "id": "cote-P5-005",
@@ -2613,7 +4467,22 @@
   ],
   "n_lecture_2": 38,
   "mesure_lecture_2": "marge latérale droite : mur droit de la maison à la limite droite du lot (au mur arrière)",
-  "distance_px": 2.0
+  "distance_px": 2.0,
+  "px_lecture_1": {
+   "photo": "P5",
+   "px": [
+    1066,
+    889
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P5",
+   "px": [
+    1064,
+    889
+   ]
+  }
  },
  {
   "id": "cote-P5-006",
@@ -2634,7 +4503,22 @@
   ],
   "n_lecture_2": 42,
   "mesure_lecture_2": "marge avant (rue à mur avant), côté gauche",
-  "distance_px": 1.4
+  "distance_px": 1.4,
+  "px_lecture_1": {
+   "photo": "P5",
+   "px": [
+    557,
+    1429
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P5",
+   "px": [
+    556,
+    1430
+   ]
+  }
  },
  {
   "id": "cote-P5-007",
@@ -2655,7 +4539,22 @@
   ],
   "n_lecture_2": 43,
   "mesure_lecture_2": "marge avant (rue à mur avant), côté droit",
-  "distance_px": 11.4
+  "distance_px": 11.4,
+  "px_lecture_1": {
+   "photo": "P5",
+   "px": [
+    1112,
+    1421
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P5",
+   "px": [
+    1105,
+    1430
+   ]
+  }
  },
  {
   "id": "cote-P5-009",
@@ -2676,48 +4575,57 @@
   ],
   "n_lecture_2": 31,
   "mesure_lecture_2": "largeur arrière du lot",
-  "distance_px": 7.6
+  "distance_px": 7.6,
+  "px_lecture_1": {
+   "photo": "P5",
+   "px": [
+    882,
+    502
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P5",
+   "px": [
+    889,
+    505
+   ]
+  }
  },
  {
-  "id": "cote-P5-010",
+  "id": "cote-P5-012",
   "feuille": "P5",
-  "texte_original": "115.17'",
-  "valeur": 1382.04,
-  "lecture_1": "115.17'",
-  "lecture_2": "115.17'",
+  "texte_original": "1\" = 20'",
+  "valeur": "1\"=20'",
+  "lecture_1": "1\" = 20'",
+  "lecture_2": "ECHELLE: 1\" = 20'",
   "photo": "P5",
   "px": [
-   558,
-   960
+   979,
+   2067
   ],
-  "emplacement": "écrit verticalement le long de la ligne de lot gauche (oblique)",
-  "mesure": "longueur de la ligne latérale gauche du lot",
+  "emplacement": "titre",
+  "mesure": "échelle du plan (rapport 1:240)",
   "ref_lecture_1": [
-   "cote-P5-010"
+   "cote-P5-012"
   ],
-  "n_lecture_2": 35,
-  "mesure_lecture_2": "profondeur du lot côté gauche",
-  "distance_px": 20.0
- },
- {
-  "id": "cote-P5-011",
-  "feuille": "P5",
-  "texte_original": "112.28'",
-  "valeur": 1347.36,
-  "lecture_1": "112.28'",
-  "lecture_2": "112,28'",
-  "photo": "P5",
-  "px": [
-   1140,
-   966
-  ],
-  "emplacement": "écrit verticalement le long de la ligne de lot droite",
-  "mesure": "longueur de la ligne latérale droite du lot (dessinée ⟂ à la rue)",
-  "ref_lecture_1": [
-   "cote-P5-011"
-  ],
-  "n_lecture_2": 36,
-  "mesure_lecture_2": "profondeur du lot côté droit",
-  "distance_px": 10.0
+  "n_lecture_2": 46,
+  "mesure_lecture_2": "échelle du plan",
+  "distance_px": 32.0,
+  "px_lecture_1": {
+   "photo": "P5",
+   "px": [
+    979,
+    2067
+   ],
+   "estime": false
+  },
+  "px_lecture_2": {
+   "photo": "P5",
+   "px": [
+    979,
+    2035
+   ]
+  }
  }
 ]

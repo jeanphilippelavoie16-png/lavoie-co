@@ -72,7 +72,7 @@
     "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne arrière rang 2 (= hors-tout 38'-0\") : 10'-9\" → somme 456 po (écart +0) ; 10'-9\" → somme 456 po (écart +0) ; 10'-3\" → somme 450 po (écart -6) ⇒ ferme avec 10'-9\" | même chaîne arrière sur la feuille RDC (cote-RDC-016/017/018 : 18'-3\" + 9'-0\" + 10'-?\")",
+  "contrainte_de_bouclage": "chaîne arrière rang 2 (= hors-tout 38'-0\") : 10'-9\" → somme 456 po (écart +0) ; 10'-3\" → somme 450 po (écart -6) ⇒ ferme avec 10'-9\" | même chaîne arrière sur la feuille RDC (cote-RDC-016/017/018 : 18'-3\" + 9'-0\" + 10'-?\")",
   "distance_px_entre_lectures": 0.0
  },
  {
@@ -377,17 +377,11 @@
    {
     "texte": "1'-0\"",
     "valeur": 12,
-    "propose_par": "lecture_1",
+    "propose_par": "lecture_1 + lecture_2",
     "raison": "7 écrit comme un 1 ; rejeté : la chaîne ne somme à 31'-8\" qu'avec 7'-0\", et la longueur dessinée ≈ 88 po"
-   },
-   {
-    "texte": "1'-0\"",
-    "valeur": 12,
-    "propose_par": "lecture_2",
-    "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne gauche rang 2 (= 31'-8\") : 7'-0\" → somme 380 po (écart +0) ; 7'-0\" → somme 380 po (écart +0) ; 1'-0\" → somme 308 po (écart -72) ; 1'-0\" → somme 308 po (écart -72) ⇒ ferme avec 7'-0\"",
+  "contrainte_de_bouclage": "chaîne gauche rang 2 (= 31'-8\") : 7'-0\" → somme 380 po (écart +0) ; 1'-0\" → somme 308 po (écart -72) ⇒ ferme avec 7'-0\"",
   "distance_px_entre_lectures": 6.4
  },
  {
@@ -610,17 +604,11 @@
    {
     "texte": "8'-5\"",
     "valeur": 101,
-    "propose_par": "lecture_1",
+    "propose_par": "lecture_1 + lecture_2",
     "raison": "9/5 peu net ; rejeté : la chaîne ne somme à 31'-8\" qu'avec 8'-9\""
-   },
-   {
-    "texte": "8'-5\"",
-    "valeur": 101,
-    "propose_par": "lecture_2",
-    "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne droite rang 2 (= 31'-8\") : 8'-9\" → somme 380 po (écart +0) ; 8'-9\" → somme 380 po (écart +0) ; 8'-5\" → somme 376 po (écart -4) ; 8'-5\" → somme 376 po (écart -4) ⇒ ferme avec 8'-9\"",
+  "contrainte_de_bouclage": "chaîne droite rang 2 (= 31'-8\") : 8'-9\" → somme 380 po (écart +0) ; 8'-5\" → somme 376 po (écart -4) ⇒ ferme avec 8'-9\"",
   "distance_px_entre_lectures": 14.1
  },
  {
@@ -695,7 +683,7 @@
     "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne droite rang 2 (= 31'-8\") : 6'-3\" → somme 380 po (écart +0) ; 6'-3\" → somme 380 po (écart +0) ; 6'-8\" → somme 385 po (écart +5) ⇒ ferme avec 6'-3\"",
+  "contrainte_de_bouclage": "chaîne droite rang 2 (= 31'-8\") : 6'-3\" → somme 380 po (écart +0) ; 6'-8\" → somme 385 po (écart +5) ⇒ ferme avec 6'-3\"",
   "distance_px_entre_lectures": 5.0
  },
  {
@@ -928,7 +916,7 @@
     "raison": "9 écrit comme un 3 ; rejeté : la chaîne ne somme à 38'-0\" qu'avec 9'-10\", longueur dessinée ≈ 120 po"
    }
   ],
-  "contrainte_de_bouclage": "chaîne intérieure x murs+colonnes (= 38'-0\") : 9'-10\" → somme 456 po (écart +0) ; 9'-10\" → somme 456 po (écart +0) ; 3'-10\" → somme 384 po (écart -72) ⇒ ferme avec 9'-10\"",
+  "contrainte_de_bouclage": "chaîne intérieure x murs+colonnes (= 38'-0\") : 9'-10\" → somme 456 po (écart +0) ; 3'-10\" → somme 384 po (écart -72) ⇒ ferme avec 9'-10\"",
   "distance_px_entre_lectures": 0.0
  },
  {
@@ -1003,7 +991,7 @@
     "raison": "idem cote-SS-038"
    }
   ],
-  "contrainte_de_bouclage": "chaîne intérieure x murs+colonnes (= 38'-0\") : 9'-10\" → somme 456 po (écart +0) ; 9'-10\" → somme 456 po (écart +0) ; 3'-10\" → somme 384 po (écart -72) ⇒ ferme avec 9'-10\"",
+  "contrainte_de_bouclage": "chaîne intérieure x murs+colonnes (= 38'-0\") : 9'-10\" → somme 456 po (écart +0) ; 3'-10\" → somme 384 po (écart -72) ⇒ ferme avec 9'-10\"",
   "distance_px_entre_lectures": 6.7
  },
  {
@@ -1078,64 +1066,8 @@
     "raison": "3/5 ; rejeté : la chaîne 10+13'-10\"+3'-11\"+12'-3\"+10 = 31'-8\""
    }
   ],
-  "contrainte_de_bouclage": "chaîne intérieure y (= 31'-8\", + 10\" mur arrière non écrit sur cette chaîne, cf. P2 cote-P2-011) : 13'-10\" → somme 380 po (écart +0) ; 13'-10\" → somme 380 po (écart +0) ; 15'-10\" → somme 404 po (écart +24) ⇒ ferme avec 13'-10\" | P2 (2016) cote-P2-012 « 13' 10\" » pour le même segment (nu int. mur arrière → axe C)",
+  "contrainte_de_bouclage": "chaîne intérieure y (= 31'-8\", + 10\" mur arrière non écrit sur cette chaîne, cf. P2 cote-P2-011) : 13'-10\" → somme 380 po (écart +0) ; 15'-10\" → somme 404 po (écart +24) ⇒ ferme avec 13'-10\" | P2 (2016) cote-P2-012 « 13' 10\" » pour le même segment (nu int. mur arrière → axe C)",
   "distance_px_entre_lectures": 5.1
- },
- {
-  "id": "o-SS-01",
-  "categorie": "orpheline",
-  "nature": [
-   "vue_par_lecture_1_seulement"
-  ],
-  "feuille": "SS",
-  "cote_id": "cote-SS-052",
-  "vignettes": [
-   "arbitrage/vignettes/o-SS-01_P1.png",
-   "arbitrage/vignettes/o-SS-01_P7.png"
-  ],
-  "vignettes_boites": [
-   {
-    "fichier": "arbitrage/vignettes/o-SS-01_P1.png",
-    "photo": "P1",
-    "boite_px": [
-     1115,
-     500,
-     1225,
-     800
-    ]
-   },
-   {
-    "fichier": "arbitrage/vignettes/o-SS-01_P7.png",
-    "photo": "P7",
-    "boite_px": [
-     1119,
-     480,
-     1226,
-     772
-    ]
-   }
-  ],
-  "emplacement": "Note générale sans renvoi précis. Un double trait vertical est dessiné à x≈136.7 (ESTIMÉ, ≈ axe de la colonne C01) du mur arrière à la poutre arrière — interprété comme solives doubles sous une cloison du RDC. Position des cloisons à confirmer avec la feuille RDC.",
-  "emplacement_lecture_2": null,
-  "mesure": "membrure str-SS-S02 (solives)",
-  "mesure_lecture_2": null,
-  "lecture_1": {
-   "texte": "SOLIVES DOUBLES SOUS LES CLOISONS PARALLÈLES",
-   "valeur": "SOLIVES:",
-   "photo": "P1",
-   "px": [
-    1170,
-    650
-   ],
-   "ref": [
-    "str-SS-S02"
-   ]
-  },
-  "lecture_2": null,
-  "alternatives": [],
-  "contrainte_de_bouclage": "aucune chaîne fermée ne contient cette cote",
-  "distance_px_entre_lectures": null,
-  "significative": true
  },
  {
   "id": "d-RDC-01",
@@ -1218,13 +1150,7 @@
    {
     "texte": "6'-8\"",
     "valeur": 80,
-    "propose_par": "lecture_1",
-    "raison": null
-   },
-   {
-    "texte": "6'-8\"",
-    "valeur": 80,
-    "propose_par": "lecture_2",
+    "propose_par": "lecture_1 + lecture_2",
     "raison": null
    }
   ],
@@ -1389,17 +1315,11 @@
    {
     "texte": "10'-5\"",
     "valeur": 125,
-    "propose_par": "lecture_1",
-    "raison": null
-   },
-   {
-    "texte": "10'-5\"",
-    "valeur": 125,
-    "propose_par": "lecture_2",
+    "propose_par": "lecture_1 + lecture_2",
     "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne arrière rang 3 (P4/P6, = 38'-0\") : 10'-9\" → somme 456 po (écart +0) ; 10-9\" → somme 456 po (écart +0) ; 10'-5\" → somme 452 po (écart -4) ; 10'-5\" → somme 452 po (écart -4) ⇒ ferme avec 10'-9\", 10-9\" | même chaîne au sous-sol (cote-SS-002/003/004 : 18'-3\" + 9'-0\" + 10'-9\")",
+  "contrainte_de_bouclage": "chaîne arrière rang 3 (P4/P6, = 38'-0\") : 10'-9\" → somme 456 po (écart +0) ; 10'-5\" → somme 452 po (écart -4) ⇒ ferme avec 10'-9\" | même chaîne au sous-sol (cote-SS-002/003/004 : 18'-3\" + 9'-0\" + 10'-9\")",
   "distance_px_entre_lectures": 7.9
  },
  {
@@ -1487,7 +1407,7 @@
     "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne arrière rang 2 axes (= 38'-0\") : 8'-3\" → somme 456 po (écart +0) ; 8'-3\" → somme 456 po (écart +0) ; 8'-9\" → somme 462 po (écart +6) ⇒ ferme avec 8'-3\" | entrée arrière : 8'-2\"+8'-3\"+8'-0\"+[2'-9\"] comparé à 18'-3\"+9'-0\" (nu ext. droit du volume, 327 po) : 8'-3\" → somme 326 po (écart -1) ; 8'-3\" → somme 326 po (écart -1) ; 8'-9\" → somme 332 po (écart +5) ⇒ aucune valeur ne ferme",
+  "contrainte_de_bouclage": "chaîne arrière rang 2 axes (= 38'-0\") : 8'-3\" → somme 456 po (écart +0) ; 8'-9\" → somme 462 po (écart +6) ⇒ ferme avec 8'-3\" | entrée arrière : 8'-2\"+8'-3\"+8'-0\"+[2'-9\"] comparé à 18'-3\"+9'-0\" (nu ext. droit du volume, 327 po) : 8'-3\" → somme 326 po (écart -1) ; 8'-9\" → somme 332 po (écart +5) ⇒ aucune valeur ne ferme",
   "distance_px_entre_lectures": 10.3
  },
  {
@@ -1571,17 +1491,11 @@
    {
     "texte": "6'-5\"",
     "valeur": 77,
-    "propose_par": "lecture_1",
-    "raison": null
-   },
-   {
-    "texte": "6'-5\"",
-    "valeur": 77,
-    "propose_par": "lecture_2",
+    "propose_par": "lecture_1 + lecture_2",
     "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne arrière rang 2 axes (= 38'-0\") : 6'-9\" → somme 456 po (écart +0) ; 6'-9\" → somme 456 po (écart +0) ; 6'-5\" → somme 452 po (écart -4) ; 6'-5\" → somme 452 po (écart -4) ⇒ ferme avec 6'-9\"",
+  "contrainte_de_bouclage": "chaîne arrière rang 2 axes (= 38'-0\") : 6'-9\" → somme 456 po (écart +0) ; 6'-5\" → somme 452 po (écart -4) ⇒ ferme avec 6'-9\"",
   "distance_px_entre_lectures": 5.0
  },
  {
@@ -1654,13 +1568,7 @@
    {
     "texte": "3'-0\"",
     "valeur": 36,
-    "propose_par": "lecture_1",
-    "raison": null
-   },
-   {
-    "texte": "3'-0\"",
-    "valeur": 36,
-    "propose_par": "lecture_2",
+    "propose_par": "lecture_1 + lecture_2",
     "raison": null
    },
    {
@@ -1749,17 +1657,11 @@
    {
     "texte": "1'-9\"",
     "valeur": 21,
-    "propose_par": "lecture_1",
-    "raison": null
-   },
-   {
-    "texte": "1'-9\"",
-    "valeur": 21,
-    "propose_par": "lecture_2",
+    "propose_par": "lecture_1 + lecture_2",
     "raison": null
    }
   ],
-  "contrainte_de_bouclage": "entrée arrière : 8'-2\"+8'-3\"+8'-0\"+[2'-9\"] comparé à 18'-3\"+9'-0\" (nu ext. droit du volume, 327 po) : 2'-9\" → somme 326 po (écart -1) ; 2'-9\" → somme 326 po (écart -1) ; 6'-9\" → somme 374 po (écart +47) ; 1'-9\" → somme 314 po (écart -13) ; 1'-9\" → somme 314 po (écart -13) ⇒ aucune valeur ne ferme",
+  "contrainte_de_bouclage": "entrée arrière : 8'-2\"+8'-3\"+8'-0\"+[2'-9\"] comparé à 18'-3\"+9'-0\" (nu ext. droit du volume, 327 po) : 2'-9\" → somme 326 po (écart -1) ; 6'-9\" → somme 374 po (écart +47) ; 1'-9\" → somme 314 po (écart -13) ⇒ aucune valeur ne ferme",
   "distance_px_entre_lectures": 4.5
  },
  {
@@ -1847,7 +1749,7 @@
     "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne intérieure x avant (y≈7', = 38'-0\") : 12'-2\" → somme 456 po (écart +0) ; 12'-2\" → somme 456 po (écart +0) ; 12'-7\" → somme 461 po (écart +5) ⇒ ferme avec 12'-2\" | P2 (2016) : ligne 2 = 10\" + 11' 4\" = 146 po (cote-P2-003 + cote-P2-004)",
+  "contrainte_de_bouclage": "chaîne intérieure x avant (y≈7', = 38'-0\") : 12'-2\" → somme 456 po (écart +0) ; 12'-7\" → somme 461 po (écart +5) ⇒ ferme avec 12'-2\" | P2 (2016) : ligne 2 = 10\" + 11' 4\" = 146 po (cote-P2-003 + cote-P2-004)",
   "distance_px_entre_lectures": 5.4
  },
  {
@@ -1935,7 +1837,7 @@
     "raison": null
    }
   ],
-  "contrainte_de_bouclage": "chaîne intérieure y droite (= 31'-8\") : 18'-7\" → somme 380 po (écart +0) ; 18'-7\" → somme 380 po (écart +0) ; 16'-7\" → somme 356 po (écart -24) ⇒ ferme avec 18'-7\"",
+  "contrainte_de_bouclage": "chaîne intérieure y droite (= 31'-8\") : 18'-7\" → somme 380 po (écart +0) ; 16'-7\" → somme 356 po (écart -24) ⇒ ferme avec 18'-7\"",
   "distance_px_entre_lectures": 14.3
  },
  {
@@ -2114,116 +2016,12 @@
    {
     "texte": "ARCHE 6'-0\"",
     "valeur": 72,
-    "propose_par": "lecture_1",
-    "raison": null
-   },
-   {
-    "texte": "ARCHE 6'-0\"",
-    "valeur": 72,
-    "propose_par": "lecture_2",
+    "propose_par": "lecture_1 + lecture_2",
     "raison": null
    }
   ],
   "contrainte_de_bouclage": "aucune chaîne ; lecture 1 : ouverture dessinée ≈ 74 po (≈ l'ARCHE 6'-0\" salon/cuisine ≈ 73 po)",
   "distance_px_entre_lectures": 40.1
- },
- {
-  "id": "o-RDC-01",
-  "categorie": "orpheline",
-  "nature": [
-   "vue_par_lecture_1_seulement"
-  ],
-  "feuille": "RDC",
-  "cote_id": "cote-RDC-050",
-  "vignettes": [
-   "arbitrage/vignettes/o-RDC-01_P3.png",
-   "arbitrage/vignettes/o-RDC-01_P4.png",
-   "arbitrage/vignettes/o-RDC-01_P6.png"
-  ],
-  "vignettes_boites": [
-   {
-    "fichier": "arbitrage/vignettes/o-RDC-01_P3.png",
-    "photo": "P3",
-    "boite_px": [
-     1520,
-     1275,
-     1820,
-     1375
-    ]
-   },
-   {
-    "fichier": "arbitrage/vignettes/o-RDC-01_P4.png",
-    "photo": "P4",
-    "boite_px": [
-     1347,
-     1026,
-     1570,
-     1101
-    ]
-   },
-   {
-    "fichier": "arbitrage/vignettes/o-RDC-01_P6.png",
-    "photo": "P6",
-    "boite_px": [
-     1415,
-     1088,
-     1649,
-     1166
-    ]
-   }
-  ],
-  "emplacement": "écrit dans le salon, trait à deux butées orienté en y ; probablement solives de plafond",
-  "emplacement_lecture_2": null,
-  "mesure": "membrure str-RDC-S02 (solives)",
-  "mesure_lecture_2": null,
-  "lecture_1": {
-   "texte": "SOLIVES 2\"x7\" @ 16\" c/c",
-   "valeur": "SOLIVES:2x7@16",
-   "photo": "P3",
-   "px": [
-    1670,
-    1326
-   ],
-   "px_note": "px ESTIMÉ (projection de la géométrie lecture 1 dans P3), pas la position du texte",
-   "ref": [
-    "str-RDC-S02"
-   ]
-  },
-  "lecture_2": null,
-  "alternatives": [],
-  "contrainte_de_bouclage": "aucune chaîne fermée ne contient cette cote",
-  "distance_px_entre_lectures": null,
-  "significative": true
- },
- {
-  "id": "o-RDC-02",
-  "categorie": "orpheline",
-  "nature": [
-   "vue_par_lecture_1_seulement"
-  ],
-  "feuille": "RDC",
-  "cote_id": "cote-RDC-051",
-  "vignettes": [],
-  "vignettes_boites": [],
-  "emplacement": "tringle et tablette dans toutes les garde-robes",
-  "emplacement_lecture_2": null,
-  "mesure": "tringle et tablette dans toutes les garde-robes",
-  "mesure_lecture_2": null,
-  "lecture_1": {
-   "texte": "NOTE : BARRE & TABLETTE DANS TOUS LES G.R.",
-   "valeur": "BARRE:",
-   "photo": "P3",
-   "px": null,
-   "ref": [
-    "note-RDC-03"
-   ]
-  },
-  "lecture_2": null,
-  "alternatives": [],
-  "contrainte_de_bouclage": "aucune chaîne fermée ne contient cette cote",
-  "distance_px_entre_lectures": null,
-  "significative": false,
-  "raison_non_significative": "pas de px (texte générique)"
  },
  {
   "id": "d-RDC-12",
@@ -2232,7 +2030,7 @@
    "alternative_signalee"
   ],
   "feuille": "RDC",
-  "cote_id": "cote-RDC-059",
+  "cote_id": "cote-RDC-057",
   "vignettes": [
    "arbitrage/vignettes/d-RDC-12_P3.png",
    "arbitrage/vignettes/d-RDC-12_P4.png",
@@ -2339,7 +2137,7 @@
    "alternative_signalee"
   ],
   "feuille": "RDC",
-  "cote_id": "cote-RDC-061",
+  "cote_id": "cote-RDC-059",
   "vignettes": [
    "arbitrage/vignettes/d-RDC-13_P3.png",
    "arbitrage/vignettes/d-RDC-13_P4.png",
@@ -2445,7 +2243,7 @@
    "alternative_signalee"
   ],
   "feuille": "RDC",
-  "cote_id": "cote-RDC-064",
+  "cote_id": "cote-RDC-062",
   "vignettes": [
    "arbitrage/vignettes/d-RDC-14_P3.png",
    "arbitrage/vignettes/d-RDC-14_P4.png",
@@ -2542,7 +2340,7 @@
    "alternative_signalee"
   ],
   "feuille": "RDC",
-  "cote_id": "cote-RDC-070",
+  "cote_id": "cote-RDC-068",
   "vignettes": [
    "arbitrage/vignettes/d-RDC-15_P3.png",
    "arbitrage/vignettes/d-RDC-15_P4.png",
@@ -2622,76 +2420,6 @@
   ],
   "contrainte_de_bouclage": "aucune chaîne ; les autres fenêtres 6'-3\" (ouv-RDC-001, ouv-RDC-003) portent « LINTEAU 2-2\"x8\" »",
   "distance_px_entre_lectures": 49.0
- },
- {
-  "id": "o-RDC-03",
-  "categorie": "orpheline",
-  "nature": [
-   "vue_par_lecture_2_seulement"
-  ],
-  "feuille": "RDC",
-  "cote_id": "cote-RDC-076",
-  "vignettes": [
-   "arbitrage/vignettes/o-RDC-03_P3.png",
-   "arbitrage/vignettes/o-RDC-03_P4.png",
-   "arbitrage/vignettes/o-RDC-03_P6.png"
-  ],
-  "vignettes_boites": [
-   {
-    "fichier": "arbitrage/vignettes/o-RDC-03_P3.png",
-    "photo": "P3",
-    "boite_px": [
-     1426,
-     1140,
-     1536,
-     1440
-    ]
-   },
-   {
-    "fichier": "arbitrage/vignettes/o-RDC-03_P4.png",
-    "photo": "P4",
-    "boite_px": [
-     1274,
-     927,
-     1355,
-     1149
-    ]
-   },
-   {
-    "fichier": "arbitrage/vignettes/o-RDC-03_P6.png",
-    "photo": "P6",
-    "boite_px": [
-     1339,
-     984,
-     1425,
-     1218
-    ]
-   }
-  ],
-  "emplacement": "salon, flèche de portée verticale",
-  "emplacement_lecture_2": null,
-  "mesure": "solives 2\"x7\" à 16\" c/c",
-  "mesure_lecture_2": null,
-  "lecture_1": null,
-  "lecture_2": {
-   "texte": "SOLIVES 2\"x7\" @ 16\" c/c",
-   "valeur": "SOLIVES:2x7@16",
-   "photo": "P3",
-   "px": [
-    1481,
-    1290
-   ],
-   "n": 74,
-   "confiance": "haute",
-   "lecture_autre_photo": {
-    "P4": "identique",
-    "P6": "identique"
-   }
-  },
-  "alternatives": [],
-  "contrainte_de_bouclage": "aucune chaîne fermée ne contient cette cote",
-  "distance_px_entre_lectures": null,
-  "significative": true
  },
  {
   "id": "d-P2-01",
@@ -3444,80 +3172,129 @@
   "distance_px_entre_lectures": 1.0
  },
  {
-  "id": "o-P5-01",
-  "categorie": "orpheline",
+  "id": "d-P5-04",
+  "categorie": "desaccord",
   "nature": [
-   "vue_par_lecture_1_seulement"
+   "alternative_signalee"
   ],
   "feuille": "P5",
-  "cote_id": "cote-P5-012",
+  "cote_id": "cote-P5-010",
   "vignettes": [
-   "arbitrage/vignettes/o-P5-01_P5.png"
+   "arbitrage/vignettes/d-P5-04_P5.png"
   ],
   "vignettes_boites": [
    {
-    "fichier": "arbitrage/vignettes/o-P5-01_P5.png",
+    "fichier": "arbitrage/vignettes/d-P5-04_P5.png",
     "photo": "P5",
     "boite_px": [
-     884,
-     2025,
-     1074,
-     2109
+     511,
+     845,
+     605,
+     1055
     ]
    }
   ],
-  "emplacement": "titre",
-  "emplacement_lecture_2": null,
-  "mesure": "échelle du plan (rapport 1:240)",
-  "mesure_lecture_2": null,
+  "emplacement": "écrit verticalement le long de la ligne de lot gauche (oblique)",
+  "emplacement_lecture_2": "limite latérale gauche du lot (oblique)",
+  "mesure": "longueur de la ligne latérale gauche du lot",
+  "mesure_lecture_2": "profondeur du lot côté gauche",
   "lecture_1": {
-   "texte": "1\" = 20'",
-   "valeur": null,
+   "texte": "115.17'",
+   "valeur": 1382.04,
    "photo": "P5",
    "px": [
-    979,
-    2067
+    558,
+    960
    ],
    "ref": [
-    "cote-P5-012"
-   ]
+    "cote-P5-010"
+   ],
+   "note": "« 115.17' » : 1/7 à surveiller ; avant-dernier chiffre lu « 1 »"
   },
-  "lecture_2": null,
-  "alternatives": [],
-  "contrainte_de_bouclage": "aucune chaîne fermée ne contient cette cote",
-  "distance_px_entre_lectures": null,
-  "significative": true
- },
- {
-  "id": "o-P5-02",
-  "categorie": "orpheline",
-  "nature": [
-   "vue_par_lecture_2_seulement"
-  ],
-  "feuille": "P5",
-  "cote_id": "cote-P5-013",
-  "vignettes": [],
-  "vignettes_boites": [],
-  "emplacement": "titre, dernière ligne",
-  "emplacement_lecture_2": null,
-  "mesure": "échelle du plan",
-  "mesure_lecture_2": null,
-  "lecture_1": null,
   "lecture_2": {
-   "texte": "ECHELLE: 1\" = 20'",
-   "valeur": "1\"=20'",
+   "texte": "115.17'",
+   "valeur": 1382.04,
    "photo": "P5",
    "px": [
-    979,
-    2035
+    558,
+    940
    ],
-   "n": 46,
-   "confiance": "haute"
+   "n": 35,
+   "confiance": "moyenne",
+   "note": "dernier chiffre : 7 à barre haute avec amorce, mais trait montant au-dessus de la barre → 4 possible"
   },
-  "alternatives": [],
-  "contrainte_de_bouclage": "aucune chaîne fermée ne contient cette cote",
-  "distance_px_entre_lectures": null,
-  "significative": false,
-  "raison_non_significative": "non dimensionnel"
+  "alternatives": [
+   {
+    "texte": "115.14'",
+    "valeur": 1381.68,
+    "propose_par": "lecture_2",
+    "raison": null
+   }
+  ],
+  "contrainte_de_bouclage": "aucune chaîne",
+  "distance_px_entre_lectures": 20.0
+ },
+ {
+  "id": "d-P5-05",
+  "categorie": "desaccord",
+  "nature": [
+   "alternative_signalee"
+  ],
+  "feuille": "P5",
+  "cote_id": "cote-P5-011",
+  "vignettes": [
+   "arbitrage/vignettes/d-P5-05_P5.png"
+  ],
+  "vignettes_boites": [
+   {
+    "fichier": "arbitrage/vignettes/d-P5-05_P5.png",
+    "photo": "P5",
+    "boite_px": [
+     1093,
+     871,
+     1197,
+     1061
+    ]
+   }
+  ],
+  "emplacement": "écrit verticalement le long de la ligne de lot droite",
+  "emplacement_lecture_2": "limite latérale droite du lot",
+  "mesure": "longueur de la ligne latérale droite du lot (dessinée ⟂ à la rue)",
+  "mesure_lecture_2": "profondeur du lot côté droit",
+  "lecture_1": {
+   "texte": "112.28'",
+   "valeur": 1347.36,
+   "photo": "P5",
+   "px": [
+    1140,
+    966
+   ],
+   "ref": [
+    "cote-P5-011"
+   ],
+   "note": "« 112.28' » : 2/8 net"
+  },
+  "lecture_2": {
+   "texte": "112,28'",
+   "valeur": 1347.36,
+   "photo": "P5",
+   "px": [
+    1150,
+    966
+   ],
+   "n": 36,
+   "confiance": "moyenne",
+   "note": "séparateur écrit comme virgule ; 8 final à petite boucle haute, 6 possible"
+  },
+  "alternatives": [
+   {
+    "texte": "112.26'",
+    "valeur": 1347.12,
+    "propose_par": "lecture_2",
+    "raison": null
+   }
+  ],
+  "contrainte_de_bouclage": "aucune chaîne",
+  "distance_px_entre_lectures": 10.0
  }
 ]

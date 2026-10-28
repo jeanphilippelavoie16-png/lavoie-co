@@ -132,11 +132,12 @@ def memb_key(s):
     u = re.sub(r'["\']', '', t)
     u = re.sub(r'(?<=\d)\s*[xX×]\s*(?=\d)', 'x', u)
     toks = re.findall(r'[\d½¼]+(?:-[\d½¼]+)*(?:x[\d½¼]+(?:-[\d½¼]+)*)*|@', u)
+    if not any(re.search(r'[\d½¼]', x) for x in toks): return None   # note sans dimension
     return f"{typ}:{''.join(toks)}" if typ else None
 
 def kind_of(text):
     t = norm_txt(text).upper()
-    if 'ECHELLE' in t or 'ÉCHELLE' in t: return 'echelle'
+    if 'ECHELLE' in t or 'ÉCHELLE' in t or re.match(r'^\s*\d+\s*"\s*=\s*\d+', t): return 'echelle'
     if 'C.M.' in t: return 'compte'
     if re.search(r'\d\s*/\s*12', t) and "'" not in t: return 'pente'
     if memb_key(text): return 'membrure'
@@ -272,6 +273,7 @@ def build_l1(niv):
             t = nt['texte_original']
             if not re.search(r'C\.M\.|ECHELLE|ÉCHELLE|BARRE', t): continue
             k = kind_of(t)
+            if cmp_value(k, t) is None: continue   # note sans dimension (ex. « BARRE & TABLETTE »)
             items.append(item(src='note', id=None, texte=t, kind=k, val=cmp_value(k, t),
                               photo=nt.get('photo') or ref, px=nt.get('px'), emplacement=nt.get('interpretation'),
                               mesure=nt.get('interpretation') or 'note', refs=[nt['id']]))
@@ -352,9 +354,9 @@ def to_ref(it, niv):
 def same(a, b):
     if a is None or b is None: return False
     if isinstance(a, tuple) and isinstance(b, tuple):
-        return abs(a[0] - b[0]) < 0.6 and abs(a[1] - b[1]) < 0.6
+        return abs(a[0] - b[0]) < 0.05 and abs(a[1] - b[1]) < 0.05
     if isinstance(a, (int, float)) and isinstance(b, (int, float)):
-        return abs(a - b) < 0.6
+        return abs(a - b) < 0.05
     return a == b
 
 def compat(i1, i2):
@@ -390,6 +392,13 @@ def apparier(niv, l1, l2):
             others = [bb for (_, aa, bb, cc, _) in cand if aa == a and bb not in u2]
             if len(set(others)) > 1: continue
         u1.add(a); u2.add(b); pairs.append((a, b, c, round(d, 1)))
+    # 2e passe : items sans px réel (px ESTIMÉ ou absent) restés seuls → appariement par texte si unique des deux côtés
+    for a, i1 in enumerate(l1):
+        if a in u1 or not (i1['px_estime'] or i1['px'] is None): continue
+        cb = [b for b, i2 in enumerate(l2) if b not in u2 and compat(i1, i2) == 'meme']
+        ca = [aa for aa, j1 in enumerate(l1) if aa not in u1 and cb and compat(j1, l2[cb[0]]) == 'meme']
+        if len(cb) == 1 and len(ca) == 1:
+            u1.add(a); u2.add(cb[0]); pairs.append((a, cb[0], 'meme', None))
     o1 = [i for i in range(len(l1)) if i not in u1]
     o2 = [i for i in range(len(l2)) if i not in u2]
     return pairs, o1, o2
@@ -473,6 +482,10 @@ def fmt_pp(v):
 
 def bouclage(niv, cid, candidats, valeurs_feuille):
     out = []
+    uniq = []
+    for t, v in candidats:
+        if not any(same(v, w) for _, w in uniq): uniq.append((t, v))
+    candidats = uniq
     for nom, ids, cible, cst in CHAINES.get(niv, []):
         if cid not in ids: continue
         autres = [valeurs_feuille.get(i) for i in ids if i != cid]
@@ -593,7 +606,12 @@ for niv in ('SS', 'RDC', 'P2', 'P5'):
             if not it: continue
             for a in it['alts']:
                 if a['valeur'] is not None and not same(a['valeur'], it['val']):
-                    alts.append({'texte': a['texte'], 'valeur': fmt(a['valeur']), 'propose_par': qui, 'raison': a['raison']})
+                    dup = next((x for x in alts if same(x['_v'], a['valeur'])), None)
+                    if dup:
+                        if qui not in dup['propose_par']: dup['propose_par'] += ' + ' + qui
+                        if a['raison'] and not dup['raison']: dup['raison'] = a['raison']
+                        continue
+                    alts.append({'texte': a['texte'], 'valeur': fmt(a['valeur']), 'propose_par': qui, 'raison': a['raison'], '_v': a['valeur']})
         if i1 and i2:
             nature = []
             if not same(i1['val'], i2['val']): nature.append('valeurs_differentes')
@@ -607,7 +625,9 @@ for niv in ('SS', 'RDC', 'P2', 'P5'):
                                 'px': [round(p) for p in px] if px else None,
                                 'emplacement': i1['emplacement'], 'mesure': i1['mesure'],
                                 'ref_lecture_1': i1['refs'], 'n_lecture_2': i2['n'],
-                                'mesure_lecture_2': i2['mesure'], 'distance_px': d})
+                                'mesure_lecture_2': i2['mesure'], 'distance_px': d,
+                                'px_lecture_1': {'photo': i1['photo'], 'px': i1['px'], 'estime': i1['px_estime']},
+                                'px_lecture_2': {'photo': i2['photo'], 'px': i2['px']}})
                 na += 1
                 continue
             nd += 1
@@ -619,8 +639,9 @@ for niv in ('SS', 'RDC', 'P2', 'P5'):
         cands = []
         for it in (i1, i2):
             if it: cands.append((it['texte'], it['val']))
-        for a in alts: cands.append((a['texte'], a['valeur']))
+        for a in alts: cands.append((a['texte'], a['_v']))
         cands = [(t, (v if not isinstance(v, list) else tuple(v))) for t, v in cands]
+        for a in alts: a.pop('_v', None)
         cid = uid
         bl = bouclage(niv, cid, cands, vals)
         extra = [EXTRA[r] for r in ((i1['refs'] if i1 else []) + [uid]) if r in EXTRA]
@@ -651,7 +672,18 @@ for niv in ('SS', 'RDC', 'P2', 'P5'):
 
 # contrôle des homographies sur les paires appariées situées dans des photos différentes
 for niv in ('SS', 'RDC'):
-    pass
+    for p in LOG['paires'][niv]:
+        pass
+for a in accords + [d for d in desaccords if d['categorie'] == 'desaccord']:
+    if 'px_lecture_1' in a:
+        l1p = dict(a['px_lecture_1']); l2p = a['px_lecture_2']
+        if l1p.get('estime'): l1p['px_note'] = 1
+    else:
+        l1p = a.get('lecture_1'); l2p = a.get('lecture_2')
+    if l1p and l2p and l1p['px'] and l2p['px'] and l1p['photo'] != l2p['photo'] and not l1p.get('px_note'):
+        q = tr(l1p['px'], l1p['photo'], l2p['photo'])
+        LOG['controle_homographies'].append({'id': a['id'], 'de': l1p['photo'], 'vers': l2p['photo'],
+            'px_l1_projete': [round(v) for v in q], 'px_l2': l2p['px'], 'ecart_px': round(math.dist(q, l2p['px']), 1)})
 
 with open(os.path.join(ARB, 'accords.json'), 'w', encoding='utf-8') as f:
     json.dump(accords, f, ensure_ascii=False, indent=1)
