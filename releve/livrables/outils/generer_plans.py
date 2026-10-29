@@ -75,6 +75,7 @@ STYLES = {
     "mur-leger": ("#C8C8C8", None, 0, None),
     "mur-lourd-c": (None, "#000000", 0.70, None),
     "mur-leger-c": (None, "#000000", 0.50, None),
+    "mur-neuf": ("#FFFFFF", None, 0, None),          # cloison projetée (proposition) : blanche, contour noir
     "ouv": (None, "#000000", 0.25, None),
     "ouv-fin": (None, "#000000", 0.18, None),
     "ouv-tir": (None, "#000000", 0.25, (1.5, 1.0)),
@@ -102,6 +103,7 @@ STYLES = {
     "cart-blanc": ("#FFFFFF", "#000000", 0.18, None),
     "cart-lourd": ("#4D4D4D", "#000000", 0.35, None),
     "cart-leger": ("#C8C8C8", "#000000", 0.25, None),
+    "cart-neuf": ("#FFFFFF", "#000000", 0.35, None),
     "invisible": (None, None, 0, None),
     "limite-zone": (None, "#808080", 0.18, (2.0, 1.2)),
 }
@@ -999,6 +1001,7 @@ def construire(niv, idx, projet, ctx, verif):
     """Construit la feuille d'un niveau : retourne un objet Feuille (dessin + données)."""
     F = Feuille()
     F.types_legende = set()
+    F.murs_neufs = False
     F.types_str = set()
     nid = str(niv.get("id") or f"N{idx}")
     F.nid = nid
@@ -1116,7 +1119,10 @@ def construire(niv, idx, projet, ctx, verif):
     # =============================== 10-Murs ===============================
     for m in sorted(murs, key=lambda m: m.lourd):
         g = D.g("10-Murs", m.id)
-        g += poly_prims(m.poly, "mur-lourd" if m.lourd else "mur-leger")
+        neuf = str(m.d.get("etat") or "") == "nouveau"
+        if neuf:
+            F.murs_neufs = True
+        g += poly_prims(m.poly, "mur-lourd" if m.lourd else ("mur-neuf" if neuf else "mur-leger"))
         PL.ligne(m.poly, m.id)
     if not leger.is_empty:
         lg = leger.boundary
@@ -2615,7 +2621,7 @@ def cartouche(F, niv, projet, ctx):
         y += 3.2 / 25.4 * 0.55
     y += 0.06
     # --- Avertissement
-    msg = "RELEVÉ DE L'EXISTANT — PRÉLIMINAIRE, À VALIDER SUR PLACE"
+    msg = projet.get("mention") or "RELEVÉ DE L'EXISTANT — PRÉLIMINAIRE, À VALIDER SUR PLACE"
     lignes = couper(msg, 3.0 / CAP, (L - 0.12) * 25.4, True)
     hbox = len(lignes) * 3.0 / 25.4 * 1.6 + 0.1
     rcadre(x0 + p, y, x1 - p, y + hbox, "cart-l")
@@ -2730,12 +2736,16 @@ def cartouche(F, niv, projet, ctx):
     sw, sh = 0.42, 0.11
     lx = x0 + p + sw + 0.1
     vis = getattr(F, "types_str", None)
+    neufs = getattr(F, "murs_neufs", False)
     items = [("lourd", "Mur extérieur / fondation"), ("leger", "Mur intérieur (cloison)"),
              ("poutre", "Poutre (au-dessus)"), ("axe", "Axe porteur d'origine"),
              ("col", "Colonne"), ("sol", "Solives (sens)"),
              ("approx", "Valeur estimée (mesurée sur l'image)"),
              ("rep", "Voir registre des écarts dans RAPPORT.md"),
              ("cote", "Cotes en pi-po (métrique en m)" if METRIQUE else "Cotes en pieds-pouces")]
+    if neufs:
+        items.insert(2, ("neuf", "Cloison projetée (nouvelle)"))
+        items[1] = ("leger", "Mur intérieur existant")
     if vis is not None:   # n'expliquer que les symboles réellement dessinés sur cette feuille
         besoin = {"poutre": "poutre", "axe": "axe", "col": "colonne", "sol": "solives"}
         items = [it for it in items if it[0] not in besoin or besoin[it[0]] in vis]
@@ -2761,6 +2771,8 @@ def cartouche(F, niv, projet, ctx):
             rect(sx0, yc - sh / 2, sx1, yc + sh / 2, "cart-lourd")
         elif kind == "leger":
             rect(sx0, yc - sh / 2 * 0.75, sx1, yc + sh / 2 * 0.75, "cart-leger")
+        elif kind == "neuf":
+            rect(sx0, yc - sh / 2 * 0.75, sx1, yc + sh / 2 * 0.75, "cart-neuf")
         elif kind in ("poutre", "axe"):
             g.append(P_pl([S(sx0, yc), S(sx1, yc)], "str-poutre" if kind == "poutre" else "str-axe"))
         elif kind == "col":
@@ -2846,7 +2858,7 @@ def cartouche(F, niv, projet, ctx):
     # Notes
     notes = [n_ for n_ in (niv.get("notes") or []) if isinstance(n_, dict)]
     if notes and peut(0.3):
-        ycur = cap("NOTES DU PLAN D'ORIGINE (traduites)", ycur)
+        ycur = cap(projet.get("titre_notes") or "NOTES DU PLAN D'ORIGINE (traduites)", ycur)
         for i, n_ in enumerate(notes, 1):
             t = str(n_.get("interpretation") or n_.get("texte_original") or "")
             if n_.get("texte_original") and n_.get("interpretation"):
@@ -3304,7 +3316,7 @@ def main(argv=None):
                   + ("identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)" if ok
                      else "DIFFÉRENT selon l'ordre interne des classes — non reproductible"))
         produits += [p_svg, p_png, p_dxf]
-    p_pdf = os.path.join(sortie, "pdf", "plans_existants.pdf")
+    p_pdf = os.path.join(sortie, "pdf", projet.get("nom_pdf") or "plans_existants.pdf")
     w = PdfWriter()
     for b in pdf_pages:
         r = PdfReader(io.BytesIO(b))
@@ -3356,7 +3368,7 @@ def main(argv=None):
     print(f"Détails : {os.path.relpath(p_ver, sortie)}")
     # RAPPORT.md (registre des écarts, mesures à prendre) — régénéré avec le reste
     p_rap = os.path.join(ici, "generer_rapport.py")
-    if os.path.isfile(p_rap):
+    if os.path.isfile(p_rap) and not projet.get("proposition"):
         subprocess.run([sys.executable, p_rap, "--json", chemin_json, "--sortie", sortie], check=True)
     # page d'annotation (annotateur/annotateur.html), seulement pour les livrables par défaut
     p_ann = os.path.join(ici, "generer_annotateur.py")
