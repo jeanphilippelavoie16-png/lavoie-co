@@ -998,6 +998,8 @@ def texte_dim_structure(s):
 def construire(niv, idx, projet, ctx, verif):
     """Construit la feuille d'un niveau : retourne un objet Feuille (dessin + données)."""
     F = Feuille()
+    F.types_legende = set()
+    F.types_str = set()
     nid = str(niv.get("id") or f"N{idx}")
     F.nid = nid
     F.nom = str(niv.get("nom") or nid)
@@ -1153,7 +1155,11 @@ def construire(niv, idx, projet, ctx, verif):
         g += prs
         PL.prims(prs, el["id"])
         PL.zone(cont, el["id"])
-        libs = [str(el["d"]["libelle"])] if el["d"].get("libelle") else LIBELLES.get(el["typ"])
+        if "libelle" in el["d"] and not el["d"]["libelle"]:
+            libs = []                                   # symbole seul, expliqué dans la légende
+            F.types_legende.add(el["typ"])
+        else:
+            libs = [str(el["d"]["libelle"])] if el["d"].get("libelle") else LIBELLES.get(el["typ"])
         if libs is None:
             nom = str(el["d"].get("nom") or el["typ"]).upper()
             libs = [nom]
@@ -1166,6 +1172,7 @@ def construire(niv, idx, projet, ctx, verif):
     for s, geo in strs:
         if s.get("afficher") is False:          # gardé dans les données, masqué sur le plan
             continue
+        F.types_str.add(str(s.get("type") or "").lower())
         sid = str(s.get("id"))
         typ = str(s.get("type") or "").lower()
         g = D.g("40-Structure", sid)
@@ -2722,14 +2729,22 @@ def cartouche(F, niv, projet, ctx):
     ycur = cap("LÉGENDE", ycur)
     sw, sh = 0.42, 0.11
     lx = x0 + p + sw + 0.1
+    vis = getattr(F, "types_str", None)
     items = [("lourd", "Mur extérieur / fondation"), ("leger", "Mur intérieur (cloison)"),
              ("poutre", "Poutre (au-dessus)"), ("axe", "Axe porteur d'origine"),
              ("col", "Colonne"), ("sol", "Solives (sens)"),
              ("approx", "Valeur estimée (mesurée sur l'image)"),
              ("rep", "Voir registre des écarts dans RAPPORT.md"),
              ("cote", "Cotes en pi-po (métrique en m)" if METRIQUE else "Cotes en pieds-pouces")]
+    if vis is not None:   # n'expliquer que les symboles réellement dessinés sur cette feuille
+        besoin = {"poutre": "poutre", "axe": "axe", "col": "colonne", "sol": "solives"}
+        items = [it for it in items if it[0] not in besoin or besoin[it[0]] in vis]
     if getattr(F, "limites", False):
         items.append(("limite", "Limite de zone ouverte (aucun mur)"))
+    if "drain" in getattr(F, "types_legende", ()):
+        items.append(("drain", "Drain"))
+    if "panneau-electrique" in getattr(F, "types_legende", ()):
+        items.append(("panneau", "Panneau électrique"))
     if getattr(F, "typ", False):
         items.append(("vide", "(typ.) : libellé typique, vaut pour les éléments identiques"))
     if not NOMS_PIECES and not DIMS_PIECES:
@@ -2761,6 +2776,14 @@ def cartouche(F, niv, projet, ctx):
             g.append(P_poly([[A, (A[0] + ah, A[1] + aw), (A[0] + ah, A[1] - aw)]], "str-plein"))
         elif kind == "limite":
             g.append(P_pl([S(sx0, yc), S(sx1, yc)], "limite-zone"))
+        elif kind == "drain":
+            dc_ = S((sx0 + sx1) / 2, yc); dr_ = mm(1.3); dk_ = dr_ * 0.7
+            g.append(P_cercle(dc_, dr_, "elem"))
+            g.append(P_pl([(dc_[0] - dk_, dc_[1] - dk_), (dc_[0] + dk_, dc_[1] + dk_)], "elem-fin"))
+            g.append(P_pl([(dc_[0] - dk_, dc_[1] + dk_), (dc_[0] + dk_, dc_[1] - dk_)], "elem-fin"))
+        elif kind == "panneau":
+            pa_, pb_ = S((sx0 + sx1) / 2 - 0.08, yc - 0.025), S((sx0 + sx1) / 2 + 0.08, yc + 0.025)
+            g.append(P_poly([[pa_, (pb_[0], pa_[1]), pb_, (pa_[0], pb_[1])]], "elem-plein"))
         elif kind == "approx":
             texte((sx0 + sx1) / 2, yc + 0.045, "≈", 3.0, True, "middle")
         elif kind == "rep":

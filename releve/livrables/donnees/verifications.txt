@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : R0    Date : 2026-10-29
-Données  : maison.json, sha256 ec261d2ac9f101cb7a2f14bcd7e6af7d30c12e68361ba716f8dc4cd4e4033482
+Données  : maison.json, sha256 1ff88193ca63e7a92a1fdffd233a447ed601dea8cd229f4117613df405c07241
 Feuilles : A-100 Sous-sol (3/16" = 1'-0") ; A-101 Rez-de-chaussée (3/16" = 1'-0")
 
 SOMMAIRE
@@ -19,7 +19,7 @@ SOMMAIRE
 
 1. IDENTIFIANTS
 ------------------------------------------------------------------------
-  [OK] 425 identifiants, aucun doublon
+  [OK] 423 identifiants, aucun doublon
 
 2. MURS
 ------------------------------------------------------------------------
@@ -97,8 +97,8 @@ SOMMAIRE
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
-  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (106 textes vérifiés)
-  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (86 textes vérifiés)
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (104 textes vérifiés)
+  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (78 textes vérifiés)
 
 9. MISE EN PAGE
 ------------------------------------------------------------------------
@@ -113,7 +113,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 93ae8e666a0ce30a… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
-  [OK] [RDC] DXF A-101_rdc.dxf : sha256 448b3354550f0ab4… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 b12ec932a670c964… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF A-101_rdc.dxf : sha256 bd03efcf6e89381e… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

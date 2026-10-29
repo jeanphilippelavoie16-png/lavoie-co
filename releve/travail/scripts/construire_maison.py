@@ -1529,6 +1529,24 @@ for i_, t_, n_, l_, x_, y_, r_ in NOUVEAUX:
                                         "note": f"position pointée par le propriétaire sur le plan ({ANNOT2})"},
                            "dimensions": None, "note": f"ajouté par le propriétaire ({ANNOT2})"})
 ss["elements"].sort(key=lambda e: e["id"])
+# 3e série (2026-10-29) : symboles sans texte ; drains de bain et de toilette alignés ; poutres, perron et marches retirés du dessin
+for e in ss["elements"]:
+    if e["id"] in ("elem-SS-DR-BAIN", "elem-SS-DR-WC", "elem-SS-DR-LAV", "elem-SS-PANNEAU"):
+        e["libelle"] = False
+    if e["id"] in ("elem-SS-DR-BAIN", "elem-SS-DR-WC"):
+        e["position"]["y"] = 203.0
+        e["position"]["note"] += " ; aligné avec l'autre drain (même y) à la demande du propriétaire"
+for niv_ in (ss, rdc):
+    for x in niv_["structure"]:
+        if x["type"] == "poutre":
+            x["afficher"] = False            # les pointillés des poutres sont retirés du dessin (données conservées)
+EXT_RET = {"elem-RDC-MAR-AR": "marches / patio arrière", "elem-RDC-PERRON": "perron avant", "elem-RDC-MAR-AV": "marches avant"}
+rdc["elements_retires"] += [dict(e, retire_selon=f"{EXT_RET[e['id']]} : seul l'intérieur du bâtiment est dessiné (propriétaire, 2026-10-29)")
+                            for e in rdc["elements"] if e["id"] in EXT_RET]
+rdc["elements"] = [e for e in rdc["elements"] if e["id"] not in EXT_RET]
+rdc["notes"] = [n for n in rdc["notes"] if n["id"] != "note-RDC-02"]      # note du perron (retiré)
+ss["notes_retirees"] = [dict(n, retire_selon="élément retiré du plan (propriétaire, 2026-10-29)") for n in ss["notes"] if n["id"] == "note-SS-05"]
+ss["notes"] = [n for n in ss["notes"] if n["id"] != "note-SS-05"]          # porte de ramonage (retirée)
 for e in ECARTS:
     lot_ = e["id"] in (EC.get('conf-cote-IMP-010'), EC.get('conf-cote-P5-010'))
     if lot_ or e["id"] == EC.get('p5'):

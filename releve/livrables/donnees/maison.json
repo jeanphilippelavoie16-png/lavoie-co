@@ -1085,13 +1085,13 @@
      "type": "drain",
      "nom": "Drain de bain",
      "nom_original": null,
-     "libelle": "DRAIN BAIN",
+     "libelle": false,
      "position": {
       "x": 27.9,
-      "y": 203.9,
+      "y": 203.0,
       "rotation_deg": 0,
       "source": "ESTIMÉ",
-      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29))"
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29)) ; aligné avec l'autre drain (même y) à la demande du propriétaire"
      },
      "dimensions": null,
      "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
@@ -1101,7 +1101,7 @@
      "type": "drain",
      "nom": "Drain de lavabo",
      "nom_original": null,
-     "libelle": "DRAIN LAVABO",
+     "libelle": false,
      "position": {
       "x": 432.5,
       "y": 314.3,
@@ -1117,13 +1117,13 @@
      "type": "drain",
      "nom": "Drain de toilette",
      "nom_original": null,
-     "libelle": "DRAIN TOILETTE",
+     "libelle": false,
      "position": {
       "x": 54.7,
-      "y": 202.0,
+      "y": 203.0,
       "rotation_deg": 0,
       "source": "ESTIMÉ",
-      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29))"
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29)) ; aligné avec l'autre drain (même y) à la demande du propriétaire"
      },
      "dimensions": null,
      "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
@@ -1162,7 +1162,7 @@
      "type": "panneau-electrique",
      "nom": "Panneau électrique",
      "nom_original": null,
-     "libelle": "PANNEAU ÉLECTRIQUE",
+     "libelle": false,
      "position": {
       "x": 12.0,
       "y": 109.2,
@@ -1223,7 +1223,8 @@
       "x2": 446,
       "y2": 204.0
      },
-     "note": "poutre arrière ; axe y = 31'-8\" − 10\" − 13'-10\" (DÉDUIT) ; repose sur str-SS-C01 à C03 ; = axe C du croquis 2016 (« porteur à l'origine »)"
+     "note": "poutre arrière ; axe y = 31'-8\" − 10\" − 13'-10\" (DÉDUIT) ; repose sur str-SS-C01 à C03 ; = axe C du croquis 2016 (« porteur à l'origine »)",
+     "afficher": false
     },
     {
      "id": "str-SS-P02",
@@ -1241,7 +1242,8 @@
       "x2": 446,
       "y2": 157
      },
-     "note": "poutre avant ; axe y = 10\" + 12'-3\" (DÉDUIT) ; repose sur str-SS-C04 à C06 ; = axe B du croquis 2016"
+     "note": "poutre avant ; axe y = 10\" + 12'-3\" (DÉDUIT) ; repose sur str-SS-C04 à C06 ; = axe B du croquis 2016",
+     "afficher": false
     },
     {
      "id": "str-SS-C01",
@@ -2725,12 +2727,6 @@
      "photo": "P2"
     },
     {
-     "id": "note-SS-05",
-     "texte_original": "PORTE DE RAMONAGE ; VÉROLE",
-     "interpretation": "Trappe de ramonage au pied de la cheminée ; « virole » (raccord du tuyau de fumée) — lecture « VÉROLE ».",
-     "photo": "P2"
-    },
-    {
      "id": "note-SS-06",
      "texte_original": "3W ; $ ; ⊕ ; Θ",
      "interpretation": "Symboles électriques (interrupteurs, sorties) non légendés : non reportés sur ce plan (voir extraction/SS.json).",
@@ -3784,7 +3780,16 @@
      "retire_selon": "réponses du propriétaire (2026-10-29)"
     }
    ],
-   "usage": "appartement indépendant ; aucun accès intérieur depuis le RDC (réponses du propriétaire (2026-10-29))"
+   "usage": "appartement indépendant ; aucun accès intérieur depuis le RDC (réponses du propriétaire (2026-10-29))",
+   "notes_retirees": [
+    {
+     "id": "note-SS-05",
+     "texte_original": "PORTE DE RAMONAGE ; VÉROLE",
+     "interpretation": "Trappe de ramonage au pied de la cheminée ; « virole » (raccord du tuyau de fumée) — lecture « VÉROLE ».",
+     "photo": "P2",
+     "retire_selon": "élément retiré du plan (propriétaire, 2026-10-29)"
+    }
+   ]
   },
   {
    "id": "RDC",
@@ -5852,109 +5857,6 @@
      "texte_original": null,
      "photo": "P4",
      "note": "massif hachuré accolé à l'extérieur du mur gauche, vis-à-vis de la cloison S. de bain / chambre avant ; un conduit (rectangle blanc) dedans"
-    },
-    {
-     "id": "elem-RDC-MAR-AR",
-     "type": "marches-ext",
-     "nom": "Marches extérieures arrière",
-     "nom_original": "(non écrit)",
-     "position": {
-      "x": 367,
-      "y": 407,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 76,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      },
-      "largeur": {
-       "valeur": 53,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      }
-     },
-     "texte_original": null,
-     "photo": "P4",
-     "escalier": {
-      "nb_contremarches": {
-       "valeur": null,
-       "source": "ILLISIBLE",
-       "photo": null,
-       "note": "non écrit"
-      },
-      "fleche": null,
-      "direction": "+x",
-      "texte_original": null
-     },
-     "note": "le long du mur arrière de la cuisine, depuis la porte extérieure de l'entrée arrière ; 7 intervalles dessinés (traits verticaux) ; nb de contremarches NON écrit ; probablement descend vers +x"
-    },
-    {
-     "id": "elem-RDC-MAR-AV",
-     "type": "marches-ext",
-     "nom": "Marches extérieures avant",
-     "nom_original": "(non écrit)",
-     "position": {
-      "x": 257.5,
-      "y": -26.5,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 53,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      },
-      "largeur": {
-       "valeur": 53,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      }
-     },
-     "texte_original": null,
-     "photo": "P4",
-     "escalier": {
-      "nb_contremarches": {
-       "valeur": null,
-       "source": "ILLISIBLE",
-       "photo": null,
-       "note": "non écrit ; 5 girons dessinés"
-      },
-      "fleche": null,
-      "direction": "+x",
-      "texte_original": null
-     },
-     "note": "5 girons dessinés (6 traits), parallèles à la façade, descendant vers la droite (+x) depuis le perron ; nb de contremarches NON écrit"
-    },
-    {
-     "id": "elem-RDC-PERRON",
-     "type": "perron",
-     "nom": "Perron de béton armé",
-     "nom_original": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
-     "position": {
-      "x": 197.5,
-      "y": -26.5,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 67,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      },
-      "largeur": {
-       "valeur": 53,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      }
-     },
-     "texte_original": "BETON / REN. AVEC BARRE / 1/2 Ø @ 10\" c/c",
-     "photo": "P4",
-     "note": "dalle devant la porte d'entrée ; « REN. » = renforcé (armé) de barres ½ po à 10 po c/c ; dimensions non cotées (ESTIMÉ)"
     }
    ],
    "structure": [
@@ -6051,7 +5953,8 @@
       "x2": 446,
       "y2": 157
      },
-     "note": "Poutre au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe B) (réponses du propriétaire (2026-10-29)). Étendue prise identique à celle de la poutre du sous-sol. Sur l'axe C : poutre autoportante str-RDC-P03."
+     "note": "Poutre au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe B) (réponses du propriétaire (2026-10-29)). Étendue prise identique à celle de la poutre du sous-sol. Sur l'axe C : poutre autoportante str-RDC-P03.",
+     "afficher": false
     }
    ],
    "cotes": [
@@ -8195,12 +8098,6 @@
      "texte_original": "NOTE : BARRE & TABLETTE DANS TOUS LES G.R.",
      "interpretation": "Tringle et tablette dans toutes les garde-robes.",
      "photo": "P4"
-    },
-    {
-     "id": "note-RDC-02",
-     "texte_original": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
-     "interpretation": "Perron avant en béton armé de barres de ½ po à 10 po c/c.",
-     "photo": "P4"
     }
    ],
    "lignes_cote": [
@@ -9250,6 +9147,112 @@
      "photo": "P4",
      "note": "rectangle en tirets dans la S. de bain (tirets = au-dessus, probablement trappe d'entretoit)",
      "retire_selon": "la trappe n'existe plus (annotateur en ligne (2026-10-29))"
+    },
+    {
+     "id": "elem-RDC-MAR-AR",
+     "type": "marches-ext",
+     "nom": "Marches extérieures arrière",
+     "nom_original": "(non écrit)",
+     "position": {
+      "x": 367,
+      "y": 407,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 76,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      },
+      "largeur": {
+       "valeur": 53,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      }
+     },
+     "texte_original": null,
+     "photo": "P4",
+     "escalier": {
+      "nb_contremarches": {
+       "valeur": null,
+       "source": "ILLISIBLE",
+       "photo": null,
+       "note": "non écrit"
+      },
+      "fleche": null,
+      "direction": "+x",
+      "texte_original": null
+     },
+     "note": "le long du mur arrière de la cuisine, depuis la porte extérieure de l'entrée arrière ; 7 intervalles dessinés (traits verticaux) ; nb de contremarches NON écrit ; probablement descend vers +x",
+     "retire_selon": "marches / patio arrière : seul l'intérieur du bâtiment est dessiné (propriétaire, 2026-10-29)"
+    },
+    {
+     "id": "elem-RDC-MAR-AV",
+     "type": "marches-ext",
+     "nom": "Marches extérieures avant",
+     "nom_original": "(non écrit)",
+     "position": {
+      "x": 257.5,
+      "y": -26.5,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 53,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      },
+      "largeur": {
+       "valeur": 53,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      }
+     },
+     "texte_original": null,
+     "photo": "P4",
+     "escalier": {
+      "nb_contremarches": {
+       "valeur": null,
+       "source": "ILLISIBLE",
+       "photo": null,
+       "note": "non écrit ; 5 girons dessinés"
+      },
+      "fleche": null,
+      "direction": "+x",
+      "texte_original": null
+     },
+     "note": "5 girons dessinés (6 traits), parallèles à la façade, descendant vers la droite (+x) depuis le perron ; nb de contremarches NON écrit",
+     "retire_selon": "marches avant : seul l'intérieur du bâtiment est dessiné (propriétaire, 2026-10-29)"
+    },
+    {
+     "id": "elem-RDC-PERRON",
+     "type": "perron",
+     "nom": "Perron de béton armé",
+     "nom_original": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
+     "position": {
+      "x": 197.5,
+      "y": -26.5,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 67,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      },
+      "largeur": {
+       "valeur": 53,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      }
+     },
+     "texte_original": "BETON / REN. AVEC BARRE / 1/2 Ø @ 10\" c/c",
+     "photo": "P4",
+     "note": "dalle devant la porte d'entrée ; « REN. » = renforcé (armé) de barres ½ po à 10 po c/c ; dimensions non cotées (ESTIMÉ)",
+     "retire_selon": "perron avant : seul l'intérieur du bâtiment est dessiné (propriétaire, 2026-10-29)"
     }
    ],
    "murs_retires": [
