@@ -253,3 +253,10 @@ sortir de la zone de dessin. Ordre de priorité :
 - **Chaînes de cotes** : somme de chaque chaîne comparée au hors-tout de la même façade (± 0,5 po), continuité
   des chaînes, valeur attendue comparée à la valeur dessinée.
 - **Textes** : chevauchements restants, texte/texte et texte/trait.
+
+## Annotateur en ligne
+
+`annotateur/annotateur.html` est régénéré par `generer_plans.py` (script `generer_annotateur.py`, gabarit
+`annotateur_gabarit.html`). Publié comme page claude.ai, il permet au propriétaire d'épingler des notes, de dessiner des
+traits, de barrer ce qui n'existe plus et de répondre aux repères ⚠. Les annotations sont gardées dans la base de la page
+(`annotations/<id>`, `reponses/<ecart-id>`), en pouces dans le repère de la maison, pour être reportées dans `maison.json`.

@@ -3326,6 +3326,10 @@ def main(argv=None):
     p_rap = os.path.join(ici, "generer_rapport.py")
     if os.path.isfile(p_rap):
         subprocess.run([sys.executable, p_rap, "--json", chemin_json, "--sortie", sortie], check=True)
+    # page d'annotation (annotateur/annotateur.html), seulement pour les livrables par défaut
+    p_ann = os.path.join(ici, "generer_annotateur.py")
+    if os.path.isfile(p_ann) and not args.json and not args.sortie:
+        subprocess.run([sys.executable, p_ann], check=True)
     return 0
 
 
