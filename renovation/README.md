@@ -1,7 +1,7 @@
 # Projets de rénovation — 86, avenue Laurier
 
 ## Règle
-- **Plans de base** : `releve/livrables/` (relevé de l'existant R0, étiquette git `plans-de-base-R0`). On ne les modifie **jamais**
+- **Plans de base** : `releve/livrables/` (relevé de l'existant R0, figé au commit `59ac401`). On ne les modifie **jamais**
   pour un projet.
 - **Chaque projet** est un dossier ici, `renovation/<code>_<nom>/`, construit à partir d'une **copie** de la base.
   Pour une nouvelle version, on copie le dossier du projet (ex. `SS-01` → `SS-02`) et on modifie la copie.
