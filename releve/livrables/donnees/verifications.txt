@@ -1,0 +1,344 @@
+RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
+========================================================================
+Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
+Révision : R0    Date : 2026-10-29
+Données  : maison.json, sha256 f8a052057ca420d12fccdad7759f58e645d632b682c4493746dbe26f85e829f2
+Feuilles : A-100 Sous-sol (3/16" = 1'-0") ; A-101 Rez-de-chaussée (3/16" = 1'-0")
+
+SOMMAIRE
+  Identifiants                 OK      0 erreur(s), 0 avertissement(s)
+  Murs                         OK      0 erreur(s), 0 avertissement(s)
+  Ouvertures                   OK      0 erreur(s), 0 avertissement(s)
+  Pièces                       OK      0 erreur(s), 0 avertissement(s)
+  Bilan de surface             OK      0 erreur(s), 0 avertissement(s)
+  Chaînes de cotes             AVERT.  0 erreur(s), 1 avertissement(s)
+  Repères d'incertitude        OK      0 erreur(s), 0 avertissement(s)
+  Textes (chevauchements)      AVERT.  0 erreur(s), 238 avertissement(s)
+  Mise en page                 OK      0 erreur(s), 0 avertissement(s)
+
+1. IDENTIFIANTS
+------------------------------------------------------------------------
+  [OK] 462 identifiants, aucun doublon
+
+2. MURS
+------------------------------------------------------------------------
+  (rien à signaler)
+
+3. OUVERTURES
+------------------------------------------------------------------------
+  (rien à signaler)
+
+4. PIÈCES
+------------------------------------------------------------------------
+  (rien à signaler)
+
+5. BILAN DE SURFACE
+------------------------------------------------------------------------
+  [OK] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1138,1 pi² + murs 134,3 pi² − chevauchement pièces/murs 0,0 pi² = 1272,3 pi² ; écart -0,0 pi²
+  [OK] [SS] aucun trou > 1 pi² entre pièces et murs
+  [OK] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1062,2 pi² + murs 186,2 pi² − chevauchement pièces/murs 0,0 pi² = 1248,3 pi² ; écart -0,0 pi²
+  [OK] [RDC] aucun trou > 1 pi² entre pièces et murs
+
+6. CHAÎNES DE COTES
+------------------------------------------------------------------------
+  [OK] [SS] façade avant, rang 1 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [SS] façade avant, rang 2 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [SS] façade arriere, rang 1 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [SS] façade arriere, rang 2 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [SS] façade gauche, rang 1 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [SS] façade gauche, rang 2 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [SS] façade droite, rang 1 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [SS] façade droite, rang 2 : Σ = 31'-8" = hors-tout 31'-8"
+  [AVERT] [RDC] lc-RDC-056 : longueur dessinée 2'-10" (34 po) ≠ valeur attendue 2'-9" (33 po), écart 1 po
+  [OK] [RDC] façade avant, rang 1 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [RDC] façade avant, rang 2 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [RDC] façade arriere, rang 1 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [RDC] façade arriere, rang 2 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [RDC] façade gauche, rang 1 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [RDC] façade gauche, rang 2 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [RDC] façade droite, rang 1 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [RDC] façade droite, rang 2 : Σ = 31'-8" = hors-tout 31'-8"
+
+7. REPÈRES D'INCERTITUDE
+------------------------------------------------------------------------
+  [INFO] ⚠29 [SS] : épaisseurs de murs présumées
+  [INFO] ⚠30 [RDC] : épaisseurs de murs présumées
+  [INFO] ⚠1 = ecart-001 [global, impact faible] : Cote en conflit cote-P5-010 — Longueur de la ligne latérale gauche du lot : 115.17' (2 lectures) ou 115,14' (3e lecture). Lecture 1 « 115.17' », lecture 2 « 115.17' », 3e lecture « 115,14' » (moyenne). Vignettes : arbitrage/vignettes/d-P5-04_P5.png.
+  [INFO] ⚠2 = ecart-002 [RDC, impact moyen] (positionné) : Cote en conflit cote-RDC-018 — Segment arrière droit 10'-9" / 10'-5" (nu ext. droit de l'entrée arrière → coin arrière droit). Lecture 1 « 10'-9" », lecture 2 « 10-9" », 3e lecture « 10'-5" » (basse). Vignettes : arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png.
+  [INFO] ⚠3 = ecart-003 [RDC, impact moyen] (positionné) : Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0" » (2 lectures) contre 6'-0" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0" », lecture 2 « ARCHE 4'-0" », 3e lecture « ARCHE 6'-0" » (moyenne). Vignettes : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png.
+  [INFO] ⚠4 = ecart-004 [SS, impact faible] (positionné) : Cote en conflit cote-SS-017 — Largeur de la fenêtre gauche basse du sous-sol (au-dessus de l'évier à lessive). Lecture 1 « 3'-0" », lecture 2 « 3'-0" », 3e lecture « 3'-0" » (basse). Vignettes : arbitrage/vignettes/d-SS-07_P1.png, arbitrage/vignettes/d-SS-07_P7.png.
+  [INFO] ⚠5 = ecart-005 [RDC, impact moyen] (positionné) : Épaisseur des murs extérieurs du RDC : 10" écrit sur le croquis 2016 (P2, chaînes 10" aux 4 côtés — valeur typique d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 (P3) montre ≈ 11 po ; aucune épaisseur écrite sur P3.
+  [INFO] ⚠6 = ecart-006 [RDC, impact moyen] (positionné) : Épaisseur des cloisons du RDC non cotée (sauf cloison chambre arrière / S. de bain 6" LU, tranchée par 3e lecture) ; dessin ≈ 6 po.
+  [INFO] ⚠7 = ecart-007 [global, impact faible] (positionné) : Épaisseurs PRÉSUMÉES par analogie ou par défaut : murs gauche et du fond du caveau (10"), murs avant et droit de l'excroissance du perron (6"), murs de l'entrée arrière (6", dessin ≈ 11") ; profondeur de l'entrée arrière non cotée : nu ext. PRÉSUMÉ à 5'-0" du mur arrière (= caveau cote-SS-009), alors que le dessin RDC montre ≈ 5'-7".
+  [INFO] ⚠8 = ecart-008 [global, impact moyen] : Hauteurs de plafond inconnues aux deux niveaux (aucune coupe ni élévation ; aucune hauteur écrite).
+  [INFO] ⚠9 = ecart-009 [RDC, impact critique] (positionné) : Croquis 2016 (P2, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 x ≈ 173 de C au mur arrière, placards en H entre lignes 2 et 3, bout de cloison ligne 4 x = 222 de y ≈ 76 au mur avant). Absentes du gris : murs de la S. de bain, cloisons des G.R. de la chambre arrière (x ≈ 145–161), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, cloisons le long des axes B et C. État actuel incertain : cloisons retirées ou simple croquis partiel.
+  [INFO] ⚠10 = ecart-010 [SS, impact critique] (positionné) : Croquis 2016 : « Colonne C4 retirée » (intersection axe C y = 204 × ligne 4 x = 222). Au plan 1957 (P1), la colonne la plus proche est str-SS-C02 à x = 228 (DÉDUIT de la chaîne 9'-10" + 8" + 7'-4") : décalage 6 po entre les deux documents.
+  [INFO] ⚠11 = ecart-011 [SS, impact critique] (positionné) : Croquis 2016 : « Colonne C6 retirée » (axe C × ligne 6, x = 316). Au plan 1957 : str-SS-C03 à x = 324 (8 po de décalage).
+  [INFO] ⚠12 = ecart-012 [SS, impact moyen] (positionné) : Le croquis 2016 ne marque des colonnes qu'aux lignes 4 et 6 (B4, B6 pleines ; C4, C6 retirées) ; le plan 1957 en montre 3 par poutre (x = 132, 228, 324). Les colonnes à x = 132 (C01, C04) n'apparaissent pas sur P2 ; positions en x décalées de 6–8 po entre documents.
+  [INFO] ⚠13 = ecart-013 [RDC, impact critique] (positionné) : Axes porteurs d'origine (P2) : B y = 157 et C y = 204, « porteurs à l'origine ». Concordance vérifiée : ils coïncident exactement avec les axes des poutres 8x10 du sous-sol (str-SS-P02 y = 10" + 12'-3" ; str-SS-P01 y = 380 − 10" − 13'-10") et avec les cloisons RDC mur-RDC-012/019 (B) et mur-RDC-026 (C). Le croquis ne dit rien de leur état en 2016.
+  [INFO] ⚠14 = ecart-014 [RDC, impact critique] (positionné) : Fissures signalées en 2016 (P2) : « zone de fissures au plafond de plâtre » le long de la ligne 6 (x ≈ 313–319) de l'axe C au mur arrière et le long de l'axe C (y ≈ 195–204) de x = 316 à ≈ 379 ; « fissure ± 1,2 m au plafond de stucco » dans le salon à x ≈ 319, y ≈ 31–67.
+  [INFO] ⚠15 = ecart-015 [RDC, impact moyen] (positionné) : Fissure ± 1,2 m au plafond de stucco du salon (P2) : x ≈ 319, y ≈ 31→67 (longueur dessinée ≈ 37 po ; texte 1,2 m ≈ 47 po).
+  [INFO] ⚠16 = ecart-016 [RDC, impact moyen] (positionné) : Usage des pièces : le croquis 2016 nomme « Salle à manger » l'espace que le plan 1957 nomme « CHAMBRE D'UTILITÉ », et « Cuisine » la « CUISINE S.-À-MANGER » d'origine ; l'absence de cloisons grises aux lignes 5 et 6 suggère un espace ouvert (NON écrit).
+  [INFO] ⚠17 = ecart-017 [RDC, impact moyen] (positionné) : ARCHE hall / salon : texte « ARCHE 4'-0" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'« ARCHE 6'-0" » salon / cuisine.
+  [INFO] ⚠18 = ecart-018 [RDC, impact faible] (positionné) : Porte de la chambre d'utilité étiquetée « 2'-6"x6'-8" » (3 lectures) dans une baie cotée 2'-5" d'axe en axe (cote-RDC-031) : une porte de 30 po ne peut pas y tenir avec ses montants ; le dessin place la porte en avant de la colonne des G.R., dans le prolongement de la cloison y = 17'-0".
+  [INFO] ⚠19 = ecart-019 [RDC, impact faible] (positionné) : Entrée arrière : 8'-2" + 8'-3" + 8'-0" + 2'-9" = 27'-2" (axe de la fenêtre + 2'-9") alors que 18'-3" + 9'-0" = 27'-3" au nu ext. droit du volume → écart de 1 po (2'-9" confirmé par la 3e lecture).
+  [INFO] ⚠20 = ecart-020 [SS, impact faible] (positionné) : Fenêtres arrière et droite haute du sous-sol : « 6'-8" » confirmé par la 3e lecture, mais dessinées de la même longueur que la fenêtre avant cotée 6'-3" (≈ 72–73 po).
+  [INFO] ⚠21 = ecart-021 [SS, impact faible] (positionné) : Porte du caveau « PORTE 2'-6" » positionnée par la cote 3'-6" dont le point de départ n'est pas dessiné (nu ext. ou int. du mur gauche du caveau).
+  [INFO] ⚠22 = ecart-022 [global, impact faible] (positionné) : Escalier SS ↔ RDC : superposition à 5 po près (SS largeur ≈ 37 ESTIMÉ, RDC cage 36½ DÉDUIT) ; 14 C.M. écrit aux deux niveaux mais ≈ 10 girons visibles au RDC (les marches inférieures passent sous le placard BALAIS) ; échappée sous la poutre arrière (y = 204) au pied de l'escalier non vérifiable.
+  [INFO] ⚠23 = ecart-023 [RDC, impact faible] (positionné) : Poutre 6"x10" FLUSH (cuisine) non cotée en position : y ≈ 206 ESTIMÉ (P3), à 2 po de l'axe C (204) et de la poutre arrière du SS.
+  [INFO] ⚠24 = ecart-024 [SS, impact faible] (positionné) : Colonnes str-SS-C01 (132, 204) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, y ≈ 212) ; les cloisons x = 12'-2" (146) passent à 14 po de la rangée de colonnes x = 132.
+  [INFO] ⚠25 = ecart-025 [global, impact faible] (positionné) : Superposition de la plomberie : elem-SS-CE (26.0, 107.7) : 52 po de la S. de bain, 297 po de la cuisine ; elem-SS-EVIER (22.4, 51.0) : 108 po de la S. de bain, 315 po de la cuisine. Aucun drain, colonne de chute ni panneau électrique dessiné au sous-sol.
+  [INFO] ⚠26 = ecart-026 [global, impact faible] (positionné) : Cheminée : massif extérieur au mur gauche non coté (seule sa face avant y = 11'-0" est située par la chaîne gauche du sous-sol) ; saillie et profondeur ≈ 20 × 21 po ESTIMÉES.
+  [INFO] ⚠27 = ecart-027 [global, impact faible] : Plan d'implantation P5 (1957, « maison projetée ») : rectangle 38'-0" × 31'-8" concordant ; excroissance avant dessinée ≈ 12,6–19,0 pi du coin gauche (perron SS : 13'-6"–19'-6") ; volume arrière ≈ 17,0–26,4 pi (entrée arrière : 18'-3"–27'-3") et marches ≈ 26,4–34,5 pi ; profondeur mesurée ≈ 32,1 pi (1 %). Implantation projetée, pas un relevé ; marges 40' (avant), 7.79' et 9' (latérales).
+  [INFO] ⚠28 = ecart-028 [global, impact moyen] : Aucune mesure prise sur place n'a été fournie par le propriétaire (ancres vides) : toute la géométrie provient des plans de 1957 et du croquis 2016.
+
+8. TEXTES (CHEVAUCHEMENTS)
+------------------------------------------------------------------------
+  [AVERT] [SS] texte/texte : cote lc-SS-026 × cote lc-SS-027 (x≈475.875, y≈29.5 po)
+  [AVERT] [SS] texte/texte : cote lc-SS-028 × cote lc-SS-027 (x≈475.875, y≈126.5 po)
+  [AVERT] [SS] texte/texte : cote lc-SS-028 × cote lc-SS-029 (x≈475.875, y≈126.5 po)
+  [AVERT] [SS] texte/texte : cote lc-SS-030 × cote lc-SS-029 (x≈475.875, y≈233 po)
+  [AVERT] [SS] texte/texte : cote lc-SS-030 × cote lc-SS-046 (x≈475.875, y≈233 po)
+  [AVERT] [SS] texte/texte : cote lc-SS-017 × cote lc-SS-018 (x≈-46.79, y≈96.139 po)
+  [AVERT] [SS] texte/texte : cote lc-SS-047 × cote lc-SS-053 (x≈254.717, y≈375 po)
+  [AVERT] [SS] texte/texte : cartouche « 9.8° (sens horaire depuis +y). » × cartouche « Source : ESTIMÉ (P5) » (x≈763.299, y≈41.81 po)
+  [AVERT] [SS] texte/texte : cartouche « 222). Au plan 1957 (P1), la co » × cartouche « proche est str-SS-C02 à x = 22 » (x≈755.931, y≈178.773 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-041 × trait de str-SS-C02 (x≈180, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-017 × trait de rep-lc-SS-017 (x≈-46.79, y≈96.139 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-042 × trait de str-SS-C02 (x≈198.612, y≈232.088 po)
+  [AVERT] [SS] texte/trait : repère ⚠20 (rep-lc-SS-010) × trait de lc-SS-010 (x≈200.354, y≈471.95 po)
+  [AVERT] [SS] texte/trait : repère ⚠20 (rep-lc-SS-010) × trait de lc-SS-010 (x≈200.354, y≈471.95 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-018 × trait de rep-lc-SS-017 (x≈-46.79, y≈114 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-018 × trait de lc-SS-022 (x≈-46.79, y≈114 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-027 × trait de lc-SS-026 (x≈475.875, y≈75 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-027 × trait de lc-SS-026 (x≈475.875, y≈75 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-027 × trait de lc-SS-033 (x≈475.875, y≈75 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-029 × trait de lc-SS-028 (x≈475.875, y≈180 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-029 × trait de lc-SS-028 (x≈475.875, y≈180 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-029 × trait de lc-SS-034 (x≈475.875, y≈180 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-031 × trait de lc-SS-035 (x≈475.875, y≈308 po)
+  [AVERT] [SS] texte/trait : repère ⚠20 (rep-lc-SS-031) × trait de lc-SS-031 (x≈481.418, y≈340.284 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-038 × trait de str-SS-F04 (x≈5, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-038 × trait de mur-SS-004 (x≈5, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-038 × trait de lc-SS-039 (x≈5, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-044 × trait de lc-SS-045 (x≈324, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-044 × trait de lc-SS-043 (x≈324, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-044 × trait de lc-SS-043 (x≈324, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-044 × trait de elem-SS-ESC (x≈324, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-044 × trait de elem-SS-ESC (x≈324, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-046 × trait de str-SS-F02 (x≈451, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-046 × trait de mur-SS-002 (x≈451, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-046 × trait de lc-SS-045 (x≈451, y≈222.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-047 × trait de str-SS-F03 (x≈254.717, y≈375 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-047 × trait de lc-SS-053 (x≈254.717, y≈375 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-047 × trait de lc-SS-048 (x≈254.717, y≈375 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-047 × trait de ouv-SS-008 (x≈254.717, y≈375 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-047 × trait de ouv-SS-008 (x≈254.717, y≈375 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-047 × trait de lc-SS-053 (x≈254.717, y≈375 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-051 × trait de lc-SS-055 (x≈254.717, y≈5 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-051 × trait de mur-SS-001 (x≈254.717, y≈5 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-051 × trait de str-SS-F01 (x≈254.717, y≈5 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-051 × trait de lc-SS-050 (x≈254.717, y≈5 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-052 × trait de str-SS-F03 (x≈78, y≈362.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-053 × trait de elem-SS-EVENT (x≈240, y≈398.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-053 × trait de elem-SS-EVENT (x≈240, y≈398.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-053 × trait de elem-SS-EVENT (x≈240, y≈398.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-053 × trait de elem-SS-EVENT (x≈240, y≈398.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-053 × trait de mur-SS-005 (x≈240, y≈398.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-053 × trait de str-SS-F05 (x≈240, y≈398.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-053 × trait de lc-SS-012 (x≈240, y≈398.283 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-054 × trait de str-SS-F03 (x≈334.717, y≈410 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-054 × trait de str-SS-F07 (x≈334.717, y≈410 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-055 × trait de str-SS-F10 (x≈241.717, y≈-24 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-055 × trait de mur-SS-001 (x≈241.717, y≈-24 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-055 × trait de str-SS-F01 (x≈241.717, y≈-24 po)
+  [AVERT] [SS] texte/trait : cote lc-SS-055 × trait de rep-mur-SS-010 (x≈241.717, y≈-24 po)
+  [AVERT] [SS] texte/trait : libellé elem-SS-FOUR « FOURNAISE » × trait de ecart-012 (x≈117.137, y≈180.232 po)
+  [AVERT] [SS] texte/trait : libellé str-SS-P01 « POUTRE 8x10 » × trait de ecart-010 (x≈228, y≈193.434 po)
+  [AVERT] [SS] texte/trait : libellé str-SS-C03 « COL. 8x8 » × trait de ecart-011 (x≈324, y≈192.709 po)
+  [AVERT] [RDC] texte/texte : escalier elem-RDC-ESC1 « DESCEND » × repère ⚠30 (rep-mur-RDC-027) (x≈288.965, y≈288.88 po)
+  [AVERT] [RDC] texte/texte : escalier elem-RDC-ESC1 « DESCEND » × étiquette piece-RDC-ESC « ESCALIER » (x≈288.965, y≈288.88 po)
+  [AVERT] [RDC] texte/texte : escalier elem-RDC-ESC1 « 14 CM » × repère ⚠30 (rep-mur-RDC-027) (x≈302.035, y≈288.88 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-047 × étiquette piece-RDC-UTI « D'UTILITÉ » (x≈255.717, y≈292 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-047 × étiquette piece-RDC-UTI « CHAMBRE » (x≈255.717, y≈292 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-047 × étiquette piece-RDC-ESC « ESCALIER » (x≈255.717, y≈292 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-043 × libellé str-RDC-S02 « SOLIVES 2x7 @ 16 c/c @ 16" c/c » (x≈303.9, y≈134.283 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-056 × cote lc-RDC-016 (x≈359.585, y≈470.088 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-003 × cote lc-RDC-004 (x≈158.75, y≈-66.875 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-035 × cote lc-RDC-036 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-038 × étiquette piece-RDC-BAL « BALAIS » (x≈295.5, y≈222.283 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-041 × cote lc-RDC-042 (x≈160.5, y≈134.283 po)
+  [AVERT] [RDC] texte/texte : cote lc-RDC-048 × libellé str-RDC-AXB « AXE PORTEUR D'ORIGINE » (x≈255.717, y≈180.5 po)
+  [AVERT] [RDC] texte/texte : libellé elem-RDC-LAV « L » × étiquette piece-RDC-ESC « ESCALIER » (x≈332, y≈273.132 po)
+  [AVERT] [RDC] texte/texte : libellé elem-RDC-LAV « L » × repère ⚠30 (rep-mur-RDC-028) (x≈332, y≈273.132 po)
+  [AVERT] [RDC] texte/texte : libellé str-RDC-AXC « AXE PORTEUR D'ORIGINE » × étiquette piece-RDC-DEG « DÉGAGEMENT » (x≈191.52, y≈193.434 po)
+  [AVERT] [RDC] texte/texte : libellé str-RDC-S01 « SOLIVES 2x7 @ 16 c/c @ 16" c/c » × étiquette piece-RDC-UTI « D'UTILITÉ » (x≈231.535, y≈296.448 po)
+  [AVERT] [RDC] texte/texte : libellé str-RDC-S01 « SOLIVES 2x7 @ 16 c/c @ 16" c/c » × étiquette piece-RDC-UTI « CHAMBRE » (x≈231.535, y≈296.448 po)
+  [AVERT] [RDC] texte/texte : étiquette piece-RDC-GR2 « G.R. » × étiquette piece-RDC-UTI « CHAMBRE » (x≈202.685, y≈331.516 po)
+  [AVERT] [RDC] texte/texte : étiquette piece-RDC-GR2 « 2 » × étiquette piece-RDC-UTI « D'UTILITÉ » (x≈202.685, y≈314.906 po)
+  [AVERT] [RDC] texte/texte : étiquette piece-RDC-GR2 « 2 » × étiquette piece-RDC-UTI « CHAMBRE » (x≈202.685, y≈314.906 po)
+  [AVERT] [RDC] texte/texte : cartouche « 9.8° (sens horaire depuis +y). » × cartouche « Source : ESTIMÉ (P5) » (x≈760.224, y≈39.81 po)
+  [AVERT] [RDC] texte/trait : escalier elem-RDC-ESC1 « DESCEND » × trait de rep-mur-RDC-027 (x≈288.965, y≈288.88 po)
+  [AVERT] [RDC] texte/trait : escalier elem-RDC-ESC1 « 14 CM » × trait de ecart-009 (x≈302.035, y≈288.88 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-039 × trait de ecart-023 (x≈386, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-056 × trait de rep-lc-RDC-056 (x≈359.585, y≈470.088 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-002 × trait de lc-RDC-008 (x≈98, y≈-66.875 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-003 × trait de lc-RDC-002 (x≈158.75, y≈-66.875 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-003 × trait de lc-RDC-002 (x≈158.75, y≈-66.875 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-004 × trait de lc-RDC-003 (x≈199, y≈-66.875 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-004 × trait de lc-RDC-003 (x≈199, y≈-66.875 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-004 × trait de lc-RDC-009 (x≈199, y≈-66.875 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-006 × trait de lc-RDC-010 (x≈377, y≈-66.875 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-016 × trait de lc-RDC-019 (x≈334, y≈467.44 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-016 × trait de lc-RDC-056 (x≈334, y≈467.44 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-034 × trait de elem-RDC-TRAPPE (x≈54, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-034 × trait de lc-RDC-057 (x≈54, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-034 × trait de mur-RDC-010 (x≈54, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-034 × trait de lc-RDC-057 (x≈54, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-034 × trait de lc-RDC-057 (x≈54, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de mur-RDC-011 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de lc-RDC-036 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de lc-RDC-034 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de lc-RDC-044 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de ouv-RDC-017 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de mur-RDC-010 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de lc-RDC-045 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de rep-mur-RDC-020 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de ouv-RDC-016 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de ouv-RDC-016 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-035 × trait de mur-RDC-021 (x≈127, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-036 × trait de lc-RDC-037 (x≈160.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-036 × trait de lc-RDC-035 (x≈160.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-036 × trait de ecart-018 (x≈160.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-036 × trait de ouv-RDC-017 (x≈160.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-036 × trait de ouv-RDC-017 (x≈160.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-036 × trait de rep-mur-RDC-020 (x≈160.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-036 × trait de ouv-RDC-016 (x≈160.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-036 × trait de mur-RDC-021 (x≈160.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-038 × trait de mur-RDC-027 (x≈295.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-038 × trait de lc-RDC-037 (x≈295.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-038 × trait de lc-RDC-039 (x≈295.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-038 × trait de mur-RDC-028 (x≈295.5, y≈222.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-041 × trait de ouv-RDC-014 (x≈160.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-041 × trait de mur-RDC-013 (x≈160.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-041 × trait de mur-RDC-014 (x≈160.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-041 × trait de lc-RDC-042 (x≈160.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-041 × trait de lc-RDC-040 (x≈160.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-041 × trait de mur-RDC-015 (x≈160.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-041 × trait de rep-mur-RDC-015 (x≈160.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-042 × trait de mur-RDC-014 (x≈198.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-042 × trait de ouv-RDC-012 (x≈198.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-042 × trait de ouv-RDC-012 (x≈198.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-042 × trait de lc-RDC-043 (x≈198.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-042 × trait de lc-RDC-041 (x≈198.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-042 × trait de mur-RDC-015 (x≈198.5, y≈134.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-048 × trait de mur-RDC-019 (x≈255.717, y≈180.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-048 × trait de str-RDC-AXB (x≈255.717, y≈180.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-048 × trait de lc-RDC-049 (x≈255.717, y≈180.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-048 × trait de str-RDC-AXC (x≈255.717, y≈180.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-048 × trait de lc-RDC-047 (x≈255.717, y≈180.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-048 × trait de mur-RDC-026 (x≈255.717, y≈180.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-050 × trait de elem-RDC-LAV (x≈348.717, y≈268.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-050 × trait de elem-RDC-SEC (x≈348.717, y≈268.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-050 × trait de elem-RDC-SEC (x≈348.717, y≈268.5 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-052 × trait de lc-RDC-044 (x≈98, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-052 × trait de ouv-RDC-019 (x≈98, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-052 × trait de ouv-RDC-019 (x≈98, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-053 × trait de mur-RDC-022 (x≈197, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de lc-RDC-050 (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de ouv-RDC-025 (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de elem-RDC-ARM-AR (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de elem-RDC-ARM-AR (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de elem-RDC-ARM-AR (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de elem-RDC-EVIER (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de elem-RDC-EVIER (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de elem-RDC-EVIER (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-054 × trait de ouv-RDC-025 (x≈375, y≈364.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-055 × trait de ouv-RDC-027 (x≈293, y≈429.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-055 × trait de lc-RDC-015 (x≈293, y≈429.283 po)
+  [AVERT] [RDC] texte/trait : cote lc-RDC-055 × trait de ouv-RDC-027 (x≈293, y≈429.283 po)
+  [AVERT] [RDC] texte/trait : libellé elem-RDC-PERRON « PERRON DE BÉTON ARMÉ » × trait de lc-RDC-008 (x≈104.839, y≈-25.62 po)
+  [AVERT] [RDC] texte/trait : libellé elem-RDC-PERRON « PERRON DE BÉTON ARMÉ » × trait de lc-RDC-001 (x≈104.839, y≈-25.62 po)
+  [AVERT] [RDC] texte/trait : libellé elem-RDC-PERRON « PERRON DE BÉTON ARMÉ » × trait de lc-RDC-002 (x≈104.839, y≈-25.62 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-AXB « AXE PORTEUR D'ORIGINE » × trait de ouv-RDC-024 (x≈228, y≈163.535 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-AXB « AXE PORTEUR D'ORIGINE » × trait de ouv-RDC-024 (x≈228, y≈163.535 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-AXB « AXE PORTEUR D'ORIGINE » × trait de lc-RDC-048 (x≈228, y≈163.535 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-AXB « AXE PORTEUR D'ORIGINE » × trait de lc-RDC-049 (x≈228, y≈163.535 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-AXB « AXE PORTEUR D'ORIGINE » × trait de lc-RDC-048 (x≈228, y≈163.535 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-AXB « AXE PORTEUR D'ORIGINE » × trait de rep-mur-RDC-015 (x≈228, y≈163.535 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-AXC « AXE PORTEUR D'ORIGINE » × trait de rep-mur-RDC-026 (x≈191.52, y≈193.434 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-S01 « SOLIVES 2x7 @ 16 c/c @ 16" c/c » × trait de ecart-016 (x≈231.535, y≈296.448 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-S01 « SOLIVES 2x7 @ 16 c/c @ 16" c/c » × trait de ecart-016 (x≈231.535, y≈296.448 po)
+  [AVERT] [RDC] texte/trait : libellé str-RDC-S02 « SOLIVES 2x7 @ 16 c/c @ 16" c/c » × trait de lc-RDC-043 (x≈328.59, y≈82.375 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « SALLE » × trait de elem-RDC-TRAPPE (x≈40.375, y≈198.141 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « SALLE » × trait de elem-RDC-BAIN (x≈40.375, y≈198.141 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « SALLE » × trait de elem-RDC-BAIN (x≈40.375, y≈198.141 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « SALLE » × trait de elem-RDC-LAVABO (x≈40.375, y≈198.141 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « SALLE » × trait de elem-RDC-LAVABO (x≈40.375, y≈198.141 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « SALLE » × trait de str-RDC-AXC (x≈40.375, y≈198.141 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « DE BAIN » × trait de elem-RDC-TRAPPE (x≈40.375, y≈181.531 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « DE BAIN » × trait de elem-RDC-BAIN (x≈40.375, y≈181.531 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « DE BAIN » × trait de elem-RDC-BAIN (x≈40.375, y≈181.531 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-SDB « DE BAIN » × trait de elem-RDC-BAIN (x≈40.375, y≈181.531 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-UTI « CHAMBRE » × trait de str-RDC-S01 (x≈225, y≈318.891 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-UTI « D'UTILITÉ » × trait de str-RDC-S01 (x≈225, y≈303.478 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-UTI « D'UTILITÉ » × trait de ecart-016 (x≈225, y≈303.478 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-DEG « DÉGAGEMENT » × trait de rep-mur-RDC-011 (x≈132.949, y≈183.037 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-DEG « DÉGAGEMENT » × trait de ouv-RDC-015 (x≈132.949, y≈183.037 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-DEG « DÉGAGEMENT » × trait de lc-RDC-045 (x≈132.949, y≈183.037 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-DEG « DÉGAGEMENT » × trait de ouv-RDC-022 (x≈132.949, y≈183.037 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-DEG « DÉGAGEMENT » × trait de ouv-RDC-022 (x≈132.949, y≈183.037 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ENT « ENTRÉE » × trait de ouv-RDC-010 (x≈197.375, y≈36.783 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ENT « ENTRÉE » × trait de ouv-RDC-010 (x≈197.375, y≈36.783 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ENT « ENTRÉE » × trait de mur-RDC-018 (x≈197.375, y≈36.783 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-LIN « LIN. » × trait de mur-RDC-014 (x≈163.5, y≈145.711 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-LIN « LIN. » × trait de rep-mur-RDC-015 (x≈163.5, y≈145.711 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-BAL « BALAIS » × trait de mur-RDC-027 (x≈297.25, y≈222.961 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-BAL « BALAIS » × trait de lc-RDC-037 (x≈297.25, y≈222.961 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-BAL « BALAIS » × trait de lc-RDC-038 (x≈297.25, y≈222.961 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-BAL « BALAIS » × trait de lc-RDC-038 (x≈297.25, y≈222.961 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-BAL « BALAIS » × trait de lc-RDC-039 (x≈297.25, y≈222.961 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-BAL « BALAIS » × trait de mur-RDC-028 (x≈297.25, y≈222.961 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de rep-mur-RDC-028 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de elem-RDC-LAV (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de elem-RDC-LAV (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de elem-RDC-ESC1 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de mur-RDC-027 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de elem-RDC-ESC1 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de elem-RDC-ESC1 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de rep-mur-RDC-028 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de mur-RDC-028 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de elem-RDC-ESC1 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-ESC « ESCALIER » × trait de lc-RDC-047 (x≈295.5, y≈262.211 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ENTRÉE » × trait de mur-RDC-005 (x≈252, y≈416.713 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ENTRÉE » × trait de elem-RDC-ARM-EAR (x≈252, y≈416.713 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ENTRÉE » × trait de lc-RDC-055 (x≈252, y≈416.713 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ENTRÉE » × trait de lc-RDC-055 (x≈252, y≈416.713 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ENTRÉE » × trait de lc-RDC-055 (x≈252, y≈416.713 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ENTRÉE » × trait de elem-RDC-ARM-EAR (x≈252, y≈416.713 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ENTRÉE » × trait de elem-RDC-ARM-EAR (x≈252, y≈416.713 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ARR. » × trait de elem-RDC-ARM-EAR (x≈252, y≈398.906 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ARR. » × trait de elem-RDC-ARM-EAR (x≈252, y≈398.906 po)
+  [AVERT] [RDC] texte/trait : étiquette piece-RDC-EAR « ARR. » × trait de elem-RDC-ARM-EAR (x≈252, y≈398.906 po)
+  [AVERT] [RDC] texte/trait : repère ⚠14 (ecart-014) × trait de elem-RDC-LAV (x≈335.507, y≈289.51 po)
+  [AVERT] [RDC] texte/trait : repère ⚠14 (ecart-014) × trait de elem-RDC-SEC (x≈335.507, y≈289.51 po)
+  [AVERT] [RDC] texte/trait : repère ⚠14 (ecart-014) × trait de elem-RDC-SEC (x≈335.507, y≈289.51 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-007) × trait de elem-RDC-MAR-AR (x≈345.751, y≈405.51 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-012) × trait de ouv-RDC-014 (x≈111.001, y≈156.51 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-012) × trait de mur-RDC-012 (x≈111.001, y≈156.51 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-012) × trait de mur-RDC-011 (x≈111.001, y≈156.51 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-012) × trait de str-RDC-AXB (x≈111.001, y≈156.51 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-027) × trait de elem-RDC-ESC1 (x≈296.001, y≈289.01 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-027) × trait de ecart-009 (x≈296.001, y≈289.01 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-027) × trait de elem-RDC-ESC1 (x≈296.001, y≈289.01 po)
+  [AVERT] [RDC] texte/trait : repère ⚠30 (rep-mur-RDC-028) × trait de elem-RDC-LAV (x≈337.001, y≈265.51 po)
+
+9. MISE EN PAGE
+------------------------------------------------------------------------
+  [INFO] [SS] elem-SS-RAMO : dimensions absentes → symbole par défaut 1'-10" × 2'-6"
+  [INFO] [SS] elem-SS-ROB1 : dimensions absentes → symbole par défaut 4" × 4"
+  [INFO] [SS] elem-SS-ROB2 : dimensions absentes → symbole par défaut 4" × 4"
+  [INFO] [SS] feuille A-100 : échelle 3/16" = 1'-0"
+  [INFO] [RDC] feuille A-101 : échelle 3/16" = 1'-0"
+
+Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.
