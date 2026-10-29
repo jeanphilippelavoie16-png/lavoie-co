@@ -1001,6 +1001,35 @@ maison = {
     ],
     "ecarts": ECARTS,
 }
+# ---------------------------------------------------------------------------- post-traitement (orchestrateur)
+# 1) chaque épaisseur PRÉSUMÉE renvoie à l'écart qui la documente (repère ⚠ unique par écart)
+for niv in maison["niveaux"]:
+    for m in niv["murs"]:
+        ep = m.get("epaisseur") or {}
+        if ep.get("source") == "PRÉSUMÉ" and not str(ep.get("ref", "")).startswith("ecart-"):
+            ep["ref"] = EC['ep-int-rdc'] if (niv["id"] == "RDC" and m["type"] == "int") else EC['ep-pres']
+
+# 2) renumérotation des photos dans l'ordre d'envoi du propriétaire (1 à 7).
+#    Les fichiers de travail (photos/, prep/, arbitrage/vignettes/) gardent la numérotation interne ;
+#    la correspondance est dans RAPPORT.md. Les identifiants (cote-P2-…) et les chemins ne sont pas touchés.
+PHOTO_ORDRE_ENVOI = {"P2": "P1", "P1": "P2", "P7": "P3", "P3": "P4", "P4": "P5", "P6": "P6", "P5": "P7"}
+_re_photo = re.compile(r"(?<![\w/-])P([1-7])(?![\w.-])")
+
+
+def _renum(o):
+    if isinstance(o, str):
+        return _re_photo.sub(lambda mt: PHOTO_ORDRE_ENVOI["P" + mt.group(1)], o)
+    if isinstance(o, list):
+        return [_renum(x) for x in o]
+    if isinstance(o, dict):
+        return {k: _renum(v) for k, v in o.items()}
+    return o
+
+
+maison = _renum(maison)
+maison["projet"]["photos"] = sorted(maison["projet"].get("photos", []), key=lambda p: p.get("id", ""))
+maison["projet"]["correspondance_photos_internes"] = {v: k for k, v in sorted(PHOTO_ORDRE_ENVOI.items(), key=lambda kv: kv[1])}
+
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, 'w', encoding='utf-8') as f:
     json.dump(maison, f, ensure_ascii=False, indent=1)
