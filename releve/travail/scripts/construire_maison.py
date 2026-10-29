@@ -1497,7 +1497,7 @@ for e in ECARTS:
 for niv_ in (rdc, ss):
     niv_["lignes_cote"] = [l for l in niv_["lignes_cote"] if l["facade"] != "int"]
 # notes du plan d'origine qui ne décrivent plus l'existant (éléments retirés, réparés ou jugés inutiles par le propriétaire)
-NOTES_RET = {"note-RDC-03", "note-RDC-04", "note-RDC-05", "note-RDC-06", "note-RDC-07", "note-RDC-09"}
+NOTES_RET = {"note-RDC-03", "note-RDC-04", "note-RDC-05", "note-RDC-06", "note-RDC-07", "note-RDC-08", "note-RDC-09"}
 rdc["notes_retirees"] = [dict(n, retire_selon=ANNOT) for n in rdc["notes"] if n["id"] in NOTES_RET]
 rdc["notes"] = [n for n in rdc["notes"] if n["id"] not in NOTES_RET]
 for e in ECARTS:
@@ -1505,6 +1505,38 @@ for e in ECARTS:
         e["position"] = [261.0, 375.0]          # reste : la porte du caveau (sens) et le côté des pentures de la porte du mur droit
 maison["projet"]["affichage"]["metrique"] = False
 maison["projet"]["affichage"]["note"] += " ; cotes intérieures et métrique retirées des plans (annotateur, 2026-10-29)"
+
+# 1f) 2e série d'annotations du propriétaire (annotateur, 2026-10-29)
+ANNOT2 = "annotateur en ligne, 2e série (2026-10-29)"
+rdc["limites_zones"] = []                                   # « Enlever pointillé » : limites des zones ouvertes retirées
+ss["elements_retires"] += [dict(e, retire_selon=f"retiré du plan à la demande du propriétaire ({ANNOT2})")
+                           for e in ss["elements"] if e["id"] == "elem-SS-RAMO"]
+ss["elements"] = [e for e in ss["elements"] if e["id"] != "elem-SS-RAMO"]
+for niv_ in (ss, rdc):                                      # flèches de solives masquées (les solives existent toujours)
+    for x in niv_["structure"]:
+        if x["type"] == "solives":
+            x["afficher"] = False
+maison["projet"]["affichage"]["textes_structure"] = False   # « enlève tous les textes à l'intérieur du bâtiment »
+NOUVEAUX = [  # (id, type, nom, libellé, x, y, rotation) — positions pointées par le propriétaire dans l'annotateur
+    ("elem-SS-DR-BAIN", "drain", "Drain de bain", "DRAIN BAIN", 27.9, 203.9, 0),
+    ("elem-SS-DR-WC", "drain", "Drain de toilette", "DRAIN TOILETTE", 54.7, 202.0, 0),
+    ("elem-SS-DR-LAV", "drain", "Drain de lavabo", "DRAIN LAVABO", 432.5, 314.3, 0),
+    ("elem-SS-PANNEAU", "panneau-electrique", "Panneau électrique", "PANNEAU ÉLECTRIQUE", 12.0, 109.2, 90),
+]
+for i_, t_, n_, l_, x_, y_, r_ in NOUVEAUX:
+    ss["elements"].append({"id": i_, "type": t_, "nom": n_, "nom_original": None, "libelle": l_,
+                           "position": {"x": x_, "y": y_, "rotation_deg": r_, "source": "ESTIMÉ",
+                                        "note": f"position pointée par le propriétaire sur le plan ({ANNOT2})"},
+                           "dimensions": None, "note": f"ajouté par le propriétaire ({ANNOT2})"})
+ss["elements"].sort(key=lambda e: e["id"])
+for e in ECARTS:
+    lot_ = e["id"] in (EC.get('conf-cote-IMP-010'), EC.get('conf-cote-P5-010'))
+    if lot_ or e["id"] == EC.get('p5'):
+        e["statut"] = "résolu"
+        e["hypothese_retenue"] = (f"Réponse du propriétaire ({ANNOT2}) : « {'115.17' if lot_ else 'C’est beau'} ». "
+                                  + e["hypothese_retenue"])
+        e["a_valider_sur_place"] = ""
+        e.pop("position", None)
 
 # 2) renumérotation des photos dans l'ordre d'envoi du propriétaire (1 à 7).
 #    Les fichiers de travail (photos/, prep/, arbitrage/vignettes/) gardent la numérotation interne ;

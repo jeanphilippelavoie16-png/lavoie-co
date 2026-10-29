@@ -1153,7 +1153,7 @@ def construire(niv, idx, projet, ctx, verif):
         g += prs
         PL.prims(prs, el["id"])
         PL.zone(cont, el["id"])
-        libs = LIBELLES.get(el["typ"])
+        libs = [str(el["d"]["libelle"])] if el["d"].get("libelle") else LIBELLES.get(el["typ"])
         if libs is None:
             nom = str(el["d"].get("nom") or el["typ"]).upper()
             libs = [nom]
@@ -1164,6 +1164,8 @@ def construire(niv, idx, projet, ctx, verif):
     lib_str = []
     elem_zones = [rect_element(el) for el in elems]
     for s, geo in strs:
+        if s.get("afficher") is False:          # gardé dans les données, masqué sur le plan
+            continue
         sid = str(s.get("id"))
         typ = str(s.get("type") or "").lower()
         g = D.g("40-Structure", sid)
@@ -1358,6 +1360,8 @@ def construire(niv, idx, projet, ctx, verif):
     for el, cont, libs, g in lib_elems:
         placer_libelle_element(el, cont, libs, g, PL, mm, fc)
     groupes = {}
+    if not TEXTES_STRUCTURE:
+        lib_str = []                             # projet.affichage.textes_structure = false : aucun libellé de structure
     for kind, sid, geo, lib, g in lib_str:
         groupes.setdefault((kind, lib), []).append((sid, geo, g))
     F.typ = any(len(v) > 1 for v in groupes.values())
@@ -2462,6 +2466,7 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
 NOMS_PIECES = True
 DIMS_PIECES = True
 METRIQUE = True      # projet.affichage.metrique = false : cotes en pi-po seulement
+TEXTES_STRUCTURE = True   # projet.affichage.textes_structure = false : poutres, colonnes, solives sans libellé
 
 
 CIRCULATION = ("DEGAGEMENT", "PASSAGE", "HALL", "CORRIDOR", "COULOIR", "CIRCULATION")
@@ -3223,7 +3228,8 @@ def main(argv=None):
         return 2
     projet = data.get("projet") or {}
     # projet.affichage.noms_pieces = false : aucun nom de pièce sur les plans (ils restent dans maison.json et le CSV)
-    global NOMS_PIECES, DIMS_PIECES, METRIQUE
+    global NOMS_PIECES, DIMS_PIECES, METRIQUE, TEXTES_STRUCTURE
+    TEXTES_STRUCTURE = bool(((projet.get("affichage") or {}).get("textes_structure", True)))
     METRIQUE = bool(((projet.get("affichage") or {}).get("metrique", True)))
     NOMS_PIECES = bool(((projet.get("affichage") or {}).get("noms_pieces", True)))
     DIMS_PIECES = bool(((projet.get("affichage") or {}).get("dimensions_pieces", True)))

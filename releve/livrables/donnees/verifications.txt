@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : R0    Date : 2026-10-29
-Données  : maison.json, sha256 af99b326871d97b92bad199c567b42495b85b9fe61533b91f6f4416a3c96ce46
+Données  : maison.json, sha256 ec261d2ac9f101cb7a2f14bcd7e6af7d30c12e68361ba716f8dc4cd4e4033482
 Feuilles : A-100 Sous-sol (3/16" = 1'-0") ; A-101 Rez-de-chaussée (3/16" = 1'-0")
 
 SOMMAIRE
@@ -19,7 +19,7 @@ SOMMAIRE
 
 1. IDENTIFIANTS
 ------------------------------------------------------------------------
-  [OK] 427 identifiants, aucun doublon
+  [OK] 425 identifiants, aucun doublon
 
 2. MURS
 ------------------------------------------------------------------------
@@ -97,12 +97,15 @@ SOMMAIRE
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
-  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (108 textes vérifiés)
-  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (94 textes vérifiés)
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (106 textes vérifiés)
+  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (86 textes vérifiés)
 
 9. MISE EN PAGE
 ------------------------------------------------------------------------
-  [INFO] [SS] elem-SS-RAMO : dimensions absentes → symbole par défaut 2'-0" × 2'-0"
+  [INFO] [SS] elem-SS-DR-BAIN : dimensions absentes → symbole par défaut 6" × 6"
+  [INFO] [SS] elem-SS-DR-LAV : dimensions absentes → symbole par défaut 6" × 6"
+  [INFO] [SS] elem-SS-DR-WC : dimensions absentes → symbole par défaut 6" × 6"
+  [INFO] [SS] elem-SS-PANNEAU : dimensions absentes → symbole par défaut 1'-4" × 4"
   [INFO] [SS] elem-SS-ROB1 : dimensions absentes → symbole par défaut 4" × 4"
   [INFO] [SS] elem-SS-ROB2 : dimensions absentes → symbole par défaut 4" × 4"
   [INFO] [SS] feuille A-100 : échelle 3/16" = 1'-0"
@@ -110,7 +113,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 3b053de07520f622… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
-  [OK] [RDC] DXF A-101_rdc.dxf : sha256 6f397d053a943fde… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 93ae8e666a0ce30a… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF A-101_rdc.dxf : sha256 448b3354550f0ab4… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

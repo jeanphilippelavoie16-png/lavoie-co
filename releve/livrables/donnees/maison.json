@@ -73,7 +73,8 @@
    "noms_pieces": false,
    "dimensions_pieces": false,
    "note": "noms, dimensions et superficies des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv ; cotes intérieures et métrique retirées des plans (annotateur, 2026-10-29)",
-   "metrique": false
+   "metrique": false,
+   "textes_structure": false
   },
   "implantation": {
    "source": "P7",
@@ -1080,6 +1081,54 @@
      "note": "Massif en saillie hors du mur gauche (elem-SS-CHEM), conduit rectangulaire dessiné à l'intérieur (≈ x -13.3 à -5.6, y 137.1 à 148.7, ESTIMÉ). Semelle tiretée autour. Aucun texte « CHEMINÉE » ; identifié par la porte de ramonage et la virole."
     },
     {
+     "id": "elem-SS-DR-BAIN",
+     "type": "drain",
+     "nom": "Drain de bain",
+     "nom_original": null,
+     "libelle": "DRAIN BAIN",
+     "position": {
+      "x": 27.9,
+      "y": 203.9,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ",
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29))"
+     },
+     "dimensions": null,
+     "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
+    },
+    {
+     "id": "elem-SS-DR-LAV",
+     "type": "drain",
+     "nom": "Drain de lavabo",
+     "nom_original": null,
+     "libelle": "DRAIN LAVABO",
+     "position": {
+      "x": 432.5,
+      "y": 314.3,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ",
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29))"
+     },
+     "dimensions": null,
+     "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
+    },
+    {
+     "id": "elem-SS-DR-WC",
+     "type": "drain",
+     "nom": "Drain de toilette",
+     "nom_original": null,
+     "libelle": "DRAIN TOILETTE",
+     "position": {
+      "x": 54.7,
+      "y": 202.0,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ",
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29))"
+     },
+     "dimensions": null,
+     "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
+    },
+    {
      "id": "elem-SS-EVENT",
      "type": "event",
      "nom": "Évent grillagé (caveau)",
@@ -1109,19 +1158,20 @@
      "mur_id": "mur-SS-005"
     },
     {
-     "id": "elem-SS-RAMO",
-     "type": "autre",
-     "nom": "P. de ramonage",
-     "nom_original": "PORTE DE RAMONAGE",
+     "id": "elem-SS-PANNEAU",
+     "type": "panneau-electrique",
+     "nom": "Panneau électrique",
+     "nom_original": null,
+     "libelle": "PANNEAU ÉLECTRIQUE",
      "position": {
-      "x": 10.5,
-      "y": 146.3,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
+      "x": 12.0,
+      "y": 109.2,
+      "rotation_deg": 90,
+      "source": "ESTIMÉ",
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29))"
      },
      "dimensions": null,
-     "texte_original": "PORTE DE RAMONAGE",
-     "note": "Flèche vers la jonction cheminée / mur gauche, face intérieure. Position ESTIMÉE (pointe de flèche). ; libellé abrégé de « PORTE DE RAMONAGE »"
+     "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
     },
     {
      "id": "elem-SS-ROB1",
@@ -1318,7 +1368,8 @@
       "y2": 370,
       "espacement": 20
      },
-     "note": "plancher du RDC ; note écrite dans la travée arrière ; solives parallèles à y sur toute la maison (PRÉSUMÉ pour les autres travées), appuyées sur les murs avant/arrière et les poutres"
+     "note": "plancher du RDC ; note écrite dans la travée arrière ; solives parallèles à y sur toute la maison (PRÉSUMÉ pour les autres travées), appuyées sur les murs avant/arrière et les poutres",
+     "afficher": false
     },
     {
      "id": "str-SS-F01",
@@ -3614,6 +3665,22 @@
      "texte_original": "RESERVOIR À L'HUILE",
      "note": "Rectangle contre le mur avant, à gauche de l'excroissance du perron.",
      "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-SS-RAMO",
+     "type": "autre",
+     "nom": "P. de ramonage",
+     "nom_original": "PORTE DE RAMONAGE",
+     "position": {
+      "x": 10.5,
+      "y": 146.3,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": null,
+     "texte_original": "PORTE DE RAMONAGE",
+     "note": "Flèche vers la jonction cheminée / mur gauche, face intérieure. Position ESTIMÉE (pointe de flèche). ; libellé abrégé de « PORTE DE RAMONAGE »",
+     "retire_selon": "retiré du plan à la demande du propriétaire (annotateur en ligne, 2e série (2026-10-29))"
     }
    ],
    "ouvertures_retirees": [
@@ -8134,12 +8201,6 @@
      "texte_original": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
      "interpretation": "Perron avant en béton armé de barres de ½ po à 10 po c/c.",
      "photo": "P4"
-    },
-    {
-     "id": "note-RDC-08",
-     "texte_original": "SW ; 3W ; $ ; ⊖",
-     "interpretation": "Symboles électriques non légendés : non reportés sur ce plan (voir extraction/RDC.json).",
-     "photo": "P4"
     }
    ],
    "lignes_cote": [
@@ -9536,68 +9597,7 @@
      "retire_selon": "réponses du propriétaire (2026-10-29) : plus d'arche ni de mur au-delà"
     }
    ],
-   "limites_zones": [
-    {
-     "id": "lz-RDC-001",
-     "p1": [
-      173,
-      157
-     ],
-     "p2": [
-      456,
-      157
-     ],
-     "note": "hall-dégagement / salon-cuisine : axe B ; cloison retirée de 18'-6\" à l'arche (constat 2026-10-29)"
-    },
-    {
-     "id": "lz-RDC-002",
-     "p1": [
-      222,
-      85
-     ],
-     "p2": [
-      222,
-      157
-     ],
-     "note": "hall / salon : prolongement de la cloison hall / salon jusqu'à l'axe B (ouvert)"
-    },
-    {
-     "id": "lz-RDC-003",
-     "p1": [
-      316,
-      157
-     ],
-     "p2": [
-      316,
-      380
-     ],
-     "note": "cuisine / escalier-dégagement : axe de l'ancienne cloison x = 26'-4\" (retirée)"
-    },
-    {
-     "id": "lz-RDC-004",
-     "p1": [
-      146,
-      204
-     ],
-     "p2": [
-      316,
-      204
-     ],
-     "note": "dégagement / salle à manger : axe C, ancienne cloison retirée"
-    },
-    {
-     "id": "lz-RDC-005",
-     "p1": [
-      175,
-      5
-     ],
-     "p2": [
-      175,
-      54
-     ],
-     "note": "entrée / vestiaire (VEST. ouvert)"
-    }
-   ],
+   "limites_zones": [],
    "usage": "logement du RDC ; l'escalier vers le sous-sol n'existe plus (réponses du propriétaire (2026-10-29))",
    "structure_retiree": [
     {
@@ -9761,6 +9761,13 @@
      "interpretation": "Tablette / armoire à médicaments dans la S. de bain (lecture incertaine ; non dessinée en élément).",
      "photo": "P4",
      "retire_selon": "annotateur en ligne (2026-10-29)"
+    },
+    {
+     "id": "note-RDC-08",
+     "texte_original": "SW ; 3W ; $ ; ⊖",
+     "interpretation": "Symboles électriques non légendés : non reportés sur ce plan (voir extraction/RDC.json).",
+     "photo": "P4",
+     "retire_selon": "annotateur en ligne (2026-10-29)"
     }
    ]
   }
@@ -9771,10 +9778,10 @@
    "niveau": "global",
    "description": "Cote en conflit cote-IMP-010 — Longueur de la ligne latérale gauche du lot : 115.17' (2 lectures) ou 115,14' (3e lecture). Lecture 1 « 115.17' », lecture 2 « 115.17' », 3e lecture « 115,14' » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-P5-04_P5.png.",
    "impact": "faible",
-   "hypothese_retenue": "115.17' (1382.04 po) — lectures 1 et 2 : 115.17' ; 3e lecture 115,14' ; aucune chaîne fermée",
-   "a_valider_sur_place": "Consulter le certificat de localisation / plan cadastral (aucune mesure de maison en jeu).",
+   "hypothese_retenue": "Réponse du propriétaire (annotateur en ligne, 2e série (2026-10-29)) : « 115.17 ». 115.17' (1382.04 po) — lectures 1 et 2 : 115.17' ; 3e lecture 115,14' ; aucune chaîne fermée",
+   "a_valider_sur_place": "",
    "photo": "P7",
-   "statut": "ouvert"
+   "statut": "résolu"
   },
   {
    "id": "ecart-002",
@@ -10031,10 +10038,10 @@
    "niveau": "global",
    "description": "Plan d'implantation P7 (1957, « maison projetée ») : rectangle 38'-0\" × 31'-8\" concordant ; excroissance avant dessinée ≈ 12,6–19,0 pi du coin gauche (perron SS : 13'-6\"–19'-6\") ; volume arrière ≈ 17,0–26,4 pi (entrée arrière : 18'-3\"–27'-3\") et marches ≈ 26,4–34,5 pi ; profondeur mesurée ≈ 32,1 pi (1 %). Implantation projetée, pas un relevé ; marges 40' (avant), 7.79' et 9' (latérales).",
    "impact": "faible",
-   "hypothese_retenue": "Plans de 1957 (P2, P3, P4, P5, P6) retenus pour la géométrie ; P7 sert à l'orientation (nord ≈ 9,8° ± 1,5°) et au lot.",
-   "a_valider_sur_place": "Certificat de localisation récent pour l'implantation réelle et l'orientation.",
+   "hypothese_retenue": "Réponse du propriétaire (annotateur en ligne, 2e série (2026-10-29)) : « C’est beau ». Plans de 1957 (P2, P3, P4, P5, P6) retenus pour la géométrie ; P7 sert à l'orientation (nord ≈ 9,8° ± 1,5°) et au lot.",
+   "a_valider_sur_place": "",
    "photo": "P7",
-   "statut": "ouvert"
+   "statut": "résolu"
   },
   {
    "id": "ecart-028",

@@ -118,27 +118,25 @@
 <polyline class="cote-tick" points="870.644,241.316 875.276,236.683"/>
 <polyline class="cote-tick" points="897.524,241.316 902.156,236.683"/>
 <text x="906.24" y="239.96" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Cotes en pieds-pouces</text>
-<text x="906.24" y="252.12" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">(typ.) : libellé typique, vaut pour les</text>
-<text x="906.24" y="263.143" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">éléments identiques</text>
-<text x="906.24" y="275.303" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Noms, dimensions et superficies des</text>
-<text x="906.24" y="286.327" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">pièces : voir tableau_pieces.csv</text>
-<polyline class="cart-l" points="867.2,293.687 1072,293.687"/>
-<text x="872.96" y="303.826" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DU PLAN D'ORIGINE (traduites)</text>
-<text x="872.96" y="314.535" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Solives de plancher 2 po × 10 po espacées de</text>
-<text x="872.96" y="325.558" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">20 po c/c (plancher du RDC), parallèles à y. [«</text>
-<text x="872.96" y="336.582" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">SOLIVES 2&quot;x10&quot; @ 20&quot; c/c »]</text>
-<text x="872.96" y="349.526" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Solives doublées sous les cloisons parallèles</text>
-<text x="872.96" y="360.549" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">aux solives (un double trait dessiné à x ≈ 137, de</text>
-<text x="872.96" y="371.573" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">la poutre arrière au mur arrière). [« SOLIVES</text>
-<text x="872.96" y="382.597" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">DOUBLES SOUS LES CLOISONS</text>
-<text x="872.96" y="393.62" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">PARALLÈLES »]</text>
-<text x="872.96" y="406.564" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Rangées d'entretoises en croix entre les</text>
-<text x="872.96" y="417.587" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">solives (dessinées dans la moitié gauche</text>
-<text x="872.96" y="428.611" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">seulement). [« CROIX ST ANDRÉ (3 fois) »]</text>
-<text x="872.96" y="441.555" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Deux poutres de 8 × 10 po sur colonnes de</text>
-<text x="872.96" y="452.578" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">bois de 8 × 8 po (3 par poutre). [« POUTRE</text>
-<text x="872.96" y="463.602" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">8&quot;x10&quot; (2 fois) ; COL. BOIS, 8&quot;x8&quot; »]</text>
-<text x="872.96" y="476.546" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">… autres notes : voir maison.json</text>
+<text x="906.24" y="252.12" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Noms, dimensions et superficies des</text>
+<text x="906.24" y="263.143" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">pièces : voir tableau_pieces.csv</text>
+<polyline class="cart-l" points="867.2,270.503 1072,270.503"/>
+<text x="872.96" y="280.643" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DU PLAN D'ORIGINE (traduites)</text>
+<text x="872.96" y="291.351" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Solives de plancher 2 po × 10 po espacées de</text>
+<text x="872.96" y="302.375" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">20 po c/c (plancher du RDC), parallèles à y. [«</text>
+<text x="872.96" y="313.398" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">SOLIVES 2&quot;x10&quot; @ 20&quot; c/c »]</text>
+<text x="872.96" y="326.342" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Solives doublées sous les cloisons parallèles</text>
+<text x="872.96" y="337.366" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">aux solives (un double trait dessiné à x ≈ 137, de</text>
+<text x="872.96" y="348.389" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">la poutre arrière au mur arrière). [« SOLIVES</text>
+<text x="872.96" y="359.413" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">DOUBLES SOUS LES CLOISONS</text>
+<text x="872.96" y="370.437" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">PARALLÈLES »]</text>
+<text x="872.96" y="383.38" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Rangées d'entretoises en croix entre les</text>
+<text x="872.96" y="394.404" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">solives (dessinées dans la moitié gauche</text>
+<text x="872.96" y="405.427" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">seulement). [« CROIX ST ANDRÉ (3 fois) »]</text>
+<text x="872.96" y="418.371" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Deux poutres de 8 × 10 po sur colonnes de</text>
+<text x="872.96" y="429.395" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">bois de 8 × 8 po (3 par poutre). [« POUTRE</text>
+<text x="872.96" y="440.418" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">8&quot;x10&quot; (2 fois) ; COL. BOIS, 8&quot;x8&quot; »]</text>
+<text x="872.96" y="453.362" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">… autres notes : voir maison.json</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="10-Murs" id="10-Murs">
@@ -267,6 +265,24 @@
 <polyline class="rappel" points="134.777,408.979 199.785,408.979"/>
 <text x="111.558" y="414.77" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">CHEMINÉE</text>
 </g>
+<g id="elem-SS-DR-BAIN">
+<circle class="elem" cx="248.035" cy="337.079" r="3"/>
+<polyline class="elem-fin" points="245.935,339.179 250.135,334.979"/>
+<polyline class="elem-fin" points="245.935,334.979 250.135,339.179"/>
+<text x="275.796" y="333.027" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">DRAIN BAIN</text>
+</g>
+<g id="elem-SS-DR-LAV">
+<circle class="elem" cx="652.635" cy="226.679" r="3"/>
+<polyline class="elem-fin" points="650.535,228.779 654.735,224.579"/>
+<polyline class="elem-fin" points="650.535,224.579 654.735,228.779"/>
+<text x="616.263" y="234.722" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">DRAIN LAVABO</text>
+</g>
+<g id="elem-SS-DR-WC">
+<circle class="elem" cx="274.835" cy="338.979" r="3"/>
+<polyline class="elem-fin" points="272.735,341.079 276.935,336.879"/>
+<polyline class="elem-fin" points="272.735,336.879 276.935,341.079"/>
+<text x="273.861" y="350.046" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">DRAIN TOILETTE</text>
+</g>
 <g id="elem-SS-EVENT">
 <polygon class="elem" points="449.135,148.329 449.135,135.829 439.135,135.829 439.135,148.329"/>
 <polyline class="elem-fin" points="449.135,148.329 439.135,135.829"/>
@@ -274,9 +290,9 @@
 <polyline class="rappel" points="413.434,148.329 439.135,148.329"/>
 <text x="398.768" y="151.096" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">ÉVENT</text>
 </g>
-<g id="elem-SS-RAMO">
-<polygon class="elem" points="218.635,406.679 242.635,406.679 242.635,382.679 218.635,382.679"/>
-<text x="276.072" y="414.746" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">P. DE RAMONAGE</text>
+<g id="elem-SS-PANNEAU">
+<path class="elem-plein" fill-rule="evenodd" d="M 234.135 439.779 L 234.135 423.779 L 230.135 423.779 L 230.135 439.779 Z"/>
+<text x="287.202" y="445.57" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">PANNEAU ÉLECTRIQUE</text>
 </g>
 <g id="elem-SS-ROB1">
 <circle class="elem" cx="603.335" cy="160.979" r="2"/>
@@ -292,7 +308,6 @@
 <g inkscape:groupmode="layer" inkscape:label="40-Structure" id="40-Structure">
 <g id="str-SS-P01">
 <polyline class="str-poutre" points="230.135,336.979 666.135,336.979"/>
-<text x="308.615" y="332.864" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">POUTRE 8x10 (typ.)</text>
 </g>
 <g id="str-SS-P02">
 <polyline class="str-poutre" points="230.135,383.979 666.135,383.979"/>
@@ -301,7 +316,6 @@
 <polygon class="str" points="370.135,340.979 370.135,332.979 362.135,332.979 362.135,340.979"/>
 <polyline class="str-fin" points="370.135,340.979 362.135,332.979"/>
 <polyline class="str-fin" points="370.135,332.979 362.135,340.979"/>
-<text x="382.201" y="330.904" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">COL. 8x8 (typ.)</text>
 </g>
 <g id="str-SS-C02">
 <polygon class="str" points="452.135,340.979 452.135,332.979 444.135,332.979 444.135,340.979"/>
@@ -327,12 +341,6 @@
 <polygon class="str" points="548.135,387.979 548.135,379.979 540.135,379.979 540.135,387.979"/>
 <polyline class="str-fin" points="548.135,387.979 540.135,379.979"/>
 <polyline class="str-fin" points="548.135,379.979 540.135,387.979"/>
-</g>
-<g id="str-SS-S01">
-<polyline class="str-fin" points="448.135,309.813 448.135,201.705"/>
-<path class="str-plein" fill-rule="evenodd" d="M 448.135 201.705 L 445.867 207.752 L 450.403 207.752 Z"/>
-<path class="str-plein" fill-rule="evenodd" d="M 448.135 309.813 L 445.867 303.766 L 450.403 303.766 Z"/>
-<text x="440.24" y="255.759" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000" transform="rotate(-90 440.24 255.759)">SOLIVES 2x10 @ 20 c/c</text>
 </g>
 <g id="str-SS-F01">
 <polygon class="str-tir" points="676.135,524.979 676.135,546.979 220.135,546.979 220.135,524.979"/>

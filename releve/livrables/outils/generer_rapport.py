@@ -160,7 +160,7 @@ def main():
     cnt = {i: sum(e["impact"] == i for e in ouverts) for i in IMPACTS}
     w("## 6. Registre des écarts")
     w("")
-    w(f"{len(E)} écarts au registre, dont **{len(ouverts)} ouverts** : **{cnt['critique']} critique{'s' if cnt['critique'] > 1 else ''}**, {cnt['moyen']} moyen{'s' if cnt['moyen'] > 1 else ''}, "
+    w(f"{len(E)} écarts au registre, dont **{len(ouverts)} ouvert{'s' if len(ouverts) > 1 else ''}** : **{cnt['critique']} critique{'s' if cnt['critique'] > 1 else ''}**, {cnt['moyen']} moyen{'s' if cnt['moyen'] > 1 else ''}, "
       f"{cnt['faible']} faible{'s' if cnt['faible'] > 1 else ''} ; {len(E) - len(ouverts)} résolus ou sans objet depuis le constat et les réponses du propriétaire.")
     w("")
     w("| # | Niveau | Impact | Statut | Description | Hypothèse retenue |")

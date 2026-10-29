@@ -118,23 +118,16 @@
 <polyline class="cote-tick" points="870.644,241.316 875.276,236.683"/>
 <polyline class="cote-tick" points="897.524,241.316 902.156,236.683"/>
 <text x="906.24" y="239.96" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Cotes en pieds-pouces</text>
-<polyline class="limite-zone" points="872.96,249.24 899.84,249.24"/>
-<text x="906.24" y="252.12" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Limite de zone ouverte (aucun mur)</text>
-<text x="906.24" y="264.28" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">(typ.) : libellé typique, vaut pour les</text>
-<text x="906.24" y="275.303" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">éléments identiques</text>
-<text x="906.24" y="287.463" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Noms, dimensions et superficies des</text>
-<text x="906.24" y="298.487" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">pièces : voir tableau_pieces.csv</text>
-<polyline class="cart-l" points="867.2,305.847 1072,305.847"/>
-<text x="872.96" y="315.986" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DU PLAN D'ORIGINE (traduites)</text>
-<text x="872.96" y="326.695" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Tringle et tablette dans toutes les garde-robes.</text>
-<text x="872.96" y="337.718" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">[« NOTE : BARRE &amp; TABLETTE DANS TOUS</text>
-<text x="872.96" y="348.742" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">LES G.R. »]</text>
-<text x="872.96" y="361.686" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Perron avant en béton armé de barres de ½ po</text>
-<text x="872.96" y="372.709" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">à 10 po c/c. [« BÉTON REN. AVEC BARRE ½&quot;Ø</text>
-<text x="872.96" y="383.733" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">@ 10&quot; c/c »]</text>
-<text x="872.96" y="396.677" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Symboles électriques non légendés : non</text>
-<text x="872.96" y="407.7" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">reportés sur ce plan (voir extraction/RDC.json). [«</text>
-<text x="872.96" y="418.724" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">SW ; 3W ; $ ; ⊖ »]</text>
+<text x="906.24" y="252.12" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Noms, dimensions et superficies des</text>
+<text x="906.24" y="263.143" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">pièces : voir tableau_pieces.csv</text>
+<polyline class="cart-l" points="867.2,270.503 1072,270.503"/>
+<text x="872.96" y="280.643" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DU PLAN D'ORIGINE (traduites)</text>
+<text x="872.96" y="291.351" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Tringle et tablette dans toutes les garde-robes.</text>
+<text x="872.96" y="302.375" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">[« NOTE : BARRE &amp; TABLETTE DANS TOUS</text>
+<text x="872.96" y="313.398" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">LES G.R. »]</text>
+<text x="872.96" y="326.342" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Perron avant en béton armé de barres de ½ po</text>
+<text x="872.96" y="337.366" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">à 10 po c/c. [« BÉTON REN. AVEC BARRE ½&quot;Ø</text>
+<text x="872.96" y="348.389" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">@ 10&quot; c/c »]</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="10-Murs" id="10-Murs">
@@ -400,7 +393,6 @@
 <polygon class="str" points="373.21,338.479 373.21,330.479 365.21,330.479 365.21,338.479"/>
 <polyline class="str-fin" points="373.21,338.479 365.21,330.479"/>
 <polyline class="str-fin" points="373.21,330.479 365.21,338.479"/>
-<text x="403.418" y="343.522" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">COL. 8x8 (typ.)</text>
 </g>
 <g id="str-RDC-C04">
 <polygon class="str" points="373.21,385.479 373.21,377.479 365.21,377.479 365.21,385.479"/>
@@ -419,7 +411,6 @@
 </g>
 <g id="str-RDC-P02">
 <polyline class="str-poutre" points="233.21,381.479 669.21,381.479"/>
-<text x="486.09" y="377.364" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">POUTRE</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="50-Cotes" id="50-Cotes">
@@ -631,21 +622,6 @@
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="60-Etiquettes" id="60-Etiquettes">
-<g id="lz-RDC-001">
-<polyline class="limite-zone" points="396.21,381.479 679.21,381.479"/>
-</g>
-<g id="lz-RDC-002">
-<polyline class="limite-zone" points="445.21,453.479 445.21,381.479"/>
-</g>
-<g id="lz-RDC-003">
-<polyline class="limite-zone" points="539.21,381.479 539.21,158.479"/>
-</g>
-<g id="lz-RDC-004">
-<polyline class="limite-zone" points="369.21,334.479 539.21,334.479"/>
-</g>
-<g id="lz-RDC-005">
-<polyline class="limite-zone" points="398.21,533.479 398.21,484.479"/>
-</g>
 <g id="facade-avant">
 <text x="451.21" y="679.029" font-family="Arial, Helvetica, sans-serif" font-size="12.317" font-weight="bold" text-anchor="middle" fill="#000000">FAÇADE AVANT (RUE)</text>
 </g>
