@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : R0    Date : 2026-10-29
-Données  : maison.json, sha256 0b488ad4aabc56151854142ab729610e705150247436be32d80b7505f5619530
+Données  : maison.json, sha256 8d8f8fc342baa39b4f2e5f753d52fae393ce7c082c1a2c3301e281a243132c06
 Feuilles : A-100 Sous-sol (3/16" = 1'-0") ; A-101 Rez-de-chaussée (3/16" = 1'-0")
 
 SOMMAIRE
@@ -18,7 +18,7 @@ SOMMAIRE
 
 1. IDENTIFIANTS
 ------------------------------------------------------------------------
-  [OK] 462 identifiants, aucun doublon
+  [OK] 434 identifiants, aucun doublon
 
 2. MURS
 ------------------------------------------------------------------------
@@ -36,7 +36,7 @@ SOMMAIRE
 ------------------------------------------------------------------------
   [OK] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1138,1 pi² + murs 134,3 pi² − chevauchement pièces/murs 0,0 pi² = 1272,3 pi² ; écart -0,0 pi²
   [OK] [SS] aucun trou > 1 pi² entre pièces et murs
-  [OK] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1062,2 pi² + murs 186,2 pi² − chevauchement pièces/murs 0,0 pi² = 1248,3 pi² ; écart -0,0 pi²
+  [OK] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1087,0 pi² + murs 161,3 pi² − chevauchement pièces/murs 0,0 pi² = 1248,3 pi² ; écart -0,0 pi²
   [OK] [RDC] aucun trou > 1 pi² entre pièces et murs
 
 6. CHAÎNES DE COTES
@@ -69,7 +69,7 @@ SOMMAIRE
   [INFO] ⚠6 = ecart-006 [RDC, impact moyen] (positionné) : Épaisseur des cloisons du RDC non cotée (sauf cloison chambre arrière / S. de bain 6" LU, tranchée par 3e lecture) ; dessin ≈ 6 po.
   [INFO] ⚠7 = ecart-007 [global, impact faible] (positionné) : Épaisseurs PRÉSUMÉES par analogie ou par défaut : murs gauche et du fond du caveau (10"), murs avant et droit de l'excroissance du perron (6"), murs de l'entrée arrière (6", dessin ≈ 11") ; profondeur de l'entrée arrière non cotée : nu ext. PRÉSUMÉ à 5'-0" du mur arrière (= caveau cote-SS-009), alors que le dessin RDC montre ≈ 5'-7".
   [INFO] ⚠8 = ecart-008 [global, impact moyen] : Hauteurs de plafond inconnues aux deux niveaux (aucune coupe ni élévation ; aucune hauteur écrite).
-  [INFO] ⚠9 = ecart-009 [RDC, impact critique] (positionné) : Croquis 2016 (P1, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 x ≈ 173 de C au mur arrière, placards en H entre lignes 2 et 3, bout de cloison ligne 4 x = 222 de y ≈ 76 au mur avant). Absentes du gris : murs de la S. de bain, cloisons des G.R. de la chambre arrière (x ≈ 145–161), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, cloisons le long des axes B et C. État actuel incertain : cloisons retirées ou simple croquis partiel.
+  [INFO] ⚠9 = ecart-009 [RDC, impact critique] (positionné) : Croquis 2016 (P1, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 x ≈ 173 de C au mur arrière, placards en H entre lignes 2 et 3, bout de cloison ligne 4 x = 222 de y ≈ 76 au mur avant). Absentes du gris : murs de la S. de bain, cloisons des G.R. de la chambre arrière (x ≈ 145–161), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, cloisons le long des axes B et C. État actuel incertain : cloisons retirées ou simple croquis partiel. — CONFIRMÉ en partie par le constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : cloisons de la cage d'escalier, du placard à balais, chambre d'utilité / dégagement (axe C) et salon / passage (axe B) retirées.
   [INFO] ⚠10 = ecart-010 [SS, impact critique] (positionné) : Croquis 2016 : « Colonne C4 retirée » (intersection axe C y = 204 × ligne 4 x = 222). Au plan 1957 (P2), la colonne la plus proche est str-SS-C02 à x = 228 (DÉDUIT de la chaîne 9'-10" + 8" + 7'-4") : décalage 6 po entre les deux documents.
   [INFO] ⚠11 = ecart-011 [SS, impact critique] (positionné) : Croquis 2016 : « Colonne C6 retirée » (axe C × ligne 6, x = 316). Au plan 1957 : str-SS-C03 à x = 324 (8 po de décalage).
   [INFO] ⚠12 = ecart-012 [SS, impact moyen] (positionné) : Le croquis 2016 ne marque des colonnes qu'aux lignes 4 et 6 (B4, B6 pleines ; C4, C6 retirées) ; le plan 1957 en montre 3 par poutre (x = 132, 228, 324). Les colonnes à x = 132 (C01, C04) n'apparaissent pas sur P1 ; positions en x décalées de 6–8 po entre documents.
@@ -85,15 +85,16 @@ SOMMAIRE
   [INFO] ⚠22 = ecart-022 [global, impact faible] (positionné) : Escalier SS ↔ RDC : superposition à 5 po près (SS largeur ≈ 37 ESTIMÉ, RDC cage 36½ DÉDUIT) ; 14 C.M. écrit aux deux niveaux mais ≈ 10 girons visibles au RDC (les marches inférieures passent sous le placard BALAIS) ; échappée sous la poutre arrière (y = 204) au pied de l'escalier non vérifiable.
   [INFO] ⚠23 = ecart-023 [RDC, impact faible] (positionné) : Poutre 6"x10" FLUSH (cuisine) non cotée en position : y ≈ 206 ESTIMÉ (P4), à 2 po de l'axe C (204) et de la poutre arrière du SS.
   [INFO] ⚠24 = ecart-024 [SS, impact faible] (positionné) : Colonnes str-SS-C01 (132, 204) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, y ≈ 212) ; les cloisons x = 12'-2" (146) passent à 14 po de la rangée de colonnes x = 132.
-  [INFO] ⚠25 = ecart-025 [global, impact faible] (positionné) : Superposition de la plomberie : elem-SS-CE (26.0, 107.7) : 52 po de la S. de bain, 297 po de la cuisine ; elem-SS-EVIER (22.4, 51.0) : 108 po de la S. de bain, 315 po de la cuisine. Aucun drain, colonne de chute ni panneau électrique dessiné au sous-sol.
+  [INFO] ⚠25 = ecart-025 [global, impact faible] (positionné) : Superposition de la plomberie : elem-SS-CE (26.0, 107.7) : 52 po de la S. de bain, 294 po de la cuisine ; elem-SS-EVIER (22.4, 51.0) : 108 po de la S. de bain, 312 po de la cuisine. Aucun drain, colonne de chute ni panneau électrique dessiné au sous-sol.
   [INFO] ⚠26 = ecart-026 [global, impact faible] (positionné) : Cheminée : massif extérieur au mur gauche non coté (seule sa face avant y = 11'-0" est située par la chaîne gauche du sous-sol) ; saillie et profondeur ≈ 20 × 21 po ESTIMÉES.
   [INFO] ⚠27 = ecart-027 [global, impact faible] : Plan d'implantation P7 (1957, « maison projetée ») : rectangle 38'-0" × 31'-8" concordant ; excroissance avant dessinée ≈ 12,6–19,0 pi du coin gauche (perron SS : 13'-6"–19'-6") ; volume arrière ≈ 17,0–26,4 pi (entrée arrière : 18'-3"–27'-3") et marches ≈ 26,4–34,5 pi ; profondeur mesurée ≈ 32,1 pi (1 %). Implantation projetée, pas un relevé ; marges 40' (avant), 7.79' et 9' (latérales).
   [INFO] ⚠28 = ecart-028 [global, impact moyen] : Aucune mesure prise sur place n'a été fournie par le propriétaire (ancres vides) : toute la géométrie provient des plans de 1957 et du croquis 2016.
+  [INFO] ⚠29 = ecart-029 [RDC, impact critique] (positionné) : constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0") est conservée.
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
   [OK] [SS] aucun chevauchement texte/texte ni texte/trait (153 textes vérifiés)
-  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (180 textes vérifiés)
+  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (167 textes vérifiés)
 
 9. MISE EN PAGE
 ------------------------------------------------------------------------
