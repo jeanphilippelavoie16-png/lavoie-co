@@ -39,7 +39,10 @@ python3 generer_plans.py --json exemple_factice.json --sortie /tmp/essai
 | `donnees/verifications.txt` | rapport des contrôles (un résumé s'affiche aussi à l'écran) |
 
 La sortie est **déterministe** : deux exécutions sur le même `maison.json` donnent des fichiers identiques octet
-pour octet. La date et la révision du cartouche viennent de `projet.date` et `projet.revision`. Pour publier une
+pour octet, quel que soit `PYTHONHASHSEED`. La section CLASSES du DXF est triée avant l'écriture, et
+`verifications.txt` (section « Reproductibilité ») le contrôle pour chaque DXF. Les PNG déclarent 150 ppp.
+
+La date et la révision du cartouche viennent de `projet.date` et `projet.revision`. Pour publier une
 nouvelle version, augmentez `projet.revision` (R0 → R1) et mettez `projet.date` à jour.
 
 `exemple_factice.json` contient des données **factices** (2 niveaux) qui servent à tester le générateur. Ce ne
@@ -76,8 +79,9 @@ le rapport donne un avertissement. Règles de placement des cotes :
 - `facade` (`avant`, `arriere`, `gauche`, `droite`) : la cote est placée hors du bâtiment.
 - `rang` : 1 = ouvertures (le plus près du mur), 2 = segments de mur ou cloisons, 3 = hors-tout. L'espacement
   entre les rangs est constant.
-- `facade` = `int` : cote intérieure. `decalage` (en pouces réels) déplace la ligne de cote
-  perpendiculairement à `p1`-`p2` : valeur positive = vers +y (cote en x) ou vers +x (cote en y).
+- `facade` = `int` : cote intérieure. `decalage` (en pouces réels) place la ligne de cote parallèlement
+  à `p1`-`p2` : valeur positive = vers +y (cote en x) ou vers +x (cote en y). La ligne reste exactement à
+  cette position.
 
 Si `lignes_cote` est **absent** d'un niveau, les 3 chaînes de chaque façade sont générées automatiquement à
 partir des murs extérieurs et de fondation (source DÉDUIT). Une liste vide `[]` signifie : aucune cote.
@@ -208,11 +212,11 @@ sortir de la zone de dessin. Ordre de priorité :
    - Variantes essayées : complète, nom + superficie, nom seul sur une ou deux lignes, nom tourné de 90°
      pour une pièce étroite.
    - Les couloirs des cotes intérieures sont d'abord laissés libres.
-4. **Cotes intérieures, par chaînes colinéaires.**
-   - Le `decalage` est un souhait : la chaîne entière peut être déplacée parallèlement, et le script retient
-     la position sans collision qui garde les textes au plus près de leur ligne.
-   - Si la chaîne entière n'a pas de place, ses cotes sont placées une à une. En dernier recours, le texte va
-     à proximité avec une ligne de rappel.
+4. **Cotes intérieures.**
+   - La ligne est toujours à p1/p2 + `decalage` et n'est jamais déplacée.
+   - Le texte est centré sur son segment si possible. Sinon, il est décalé le long du segment, écrit sur
+     deux lignes (pi-po sur métrique), empilé, ou placé à côté avec un renvoi vers le milieu de la cote.
+   - Il n'est jamais au-delà des extrémités ni dans un mur.
 5. **Libellés d'éléments**, à l'intérieur du symbole ou autour.
 6. **Libellés de structure.**
    - Un libellé répété (par exemple COL. 8x8 ×6) n'est écrit qu'une fois, suivi de « (typ.) ».

@@ -13,7 +13,7 @@ SOMMAIRE
   Bilan de surface             OK      0 erreur(s), 0 avertissement(s)
   Chaînes de cotes             AVERT.  0 erreur(s), 1 avertissement(s)
   Repères d'incertitude        OK      0 erreur(s), 0 avertissement(s)
-  Textes (chevauchements)      AVERT.  0 erreur(s), 7 avertissement(s)
+  Textes (chevauchements)      OK      0 erreur(s), 0 avertissement(s)
   Mise en page                 OK      0 erreur(s), 0 avertissement(s)
   Reproductibilité             OK      0 erreur(s), 0 avertissement(s)
 
@@ -96,13 +96,8 @@ SOMMAIRE
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
-  [AVERT] [SS] texte/trait : repère ⚠4 (ecart-004) × trait de ecart-004 (x≈-14.874, y≈54.587 po)
-  [AVERT] [SS] texte/trait : repère ⚠29 (ecart-029) × trait de ecart-029 (x≈433.865, y≈81.587 po)
-  [AVERT] [RDC] texte/trait : repère ⚠13 (ecart-013) × trait de ecart-013 (x≈439.525, y≈165.449 po)
-  [AVERT] [RDC] texte/trait : repère ⚠17 (ecart-017) × trait de ecart-017 (x≈211.816, y≈118.11 po)
-  [AVERT] [RDC] texte/trait : repère ⚠25 (ecart-025) × trait de ecart-025 (x≈31.013, y≈193.213 po)
-  [AVERT] [RDC] texte/trait : libellé str-RDC-S01 « SOLIVES 2x7 @ 16 c/c (typ.) » × trait de str-RDC-S01 (x≈262.904, y≈229.235 po)
-  [AVERT] [RDC] texte/trait : libellé str-RDC-S01 « SOLIVES 2x7 @ 16 c/c (typ.) » × trait de str-RDC-S01 (x≈262.904, y≈229.235 po)
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (157 textes vérifiés)
+  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (172 textes vérifiés)
 
 9. MISE EN PAGE
 ------------------------------------------------------------------------
@@ -114,7 +109,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 44fc1cddcaaec4c4… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
-  [OK] [RDC] DXF A-101_rdc.dxf : sha256 445d0cba53d6a340… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 0225685b1439526c… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF A-101_rdc.dxf : sha256 abdd3c9a99c7bf20… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

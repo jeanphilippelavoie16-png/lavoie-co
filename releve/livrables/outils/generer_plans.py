@@ -1204,8 +1204,10 @@ def construire(niv, idx, projet, ctx, verif):
     # =============================== 50-Cotes (traits de façade) ===============================
     cotes = preparer_cotes(lcs, G, mm, verif, nid)
     emp_m = unary_union([m.emprise() for m in murs]) if murs else Polygon()
-    masque = unary_union([z.buffer(mm(0.8), join_style=2) for z in elem_zones if not z.within(emp_m.envelope)]) \
-        if elem_zones else None
+    # les lignes d'attache des façades sont interrompues sur les volumes qu'elles traversent
+    # (éléments extérieurs, pièces et murs des excroissances)
+    masque = unary_union([z.buffer(mm(0.8), join_style=2) for z in elem_zones if not z.within(emp_m.envelope)]
+                         + [p.buffer(mm(0.5), join_style=2) for _, p in pieces] + [emp_m.buffer(mm(0.5), join_style=2)])
     dessiner_traits_cotes(cotes, D, PL, mm, masque)
     tracer_cotes_int(cotes, PL, mm)        # cotes intérieures : ligne fixe (p1/p2 + decalage)
 
@@ -1234,7 +1236,28 @@ def construire(niv, idx, projet, ctx, verif):
     placer_textes_cotes(cotes, PL, mm, fc)
     for sp in textes_esc:
         placer_textes_escalier(sp, PL, mm, fc)
-    # --- 70-Incertitudes (repères ancrés : avant les libellés mobiles)
+    PL.pieces = [p for _, p in pieces]
+    # étiquettes de pièces dans leur pièce : complètes d'abord (en laissant libres les bandes de texte
+    # des cotes intérieures, puis sans cette réserve), réduites ensuite
+    for c in cotes:
+        if c["facade"] == "int":
+            A, B = pt_cote(c, c["c1"], c["ligne"]), pt_cote(c, c["c2"], c["ligne"])
+            PL.ligne(LineString([A, B]).buffer(mm(C_GAP + 0.97 * H_COTE / CAP + 0.3), cap_style="flat"), "__reserve__")
+    F.dims_omises = False
+    F.etiquettes = {}
+    restants = sorted(pieces, key=lambda dp: -dp[1].area)
+    for mode, reserve in (("complet", True), ("complet", False), ("reduit", False)):
+        if not reserve:
+            PL.retirer("__reserve__")
+        encore = []
+        for d, poly in restants:
+            r = placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, mode=mode, F=F)
+            if r is None:
+                encore.append((d, poly))
+            elif r:
+                F.dims_omises = True
+        restants = encore
+    # --- 70-Incertitudes (repères ancrés, après les étiquettes de pièces)
     demandes = []
     for ec in ctx["ecarts"]:
         eid = str(ec.get("id"))
@@ -1273,27 +1296,6 @@ def construire(niv, idx, projet, ctx, verif):
         verif.add("Repères d'incertitude", "AVERT", f"[{nid}] épaisseur présumée sans écart référencé (epaisseur.ref) : "
                                                    f"{', '.join(sans_ref)} — aucun repère dessiné")
     places = placer_reperes(demandes, D, PL, mm)
-    PL.pieces = [p for _, p in pieces]
-    # étiquettes de pièces dans leur pièce : complètes d'abord (en laissant libres les bandes de texte
-    # des cotes intérieures, puis sans cette réserve), réduites ensuite
-    for c in cotes:
-        if c["facade"] == "int":
-            A, B = pt_cote(c, c["c1"], c["ligne"]), pt_cote(c, c["c2"], c["ligne"])
-            PL.ligne(LineString([A, B]).buffer(mm(C_GAP + 0.97 * H_COTE / CAP + 0.3), cap_style="flat"), "__reserve__")
-    F.dims_omises = False
-    F.etiquettes = {}
-    restants = sorted(pieces, key=lambda dp: -dp[1].area)
-    for mode, reserve in (("complet", True), ("complet", False), ("reduit", False)):
-        if not reserve:
-            PL.retirer("__reserve__")
-        encore = []
-        for d, poly in restants:
-            r = placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, mode=mode, F=F)
-            if r is None:
-                encore.append((d, poly))
-            elif r:
-                F.dims_omises = True
-        restants = encore
     placer_textes_int(cotes, PL, mm, fc)
     for el, cont, libs, g in lib_elems:
         placer_libelle_element(el, cont, libs, g, PL, mm, fc)
@@ -2210,7 +2212,9 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
     noms2 = lignes_nom_2(nom, fn)
     jeux = [noms1] + ([noms2] if noms2 else [])
     variantes = []          # (lignes, rotation, complet)
-    for sous, complet in (([(f"{tx} × {ty}", fc, False), (ta, fc, False)], True), ([(ta, fc, False)], False), ([], False)):
+    for sous, complet in (([(f"{tx} × {ty}", fc, False), (ta, fc, False)], True),
+                          ([(f"{tx} ×", fc, False), (ty, fc, False), (ta, fc, False)], True),
+                          ([(ta, fc, False)], False), ([], False)):
         for nn in jeux:
             variantes.append(([(t, fn, True) for t in nn] + sous, 0.0, complet))
     for nn in jeux:
@@ -2229,14 +2233,14 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
         bminx, bminy, bmaxx, bmaxy = e0.bounds
         if bmaxx - bminx > maxx - minx or bmaxy - bminy > maxy - miny:
             continue
-        step = max(mm(1.2), min(bmaxx - bminx, bmaxy - bminy) / 4)
+        step = max(mm(0.8), min(bmaxx - bminx, bmaxy - bminy) / 8)
         grille = []
         for i in range(int((maxx - minx) / step) + 2):
             for j in range(int((maxy - miny) / step) + 2):
                 x, y = minx + i * step, miny + j * step
                 grille.append(((x - pole.x) ** 2 + (y - pole.y) ** 2, round(x, 4), round(y, 4)))
         grille.sort()
-        pts = [(pole.x, pole.y)] + [(x, y) for _, x, y in grille[:1500]]
+        pts = [(pole.x, pole.y)] + [(x, y) for _, x, y in grille[:4000]]
         for x, y in pts:
             z = affinity.translate(e0, x, y)
             if not z.within(interieur):
