@@ -7,8 +7,9 @@ gardes changent. Les versions précédentes restent intactes.
 « Fais un escalier en coin. Checke comment ça pourrait rentrer dans cet espace-là. »
 
 ## Étude (`etude_escalier_en_coin.png`, produite par `etude_escalier_en_coin.py`)
-Trois implantations dans la bande dessinée sur A-101, avec 14 contremarches d'environ 7½ po (hauteur d'étage
-présumée, non mesurée), des girons de 10 po et 36 po de large :
+Trois implantations dans la bande dessinée sur A-101, avec 14 contremarches d'environ 7½ po, des girons de 10 po et
+36 po de large. Hauteur : **8 pi au sous-sol** (propriétaire, 2026-10-29) + environ 9 po de plancher = environ 105 po
+d'un plancher à l'autre, soit 14 contremarches de 7½ po (sous le maximum de 7⅞ po, environ 200 mm).
 
 | Option | Description | Pied (depuis le devant) | Pour | Contre |
 |---|---|---|---|---|
@@ -24,7 +25,13 @@ présumée, non mesurée), des girons de 10 po et 36 po de large :
 - Sous la partie basse de la volée du haut : rangement bas en chêne, ouvert sur le passage.
 - Le hall au pied de l'escalier gagne 2 pi (≈ 53 pi²).
 
+## Hauteur (mise à jour)
+Le propriétaire donne **8 pi au sous-sol**. Pris comme plancher → plafond actuel ; on y ajoute ~9 po de structure de
+plancher (solive de 2 × 8, sous-plancher, fini) : environ 105 po d'étage, ce qui confirme les 14 contremarches de 7½ po.
+Si les 8 pi sont mesurés **jusqu'au dessus du plancher d'en haut**, il faut 13 contremarches de ≈ 7⅜ po : une marche
+de moins (la volée du bas raccourcit de 10 po). Dans la maquette, le plafond est maintenant à 8 pi.
+
 ## À valider sur place
-Hauteur plancher-plancher ; solives à couper pour la trémie en L et linteaux ; hauteur libre sous la volée du haut
+Hauteur plancher-plancher exacte (mesurer dans l'ancienne trémie ou à la porte du caveau) ; solives à couper pour la trémie en L et linteaux ; hauteur libre sous la volée du haut
 devant la porte du caveau (6'-6" au plus bas) ; giron et main courante continue ; coupe-feu entre les deux logements.
 À valider avec la Ville de Baie-Comeau et un professionnel.

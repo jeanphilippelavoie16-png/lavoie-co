@@ -165,7 +165,7 @@ def kettlebell(x, y, r, mat="carbone"):
 # ---------------------------------------------------------------------------------------------------- scène
 M = []
 # --- séjour : mur de lattes de chêne, télé, sofa en L, coin lecture
-M += [B(234 + 3 * i, 10, 236 + 3 * i, 11.6, 0, 89, "placage") for i in range(33)]
+M += [B(234 + 3 * i, 10, 236 + 3 * i, 11.6, 0, 95, "placage") for i in range(33)]
 M += [A(250, 11.6, 322, 27, 4, 18, "placage", r=1, b=0.4), B(258, 11.7, 314, 13, 30, 62, "ecran", r=0.4)]
 M += [A(238, 40, 350, 132, 0, 0.5, "tapis", r=2, b=0.2)]
 M += sofa(244, 98, 340, 136, "+y") + sofa(340, 66, 378, 136, "+x")
@@ -249,8 +249,8 @@ M += etagere(230, 384, 246, 430) + etagere(300, 384, 316, 430) + etagere(250, 41
 SCENE = {
     "niveau": "SS",
     "titre": TITRE,
-    "plafond": 90,
-    "hauteur_etage": 105,        # plancher à plancher PRÉSUMÉ (non mesuré) : 14 contremarches de 7½ po
+    "plafond": 96,               # 8 pi, donné par le propriétaire (2026-10-29)
+    "hauteur_etage": 105,        # plancher à plancher DÉDUIT : 8 pi + ~9 po de plancher (solives, sous-plancher, fini) ; 14 × 7½ po
     "allege_fenetre": 56, "tete_fenetre": 86,
     "sol_defaut": "chene",
     "sols": {"piece-SS-LAVAGE": "terrazzo", "piece-SS-GYM": "caoutchouc", "piece-SS-SDB": "porcelaine",

@@ -17,6 +17,9 @@ from shapely.geometry.polygon import orient
 T = 4.5
 DATE = "2026-10-29"
 SOURCE = "proposition SS-08 (esquisse)"
+# Hauteur du sous-sol donnée par le propriétaire le 2026-10-29 (« 8 pi en bas ») : plancher au plafond actuel.
+HAUTEUR_SS = {"valeur": 96, "source": "MESURÉ", "photo": None,
+              "note": "8 pi, plancher du sous-sol au plafond, donné par le propriétaire (2026-10-29) ; sous les poutres : moins"}
 
 
 def dim(v, note=None, src="PRÉSUMÉ"):
@@ -170,7 +173,7 @@ def appliquer(maison):
         pieces.append({"id": pid, "nom": nom, "nom_original": None, "etat": "nouveau", "description": f"{nom} — {SOURCE}",
                        "polygone": [[round(x, 2), round(y, 2)] for x, y in list(poly.exterior.coords)[:-1]],
                        "superficie": dim(round(poly.area / 144, 1), "aire du polygone au nu des cloisons projetées", "DÉDUIT"),
-                       "hauteur_plafond": {"valeur": None, "source": "ILLISIBLE", "photo": None},
+                       "hauteur_plafond": dict(HAUTEUR_SS),
                        "dimensions": {"x": dim(round(maxx - minx, 2), None, "DÉDUIT"), "y": dim(round(maxy - miny, 2), None, "DÉDUIT")}})
     for x in pieces:
         if x["id"] == "piece-SS-ESC":
@@ -227,7 +230,7 @@ def appliquer(maison):
         "Fenêtre arrière de la chambre 1 coupée par l'escalier : la réduire ou la condamner (à décider).",
         "Salle de bain : bain autoportant et toilette déplacés, drains existants ignorés (tranchée).",
         "Vestiaire près de l'entrée ; coin frigo dans le séjour (prise dédiée à prévoir).",
-        "Évacuation des chambres, hauteur sous poutres, coupe-feu à valider.",
+        "Hauteur du sous-sol : 8 pi (propriétaire) ; hauteur sous poutres et coupe-feu à valider.",
     ]
     ss["notes"] = [{"id": f"note-SS-P{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t} for i, t in enumerate(notes)]
     ss["lignes_cote"] = [l for l in ss["lignes_cote"] if l.get("facade") != "int"]
