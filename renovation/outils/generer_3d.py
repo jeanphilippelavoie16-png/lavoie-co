@@ -88,6 +88,21 @@ def lattes(m, H, pas=3.5, larg=1.5, ep=1.5):
     return out
 
 
+def eventail(tr):
+    """Rayons des marches tournantes (voir generer_plans.eventail) : [(pivot, point)] pour j = 0..nb."""
+    x0, y0, x1, y1 = tr["carre"]
+    px, py = tr["pivot"]
+    xf, yf = (x0 if abs(px - x1) < 0.01 else x1), (y0 if abs(py - y1) < 0.01 else y1)
+    hx, vy = math.copysign(1, xf - px), math.copysign(1, yf - py)
+    out = []
+    for j in range(int(tr["nb"]) + 1):
+        f = math.radians(90 * j / tr["nb"])
+        dx, dy = math.cos(f) * hx, math.sin(f) * vy
+        t = min(abs((xf - px) / dx) if abs(dx) > 1e-9 else 1e9, abs((yf - py) / dy) if abs(dy) > 1e-9 else 1e9)
+        out.append(((px, py), (px + dx * t, py + dy * t)))
+    return out
+
+
 def escalier(e, H, etage):
     """Volée droite : girons de chêne, contremarches blanches, dessous fermé ; trémie et cage au-dessus du plafond.
     Retourne (boîtes, trémie [x0, y0, x1, y1], obstacle)."""
@@ -107,11 +122,25 @@ def escalier(e, H, etage):
         return {"x0": xa, "x1": xb, "y0": cy - W / 2, "y1": cy + W / 2, "z0": z0, "z1": z1, "mat": mat}
 
     out = []
-    for i in range(n - 1):
+    tr = es.get("tournant")
+    nd = n - 1 - (int(tr["nb"]) if tr else 0)
+    if tr:                                       # marches tournantes en haut : la volée droite s'arrête au carré
+        pas = (L - (tr["carre"][3] - tr["carre"][1] if d[0] == 0 else tr["carre"][2] - tr["carre"][0])) / nd
+    for i in range(nd):
         z = (i + 1) * r
         out.append(rect(i * pas, (i + 1) * pas, 0, z - 1.25, "gypse"))                 # dessous fermé
         out.append(rect(max(0, i * pas - 1), (i + 1) * pas, z - 1.25, z, "placage"))   # giron (nez de 1 po)
         out.append(rect(i * pas, i * pas + 0.75, i * r, z - 1.25, "porte"))           # contremarche
+    if tr:
+        rayons = eventail(tr)
+        coin = (rayons[0][1][0], rayons[-1][1][1])          # coin du carré opposé au pivot
+        for j in range(int(tr["nb"])):
+            (p0, a_), (_, b_) = rayons[j], rayons[j + 1]
+            entoure = abs(a_[0] - coin[0]) < 0.01 and abs(b_[1] - coin[1]) < 0.01 and a_ != coin and b_ != coin
+            pts = [p0, a_] + ([coin] if entoure else []) + [b_]
+            z = (nd + j + 1) * r
+            out.append({"pts": [list(q) for q in pts], "z0": 0, "z1": z - 1.25, "mat": "gypse"})
+            out.append({"pts": [list(q) for q in pts], "z0": z - 1.25, "z1": z, "mat": "placage"})
     # trémie : dès que l'échappée (77 po au-dessus du nez) dépasse le plafond fini
     s_tr = max(0.0, min(L, ((H - 77) / r - 1) * pas))
     t0 = rect(s_tr, L, 0, 1, "")

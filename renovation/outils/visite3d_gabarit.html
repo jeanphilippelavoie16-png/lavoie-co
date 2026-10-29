@@ -280,6 +280,7 @@ for (const [n, m] of Object.entries(MAT)) m.name = n;
 // boîte avec coordonnées de texture en mètres (les matériaux gardent la même échelle partout)
 const FACE = { "+x": 0, "-x": 1, "+y": 5, "-y": 4 };   // repère maison → ordre des faces de BoxGeometry
 function boite(b, groupe) {
+  if (b.pts) return prisme(b, groupe);
   const w = (b.x1 - b.x0) * K, h = (b.z1 - b.z0) * K, d = (b.y1 - b.y0) * K;
   if (w <= 0 || h <= 0 || d <= 0) return;
   // r : arêtes arrondies (meubles, coussins, appareils) au lieu d'arêtes vives
@@ -338,6 +339,12 @@ function arrondi(o, groupe) {
   const g = new THREE.ExtrudeGeometry(sh, { depth: Math.max(0.01, (o.z1 - o.z0 - 2 * b) * K), bevelEnabled: b > 0,
     bevelThickness: b * K, bevelSize: b * K, bevelSegments: 3, curveSegments: 16 });
   g.rotateX(-Math.PI / 2); g.translate(0, (o.z0 + b) * K, 0); g.computeVertexNormals(); uvMonde(g, o.mat);
+  return placer(g, o, groupe);
+}
+function prisme(o, groupe) {             // polygone en plan extrudé de z0 à z1 (marches tournantes)
+  const sh = new THREE.Shape(o.pts.map(([x, y]) => new THREE.Vector2(x * K, y * K)));
+  const g = new THREE.ExtrudeGeometry(sh, { depth: (o.z1 - o.z0) * K, bevelEnabled: false });
+  g.rotateX(-Math.PI / 2); g.translate(0, o.z0 * K, 0); g.computeVertexNormals(); uvMonde(g, o.mat);
   return placer(g, o, groupe);
 }
 function tube(o, groupe) {

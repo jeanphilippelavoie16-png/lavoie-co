@@ -1446,6 +1446,22 @@ def rect_element(el):
     return affinity.translate(r, el["x"], el["y"])
 
 
+def eventail(tr):
+    """Rayons des marches tournantes : du pivot vers le bord opposé du carré, en nb parts égales de 90°.
+    Retourne [(pivot, point)] pour j = 0..nb (0 : long du bord horizontal, nb : long du bord vertical)."""
+    x0, y0, x1, y1 = tr["carre"]
+    px, py = tr["pivot"]
+    xf, yf = (x0 if abs(px - x1) < 0.01 else x1), (y0 if abs(py - y1) < 0.01 else y1)
+    hx, vy = math.copysign(1, xf - px), math.copysign(1, yf - py)
+    out = []
+    for j in range(int(tr["nb"]) + 1):
+        f = math.radians(90 * j / tr["nb"])
+        dx, dy = math.cos(f) * hx, math.sin(f) * vy
+        t = min(abs((xf - px) / dx) if abs(dx) > 1e-9 else 1e9, abs((yf - py) / dy) if abs(dy) > 1e-9 else 1e9)
+        out.append(((px, py), (px + dx * t, py + dy * t)))
+    return out
+
+
 def dessiner_escalier(el, g, PL, mm, fc, verif, nid):
     e = el["d"]
     es = e.get("escalier") if isinstance(e.get("escalier"), dict) else {}
@@ -1474,9 +1490,23 @@ def dessiner_escalier(el, g, PL, mm, fc, verif, nid):
     else:
         pas = 10.0
         nb = int(run / pas - 1e-6)
-    for i in range(1, nb + 1):
-        s = -run / 2 + i * pas
-        pr.append(P_pl([P(s, -wid / 2), P(s, wid / 2)], "elem-fin"))
+    tr = es.get("tournant") if isinstance(es.get("tournant"), dict) else None
+    if tr and n:
+        # marches tournantes dans un carré (« carre » [x0, y0, x1, y1]) autour d'un pivot ; le reste est droit
+        x0, y0, x1, y1 = tr["carre"]
+        ss = [(xx - c[0]) * dv[0] + (yy - c[1]) * dv[1] for xx, yy in ((x0, y0), (x1, y1))]
+        lo, hi = (-run / 2, min(ss)) if max(ss) > 0 else (max(ss), run / 2)
+        nd = n - 1 - int(tr["nb"])
+        for i in range(nd + 1):
+            s = lo + i * (hi - lo) / nd
+            if abs(abs(s) - run / 2) > 0.01:
+                pr.append(P_pl([P(s, -wid / 2), P(s, wid / 2)], "elem-fin"))
+        for a_, b_ in eventail(tr)[1:-1]:
+            pr.append(P_pl([a_, b_], "elem-fin"))
+    else:
+        for i in range(1, nb + 1):
+            s = -run / 2 + i * pas
+            pr.append(P_pl([P(s, -wid / 2), P(s, wid / 2)], "elem-fin"))
     texte_fl = str(es.get("fleche") or "").upper()
     if el["typ"] == "escalier" or texte_fl:
         S = P(-run / 2 + min(mm(2), run * 0.1), 0)
