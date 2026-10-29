@@ -49,7 +49,7 @@
    "note": "cotes du plan d'implantation (pieds décimaux convertis en pouces) ; maison « projetée » 1957",
    "cotes": [
     {
-     "id": "cote-P5-001",
+     "id": "cote-IMP-001",
      "texte_original": "38'-0\"",
      "valeur": 456,
      "lecture_1": "38'-0\"",
@@ -65,7 +65,7 @@
      "note": "lectures 1 et 2 concordantes"
     },
     {
-     "id": "cote-P5-002",
+     "id": "cote-IMP-002",
      "texte_original": "31'-8\"",
      "valeur": 380.0,
      "lecture_1": "31'-8\"",
@@ -85,7 +85,7 @@
       "lisible": true,
       "justification": "Écrit verticalement. Le 3 est net. Le 2e chiffre est une hampe verticale ; la petite barre en haut vient des hachures du mur qui le chevauchent, pas d'un 7 (le 7 de ce dessinateur, dans 57.23, a une diagonale). Le 8 a deux boucles nettes."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-P5-01_P5.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-01_P5.png",
      "alternatives": [
       {
        "texte": "31'-6\"",
@@ -97,7 +97,7 @@
      "contrainte_de_bouclage": "hors-tout aussi lu 31'-8\" sur SS, RDC et P1"
     },
     {
-     "id": "cote-P5-003",
+     "id": "cote-IMP-003",
      "texte_original": "7.79'",
      "valeur": 93.48,
      "lecture_1": "7.79'",
@@ -117,7 +117,7 @@
       "lisible": true,
       "justification": "Le 1er chiffre est en partie masqué par la ligne de lot et la flèche, mais la barre et la diagonale d'un 7 se voient. On lit ensuite « .79 », avec un 7 identique et un 9 à boucle fermée."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-P5-02_P5.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-02_P5.png",
      "alternatives": [
       {
        "texte": "7.19'",
@@ -135,7 +135,7 @@
      "contrainte_de_bouclage": "7.79' + 38'-0\" + 9' = 54,79 pi ; lecture 1 : largeur du lot mesurée dans l'image à 40 pi de la rue ≈ 54,3 pi (ESTIMÉ)"
     },
     {
-     "id": "cote-P5-004",
+     "id": "cote-IMP-004",
      "texte_original": "9'",
      "valeur": 108,
      "lecture_1": "9'",
@@ -151,7 +151,7 @@
      "note": "lectures 1 et 2 concordantes"
     },
     {
-     "id": "cote-P5-005",
+     "id": "cote-IMP-005",
      "texte_original": "9'",
      "valeur": 108,
      "lecture_1": "9'",
@@ -167,7 +167,7 @@
      "note": "lectures 1 et 2 concordantes"
     },
     {
-     "id": "cote-P5-006",
+     "id": "cote-IMP-006",
      "texte_original": "40'",
      "valeur": 480,
      "lecture_1": "40'",
@@ -183,7 +183,7 @@
      "note": "lectures 1 et 2 concordantes"
     },
     {
-     "id": "cote-P5-007",
+     "id": "cote-IMP-007",
      "texte_original": "40'",
      "valeur": 480,
      "lecture_1": "40'",
@@ -199,7 +199,7 @@
      "note": "lectures 1 et 2 concordantes"
     },
     {
-     "id": "cote-P5-008",
+     "id": "cote-IMP-008",
      "texte_original": "57.23",
      "valeur": 686.76,
      "lecture_1": "57.23",
@@ -219,7 +219,7 @@
       "lisible": true,
       "justification": "Les chiffres sont nets : 5 avec drapeau, 7 à barre et diagonale, 2 et 3 sans ambiguïté."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-P5-03_P5.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-03_P5.png",
      "alternatives": [
       {
        "texte": "57.28",
@@ -231,7 +231,7 @@
      "contrainte_de_bouclage": "aucune chaîne"
     },
     {
-     "id": "cote-P5-009",
+     "id": "cote-IMP-009",
      "texte_original": "50.27'",
      "valeur": 603.24,
      "lecture_1": "50.27'",
@@ -247,7 +247,7 @@
      "note": "lectures 1 et 2 concordantes"
     },
     {
-     "id": "cote-P5-010",
+     "id": "cote-IMP-010",
      "texte_original": "115.17'",
      "valeur": 1382.04,
      "lecture_1": "115.17'",
@@ -267,7 +267,7 @@
       "lisible": true,
       "justification": "« 115,1 » est net. Le dernier chiffre a un court trait gauche, une barre médiane et un jambage droit plus long qui descend sous la ligne de base (forme Ч) : c'est un 4 ouvert. Les 7 de la feuille (57.23) ont une barre haute et une diagonale sans trait gauche."
      },
-     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : lectures 1 et 2 : 115.17' ; 3e lecture 115,14' ; aucune chaîne fermée ; vignettes arbitrage/vignettes/d-P5-04_P5.png ; écart ecart-001",
+     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : lectures 1 et 2 : 115.17' ; 3e lecture 115,14' ; aucune chaîne fermée ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-04_P5.png ; écart ecart-001",
      "alternatives": [
       {
        "texte": "115.14'",
@@ -279,7 +279,7 @@
      "contrainte_de_bouclage": "aucune chaîne"
     },
     {
-     "id": "cote-P5-011",
+     "id": "cote-IMP-011",
      "texte_original": "112.28'",
      "valeur": 1347.36,
      "lecture_1": "112.28'",
@@ -299,7 +299,7 @@
       "lisible": true,
       "justification": "Les chiffres sont nets : le 2 a une base plate, et le 8 a deux boucles fermées."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-P5-05_P5.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-05_P5.png",
      "alternatives": [
       {
        "texte": "112.26'",
@@ -311,7 +311,7 @@
      "contrainte_de_bouclage": "aucune chaîne"
     },
     {
-     "id": "cote-P5-012",
+     "id": "cote-IMP-012",
      "texte_original": "1\" = 20'",
      "valeur": null,
      "lecture_1": "1\" = 20'",
@@ -724,7 +724,8 @@
       "note": "non écrite"
      },
      "texte_original": "PORTE 2'-8\"",
-     "note": "porte dans le mur de fondation droit (rectangle barré d'un X) ; aucun arc dessiné : battant et sens inconnus"
+     "note": "porte dans le mur de fondation droit (rectangle barré d'un X) ; aucun arc dessiné : battant et sens inconnus — voir ecart-029",
+     "repere": "ecart-029"
     },
     {
      "id": "ouv-SS-006",
@@ -821,7 +822,8 @@
       "note": "non écrite"
      },
      "texte_original": "PORTE 2'-6\"",
-     "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus"
+     "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus — voir ecart-029",
+     "repere": "ecart-029"
     }
    ],
    "pieces": [
@@ -927,9 +929,9 @@
     },
     {
      "id": "piece-SS-PERRON",
-     "nom": "Vide",
+     "nom": "Excroissance sous perron",
      "nom_original": "(aucun nom au plan)",
-     "description": "Vide de l'excroissance de fondation sous le perron avant ; accès non dessiné",
+     "description": "Excroissance de fondation sous le perron avant ; contenu (vide / remblai) inconnu ; accès non dessiné",
      "polygone": [
       [
        228.0,
@@ -1031,7 +1033,7 @@
       }
      },
      "texte_original": null,
-     "note": "Massif en saillie hors du mur gauche (mur-SS-011), conduit rectangulaire dessiné à l'intérieur (≈ x -13.3 à -5.6, y 137.1 à 148.7, ESTIMÉ). Semelle tiretée autour. Aucun texte « CHEMINÉE » ; identifié par la porte de ramonage et la virole."
+     "note": "Massif en saillie hors du mur gauche (elem-SS-CHEM), conduit rectangulaire dessiné à l'intérieur (≈ x -13.3 à -5.6, y 137.1 à 148.7, ESTIMÉ). Semelle tiretée autour. Aucun texte « CHEMINÉE » ; identifié par la porte de ramonage et la virole."
     },
     {
      "id": "elem-SS-ESC",
@@ -1064,13 +1066,20 @@
        "valeur": 14,
        "source": "LU",
        "photo": "P2",
-       "ref": "cote-SS-056"
+       "ref": "cote-SS-055"
       },
       "fleche": "MONTE",
       "direction": "+y",
       "texte_original": "14 C.M."
      },
-     "note": "volée droite ; 13 girons dessinés ; mot MONTE absent (flèche seule) ; échappée sous la poutre arrière à vérifier"
+     "note": "volée droite ; 13 girons dessinés ; mot MONTE absent (flèche seule) ; échappée sous la poutre arrière à vérifier ; rampe (main courante) écrite « RAMPE » du côté gauche de la volée (P2)",
+     "rampe": {
+      "texte_original": "RAMPE",
+      "cote": "gauche de la volée (côté −x, ≈ 22'-11\" du coin gauche)",
+      "source": "LU",
+      "photo": "P2",
+      "note": "« RAMPE » écrit avec une flèche vers le côté gauche de la volée ; position ESTIMÉE ; non dessinée"
+     }
     },
     {
      "id": "elem-SS-EVENT",
@@ -1155,7 +1164,7 @@
       }
      },
      "texte_original": "FOURNAISE",
-     "note": "Rectangle entre les deux poutres, près du mur gauche. Tracés tiretés la reliant à la cheminée (voir elem-SS-TUYAU)."
+     "note": "Rectangle entre les deux poutres, près du mur gauche. Tracés tiretés la reliant à la cheminée (voir tuyau à fumée (non reporté))."
     },
     {
      "id": "elem-SS-HUILE",
@@ -1187,8 +1196,8 @@
     },
     {
      "id": "elem-SS-RAMO",
-     "type": "trappe",
-     "nom": "Porte de ramonage",
+     "type": "autre",
+     "nom": "P. de ramonage",
      "nom_original": "PORTE DE RAMONAGE",
      "position": {
       "x": 10.5,
@@ -1198,7 +1207,7 @@
      },
      "dimensions": null,
      "texte_original": "PORTE DE RAMONAGE",
-     "note": "Flèche vers la jonction cheminée / mur gauche, face intérieure. Position ESTIMÉE (pointe de flèche)."
+     "note": "Flèche vers la jonction cheminée / mur gauche, face intérieure. Position ESTIMÉE (pointe de flèche). ; libellé abrégé de « PORTE DE RAMONAGE »"
     },
     {
      "id": "elem-SS-ROB1",
@@ -1656,9 +1665,9 @@
       "valeur_po": 129,
       "confiance": "moyenne",
       "lisible": true,
-      "justification": "Le 1 et le 0 sont nets sur P2 et P7. Le chiffre des pouces a la forme en crochet du 9 de ce dessinateur (boucle haute pleine, queue qui redescend), la même que le 9 de 9'-10\" (d-SS-13) et de 8'-9\" (d-SS-08). On ne voit pas les deux boucles fermées du 8 de ce dessinateur."
+      "justification": "Le 1 et le 0 sont nets sur P2 et P3. Le chiffre des pouces a la forme en crochet du 9 de ce dessinateur (boucle haute pleine, queue qui redescend), la même que le 9 de 9'-10\" (d-SS-13) et de 8'-9\" (d-SS-08). On ne voit pas les deux boucles fermées du 8 de ce dessinateur."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-SS-01_P1.png, arbitrage/vignettes/d-SS-01_P7.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-01_P1.png, arbitrage/vignettes/d-SS-01_P7.png",
      "alternatives": [
       {
        "texte": "10'-3\"",
@@ -1688,9 +1697,9 @@
       "valeur_po": 156,
       "confiance": "moyenne",
       "lisible": true,
-      "justification": "Le 2e chiffre, collé au 1, a une encoche ouverte à gauche au milieu sur P2 et P7. C'est la forme des 3 de 3'-0\" (d-SS-06) et 6'-3\" (d-SS-09). Les 8 du même dessinateur, de forme B avec un trou fermé (d-SS-03, d-SS-08), ne correspondent pas. Encre empâtée : un 8 reste possible."
+      "justification": "Le 2e chiffre, collé au 1, a une encoche ouverte à gauche au milieu sur P2 et P3. C'est la forme des 3 de 3'-0\" (d-SS-06) et 6'-3\" (d-SS-09). Les 8 du même dessinateur, de forme B avec un trou fermé (d-SS-03, d-SS-08), ne correspondent pas. Encre empâtée : un 8 reste possible."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-SS-02_P1.png, arbitrage/vignettes/d-SS-02_P7.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-02_P1.png, arbitrage/vignettes/d-SS-02_P7.png",
      "alternatives": [
       {
        "texte": "10'-0\"",
@@ -1722,7 +1731,7 @@
       "lisible": true,
       "justification": "Le 6 est net. Le trait d'axe passe entre 6' et le chiffre des pouces. Ce chiffre montre un trou intérieur fermé (forme B) sur P2 et P3, comme le 8 de 8'-9\". Le 3 de ce dessinateur reste ouvert à gauche."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-SS-03_P1.png, arbitrage/vignettes/d-SS-03_P7.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-03_P1.png, arbitrage/vignettes/d-SS-03_P7.png",
      "alternatives": [
       {
        "texte": "6'-3\"",
@@ -1806,9 +1815,9 @@
       "valeur_po": 42,
       "confiance": "haute",
       "lisible": true,
-      "justification": "Lecture « 3'-6\" » nette et identique sur P2 et P7. Le 3 a deux lobes, et le 6 a sa hampe montante et sa boucle basse."
+      "justification": "Lecture « 3'-6\" » nette et identique sur P2 et P3. Le 3 a deux lobes, et le 6 a sa hampe montante et sa boucle basse."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-SS-04_P1.png, arbitrage/vignettes/d-SS-04_P7.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-04_P1.png, arbitrage/vignettes/d-SS-04_P7.png",
      "alternatives": [
       {
        "texte": "3'-0\"",
@@ -1864,7 +1873,7 @@
       392,
       1030
      ],
-     "mesure": "de l'axe de la fenêtre ouv-SS-006 à la face avant (côté rue) du massif de cheminée (mur-SS-011)",
+     "mesure": "de l'axe de la fenêtre ouv-SS-006 à la face avant (côté rue) du massif de cheminée (elem-SS-CHEM)",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -1886,9 +1895,9 @@
       "valeur_po": 84,
       "confiance": "haute",
       "lisible": true,
-      "justification": "Le 1er chiffre a une barre supérieure horizontale franche et une hampe verticale (forme ᒣ) sur P2 et P7. Le 1 de ce dessinateur est un simple trait sans barre. On lit donc 7. Le 0 et le \" sont nets."
+      "justification": "Le 1er chiffre a une barre supérieure horizontale franche et une hampe verticale (forme ᒣ) sur P2 et P3. Le 1 de ce dessinateur est un simple trait sans barre. On lit donc 7. Le 0 et le \" sont nets."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-SS-05_P1.png, arbitrage/vignettes/d-SS-05_P7.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-05_P1.png, arbitrage/vignettes/d-SS-05_P7.png",
      "alternatives": [
       {
        "texte": "1'-0\"",
@@ -1934,9 +1943,9 @@
       "valeur_po": 36,
       "confiance": "haute",
       "lisible": true,
-      "justification": "Le 3 a deux lobes nets et une encoche à gauche, identiques sur P2 et P7. Le 0 est fermé."
+      "justification": "Le 3 a deux lobes nets et une encoche à gauche, identiques sur P2 et P3. Le 0 est fermé."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-SS-06_P1.png, arbitrage/vignettes/d-SS-06_P7.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-06_P1.png, arbitrage/vignettes/d-SS-06_P7.png",
      "alternatives": [
       {
        "texte": "3'-6\"",
@@ -1966,9 +1975,9 @@
       "valeur_po": 36,
       "confiance": "basse",
       "lisible": true,
-      "justification": "Le 1er chiffre est une masse oblique empâtée, avec un léger renflement à mi-hauteur, sur P2 et P7. Gabarit et épaisseur compatibles avec le 3 de d-SS-06, mais les lobes ne se séparent pas. Un 2 est peu probable (pas de base horizontale), et un 1 est trop large. Le 0 et le \" sont nets."
+      "justification": "Le 1er chiffre est une masse oblique empâtée, avec un léger renflement à mi-hauteur, sur P2 et P3. Gabarit et épaisseur compatibles avec le 3 de d-SS-06, mais les lobes ne se séparent pas. Un 2 est peu probable (pas de base horizontale), et un 1 est trop large. Le 0 et le \" sont nets."
      },
-     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : les lectures 1 et 2 lisent 3'-0\" ; 3e lecture 3'-0\" mais en confiance basse ; aucune chaîne ne contient cette largeur ; dessin ≈ 37 po (ESTIMÉ) compatible ; vignettes arbitrage/vignettes/d-SS-07_P1.png, arbitrage/vignettes/d-SS-07_P7.png ; écart ecart-004",
+     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : les lectures 1 et 2 lisent 3'-0\" ; 3e lecture 3'-0\" mais en confiance basse ; aucune chaîne ne contient cette largeur ; dessin ≈ 37 po (ESTIMÉ) compatible ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-07_P1.png, arbitrage/vignettes/d-SS-07_P7.png ; écart ecart-004",
      "alternatives": [
       {
        "texte": "1'-0\"",
@@ -2078,9 +2087,9 @@
       "valeur_po": 105,
       "confiance": "haute",
       "lisible": true,
-      "justification": "Le 1er chiffre a deux boucles fermées (forme B), comme le 8 de ce dessinateur. Le chiffre des pouces a une boucle haute fermée et une queue descendante : c'est un 9. Lecture identique sur P2 et P7."
+      "justification": "Le 1er chiffre a deux boucles fermées (forme B), comme le 8 de ce dessinateur. Le chiffre des pouces a une boucle haute fermée et une queue descendante : c'est un 9. Lecture identique sur P2 et P3."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-SS-08_P1.png, arbitrage/vignettes/d-SS-08_P7.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-08_P1.png, arbitrage/vignettes/d-SS-08_P7.png",
      "alternatives": [
       {
        "texte": "8'-5\"",
@@ -2110,9 +2119,9 @@
       "valeur_po": 75,
       "confiance": "haute",
       "lisible": true,
-      "justification": "Le 6 a une hampe montante et une boucle basse (même forme que le 6\" de d-SS-11). Le 3 est à tête plate, de forme ʒ, avec une encoche centrale. Lecture identique sur P2 et P7."
+      "justification": "Le 6 a une hampe montante et une boucle basse (même forme que le 6\" de d-SS-11). Le 3 est à tête plate, de forme ʒ, avec une encoche centrale. Lecture identique sur P2 et P3."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-SS-09_P1.png, arbitrage/vignettes/d-SS-09_P7.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-09_P1.png, arbitrage/vignettes/d-SS-09_P7.png",
      "alternatives": [
       {
        "texte": "6'-8\"",
@@ -2144,7 +2153,7 @@
       "lisible": true,
       "justification": "Le 6 est net. Le chiffre des pouces touche la ligne de cote supérieure. Sa partie basse est une boucle fermée avec un trou net sur P2 et P3, et sa partie haute se confond avec la ligne. Un 3 n'aurait pas de boucle fermée : on retient 8."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-SS-10_P1.png, arbitrage/vignettes/d-SS-10_P7.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-10_P1.png, arbitrage/vignettes/d-SS-10_P7.png",
      "alternatives": [
       {
        "texte": "6'-3\"",
@@ -2340,9 +2349,9 @@
       "valeur_po": 6,
       "confiance": "haute",
       "lisible": true,
-      "justification": "Un seul chiffre, 6 net (hampe montante, boucle basse), sous la cote 18\", identique sur P2 et P7."
+      "justification": "Un seul chiffre, 6 net (hampe montante, boucle basse), sous la cote 18\", identique sur P2 et P3."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-SS-11_P1.png, arbitrage/vignettes/d-SS-11_P7.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-11_P1.png, arbitrage/vignettes/d-SS-11_P7.png",
      "alternatives": [
       {
        "texte": "8\"",
@@ -2390,7 +2399,7 @@
       "lisible": true,
       "justification": "Le 1er chiffre est un arc en ↄ sans encoche centrale, avec un départ épaissi en haut. Il correspond au 9 de ce dessinateur (cf. 9'-10\" de d-SS-13, où la boucle est fermée). Le 3 de cette feuille a une encoche à gauche, absente ici. Le 10 est net."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-SS-12_P1.png, arbitrage/vignettes/d-SS-12_P7.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-12_P1.png, arbitrage/vignettes/d-SS-12_P7.png",
      "alternatives": [
       {
        "texte": "3'-10\"",
@@ -2500,9 +2509,9 @@
       "valeur_po": 118,
       "confiance": "haute",
       "lisible": true,
-      "justification": "Le 9 a une boucle haute fermée et une queue descendante, net sur P2 et P7. Le 10\" est net."
+      "justification": "Le 9 a une boucle haute fermée et une queue descendante, net sur P2 et P3. Le 10\" est net."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-SS-13_P1.png, arbitrage/vignettes/d-SS-13_P7.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-13_P1.png, arbitrage/vignettes/d-SS-13_P7.png",
      "alternatives": [
       {
        "texte": "3'-10\"",
@@ -2548,9 +2557,9 @@
       "valeur_po": 166,
       "confiance": "moyenne",
       "lisible": true,
-      "justification": "On lit 1 puis un chiffre à tête plate oblique avec un ventre bas (forme ʒ), identique au 3 à tête plate de 6'-3\" (d-SS-09). Un 5 aurait une hampe verticale et un drapeau à droite. Lecture identique sur P2 et P7."
+      "justification": "On lit 1 puis un chiffre à tête plate oblique avec un ventre bas (forme ʒ), identique au 3 à tête plate de 6'-3\" (d-SS-09). Un 5 aurait une hampe verticale et un drapeau à droite. Lecture identique sur P2 et P3."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-SS-14_P1.png, arbitrage/vignettes/d-SS-14_P7.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-14_P1.png, arbitrage/vignettes/d-SS-14_P7.png",
      "alternatives": [
       {
        "texte": "15'-10\"",
@@ -2559,7 +2568,7 @@
        "raison": "3/5 ; rejeté : la chaîne 10+13'-10\"+3'-11\"+12'-3\"+10 = 31'-8\""
       }
      ],
-     "contrainte_de_bouclage": "chaîne intérieure y (= 31'-8\", + 10\" mur arrière non écrit sur cette chaîne, cf. P1 cote-P2-011) : 13'-10\" → somme 380 po (écart +0) ; 15'-10\" → somme 404 po (écart +24) ⇒ ferme avec 13'-10\" | P1 (2016) cote-P2-012 « 13' 10\" » pour le même segment (nu int. mur arrière → axe C)"
+     "contrainte_de_bouclage": "chaîne intérieure y (= 31'-8\", + 10\" mur arrière non écrit sur cette chaîne, cf. P1 cote-RDC-211) : 13'-10\" → somme 380 po (écart +0) ; 15'-10\" → somme 404 po (écart +24) ⇒ ferme avec 13'-10\" | P1 (2016) cote-RDC-212 « 13' 10\" » pour le même segment (nu int. mur arrière → axe C)"
     },
     {
      "id": "cote-SS-047",
@@ -3828,20 +3837,20 @@
     }
    ],
    "elements_electriques_non_reportes": [
-    "elem-SS-VIROLE",
-    "elem-SS-TUYAU",
-    "elem-SS-LUM1",
-    "elem-SS-LUM2",
-    "elem-SS-LUM3",
-    "elem-SS-LUM4",
-    "elem-SS-LUM5",
-    "elem-SS-LUM6",
-    "elem-SS-INT1",
-    "elem-SS-INT2",
-    "elem-SS-INT3",
-    "elem-SS-PRI1",
-    "elem-SS-PRI2",
-    "elem-SS-PRI3"
+    "Virole (raccord du tuyau à fumée dans la cheminée)",
+    "Tuyau à fumée (interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Interrupteur « $ » près de la porte du caveau",
+    "Interrupteur « $ » sur la colonne avant gauche",
+    "Interrupteur 3 voies probable, porte 2'-8\"",
+    "Symbole sur la colonne arrière gauche (prise ? interprétation)",
+    "Symbole sur la colonne avant droite (prise ? interprétation)",
+    "Symbole « Θ » à droite de la colonne avant droite (interprétation : prise/sortie)"
    ]
   },
   {
@@ -4666,11 +4675,11 @@
       "note": "non écrite"
      },
      "sens": {
-      "charniere": "debut",
+      "charniere": "fin",
       "ouvre_vers": "gauche"
      },
      "texte_original": "2'-10\"x6'-10\"",
-     "note": "porte d'entrée avant ; pentures côté salon ; ouvre vers l'intérieur ; donne sur le perron de béton"
+     "note": "porte d'entrée avant ; pentures côté salon (vantail dessiné le long de la cloison du salon) ; ouvre vers l'intérieur ; donne sur le perron de béton"
     },
     {
      "id": "ouv-RDC-011",
@@ -4808,10 +4817,10 @@
      },
      "sens": {
       "charniere": "debut",
-      "ouvre_vers": "gauche"
+      "ouvre_vers": "droite"
      },
      "texte_original": "2'-6\"x6'-8\"",
-     "note": "porte de la S. de bain ; ouvre dans la S. de bain"
+     "note": "porte de la S. de bain ; ouvre vers le dégagement (constat du propriétaire 2026-10-29 ; au plan 1957 elle ouvrait dans la S. de bain)"
     },
     {
      "id": "ouv-RDC-016",
@@ -4915,11 +4924,11 @@
       "note": "non écrite"
      },
      "sens": {
-      "charniere": "fin",
+      "charniere": "debut",
       "ouvre_vers": "gauche"
      },
      "texte_original": "2'-4\"x6'-8\"",
-     "note": "porte du G.R. arrière de la chambre arrière"
+     "note": "porte du G.R. arrière de la chambre arrière ; pentures sur le montant central commun"
     },
     {
      "id": "ouv-RDC-020",
@@ -4955,7 +4964,7 @@
       "ouvre_vers": "gauche"
      },
      "texte_original": "2'-4\"x6'-8\"",
-     "note": "porte du 2e G.R. de la chambre arrière"
+     "note": "porte du 2e G.R. de la chambre arrière ; pentures sur le montant central commun"
     },
     {
      "id": "ouv-RDC-021",
@@ -5023,11 +5032,11 @@
       "note": "non écrite"
      },
      "sens": {
-      "charniere": "fin",
+      "charniere": "debut",
       "ouvre_vers": "gauche"
      },
      "texte_original": "1'-9\"x6'-8\"",
-     "note": "porte de la lingerie (LIN.) ; ouvre vers le dégagement"
+     "note": "porte de la lingerie (LIN.) ; pentures côté gauche (vantail dessiné sur le jambage gauche, P4/P5) ; ouvre vers le dégagement"
     },
     {
      "id": "ouv-RDC-026",
@@ -5059,11 +5068,11 @@
       "note": "non écrite"
      },
      "sens": {
-      "charniere": "fin",
+      "charniere": "debut",
       "ouvre_vers": "droite"
      },
      "texte_original": "2'-8\"x6'-8\"",
-     "note": "porte entrée arrière → palier ; ouvre vers le palier"
+     "note": "porte entrée arrière → palier ; pentures côté gauche ; ouvre vers le palier"
     },
     {
      "id": "ouv-RDC-027",
@@ -5137,7 +5146,7 @@
      "superficie": {
       "valeur": 136.5,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5150,14 +5159,14 @@
       "x": {
        "valeur": 133.75,
        "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "photo": "P4",
+       "note": "dimension principale : 12'-2\" (cote-RDC-030 + cote-RDC-029) − mur ext. 10\" − ½ cloison 4½\" PRÉSUMÉE"
       },
       "y": {
-       "valeur": 155.75,
-       "source": "ESTIMÉ",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "valeur": 144.0,
+       "source": "DÉDUIT",
+       "photo": "P4",
+       "note": "dimension principale hors alcôve de la porte : 13'-1\" (cote-RDC-035) − mur ext. 10\" − ½ cloison 6\" (cote-RDC-047)"
       }
      }
     },
@@ -5287,7 +5296,7 @@
      "superficie": {
       "valeur": 5.1,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5306,7 +5315,7 @@
       "y": {
        "valeur": 30.25,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5337,7 +5346,7 @@
      "superficie": {
       "valeur": 6.3,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5356,7 +5365,7 @@
       "y": {
        "valeur": 37.0,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5387,7 +5396,7 @@
      "superficie": {
       "valeur": 6.6,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5406,7 +5415,7 @@
       "y": {
        "valeur": 38.5,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5511,7 +5520,7 @@
      "superficie": {
       "valeur": 67.4,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5530,7 +5539,7 @@
       "y": {
        "valeur": 52.75,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5561,7 +5570,7 @@
      "superficie": {
       "valeur": 27.1,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5580,7 +5589,7 @@
       "y": {
        "valeur": 91.75,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5619,7 +5628,7 @@
      "superficie": {
       "valeur": 15.6,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5638,7 +5647,7 @@
       "y": {
        "valeur": 50.75,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5669,7 +5678,7 @@
      "superficie": {
       "valeur": 7.8,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5688,7 +5697,7 @@
       "y": {
        "valeur": 41.75,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5719,7 +5728,7 @@
      "superficie": {
       "valeur": 12.8,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5738,7 +5747,7 @@
       "y": {
        "valeur": 75.5,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5769,7 +5778,7 @@
      "superficie": {
       "valeur": 3.1,
       "source": "ESTIMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -5788,7 +5797,7 @@
       "y": {
        "valeur": 18.5,
        "source": "ESTIMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -5985,7 +5994,7 @@
      "superficie": {
       "valeur": 36.0,
       "source": "PRÉSUMÉ",
-      "photo": null,
+      "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
@@ -6004,7 +6013,7 @@
       "y": {
        "valeur": 54.0,
        "source": "PRÉSUMÉ",
-       "photo": null,
+       "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
@@ -6069,7 +6078,7 @@
        "valeur": 14,
        "source": "LU",
        "photo": "P4",
-       "ref": "cote-RDC-079",
+       "ref": "cote-RDC-077",
        "note": "nombre total ; seulement ≈ 10 girons visibles au RDC"
       },
       "fleche": "DESCEND",
@@ -6587,7 +6596,7 @@
       "lisible": true,
       "justification": "Le 6 est net. Le chiffre des pouces a un départ supérieur en trait plat ouvert (pas de boucle) et une masse basse empâtée, sur P4, P5 et P6. Les 8 de P4 (8'-4\", 11'-8\") ont deux boucles fermées bien visibles, pas ce chiffre. On retient un 3 à tête plate."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-01_P3.png, arbitrage/vignettes/d-RDC-01_P4.png, arbitrage/vignettes/d-RDC-01_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-01_P3.png, arbitrage/vignettes/d-RDC-01_P4.png, arbitrage/vignettes/d-RDC-01_P6.png",
      "alternatives": [
       {
        "texte": "6'-8\"",
@@ -6619,7 +6628,7 @@
       "lisible": true,
       "justification": "Le 1er chiffre a une boucle haute (intérieur visible sur P4) et une queue en ↄ qui revient à gauche, sur les 3 photos. Le 5 du même dessinateur (P5, « 5\" ») a un drapeau supérieur et une hampe, absents ici. Le 0 est net."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-02_P3.png, arbitrage/vignettes/d-RDC-02_P4.png, arbitrage/vignettes/d-RDC-02_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-02_P3.png, arbitrage/vignettes/d-RDC-02_P4.png, arbitrage/vignettes/d-RDC-02_P6.png",
      "alternatives": [
       {
        "texte": "5'-0\"",
@@ -6683,7 +6692,7 @@
       "lisible": true,
       "justification": "Le 10' est net. Le chiffre des pouces touche la ligne de cote au-dessus : sous cette ligne, un petit trou fermé en haut à gauche, puis un ventre qui descend vers la gauche (P5, P6). Si la barre haute est le drapeau d'un 5 fondu dans la ligne, on lit 5 (lecture d'ensemble). Si le trou est une vraie boucle, on lit 9. Pas de tranchage certain."
      },
-     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : 3e lecture 10'-5\" en confiance basse ; seule 10'-9\" ferme la chaîne arrière 18'-3\" + 9'-0\" + 10'-9\" = 38'-0\" (10'-5\" donne 37'-8\") ; la même chaîne au sous-sol (cote-SS-004) est confirmée 10'-9\" ; vignettes arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png ; écart ecart-002",
+     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : 3e lecture 10'-5\" en confiance basse ; seule 10'-9\" ferme la chaîne arrière 18'-3\" + 9'-0\" + 10'-9\" = 38'-0\" (10'-5\" donne 37'-8\") ; la même chaîne au sous-sol (cote-SS-004) est confirmée 10'-9\" ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png ; écart ecart-002",
      "alternatives": [
       {
        "texte": "10'-5\"",
@@ -6731,7 +6740,7 @@
       "lisible": true,
       "justification": "Le 8 a deux lobes. Le chiffre des pouces a une encoche centrale à gauche (forme ʒ), visible sur P4, P5 et P6 : c'est un 3, distinct du 9 en ↄ sans encoche de ce dessinateur."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-04_P3.png, arbitrage/vignettes/d-RDC-04_P4.png, arbitrage/vignettes/d-RDC-04_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-04_P3.png, arbitrage/vignettes/d-RDC-04_P4.png, arbitrage/vignettes/d-RDC-04_P6.png",
      "alternatives": [
       {
        "texte": "8'-9\"",
@@ -6795,7 +6804,7 @@
       "lisible": true,
       "justification": "Le chiffre des pouces a un sommet empâté en boucle (intérieur gris sur P4) et une queue en ↄ sans encoche centrale, identique au 9 de 9'-0\" (d-RDC-02). Le 3 de ce dessinateur (8'-3\") a une encoche, absente ici."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-05_P3.png, arbitrage/vignettes/d-RDC-05_P4.png, arbitrage/vignettes/d-RDC-05_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-05_P3.png, arbitrage/vignettes/d-RDC-05_P4.png, arbitrage/vignettes/d-RDC-05_P6.png",
      "alternatives": [
       {
        "texte": "6'-5\"",
@@ -6859,7 +6868,7 @@
       "lisible": true,
       "justification": "Le trait d'axe vertical traverse le texte entre « 3'- » et le chiffre des pouces. Ce chiffre est une boucle placée dans la moitié basse de la hauteur du texte, accolée au trait, comme la boucle basse d'un 6. Un 0 de ce dessinateur occupe toute la hauteur. Doute résiduel 6/0 parce que la hampe se confond avec l'axe."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-06_P4.png, arbitrage/vignettes/d-RDC-06_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-06_P4.png, arbitrage/vignettes/d-RDC-06_P6.png",
      "alternatives": [
       {
        "texte": "3'-0\"",
@@ -6897,7 +6906,7 @@
       "lisible": true,
       "justification": "Le 1er chiffre est une hampe avec un pied horizontal vers la droite (forme L avec un petit crochet haut), sur P5 et P6. C'est un 2 écrit sec : le 1 de ce dessinateur n'a pas de pied. Le 2e chiffre est un 9 net, à boucle haute fermée."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-07_P4.png, arbitrage/vignettes/d-RDC-07_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-07_P4.png, arbitrage/vignettes/d-RDC-07_P6.png",
      "alternatives": [
       {
        "texte": "6'-9\"",
@@ -6943,7 +6952,7 @@
       675,
       805
      ],
-     "mesure": "nu ext. mur gauche → cloison droite de la S. de bain (mur-RDC-011)",
+     "mesure": "nu ext. mur gauche → axe de la cloison droite de la S. de bain (mur-RDC-011)",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -6959,7 +6968,7 @@
       910,
       804
      ],
-     "mesure": "cloison droite S. de bain (mur-RDC-011) → cloison gauche de la colonne des G.R. (mur-RDC-013/014)",
+     "mesure": "axe mur-RDC-011 → axe de la cloison à 12'-2\" (mur-RDC-021, colonne des G.R.)",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -6975,7 +6984,7 @@
       1062,
       800
      ],
-     "mesure": "cloison gauche colonne G.R. (mur-RDC-013) → cloison droite colonne G.R. (mur-RDC-015)",
+     "mesure": "axe mur-RDC-021 → axe mur-RDC-022 (colonne des G.R., 12'-2\" → 14'-7\")",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -6991,7 +7000,7 @@
       1250,
       823
      ],
-     "mesure": "cloison mur-RDC-015 → cloison gauche de l'escalier (mur-RDC-021)",
+     "mesure": "axe mur-RDC-022 → axe de l'ancienne cloison à 22'-11\" (mur-RDC-027, retirée)",
      "note": "lectures 1 et 2 concordantes",
      "note_constat": "cote d'origine conservée pour mémoire ; elle vise une cloison retirée (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)) et n'est plus dessinée"
     },
@@ -7008,7 +7017,7 @@
       1519,
       803
      ],
-     "mesure": "cloison gauche escalier (mur-RDC-021) → cloison droite escalier (mur-RDC-022) : largeur escalier/BALAIS",
+     "mesure": "ancienne cloison à 22'-11\" → ancienne cloison à 26'-4\" (mur-RDC-027 → mur-RDC-028, retirées) : largeur de l'ancienne cage d'escalier",
      "note": "lectures 1 et 2 concordantes",
      "note_constat": "cote d'origine conservée pour mémoire ; elle vise une cloison retirée (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)) et n'est plus dessinée"
     },
@@ -7025,7 +7034,7 @@
       1815,
       820
      ],
-     "mesure": "cloison droite escalier (mur-RDC-022) → nu ext. mur droit",
+     "mesure": "ancienne cloison à 26'-4\" (mur-RDC-028, retirée) → nu ext. mur droit",
      "note": "lectures 1 et 2 concordantes",
      "note_constat": "cote d'origine conservée pour mémoire ; elle vise une cloison retirée (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)) et n'est plus dessinée"
     },
@@ -7042,7 +7051,7 @@
       617,
       617
      ],
-     "mesure": "nu ext. mur arrière → cloison chambre arr./S. de bain (mur-RDC-010)",
+     "mesure": "nu ext. mur arrière → axe de la cloison chambre arrière / S. de bain (mur-RDC-010)",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -7058,7 +7067,7 @@
       600,
       923
      ],
-     "mesure": "cloison mur-RDC-010 → cloison mur-RDC-012 (profondeur S. de bain)",
+     "mesure": "axe mur-RDC-010 → axe mur-RDC-012 (profondeur de la S. de bain)",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -7074,7 +7083,7 @@
       589,
       1275
      ],
-     "mesure": "nu ext. mur avant → cloison S. de bain/chambre avant (mur-RDC-012)",
+     "mesure": "nu ext. mur avant → axe mur-RDC-012 (cloison S. de bain / chambre avant, axe B)",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -7090,7 +7099,7 @@
       705,
       1344
      ],
-     "mesure": "nu ext. mur gauche → cloison droite de la chambre avant (mur-RDC-026)",
+     "mesure": "nu ext. mur gauche → axe de la cloison chambre avant / G.R. (mur-RDC-013)",
      "lecture_3": {
       "texte": "12'-2\"",
       "valeur_po": 146,
@@ -7098,7 +7107,7 @@
       "lisible": true,
       "justification": "Lecture « 12'·2\" ». Le chiffre des pouces a une courbe haute, une diagonale et une base horizontale qui rejoint le trait d'axe, sur les 3 photos. Un 7 n'aurait pas de base."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-08_P3.png, arbitrage/vignettes/d-RDC-08_P4.png, arbitrage/vignettes/d-RDC-08_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-08_P3.png, arbitrage/vignettes/d-RDC-08_P4.png, arbitrage/vignettes/d-RDC-08_P6.png",
      "alternatives": [
       {
        "texte": "12'-7\"",
@@ -7107,7 +7116,7 @@
        "raison": null
       }
      ],
-     "contrainte_de_bouclage": "chaîne intérieure x avant (y≈7', = 38'-0\") : 12'-2\" → somme 456 po (écart +0) ; 12'-7\" → somme 461 po (écart +5) ⇒ ferme avec 12'-2\" | P1 (2016) : ligne 2 = 10\" + 11' 4\" = 146 po (cote-P2-003 + cote-P2-004)"
+     "contrainte_de_bouclage": "chaîne intérieure x avant (y≈7', = 38'-0\") : 12'-2\" → somme 456 po (écart +0) ; 12'-7\" → somme 461 po (écart +5) ⇒ ferme avec 12'-2\" | P1 (2016) : ligne 2 = 10\" + 11' 4\" = 146 po (cote-RDC-203 + cote-RDC-204)"
     },
     {
      "id": "cote-RDC-039",
@@ -7122,7 +7131,7 @@
       1050,
       1350
      ],
-     "mesure": "cloison mur-RDC-026 → cloison mur-RDC-027 (profondeur G.R./LIN./VEST.)",
+     "mesure": "axe mur-RDC-013 → axe mur-RDC-014 (profondeur G.R. / LIN. / VEST.)",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -7138,7 +7147,7 @@
       1190,
       1342
      ],
-     "mesure": "cloison mur-RDC-027 → cloison hall/salon (mur-RDC-025) : largeur du hall",
+     "mesure": "axe mur-RDC-014 → axe de la cloison hall / salon (mur-RDC-018) : largeur du hall",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -7154,7 +7163,7 @@
       1713,
       1347
      ],
-     "mesure": "cloison hall/salon (mur-RDC-025) → nu ext. mur droit",
+     "mesure": "axe mur-RDC-018 → nu ext. mur droit",
      "note": "lectures 1 et 2 concordantes"
     },
     {
@@ -7170,7 +7179,7 @@
       1325,
       608
      ],
-     "mesure": "nu ext. mur arrière → cloison avant de la ch. d'utilité (mur-RDC-020)",
+     "mesure": "nu ext. mur arrière → axe C (str-RDC-AXC ; ancienne cloison mur-RDC-026, retirée)",
      "note": "lectures 1 et 2 concordantes",
      "note_constat": "cote d'origine conservée pour mémoire ; elle vise une cloison retirée (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)) et n'est plus dessinée"
     },
@@ -7187,7 +7196,7 @@
       1322,
       962
      ],
-     "mesure": "cloison mur-RDC-020 → cloison salon/passage (mur-RDC-024) : largeur du passage",
+     "mesure": "axe C → axe B (str-RDC-AXC → str-RDC-AXB) : largeur de l'ancien passage",
      "note": "lectures 1 et 2 concordantes",
      "note_constat": "cote d'origine conservée pour mémoire ; elle vise une cloison retirée (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)) et n'est plus dessinée"
     },
@@ -7204,7 +7213,7 @@
       1320,
       1303
      ],
-     "mesure": "nu ext. mur avant → cloison salon/passage (mur-RDC-024)",
+     "mesure": "nu ext. mur avant → axe B (str-RDC-AXB ; ancienne cloison salon / passage, retirée)",
      "note": "lectures 1 et 2 concordantes",
      "note_constat": "cote d'origine conservée pour mémoire ; elle vise une cloison retirée (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)) et n'est plus dessinée"
     },
@@ -7221,7 +7230,7 @@
       1870,
       772
      ],
-     "mesure": "nu ext. mur arrière → cloison salon/cuisine avec arche (mur-RDC-024)",
+     "mesure": "nu ext. mur arrière → axe B (str-RDC-AXB ; ancienne arche 6'-0\", trumeau mur-RDC-019)",
      "lecture_3": {
       "texte": "18'-7\"",
       "valeur_po": 223,
@@ -7229,7 +7238,7 @@
       "lisible": true,
       "justification": "Le 2e chiffre a une grande boucle basse fermée et un sommet compact, avec une petite protubérance et un trou à droite (P4). Il ressemble aux 8 en B de P4 plutôt qu'à un 6, qui n'a qu'une hampe. Le 7 est net."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-09_P3.png, arbitrage/vignettes/d-RDC-09_P4.png, arbitrage/vignettes/d-RDC-09_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-09_P3.png, arbitrage/vignettes/d-RDC-09_P4.png, arbitrage/vignettes/d-RDC-09_P6.png",
      "alternatives": [
       {
        "texte": "16'-7\"",
@@ -7254,7 +7263,7 @@
       1877,
       1293
      ],
-     "mesure": "nu ext. mur avant → cloison salon/cuisine (mur-RDC-024)",
+     "mesure": "nu ext. mur avant → axe B (str-RDC-AXB ; trumeau mur-RDC-019)",
      "note": "lectures 1 et 2 concordantes",
      "note_constat": "cote d'origine conservée pour mémoire ; elle vise une cloison retirée (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)) et n'est plus dessinée"
     },
@@ -7279,7 +7288,7 @@
       "lisible": true,
       "justification": "Un 6 net (hampe montante, boucle basse) sur les 3 photos."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-RDC-10_P3.png, arbitrage/vignettes/d-RDC-10_P4.png, arbitrage/vignettes/d-RDC-10_P6.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-10_P3.png, arbitrage/vignettes/d-RDC-10_P4.png, arbitrage/vignettes/d-RDC-10_P6.png",
      "alternatives": [
       {
        "texte": "6\" (si le texte est écrit tête-bêche)",
@@ -7317,7 +7326,7 @@
       "lisible": true,
       "justification": "Le chiffre est un crochet ouvert en haut avec une boucle basse empâtée à droite (forme ɕ), comme le 6 de 6'-3\" et 6'-9\" de cette feuille. Le 4 de P4 (« 4\" ») est triangulaire et fermé, très différent. Le 0 est net."
      },
-     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : lectures 1 et 2 : 4'-0\" ; 3e lecture (aveugle) : 6'-0\" ; ouverture dessinée ≈ 74 po (ESTIMÉ). Valeur écrite majoritaire retenue (les cotes écrites priment sur le dessin) — à mesurer ; vignettes arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png ; écart ecart-003",
+     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : lectures 1 et 2 : 4'-0\" ; 3e lecture (aveugle) : 6'-0\" ; ouverture dessinée ≈ 74 po (ESTIMÉ). Valeur écrite majoritaire retenue (les cotes écrites priment sur le dessin) — à mesurer ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png ; écart ecart-003",
      "alternatives": [
       {
        "texte": "ARCHE 6'-0\"",
@@ -7485,7 +7494,7 @@
       "lisible": true,
       "justification": "Largeur : 2'-6\". Le 2 est net. Le 6 est en partie barré par la penture, mais sa hampe et sa boucle basse se voient sur les 3 photos. Hauteur : le 6 est net. Le chiffre des pouces est incertain entre 8 et 9 : boucle basse refermée sur P4, crochet ouvert à gauche sur P5 et P6. On retient 8 sans certitude (la hauteur n'entre pas dans valeur_po)."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-12_P3.png, arbitrage/vignettes/d-RDC-12_P4.png, arbitrage/vignettes/d-RDC-12_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-12_P3.png, arbitrage/vignettes/d-RDC-12_P4.png, arbitrage/vignettes/d-RDC-12_P6.png",
      "alternatives": [
       {
        "texte": "2'-4\"x6'-8\"",
@@ -7533,7 +7542,7 @@
      "lecture_2": "1'-9\"x6'-8\"",
      "statut": "confirmee",
      "photo": "P4",
-     "emplacement": "porte de la lingerie (LIN.) ; pentures côté droit (x≈175), ouvre vers le dégagement (+y)",
+     "emplacement": "porte de la lingerie (LIN.) ; pentures côté gauche (x≈148), ouvre vers le dégagement (+y)",
      "px": [
       1025,
       1015
@@ -7547,7 +7556,7 @@
       "lisible": true,
       "justification": "Largeur : 1 net. Le chiffre suivant a un sommet empâté et une queue en ↄ qui revient en bas à gauche, sans encoche, comme le 9 de ce dessinateur. Un 3 aurait une encoche. Hauteur : 6'-8\", avec un 8 à boucle basse nettement fermée."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-RDC-13_P3.png, arbitrage/vignettes/d-RDC-13_P4.png, arbitrage/vignettes/d-RDC-13_P6.png",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-13_P3.png, arbitrage/vignettes/d-RDC-13_P4.png, arbitrage/vignettes/d-RDC-13_P6.png",
      "alternatives": [
       {
        "texte": "1'-5\"x6'-8\"",
@@ -7626,7 +7635,7 @@
       "lisible": true,
       "justification": "Les deux 8 ont deux boucles fermées, nettes sur P4, P5 et P6. Le 2 et le 6 sont nets."
      },
-     "note": "tranché par 3e lecture (haute) ; vignettes arbitrage/vignettes/d-RDC-14_P3.png, arbitrage/vignettes/d-RDC-14_P4.png, arbitrage/vignettes/d-RDC-14_P6.png",
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-14_P3.png, arbitrage/vignettes/d-RDC-14_P4.png, arbitrage/vignettes/d-RDC-14_P6.png",
      "alternatives": [
       {
        "texte": "2'-0\"x6'-8\"",
@@ -7747,7 +7756,7 @@
       "lisible": true,
       "justification": "On lit « LINTEAU 2-2\"x8\" » (2 pièces de 2x8). Le 8 a une boucle haute et une boucle basse avec trou, net sur P5 et P6. Le 2e chiffre (épaisseur) est en partie masqué par le point d'axe (2 ou 3, 2 plus probable). valeur_po = hauteur de la membrure (8\")."
      },
-     "note": "tranché par 3e lecture ; vignettes arbitrage/vignettes/d-RDC-15_P3.png, arbitrage/vignettes/d-RDC-15_P4.png, arbitrage/vignettes/d-RDC-15_P6.png",
+     "note": "tranché par 3e lecture ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-15_P3.png, arbitrage/vignettes/d-RDC-15_P4.png, arbitrage/vignettes/d-RDC-15_P6.png",
      "alternatives": [
       {
        "texte": "LINTEAU 2-3\"x8\"",
@@ -7932,7 +7941,7 @@
       190
      ],
      "mesure": "longueur hors-tout de la façade : nu ext. gauche (ligne 1) → nu ext. droit (ligne 7)",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-001 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-202",
@@ -7955,7 +7964,7 @@
       "lisible": true,
       "justification": "Chiffres dactylographiés de l'ingénieur. « 31' » est net. Le chiffre des pouces a une boucle haute pleine sur toute sa largeur et une boucle basse plus large (rendu ASCII ou pixel) : c'est un 8. Un 6 n'aurait qu'une hampe en haut à gauche. Un 3 ou un 5 sont exclus par la largeur et la symétrie."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-P2-01_P2.png ; id lecture 1 cote-P2-002 (croquis 2016)",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P2-01_P2.png ; croquis 2016 (P1)",
      "alternatives": [
       {
        "texte": "31' 6\"",
@@ -7980,7 +7989,7 @@
       1582
      ],
      "mesure": "épaisseur du mur ext. gauche (ligne 1 → nu int.)",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-003 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-204",
@@ -7996,7 +8005,7 @@
       1597
      ],
      "mesure": "nu int. mur gauche → ligne 2",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-004 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-205",
@@ -8012,7 +8021,7 @@
       1597
      ],
      "mesure": "ligne 2 → ligne 3 (profondeur des placards en H)",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-005 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-206",
@@ -8028,7 +8037,7 @@
       1597
      ],
      "mesure": "ligne 3 → ligne 4 (zone hall/vestibule ; ouverture pâle dans le mur avant x≈183–216 po)",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-006 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-207",
@@ -8044,7 +8053,7 @@
       1602
      ],
      "mesure": "ligne 4 → ligne 5",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-007 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-208",
@@ -8060,7 +8069,7 @@
       1605
      ],
      "mesure": "ligne 5 → ligne 6 (= largeur de la cage d'escalier d'origine, fond pâle)",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-008 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-209",
@@ -8076,7 +8085,7 @@
       1617
      ],
      "mesure": "ligne 6 → nu int. du mur droit",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-009 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-210",
@@ -8092,7 +8101,7 @@
       1585
      ],
      "mesure": "épaisseur du mur ext. droit (nu int. → ligne 7)",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-010 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-211",
@@ -8108,7 +8117,7 @@
       373
      ],
      "mesure": "épaisseur du mur arrière (D → nu int.)",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-011 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-212",
@@ -8124,7 +8133,7 @@
       647
      ],
      "mesure": "nu int. mur arrière → axe C",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-012 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-213",
@@ -8140,7 +8149,7 @@
       987
      ],
      "mesure": "entraxe des deux « axes porteurs à l'origine » C et B",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-013 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-214",
@@ -8156,7 +8165,7 @@
       1269
      ],
      "mesure": "axe B → nu int. du mur avant",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-014 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-215",
@@ -8172,7 +8181,7 @@
       1525
      ],
      "mesure": "épaisseur du mur avant (nu int. → A)",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-015 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-216",
@@ -8189,7 +8198,7 @@
      ],
      "mesure": "pente du toit 5/12 (≈22,6°) — rapport, pas une longueur",
      "dimension_nominale": "5/12",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-016 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-217",
@@ -8210,9 +8219,9 @@
       "valeur_po": 100,
       "confiance": "moyenne",
       "lisible": true,
-      "justification": "Texte pâle du plan d'origine sur P2. Après soustraction du fond, on lit « 8 - 4 » : 8 à deux boucles, 4 ouvert. Concorde avec la forme lisible sur P3."
+      "justification": "Texte pâle du plan d'origine sur P1. Après soustraction du fond, on lit « 8 - 4 » : 8 à deux boucles, 4 ouvert. Concorde avec la forme lisible sur P4."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-P2-02_P2.png ; id lecture 1 cote-P2-017 (croquis 2016)",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P2-02_P2.png ; croquis 2016 (P1)",
      "alternatives": [
       {
        "texte": "8'-1\"",
@@ -8248,9 +8257,9 @@
       "valeur_po": 41,
       "confiance": "moyenne",
       "lisible": true,
-      "justification": "Texte pâle sur P2. Après soustraction du fond, on lit « 3 - 5\" » : 3 à deux lobes, 5 avec drapeau. Même forme que « BALAIS 3'-5\" » sur P3."
+      "justification": "Texte pâle sur P1. Après soustraction du fond, on lit « 3 - 5\" » : 3 à deux lobes, 5 avec drapeau. Même forme que « BALAIS 3'-5\" » sur P4."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-P2-03_P2.png ; id lecture 1 cote-P2-018 (croquis 2016)",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P2-03_P2.png ; croquis 2016 (P1)",
      "alternatives": [
       {
        "texte": "3'-6\"",
@@ -8259,7 +8268,7 @@
        "raison": null
       }
      ],
-     "contrainte_de_bouclage": "cote pâle du plan d'origine ; P4 cote-RDC-033 « 3'-5\" » et P1 cote-P2-008 « 3' 5\" »"
+     "contrainte_de_bouclage": "cote pâle du plan d'origine ; P4 cote-RDC-033 « 3'-5\" » et P1 cote-RDC-208 « 3' 5\" »"
     },
     {
      "id": "cote-RDC-219",
@@ -8282,7 +8291,7 @@
       "lisible": true,
       "justification": "Texte pâle sur P1 : « 11-8\" ». Deux traits verticaux, puis un 8 à deux boucles."
      },
-     "note": "tranché par 3e lecture (moyenne) ; vignettes arbitrage/vignettes/d-P2-04_P2.png ; id lecture 1 cote-P2-019 (croquis 2016)",
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P2-04_P2.png ; croquis 2016 (P1)",
      "alternatives": [
       {
        "texte": "11'-6\"",
@@ -8312,9 +8321,9 @@
       "valeur_po": null,
       "confiance": "basse",
       "lisible": false,
-      "justification": "Filigrane très pâle : seuls des fragments du libellé « S. DE BAIN » et de chiffres sont visibles. Aucune cote lisible de façon fiable sur P1, à lire sur P3."
+      "justification": "Filigrane très pâle : seuls des fragments du libellé « S. DE BAIN » et de chiffres sont visibles. Aucune cote lisible de façon fiable sur P1, à lire sur P4."
      },
-     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; vignettes arbitrage/vignettes/o-P2-01_P2.png ; id lecture 1 cote-P2-020 (croquis 2016)",
+     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/o-P2-01_P2.png ; croquis 2016 (P1)",
      "contrainte_de_bouclage": "aucune chaîne fermée ne contient cette cote"
     },
     {
@@ -8339,7 +8348,7 @@
       "lisible": true,
       "justification": "Texte pâle sur P1 : « 6 x10\" F L U S H ». Le 1 et le 0 de « 10 » sont visibles, et le 6 se lit faiblement. Même forme que le libellé net de P4 « POUTRE 6\"x10\" FLUSH ». valeur_po = hauteur de la poutre (10\")."
      },
-     "note": "tranché par 3e lecture (3e lecture complète la note : « POUTRE 6\"x10\" FLUSH ») ; vignettes arbitrage/vignettes/d-P2-05_P2.png ; id lecture 1 cote-P2-021 (croquis 2016)",
+     "note": "tranché par 3e lecture (3e lecture complète la note : « POUTRE 6\"x10\" FLUSH ») ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P2-05_P2.png ; croquis 2016 (P1)",
      "contrainte_de_bouclage": "note pâle du plan d'origine ; P4 : « POUTRE 6\"x10\" FLUSH » (str-RDC-P01)"
     },
     {
@@ -8352,16 +8361,16 @@
      "photo": "P1",
      "emplacement": "fond pâle sur toute la surface du plan",
      "px": null,
-     "mesure": "cotes du plan d'origine — trop pâles sur P1 ; les lire sur P4/P4/P6",
+     "mesure": "cotes du plan d'origine — trop pâles sur P1 ; les lire sur P4/P5/P6",
      "dimension_nominale": "2-4",
      "lecture_3": {
       "texte": "(cotes d'origine trop pâles sur P1)",
       "valeur_po": null,
       "confiance": "basse",
       "lisible": false,
-      "justification": "Aucune vignette. Les cotes en fond pâle de P1 se lisent sur P4, P5 et P6, pas sur P2."
+      "justification": "Aucune vignette. Les cotes en fond pâle de P1 se lisent sur P4, P5 et P6, pas sur P1."
      },
-     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; id lecture 1 cote-P2-022 (croquis 2016)",
+     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; croquis 2016 (P1)",
      "contrainte_de_bouclage": "aucune chaîne fermée ne contient cette cote"
     },
     {
@@ -8378,7 +8387,7 @@
       1368
      ],
      "mesure": "Trait tireté rouge vertical (parallèle à y) dans le salon.",
-     "note": "lectures 1 et 2 concordantes ; id lecture 1 cote-P2-023 (croquis 2016)"
+     "note": "lectures 1 et 2 concordantes ; croquis 2016 (P1)"
     },
     {
      "id": "cote-RDC-224",
@@ -8401,7 +8410,7 @@
       "lisible": true,
       "justification": "Filigrane : on devine un chiffre en ʒ, puis « - 5 ». Le 1er chiffre (3 ou 2) est incertain."
      },
-     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; vignettes arbitrage/vignettes/o-P2-03_P2.png ; id lecture 1 cote-P2-024 (croquis 2016)",
+     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/o-P2-03_P2.png ; croquis 2016 (P1)",
      "alternatives": [
       {
        "texte": "2'-5\"",
@@ -8439,7 +8448,7 @@
       "lisible": false,
       "justification": "Filigrane : on lit « ?-5 » avec un 5 assez net. Le 1er chiffre est réduit à une tache (4, x ou 2 possibles). Pas de valeur fiable."
      },
-     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; vignettes arbitrage/vignettes/o-P2-04_P2.png ; id lecture 1 cote-P2-025 (croquis 2016)",
+     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/o-P2-04_P2.png ; croquis 2016 (P1)",
      "alternatives": [
       {
        "texte": "2'-5\"",
@@ -8471,7 +8480,7 @@
       "lisible": true,
       "justification": "Filigrane : la séquence ressemble à une étiquette de porte (« 2-6 x 6'-8\" » ou « 6'-0\" »). Seul le dernier chiffre rond, avec son tiret, est relativement visible. Lecture très incertaine."
      },
-     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; vignettes arbitrage/vignettes/o-P2-05_P2.png ; id lecture 1 cote-P2-026 (croquis 2016)",
+     "note": "orpheline (vue par un seul lecteur) ; 3e lecture : illisible ou confiance basse ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/o-P2-05_P2.png ; croquis 2016 (P1)",
      "alternatives": [
       {
        "texte": "3'-0\"",
@@ -9495,18 +9504,18 @@
     }
    ],
    "elements_electriques_non_reportes": [
-    "elem-RDC-PHARM",
-    "elem-RDC-L01",
-    "elem-RDC-L02",
-    "elem-RDC-L03",
-    "elem-RDC-L04",
-    "elem-RDC-L05",
-    "elem-RDC-L06",
-    "elem-RDC-L07",
-    "elem-RDC-L08",
-    "elem-RDC-L09",
-    "elem-RDC-L10",
-    "elem-RDC-L11"
+    "Armoire à pharmacie (?)",
+    "Luminaire plafonnier — chambre arrière",
+    "Luminaire plafonnier — chambre avant",
+    "Luminaire plafonnier — chambre d'utilité",
+    "Luminaire plafonnier — dégagement / passage (près du mot PASSAGE)",
+    "Luminaire plafonnier — entrée avant",
+    "Luminaire plafonnier — palier de l'escalier",
+    "Luminaire plafonnier — entrée arrière",
+    "Luminaire plafonnier — extérieur, au-dessus des marches arrière",
+    "Luminaire plafonnier — cuisine",
+    "Luminaire plafonnier — cuisine / s.-à-manger (sur la poutre)",
+    "Luminaire plafonnier — extérieur, perron avant"
    ],
    "elements_retires": [
     {
@@ -10003,7 +10012,7 @@
       "note": "non écrite"
      },
      "sens": {
-      "charniere": "fin",
+      "charniere": "debut",
       "ouvre_vers": "droite"
      },
      "texte_original": "2'-4\"x6'-8\"",
@@ -10091,7 +10100,7 @@
   {
    "id": "ecart-001",
    "niveau": "global",
-   "description": "Cote en conflit cote-P5-010 — Longueur de la ligne latérale gauche du lot : 115.17' (2 lectures) ou 115,14' (3e lecture). Lecture 1 « 115.17' », lecture 2 « 115.17' », 3e lecture « 115,14' » (moyenne). Vignettes : arbitrage/vignettes/d-P5-04_P5.png.",
+   "description": "Cote en conflit cote-IMP-010 — Longueur de la ligne latérale gauche du lot : 115.17' (2 lectures) ou 115,14' (3e lecture). Lecture 1 « 115.17' », lecture 2 « 115.17' », 3e lecture « 115,14' » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-P5-04_P5.png.",
    "impact": "faible",
    "hypothese_retenue": "115.17' (1382.04 po) — lectures 1 et 2 : 115.17' ; 3e lecture 115,14' ; aucune chaîne fermée",
    "a_valider_sur_place": "Consulter le certificat de localisation / plan cadastral (aucune mesure de maison en jeu).",
@@ -10101,7 +10110,7 @@
   {
    "id": "ecart-002",
    "niveau": "RDC",
-   "description": "Cote en conflit cote-RDC-018 — Segment arrière droit 10'-9\" / 10'-5\" (nu ext. droit de l'entrée arrière → coin arrière droit). Lecture 1 « 10'-9\" », lecture 2 « 10-9\" », 3e lecture « 10'-5\" » (basse). Vignettes : arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png.",
+   "description": "Cote en conflit cote-RDC-018 — Segment arrière droit 10'-9\" / 10'-5\" (nu ext. droit de l'entrée arrière → coin arrière droit). Lecture 1 « 10'-9\" », lecture 2 « 10-9\" », 3e lecture « 10'-5\" » (basse). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png.",
    "impact": "moyen",
    "hypothese_retenue": "10'-9\" (10'-9\" po) — 3e lecture 10'-5\" en confiance basse ; seule 10'-9\" ferme la chaîne arrière 18'-3\" + 9'-0\" + 10'-9\" = 38'-0\" (10'-5\" donne 37'-8\") ; la même chaîne au sous-sol (cote-SS-004) est confirmée 10'-9\"",
    "a_valider_sur_place": "Mesurer à l'extérieur, le long du mur arrière, du coin arrière droit au nu extérieur du mur droit de l'entrée arrière (attendu 10'-9\" = 129 po).",
@@ -10115,10 +10124,10 @@
   {
    "id": "ecart-003",
    "niveau": "RDC",
-   "description": "Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0\" » (2 lectures) contre 6'-0\" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0\" », lecture 2 « ARCHE 4'-0\" », 3e lecture « ARCHE 6'-0\" » (moyenne). Vignettes : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png.",
+   "description": "Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0\" » (2 lectures) contre 6'-0\" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0\" », lecture 2 « ARCHE 4'-0\" », 3e lecture « ARCHE 6'-0\" » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png.",
    "impact": "moyen",
    "hypothese_retenue": "ARCHE 4'-0\" (4'-0\" po) — lectures 1 et 2 : 4'-0\" ; 3e lecture (aveugle) : 6'-0\" ; ouverture dessinée ≈ 74 po (ESTIMÉ). Valeur écrite majoritaire retenue (les cotes écrites priment sur le dessin) — à mesurer",
-   "a_valider_sur_place": "Mesurer la largeur libre de l'arche entre le hall et le salon (cloison x = 18'-6\").",
+   "a_valider_sur_place": "Mesurer la largeur libre de l'arche hall / salon (cloison à 18'-6\" du coin avant gauche).",
    "photo": "P4",
    "statut": "ouvert",
    "position": [
@@ -10129,7 +10138,7 @@
   {
    "id": "ecart-004",
    "niveau": "SS",
-   "description": "Cote en conflit cote-SS-017 — Largeur de la fenêtre gauche basse du sous-sol (au-dessus de l'évier à lessive). Lecture 1 « 3'-0\" », lecture 2 « 3'-0\" », 3e lecture « 3'-0\" » (basse). Vignettes : arbitrage/vignettes/d-SS-07_P1.png, arbitrage/vignettes/d-SS-07_P7.png.",
+   "description": "Cote en conflit cote-SS-017 — Largeur de la fenêtre gauche basse du sous-sol (au-dessus de l'évier à lessive). Lecture 1 « 3'-0\" », lecture 2 « 3'-0\" », 3e lecture « 3'-0\" » (basse). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-SS-07_P1.png, arbitrage/vignettes/d-SS-07_P7.png.",
    "impact": "faible",
    "hypothese_retenue": "3'-0\" (3'-0\" po) — les lectures 1 et 2 lisent 3'-0\" ; 3e lecture 3'-0\" mais en confiance basse ; aucune chaîne ne contient cette largeur ; dessin ≈ 37 po (ESTIMÉ) compatible",
    "a_valider_sur_place": "Mesurer la largeur brute de la fenêtre du mur gauche du sous-sol, côté avant (au-dessus de l'évier à lessive).",
@@ -10143,7 +10152,7 @@
   {
    "id": "ecart-005",
    "niveau": "RDC",
-   "description": "Épaisseur des murs extérieurs du RDC : 10\" écrit sur le croquis 2016 (P1, chaînes 10\" aux 4 côtés — valeur typique d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 (P4) montre ≈ 11 po ; aucune épaisseur écrite sur P3.",
+   "description": "Épaisseur des murs extérieurs du RDC : 10\" écrit sur le croquis 2016 (P1, chaînes 10\" aux 4 côtés — valeur typique d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 montre ≈ 11 po ; aucune épaisseur écrite sur la feuille RDC (P4, P5 et P6).",
    "impact": "moyen",
    "hypothese_retenue": "10\" (LU P1) appliqué aux 4 murs ext. du RDC ; les dimensions intérieures des pièces en dépendent (± 1 po).",
    "a_valider_sur_place": "Mesurer l'épaisseur totale du mur extérieur au jambage de la porte d'entrée avant et d'une fenêtre (revêtement int. au revêtement ext.).",
@@ -10195,21 +10204,21 @@
   {
    "id": "ecart-009",
    "niveau": "RDC",
-   "description": "Croquis 2016 (P1, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 x ≈ 173 de C au mur arrière, placards en H entre lignes 2 et 3, bout de cloison ligne 4 x = 222 de y ≈ 76 au mur avant). Absentes du gris : murs de la S. de bain, cloisons des G.R. de la chambre arrière (x ≈ 145–161), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, cloisons le long des axes B et C. État actuel incertain : cloisons retirées ou simple croquis partiel. — CONFIRMÉ en partie par le constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : cloisons de la cage d'escalier, du placard à balais, chambre d'utilité / dégagement (axe C) et salon / passage (axe B) retirées.",
+   "description": "Croquis 2016 (P1, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 à ≈ 14'-5\" du coin gauche, de l'axe C au mur arrière ; placards en H entre les lignes 2 et 3 ; bout de cloison ligne 4 à 18'-6\", de ≈ 6'-4\" au mur avant). Absentes du gris : murs de la S. de bain, cloisons des G.R. de la chambre arrière (≈ 12'-1\" à 13'-5\"), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, cloisons le long des axes B et C. État actuel incertain : cloisons retirées ou simple croquis partiel. — CONFIRMÉ en partie par le constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : cloisons de la cage d'escalier, du placard à balais, chambre d'utilité / dégagement (axe C) et salon / passage (axe B) retirées.",
    "impact": "critique",
-   "hypothese_retenue": "Le relevé reproduit le plan de 1957 (P4) ; les cloisons absentes du gris 2016 sont conservées et signalées ici.",
-   "a_valider_sur_place": "Visiter : présence des cloisons de la cage d'escalier (x = 22'-11\" et 26'-4\"), de la cloison chambre d'utilité / passage (y = 17'-0\"), des G.R. de la chambre arrière, de la S. de bain ; position réelle de la cloison ligne 3 (x ≈ 14'-5\" vs 14'-7\").",
+   "hypothese_retenue": "Le relevé reproduit le plan de 1957 (P4), corrigé par le constat du propriétaire ; les autres cloisons absentes du gris 2016 sont conservées et signalées ici.",
+   "a_valider_sur_place": "Constater les cloisons qui restent incertaines (absentes du gris 2016 et non barrées par le propriétaire) : G.R. de la chambre arrière (entre 12'-2\" et 14'-7\" du coin gauche), murs de la S. de bain, lingerie (LIN.) et cloison hall / salon (18'-6\", arche 4'-0\") ; position réelle de la cloison ligne 3 (≈ 14'-5\" sur P1 contre 14'-7\" en 1957).",
    "photo": "P1",
    "statut": "ouvert",
    "position": [
-    296,
-    290
+    160,
+    300
    ]
   },
   {
    "id": "ecart-010",
    "niveau": "SS",
-   "description": "Croquis 2016 : « Colonne C4 retirée » (intersection axe C y = 204 × ligne 4 x = 222). Au plan 1957 (P2), la colonne la plus proche est str-SS-C02 à x = 228 (DÉDUIT de la chaîne 9'-10\" + 8\" + 7'-4\") : décalage 6 po entre les deux documents.",
+   "description": "Croquis 2016 : « Colonne C4 retirée » (axe C à 17'-0\" du nu ext. avant × ligne 4 à 18'-6\" du coin gauche). Au plan 1957 (P2), la colonne la plus proche est str-SS-C02 à 19'-0\" (DÉDUIT de la chaîne 9'-10\" + 8\" + 7'-4\") : décalage de 6 po entre les deux documents.",
    "impact": "critique",
    "hypothese_retenue": "str-SS-C02 conservée au plan (état 1957) avec mention ; portée de la poutre arrière possiblement doublée (≈ 15'-4\" entre C01 et C03 sans C02).",
    "a_valider_sur_place": "Au sous-sol, sous la poutre arrière (17'-0\" du nu ext. avant) : vérifier la présence / l'absence de colonne à x ≈ 18'-6\"–19'-0\", la flèche de la poutre et tout appui ajouté.",
@@ -10223,7 +10232,7 @@
   {
    "id": "ecart-011",
    "niveau": "SS",
-   "description": "Croquis 2016 : « Colonne C6 retirée » (axe C × ligne 6, x = 316). Au plan 1957 : str-SS-C03 à x = 324 (8 po de décalage).",
+   "description": "Croquis 2016 : « Colonne C6 retirée » (axe C × ligne 6 à 26'-4\" du coin gauche). Au plan 1957 : str-SS-C03 à 27'-0\" (8 po de décalage).",
    "impact": "critique",
    "hypothese_retenue": "str-SS-C03 conservée au plan (état 1957) avec mention ; zone de fissures 2016 au droit (ligne 6 / axe C).",
    "a_valider_sur_place": "Au sous-sol, sous la poutre arrière : vérifier la colonne à x ≈ 26'-4\"–27'-0\" ; mesurer la flèche de la poutre entre C02 et le mur droit.",
@@ -10237,10 +10246,10 @@
   {
    "id": "ecart-012",
    "niveau": "SS",
-   "description": "Le croquis 2016 ne marque des colonnes qu'aux lignes 4 et 6 (B4, B6 pleines ; C4, C6 retirées) ; le plan 1957 en montre 3 par poutre (x = 132, 228, 324). Les colonnes à x = 132 (C01, C04) n'apparaissent pas sur P1 ; positions en x décalées de 6–8 po entre documents.",
+   "description": "Le croquis 2016 ne marque des colonnes qu'aux lignes 4 et 6 (B4, B6 pleines ; C4, C6 retirées) ; le plan 1957 en montre 3 par poutre (à 11'-0\", 19'-0\" et 27'-0\" du coin gauche). Les colonnes à 11'-0\" (C01, C04) n'apparaissent pas sur P1 ; positions décalées de 6 à 8 po entre documents.",
    "impact": "moyen",
    "hypothese_retenue": "Positions 1957 retenues (DÉDUITES des cotes du sous-sol).",
-   "a_valider_sur_place": "Relever au sous-sol la position (x, y) et la section de chaque colonne sous les deux poutres 8x10.",
+   "a_valider_sur_place": "Relever au sous-sol la position et la section de chaque colonne sous les deux poutres 8x10.",
    "photo": "P2",
    "statut": "ouvert",
    "position": [
@@ -10251,10 +10260,10 @@
   {
    "id": "ecart-013",
    "niveau": "RDC",
-   "description": "Axes porteurs d'origine (P1) : B y = 157 et C y = 204, « porteurs à l'origine ». Concordance vérifiée : ils coïncident exactement avec les axes des poutres 8x10 du sous-sol (str-SS-P02 y = 10\" + 12'-3\" ; str-SS-P01 y = 380 − 10\" − 13'-10\") et avec les cloisons RDC mur-RDC-012/019 (B) et mur-RDC-026 (C). Le croquis ne dit rien de leur état en 2016.",
+   "description": "Axes porteurs d'origine (P1) : B à 13'-1\" et C à 17'-0\" du nu ext. avant, « porteurs à l'origine ». Concordance vérifiée : ils coïncident exactement avec les axes des poutres 8x10 du sous-sol (str-SS-P02 : 10\" + 12'-3\" ; str-SS-P01 : 31'-8\" − 10\" − 13'-10\") et avec les cloisons RDC d'origine mur-RDC-012/019 (B) et mur-RDC-026 (C). Le croquis ne dit rien de leur état en 2016 ; le propriétaire a constaté le retrait des cloisons sur B (à droite de 18'-6\", sauf le trumeau près du mur droit) et sur C.",
    "impact": "critique",
-   "hypothese_retenue": "Cloisons sur B et C marquées porteur « inconnu » avec indices (aucun plan n'écrit « porteur » pour l'état actuel).",
-   "a_valider_sur_place": "Vérifier au sous-sol l'appui des solives sur les deux poutres et, au RDC, la continuité des cloisons sur les axes B et C (salon / passage, chambre d'utilité / passage).",
+   "hypothese_retenue": "Cloisons restantes sur B (mur-RDC-012, trumeau mur-RDC-019) marquées porteur « inconnu » avec indices ; aucune reprise structurale relevée.",
+   "a_valider_sur_place": "Au sous-sol : appui des solives 2x10 sur les deux poutres 8x10 (13'-1\" et 17'-0\" du nu ext. avant). Au RDC : poutre ou retombée ajoutée au plafond lors du retrait des cloisons sur les axes B et C (section, appuis, hauteur libre).",
    "photo": "P1",
    "statut": "ouvert",
    "position": [
@@ -10265,10 +10274,10 @@
   {
    "id": "ecart-014",
    "niveau": "RDC",
-   "description": "Fissures signalées en 2016 (P1) : « zone de fissures au plafond de plâtre » le long de la ligne 6 (x ≈ 313–319) de l'axe C au mur arrière et le long de l'axe C (y ≈ 195–204) de x = 316 à ≈ 379 ; « fissure ± 1,2 m au plafond de stucco » dans le salon à x ≈ 319, y ≈ 31–67.",
+   "description": "Fissures signalées en 2016 (P1) : « zone de fissures au plafond de plâtre » le long de la ligne 6 (≈ 26'-1\" à 26'-7\" du coin gauche), de l'axe C au mur arrière, et le long de l'axe C (≈ 16'-3\" à 17'-0\" du nu ext. avant), de 26'-4\" à ≈ 31'-7\" ; « fissure ± 1,2 m au plafond de stucco » dans le salon à ≈ 26'-7\" du coin gauche, de 2'-7\" à 5'-7\" du nu ext. avant.",
    "impact": "critique",
    "hypothese_retenue": "Fissures reportées comme écart (aucune donnée de profondeur ni d'évolution) ; probablement liées au retrait des colonnes C4/C6 (NON écrit).",
-   "a_valider_sur_place": "Relever les fissures (longueur, ouverture, évolution) au plafond de la cuisine le long de la cloison de l'escalier et de la poutre FLUSH, et au plafond du salon à x ≈ 26'-7\".",
+   "a_valider_sur_place": "Relever les fissures (longueur, ouverture, évolution) au plafond de la cuisine le long de l'ancienne cloison de l'escalier et de la poutre FLUSH, et au plafond du salon à ≈ 26'-7\" du coin gauche.",
    "photo": "P1",
    "statut": "ouvert",
    "position": [
@@ -10279,10 +10288,10 @@
   {
    "id": "ecart-015",
    "niveau": "RDC",
-   "description": "Fissure ± 1,2 m au plafond de stucco du salon (P1) : x ≈ 319, y ≈ 31→67 (longueur dessinée ≈ 37 po ; texte 1,2 m ≈ 47 po).",
+   "description": "Fissure ± 1,2 m au plafond de stucco du salon (P1) : à ≈ 26'-7\" du coin gauche, de 2'-7\" à 5'-7\" du nu ext. avant (longueur dessinée ≈ 37 po ; texte 1,2 m ≈ 47 po).",
    "impact": "moyen",
    "hypothese_retenue": "Position ESTIMÉE sur le croquis 2016.",
-   "a_valider_sur_place": "Mesurer la fissure au plafond du salon, près de x = 26'-7\" du coin avant gauche.",
+   "a_valider_sur_place": "Mesurer la fissure au plafond du salon, près de 26'-7\" du coin avant gauche.",
    "photo": "P1",
    "statut": "ouvert",
    "position": [
@@ -10307,10 +10316,10 @@
   {
    "id": "ecart-017",
    "niveau": "RDC",
-   "description": "ARCHE hall / salon : texte « ARCHE 4'-0\" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'« ARCHE 6'-0\" » salon / cuisine.",
+   "description": "ARCHE hall / salon : texte « ARCHE 4'-0\" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'ancienne « ARCHE 6'-0\" » salon / cuisine.",
    "impact": "moyen",
    "hypothese_retenue": "Voir ecart-003 (cote en conflit) : 4'-0\" retenu.",
-   "a_valider_sur_place": "Mesurer la largeur libre de l'arche hall / salon.",
+   "a_valider_sur_place": "Mesurer la largeur libre de l'arche hall / salon (cloison à 18'-6\" du coin avant gauche).",
    "photo": "P4",
    "statut": "ouvert",
    "position": [
@@ -10321,9 +10330,9 @@
   {
    "id": "ecart-018",
    "niveau": "RDC",
-   "description": "Porte de la chambre d'utilité étiquetée « 2'-6\"x6'-8\" » (3 lectures) dans une baie cotée 2'-5\" d'axe en axe (cote-RDC-031) : une porte de 30 po ne peut pas y tenir avec ses montants ; le dessin place la porte en avant de la colonne des G.R., dans le prolongement de la cloison y = 17'-0\".",
+   "description": "Porte de la chambre d'utilité étiquetée « 2'-6\"x6'-8\" » (3 lectures) dans une baie cotée 2'-5\" d'axe en axe (cote-RDC-031) : une porte de 30 po ne peut pas y tenir avec ses montants ; le dessin place la porte en avant de la colonne des G.R., dans le prolongement de la cloison à 17'-0\" du nu ext. avant.",
    "impact": "faible",
-   "hypothese_retenue": "Sans objet : la porte et sa cloison n'existent plus (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)). Porte de 30 po placée sur la cloison y = 204 entre x ≈ 148 et 178 (ESTIMÉ).",
+   "hypothese_retenue": "Sans objet : la porte et sa cloison n'existent plus (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)). Porte de 30 po placée sur la cloison de l'axe C, entre ≈ 12'-4\" et 14'-10\" du coin gauche (ESTIMÉ).",
    "a_valider_sur_place": "Mesurer la largeur et la position de la porte de la chambre d'utilité.",
    "photo": "P4",
    "statut": "sans objet",
@@ -10365,7 +10374,7 @@
    "niveau": "SS",
    "description": "Porte du caveau « PORTE 2'-6\" » positionnée par la cote 3'-6\" dont le point de départ n'est pas dessiné (nu ext. ou int. du mur gauche du caveau).",
    "impact": "faible",
-   "hypothese_retenue": "Axe à 18'-3\" + 3'-6\" = 21'-9\" (depuis le nu ext., x = 261) ; alternative x = 271 (depuis le nu int.).",
+   "hypothese_retenue": "Axe à 18'-3\" + 3'-6\" = 21'-9\" du coin gauche (depuis le nu ext.) ; alternative 22'-7\" (depuis le nu int.).",
    "a_valider_sur_place": "Mesurer la position de la porte du caveau depuis le coin intérieur arrière gauche du sous-sol.",
    "photo": "P2",
    "statut": "ouvert",
@@ -10377,9 +10386,9 @@
   {
    "id": "ecart-022",
    "niveau": "global",
-   "description": "Escalier SS ↔ RDC : superposition à 5 po près (SS largeur ≈ 37 ESTIMÉ, RDC cage 36½ DÉDUIT) ; 14 C.M. écrit aux deux niveaux mais ≈ 10 girons visibles au RDC (les marches inférieures passent sous le placard BALAIS) ; échappée sous la poutre arrière (y = 204) au pied de l'escalier non vérifiable.",
+   "description": "Escalier SS ↔ RDC : superposition à 5 po près (SS largeur ≈ 37 po ESTIMÉ, RDC cage 36½ po DÉDUIT) ; 14 C.M. écrit aux deux niveaux mais ≈ 10 girons visibles au RDC (les marches inférieures passaient sous le placard BALAIS) ; échappée sous la poutre arrière (17'-0\" du nu ext. avant) au pied de l'escalier non vérifiable.",
    "impact": "faible",
-   "hypothese_retenue": "Course ESTIMÉE au dessin ; position x alignée sur la cage du RDC.",
+   "hypothese_retenue": "Course ESTIMÉE au dessin ; position alignée sur la cage du RDC.",
    "a_valider_sur_place": "Mesurer la hauteur et le giron des marches, la largeur de l'escalier et l'échappée sous la poutre arrière.",
    "photo": "P2",
    "statut": "ouvert",
@@ -10391,9 +10400,9 @@
   {
    "id": "ecart-023",
    "niveau": "RDC",
-   "description": "Poutre 6\"x10\" FLUSH (cuisine) non cotée en position : y ≈ 206 ESTIMÉ (P4), à 2 po de l'axe C (204) et de la poutre arrière du SS.",
+   "description": "Poutre 6\"x10\" FLUSH (cuisine) non cotée en position : ≈ 17'-2\" du nu ext. avant ESTIMÉ (P4), à 2 po de l'axe C (17'-0\") et de la poutre arrière du SS.",
    "impact": "faible",
-   "hypothese_retenue": "y = 206 ESTIMÉ.",
+   "hypothese_retenue": "17'-2\" (206 po) ESTIMÉ.",
    "a_valider_sur_place": "Repérer la poutre au plafond de la cuisine (bande de plâtre, fissures) et mesurer sa distance au mur arrière.",
    "photo": "P4",
    "statut": "ouvert",
@@ -10405,10 +10414,10 @@
   {
    "id": "ecart-024",
    "niveau": "SS",
-   "description": "Colonnes str-SS-C01 (132, 204) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, y ≈ 212) ; les cloisons x = 12'-2\" (146) passent à 14 po de la rangée de colonnes x = 132.",
+   "description": "Colonne str-SS-C01 (11'-0\" du coin gauche, sur la poutre arrière à 17'-0\" du nu ext. avant) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, ≈ 17'-8\") ; la cloison à 12'-2\" passe à 14 po de la rangée de colonnes à 11'-0\".",
    "impact": "faible",
    "hypothese_retenue": "Aucune incidence sur le relevé ; information pour la structure.",
-   "a_valider_sur_place": "Vérifier l'appui de la cloison x = 12'-2\" sur la solive doublée (note « solives doubles sous les cloisons »).",
+   "a_valider_sur_place": "Vérifier l'appui de la cloison à 12'-2\" du coin gauche sur la solive doublée (note « solives doubles sous les cloisons »).",
    "photo": "P2",
    "statut": "ouvert",
    "position": [
@@ -10419,10 +10428,10 @@
   {
    "id": "ecart-025",
    "niveau": "global",
-   "description": "Superposition de la plomberie : elem-SS-CE (26.0, 107.7) : 52 po de la S. de bain, 294 po de la cuisine ; elem-SS-EVIER (22.4, 51.0) : 108 po de la S. de bain, 312 po de la cuisine. Aucun drain, colonne de chute ni panneau électrique dessiné au sous-sol.",
+   "description": "Superposition de la plomberie : chauffe-eau du sous-sol à 2'-2\" du coin gauche et 9'-0\" du nu ext. avant : à 4'-4\" de la S. de bain et 24'-6\" de la cuisine (en plan) ; évier à lessive du sous-sol à 1'-10\" du coin gauche et 4'-3\" du nu ext. avant : à 9'-0\" de la S. de bain et 26'-0\" de la cuisine (en plan). Aucun drain, colonne de chute ni panneau électrique dessiné au sous-sol.",
    "impact": "faible",
    "hypothese_retenue": "Aucune conduite reportée (non dessinée).",
-   "a_valider_sur_place": "Repérer au sous-sol la colonne de chute sous la S. de bain (x ≈ 0–9', y ≈ 13'-1\"–18'-7\") et sous l'évier de cuisine.",
+   "a_valider_sur_place": "Repérer au sous-sol la colonne de chute sous la S. de bain (0 à 9'-0\" du coin gauche, 13'-1\" à 18'-7\" du nu ext. avant) et sous l'ancien évier de cuisine.",
    "photo": "P2",
    "statut": "ouvert",
    "position": [
@@ -10433,7 +10442,7 @@
   {
    "id": "ecart-026",
    "niveau": "global",
-   "description": "Cheminée : massif extérieur au mur gauche non coté (seule sa face avant y = 11'-0\" est située par la chaîne gauche du sous-sol) ; saillie et profondeur ≈ 20 × 21 po ESTIMÉES.",
+   "description": "Cheminée : massif extérieur au mur gauche non coté (seule sa face avant, à 11'-0\" du nu ext. avant, est située par la chaîne gauche du sous-sol) ; saillie et profondeur ≈ 20 × 21 po ESTIMÉES.",
    "impact": "faible",
    "hypothese_retenue": "Dimensions ESTIMÉES au dessin.",
    "a_valider_sur_place": "Mesurer la saillie et la largeur du massif de cheminée à l'extérieur, côté gauche.",
@@ -10449,7 +10458,7 @@
    "niveau": "global",
    "description": "Plan d'implantation P7 (1957, « maison projetée ») : rectangle 38'-0\" × 31'-8\" concordant ; excroissance avant dessinée ≈ 12,6–19,0 pi du coin gauche (perron SS : 13'-6\"–19'-6\") ; volume arrière ≈ 17,0–26,4 pi (entrée arrière : 18'-3\"–27'-3\") et marches ≈ 26,4–34,5 pi ; profondeur mesurée ≈ 32,1 pi (1 %). Implantation projetée, pas un relevé ; marges 40' (avant), 7.79' et 9' (latérales).",
    "impact": "faible",
-   "hypothese_retenue": "Plans de 1957 (P2/P3) retenus pour la géométrie ; P7 sert à l'orientation (nord ≈ 9,8° ± 1,5°) et au lot.",
+   "hypothese_retenue": "Plans de 1957 (P2, P3, P4, P5, P6) retenus pour la géométrie ; P7 sert à l'orientation (nord ≈ 9,8° ± 1,5°) et au lot.",
    "a_valider_sur_place": "Certificat de localisation récent pour l'implantation réelle et l'orientation.",
    "photo": "P7",
    "statut": "ouvert"
@@ -10466,6 +10475,20 @@
   },
   {
    "id": "ecart-029",
+   "niveau": "SS",
+   "description": "Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) : ouv-SS-005 « PORTE 2'-8\" » (mur droit, axe à 6'-3\" du nu ext. avant) et ouv-SS-008 « PORTE 2'-6\" » (porte du caveau, mur arrière). Les tiretés près de la porte 2'-8\" sont des circuits électriques.",
+   "impact": "faible",
+   "hypothese_retenue": "Portes dessinées comme baies (opération « aucune ») ; aucun sens inventé.",
+   "a_valider_sur_place": "Constater pour chaque porte le type de battant, le côté des pentures et le côté d'ouverture.",
+   "photo": "P2",
+   "statut": "ouvert",
+   "position": [
+    451,
+    75
+   ]
+  },
+  {
+   "id": "ecart-030",
    "niveau": "RDC",
    "impact": "critique",
    "statut": "ouvert",

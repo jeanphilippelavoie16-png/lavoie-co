@@ -171,7 +171,7 @@ CONFLIT_INFO = {
     'cote-RDC-018': ("RDC", "moyen", "Segment arrière droit 10'-9\" / 10'-5\" (nu ext. droit de l'entrée arrière → coin arrière droit)",
                      "Mesurer à l'extérieur, le long du mur arrière, du coin arrière droit au nu extérieur du mur droit de l'entrée arrière (attendu 10'-9\" = 129 po).", "P6", (391, 380)),
     'cote-RDC-048': ("RDC", "moyen", "Largeur de l'arche hall / salon : écrit « ARCHE 4'-0\" » (2 lectures) contre 6'-0\" (3e lecture) ; dessin ≈ 74 po",
-                     "Mesurer la largeur libre de l'arche entre le hall et le salon (cloison x = 18'-6\").", "P3", (222, 118.6)),
+                     "Mesurer la largeur libre de l'arche hall / salon (cloison à 18'-6\" du coin avant gauche).", "P3", (222, 118.6)),
     'cote-P5-010': ("global", "faible", "Longueur de la ligne latérale gauche du lot : 115.17' (2 lectures) ou 115,14' (3e lecture)",
                     "Consulter le certificat de localisation / plan cadastral (aucune mesure de maison en jeu).", "P5", None),
 }
@@ -181,7 +181,7 @@ for cid in sorted(CONFLIT_INFO, key=lambda c: (c.split('-')[1], c)):
     niv, imp, desc, aval, ph, pos = CONFLIT_INFO[cid]
     l1t = (d.get('lecture_1') or {}).get('texte'); l2t = (d.get('lecture_2') or {}).get('texte')
     ecart('conf-' + cid, niv, f"Cote en conflit {cid} — {desc}. Lecture 1 « {l1t} », lecture 2 « {l2t} », 3e lecture « {lec3['texte']} » "
-          f"({lec3['confiance']}). Vignettes : {', '.join(d['vignettes'])}.", imp,
+          f"({lec3['confiance']}). Vignettes (fichiers de travail, numérotation interne des photos) : {', '.join(d['vignettes'])}.", imp,
           f"{txt} ({pp(val) if isinstance(val, (int, float)) and cid != 'cote-P5-010' else val} po) — {note.split('hypothèse retenue : ')[-1]}",
           aval, ph, pos if niv in ('SS', 'RDC') else None)
 for cid, (d, statut, *_r) in RESOL.items():
@@ -216,7 +216,7 @@ for a in ACC:
     cid = a['id']
     if niv == 'P2': cid = P2_ID(cid)
     c = cote_entry(cid, niv, a['texte_original'], v, a['lecture_1'], a['lecture_2'], 'confirmee', a['photo'], a['px'],
-                   a['emplacement'], a['mesure'], h, "lectures 1 et 2 concordantes" + (f" ; id lecture 1 {a['id']} (croquis 2016)" if niv == 'P2' else ""),
+                   a['emplacement'], a['mesure'], h, "lectures 1 et 2 concordantes" + (" ; croquis 2016 (P2)" if niv == 'P2' else ""),
                    dim_nom=dn)
     VAL[cid] = v; STAT[cid] = 'confirmee'
     if niv == 'P5': IMPL.append(c)
@@ -230,8 +230,8 @@ for cid, (d, statut, val, txt, note, lec3) in sorted(RESOL.items()):
     px = (l2 or l1).get('px') if (l1.get('px_note') or not l1.get('px')) else l1.get('px')
     nid = P2_ID(cid) if niv == 'P2' else cid
     rep = EC.get('conf-' + cid)
-    n = note + (f" ; vignettes {', '.join(d['vignettes'])}" if d['vignettes'] else "") + (f" ; écart {rep}" if rep else "")
-    if niv == 'P2': n += f" ; id lecture 1 {cid} (croquis 2016)"
+    n = note + (f" ; vignettes (fichiers de travail, numérotation interne) {', '.join(d['vignettes'])}" if d['vignettes'] else "") + (f" ; écart {rep}" if rep else "")
+    if niv == 'P2': n += " ; croquis 2016 (P2)"
     dn = None
     if isinstance(l1.get('valeur'), str) or isinstance(l2.get('valeur'), str):
         dn = memb(txt) or None
@@ -359,11 +359,13 @@ def pos_on(m, cx=None, cy=None):
     return abs(cy - m['y1'])
 
 
-def sens(m, hinge_c, swing):
-    """hinge_c : coordonnée du jambage des pentures le long du mur ; swing : '+x','-x','+y','-y' (côté où pousse le vantail)"""
+def sens(m, centre, hinge_c, swing):
+    """centre : coordonnée du centre de la porte le long du mur ; hinge_c : coordonnée du jambage des pentures ;
+    swing : '+x','-x','+y','-y' (côté où pousse le vantail). charnière « debut » = jambage du côté (x1,y1)."""
     horiz = m['y1'] == m['y2']
     a, b = (m['x1'], m['x2']) if horiz else (m['y1'], m['y2'])
-    charn = 'debut' if abs(hinge_c - a) < abs(hinge_c - b) else 'fin'
+    vers_fin = 1 if b > a else -1
+    charn = 'fin' if (hinge_c - centre) * vers_fin > 0 else 'debut'
     ux, uy = (1 if m['x2'] > m['x1'] else -1, 0) if horiz else (0, 1 if m['y2'] > m['y1'] else -1)
     nx, ny = -uy, ux
     sv = {'+x': (1, 0), '-x': (-1, 0), '+y': (0, 1), '-y': (0, -1)}[swing]
@@ -420,7 +422,7 @@ def porte(oid, mid, centre, cid, hinge, swing, note, pos_src="ESTIMÉ", pos_note
     L, H = c['valeur'], c['hauteur']
     st = STAT[cid]
     larg = D(L, "LU", "P3", ref=cid, note=None if st == 'confirmee' else f"statut {st}")
-    return ouv(oid, 'porte', 'battante', MURS_RDC, mid, centre, larg, D(H, "LU", "P3", ref=cid), sens(m, hinge, swing),
+    return ouv(oid, 'porte', 'battante', MURS_RDC, mid, centre, larg, D(H, "LU", "P3", ref=cid), sens(m, centre, hinge, swing),
                c['texte_original'], note, pos_src, pos_note)
 
 
@@ -451,7 +453,7 @@ OUV_RDC = [
     ouv('ouv-RDC-008', 'fenetre', 'fixe', MURS_RDC, 'mur-RDC-006', V('cote-RDC-019') + V('cote-RDC-020') + V('cote-RDC-021'), W('cote-RDC-026', 'P6'),
         texte="3'-6\"", note=FEN_NOTE + " ; entrée arrière ; aucun linteau écrit", pos_note="8'-2\" + 8'-3\" + 8'-0\""),
     porte('ouv-RDC-010', 'mur-RDC-001', V('cote-RDC-010') + V('cote-RDC-011'), lab('ouv-RDC-010'), 216, '+y',
-          "porte d'entrée avant ; pentures côté salon ; ouvre vers l'intérieur ; donne sur le perron de béton", "DÉDUIT", "axe à 8'-2\" + 8'-5\" (cote-RDC-011)"),
+          "porte d'entrée avant ; pentures côté salon (vantail dessiné le long de la cloison du salon) ; ouvre vers l'intérieur ; donne sur le perron de béton", "DÉDUIT", "axe à 8'-2\" + 8'-5\" (cote-RDC-011)"),
     porte('ouv-RDC-011', 'mur-RDC-017', 198.5, lab('ouv-RDC-011'), 178, '+y', "porte entrée → hall ; pentures côté gauche ; ouvre vers le hall"),
     porte('ouv-RDC-014', 'mur-RDC-012', 127, lab('ouv-RDC-014'), 143, '-y', "porte de la chambre avant ; ouvre dans la chambre"),
     porte('ouv-RDC-015', 'mur-RDC-011', 178, lab('ouv-RDC-015'), 163, '+x', "porte de la S. de bain ; ouvre vers le dégagement (constat du propriétaire 2026-10-29 ; au plan 1957 elle ouvrait dans la S. de bain)"),
@@ -459,14 +461,14 @@ OUV_RDC = [
     porte('ouv-RDC-017', 'mur-RDC-026', 163, lab('ouv-RDC-017'), 148, '+y',
           "porte de la chambre d'utilité (alcôve sous le G.R.) ; étiquetée 2'-6\" dans une baie cotée 2'-5\" d'axe en axe — voir écart"),
     porte('ouv-RDC-018', 'mur-RDC-022', 274.5, lab('ouv-RDC-018'), 255.25, '+x', "porte du G.R. de la chambre d'utilité"),
-    porte('ouv-RDC-019', 'mur-RDC-021', 354, lab('ouv-RDC-019'), 339.75, '-x', "porte du G.R. arrière de la chambre arrière"),
-    porte('ouv-RDC-020', 'mur-RDC-021', 317, lab('ouv-RDC-020'), 335.25, '-x', "porte du 2e G.R. de la chambre arrière"),
+    porte('ouv-RDC-019', 'mur-RDC-021', 354, lab('ouv-RDC-019'), 339.75, '-x', "porte du G.R. arrière de la chambre arrière ; pentures sur le montant central commun"),
+    porte('ouv-RDC-020', 'mur-RDC-021', 317, lab('ouv-RDC-020'), 335.25, '-x', "porte du 2e G.R. de la chambre arrière ; pentures sur le montant central commun"),
     porte('ouv-RDC-021', 'mur-RDC-013', 93, lab('ouv-RDC-021'), 79, '-x', "porte du G.R. de la chambre avant ; ouvre dans la chambre"),
-    porte('ouv-RDC-022', 'mur-RDC-012', 160.5, lab('ouv-RDC-022'), 171, '+y', "porte de la lingerie (LIN.) ; ouvre vers le dégagement"),
+    porte('ouv-RDC-022', 'mur-RDC-012', 160.5, lab('ouv-RDC-022'), 150, '+y', "porte de la lingerie (LIN.) ; pentures côté gauche (vantail dessiné sur le jambage gauche, P3/P4) ; ouvre vers le dégagement"),
     porte('ouv-RDC-023', 'mur-RDC-026', 295.5, lab('ouv-RDC-023'), 281.5, '-y', "porte du placard à balais (sous l'escalier) ; ouvre vers le passage"),
     porte('ouv-RDC-024', 'mur-RDC-028', 182, lab('ouv-RDC-024'), 166, '-x', "porte passage → cuisine ; ouvre vers le passage"),
     porte('ouv-RDC-025', 'mur-RDC-028', 352, lab('ouv-RDC-025'), 368, '+x', "porte palier de l'escalier → cuisine ; ouvre dans la cuisine"),
-    porte('ouv-RDC-026', 'mur-RDC-003', 295, lab('ouv-RDC-026'), 279, '-y', "porte entrée arrière → palier ; ouvre vers le palier"),
+    porte('ouv-RDC-026', 'mur-RDC-003', 295, lab('ouv-RDC-026'), 279, '-y', "porte entrée arrière → palier ; pentures côté gauche ; ouvre vers le palier"),
     porte('ouv-RDC-027', 'mur-RDC-007', 409, lab('ouv-RDC-027'), 426, '-x', "porte extérieure arrière (vers les marches arrière) ; ouvre vers l'intérieur de l'entrée"),
 ]
 # arches
@@ -516,7 +518,7 @@ PIECES_DEF = {
     'SS': [
         ('piece-SS-PRINC', "Sous-sol", "(aucun nom au plan)", (300, 100)),
         ('piece-SS-LEG', "Caveau", "LEGUMES", (270, 405)),
-        ('piece-SS-PERRON', "Vide", "(aucun nom au plan)", (198, -20)),
+        ('piece-SS-PERRON', "Excroissance sous perron", "(aucun nom au plan)", (198, -20)),
     ],
     'RDC': [
         ('piece-RDC-CH1', "Chambre arrière", "CHAMBRE", (60, 300)),
@@ -541,7 +543,7 @@ PIECES_DEF = {
 DESC = {
     'piece-SS-PRINC': "Sous-sol, espace principal non cloisonné (aucun nom au plan)",
     'piece-SS-LEG': "Caveau à légumes (« LEGUMES »)",
-    'piece-SS-PERRON': "Vide de l'excroissance de fondation sous le perron avant ; accès non dessiné",
+    'piece-SS-PERRON': "Excroissance de fondation sous le perron avant ; contenu (vide / remblai) inconnu ; accès non dessiné",
     'piece-RDC-GR1': "Garde-robe 1 de la chambre arrière", 'piece-RDC-GR2': "Garde-robe 2 de la chambre arrière",
     'piece-RDC-GRU': "Garde-robe de la chambre d'utilité",
     'piece-RDC-UTI': "Salle à manger : ancienne chambre d'utilité (1957), ouverte sur la cuisine, l'escalier et le dégagement (constat 2026-10-29) ; nommée « Salle à manger » sur le croquis 2016 (P2)",
@@ -642,7 +644,7 @@ ELEM_SS.append({"id": "elem-SS-ESC", "type": "escalier", "nom": "Escalier vers l
                 "dimensions": {"longueur": D(121.7, "ESTIMÉ", "P1", "course mesurée au dessin, du pied (≈ poutre arrière) au palier"),
                                "largeur": D(37, "ESTIMÉ", "P1", "largeur non cotée")},
                 "texte_original": "14 C.M.",
-                "escalier": {"nb_contremarches": D(14, "LU", "P1", ref="cote-SS-056"), "fleche": "MONTE", "direction": "+y",
+                "escalier": {"nb_contremarches": D(14, "LU", "P1", ref=next(c['id'] for c in COTES['SS'] if 'C.M.' in (c['texte_original'] or ''))), "fleche": "MONTE", "direction": "+y",
                              "texte_original": "14 C.M."},
                 "note": "volée droite ; 13 girons dessinés ; mot MONTE absent (flèche seule) ; échappée sous la poutre arrière à vérifier"})
 ELEM_SS.sort(key=lambda e: e['id'])
@@ -652,12 +654,12 @@ ELEM_RDC.append({"id": "elem-RDC-ESC1", "type": "escalier", "nom": "Escalier ver
                  "dimensions": {"longueur": D(90.25, "ESTIMÉ", "P3", "partie visible, du palier (y ≈ 334) à la cloison du BALAIS ; les marches inférieures passent sous le BALAIS (course totale ≈ 130 po au SS)"),
                                 "largeur": D(36.5, "DÉDUIT", "P3", "entre cloisons x = 23'-0\" et 26'-4\" (axes LU, cloisons 4½\" PRÉSUMÉ)")},
                  "texte_original": "2.R. 14 C.M.",
-                 "escalier": {"nb_contremarches": D(14, "LU", "P3", ref="cote-RDC-079", note="nombre total ; seulement ≈ 10 girons visibles au RDC"),
+                 "escalier": {"nb_contremarches": D(14, "LU", "P3", ref=next(c['id'] for c in COTES['RDC'] if 'C.M.' in (c['texte_original'] or '')), note="nombre total ; seulement ≈ 10 girons visibles au RDC"),
                               "fleche": "DESCEND", "direction": "-y", "texte_original": "2.R. 14 C.M."},
                  "note": "préfixe « 2.R. » non interprété"})
 ELEM_RDC.sort(key=lambda e: e['id'])
-ELEC = {'SS': [e['id'] for e in EX['SS']['elements'] if e['type'] == 'autre'],
-        'RDC': [e['id'] for e in EX['RDC']['elements'] if e['type'] == 'autre']}
+ELEC = {'SS': [e['nom'] for e in EX['SS']['elements'] if e['type'] == 'autre'],
+        'RDC': [e['nom'] for e in EX['RDC']['elements'] if e['type'] == 'autre']}
 
 # ============================================================================ 8. structure
 def st(sid, typ, dim_txt, val, src, photo, geom, sens_=None, note=None):
@@ -898,12 +900,14 @@ cui = Polygon(next(p for p in PIECES['RDC'] if p['id'] == 'piece-RDC-CUI')['poly
 plomb = []
 for eid in ('elem-SS-CE', 'elem-SS-EVIER'):
     e = next(e for e in ELEM_SS if e['id'] == eid); pt = Point(e['position']['x'], e['position']['y'])
-    plomb.append(f"{eid} ({e['position']['x']}, {e['position']['y']}) : {sdb.distance(pt):.0f} po de la S. de bain, {cui.distance(pt):.0f} po de la cuisine")
+    plomb.append(f"{e['nom'].lower()} du sous-sol à {pp(round(e['position']['x']))} du coin gauche et {pp(round(e['position']['y']))} du nu ext. avant : "
+                 f"à {pp(round(sdb.distance(pt)))} de la S. de bain et {pp(round(cui.distance(pt)))} de la cuisine (en plan)")
 check(False, "colonnes de plomberie : " + " ; ".join(plomb) + " — aucun appareil SS directement sous la S. de bain ou l'évier de cuisine ; drains non dessinés")
 
 # ============================================================================ 12. registre des écarts (suite)
+ARCHE_AV = "Mesurer la largeur libre de l'arche hall / salon (cloison à 18'-6\" du coin avant gauche)."
 ecart('ep-ext-rdc', 'RDC', "Épaisseur des murs extérieurs du RDC : 10\" écrit sur le croquis 2016 (P2, chaînes 10\" aux 4 côtés — valeur typique "
-      "d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 (P3) montre ≈ 11 po ; aucune épaisseur écrite sur P3.",
+      "d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 montre ≈ 11 po ; aucune épaisseur écrite sur la feuille RDC (P3, P4 et P6).",
       "moyen", "10\" (LU P2) appliqué aux 4 murs ext. du RDC ; les dimensions intérieures des pièces en dépendent (± 1 po).",
       "Mesurer l'épaisseur totale du mur extérieur au jambage de la porte d'entrée avant et d'une fenêtre (revêtement int. au revêtement ext.).", "P2", (5, 100))
 ecart('ep-int-rdc', 'RDC', "Épaisseur des cloisons du RDC non cotée (sauf cloison chambre arrière / S. de bain 6\" LU, tranchée par 3e lecture) ; dessin ≈ 6 po.",
@@ -917,44 +921,46 @@ ecart('ep-pres', 'global', "Épaisseurs PRÉSUMÉES par analogie ou par défaut 
 ecart('hp', 'global', "Hauteurs de plafond inconnues aux deux niveaux (aucune coupe ni élévation ; aucune hauteur écrite).", "moyen",
       "Hauteur laissée vide (ILLISIBLE) ; aucune valeur présumée.",
       "Mesurer la hauteur plancher-plafond au sous-sol (sous solives et sous les poutres 8x10) et au RDC (salon, cuisine sous la poutre FLUSH).", "P1", None)
-ecart('p2-cloisons', 'RDC', "Croquis 2016 (P2, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 x ≈ 173 "
-      "de C au mur arrière, placards en H entre lignes 2 et 3, bout de cloison ligne 4 x = 222 de y ≈ 76 au mur avant). Absentes du gris : murs de la S. de bain, "
-      "cloisons des G.R. de la chambre arrière (x ≈ 145–161), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, "
+ecart('p2-cloisons', 'RDC', "Croquis 2016 (P2, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 à ≈ 14'-5\" "
+      "du coin gauche, de l'axe C au mur arrière ; placards en H entre les lignes 2 et 3 ; bout de cloison ligne 4 à 18'-6\", de ≈ 6'-4\" au mur avant). Absentes du gris : murs de la S. de bain, "
+      "cloisons des G.R. de la chambre arrière (≈ 12'-1\" à 13'-5\"), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, "
       "cloisons le long des axes B et C. État actuel incertain : cloisons retirées ou simple croquis partiel.", "critique",
-      "Le relevé reproduit le plan de 1957 (P3) ; les cloisons absentes du gris 2016 sont conservées et signalées ici.",
-      "Visiter : présence des cloisons de la cage d'escalier (x = 22'-11\" et 26'-4\"), de la cloison chambre d'utilité / passage (y = 17'-0\"), des G.R. de la chambre arrière, de la S. de bain ; position réelle de la cloison ligne 3 (x ≈ 14'-5\" vs 14'-7\").",
-      "P2", (296, 290))
-ecart('col-c4', 'SS', "Croquis 2016 : « Colonne C4 retirée » (intersection axe C y = 204 × ligne 4 x = 222). Au plan 1957 (P1), la colonne la plus proche est str-SS-C02 "
-      "à x = 228 (DÉDUIT de la chaîne 9'-10\" + 8\" + 7'-4\") : décalage 6 po entre les deux documents.", "critique",
+      "Le relevé reproduit le plan de 1957 (P3), corrigé par le constat du propriétaire ; les autres cloisons absentes du gris 2016 sont conservées et signalées ici.",
+      "Constater les cloisons qui restent incertaines (absentes du gris 2016 et non barrées par le propriétaire) : G.R. de la chambre arrière (entre 12'-2\" et 14'-7\" du coin gauche), "
+      "murs de la S. de bain, lingerie (LIN.) et cloison hall / salon (18'-6\", arche 4'-0\") ; position réelle de la cloison ligne 3 (≈ 14'-5\" sur P2 contre 14'-7\" en 1957).",
+      "P2", (160, 300))
+ecart('col-c4', 'SS', "Croquis 2016 : « Colonne C4 retirée » (axe C à 17'-0\" du nu ext. avant × ligne 4 à 18'-6\" du coin gauche). Au plan 1957 (P1), la colonne la plus proche est str-SS-C02 "
+      "à 19'-0\" (DÉDUIT de la chaîne 9'-10\" + 8\" + 7'-4\") : décalage de 6 po entre les deux documents.", "critique",
       "str-SS-C02 conservée au plan (état 1957) avec mention ; portée de la poutre arrière possiblement doublée (≈ 15'-4\" entre C01 et C03 sans C02).",
       "Au sous-sol, sous la poutre arrière (17'-0\" du nu ext. avant) : vérifier la présence / l'absence de colonne à x ≈ 18'-6\"–19'-0\", la flèche de la poutre et tout appui ajouté.", "P2", (228, 204))
-ecart('col-c6', 'SS', "Croquis 2016 : « Colonne C6 retirée » (axe C × ligne 6, x = 316). Au plan 1957 : str-SS-C03 à x = 324 (8 po de décalage).", "critique",
+ecart('col-c6', 'SS', "Croquis 2016 : « Colonne C6 retirée » (axe C × ligne 6 à 26'-4\" du coin gauche). Au plan 1957 : str-SS-C03 à 27'-0\" (8 po de décalage).", "critique",
       "str-SS-C03 conservée au plan (état 1957) avec mention ; zone de fissures 2016 au droit (ligne 6 / axe C).",
       "Au sous-sol, sous la poutre arrière : vérifier la colonne à x ≈ 26'-4\"–27'-0\" ; mesurer la flèche de la poutre entre C02 et le mur droit.", "P2", (324, 204))
 ecart('col-p2', 'SS', "Le croquis 2016 ne marque des colonnes qu'aux lignes 4 et 6 (B4, B6 pleines ; C4, C6 retirées) ; le plan 1957 en montre 3 par poutre "
-      "(x = 132, 228, 324). Les colonnes à x = 132 (C01, C04) n'apparaissent pas sur P2 ; positions en x décalées de 6–8 po entre documents.", "moyen",
+      "(à 11'-0\", 19'-0\" et 27'-0\" du coin gauche). Les colonnes à 11'-0\" (C01, C04) n'apparaissent pas sur P2 ; positions décalées de 6 à 8 po entre documents.", "moyen",
       "Positions 1957 retenues (DÉDUITES des cotes du sous-sol).",
-      "Relever au sous-sol la position (x, y) et la section de chaque colonne sous les deux poutres 8x10.", "P1", (132, 180))
-ecart('axes', 'RDC', "Axes porteurs d'origine (P2) : B y = 157 et C y = 204, « porteurs à l'origine ». Concordance vérifiée : ils coïncident exactement avec les "
-      "axes des poutres 8x10 du sous-sol (str-SS-P02 y = 10\" + 12'-3\" ; str-SS-P01 y = 380 − 10\" − 13'-10\") et avec les cloisons RDC mur-RDC-012/019 (B) "
-      "et mur-RDC-026 (C). Le croquis ne dit rien de leur état en 2016.", "critique",
-      "Cloisons sur B et C marquées porteur « inconnu » avec indices (aucun plan n'écrit « porteur » pour l'état actuel).",
-      "Vérifier au sous-sol l'appui des solives sur les deux poutres et, au RDC, la continuité des cloisons sur les axes B et C (salon / passage, chambre d'utilité / passage).", "P2", (440, 157))
-ecart('fissures', 'RDC', "Fissures signalées en 2016 (P2) : « zone de fissures au plafond de plâtre » le long de la ligne 6 (x ≈ 313–319) de l'axe C au mur arrière "
-      "et le long de l'axe C (y ≈ 195–204) de x = 316 à ≈ 379 ; « fissure ± 1,2 m au plafond de stucco » dans le salon à x ≈ 319, y ≈ 31–67.", "critique",
+      "Relever au sous-sol la position et la section de chaque colonne sous les deux poutres 8x10.", "P1", (132, 180))
+ecart('axes', 'RDC', "Axes porteurs d'origine (P2) : B à 13'-1\" et C à 17'-0\" du nu ext. avant, « porteurs à l'origine ». Concordance vérifiée : ils coïncident exactement avec les "
+      "axes des poutres 8x10 du sous-sol (str-SS-P02 : 10\" + 12'-3\" ; str-SS-P01 : 31'-8\" − 10\" − 13'-10\") et avec les cloisons RDC d'origine mur-RDC-012/019 (B) "
+      "et mur-RDC-026 (C). Le croquis ne dit rien de leur état en 2016 ; le propriétaire a constaté le retrait des cloisons sur B (à droite de 18'-6\", sauf le trumeau près du mur droit) et sur C.", "critique",
+      "Cloisons restantes sur B (mur-RDC-012, trumeau mur-RDC-019) marquées porteur « inconnu » avec indices ; aucune reprise structurale relevée.",
+      "Au sous-sol : appui des solives 2x10 sur les deux poutres 8x10 (13'-1\" et 17'-0\" du nu ext. avant). Au RDC : poutre ou retombée ajoutée au plafond lors du retrait "
+      "des cloisons sur les axes B et C (section, appuis, hauteur libre).", "P2", (440, 157))
+ecart('fissures', 'RDC', "Fissures signalées en 2016 (P2) : « zone de fissures au plafond de plâtre » le long de la ligne 6 (≈ 26'-1\" à 26'-7\" du coin gauche), de l'axe C au mur arrière, "
+      "et le long de l'axe C (≈ 16'-3\" à 17'-0\" du nu ext. avant), de 26'-4\" à ≈ 31'-7\" ; « fissure ± 1,2 m au plafond de stucco » dans le salon à ≈ 26'-7\" du coin gauche, de 2'-7\" à 5'-7\" du nu ext. avant.", "critique",
       "Fissures reportées comme écart (aucune donnée de profondeur ni d'évolution) ; probablement liées au retrait des colonnes C4/C6 (NON écrit).",
-      "Relever les fissures (longueur, ouverture, évolution) au plafond de la cuisine le long de la cloison de l'escalier et de la poutre FLUSH, et au plafond du salon à x ≈ 26'-7\".",
+      "Relever les fissures (longueur, ouverture, évolution) au plafond de la cuisine le long de l'ancienne cloison de l'escalier et de la poutre FLUSH, et au plafond du salon à ≈ 26'-7\" du coin gauche.",
       "P2", (316, 290))
-ecart('fiss-salon', 'RDC', "Fissure ± 1,2 m au plafond de stucco du salon (P2) : x ≈ 319, y ≈ 31→67 (longueur dessinée ≈ 37 po ; texte 1,2 m ≈ 47 po).", "moyen",
-      "Position ESTIMÉE sur le croquis 2016.", "Mesurer la fissure au plafond du salon, près de x = 26'-7\" du coin avant gauche.", "P2", (319, 49))
+ecart('fiss-salon', 'RDC', "Fissure ± 1,2 m au plafond de stucco du salon (P2) : à ≈ 26'-7\" du coin gauche, de 2'-7\" à 5'-7\" du nu ext. avant (longueur dessinée ≈ 37 po ; texte 1,2 m ≈ 47 po).", "moyen",
+      "Position ESTIMÉE sur le croquis 2016.", "Mesurer la fissure au plafond du salon, près de 26'-7\" du coin avant gauche.", "P2", (319, 49))
 ecart('usage', 'RDC', "Usage des pièces : le croquis 2016 nomme « Salle à manger » l'espace que le plan 1957 nomme « CHAMBRE D'UTILITÉ », et « Cuisine » la "
       "« CUISINE S.-À-MANGER » d'origine ; l'absence de cloisons grises aux lignes 5 et 6 suggère un espace ouvert (NON écrit).", "moyen",
       "Nom d'origine conservé, nom 2016 indiqué entre parenthèses.", "Constater l'usage et l'aménagement actuels de la chambre d'utilité et de la cuisine.", "P2", (225, 290))
-ecart('arche', 'RDC', "ARCHE hall / salon : texte « ARCHE 4'-0\" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'« ARCHE 6'-0\" » salon / cuisine.",
-      "moyen", f"Voir {EC['conf-cote-RDC-048']} (cote en conflit) : 4'-0\" retenu.", "Mesurer la largeur libre de l'arche hall / salon.", "P3", (222, 118.6))
+ecart('arche', 'RDC', "ARCHE hall / salon : texte « ARCHE 4'-0\" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'ancienne « ARCHE 6'-0\" » salon / cuisine.",
+      "moyen", f"Voir {EC['conf-cote-RDC-048']} (cote en conflit) : 4'-0\" retenu.", ARCHE_AV, "P3", (222, 118.6))
 ecart('porte-uti', 'RDC', "Porte de la chambre d'utilité étiquetée « 2'-6\"x6'-8\" » (3 lectures) dans une baie cotée 2'-5\" d'axe en axe (cote-RDC-031) : une porte de 30 po "
-      "ne peut pas y tenir avec ses montants ; le dessin place la porte en avant de la colonne des G.R., dans le prolongement de la cloison y = 17'-0\".", "faible",
-      "Porte de 30 po placée sur la cloison y = 204 entre x ≈ 148 et 178 (ESTIMÉ).", "Mesurer la largeur et la position de la porte de la chambre d'utilité.", "P3", (163, 204))
+      "ne peut pas y tenir avec ses montants ; le dessin place la porte en avant de la colonne des G.R., dans le prolongement de la cloison à 17'-0\" du nu ext. avant.", "faible",
+      "Porte de 30 po placée sur la cloison de l'axe C, entre ≈ 12'-4\" et 14'-10\" du coin gauche (ESTIMÉ).", "Mesurer la largeur et la position de la porte de la chambre d'utilité.", "P3", (163, 204))
 ecart('ear-1po', 'RDC', "Entrée arrière : 8'-2\" + 8'-3\" + 8'-0\" + 2'-9\" = 27'-2\" (axe de la fenêtre + 2'-9\") alors que 18'-3\" + 9'-0\" = 27'-3\" au nu ext. droit du volume "
       "→ écart de 1 po (2'-9\" confirmé par la 3e lecture).", "faible",
       "Nu ext. droit du volume à 27'-3\" (chaîne hors-tout) ; la cote 2'-9\" est dessinée 2'-10\" (repère sur la cote).",
@@ -962,29 +968,37 @@ ecart('ear-1po', 'RDC', "Entrée arrière : 8'-2\" + 8'-3\" + 8'-0\" + 2'-9\" = 
 ecart('fen-ss', 'SS', "Fenêtres arrière et droite haute du sous-sol : « 6'-8\" » confirmé par la 3e lecture, mais dessinées de la même longueur que la fenêtre avant cotée 6'-3\" (≈ 72–73 po).",
       "faible", "6'-8\" (LU, confirmé).", "Mesurer la largeur des fenêtres du mur arrière (13'-0\" du coin gauche) et du mur droit (6'-0\" du coin arrière).", "P1", (156, 380))
 ecart('porte-cav', 'SS', "Porte du caveau « PORTE 2'-6\" » positionnée par la cote 3'-6\" dont le point de départ n'est pas dessiné (nu ext. ou int. du mur gauche du caveau).",
-      "faible", "Axe à 18'-3\" + 3'-6\" = 21'-9\" (depuis le nu ext., x = 261) ; alternative x = 271 (depuis le nu int.).",
+      "faible", "Axe à 18'-3\" + 3'-6\" = 21'-9\" du coin gauche (depuis le nu ext.) ; alternative 22'-7\" (depuis le nu int.).",
       "Mesurer la position de la porte du caveau depuis le coin intérieur arrière gauche du sous-sol.", "P1", (261, 375))
-ecart('escalier', 'global', f"Escalier SS ↔ RDC : superposition à {d_esc:.0f} po près (SS largeur ≈ 37 ESTIMÉ, RDC cage 36½ DÉDUIT) ; 14 C.M. écrit aux deux niveaux "
-      "mais ≈ 10 girons visibles au RDC (les marches inférieures passent sous le placard BALAIS) ; échappée sous la poutre arrière (y = 204) au pied de l'escalier non vérifiable.",
-      "faible", "Course ESTIMÉE au dessin ; position x alignée sur la cage du RDC.",
+ecart('escalier', 'global', f"Escalier SS ↔ RDC : superposition à {d_esc:.0f} po près (SS largeur ≈ 37 po ESTIMÉ, RDC cage 36½ po DÉDUIT) ; 14 C.M. écrit aux deux niveaux "
+      "mais ≈ 10 girons visibles au RDC (les marches inférieures passaient sous le placard BALAIS) ; échappée sous la poutre arrière (17'-0\" du nu ext. avant) au pied de l'escalier non vérifiable.",
+      "faible", "Course ESTIMÉE au dessin ; position alignée sur la cage du RDC.",
       "Mesurer la hauteur et le giron des marches, la largeur de l'escalier et l'échappée sous la poutre arrière.", "P1", (295, 270))
-ecart('poutre-flush', 'RDC', "Poutre 6\"x10\" FLUSH (cuisine) non cotée en position : y ≈ 206 ESTIMÉ (P3), à 2 po de l'axe C (204) et de la poutre arrière du SS.",
-      "faible", "y = 206 ESTIMÉ.", "Repérer la poutre au plafond de la cuisine (bande de plâtre, fissures) et mesurer sa distance au mur arrière.", "P3", (380, 206))
-ecart('col-plancher', 'SS', "Colonnes str-SS-C01 (132, 204) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, y ≈ 212) ; "
-      "les cloisons x = 12'-2\" (146) passent à 14 po de la rangée de colonnes x = 132.", "faible",
-      "Aucune incidence sur le relevé ; information pour la structure.", "Vérifier l'appui de la cloison x = 12'-2\" sur la solive doublée (note « solives doubles sous les cloisons »).", "P1", (132, 204))
+ecart('poutre-flush', 'RDC', "Poutre 6\"x10\" FLUSH (cuisine) non cotée en position : ≈ 17'-2\" du nu ext. avant ESTIMÉ (P3), à 2 po de l'axe C (17'-0\") et de la poutre arrière du SS.",
+      "faible", "17'-2\" (206 po) ESTIMÉ.", "Repérer la poutre au plafond de la cuisine (bande de plâtre, fissures) et mesurer sa distance au mur arrière.", "P3", (380, 206))
+ecart('col-plancher', 'SS', "Colonne str-SS-C01 (11'-0\" du coin gauche, sur la poutre arrière à 17'-0\" du nu ext. avant) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, ≈ 17'-8\") ; "
+      "la cloison à 12'-2\" passe à 14 po de la rangée de colonnes à 11'-0\".", "faible",
+      "Aucune incidence sur le relevé ; information pour la structure.", "Vérifier l'appui de la cloison à 12'-2\" du coin gauche sur la solive doublée (note « solives doubles sous les cloisons »).", "P1", (132, 204))
 ecart('plomberie', 'global', "Superposition de la plomberie : " + " ; ".join(plomb) + ". Aucun drain, colonne de chute ni panneau électrique dessiné au sous-sol.",
-      "faible", "Aucune conduite reportée (non dessinée).", "Repérer au sous-sol la colonne de chute sous la S. de bain (x ≈ 0–9', y ≈ 13'-1\"–18'-7\") et sous l'évier de cuisine.", "P1", (40, 190))
-ecart('cheminee', 'global', "Cheminée : massif extérieur au mur gauche non coté (seule sa face avant y = 11'-0\" est située par la chaîne gauche du sous-sol) ; saillie et profondeur ≈ 20 × 21 po ESTIMÉES.",
+      "faible", "Aucune conduite reportée (non dessinée).", "Repérer au sous-sol la colonne de chute sous la S. de bain (0 à 9'-0\" du coin gauche, 13'-1\" à 18'-7\" du nu ext. avant) et sous l'ancien évier de cuisine.", "P1", (40, 190))
+ecart('cheminee', 'global', "Cheminée : massif extérieur au mur gauche non coté (seule sa face avant, à 11'-0\" du nu ext. avant, est située par la chaîne gauche du sous-sol) ; saillie et profondeur ≈ 20 × 21 po ESTIMÉES.",
       "faible", "Dimensions ESTIMÉES au dessin.", "Mesurer la saillie et la largeur du massif de cheminée à l'extérieur, côté gauche.", "P1", (-10, 142))
 ecart('p5', 'global', "Plan d'implantation P5 (1957, « maison projetée ») : rectangle 38'-0\" × 31'-8\" concordant ; excroissance avant dessinée ≈ 12,6–19,0 pi du coin gauche "
       "(perron SS : 13'-6\"–19'-6\") ; volume arrière ≈ 17,0–26,4 pi (entrée arrière : 18'-3\"–27'-3\") et marches ≈ 26,4–34,5 pi ; profondeur mesurée ≈ 32,1 pi (1 %). "
       "Implantation projetée, pas un relevé ; marges 40' (avant), 7.79' et 9' (latérales).", "faible",
-      "Plans de 1957 (P1/P3) retenus pour la géométrie ; P5 sert à l'orientation (nord ≈ 9,8° ± 1,5°) et au lot.",
+      "Plans de 1957 (P1, P7, P3, P4, P6) retenus pour la géométrie ; P5 sert à l'orientation (nord ≈ 9,8° ± 1,5°) et au lot.",
       "Certificat de localisation récent pour l'implantation réelle et l'orientation.", "P5", None)
 ecart('ancres', 'global', "Aucune mesure prise sur place n'a été fournie par le propriétaire (ancres vides) : toute la géométrie provient des plans de 1957 et du croquis 2016.",
       "moyen", "Plans d'origine reproduits sans calage sur le bâtiment réel.",
       "Mesurer au minimum les deux hors-tout extérieurs (38'-0\" et 31'-8\") et une diagonale au sous-sol pour caler le relevé.", "P1", None)
+ecart('portes-ss', 'SS', "Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) : ouv-SS-005 « PORTE 2'-8\" » "
+      "(mur droit, axe à 6'-3\" du nu ext. avant) et ouv-SS-008 « PORTE 2'-6\" » (porte du caveau, mur arrière). Les tiretés près de la porte 2'-8\" sont des circuits électriques.",
+      "faible", "Portes dessinées comme baies (opération « aucune ») ; aucun sens inventé.",
+      "Constater pour chaque porte le type de battant, le côté des pentures et le côté d'ouverture.", "P1", (451, 75))
+for o in OUV_SS:
+    if o['id'] in ('ouv-SS-005', 'ouv-SS-008'):
+        o['repere'] = EC['portes-ss']
+        o['note'] += f" — voir {EC['portes-ss']}"
 
 # repères des écarts sur les cotes concernées
 for niv in ('SS', 'RDC'):
@@ -992,6 +1006,58 @@ for niv in ('SS', 'RDC'):
         if l['ref'] == 'cote-RDC-027': l['repere'] = EC['ear-1po']
         if l['ref'] in ('cote-SS-006', 'cote-SS-025'): l['repere'] = EC['fen-ss']
         if l['ref'] == 'cote-SS-010': l['repere'] = EC['porte-cav']
+
+# ============================================================================ 12b. corrections QC R1 (données)
+# C9 : champ « mesure » des cotes intérieures du RDC — renvois aux murs actuels, ou aux axes pour les cloisons retirées
+MESURES_RDC = {
+    'cote-RDC-029': "nu ext. mur gauche → axe de la cloison droite de la S. de bain (mur-RDC-011)",
+    'cote-RDC-030': "axe mur-RDC-011 → axe de la cloison à 12'-2\" (mur-RDC-021, colonne des G.R.)",
+    'cote-RDC-031': "axe mur-RDC-021 → axe mur-RDC-022 (colonne des G.R., 12'-2\" → 14'-7\")",
+    'cote-RDC-032': "axe mur-RDC-022 → axe de l'ancienne cloison à 22'-11\" (mur-RDC-027, retirée)",
+    'cote-RDC-033': "ancienne cloison à 22'-11\" → ancienne cloison à 26'-4\" (mur-RDC-027 → mur-RDC-028, retirées) : largeur de l'ancienne cage d'escalier",
+    'cote-RDC-034': "ancienne cloison à 26'-4\" (mur-RDC-028, retirée) → nu ext. mur droit",
+    'cote-RDC-035': "nu ext. mur arrière → axe de la cloison chambre arrière / S. de bain (mur-RDC-010)",
+    'cote-RDC-036': "axe mur-RDC-010 → axe mur-RDC-012 (profondeur de la S. de bain)",
+    'cote-RDC-037': "nu ext. mur avant → axe mur-RDC-012 (cloison S. de bain / chambre avant, axe B)",
+    'cote-RDC-038': "nu ext. mur gauche → axe de la cloison chambre avant / G.R. (mur-RDC-013)",
+    'cote-RDC-039': "axe mur-RDC-013 → axe mur-RDC-014 (profondeur G.R. / LIN. / VEST.)",
+    'cote-RDC-040': "axe mur-RDC-014 → axe de la cloison hall / salon (mur-RDC-018) : largeur du hall",
+    'cote-RDC-041': "axe mur-RDC-018 → nu ext. mur droit",
+    'cote-RDC-042': "nu ext. mur arrière → axe C (str-RDC-AXC ; ancienne cloison mur-RDC-026, retirée)",
+    'cote-RDC-043': "axe C → axe B (str-RDC-AXC → str-RDC-AXB) : largeur de l'ancien passage",
+    'cote-RDC-044': "nu ext. mur avant → axe B (str-RDC-AXB ; ancienne cloison salon / passage, retirée)",
+    'cote-RDC-045': "nu ext. mur arrière → axe B (str-RDC-AXB ; ancienne arche 6'-0\", trumeau mur-RDC-019)",
+    'cote-RDC-046': "nu ext. mur avant → axe B (str-RDC-AXB ; trumeau mur-RDC-019)",
+}
+for c in COTES['RDC']:
+    if c['id'] in MESURES_RDC:
+        c['mesure'] = MESURES_RDC[c['id']]
+    if c['id'] == lab('ouv-RDC-022') and c.get('emplacement'):
+        c['emplacement'] = c['emplacement'].replace("pentures côté droit (x≈175)", "pentures côté gauche (x≈148)")
+# C13 : chambre arrière — dimensions principales (hors alcôve de la porte)
+for p in PIECES['RDC']:
+    if p['id'] == 'piece-RDC-CH1':
+        p['dimensions'] = {
+            "x": D(146 - 10 - T_INT / 2, "DÉDUIT", "P3", "dimension principale : 12'-2\" (cote-RDC-030 + cote-RDC-029) − mur ext. 10\" − ½ cloison 4½\" PRÉSUMÉE"),
+            "y": D(V('cote-RDC-035') - 10 - T_6 / 2, "DÉDUIT", "P3", "dimension principale hors alcôve de la porte : 13'-1\" (cote-RDC-035) − mur ext. 10\" − ½ cloison 6\" (cote-RDC-047)")}
+# C17 : valeurs ESTIMÉ des pièces → photo d'où viennent les positions estimées
+for niv, ph in (('SS', 'P1'), ('RDC', 'P3')):
+    for p in PIECES[niv]:
+        for d_ in [p['superficie'], p['dimensions']['x'], p['dimensions']['y']]:
+            if d_['source'] in ('ESTIMÉ', 'PRÉSUMÉ') and not d_.get('photo'):
+                d_['photo'] = ph
+# C14 : « TRAPPE » du sous-sol = porte de ramonage
+for e in ELEM_SS:
+    if e['id'] == 'elem-SS-RAMO':
+        e['type'] = 'autre'
+        e['nom'] = "P. de ramonage"
+        e['note'] = (e.get('note') or '') + " ; libellé abrégé de « PORTE DE RAMONAGE »"
+# C15 : rampe de l'escalier du sous-sol
+for e in ELEM_SS:
+    if e['id'] == 'elem-SS-ESC':
+        e['rampe'] = {"texte_original": "RAMPE", "cote": "gauche de la volée (côté −x, ≈ 22'-11\" du coin gauche)", "source": "LU", "photo": "P1",
+                      "note": "« RAMPE » écrit avec une flèche vers le côté gauche de la volée ; position ESTIMÉE ; non dessinée"}
+        e['note'] += " ; rampe (main courante) écrite « RAMPE » du côté gauche de la volée (P1)"
 
 # ============================================================================ 13. assemblage
 for o in OUV_SS + OUV_RDC: o.pop('_centre', None)
@@ -1100,7 +1166,7 @@ ECARTS.append({
 #    Les fichiers de travail (photos/, prep/, arbitrage/vignettes/) gardent la numérotation interne ;
 #    la correspondance est dans RAPPORT.md. Les identifiants (cote-P2-…) et les chemins ne sont pas touchés.
 PHOTO_ORDRE_ENVOI = {"P2": "P1", "P1": "P2", "P7": "P3", "P3": "P4", "P4": "P5", "P6": "P6", "P5": "P7"}
-_re_photo = re.compile(r"(?<![\w/-])P([1-7])(?![\w.-])")
+_re_photo = re.compile(r"(?<![\w-])(?<!redresse/)(?<!tuiles/)(?<!photos/)P([1-7])(?![\w-]|\.\w)")
 
 
 def _renum(o):
@@ -1113,6 +1179,19 @@ def _renum(o):
     return o
 
 
+def _ids(o):
+    if isinstance(o, str):
+        o = re.sub(r"cote-P2-0(\d\d)", r"cote-RDC-2\1", o)
+        o = o.replace("cote-P5-", "cote-IMP-").replace("mur-SS-011", "elem-SS-CHEM")
+        return o.replace("elem-SS-TUYAU", "tuyau à fumée (non reporté)").replace("elem-SS-VIROLE", "virole (non reportée)")
+    if isinstance(o, list):
+        return [_ids(x) for x in o]
+    if isinstance(o, dict):
+        return {k: _ids(v) for k, v in o.items()}
+    return o
+
+
+maison = _ids(maison)
 maison = _renum(maison)
 maison["projet"]["photos"] = sorted(maison["projet"].get("photos", []), key=lambda p: p.get("id", ""))
 maison["projet"]["correspondance_photos_internes"] = {v: k for k, v in sorted(PHOTO_ORDRE_ENVOI.items(), key=lambda kv: kv[1])}

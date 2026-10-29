@@ -276,7 +276,7 @@ def couper(txt, f, lmax, gras=False):
 # Rapport de vérifications
 # ---------------------------------------------------------------------------
 SECTIONS = ["Identifiants", "Murs", "Ouvertures", "Pièces", "Bilan de surface",
-            "Chaînes de cotes", "Repères d'incertitude", "Textes (chevauchements)", "Mise en page"]
+            "Chaînes de cotes", "Repères d'incertitude", "Textes (chevauchements)", "Mise en page", "Reproductibilité"]
 
 
 class Verif:
@@ -1207,6 +1207,7 @@ def construire(niv, idx, projet, ctx, verif):
     masque = unary_union([z.buffer(mm(0.8), join_style=2) for z in elem_zones if not z.within(emp_m.envelope)]) \
         if elem_zones else None
     dessiner_traits_cotes(cotes, D, PL, mm, masque)
+    tracer_cotes_int(cotes, PL, mm)        # cotes intérieures : ligne fixe (p1/p2 + decalage)
 
     # =============================== Libellé de façade (fixe) ===============================
     av = [c["ligne"] for c in cotes if c["facade"] == "avant"]
@@ -1227,7 +1228,7 @@ def construire(niv, idx, projet, ctx, verif):
                 and num(pos[0]) is not None and num(pos[1]) is not None:
             P0 = Point(float(pos[0]), float(pos[1]))
             if empreinte.is_empty or empreinte.distance(P0) <= 24.0:
-                PL.ligne(P0.buffer(mm(1.0)), str(ec.get("id")))
+                PL.ligne(P0.buffer(mm(1.0)), "point:" + str(ec.get("id")))
 
     # =============================== Textes (ordre de priorité) ===============================
     placer_textes_cotes(cotes, PL, mm, fc)
@@ -1273,34 +1274,31 @@ def construire(niv, idx, projet, ctx, verif):
                                                    f"{', '.join(sans_ref)} — aucun repère dessiné")
     places = placer_reperes(demandes, D, PL, mm)
     PL.pieces = [p for _, p in pieces]
-    # étiquettes de pièces à l'intérieur de leur pièce : d'abord en laissant libres les couloirs
-    # des cotes intérieures (position souhaitée), puis sans cette réserve
+    # étiquettes de pièces dans leur pièce : complètes d'abord (en laissant libres les bandes de texte
+    # des cotes intérieures, puis sans cette réserve), réduites ensuite
     for c in cotes:
         if c["facade"] == "int":
             A, B = pt_cote(c, c["c1"], c["ligne"]), pt_cote(c, c["c2"], c["ligne"])
             PL.ligne(LineString([A, B]).buffer(mm(C_GAP + 0.97 * H_COTE / CAP + 0.3), cap_style="flat"), "__reserve__")
     F.dims_omises = False
-    restants = []
-    for d, poly in sorted(pieces, key=lambda dp: -dp[1].area):
-        r = placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1)
-        if r is None:
-            restants.append((d, poly))
-        elif r:
-            F.dims_omises = True
-    PL.retirer("__reserve__")
-    encore = []
-    for d, poly in restants:
-        r = placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1)
-        if r is None:
-            encore.append((d, poly))
-        elif r:
-            F.dims_omises = True
-    restants = encore
-    placer_cotes_int(cotes, PL, mm, fc, set(m.id for m in murs))
+    F.etiquettes = {}
+    restants = sorted(pieces, key=lambda dp: -dp[1].area)
+    for mode, reserve in (("complet", True), ("complet", False), ("reduit", False)):
+        if not reserve:
+            PL.retirer("__reserve__")
+        encore = []
+        for d, poly in restants:
+            r = placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, mode=mode, F=F)
+            if r is None:
+                encore.append((d, poly))
+            elif r:
+                F.dims_omises = True
+        restants = encore
+    placer_textes_int(cotes, PL, mm, fc)
     for el, cont, libs, g in lib_elems:
         placer_libelle_element(el, cont, libs, g, PL, mm, fc)
     for d, poly in sorted(restants, key=lambda dp: dp[1].area):
-        placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=2, autres=[p for _, p in pieces if p is not poly])
+        placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=2, autres=[p for _, p in pieces if p is not poly], F=F)
         F.dims_omises = True
     groupes = {}
     for kind, sid, geo, lib, g in lib_str:
@@ -1344,6 +1342,7 @@ def construire(niv, idx, projet, ctx, verif):
 
     # =============================== chevauchements restants ===============================
     verifier_textes(F, verif)
+    verifier_etiquettes(F, verif)
     F.cotes = cotes
     F.lcs = lcs
     return F
@@ -1491,7 +1490,9 @@ def placer_solives(items, lib, PL, mm, fc):
                     if abs(off) > mm(1.5) + 0.8 * fc:
                         continue
                     yield b.buffer(mm(0.3), join_style=2), None, (x, y, ang, b)
-            pay, _, cout = essayer(PL, gen(), ignore=(own,), zones=True)
+            PL.prims(pr, "fleche:" + own)       # la flèche candidate compte comme obstacle pour son libellé
+            pay, _, cout = essayer(PL, gen(), ignore=(), zones=True)
+            PL.retirer("fleche:" + own)
             if cout == 0:
                 choix = (pr, seg, pay)
                 break
@@ -1746,7 +1747,7 @@ def traits_ligne_cote(c, ligne, mm, ticks=None):
     return pr
 
 
-def cands_texte_cote(c, ligne, fc, mm, loin=True, etages=False, grille=True):
+def cands_texte_cote(c, ligne, fc, mm, loin=True, etages=False, grille=True, interieur=False):
     """Positions candidates du texte d'une cote : (textes, None, None, boîte, rappel).
     textes = [(x, y, ancre, chaîne)] ; une ligne « 12'-6" (3,81 m) » ou deux lignes (pi-po / métrique)."""
     t1 = c["texte"]
@@ -1774,27 +1775,33 @@ def cands_texte_cote(c, ligne, fc, mm, loin=True, etages=False, grille=True):
         rp = rappel(bx, Point(ld_cible)) if ld_cible is not None else None
         return textes, None, None, bx, rp
 
-    yield cand([(mid, haut, "middle", t1)])
-    yield cand([(mid, bas, "middle", t1)])
+    # un texte plus long que son segment n'est jamais centré dessus (il couperait ses lignes d'attache)
+    if w + mm(1.0) <= span:
+        yield cand([(mid, haut, "middle", t1)])
+        yield cand([(mid, bas, "middle", t1)])
     if w + mm(2) < span:
         for fr_ in (0.3, 0.7, 0.2, 0.8):
             a = min(max(c["c1"] + span * fr_, c["c1"] + w / 2 + mm(1)), c["c2"] - w / 2 - mm(1))
             yield cand([(a, haut, "middle", t1)])
             yield cand([(a, bas, "middle", t1)])
     # deux lignes (pi-po au-dessus du métrique) entre les lignes d'attache
-    yield cand([(mid, haut + pas, "middle", imp), (mid, haut, "middle", met)])
-    yield cand([(mid, bas, "middle", imp), (mid, bas - pas, "middle", met)])
-    for lvl in (haut, bas):
-        yield cand([(c["c2"] + mm(1.3), lvl, "start", t1)])
-        yield cand([(c["c1"] - mm(1.3), lvl, "end", t1)])
+    if max(MET.l(imp, fc), MET.l(met, fc)) + mm(1.0) <= span:
+        yield cand([(mid, haut + pas, "middle", imp), (mid, haut, "middle", met)])
+        yield cand([(mid, bas, "middle", imp), (mid, bas - pas, "middle", met)])
+    if not interieur:
+        for lvl in (haut, bas):
+            yield cand([(c["c2"] + mm(1.3), lvl, "start", t1)], pt_cote(c, c["c2"], ligne) if w + mm(1.0) > span else None)
+            yield cand([(c["c1"] - mm(1.3), lvl, "end", t1)], pt_cote(c, c["c1"], ligne) if w + mm(1.0) > span else None)
     if etages:
         cible = pt_cote(c, mid, ligne)
         for k in (1, 2, 3):
             for sgn in (1, -1):
                 lvl = (haut + k * pas) if sgn > 0 else (bas - k * pas)
                 for da in (0.0, mm(4), -mm(4), mm(8), -mm(8)):
+                    if interieur and not (c["c1"] <= mid + da <= c["c2"]):
+                        continue
                     yield cand([(mid + da, lvl, "middle", t1)], cible)
-    if loin:
+    if loin and not interieur:
         for k in range(1, 9):
             for lvl in (haut, bas):
                 yield cand([(c["c2"] + mm(1.3) + k * mm(3.5), lvl, "start", t1)], pt_cote(c, c["c2"], ligne))
@@ -1805,7 +1812,13 @@ def cands_texte_cote(c, ligne, fc, mm, loin=True, etages=False, grille=True):
         seg = LineString([pt_cote(c, c["c1"], ligne), pt_cote(c, c["c2"], ligne)])
         hh = 0.97 * fc
         W_, H_ = (w, hh) if c["ax"] == 0 else (hh, w)
-        for dd, x, y in grille_autour(seg, W_, H_, mm(25), mm(1.2), 3000):
+        for dd, x, y in grille_autour(seg, W_, H_, mm(35), mm(1.2), 5000):
+            if interieur:
+                al, pe = (x, y) if c["ax"] == 0 else (y, x)
+                if not (c["c1"] - w / 2 - mm(6) <= al <= c["c2"] + w / 2 + mm(6)):
+                    continue
+                if (al < c["c1"] or al > c["c2"]) and abs(pe - ligne) < 0.97 * fc + gap:
+                    continue          # jamais dans le prolongement de la ligne
             if c["ax"] == 0:
                 xb, yb = x, y - 0.27 * fc
             else:
@@ -1843,7 +1856,7 @@ def placer_textes_cotes(cotes, PL, mm, fc):
             def zgen(gen=gen):
                 for ch in gen:
                     yield ch[3].buffer(mm(0.25), join_style=2), ch[4], ch
-            pay, ld, cout = essayer(PL, zgen(), ignore=(c["id"],), zones=False)
+            pay, ld, cout = essayer(PL, zgen(), ignore=(), zones=False)
             if cout == 0 or phase == 1:
                 places[c["id"]] = pay
                 ecrire_texte_cote(c, pay, PL, fc)
@@ -1870,79 +1883,28 @@ def chaines_int(cotes):
     return out
 
 
-def evaluer_chaine(ch, ligne, PL, mm, fc, grille):
-    """Évalue une chaîne de cotes intérieures sur une ligne donnée : (conflits, pénalité, traits, choix)."""
-    ids = tuple(c["id"] for c in ch)
-    prs = {c["id"]: traits_ligne_cote(c, ligne, mm) for c in ch}
-    geos = [(cid, geom_prim(p)) for cid, pr in prs.items() for p in pr]
-    cout = sum(PL.conflits_textes(g, ids) for _, g in geos)
-    if cout:
-        return cout, 0.0, prs, None
-    choix, extra, pen = {}, [], 0.0
-    ordre = sorted(ch, key=lambda c: (round((c["c2"] - c["c1"]) - MET.l(c["texte"], fc), 6), ch.index(c)))
-    for c in ordre:
-        autres = [g for cid, g in geos if cid != c["id"]]
-        seg = LineString([pt_cote(c, c["c1"], ligne), pt_cote(c, c["c2"], ligne)])
-        bestc = None
-        for cand in cands_texte_cote(c, ligne, fc, mm, loin=True, etages=True, grille=grille):
-            z = cand[3].buffer(mm(0.25), join_style=2)
-            k_ = PL.conflits(z, ignore=ids, zones=True) + sum(1 for g in extra + autres if g.intersects(z))
-            if cand[4] is not None:
-                k_ += PL.conflits_textes(cand[4], ids) + sum(1 for g in extra if g.intersects(cand[4]))
-            if bestc is None or k_ < bestc[0]:
-                bestc = (k_, cand)
-            if k_ == 0:
-                break
-        choix[c["id"]] = bestc[1]
-        extra.append(bestc[1][3])
-        if bestc[1][4] is not None:
-            extra.append(bestc[1][4])
-        cout += bestc[0]
-        pen += max(0.0, bestc[1][3].distance(seg) - mm(1.2))
-    return cout, pen, prs, choix
-
-
-def placer_cotes_int(cotes, PL, mm, fc, murs_ids):
-    """Cotes intérieures, par chaînes colinéaires : la chaîne entière peut être déplacée parallèlement
-    (decalage = souhait) ; chaque texte glisse le long de la ligne, change de côté, s'empile ou sort
-    au-delà des extrémités (ligne de rappel). Parmi les positions sans collision, on retient celle qui
-    garde les textes le plus près de leur ligne et la ligne le plus près de sa position souhaitée."""
-    file_ = list(chaines_int(cotes))
-    while file_:
-        ch = file_.pop(0)
-        c0 = ch[0]
-        base = c0["p1"][1 - c0["ax"]]
-        decs = [c0["dec"]]
-        for k in range(1, 21):
-            decs += [c0["dec"] + k * mm(2.5), c0["dec"] - k * mm(2.5)]
-        best = None
-        for grille in (False, True):
-            for dec in decs:
-                cout, pen, prs, choix = evaluer_chaine(ch, base + dec, PL, mm, fc, grille)
-                if choix is None:
-                    continue
-                score = (cout, pen + 0.4 * abs(dec - c0["dec"]))
-                if best is None or score < best[0]:
-                    best = (score, dec, prs, choix)
-                if cout == 0 and pen < mm(0.5) and abs(dec - c0["dec"]) < mm(0.1):
-                    break
-            if best is not None and best[0][0] == 0:
-                break
-        if best is None:
-            cout, pen, prs, choix = evaluer_chaine(ch, base + c0["dec"], PL, mm, fc, True)
-            choix = choix or {c["id"]: next(cands_texte_cote(c, base + c0["dec"], fc, mm)) for c in ch}
-            best = ((cout, pen), c0["dec"], prs, choix)
-        (cout, pen), dec, prs, choix = best
-        if cout > 0 and len(ch) > 1:
-            # la chaîne entière ne trouve pas de place nette : cotes placées une à une
-            file_ = [[c] for c in ch] + file_
+def tracer_cotes_int(cotes, PL, mm):
+    """Cotes intérieures : la ligne est à p1/p2 + decalage (jamais déplacée)."""
+    for c in cotes:
+        if c["facade"] != "int":
             continue
-        for c in ch:
-            c["ligne"] = base + dec
-            c["grp"].extend(prs[c["id"]])
-            PL.prims(prs[c["id"]], c["id"])
-        for c in ch:
-            ecrire_texte_cote(c, choix[c["id"]], PL, fc)
+        pr = traits_ligne_cote(c, c["ligne"], mm)
+        c["grp"].extend(pr)
+        PL.prims(pr, c["id"])
+
+
+def placer_textes_int(cotes, PL, mm, fc):
+    """Textes des cotes intérieures : centrés sur leur segment si possible ; sinon décalés le long du
+    segment, sur deux lignes, empilés ou à côté avec un renvoi vers le milieu de la cote — jamais
+    au-delà des extrémités ni dans un mur. Les plus contraintes d'abord."""
+    ints = [c for c in cotes if c["facade"] == "int"]
+    ints = sorted(ints, key=lambda c: (round((c["c2"] - c["c1"]) - MET.l(c["texte"], fc), 6), ints.index(c)))
+    for c in ints:
+        def zgen(c=c):
+            for ch in cands_texte_cote(c, c["ligne"], fc, mm, loin=False, etages=True, interieur=True):
+                yield ch[3].buffer(mm(0.25), join_style=2), ch[4], ch
+        pay, ld, cout = essayer(PL, zgen(), ignore=(), zones=True)
+        ecrire_texte_cote(c, pay, PL, fc)
 
 
 # ---------------------------------------------------------------------------
@@ -1975,12 +1937,16 @@ def cands_marqueur(n, ancre, cible, own, mm):
         pr, tri, tb = marqueur_prims(n, tx, y, mm)
         zone = unary_union([tri, tb]).envelope.buffer(mm(0.3), join_style=2)
         ld = rappel(tri, cible) if (d > mm(1.0) or cible.geom_type == "Point") else None
+        if ld is not None and ld.intersects(tb):
+            continue
         yield zone, ld, (pr, tri, tb, ld)
     for dd, x, y in grille_autour(ancre, larg, haut, mm(25), mm(1.2), 3000):
         tx = x - larg / 2 + s / 2
         pr, tri, tb = marqueur_prims(n, tx, y, mm)
         zone = unary_union([tri, tb]).envelope.buffer(mm(0.3), join_style=2)
         ld = rappel(tri, cible)
+        if ld is not None and ld.intersects(tb):
+            continue
         yield zone, ld, (pr, tri, tb, ld)
 
 
@@ -2138,7 +2104,7 @@ def placer_long_ligne(items, lib, PL, mm, fc):
                     q = (p.x + up[0] * math.copysign(mm(0.3), off), p.y + up[1] * math.copysign(mm(0.3), off))
                     ld = rappel(b, Point(q))
                 yield b.buffer(mm(0.3), join_style=2), ld, (x, y, ang, b)
-        pay, ld, cout = essayer(PL, gen(), ignore=(own,), zones=True)
+        pay, ld, cout = essayer(PL, gen(), ignore=(), zones=True)
         if best is None or cout < best[0]:
             best = (cout, pay, ld, own, g)
         if cout == 0:
@@ -2151,7 +2117,7 @@ def placer_long_ligne(items, lib, PL, mm, fc):
                     yb = y - 0.27 * fc
                     b = boite(x, yb, w, fc, "middle", 0.0, 0, lib)
                     yield b.buffer(mm(0.3), join_style=2), rappel(b, geo), (x, yb, 0.0, b)
-            pay, ld, cout = essayer(PL, gen2(), ignore=(own,), zones=True)
+            pay, ld, cout = essayer(PL, gen2(), ignore=(), zones=True)
             if cout < best[0]:
                 best = (cout, pay, ld, own, g)
             if cout == 0:
@@ -2219,7 +2185,7 @@ def lignes_nom_2(nom, fn):
     return best[1] if best else None
 
 
-def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None):
+def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mode="reduit", F=None):
     """Étiquette de pièce : complète à l'intérieur si possible ; sinon nom seul (1 ou 2 lignes, ou
     tourné de 90° pour une pièce étroite) ; sinon à l'extérieur, dans la zone libre la plus proche,
     avec ligne de rappel. Retourne True si les dimensions ont dû être omises."""
@@ -2249,6 +2215,8 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None):
             variantes.append(([(t, fn, True) for t in nn] + sous, 0.0, complet))
     for nn in jeux:
         variantes.append(([(t, fn, True) for t in nn], 90.0, False))
+    if mode == "complet":
+        variantes = [v for v in variantes if v[2]]
     try:
         pole = polylabel(poly, tolerance=1.0)
     except Exception:
@@ -2320,7 +2288,23 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None):
     g += prims
     for b, (t, f, gr) in zip(boites, lignes):
         PL.texte(b, pid, f"étiquette {pid} « {t} »")
+    if F is not None:
+        F.etiquettes[pid] = (env, Point(ld.coords[-1]) if ld is not None else None, poly, complet)
     return not complet
+
+
+def verifier_etiquettes(F, verif):
+    """Chaque étiquette de pièce est dans son polygone, ou reliée par un renvoi qui se termine dans son polygone."""
+    mauvais = 0
+    for pid, (env, bout, poly, complet) in sorted(F.etiquettes.items()):
+        dedans = poly.contains(env.representative_point())
+        relie = bout is not None and poly.buffer(0.01).contains(bout)
+        if not (dedans or relie):
+            mauvais += 1
+            verif.add("Pièces", "ERREUR", f"[{F.nid}] {pid} : étiquette hors de sa pièce sans renvoi vers elle")
+    if mauvais == 0 and F.etiquettes:
+        verif.add("Pièces", "OK", f"[{F.nid}] {len(F.etiquettes)} étiquettes de pièces : chacune dans sa pièce "
+                                  f"ou reliée à elle par un renvoi qui s'y termine")
 
 
 def verifier_textes(F, verif):
@@ -2346,8 +2330,15 @@ def verifier_textes(F, verif):
         for i, g in enumerate(T):
             for j in lt.query(g, predicate="intersects"):
                 j = int(j)
-                if PL.Lo[j] == PL.To[i].split("#")[0] or (PL.Lo[j] == "cadre" and PL.To[i] == "cartouche"):
+                if PL.Lo[j] == "cadre" and PL.To[i] == "cartouche":
                     continue
+                if "#" in PL.To[i] and PL.Lo[j] == PL.To[i].split("#")[0]:
+                    continue                      # texte d'escalier sur fond masqué
+                if PL.Lo[j] == PL.To[i]:
+                    inter = g.intersection(PL.L[j])
+                    mesure = inter.area if inter.geom_type in ("Polygon", "MultiPolygon") else inter.length
+                    if mesure <= F.mm(0.3) * (F.mm(0.3) if inter.geom_type in ("Polygon", "MultiPolygon") else 1):
+                        continue                  # simple contact (ligne de rappel qui part du texte)
                 c = g.centroid
                 verif.add("Textes (chevauchements)", "AVERT",
                           f"[{F.nid}] texte/trait : {PL.Td[i]} × trait de {PL.Lo[j]} (x≈{f3(c.x)}, y≈{f3(c.y)} po)")
@@ -2510,7 +2501,7 @@ def cartouche(F, niv, projet, ctx):
         yy = yb - hrow + 0.08
         yy += 2.5 / 25.4
         texte(tx, yy, "NORD", 2.5, True)
-        stxt = f"{f3(ang)}° (sens horaire depuis +y). Source : {nord.get('source') or '—'}"
+        stxt = f"{f3(ang).replace('.', ',')}° (sens horaire depuis +y). Source : {nord.get('source') or '—'}"
         if nord.get("photo"):
             stxt += f" ({nord.get('photo')})"
         for t in couper(stxt, 2.5 / CAP, (x1 - p - tx) * 25.4)[:4]:
@@ -2831,7 +2822,25 @@ def dxf_feuille(F, chemin):
                           "end": TextEntityAlignment.RIGHT}[p["ancre"]]
                     e.set_placement((p["x"], p["y"]), align=al)
                     xd(e, gid)
-    doc.saveas(chemin)
+    texte = dxf_texte_normalise(doc)
+    # contrôle : l'ordre initial des classes (qui dépend du hachage de Python dans ezdxf) ne doit pas compter
+    from collections import OrderedDict
+    doc.classes.classes = OrderedDict(reversed(list(doc.classes.classes.items())))
+    texte2 = dxf_texte_normalise(doc)
+    with open(chemin, "wt", encoding=doc.output_encoding, errors="dxfreplace", newline="\n") as f:
+        f.write(texte)
+    return hashlib.sha256(texte.encode("utf-8")).hexdigest(), texte == texte2
+
+
+def dxf_texte_normalise(doc):
+    """Texte DXF déterministe : la section CLASSES d'ezdxf est remplie depuis un ensemble (ordre dépendant de
+    PYTHONHASHSEED) ; on la complète puis on la trie avant l'écriture."""
+    from collections import OrderedDict
+    doc.classes.add_required_classes(doc.dxfversion)
+    doc.classes.classes = OrderedDict(sorted(doc.classes.classes.items()))
+    s = io.StringIO()
+    doc.write(s)
+    return s.getvalue()
 
 
 # ---------------------------------------------------------------------------
@@ -3040,10 +3049,16 @@ def main(argv=None):
         with open(p_svg, "w", encoding="utf-8", newline="\n") as f:
             f.write(svg)
         p_png = os.path.join(sortie, "png", base + ".png")
-        cairosvg.svg2png(bytestring=svg.encode("utf-8"), write_to=p_png, dpi=150)
+        png = cairosvg.svg2png(bytestring=svg.encode("utf-8"), dpi=150)
+        from PIL import Image
+        Image.open(io.BytesIO(png)).save(p_png, format="PNG", dpi=(150, 150))
         pdf_pages.append(cairosvg.svg2pdf(bytestring=svg.encode("utf-8")))
         p_dxf = os.path.join(sortie, "dxf", base + ".dxf")
-        dxf_feuille(F, p_dxf)
+        h, ok = dxf_feuille(F, p_dxf)
+        verif.add("Reproductibilité", "OK" if ok else "ERREUR",
+                  f"[{F.nid}] DXF {base}.dxf : sha256 {h[:16]}… "
+                  + ("identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)" if ok
+                     else "DIFFÉRENT selon l'ordre interne des classes — non reproductible"))
         produits += [p_svg, p_png, p_dxf]
     p_pdf = os.path.join(sortie, "pdf", "plans_existants.pdf")
     w = PdfWriter()
