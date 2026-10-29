@@ -259,14 +259,14 @@ def V(cid):
 T_FOND = 10.0      # LU (P1 : cote-SS-019, -034, -037, -045)
 T_EXT = 10.0       # MESURÉ : 10" confirmé par le propriétaire (2026-10-29) ; = croquis 2016 (P2) ; dessin 1957 ≈ 11 po
 H_EXT = T_EXT / 2
-T_INT = 4.5        # PRÉSUMÉ (dessin ≈ 6 po)
+T_INT = 4.5        # MESURÉ : confirmé par le propriétaire (2026-10-29)
 T_6 = V('cote-RDC-047')   # cloison chambre arrière / S. de bain : 6" (tranché 3e lecture)
 assert T_6 == 6
 T_EAR = T_EXT      # entrée arrière : mur extérieur, même valeur provisoire
 T_PERRON = 6.0     # cote-SS-036 (LU) ; murs avant/droit par analogie
 
 E_EXT = D(T_EXT, "MESURÉ", None, "10\" confirmé par le propriétaire (2026-10-29) ; concorde avec le croquis 2016 (cote-RDC-203/210/211/215) ; dessin 1957 ≈ 11 po (ESTIMÉ)")
-E_INT = D(T_INT, "PRÉSUMÉ", None, "cloison non cotée ; 4½\" usuel (dessin ≈ 6 po, ESTIMÉ)")
+E_INT = D(T_INT, "MESURÉ", None, "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)")
 E_EAR = D(T_EAR, "PRÉSUMÉ", None, "mur extérieur de l'entrée arrière : 10\" pris égal aux murs de la maison (confirmés par le propriétaire) ; dessin ≈ 11 po (ESTIMÉ)")
 
 CONVENTION = ("Hors-tout et chaînes extérieures au NU EXTÉRIEUR des murs de fondation (SS) et des murs extérieurs (RDC) ; "
@@ -508,13 +508,6 @@ for oid, mid, centre, cid, note in (('ouv-RDC-012', 'mur-RDC-018', 118.6, 'cote-
                        pos_src="ESTIMÉ", pos_note="centre mesuré au dessin (P3)"))
 OUV_RDC.sort(key=lambda o: o['id'])
 
-for o in OUV_RDC:
-    if o['id'] == 'ouv-RDC-012':
-        o['note'] = ("baie ouverte entre le hall et le salon, à l'emplacement de l'ancienne arche ; ce n'est plus une arche "
-                     "(réponses du propriétaire, 2026-10-29) ; la colonne 8\"x8\" de l'axe B monte à cet endroit ; "
-                     "largeur 4'-0\" écrite (en conflit, voir écart)")
-        o['texte_original'] = "ARCHE 4'-0\" (plan 1957) ; aujourd'hui baie ouverte sans arche"
-
 # ============================================================================ 5b. CONSTAT DU PROPRIÉTAIRE (2026-10-29)
 # Le propriétaire a barré en rouge, sur l'épreuve A-101 R0, les cloisons qui n'existent plus, et demandé de retirer
 # meubles, électroménagers, comptoirs et baignoire. Le constat sur place prime sur les plans (principe 4).
@@ -539,6 +532,19 @@ for o in list(OUV_RDC):
     if o['mur_id'] in MURS_RETIRES or o['id'] == 'ouv-RDC-013':
         OUV_RETIREES.append(dict(o, retire_selon=CONSTAT))
         OUV_RDC.remove(o)
+# Mur hall / salon : il s'arrête là où l'arche commençait ; au-delà, seule la colonne 8"x8" de l'axe B (réponses du propriétaire)
+_arche_hs = next(o for o in OUV_RDC if o['id'] == 'ouv-RDC-012')
+Y_FIN_HALL = 5 + _arche_hs['position']['valeur'] - _arche_hs['largeur']['valeur'] / 2
+_m18 = next(m for m in MURS_RDC if m['id'] == 'mur-RDC-018')
+MURS_RETIRES_DATA.append(dict(copy.deepcopy(_m18), id='mur-RDC-018-1957', retire_selon="réponses du propriétaire (2026-10-29)",
+                              description_retrait="partie de la cloison hall / salon au-delà de l'ancienne arche (vers l'axe B), retirée"))
+_m18['y2'] = round(Y_FIN_HALL, 2)
+_m18['source_position'] = 'ESTIMÉ'
+_m18['note'] = ("Cloison hall / salon ; axe x = 18'-6\" (cote-RDC-040). Elle s'arrête où commençait l'ancienne arche (début ESTIMÉ au "
+                "dessin 1957 : centre ≈ 9'-10\", largeur 4'-0\" écrite) ; au-delà, ouvert jusqu'à la colonne 8\"x8\" de l'axe B "
+                "(réponses du propriétaire, 2026-10-29).")
+OUV_RETIREES.append(dict(_arche_hs, retire_selon="réponses du propriétaire (2026-10-29) : plus d'arche ni de mur au-delà"))
+OUV_RDC.remove(_arche_hs)
 
 # ============================================================================ 6. pièces (régions libres entre murs, découpées par lignes fictives)
 NOTE_EP = {'SS': "nu int. : cotes LU − épaisseurs (fondation 10\" LU)",
@@ -585,6 +591,7 @@ DESC = {
 COUPES = {
     'SS': [],
     'RDC': [((173, 157), (456, 157), "hall-dégagement / salon-cuisine : axe B ; cloison retirée de 18'-6\" à l'arche (constat 2026-10-29)"),
+            ((222, 85), (222, 157), "hall / salon : prolongement de la cloison hall / salon jusqu'à l'axe B (ouvert)"),
             ((316, 157), (316, 380), "cuisine / escalier-dégagement : axe de l'ancienne cloison x = 26'-4\" (retirée)"),
             ((146, 204), (316, 204), "dégagement / salle à manger : axe C, ancienne cloison retirée"),
             ((175, 5), (175, 54), "entrée / vestiaire (VEST. ouvert)")],
@@ -1343,8 +1350,20 @@ for e in ECARTS:
             e["a_valider_sur_place"] = ""
             e.pop("position", None)
     if e["id"] in (EC.get('conf-cote-RDC-048'), EC.get('arche')):
-        e["description"] += f" — Ce n'est plus une arche : baie ouverte au même endroit, avec la colonne de l'axe B ({REPONSES})."
-        e["a_valider_sur_place"] = "Mesurer la largeur libre de la baie entre le hall et le salon (ancienne arche ; 4'-0\" écrit, ≈ 6'-2\" dessiné)."
+        e["description"] += (f" — Il n'y a plus d'arche : la cloison hall / salon s'arrête où l'arche commençait, puis c'est ouvert "
+                             f"jusqu'à la colonne de l'axe B ({REPONSES}).")
+        e["hypothese_retenue"] = ("Fin de la cloison au début de l'ancienne arche, ≈ 7'-11\" du nu ext. avant (ESTIMÉ : centre dessiné "
+                                  "≈ 9'-10\" moins la moitié de 4'-0\"). " + e["hypothese_retenue"])
+        e["a_valider_sur_place"] = "Mesurer où se termine la cloison hall / salon (distance depuis l'intérieur du mur avant)."
+        e["impact"] = "faible"
+    if e["id"] == EC.get('ep-int-rdc'):
+        e["statut"] = "résolu"
+        e["hypothese_retenue"] = f"4½\" confirmé par le propriétaire ({REPONSES}). " + e["hypothese_retenue"]
+        e["a_valider_sur_place"] = ""
+        e.pop("position", None)
+    if e["id"] == EC.get('hp') or e["id"] == EC.get('axes'):
+        e["statut"] = "reporté"
+        e["hypothese_retenue"] = f"Non requis pour l'instant selon le propriétaire ({REPONSES}). " + e["hypothese_retenue"]
     if e["id"] == EC.get('ep-ext-rdc'):
         e["statut"] = "résolu"
         e["hypothese_retenue"] = f"10\" confirmé par le propriétaire ({REPONSES}). " + e["hypothese_retenue"]
@@ -1372,7 +1391,11 @@ for e in ECARTS:
 _ax = next(e for e in ECARTS if e["id"] == EC['axes'])
 for e in ECARTS:
     if e["description"].startswith("constat du propriétaire"):
-        e["a_valider_sur_place"] = _ax["a_valider_sur_place"]
+        # constat intégré aux plans ; la seule vérification qui restait (poutres des axes B et C) est reportée avec l'écart « axes »
+        e["statut"] = "résolu"
+        e["hypothese_retenue"] = "Constat intégré aux plans. " + e["hypothese_retenue"]
+        e["a_valider_sur_place"] = ""
+        e.pop("position", None)
 # le sous-sol a des ouvertures déplacées : un écart pour les positions et tailles présumées
 ECARTS.append({"id": f"ecart-{len(ECARTS) + 1:03d}", "niveau": "SS", "impact": "moyen", "statut": "ouvert", "photo": "P2",
                "description": (f"{REPONSES} : la porte du mur droit et la fenêtre du milieu ont été permutées ; la grande fenêtre "

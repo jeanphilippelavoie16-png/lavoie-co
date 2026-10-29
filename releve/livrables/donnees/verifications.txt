@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : R0    Date : 2026-10-29
-Données  : maison.json, sha256 6e2d69574e9d62ff06ceeb2a503aa1de4ff87e0926470d37f54696b2004b40ea
+Données  : maison.json, sha256 608517d64b3012f180564779132b06cce83b9caec28791253d211286150c1bfd
 Feuilles : A-100 Sous-sol (3/16" = 1'-0") ; A-101 Rez-de-chaussée (3/16" = 1'-0")
 
 SOMMAIRE
@@ -37,7 +37,7 @@ SOMMAIRE
 ------------------------------------------------------------------------
   [OK] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1138,1 pi² + murs 134,3 pi² − chevauchement pièces/murs 0,0 pi² = 1272,3 pi² ; écart -0,0 pi²
   [OK] [SS] aucun trou > 1 pi² entre pièces et murs
-  [OK] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1081,8 pi² + murs 166,5 pi² − chevauchement pièces/murs 0,0 pi² = 1248,3 pi² ; écart 0,0 pi²
+  [OK] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1083,8 pi² + murs 164,6 pi² − chevauchement pièces/murs 0,0 pi² = 1248,3 pi² ; écart 0,0 pi²
   [OK] [RDC] aucun trou > 1 pi² entre pièces et murs
 
 6. CHAÎNES DE COTES
@@ -62,12 +62,13 @@ SOMMAIRE
 
 7. REPÈRES D'INCERTITUDE
 ------------------------------------------------------------------------
+  [INFO] [RDC] écarts non ouverts, sans repère dessiné : ⚠13
   [INFO] ⚠1 = ecart-001 [global, impact faible] : Cote en conflit cote-IMP-010 — Longueur de la ligne latérale gauche du lot : 115.17' (2 lectures) ou 115,14' (3e lecture). Lecture 1 « 115.17' », lecture 2 « 115.17' », 3e lecture « 115,14' » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-P5-04_P5.png.
   [INFO] ⚠2 = ecart-002 [RDC, impact moyen] : Cote en conflit cote-RDC-018 — Segment arrière droit 10'-9" / 10'-5" (nu ext. droit de l'entrée arrière → coin arrière droit). Lecture 1 « 10'-9" », lecture 2 « 10-9" », 3e lecture « 10'-5" » (basse). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png.
-  [INFO] ⚠3 = ecart-003 [RDC, impact moyen] (positionné) : Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0" » (2 lectures) contre 6'-0" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0" », lecture 2 « ARCHE 4'-0" », 3e lecture « ARCHE 6'-0" » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png. — Ce n'est plus une arche : baie ouverte au même endroit, avec la colonne de l'axe B (réponses du propriétaire (2026-10-29)).
+  [INFO] ⚠3 = ecart-003 [RDC, impact faible] (positionné) : Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0" » (2 lectures) contre 6'-0" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0" », lecture 2 « ARCHE 4'-0" », 3e lecture « ARCHE 6'-0" » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png. — Il n'y a plus d'arche : la cloison hall / salon s'arrête où l'arche commençait, puis c'est ouvert jusqu'à la colonne de l'axe B (réponses du propriétaire (2026-10-29)).
   [INFO] ⚠4 = ecart-004 [SS, impact faible] (positionné) : Cote en conflit cote-SS-017 — Largeur de la fenêtre gauche basse du sous-sol (au-dessus de l'évier à lessive). Lecture 1 « 3'-0" », lecture 2 « 3'-0" », 3e lecture « 3'-0" » (basse). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-SS-07_P1.png, arbitrage/vignettes/d-SS-07_P7.png.
   [INFO] ⚠5 = ecart-005 [RDC, impact moyen] : Épaisseur des murs extérieurs du RDC : 10" écrit sur le croquis 2016 (P1, chaînes 10" aux 4 côtés — valeur typique d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 montre ≈ 11 po ; aucune épaisseur écrite sur la feuille RDC (P4, P5 et P6).
-  [INFO] ⚠6 = ecart-006 [RDC, impact moyen] (positionné) : Épaisseur des cloisons du RDC non cotée (sauf cloison chambre arrière / S. de bain 6" LU, tranchée par 3e lecture) ; dessin ≈ 6 po.
+  [INFO] ⚠6 = ecart-006 [RDC, impact moyen] : Épaisseur des cloisons du RDC non cotée (sauf cloison chambre arrière / S. de bain 6" LU, tranchée par 3e lecture) ; dessin ≈ 6 po.
   [INFO] ⚠7 = ecart-007 [global, impact faible] (positionné) : Épaisseurs PRÉSUMÉES par analogie ou par défaut : murs gauche et du fond du caveau (10"), murs avant et droit de l'excroissance du perron (6"), murs de l'entrée arrière (6", dessin ≈ 11") ; profondeur de l'entrée arrière non cotée : nu ext. PRÉSUMÉ à 5'-0" du mur arrière (= caveau cote-SS-009), alors que le dessin RDC montre ≈ 5'-7".
   [INFO] ⚠8 = ecart-008 [global, impact moyen] : Hauteurs de plafond inconnues aux deux niveaux (aucune coupe ni élévation ; aucune hauteur écrite).
   [INFO] ⚠9 = ecart-009 [RDC, impact critique] : Croquis 2016 (P1, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 à ≈ 14'-5" du coin gauche, de l'axe C au mur arrière ; placards en H entre les lignes 2 et 3 ; bout de cloison ligne 4 à 18'-6", de ≈ 6'-4" au mur avant). Absentes du gris : murs de la S. de bain, cloisons des G.R. de la chambre arrière (≈ 12'-1" à 13'-5"), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, cloisons le long des axes B et C. État actuel incertain : cloisons retirées ou simple croquis partiel. — CONFIRMÉ en partie par le constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : cloisons de la cage d'escalier, du placard à balais, chambre d'utilité / dégagement (axe C) et salon / passage (axe B) retirées.
@@ -78,7 +79,7 @@ SOMMAIRE
   [INFO] ⚠14 = ecart-014 [RDC, impact critique] (positionné) : Fissures signalées en 2016 (P1) : « zone de fissures au plafond de plâtre » le long de la ligne 6 (≈ 26'-1" à 26'-7" du coin gauche), de l'axe C au mur arrière, et le long de l'axe C (≈ 16'-3" à 17'-0" du nu ext. avant), de 26'-4" à ≈ 31'-7" ; « fissure ± 1,2 m au plafond de stucco » dans le salon à ≈ 26'-7" du coin gauche, de 2'-7" à 5'-7" du nu ext. avant.
   [INFO] ⚠15 = ecart-015 [RDC, impact moyen] (positionné) : Fissure ± 1,2 m au plafond de stucco du salon (P1) : à ≈ 26'-7" du coin gauche, de 2'-7" à 5'-7" du nu ext. avant (longueur dessinée ≈ 37 po ; texte 1,2 m ≈ 47 po).
   [INFO] ⚠16 = ecart-016 [RDC, impact moyen] (positionné) : Usage des pièces : le croquis 2016 nomme « Salle à manger » l'espace que le plan 1957 nomme « CHAMBRE D'UTILITÉ », et « Cuisine » la « CUISINE S.-À-MANGER » d'origine ; l'absence de cloisons grises aux lignes 5 et 6 suggère un espace ouvert (NON écrit).
-  [INFO] ⚠17 = ecart-017 [RDC, impact moyen] (positionné) : ARCHE hall / salon : texte « ARCHE 4'-0" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'ancienne « ARCHE 6'-0" » salon / cuisine. — Ce n'est plus une arche : baie ouverte au même endroit, avec la colonne de l'axe B (réponses du propriétaire (2026-10-29)).
+  [INFO] ⚠17 = ecart-017 [RDC, impact faible] (positionné) : ARCHE hall / salon : texte « ARCHE 4'-0" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'ancienne « ARCHE 6'-0" » salon / cuisine. — Il n'y a plus d'arche : la cloison hall / salon s'arrête où l'arche commençait, puis c'est ouvert jusqu'à la colonne de l'axe B (réponses du propriétaire (2026-10-29)).
   [INFO] ⚠18 = ecart-018 [RDC, impact faible] : Porte de la chambre d'utilité étiquetée « 2'-6"x6'-8" » (3 lectures) dans une baie cotée 2'-5" d'axe en axe (cote-RDC-031) : une porte de 30 po ne peut pas y tenir avec ses montants ; le dessin place la porte en avant de la colonne des G.R., dans le prolongement de la cloison à 17'-0" du nu ext. avant.
   [INFO] ⚠19 = ecart-019 [RDC, impact faible] (positionné) : Entrée arrière : 8'-2" + 8'-3" + 8'-0" + 2'-9" = 27'-2" (axe de la fenêtre + 2'-9") alors que 18'-3" + 9'-0" = 27'-3" au nu ext. droit du volume → écart de 1 po (2'-9" confirmé par la 3e lecture).
   [INFO] ⚠20 = ecart-020 [SS, impact faible] (positionné) : Fenêtres arrière et droite haute du sous-sol : « 6'-8" » confirmé par la 3e lecture, mais dessinées de la même longueur que la fenêtre avant cotée 6'-3" (≈ 72–73 po). — La fenêtre arrière gauche a depuis été séparée en deux fenêtres (réponses du propriétaire (2026-10-29)).
@@ -91,13 +92,13 @@ SOMMAIRE
   [INFO] ⚠27 = ecart-027 [global, impact faible] : Plan d'implantation P7 (1957, « maison projetée ») : rectangle 38'-0" × 31'-8" concordant ; excroissance avant dessinée ≈ 12,6–19,0 pi du coin gauche (perron SS : 13'-6"–19'-6") ; volume arrière ≈ 17,0–26,4 pi (entrée arrière : 18'-3"–27'-3") et marches ≈ 26,4–34,5 pi ; profondeur mesurée ≈ 32,1 pi (1 %). Implantation projetée, pas un relevé ; marges 40' (avant), 7.79' et 9' (latérales).
   [INFO] ⚠28 = ecart-028 [global, impact moyen] : Aucune mesure prise sur place n'a été fournie par le propriétaire (ancres vides) : toute la géométrie provient des plans de 1957 et du croquis 2016.
   [INFO] ⚠29 = ecart-029 [SS, impact faible] (positionné) : Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) : ouv-SS-005 « PORTE 2'-8" » (mur droit, axe à 6'-3" du nu ext. avant) et ouv-SS-008 « PORTE 2'-6" » (porte du caveau, mur arrière). Les tiretés près de la porte 2'-8" sont des circuits électriques. Depuis, la porte du mur droit a été déplacée à la place de la fenêtre du milieu (réponses du propriétaire (2026-10-29)).
-  [INFO] ⚠30 = ecart-030 [RDC, impact critique] (positionné) : constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0") est conservée. La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la salle de bain). 2e constat (2026-10-29) : le trumeau à droite de l'ancienne arche n'existe plus ; l'escalier entre le sous-sol et le RDC n'existe plus ; une poutre est visible au plafond du RDC côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) ; une poutre autoportante a été installée dans le plafond sur l'axe C.
+  [INFO] ⚠30 = ecart-030 [RDC, impact critique] : constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0") est conservée. La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la salle de bain). 2e constat (2026-10-29) : le trumeau à droite de l'ancienne arche n'existe plus ; l'escalier entre le sous-sol et le RDC n'existe plus ; une poutre est visible au plafond du RDC côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) ; une poutre autoportante a été installée dans le plafond sur l'axe C.
   [INFO] ⚠31 = ecart-031 [SS, impact moyen] (positionné) : réponses du propriétaire (2026-10-29) : la porte du mur droit et la fenêtre du milieu ont été permutées ; la grande fenêtre arrière gauche (6'-8") a été séparée en deux, la moitié gauche déplacée de 2'-0" vers la gauche. Largeurs et positions déduites de la description, non mesurées.
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
   [OK] [SS] aucun chevauchement texte/texte ni texte/trait (146 textes vérifiés)
-  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (145 textes vérifiés)
+  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (139 textes vérifiés)
 
 9. MISE EN PAGE
 ------------------------------------------------------------------------
@@ -110,6 +111,6 @@ SOMMAIRE
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
   [OK] [SS] DXF A-100_sous-sol.dxf : sha256 c530304ba304cb7a… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
-  [OK] [RDC] DXF A-101_rdc.dxf : sha256 494047c22f2d6628… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF A-101_rdc.dxf : sha256 919e97a5cfb31013… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

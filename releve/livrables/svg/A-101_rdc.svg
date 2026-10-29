@@ -137,19 +137,19 @@
 <path class="inc" fill-rule="evenodd" d="M 873.681 374.44 L 883.759 374.44 L 878.72 365.711 Z"/>
 <path class="inc-blanc" fill-rule="evenodd" d="M 878.014 371.705 L 879.426 371.705 L 879.284 367.864 L 878.156 367.864 Z"/>
 <path class="inc-blanc" fill-rule="evenodd" d="M 878.014 373.276 L 879.426 373.276 L 879.426 372.403 L 878.014 372.403 Z"/>
-<text x="884.767" y="374.44" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">6</text>
-<text x="899.84" y="373.989" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Toutes les cloisons sans cote d'épaisseur :</text>
-<text x="899.84" y="385.013" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4½&quot; présumé (14 murs, repère unique).</text>
-<text x="899.84" y="396.037" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Épaisseur des cloisons du RDC non …</text>
-<text x="899.84" y="407.06" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">[ecart-006 — voir RAPPORT.md]</text>
+<text x="884.767" y="374.44" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">7</text>
+<text x="899.84" y="373.989" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Tous les murs sans cote d'épaisseur : 10&quot;</text>
+<text x="899.84" y="385.013" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">présumé (3 murs, repère unique).</text>
+<text x="899.84" y="396.037" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Épaisseurs PRÉSUMÉES par analogie …</text>
+<text x="899.84" y="407.06" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">[ecart-007 — voir RAPPORT.md]</text>
 <path class="inc" fill-rule="evenodd" d="M 873.681 421.734 L 883.759 421.734 L 878.72 413.006 Z"/>
 <path class="inc-blanc" fill-rule="evenodd" d="M 878.014 418.999 L 879.426 418.999 L 879.284 415.159 L 878.156 415.159 Z"/>
 <path class="inc-blanc" fill-rule="evenodd" d="M 878.014 420.57 L 879.426 420.57 L 879.426 419.697 L 878.014 419.697 Z"/>
-<text x="884.767" y="421.734" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">7</text>
-<text x="899.84" y="421.284" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Tous les murs sans cote d'épaisseur : 10&quot;</text>
-<text x="899.84" y="432.307" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">présumé (3 murs, repère unique).</text>
-<text x="899.84" y="443.331" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Épaisseurs PRÉSUMÉES par analogie …</text>
-<text x="899.84" y="454.355" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">[ecart-007 — voir RAPPORT.md]</text>
+<text x="884.767" y="421.734" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">14</text>
+<text x="899.84" y="421.284" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Fissures signalées en 2016 (P1) : « zone</text>
+<text x="899.84" y="432.307" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">de fissures au plafond de plâtre » le long</text>
+<text x="899.84" y="443.331" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">de la ligne 6 (≈ 26'-1&quot; à 26'-7&quot; du coin …</text>
+<text x="899.84" y="454.355" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">[ecart-014 — voir RAPPORT.md]</text>
 <text x="872.96" y="468.578" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">… liste complète : donnees/verifications.txt</text>
 <polyline class="cart-l" points="867.2,474.338 1072,474.338"/>
 </g>
@@ -185,8 +185,7 @@
 <path class="mur-leger" fill-rule="evenodd" d="M 447.46 473.229 L 447.46 477.729 L 437.71 477.729 L 437.71 473.229 Z"/>
 </g>
 <g id="mur-RDC-018">
-<path class="mur-leger" fill-rule="evenodd" d="M 447.46 538.479 L 442.96 538.479 L 442.96 443.879 L 447.46 443.879 Z"/>
-<path class="mur-leger" fill-rule="evenodd" d="M 442.96 381.479 L 447.46 381.479 L 447.46 395.879 L 442.96 395.879 Z"/>
+<path class="mur-leger" fill-rule="evenodd" d="M 447.46 538.479 L 447.46 443.879 L 442.96 443.879 L 442.96 538.479 Z"/>
 </g>
 <g id="mur-RDC-020">
 <path class="mur-leger" fill-rule="evenodd" d="M 328.96 328.729 L 328.96 324.229 L 335.21 324.229 L 335.21 328.729 Z"/>
@@ -252,8 +251,8 @@
 <polyline class="mur-leger-c" points="400.46,168.499 400.46,198.729 400.46,203.229 400.46,240.229 400.46,244.729 400.46,249.979 395.96,249.979 395.96,244.729 371.46,244.729 371.46,283.229 395.96,283.229 395.96,277.979 400.46,277.979 400.46,283.229 400.46,287.729 395.96,287.729 371.46,287.729 371.46,324.229 371.46,328.729 371.46,334.479 366.96,334.479 366.96,328.729 365.21,328.729 365.21,324.229 366.96,324.229 366.96,287.729 366.96,283.229"/>
 <polyline class="mur-leger-c" points="371.46,170.479 366.96,170.479 366.96,168.499"/>
 <polyline class="mur-leger-c" points="371.46,168.499 371.46,170.479"/>
-<polyline class="mur-leger-c" points="442.96,528.459 442.96,477.729 437.71,477.729 437.71,473.229 442.96,473.229 442.96,443.879 447.46,443.879 447.46,473.229 447.46,477.729 447.46,528.459"/>
-<polyline class="mur-leger-c" points="447.46,395.879 442.96,395.879 442.96,381.479 447.46,381.479 447.46,395.879"/>
+<polyline class="mur-leger-c" points="442.96,473.229 442.96,443.879 447.46,443.879 447.46,473.229 447.46,477.729 447.46,528.459"/>
+<polyline class="mur-leger-c" points="442.96,528.459 442.96,477.729 437.71,477.729 437.71,473.229 442.96,473.229"/>
 </g>
 <g id="contour-murs-lourds">
 <polyline class="mur-lourd-c" points="233.21,538.479 223.21,538.479 223.21,528.479 223.21,365.479 233.21,365.479 233.21,528.479 283.71,528.479 283.71,538.479 233.21,538.479"/>
@@ -332,10 +331,6 @@
 <g id="ouv-RDC-011">
 <polyline class="ouv" points="405.71,473.229 405.71,441.229"/>
 <path class="ouv-fin" d="M 437.71 473.229 A 32 32 0 0 0 405.71 441.229"/>
-</g>
-<g id="ouv-RDC-012">
-<polyline class="ouv-tir" points="447.46,443.879 447.46,395.879"/>
-<polyline class="ouv-tir" points="442.96,443.879 442.96,395.879"/>
 </g>
 <g id="ouv-RDC-014">
 <polyline class="ouv" points="365.21,383.729 365.21,413.729"/>
@@ -473,9 +468,9 @@
 <text x="487.7" y="249.761" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000" transform="rotate(-90 487.7 249.761)">SOLIVES 2x7 @ 16 c/c (typ.)</text>
 </g>
 <g id="str-RDC-S02">
-<polyline class="str-fin" points="558.335,520.92 558.335,424.887"/>
-<path class="str-plein" fill-rule="evenodd" d="M 558.335 424.887 L 556.067 430.934 L 560.603 430.934 Z"/>
-<path class="str-plein" fill-rule="evenodd" d="M 558.335 520.92 L 556.067 514.873 L 560.603 514.873 Z"/>
+<polyline class="str-fin" points="558.335,500.342 558.335,404.308"/>
+<path class="str-plein" fill-rule="evenodd" d="M 558.335 404.308 L 556.067 410.355 L 560.603 410.355 Z"/>
+<path class="str-plein" fill-rule="evenodd" d="M 558.335 500.342 L 556.067 494.294 L 560.603 494.294 Z"/>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="50-Cotes" id="50-Cotes">
@@ -727,19 +722,6 @@
 <text x="422.513" y="372.735" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">2'-5&quot; (0,74 m)</text>
 <polyline class="rappel" points="396.154,374.582 393.86,410.479"/>
 </g>
-<g id="lc-RDC-042">
-<polyline class="cote" points="398.21,410.479 445.21,410.479"/>
-<polyline class="cote-tick" points="395.894,412.796 400.526,408.163"/>
-<polyline class="cote-tick" points="442.894,412.796 447.526,408.163"/>
-<text x="421.71" y="396.235" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">3'-11&quot;</text>
-<text x="421.71" y="406.616" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">(1,19 m)</text>
-</g>
-<g id="lc-RDC-043">
-<polyline class="cote" points="445.21,410.479 679.21,410.479"/>
-<polyline class="cote-tick" points="442.894,412.796 447.526,408.163"/>
-<polyline class="cote-tick" points="676.894,412.796 681.526,408.163"/>
-<text x="562.21" y="406.616" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">19'-6&quot; (5,94 m)</text>
-</g>
 <g id="lc-RDC-044">
 <polyline class="cote" points="323.21,315.479 323.21,158.479"/>
 <polyline class="cote-tick" points="320.894,317.796 325.526,313.163"/>
@@ -816,12 +798,15 @@
 <polyline class="limite-zone" points="396.21,381.479 679.21,381.479"/>
 </g>
 <g id="lz-RDC-002">
-<polyline class="limite-zone" points="539.21,381.479 539.21,158.479"/>
+<polyline class="limite-zone" points="445.21,453.479 445.21,381.479"/>
 </g>
 <g id="lz-RDC-003">
-<polyline class="limite-zone" points="369.21,334.479 539.21,334.479"/>
+<polyline class="limite-zone" points="539.21,381.479 539.21,158.479"/>
 </g>
 <g id="lz-RDC-004">
+<polyline class="limite-zone" points="369.21,334.479 539.21,334.479"/>
+</g>
+<g id="lz-RDC-005">
 <polyline class="limite-zone" points="398.21,533.479 398.21,484.479"/>
 </g>
 <g id="facade-avant">
@@ -837,14 +822,6 @@
 <path class="inc-blanc" fill-rule="evenodd" d="M 454.835 421.625 L 456.246 421.625 L 456.246 420.752 L 454.835 420.752 Z"/>
 <text x="461.588" y="422.789" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">3</text>
 </g>
-<g id="ecart-006">
-<circle class="inc" cx="369.21" cy="418.479" r="1.512"/>
-<polyline class="inc-c" points="374.501,421.389 369.21,418.479"/>
-<path class="inc" fill-rule="evenodd" d="M 374.501 421.389 L 384.58 421.389 L 379.541 412.66 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 378.835 418.654 L 380.246 418.654 L 380.105 414.813 L 378.976 414.813 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 378.835 420.225 L 380.246 420.225 L 380.246 419.352 L 378.835 419.352 Z"/>
-<text x="385.588" y="421.389" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">6</text>
-</g>
 <g id="ecart-007">
 <circle class="inc" cx="496.21" cy="101.479" r="1.512"/>
 <polyline class="inc-c" points="496.21,95.45 496.21,101.479"/>
@@ -852,14 +829,6 @@
 <path class="inc-blanc" fill-rule="evenodd" d="M 497.637 92.715 L 499.048 92.715 L 498.906 88.874 L 497.778 88.874 Z"/>
 <path class="inc-blanc" fill-rule="evenodd" d="M 497.637 94.286 L 499.048 94.286 L 499.048 93.413 L 497.637 93.413 Z"/>
 <text x="504.389" y="95.45" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">7</text>
-</g>
-<g id="ecart-013">
-<circle class="inc" cx="663.21" cy="381.479" r="1.512"/>
-<polyline class="inc-c" points="650.7,388.702 663.21,381.479"/>
-<path class="inc" fill-rule="evenodd" d="M 645.309 396.82 L 655.387 396.82 L 650.348 388.091 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 649.643 394.085 L 651.054 394.085 L 650.912 390.244 L 649.784 390.244 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 649.643 395.656 L 651.054 395.656 L 651.054 394.783 L 649.643 394.783 Z"/>
-<text x="656.395" y="396.82" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">13</text>
 </g>
 <g id="ecart-014">
 <circle class="inc" cx="539.21" cy="248.479" r="1.512"/>
@@ -887,11 +856,11 @@
 </g>
 <g id="ecart-017">
 <circle class="inc" cx="445.21" cy="419.879" r="1.512"/>
-<polyline class="inc-c" points="457.17,427.138 445.21,419.879"/>
-<path class="inc" fill-rule="evenodd" d="M 452.131 435.866 L 462.209 435.866 L 457.17 427.138 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 456.465 433.132 L 457.876 433.132 L 457.735 429.291 L 456.606 429.291 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 456.465 434.703 L 457.876 434.703 L 457.876 433.83 L 456.465 433.83 Z"/>
-<text x="463.217" y="435.866" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">17</text>
+<polyline class="inc-c" points="452.131,409.711 445.21,419.879"/>
+<path class="inc" fill-rule="evenodd" d="M 452.131 409.711 L 462.209 409.711 L 457.17 400.983 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 456.465 406.976 L 457.876 406.976 L 457.735 403.136 L 456.606 403.136 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 456.465 408.547 L 457.876 408.547 L 457.876 407.675 L 456.465 407.675 Z"/>
+<text x="463.217" y="409.711" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">17</text>
 </g>
 <g id="ecart-019">
 <circle class="inc" cx="533.21" cy="98.479" r="1.512"/>
@@ -924,14 +893,6 @@
 <path class="inc-blanc" fill-rule="evenodd" d="M 197.714 413.741 L 199.125 413.741 L 198.984 409.9 L 197.855 409.9 Z"/>
 <path class="inc-blanc" fill-rule="evenodd" d="M 197.714 415.312 L 199.125 415.312 L 199.125 414.439 L 197.714 414.439 Z"/>
 <text x="204.467" y="416.476" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">26</text>
-</g>
-<g id="ecart-030">
-<circle class="inc" cx="485.21" cy="358.479" r="1.512"/>
-<polyline class="inc-c" points="490.501,361.389 485.21,358.479"/>
-<path class="inc" fill-rule="evenodd" d="M 490.501 361.389 L 500.58 361.389 L 495.541 352.66 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 494.835 358.654 L 496.246 358.654 L 496.105 354.813 L 494.976 354.813 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 494.835 360.225 L 496.246 360.225 L 496.246 359.352 L 494.835 359.352 Z"/>
-<text x="501.588" y="361.389" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">30</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="90-RENO-Propose" id="90-RENO-Propose">
