@@ -1484,7 +1484,10 @@ def dessiner_escalier(el, g, PL, mm, fc, verif, nid):
     pr = [P_pl(R, "elem", True)]
     n = num(es.get("nb_contremarches"))
     n = int(round(n)) if n and n >= 2 else None
-    if n:
+    if n and es.get("girons"):          # volée d'un escalier en L : girons comptés à part (la dernière marche est le palier)
+        pas = run / int(es["girons"])
+        nb = int(es["girons"]) - 1
+    elif n:
         pas = run / n
         nb = n - 1
     else:
@@ -1519,8 +1522,8 @@ def dessiner_escalier(el, g, PL, mm, fc, verif, nid):
     g += pr
     PL.prims(pr, el["id"])
     PL.zone(Polygon(R), el["id"])
-    if el["typ"] != "escalier":
-        return None
+    if el["typ"] != "escalier" or es.get("sans_texte"):
+        return None                     # sans_texte : volée courte d'un escalier en L, la flèche suffit
     textes = []
     if texte_fl in ("MONTE", "DESCEND"):
         textes.append(texte_fl)

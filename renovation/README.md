@@ -23,6 +23,7 @@
 | SS-05 | Copie de SS-04 : salle de bain revue (toilette contre le mur, bain en coin, douche de 6 pi), matériaux réels dans la maquette | esquisse |
 | SS-06 | Copie de SS-05 : nouvel escalier (emplacement dessiné sur A-101, en haut et en bas), sous-sol repensé autour d'un hall central, bain sur pied, gym (tapis roulant, vélo de route sur base, poids au sol) ; feuilles P-105 et P-106 | esquisse |
 | SS-07 | Copie de SS-06 : vestiaire à la place du coin bar, coin frigo dans le séjour, escalier à 3 marches tournantes en haut, tapis roulant dans le sens du vélo ; feuilles P-107 et P-108 | esquisse |
+| SS-08 | Copie de SS-07 : escalier en L, palier dans le coin arrière (étude de 3 implantations dans DESIGN.md) ; feuilles P-109 et P-110 | esquisse |
 
 ## Maquette 3D
     python3 renovation/outils/generer_3d.py renovation/<projet>

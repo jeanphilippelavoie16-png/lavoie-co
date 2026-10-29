@@ -111,7 +111,11 @@ def escalier(e, H, etage):
     L, W = e["dimensions"]["longueur"]["valeur"], e["dimensions"]["largeur"]["valeur"]
     cx, cy = e["position"]["x"], e["position"]["y"]
     d = {"+y": (0, 1), "-y": (0, -1), "+x": (1, 0), "-x": (-1, 0)}[es.get("direction", "+y")]
-    r, pas = etage / n, L / (n - 1)
+    total, depart = int(es.get("total", n)), int(es.get("depart", 0))   # escalier en L : volée qui part d'un palier
+    r = etage / total
+    girons = int(es.get("girons", n - 1))
+    pas = L / girons
+    z0v = depart * r
 
     def rect(s0, s1, z0, z1, mat):
         # s le long de la montée depuis le pied, sur toute la largeur
@@ -121,16 +125,20 @@ def escalier(e, H, etage):
         xa, xb = sorted([cx - d[0] * L / 2 + d[0] * s0, cx - d[0] * L / 2 + d[0] * s1])
         return {"x0": xa, "x1": xb, "y0": cy - W / 2, "y1": cy + W / 2, "z0": z0, "z1": z1, "mat": mat}
 
-    out = []
+    out, obst = [], []
     tr = es.get("tournant")
-    nd = n - 1 - (int(tr["nb"]) if tr else 0)
+    nd = girons - (int(tr["nb"]) if tr else 0)
     if tr:                                       # marches tournantes en haut : la volée droite s'arrête au carré
         pas = (L - (tr["carre"][3] - tr["carre"][1] if d[0] == 0 else tr["carre"][2] - tr["carre"][0])) / nd
     for i in range(nd):
-        z = (i + 1) * r
-        out.append(rect(i * pas, (i + 1) * pas, 0, z - 1.25, "gypse"))                 # dessous fermé
+        z = z0v + (i + 1) * r
+        bas = 0 if z < 60 else z - 12            # dessous fermé jusqu'au sol, ou sous-face de 1 pi quand on passe dessous
+        out.append(rect(i * pas, (i + 1) * pas, bas, z - 1.25, "gypse"))
         out.append(rect(max(0, i * pas - 1), (i + 1) * pas, z - 1.25, z, "placage"))   # giron (nez de 1 po)
-        out.append(rect(i * pas, i * pas + 0.75, i * r, z - 1.25, "porte"))           # contremarche
+        out.append(rect(i * pas, i * pas + 0.75, z - r, z - 1.25, "porte"))           # contremarche
+        if bas < 72:
+            q = rect(i * pas, (i + 1) * pas, 0, 1, "")
+            obst.append({k: q[k] for k in ("x0", "x1", "y0", "y1")})
     if tr:
         rayons = eventail(tr)
         coin = (rayons[0][1][0], rayons[-1][1][1])          # coin du carré opposé au pivot
@@ -142,17 +150,43 @@ def escalier(e, H, etage):
             out.append({"pts": [list(q) for q in pts], "z0": 0, "z1": z - 1.25, "mat": "gypse"})
             out.append({"pts": [list(q) for q in pts], "z0": z - 1.25, "z1": z, "mat": "placage"})
     # trémie : dès que l'échappée (77 po au-dessus du nez) dépasse le plafond fini
-    s_tr = max(0.0, min(L, ((H - 77) / r - 1) * pas))
+    s_tr = max(0.0, min(L, ((H - 77 - z0v) / r - 1) * pas))
     t0 = rect(s_tr, L, 0, 1, "")
-    tremie = [t0["x0"], t0["y0"], t0["x1"], t0["y1"]]
-    haut = H + etage
-    cage = [{"x0": tremie[0] - 2, "x1": tremie[0], "y0": tremie[1] - 2, "y1": tremie[3] + 2, "z0": H, "z1": haut, "mat": "gypse"},
-            {"x0": tremie[2], "x1": tremie[2] + 2, "y0": tremie[1] - 2, "y1": tremie[3] + 2, "z0": H, "z1": haut, "mat": "gypse"},
-            {"x0": tremie[0], "x1": tremie[2], "y0": tremie[1] - 2, "y1": tremie[1], "z0": H, "z1": haut, "mat": "gypse"},
-            {"x0": tremie[0], "x1": tremie[2], "y0": tremie[3], "y1": tremie[3] + 2, "z0": H, "z1": haut, "mat": "gypse"},
-            {"x0": tremie[0] - 2, "x1": tremie[2] + 2, "y0": tremie[1] - 2, "y1": tremie[3] + 2, "z0": haut, "z1": haut + 1, "mat": "plafond"}]
-    tout = rect(0, L, 0, 1, "")
-    return out + cage, tremie, {k: tout[k] for k in ("x0", "x1", "y0", "y1")}
+    return out, [t0["x0"], t0["y0"], t0["x1"], t0["y1"]], obst
+
+
+def palier(e, H, etage):
+    """Palier d'un escalier en L : bloc fermé jusqu'au sol, dessus en chêne. Retourne (boîtes, trémie, obstacle)."""
+    pa = e["palier"]
+    z = int(pa["niveau"]) * etage / int(pa["total"])
+    L, W = e["dimensions"]["longueur"]["valeur"], e["dimensions"]["largeur"]["valeur"]
+    x0, y0 = e["position"]["x"] - L / 2, e["position"]["y"] - W / 2
+    b = {"x0": x0, "x1": x0 + L, "y0": y0, "y1": y0 + W}
+    tr = [x0, y0, x0 + L, y0 + W] if z + 77 > H else None
+    return [dict(b, z0=0, z1=z - 1.25, mat="gypse"), dict(b, z0=z - 1.25, z1=z, mat="placage")], tr, b
+
+
+def cage_tremie(rects, H, etage):
+    """Réunit les trémies (rectangles qui se touchent) en polygones ; murs de la cage au-dessus du plafond."""
+    from shapely.geometry import box
+    from shapely.ops import unary_union
+    from shapely.geometry.polygon import orient
+    u = unary_union([box(*r) for r in rects]).buffer(0)
+    polys, boites = [], []
+    for p in (u.geoms if hasattr(u, "geoms") else [u]):
+        p = orient(p.simplify(0.01), 1.0)
+        pts = [list(q) for q in list(p.exterior.coords)[:-1]]
+        polys.append(pts)
+        for (xa, ya), (xb, yb) in zip(pts, pts[1:] + pts[:1]):   # sens antihoraire : l'extérieur est à droite
+            if abs(ya - yb) < 0.01:
+                y = ya - 2 if xb > xa else ya
+                boites.append({"x0": min(xa, xb) - 2, "x1": max(xa, xb) + 2, "y0": y, "y1": y + 2, "z0": H + 0.2, "z1": H + etage, "mat": "gypse"})
+            else:
+                x = xa if yb > ya else xa - 2
+                boites.append({"x0": x, "x1": x + 2, "y0": min(ya, yb) - 2, "y1": max(ya, yb) + 2, "z0": H + 0.2, "z1": H + etage, "mat": "gypse"})
+        mx0, my0, mx1, my1 = p.bounds
+        boites.append({"x0": mx0 - 2, "x1": mx1 + 2, "y0": my0 - 2, "y1": my1 + 2, "z0": H + etage, "z1": H + etage + 1, "mat": "plafond"})
+    return polys, boites
 
 
 def bibliotheque(scene, S):
@@ -319,11 +353,18 @@ def main(dossier):
                            "y0": min(g["y1"], g["y2"]) - (e if horiz else 0), "y1": max(g["y1"], g["y2"]) + (e if horiz else 0),
                            "z0": H - 10, "z1": H, "mat": "gypse"})
     # escaliers projetés : marches, trémie dans le plafond, cage au-dessus, obstacle pour la visite
-    tremies, obstacles = [], []
+    rects, obstacles = [], []
     for e in niv["elements"]:
         if e["type"] == "escalier" and e.get("etat") == "nouveau":
             bx, tr, ob = escalier(e, H, S.get("hauteur_etage", 105))
-            boites += bx; tremies.append(tr); obstacles.append(ob)
+            boites += bx; rects.append(tr); obstacles += ob
+        elif e.get("palier") and e.get("etat") == "nouveau":
+            bx, tr, ob = palier(e, H, S.get("hauteur_etage", 105))
+            boites += bx; obstacles.append(ob)
+            if tr:
+                rects.append(tr)
+    tremies, cage = cage_tremie(rects, H, S.get("hauteur_etage", 105)) if rects else ([], [])
+    boites += cage
     peindre(boites, niv["pieces"], S)
     mats = S.get("sols", {})
     sols = []
