@@ -130,7 +130,8 @@ def appliquer(maison):
     princ = next(x for x in ss["pieces"] if x["id"] == "piece-SS-PRINC")
     autres = [x for x in ss["pieces"] if x["id"] != "piece-SS-PRINC"]
     zone = Polygon(princ["polygone"])
-    emprises = unary_union([LineString([(m["x1"], m["y1"]), (m["x2"], m["y2"])]).buffer(T / 2, cap_style=3) for m in murs])
+    emprises = unary_union([LineString([(m["x1"], m["y1"]), (m["x2"], m["y2"])]).buffer(m["epaisseur"]["valeur"] / 2, cap_style=3)
+                            for m in murs])
     libre = zone.difference(emprises)
     morceaux = []
     for r in (libre.geoms if hasattr(libre, "geoms") else [libre]):

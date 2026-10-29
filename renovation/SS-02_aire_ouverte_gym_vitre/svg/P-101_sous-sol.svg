@@ -713,11 +713,11 @@
 <text x="448.135" y="682.529" font-family="Arial, Helvetica, sans-serif" font-size="12.317" font-weight="bold" text-anchor="middle" fill="#000000">FAÇADE AVANT (RUE)</text>
 </g>
 <g id="piece-SS-SALON">
-<path class="invisible" fill-rule="evenodd" d="M 666.135 530.979 L 666.135 339.229 L 517.885 339.229 L 517.885 336.979 L 450.385 336.979 L 450.385 339.229 L 368.385 339.229 L 368.385 381.729 L 450.385 381.729 L 450.385 530.979 Z"/>
-<text x="564.947" y="420.116" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">AIRE OUVERTE —</text>
-<text x="564.947" y="436.726" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">SALON / SALLE DE JEU</text>
-<text x="564.947" y="448.374" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">24'-9¾&quot; × 16'-2&quot;</text>
-<text x="564.947" y="458.756" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">312,5 pi² (29,0 m²)</text>
+<path class="invisible" fill-rule="evenodd" d="M 666.135 530.979 L 666.135 339.229 L 517.885 339.229 L 517.885 336.979 L 450.385 336.979 L 450.385 339.229 L 368.385 339.229 L 368.385 382.979 L 449.135 382.979 L 449.135 530.979 Z"/>
+<text x="546.337" y="420.116" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">AIRE OUVERTE —</text>
+<text x="546.337" y="436.726" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">SALON / SALLE DE JEU</text>
+<text x="546.337" y="448.374" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">24'-9¾&quot; × 16'-2&quot;</text>
+<text x="546.337" y="458.756" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">314,5 pi² (29,2 m²)</text>
 </g>
 <g id="piece-SS-CH1">
 <path class="invisible" fill-rule="evenodd" d="M 230.135 170.979 L 230.135 288.729 L 445.885 288.729 L 445.885 170.979 Z"/>
@@ -745,9 +745,9 @@
 <text x="410.465" y="329.912" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">22,3 pi² (2,1 m²)</text>
 </g>
 <g id="piece-SS-GYM">
-<path class="invisible" fill-rule="evenodd" d="M 322.385 530.979 L 445.885 530.979 L 445.885 386.229 L 322.385 386.229 Z"/>
-<text x="372.616" y="451.893" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 372.616 451.893)">SALLE</text>
-<text x="389.226" y="451.893" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 389.226 451.893)">D'ENTRAÎNEMENT</text>
+<path class="invisible" fill-rule="evenodd" d="M 322.385 530.979 L 447.135 530.979 L 447.135 384.979 L 368.385 384.979 L 368.385 386.229 L 322.385 386.229 Z"/>
+<text x="372.616" y="458.349" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 372.616 458.349)">SALLE</text>
+<text x="389.226" y="458.349" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 389.226 458.349)">D'ENTRAÎNEMENT</text>
 </g>
 <g id="piece-SS-SDB">
 <path class="invisible" fill-rule="evenodd" d="M 230.135 293.229 L 230.135 381.729 L 363.885 381.729 L 363.885 293.229 Z"/>

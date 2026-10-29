@@ -102,7 +102,6 @@ def main(dossier):
         for o in par_mur.get(m["id"], []):
             if o["type"] == "fenetre":
                 c, w = o["position"]["valeur"], o["largeur"]["valeur"]
-                q = boites_mur({**m, "materiau": None, "type": "int"}, [], H, sill, head)[0][0]
                 # vitre de fenêtre : une boîte mince au centre du mur, entre allège et tête
                 L = math.hypot(m["x2"] - m["x1"], m["y2"] - m["y1"])
                 ux, uy = (m["x2"] - m["x1"]) / L, (m["y2"] - m["y1"]) / L
@@ -112,10 +111,26 @@ def main(dossier):
                     boites.append({"x0": min(pa[0], pb[0]), "x1": max(pa[0], pb[0]), "y0": m["y1"] - 0.5, "y1": m["y1"] + 0.5, "z0": sill, "z1": head, "mat": "vitre"})
                 else:
                     boites.append({"x0": m["x1"] - 0.5, "x1": m["x1"] + 0.5, "y0": min(pa[1], pb[1]), "y1": max(pa[1], pb[1]), "z0": sill, "z1": head, "mat": "vitre"})
+            elif o.get("operation") == "coulissante":
+                pass                      # porte coulissante : représentée ouverte (dans le mur)
             elif o.get("operation") != "aucune":
                 f = feuille_porte(m, o, t)
-                f.update({"z0": 0.5, "z1": 80, "mat": "porte-verre" if o.get("materiau") == "verre" else ("porte-ext" if m["type"] != "int" else "porte")})
-                portes.append(f)
+                if o.get("materiau") == "verre":
+                    # porte vitrée : panneau de verre dans un cadre noir de 1½ po
+                    f.update({"z0": 0.5, "z1": 80, "mat": "porte-verre"})
+                    portes.append(f)
+                    long_x = (f["x1"] - f["x0"]) > (f["y1"] - f["y0"])
+                    c = 1.5
+                    if long_x:
+                        cadres = [(f["x0"], f["x0"] + c, 0.5, 80), (f["x1"] - c, f["x1"], 0.5, 80), (f["x0"], f["x1"], 0.5, 2), (f["x0"], f["x1"], 78.5, 80)]
+                        portes += [{"x0": a0, "x1": a1, "y0": f["y0"] - 0.2, "y1": f["y1"] + 0.2, "z0": z0, "z1": z1, "mat": "metal"} for a0, a1, z0, z1 in cadres]
+                    else:
+                        cadres = [(f["y0"], f["y0"] + c, 0.5, 80), (f["y1"] - c, f["y1"], 0.5, 80), (f["y0"], f["y1"], 0.5, 2), (f["y0"], f["y1"], 78.5, 80)]
+                        portes += [{"x0": f["x0"] - 0.2, "x1": f["x1"] + 0.2, "y0": a0, "y1": a1, "z0": z0, "z1": z1, "mat": "metal"} for a0, a1, z0, z1 in cadres]
+                    portes.append({**f, "z0": 38, "z1": 40, "mat": "metal", **({"x0": f["x1"] - 4, "x1": f["x1"] - 3} if long_x else {"y0": f["y1"] - 4, "y1": f["y1"] - 3})})
+                else:
+                    f.update({"z0": 0.5, "z1": 80, "mat": "porte-ext" if m["type"] != "int" else "porte"})
+                    portes.append(f)
     # meneaux des cloisons vitrées
     for m in niv["murs"]:
         if m.get("materiau") != "verre":

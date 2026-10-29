@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : A    Date : 2026-10-29
-Données  : maison.json, sha256 8da3e515d1e505ac0a98b3e637cbb69376869f927c1e43a5e352b050aa4de2c1
+Données  : maison.json, sha256 08761bd7b4d0c23befc7383c0b468807d4d084e508ccf2b5964cce6f98053716
 Feuilles : P-101 Sous-sol proposé (3/16" = 1'-0")
 
 SOMMAIRE
@@ -10,7 +10,7 @@ SOMMAIRE
   Murs                         OK      0 erreur(s), 0 avertissement(s)
   Ouvertures                   OK      0 erreur(s), 0 avertissement(s)
   Pièces                       OK      0 erreur(s), 0 avertissement(s)
-  Bilan de surface             AVERT.  0 erreur(s), 3 avertissement(s)
+  Bilan de surface             OK      0 erreur(s), 0 avertissement(s)
   Chaînes de cotes             OK      0 erreur(s), 0 avertissement(s)
   Repères d'incertitude        AVERT.  0 erreur(s), 2 avertissement(s)
   Textes (chevauchements)      OK      0 erreur(s), 0 avertissement(s)
@@ -35,9 +35,8 @@ SOMMAIRE
 
 5. BILAN DE SURFACE
 ------------------------------------------------------------------------
-  [AVERT] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1095,2 pi² + murs 173,2 pi² − chevauchement pièces/murs 0,0 pi² = 1268,4 pi² ; écart 3,9 pi²
-  [AVERT] [SS] trou (ni pièce ni mur) de 2,0 pi² vers x=229.625, y=83 po (boîte 148.25,10 → 230.25,159.25)
-  [AVERT] [SS] trou (ni pièce ni mur) de 1,9 pi² vers x=226.375, y=82.375 po (boîte 148.25,10 → 227,156)
+  [OK] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1099,1 pi² + murs 173,2 pi² − chevauchement pièces/murs 0,0 pi² = 1272,3 pi² ; écart 0,0 pi²
+  [OK] [SS] aucun trou > 1 pi² entre pièces et murs
 
 6. CHAÎNES DE COTES
 ------------------------------------------------------------------------
@@ -71,6 +70,6 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF P-101_sous-sol.dxf : sha256 cf3fc13928003ead… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF P-101_sous-sol.dxf : sha256 4c358cf3885456eb… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

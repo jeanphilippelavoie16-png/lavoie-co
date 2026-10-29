@@ -1350,11 +1350,19 @@
        10.0
       ],
       [
-       225.75,
+       227.0,
        10.0
       ],
       [
-       225.75,
+       227.0,
+       156.0
+      ],
+      [
+       148.25,
+       156.0
+      ],
+      [
+       148.25,
        154.75
       ],
       [
@@ -1363,7 +1371,7 @@
       ]
      ],
      "superficie": {
-      "valeur": 124.1,
+      "valeur": 126.1,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu des cloisons projetées"
@@ -1375,12 +1383,12 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 123.5,
+       "valeur": 124.75,
        "source": "DÉDUIT",
        "photo": null
       },
       "y": {
-       "valeur": 144.75,
+       "valeur": 146.0,
        "source": "DÉDUIT",
        "photo": null
       }
@@ -1423,19 +1431,19 @@
       ],
       [
        148.25,
-       159.25
+       158.0
       ],
       [
-       230.25,
-       159.25
+       229.0,
+       158.0
       ],
       [
-       230.25,
+       229.0,
        10.0
       ]
      ],
      "superficie": {
-      "valeur": 312.5,
+      "valeur": 314.5,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu des cloisons projetées"

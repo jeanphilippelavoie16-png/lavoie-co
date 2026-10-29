@@ -18,7 +18,11 @@
 |---|---|---|
 | SS-01 | Aménagement du sous-sol : 2 chambres, grande salle de bain, salon / salle de jeu, salle d'entraînement, salle d'utilité | esquisse |
 | SS-02 | Copie de SS-01 : aire ouverte, salle d'entraînement vitrée, direction de design, maquette 3D visitable (`3d/visite.html`) | esquisse |
+| SS-03 | Copie de SS-02 : grande salle de bain à double vanité, cuisine en ligne, caveau en rangement, buanderie (skill designer-interieur) | esquisse |
 
 ## Maquette 3D
     python3 renovation/outils/generer_3d.py renovation/<projet>
 Lit `donnees/maison.json` et `scene_3d.py` (matériaux, mobilier, éclairage) du projet.
+
+## Skill de design
+`.claude/skills/designer-interieur/SKILL.md` : méthode, dégagements, code à vérifier, direction de design, livrables.
