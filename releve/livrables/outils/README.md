@@ -147,6 +147,9 @@ sur chaque feuille dont la géométrie passe à moins de 24 po de cette position
     polygone (source DÉDUIT).
   - `polygone` : contour au nu intérieur des murs, en sens antihoraire.
 - **Notes.** `niveau.notes` sont affichées traduites dans le cartouche.
+- **Limites de zones ouvertes.** `niveau.limites_zones = [{"id", "p1", "p2", "note"}]` (facultatif) : lignes
+  fictives entre zones ouvertes, sans mur. Elles sont dessinées en tireté fin gris (0,18 mm, calque
+  60-Etiquettes), avec une ligne de légende « Limite de zone ouverte (aucun mur) ».
 - **Feuille.**
   - `niveau.feuille` (par exemple A-100) et `niveau.photos_sources` alimentent le cartouche.
   - `niveau.slug` (facultatif) impose le nom de fichier.
@@ -186,6 +189,8 @@ lisibles.
     correspondante du cartouche précise « Toutes les cloisons sans cote d'épaisseur : 4½" présumé ».
   - Une cote présumée ou en conflit, ou un mur d'épaisseur présumée, sans écart référencé ne reçoit aucun
     repère. Il est signalé en [AVERT] dans `verifications.txt`.
+  - Seuls les écarts dont `statut` vaut « ouvert » (ou dont le statut est absent) sont dessinés. Un écart
+    « sans objet » ou « résolu » n'a aucun repère sur le plan.
   - La liste complète figure dans `verifications.txt` (section « Repères d'incertitude ») et, pour chaque
     feuille, dans son cartouche (descriptions abrégées).
 - L'orange est réservé aux incertitudes. Tout le reste est en noir et gris.
@@ -208,23 +213,29 @@ sortir de la zone de dessin. Ordre de priorité :
      premier. Ordre d'essai : centré au-dessus, au-dessous, décalé le long du segment, sur deux lignes
      (pi-po sur métrique), au-delà d'une extrémité, puis plus loin avec une ligne de rappel.
 2. **Repères ancrés** (positions d'écarts, murs, cotes de façade).
-3. **Étiquettes de pièces dans leur propre pièce.**
-   - Variantes essayées : complète, nom + superficie, nom seul sur une ou deux lignes, nom tourné de 90°
-     pour une pièce étroite.
-   - Les couloirs des cotes intérieures sont d'abord laissés libres.
+3. **Étiquettes de pièces, lues DANS leur pièce.**
+   - Ordre d'essai : complète (nom, dimensions, superficie, au besoin sur plusieurs lignes) ; nom +
+     superficie ; nom seul horizontal, puis vertical, à 4 mm de hauteur de capitale, puis à 3,5 mm
+     (police 4,9 mm).
+   - Les pièces non petites (chambres, salon, salle à manger…) affichent dimensions et superficie.
 4. **Cotes intérieures.**
    - La ligne est toujours à p1/p2 + `decalage` et n'est jamais déplacée.
    - Le texte est centré sur son segment si possible. Sinon, il est décalé le long du segment, écrit sur
      deux lignes (pi-po sur métrique), empilé, ou placé à côté avec un renvoi vers le milieu de la cote.
-   - Il n'est jamais au-delà des extrémités ni dans un mur.
+   - Il n'est jamais au-delà des extrémités ni dans un mur. Un texte déplacé reste à environ 1,5 fois sa
+     longueur de son segment. Son renvoi ne croise ni escalier, ni élément, ni colonne.
 5. **Libellés d'éléments**, à l'intérieur du symbole ou autour.
 6. **Libellés de structure.**
    - Un libellé répété (par exemple COL. 8x8 ×6) n'est écrit qu'une fois, suivi de « (typ.) ».
    - La flèche des solives est placée avec son libellé.
-7. **Étiquettes des petites pièces qui ne tiennent pas dans leur polygone.**
-   - Nom seul, placé dans la zone libre la plus proche : de préférence hors des autres pièces, une pièce
-     voisine étant tolérée.
-   - Une ligne de rappel, terminée par un point, relie le nom à la pièce.
+7. **Étiquettes qui ne tiennent pas dans leur pièce** (dernier recours).
+   - Nom seul, placé **hors de toute pièce nommée** (hors du bâtiment ou dans une zone libre), avec un renvoi
+     court, terminé par un point, qui ne croise aucune chaîne de cotes.
+   - À la rigueur seulement, le nom va dans un espace de circulation voisin (dégagement, passage, hall,
+     corridor) ; le rapport le signale en INFO.
+   - Jamais à côté de « FAÇADE AVANT (RUE) ».
+   - Contrôle en ERREUR : texte lu à plus de 20 % dans une autre pièce, ou étiquette hors de sa pièce sans
+     renvoi qui s'y termine.
    - Les dimensions et la superficie de ces pièces sont alors omises sur le plan ; la légende le signale.
      Elles restent dans `tableau_pieces.csv`.
 
