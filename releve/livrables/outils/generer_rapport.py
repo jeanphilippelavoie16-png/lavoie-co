@@ -115,10 +115,15 @@ def main():
     rc = f" (⚠{int(constat['id'].split('-')[1])})" if constat else ""
     w("- **État représenté : les plans d'origine (1957) corrigés par le constat du propriétaire du 2026-10-29**" + rc + " : "
       "au rez-de-chaussée, les cloisons de la cage d'escalier, du placard à balais et des axes porteurs d'origine B et C "
-      "(chambre d'utilité / dégagement, salon / passage) n'existent plus ; la porte de la salle de bain ouvre vers le dégagement ; "
-      "meubles, électroménagers, comptoirs et baignoire ne sont pas représentés (conservés pour mémoire dans `maison.json`). "
+      "(chambre d'utilité / dégagement, salon / passage, trumeau compris) n'existent plus ; l'escalier entre le sous-sol et le "
+      "rez-de-chaussée n'existe plus ; une poutre est visible au plafond du rez-de-chaussée côté rue seulement, dans l'axe de la "
+      "poutre avant du sous-sol ; la porte de la salle de bain ouvre vers le dégagement ; le mobilier et les appareils "
+      "(plomberie, chauffage, électroménagers, comptoirs) ne sont pas représentés (positions 1957 conservées dans `maison.json`). "
       "Les autres cloisons de 1957 absentes du croquis d'ingénieur de 2016 (photo 1, qui n'est pas un relevé complet) "
       "sont conservées et consignées comme écart à valider en visite.")
+    if (P.get("affichage") or {}).get("noms_pieces") is False:
+        w("- **Noms des pièces retirés des plans** à la demande du propriétaire : ils restent dans `maison.json` et "
+          "`tableau_pieces.csv` (identifiants piece-…) ; les plans gardent les dimensions et superficies des pièces principales.")
     w("- **Aucune mesure sur place (ancres vides)** : le relevé n'est calé sur aucune mesure du bâtiment réel.")
     w("- **Les cotes écrites priment sur le dessin** : la géométrie est construite à partir des chaînes de cotes ; "
       "les proportions du dessin servent seulement à combler les trous (ESTIMÉ).")

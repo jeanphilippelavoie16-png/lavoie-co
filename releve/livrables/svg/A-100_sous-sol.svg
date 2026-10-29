@@ -120,8 +120,8 @@
 <text x="906.24" y="239.96" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Cotes en pi-po (métrique en m)</text>
 <text x="906.24" y="252.12" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">(typ.) : libellé typique, vaut pour les</text>
 <text x="906.24" y="263.143" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">éléments identiques</text>
-<text x="906.24" y="275.303" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Petites pièces : nom seul ; dimensions et</text>
-<text x="906.24" y="286.327" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">superficie dans tableau_pieces.csv</text>
+<text x="906.24" y="275.303" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Noms des pièces, et dimensions des</text>
+<text x="906.24" y="286.327" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">petites pièces : voir tableau_pieces.csv</text>
 <polyline class="cart-l" points="867.2,293.687 1072,293.687"/>
 <text x="872.96" y="303.826" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">REPÈRES SUR CETTE FEUILLE</text>
 <path class="inc" fill-rule="evenodd" d="M 873.681 314.985 L 883.759 314.985 L 878.72 306.257 Z"/>
@@ -255,10 +255,6 @@
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="30-Escaliers-Elements" id="30-Escaliers-Elements">
-<g id="elem-SS-CE">
-<circle class="elem" cx="246.135" cy="433.279" r="11.25"/>
-<text x="246.135" y="435.567" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">C.E.</text>
-</g>
 <g id="elem-SS-CHEM">
 <polygon class="elem" points="199.785,408.979 220.085,408.979 220.085,387.379 199.785,387.379"/>
 <polyline class="elem-fin" points="219.09,408.979 220.085,407.984"/>
@@ -273,50 +269,12 @@
 <polyline class="rappel" points="134.777,408.979 199.785,408.979"/>
 <text x="111.558" y="414.77" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">CHEMINÉE</text>
 </g>
-<g id="elem-SS-ESC">
-<polygon class="elem" points="531.835,333.729 531.835,212.029 494.835,212.029 494.835,333.729"/>
-<polyline class="elem-fin" points="531.835,325.037 494.835,325.037"/>
-<polyline class="elem-fin" points="531.835,316.344 494.835,316.344"/>
-<polyline class="elem-fin" points="531.835,307.651 494.835,307.651"/>
-<polyline class="elem-fin" points="531.835,298.958 494.835,298.958"/>
-<polyline class="elem-fin" points="531.835,290.265 494.835,290.265"/>
-<polyline class="elem-fin" points="531.835,281.572 494.835,281.572"/>
-<polyline class="elem-fin" points="531.835,272.879 494.835,272.879"/>
-<polyline class="elem-fin" points="531.835,264.187 494.835,264.187"/>
-<polyline class="elem-fin" points="531.835,255.494 494.835,255.494"/>
-<polyline class="elem-fin" points="531.835,246.801 494.835,246.801"/>
-<polyline class="elem-fin" points="531.835,238.108 494.835,238.108"/>
-<polyline class="elem-fin" points="531.835,229.415 494.835,229.415"/>
-<polyline class="elem-fin" points="531.835,220.722 494.835,220.722"/>
-<polyline class="elem" points="513.335,328.69 513.335,214.549"/>
-<circle class="elem" cx="513.335" cy="328.69" r="1.764"/>
-<path class="elem-plein" fill-rule="evenodd" d="M 513.335 214.549 L 511.067 220.596 L 515.603 220.596 Z"/>
-<path class="masque" fill-rule="evenodd" d="M 512.075 289.771 L 512.075 255.988 L 501.526 255.988 L 501.526 289.771 Z"/>
-<text x="509.22" y="272.879" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000" transform="rotate(-90 509.22 272.879)">MONTE</text>
-<path class="masque" fill-rule="evenodd" d="M 525.32 305.098 L 525.32 277.17 L 514.771 277.17 L 514.771 305.098 Z"/>
-<text x="522.465" y="291.134" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000" transform="rotate(-90 522.465 291.134)">14 CM</text>
-</g>
 <g id="elem-SS-EVENT">
 <polygon class="elem" points="449.135,148.329 449.135,135.829 439.135,135.829 439.135,148.329"/>
 <polyline class="elem-fin" points="449.135,148.329 439.135,135.829"/>
 <polyline class="elem-fin" points="439.135,148.329 449.135,135.829"/>
 <polyline class="rappel" points="413.434,143.873 439.135,143.873"/>
 <text x="398.768" y="142.025" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">ÉVENT</text>
-</g>
-<g id="elem-SS-EVIER">
-<polygon class="elem" points="232.085,511.729 252.985,511.729 252.985,468.229 232.085,468.229"/>
-<polygon class="elem-fin" points="248.485,509.229 236.585,509.229 235.82,509.077 235.171,508.644 234.737,507.995 234.585,507.229 234.585,472.729 234.737,471.964 235.171,471.315 235.82,470.882 236.585,470.729 248.485,470.729 249.25,470.882 249.899,471.315 250.333,471.964 250.485,472.729 250.485,507.229 250.333,507.995 249.899,508.644 249.25,509.077"/>
-<text x="248.741" y="465.37" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">BAC</text>
-</g>
-<g id="elem-SS-FOUR">
-<polygon class="elem" points="276.085,381.629 308.585,381.629 308.585,340.129 276.085,340.129"/>
-<polygon class="elem-fin" points="278.085,379.629 306.585,379.629 306.585,342.129 278.085,342.129"/>
-<polyline class="rappel" points="308.585,386.033 308.585,381.629"/>
-<text x="303.335" y="392.719" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">FOURNAISE</text>
-</g>
-<g id="elem-SS-HUILE">
-<polygon class="elem" points="345.595,528.579 292.275,528.579 288.452,527.819 285.211,525.653 283.045,522.412 282.285,518.589 282.285,518.569 283.045,514.746 285.211,511.505 288.452,509.34 292.275,508.579 345.595,508.579 349.418,509.34 352.659,511.505 354.825,514.746 355.585,518.569 355.585,518.589 354.825,522.412 352.659,525.653 349.418,527.819"/>
-<text x="318.935" y="520.867" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">RÉS. HUILE</text>
 </g>
 <g id="elem-SS-RAMO">
 <polygon class="elem" points="218.635,406.679 242.635,406.679 242.635,382.679 218.635,382.679"/>
@@ -376,7 +334,7 @@
 <polyline class="str-fin" points="448.135,286.647 448.135,178.538"/>
 <path class="str-plein" fill-rule="evenodd" d="M 448.135 178.538 L 445.867 184.586 L 450.403 184.586 Z"/>
 <path class="str-plein" fill-rule="evenodd" d="M 448.135 286.647 L 445.867 280.6 L 450.403 280.6 Z"/>
-<text x="440.24" y="232.593" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000" transform="rotate(-90 440.24 232.593)">SOLIVES 2x10 @ 20 c/c</text>
+<text x="440.24" y="236.917" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000" transform="rotate(-90 440.24 236.917)">SOLIVES 2x10 @ 20 c/c</text>
 </g>
 <g id="str-SS-F01">
 <polygon class="str-tir" points="676.135,524.979 676.135,546.979 220.135,546.979 220.135,524.979"/>
@@ -689,15 +647,14 @@
 <polyline class="cote" points="452.135,324.979 540.135,324.979"/>
 <polyline class="cote-tick" points="449.819,327.296 454.451,322.663"/>
 <polyline class="cote-tick" points="537.819,327.296 542.451,322.663"/>
-<text x="414.73" y="393.061" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">7'-4&quot; (2,24 m)</text>
-<polyline class="rappel" points="441.089,386.375 465.335,324.979"/>
+<text x="511.76" y="321.116" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">7'-4&quot; (2,24 m)</text>
 </g>
 <g id="lc-SS-044">
 <polyline class="cote" points="540.135,324.979 548.135,324.979"/>
 <polyline class="cote-tick" points="537.819,327.296 542.451,322.663"/>
 <polyline class="cote-tick" points="545.819,327.296 550.451,322.663"/>
-<text x="554.491" y="315.816" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">8&quot; (0,20 m)</text>
-<polyline class="rappel" points="541.335,317.663 541.335,324.979"/>
+<text x="544.135" y="310.735" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">8&quot; (0,20 m)</text>
+<polyline class="rappel" points="541.335,312.582 541.335,324.979"/>
 </g>
 <g id="lc-SS-045">
 <polyline class="cote" points="548.135,324.979 666.135,324.979"/>
@@ -757,8 +714,8 @@
 <polyline class="cote" points="439.135,148.979 481.135,148.979"/>
 <polyline class="cote-tick" points="436.819,151.296 441.451,146.663"/>
 <polyline class="cote-tick" points="478.819,151.296 483.451,146.663"/>
-<text x="482.36" y="138.951" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">3'-6&quot; (1,07 m)</text>
-<polyline class="rappel" points="474.835,140.799 474.835,148.979"/>
+<text x="414.328" y="184.306" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">3'-6&quot; (1,07 m)</text>
+<polyline class="rappel" points="440.687,177.619 445.435,148.979"/>
 </g>
 <g id="lc-SS-054">
 <polyline class="cote" points="561.135,160.979 561.135,100.979"/>
@@ -785,30 +742,23 @@
 </g>
 <g id="piece-SS-PRINC">
 <path class="invisible" fill-rule="evenodd" d="M 230.135 530.979 L 666.135 530.979 L 666.135 170.979 L 230.135 170.979 Z"/>
-<text x="400.283" y="350.45" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">SOUS-SOL</text>
-<text x="400.283" y="362.099" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">36'-4&quot; × 30'-0&quot;</text>
-<text x="400.283" y="372.48" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">1090,0 pi² (101,3 m²)</text>
+<text x="410.141" y="354.349" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">36'-4&quot; × 30'-0&quot;</text>
+<text x="410.141" y="364.73" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">1090,0 pi² (101,3 m²)</text>
 </g>
 <g id="piece-SS-LEG">
 <path class="invisible" fill-rule="evenodd" d="M 537.135 110.979 L 449.135 110.979 L 449.135 160.979 L 537.135 160.979 Z"/>
-<text x="504.568" y="127.898" font-family="Arial, Helvetica, sans-serif" font-size="12.317" font-weight="bold" text-anchor="middle" fill="#000000">CAVEAU</text>
-</g>
-<g id="piece-SS-PERRON">
-<path class="invisible" fill-rule="evenodd" d="M 448.135 582.979 L 448.135 540.979 L 388.135 540.979 L 388.135 582.979 Z"/>
-<polyline class="rappel" points="373.017,579.956 391.159,579.956"/>
-<circle class="elem-plein" cx="391.159" cy="579.956" r="1.26"/>
-<text x="316.7" y="578.348" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">EXCROISSANCE</text>
-<text x="316.7" y="594.958" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">SOUS PERRON</text>
+<text x="498.323" y="132.959" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">7'-4&quot; × 4'-2&quot;</text>
+<text x="498.323" y="143.34" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">30,6 pi² (2,8 m²)</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="70-Incertitudes" id="70-Incertitudes">
 <g id="ecart-004">
 <circle class="inc" cx="220.135" cy="492.979" r="1.512"/>
-<polyline class="inc-c" points="207.017,462.507 220.135,492.979"/>
-<path class="inc" fill-rule="evenodd" d="M 196.938 462.507 L 207.017 462.507 L 201.978 453.779 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 201.272 459.772 L 202.683 459.772 L 202.542 455.932 L 201.413 455.932 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 201.272 461.343 L 202.683 461.343 L 202.683 460.47 L 201.272 460.47 Z"/>
-<text x="208.025" y="462.507" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">4</text>
+<polyline class="inc-c" points="241.804,495.889 220.135,492.979"/>
+<path class="inc" fill-rule="evenodd" d="M 241.804 495.889 L 251.883 495.889 L 246.844 487.16 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 246.138 493.154 L 247.549 493.154 L 247.408 489.313 L 246.279 489.313 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 246.138 494.725 L 247.549 494.725 L 247.549 493.852 L 246.138 493.852 Z"/>
+<text x="252.891" y="495.889" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">4</text>
 </g>
 <g id="ecart-007">
 <circle class="inc" cx="493.135" cy="103.979" r="1.512"/>
@@ -820,11 +770,11 @@
 </g>
 <g id="ecart-010">
 <circle class="inc" cx="448.135" cy="336.979" r="1.512"/>
-<polyline class="inc-c" points="458.507,384.93 448.135,336.979"/>
-<path class="inc" fill-rule="evenodd" d="M 453.467 393.659 L 463.546 393.659 L 458.507 384.93 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 457.801 390.924 L 459.212 390.924 L 459.071 387.084 L 457.942 387.084 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 457.801 392.495 L 459.212 392.495 L 459.212 391.622 L 457.801 391.622 Z"/>
-<text x="464.554" y="393.659" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">10</text>
+<polyline class="inc-c" points="487.126,294.741 448.135,336.979"/>
+<path class="inc" fill-rule="evenodd" d="M 487.126 294.741 L 497.205 294.741 L 492.165 286.012 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 491.46 292.006 L 492.871 292.006 L 492.73 288.165 L 491.601 288.165 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 491.46 293.577 L 492.871 293.577 L 492.871 292.704 L 491.46 292.704 Z"/>
+<text x="498.213" y="294.741" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">10</text>
 </g>
 <g id="ecart-011">
 <circle class="inc" cx="544.135" cy="336.979" r="1.512"/>
@@ -836,11 +786,11 @@
 </g>
 <g id="ecart-012">
 <circle class="inc" cx="352.135" cy="360.979" r="1.512"/>
-<polyline class="inc-c" points="351.777,354.213 352.135,360.979"/>
-<path class="inc" fill-rule="evenodd" d="M 341.699 354.213 L 351.777 354.213 L 346.738 345.485 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 346.033 351.478 L 347.444 351.478 L 347.303 347.638 L 346.174 347.638 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 346.033 353.049 L 347.444 353.049 L 347.444 352.177 L 346.033 352.177 Z"/>
-<text x="352.785" y="354.213" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">12</text>
+<polyline class="inc-c" points="352.135,354.95 352.135,360.979"/>
+<path class="inc" fill-rule="evenodd" d="M 347.717 354.95 L 357.796 354.95 L 352.757 346.221 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 352.051 352.215 L 353.462 352.215 L 353.321 348.374 L 352.192 348.374 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 352.051 353.786 L 353.462 353.786 L 353.462 352.913 L 352.051 352.913 Z"/>
+<text x="358.804" y="354.95" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">12</text>
 </g>
 <g id="ecart-020">
 <circle class="inc" cx="376.135" cy="160.979" r="1.512"/>
@@ -852,19 +802,11 @@
 </g>
 <g id="ecart-021">
 <circle class="inc" cx="481.135" cy="165.979" r="1.512"/>
-<polyline class="inc-c" points="493.401,150.466 481.135,165.979"/>
-<path class="inc" fill-rule="evenodd" d="M 493.401 150.466 L 503.48 150.466 L 498.44 141.738 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 497.735 147.731 L 499.146 147.731 L 499.005 143.891 L 497.876 143.891 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 497.735 149.302 L 499.146 149.302 L 499.146 148.43 L 497.735 148.43 Z"/>
-<text x="504.487" y="150.466" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">21</text>
-</g>
-<g id="ecart-022">
-<circle class="inc" cx="515.135" cy="270.979" r="1.512"/>
-<polyline class="inc-c" points="536.804,273.889 515.135,270.979"/>
-<path class="inc" fill-rule="evenodd" d="M 536.804 273.889 L 546.883 273.889 L 541.844 265.16 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 541.138 271.154 L 542.549 271.154 L 542.408 267.313 L 541.279 267.313 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 541.138 272.725 L 542.549 272.725 L 542.549 271.852 L 541.138 271.852 Z"/>
-<text x="547.891" y="273.889" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">22</text>
+<polyline class="inc-c" points="488.024,184.231 481.135,165.979"/>
+<path class="inc" fill-rule="evenodd" d="M 482.985 192.959 L 493.064 192.959 L 488.024 184.231 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 487.319 190.224 L 488.73 190.224 L 488.589 186.384 L 487.46 186.384 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 487.319 191.795 L 488.73 191.795 L 488.73 190.923 L 487.319 190.923 Z"/>
+<text x="494.072" y="192.959" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">21</text>
 </g>
 <g id="ecart-024">
 <circle class="inc" cx="352.135" cy="336.979" r="1.512"/>
@@ -876,11 +818,11 @@
 </g>
 <g id="ecart-025">
 <circle class="inc" cx="260.135" cy="350.979" r="1.512"/>
-<polyline class="inc-c" points="254.738,354.836 260.135,350.979"/>
-<path class="inc" fill-rule="evenodd" d="M 249.699 363.564 L 259.777 363.564 L 254.738 354.836 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 254.033 360.83 L 255.444 360.83 L 255.303 356.989 L 254.174 356.989 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 254.033 362.401 L 255.444 362.401 L 255.444 361.528 L 254.033 361.528 Z"/>
-<text x="260.785" y="363.564" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">25</text>
+<polyline class="inc-c" points="265.426,353.889 260.135,350.979"/>
+<path class="inc" fill-rule="evenodd" d="M 265.426 353.889 L 275.505 353.889 L 270.466 345.16 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 269.76 351.154 L 271.171 351.154 L 271.03 347.313 L 269.901 347.313 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 269.76 352.725 L 271.171 352.725 L 271.171 351.852 L 269.76 351.852 Z"/>
+<text x="276.513" y="353.889" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">25</text>
 </g>
 <g id="ecart-026">
 <circle class="inc" cx="210.135" cy="398.979" r="1.512"/>

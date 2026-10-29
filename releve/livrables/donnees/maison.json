@@ -44,6 +44,10 @@
   ],
   "date": "2026-10-29",
   "revision": "R0",
+  "affichage": {
+   "noms_pieces": false,
+   "note": "noms des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv"
+  },
   "implantation": {
    "source": "P7",
    "note": "cotes du plan d'implantation (pieds décimaux convertis en pouces) ; maison « projetée » 1957",
@@ -980,34 +984,6 @@
    ],
    "elements": [
     {
-     "id": "elem-SS-CE",
-     "type": "chauffe-eau",
-     "nom": "Chauffe-eau",
-     "nom_original": "EAU CHAUDE",
-     "position": {
-      "x": 26.0,
-      "y": 107.7,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 22.5,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "diamètre du cercle dessiné ; ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire"
-      },
-      "largeur": {
-       "valeur": 22.5,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "cercle"
-      }
-     },
-     "texte_original": "EAU CHAUDE",
-     "note": "Cercle contre le mur gauche, devant (côté rue) la cheminée."
-    },
-    {
      "id": "elem-SS-CHEM",
      "type": "cheminee",
      "nom": "Cheminée (base, avec conduit)",
@@ -1034,52 +1010,6 @@
      },
      "texte_original": null,
      "note": "Massif en saillie hors du mur gauche (elem-SS-CHEM), conduit rectangulaire dessiné à l'intérieur (≈ x -13.3 à -5.6, y 137.1 à 148.7, ESTIMÉ). Semelle tiretée autour. Aucun texte « CHEMINÉE » ; identifié par la porte de ramonage et la virole."
-    },
-    {
-     "id": "elem-SS-ESC",
-     "type": "escalier",
-     "nom": "Escalier vers le rez-de-chaussée",
-     "nom_original": "14 C.M. / RAMPE",
-     "position": {
-      "x": 293.2,
-      "y": 268.1,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 121.7,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "course mesurée au dessin, du pied (≈ poutre arrière) au palier"
-      },
-      "largeur": {
-       "valeur": 37,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "largeur non cotée"
-      }
-     },
-     "texte_original": "14 C.M.",
-     "escalier": {
-      "nb_contremarches": {
-       "valeur": 14,
-       "source": "LU",
-       "photo": "P2",
-       "ref": "cote-SS-055"
-      },
-      "fleche": "MONTE",
-      "direction": "+y",
-      "texte_original": "14 C.M."
-     },
-     "note": "volée droite ; 13 girons dessinés ; mot MONTE absent (flèche seule) ; échappée sous la poutre arrière à vérifier ; rampe (main courante) écrite « RAMPE » du côté gauche de la volée (P2)",
-     "rampe": {
-      "texte_original": "RAMPE",
-      "cote": "gauche de la volée (côté −x, ≈ 22'-11\" du coin gauche)",
-      "source": "LU",
-      "photo": "P2",
-      "note": "« RAMPE » écrit avec une flèche vers le côté gauche de la volée ; position ESTIMÉE ; non dessinée"
-     }
     },
     {
      "id": "elem-SS-EVENT",
@@ -1109,90 +1039,6 @@
      "texte_original": "EVENT GRILLAGÉ",
      "note": "Dans le mur gauche du caveau (mur-SS-005).",
      "mur_id": "mur-SS-005"
-    },
-    {
-     "id": "elem-SS-EVIER",
-     "type": "bac-lavage",
-     "nom": "Évier à lessive",
-     "nom_original": "EVIER À LESSIVE",
-     "position": {
-      "x": 22.4,
-      "y": 51.0,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 20.9,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
-      },
-      "largeur": {
-       "valeur": 43.5,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
-      }
-     },
-     "texte_original": "EVIER À LESSIVE",
-     "note": "Contre le mur gauche, sous la fenêtre basse ouv-SS-007."
-    },
-    {
-     "id": "elem-SS-FOUR",
-     "type": "fournaise",
-     "nom": "Fournaise",
-     "nom_original": "FOURNAISE",
-     "position": {
-      "x": 72.2,
-      "y": 180.1,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 32.5,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
-      },
-      "largeur": {
-       "valeur": 41.5,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
-      }
-     },
-     "texte_original": "FOURNAISE",
-     "note": "Rectangle entre les deux poutres, près du mur gauche. Tracés tiretés la reliant à la cheminée (voir tuyau à fumée (non reporté))."
-    },
-    {
-     "id": "elem-SS-HUILE",
-     "type": "reservoir-huile",
-     "nom": "Réservoir à l'huile",
-     "nom_original": "RESERVOIR À L'HUILE",
-     "position": {
-      "x": 98.8,
-      "y": 22.4,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 73.3,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
-      },
-      "largeur": {
-       "valeur": 20.0,
-       "source": "ESTIMÉ",
-       "photo": "P2",
-       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
-      }
-     },
-     "texte_original": "RESERVOIR À L'HUILE",
-     "note": "Rectangle contre le mur avant, à gauche de l'excroissance du perron."
     },
     {
      "id": "elem-SS-RAMO",
@@ -3851,6 +3697,171 @@
     "Symbole sur la colonne arrière gauche (prise ? interprétation)",
     "Symbole sur la colonne avant droite (prise ? interprétation)",
     "Symbole « Θ » à droite de la colonne avant droite (interprétation : prise/sortie)"
+   ],
+   "elements_retires": [
+    {
+     "id": "elem-SS-CE",
+     "type": "chauffe-eau",
+     "nom": "Chauffe-eau",
+     "nom_original": "EAU CHAUDE",
+     "position": {
+      "x": 26.0,
+      "y": 107.7,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 22.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "diamètre du cercle dessiné ; ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire"
+      },
+      "largeur": {
+       "valeur": 22.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "cercle"
+      }
+     },
+     "texte_original": "EAU CHAUDE",
+     "note": "Cercle contre le mur gauche, devant (côté rue) la cheminée.",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-SS-ESC",
+     "type": "escalier",
+     "nom": "Escalier vers le rez-de-chaussée",
+     "nom_original": "14 C.M. / RAMPE",
+     "position": {
+      "x": 293.2,
+      "y": 268.1,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 121.7,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "course mesurée au dessin, du pied (≈ poutre arrière) au palier"
+      },
+      "largeur": {
+       "valeur": 37,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "largeur non cotée"
+      }
+     },
+     "texte_original": "14 C.M.",
+     "escalier": {
+      "nb_contremarches": {
+       "valeur": 14,
+       "source": "LU",
+       "photo": "P2",
+       "ref": "cote-SS-055"
+      },
+      "fleche": "MONTE",
+      "direction": "+y",
+      "texte_original": "14 C.M."
+     },
+     "note": "volée droite ; 13 girons dessinés ; mot MONTE absent (flèche seule) ; échappée sous la poutre arrière à vérifier ; rampe (main courante) écrite « RAMPE » du côté gauche de la volée (P2)",
+     "rampe": {
+      "texte_original": "RAMPE",
+      "cote": "gauche de la volée (côté −x, ≈ 22'-11\" du coin gauche)",
+      "source": "LU",
+      "photo": "P2",
+      "note": "« RAMPE » écrit avec une flèche vers le côté gauche de la volée ; position ESTIMÉE ; non dessinée"
+     },
+     "retire_selon": "l'escalier entre le sous-sol et le RDC n'existe plus (2e constat du propriétaire, 2026-10-29)"
+    },
+    {
+     "id": "elem-SS-EVIER",
+     "type": "bac-lavage",
+     "nom": "Évier à lessive",
+     "nom_original": "EVIER À LESSIVE",
+     "position": {
+      "x": 22.4,
+      "y": 51.0,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 20.9,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
+      },
+      "largeur": {
+       "valeur": 43.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
+      }
+     },
+     "texte_original": "EVIER À LESSIVE",
+     "note": "Contre le mur gauche, sous la fenêtre basse ouv-SS-007.",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-SS-FOUR",
+     "type": "fournaise",
+     "nom": "Fournaise",
+     "nom_original": "FOURNAISE",
+     "position": {
+      "x": 72.2,
+      "y": 180.1,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 32.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
+      },
+      "largeur": {
+       "valeur": 41.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
+      }
+     },
+     "texte_original": "FOURNAISE",
+     "note": "Rectangle entre les deux poutres, près du mur gauche. Tracés tiretés la reliant à la cheminée (voir tuyau à fumée (non reporté)).",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-SS-HUILE",
+     "type": "reservoir-huile",
+     "nom": "Réservoir à l'huile",
+     "nom_original": "RESERVOIR À L'HUILE",
+     "position": {
+      "x": 98.8,
+      "y": 22.4,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 73.3,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
+      },
+      "largeur": {
+       "valeur": 20.0,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
+      }
+     },
+     "texte_original": "RESERVOIR À L'HUILE",
+     "note": "Rectangle contre le mur avant, à gauche de l'excroissance du perron.",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    }
    ]
   },
   {
@@ -4187,28 +4198,6 @@
      "y2": 157,
      "note": "Cloison hall / salon (ARCHE) ; axe x = 12'-2\" + 2'-5\" + 3'-11\" = 18'-6\" (cote-RDC-040).",
      "source_position": "DÉDUIT"
-    },
-    {
-     "id": "mur-RDC-019",
-     "type": "int",
-     "porteur": "inconnu",
-     "indices_porteur": [
-      "au-dessus de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe y = 157)",
-      "axe B « porteur à l'origine » (P1, ing. 2016)"
-     ],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "PRÉSUMÉ",
-      "photo": null,
-      "note": "cloison non cotée ; 4½\" usuel (dessin ≈ 6 po, ESTIMÉ)",
-      "ref": "ecart-006"
-     },
-     "x1": 439.5,
-     "y1": 157,
-     "x2": 451,
-     "y2": 157,
-     "note": "Trumeau conservé entre l'ancienne arche 6'-0\" et le mur droit (axe B). Le reste de la cloison salon / passage-cuisine n'existe plus (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)). Extrémité x = jambage de l'arche, position ESTIMÉE au dessin (P4).",
-     "source_position": "ESTIMÉ"
     },
     {
      "id": "mur-RDC-020",
@@ -5328,18 +5317,18 @@
      "polygone": [
       [
        148.25,
-       298.25
-      ],
-      [
-       172.75,
-       298.25
-      ],
-      [
-       172.75,
        335.25
       ],
       [
        148.25,
+       298.25
+      ],
+      [
+       172.75,
+       298.25
+      ],
+      [
+       172.75,
        335.25
       ]
      ],
@@ -5424,18 +5413,18 @@
      "id": "piece-RDC-UTI",
      "nom": "Salle à manger",
      "nom_original": "CHAMBRE D'UTILITÉ (1957) ; « Salle à manger » (2016)",
-     "description": "Salle à manger : ancienne chambre d'utilité (1957), ouverte sur la cuisine, l'escalier et le dégagement (constat 2026-10-29) ; nommée « Salle à manger » sur le croquis 2016 (P1)",
+     "description": "Salle à manger : ancienne chambre d'utilité (1957), ouverte sur la cuisine et le dégagement ; inclut l'emplacement de l'ancien escalier et du placard à balais (constat 2026-10-29) ; nommée « Salle à manger » sur le croquis 2016 (P1)",
      "polygone": [
       [
        148.25,
        204.0
       ],
       [
-       275.0,
+       316.0,
        204.0
       ],
       [
-       275.0,
+       316.0,
        370.0
       ],
       [
@@ -5452,7 +5441,7 @@
       ]
      ],
      "superficie": {
-      "valeur": 122.1,
+      "valeur": 169.4,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5465,7 +5454,7 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 126.75,
+       "valeur": 167.75,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5809,7 +5798,7 @@
      "description": null,
      "polygone": [
       [
-       439.5,
+       446.0,
        157.0
       ],
       [
@@ -5823,18 +5812,10 @@
       [
        446.0,
        10.0
-      ],
-      [
-       446.0,
-       154.75
-      ],
-      [
-       439.5,
-       154.75
       ]
      ],
      "superficie": {
-      "valeur": 226.3,
+      "valeur": 226.4,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5875,16 +5856,8 @@
        157.0
       ],
       [
-       439.5,
-       157.0
-      ],
-      [
-       439.5,
-       159.25
-      ],
-      [
        446.0,
-       159.25
+       157.0
       ],
       [
        446.0,
@@ -5892,7 +5865,7 @@
       ]
      ],
      "superficie": {
-      "valeur": 192.2,
+      "valeur": 192.3,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5912,56 +5885,6 @@
       },
       "y": {
        "valeur": 213.0,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      }
-     }
-    },
-    {
-     "id": "piece-RDC-ESC",
-     "nom": "Escalier",
-     "nom_original": "(aucun nom au plan)",
-     "description": "Escalier du sous-sol et palier arrière ; cloisons de la cage et placard à balais retirés (constat 2026-10-29) ; garde-corps non relevé",
-     "polygone": [
-      [
-       275.0,
-       370.0
-      ],
-      [
-       275.0,
-       204.0
-      ],
-      [
-       316.0,
-       204.0
-      ],
-      [
-       316.0,
-       370.0
-      ]
-     ],
-     "superficie": {
-      "valeur": 47.3,
-      "source": "DÉDUIT",
-      "photo": null,
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-     },
-     "hauteur_plafond": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 41.0,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      },
-      "y": {
-       "valeur": 166.0,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -6046,73 +5969,6 @@
      "texte_original": null,
      "photo": "P4",
      "note": "massif hachuré accolé à l'extérieur du mur gauche, vis-à-vis de la cloison S. de bain / chambre avant ; un conduit (rectangle blanc) dedans"
-    },
-    {
-     "id": "elem-RDC-ESC1",
-     "type": "escalier",
-     "nom": "Escalier vers le sous-sol (partie visible)",
-     "nom_original": "2.R. 14 C.M. / RAMPE",
-     "position": {
-      "x": 295.5,
-      "y": 288.88,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 90.25,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "partie visible, du palier (y ≈ 334) à la cloison du BALAIS ; les marches inférieures passent sous le BALAIS (course totale ≈ 130 po au SS)"
-      },
-      "largeur": {
-       "valeur": 36.5,
-       "source": "DÉDUIT",
-       "photo": "P4",
-       "note": "entre les axes des anciennes cloisons x = 23'-0\" et 26'-4\" (retirées, constat 2026-10-29) (axes LU, cloisons 4½\" PRÉSUMÉ)"
-      }
-     },
-     "texte_original": "2.R. 14 C.M.",
-     "escalier": {
-      "nb_contremarches": {
-       "valeur": 14,
-       "source": "LU",
-       "photo": "P4",
-       "ref": "cote-RDC-077",
-       "note": "nombre total ; seulement ≈ 10 girons visibles au RDC"
-      },
-      "fleche": "DESCEND",
-      "direction": "-y",
-      "texte_original": "2.R. 14 C.M."
-     },
-     "note": "préfixe « 2.R. » non interprété"
-    },
-    {
-     "id": "elem-RDC-LAVABO",
-     "type": "lavabo",
-     "nom": "Lavabo",
-     "nom_original": "(non écrit)",
-     "position": {
-      "x": 57,
-      "y": 206.5,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 11,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      },
-      "largeur": {
-       "valeur": 11,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      }
-     },
-     "texte_original": null,
-     "photo": "P4",
-     "note": "trapèze contre la cloison arrière de la S. de bain ; petit cadre au-dessus contenant la cote « 9'-0\" » (miroir/tablette ?)"
     },
     {
      "id": "elem-RDC-MAR-AR",
@@ -6243,33 +6099,6 @@
      "texte_original": "TRAPPE",
      "photo": "P4",
      "note": "rectangle en tirets dans la S. de bain (tirets = au-dessus, probablement trappe d'entretoit)"
-    },
-    {
-     "id": "elem-RDC-WC",
-     "type": "toilette",
-     "nom": "Toilette (probable)",
-     "nom_original": "(non écrit)",
-     "position": {
-      "x": 59,
-      "y": 166,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 20,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      },
-      "largeur": {
-       "valeur": 16,
-       "source": "ESTIMÉ",
-       "photo": "P4"
-      }
-     },
-     "texte_original": null,
-     "photo": "P4",
-     "note": "contour arrondi contre la cloison avant de la S. de bain avec un cercle-croix : interprété comme cuvette ; pourrait être un luminaire"
     }
    ],
    "structure": [
@@ -6328,6 +6157,25 @@
      "note": "poutre affleurante (« FLUSH ») au plafond de la cuisine, de la cloison de l'escalier au mur droit ; y NON coté : ≈ 206 po ESTIMÉ (P4), concordant à 2 po près avec l'axe C (204) et la poutre arrière du sous-sol ; aussi visible en filigrane sur P1 (cote-RDC-221)"
     },
     {
+     "id": "str-RDC-P02",
+     "type": "poutre",
+     "dimension": {
+      "texte_original": null,
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "section non relevée"
+     },
+     "sens": "x",
+     "geometrie": {
+      "x1": 175.0,
+      "y1": 157.0,
+      "x2": 446.0,
+      "y2": 157.0
+     },
+     "note": "Poutre au plafond du RDC côté rue, qui suit la poutre 8\"x10\" du sous-sol (str-SS-P02, axe B) — 2e constat du propriétaire (2026-10-29). Étendue PRÉSUMÉE sur la partie ouverte de l'axe B (de la fin de la cloison S. de bain / chambre avant au mur droit) ; aucune poutre sur l'axe C selon le propriétaire."
+    },
+    {
      "id": "str-RDC-S01",
      "type": "solives",
      "dimension": {
@@ -6338,9 +6186,9 @@
      },
      "sens": "y",
      "geometrie": {
-      "x1": 177.25,
+      "x1": 148.25,
       "y1": 206.25,
-      "x2": 272.75,
+      "x2": 316,
       "y2": 370,
       "espacement": 16
      },
@@ -9544,7 +9392,7 @@
      "texte_original": "ARMOIRES BAS HAUT",
      "photo": "P4",
      "note": "comptoir/armoires le long du mur arrière de la cuisine ; « HAUT » avec flèche vers le mur droit",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     },
     {
      "id": "elem-RDC-ARM-DR",
@@ -9572,7 +9420,7 @@
      "texte_original": null,
      "photo": "P4",
      "note": "bande d'armoires le long du mur droit contenant le poêle et le réfrigérateur",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     },
     {
      "id": "elem-RDC-ARM-EAR",
@@ -9600,7 +9448,7 @@
      "texte_original": "ARMOIRES",
      "photo": "P4",
      "note": "le long du mur gauche de l'entrée arrière",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     },
     {
      "id": "elem-RDC-BAIN",
@@ -9628,7 +9476,7 @@
      "texte_original": null,
      "photo": "P4",
      "note": "rectangle le long du mur gauche sous la fenêtre de la S. de bain",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     },
     {
      "id": "elem-RDC-COMPT",
@@ -9656,7 +9504,48 @@
      "texte_original": "COMPTOIR",
      "photo": "P4",
      "note": "contre le mur droit, bout gauche arrondi (presqu'île)",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-RDC-ESC1",
+     "type": "escalier",
+     "nom": "Escalier vers le sous-sol (partie visible)",
+     "nom_original": "2.R. 14 C.M. / RAMPE",
+     "position": {
+      "x": 295.5,
+      "y": 288.88,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 90.25,
+       "source": "ESTIMÉ",
+       "photo": "P4",
+       "note": "partie visible, du palier (y ≈ 334) à la cloison du BALAIS ; les marches inférieures passent sous le BALAIS (course totale ≈ 130 po au SS)"
+      },
+      "largeur": {
+       "valeur": 36.5,
+       "source": "DÉDUIT",
+       "photo": "P4",
+       "note": "entre cloisons x = 23'-0\" et 26'-4\" (axes LU, cloisons 4½\" PRÉSUMÉ)"
+      }
+     },
+     "texte_original": "2.R. 14 C.M.",
+     "escalier": {
+      "nb_contremarches": {
+       "valeur": 14,
+       "source": "LU",
+       "photo": "P4",
+       "ref": "cote-RDC-077",
+       "note": "nombre total ; seulement ≈ 10 girons visibles au RDC"
+      },
+      "fleche": "DESCEND",
+      "direction": "-y",
+      "texte_original": "2.R. 14 C.M."
+     },
+     "note": "préfixe « 2.R. » non interprété",
+     "retire_selon": "l'escalier entre le sous-sol et le RDC n'existe plus (2e constat du propriétaire, 2026-10-29)"
     },
     {
      "id": "elem-RDC-EVIER",
@@ -9684,7 +9573,7 @@
      "texte_original": "EVIER",
      "photo": "P4",
      "note": "sous la fenêtre de la cuisine",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     },
     {
      "id": "elem-RDC-LAV",
@@ -9712,7 +9601,35 @@
      "texte_original": "LAV.",
      "photo": "P4",
      "note": "adossée à la cloison d'escalier côté cuisine",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-RDC-LAVABO",
+     "type": "lavabo",
+     "nom": "Lavabo",
+     "nom_original": "(non écrit)",
+     "position": {
+      "x": 57,
+      "y": 206.5,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 11,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      },
+      "largeur": {
+       "valeur": 11,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      }
+     },
+     "texte_original": null,
+     "photo": "P4",
+     "note": "trapèze contre la cloison arrière de la S. de bain ; petit cadre au-dessus contenant la cote « 9'-0\" » (miroir/tablette ?)",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     },
     {
      "id": "elem-RDC-POELE",
@@ -9740,7 +9657,7 @@
      "texte_original": "POELE 220",
      "photo": "P4",
      "note": "« 220 » = prise 220 V",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     },
     {
      "id": "elem-RDC-REF",
@@ -9767,7 +9684,7 @@
      },
      "texte_original": "REF.",
      "photo": "P4",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     },
     {
      "id": "elem-RDC-SEC",
@@ -9795,12 +9712,40 @@
      "texte_original": "220 SEC.",
      "photo": "P4",
      "note": "« 220 » = prise 220 V",
-     "retire_selon": "demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire non représentés ; position d'origine conservée ici pour mémoire"
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-RDC-WC",
+     "type": "toilette",
+     "nom": "Toilette (probable)",
+     "nom_original": "(non écrit)",
+     "position": {
+      "x": 59,
+      "y": 166,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 20,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      },
+      "largeur": {
+       "valeur": 16,
+       "source": "ESTIMÉ",
+       "photo": "P4"
+      }
+     },
+     "texte_original": null,
+     "photo": "P4",
+     "note": "contour arrondi contre la cloison avant de la S. de bain avec un cercle-croix : interprété comme cuvette ; pourrait être un luminaire",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     }
    ],
    "murs_retires": [
     {
-     "id": "mur-RDC-019-1957",
+     "id": "mur-RDC-019",
      "type": "int",
      "porteur": "inconnu",
      "indices_porteur": [
@@ -9821,8 +9766,7 @@
      "note": "Cloison salon / passage et salon / cuisine (ARCHE 6'-0\") ; axe y = 13'-1\" (cote-RDC-044, -046).",
      "source_position": "DÉDUIT",
      "retire_selon": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)",
-     "description_retrait": "cloison salon / passage-cuisine (axe B, y = 13'-1\") barrée en rouge de x = 18'-6\" jusqu'à l'arche 6'-0\" ; seul le trumeau à droite de l'arche (x ≥ 439.5) est conservé",
-     "note_id": "cloison d'origine complète ; le trumeau conservé garde l'id mur-RDC-019"
+     "description_retrait": "cloison salon / passage-cuisine (axe B, y = 13'-1\") barrée en rouge jusqu'à l'arche 6'-0\" ; le trumeau restant à droite de l'arche n'existe plus non plus (2e constat du propriétaire, 2026-10-29)"
     },
     {
      "id": "mur-RDC-026",
@@ -10130,22 +10074,10 @@
       316,
       204
      ],
-     "note": "dégagement / salle à manger-escalier : axe C, ancienne cloison retirée"
+     "note": "dégagement / salle à manger : axe C, ancienne cloison retirée"
     },
     {
      "id": "lz-RDC-004",
-     "p1": [
-      275,
-      204
-     ],
-     "p2": [
-      275,
-      373
-     ],
-     "note": "salle à manger / escalier : axe de l'ancienne cloison x = 22'-11\" (retirée)"
-    },
-    {
-     "id": "lz-RDC-005",
      "p1": [
       175,
       5
@@ -10326,7 +10258,7 @@
    "description": "Axes porteurs d'origine (P1) : B à 13'-1\" et C à 17'-0\" du nu ext. avant, « porteurs à l'origine ». Concordance vérifiée : ils coïncident exactement avec les axes des poutres 8x10 du sous-sol (str-SS-P02 : 10\" + 12'-3\" ; str-SS-P01 : 31'-8\" − 10\" − 13'-10\") et avec les cloisons RDC d'origine mur-RDC-012/019 (B) et mur-RDC-026 (C). Le croquis ne dit rien de leur état en 2016 ; le propriétaire a constaté le retrait des cloisons sur B (à droite de 18'-6\", sauf le trumeau près du mur droit) et sur C.",
    "impact": "critique",
    "hypothese_retenue": "Cloisons restantes sur B (mur-RDC-012, trumeau mur-RDC-019) marquées porteur « inconnu » avec indices ; aucune reprise structurale relevée.",
-   "a_valider_sur_place": "Au sous-sol : appui des solives 2x10 sur les deux poutres 8x10 (13'-1\" et 17'-0\" du nu ext. avant). Au RDC : poutre ou retombée ajoutée au plafond lors du retrait des cloisons sur les axes B et C (section, appuis, hauteur libre).",
+   "a_valider_sur_place": "Relever la poutre apparente au plafond du RDC sur l'axe B (13'-1\" du nu ext. avant) : section, hauteur libre dessous, appuis aux extrémités ; sur l'axe C (17'-0\"), où aucune poutre n'est visible : comment le plafond et les solives sont-ils portés depuis le retrait de la cloison ?",
    "photo": "P1",
    "statut": "ouvert",
    "position": [
@@ -10447,14 +10379,10 @@
    "niveau": "global",
    "description": "Escalier SS ↔ RDC : superposition à 5 po près (SS largeur ≈ 37 po ESTIMÉ, RDC 3'-5\" à l'axe des anciennes cloisons (cote-RDC-033), cage retirée) ; 14 C.M. écrit aux deux niveaux mais ≈ 10 girons visibles au RDC (les marches inférieures passaient sous le placard BALAIS) ; échappée sous la poutre arrière (17'-0\" du nu ext. avant) au pied de l'escalier non vérifiable.",
    "impact": "faible",
-   "hypothese_retenue": "Course ESTIMÉE au dessin ; position alignée sur la cage du RDC.",
-   "a_valider_sur_place": "Mesurer la hauteur et le giron des marches, la largeur de l'escalier et l'échappée sous la poutre arrière.",
+   "hypothese_retenue": "Sans objet : l'escalier n'existe plus (2e constat du propriétaire, 2026-10-29). Course ESTIMÉE au dessin ; position alignée sur la cage du RDC.",
+   "a_valider_sur_place": "",
    "photo": "P2",
-   "statut": "ouvert",
-   "position": [
-    295,
-    270
-   ]
+   "statut": "sans objet"
   },
   {
    "id": "ecart-023",
@@ -10489,7 +10417,7 @@
    "niveau": "global",
    "description": "Superposition de la plomberie : chauffe-eau du sous-sol à 2'-2\" du coin gauche et 9'-0\" du nu ext. avant : à 4'-4\" de la S. de bain et 24'-6\" de la cuisine (en plan) ; évier à lessive du sous-sol à 1'-10\" du coin gauche et 4'-3\" du nu ext. avant : à 9'-0\" de la S. de bain et 26'-0\" de la cuisine (en plan). Aucun drain, colonne de chute ni panneau électrique dessiné au sous-sol.",
    "impact": "faible",
-   "hypothese_retenue": "Aucune conduite reportée (non dessinée).",
+   "hypothese_retenue": "Aucune conduite reportée (non dessinée). Appareils du sous-sol (chauffe-eau, fournaise, réservoir à l'huile, évier à lessive) et de la S. de bain retirés du plan à la demande du propriétaire ; positions 1957 dans elements_retires.",
    "a_valider_sur_place": "Repérer au sous-sol la colonne de chute sous la S. de bain (0 à 9'-0\" du coin gauche, 13'-1\" à 18'-7\" du nu ext. avant) et sous l'ancien évier de cuisine.",
    "photo": "P2",
    "statut": "ouvert",
@@ -10552,9 +10480,9 @@
    "impact": "critique",
    "statut": "ouvert",
    "photo": "P1",
-   "description": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0\" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0\") est conservée. La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la salle de bain).",
-   "hypothese_retenue": "Cloisons retirées du plan (conservées dans murs_retires pour mémoire) ; aire ouverte découpée en zones (dégagement, salle à manger, escalier, cuisine, salon) aux axes des anciennes cloisons, sans mur. Escalier conservé (seul accès au sous-sol) ; garde-corps et reprises structurales (poutres, linteaux, retombées) non relevés. Trumeau à droite de l'ancienne arche conservé (position ESTIMÉE).",
-   "a_valider_sur_place": "Au RDC : présence d'une retombée ou poutre au plafond le long des axes B (13'-1\" du nu ext. avant) et C (17'-0\") là où les cloisons ont été enlevées, et sa hauteur libre ; garde-corps de l'escalier ; existence du trumeau près du mur droit sur l'axe B ; cloison hall / salon (arche 4'-0\") toujours en place ?",
+   "description": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0\" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0\") est conservée. La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la salle de bain). 2e constat (2026-10-29) : le trumeau à droite de l'ancienne arche n'existe plus ; l'escalier entre le sous-sol et le RDC n'existe plus ; une poutre est visible au plafond du RDC côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) — aucune sur l'axe C.",
+   "hypothese_retenue": "Cloisons retirées du plan (conservées dans murs_retires pour mémoire) ; aire ouverte découpée en zones (dégagement, salle à manger, escalier, cuisine, salon) aux axes des anciennes cloisons, sans mur. Escalier et trumeau retirés ; ouverture de plancher présumée refermée. Poutre de l'axe B dessinée (str-RDC-P02), section inconnue, étendue PRÉSUMÉE sur la partie ouverte de l'axe.",
+   "a_valider_sur_place": "Au RDC : section, hauteur libre et appuis de la poutre apparente sur l'axe B (13'-1\" du nu ext. avant) et son étendue exacte ; sur l'axe C (17'-0\"), comment le plafond est porté sans cloison ni poutre ; cloison hall / salon (arche 4'-0\") toujours en place ? Accès actuel au sous-sol (l'escalier intérieur n'existe plus) et plancher refait à l'emplacement de l'ancienne trémie.",
    "position": [
     262.0,
     180.0

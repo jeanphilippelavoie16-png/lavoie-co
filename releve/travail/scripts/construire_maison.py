@@ -490,6 +490,8 @@ MURS_RETIRES = {
     'mur-RDC-027': "cloison chambre d'utilité / cage d'escalier (x = 22'-11\") — barrée en rouge",
     'mur-RDC-028': "cloison cage d'escalier / cuisine et passage / cuisine (x = 26'-4\") — barrée en rouge",
     'mur-RDC-029': "cloison placard à balais / escalier — barrée en rouge",
+    'mur-RDC-019': ("cloison salon / passage-cuisine (axe B, y = 13'-1\") barrée en rouge jusqu'à l'arche 6'-0\" ; "
+                    "le trumeau restant à droite de l'arche n'existe plus non plus (2e constat du propriétaire, 2026-10-29)"),
 }
 ARCHE_SALON = next(o for o in OUV_RDC if o['id'] == 'ouv-RDC-013')
 X_STUB = 222 + ARCHE_SALON['position']['valeur'] + ARCHE_SALON['largeur']['valeur'] / 2   # jambage droit de l'arche 6'-0"
@@ -498,14 +500,6 @@ for m in list(MURS_RDC):
     if m['id'] in MURS_RETIRES:
         MURS_RETIRES_DATA.append(dict(m, retire_selon=CONSTAT, description_retrait=MURS_RETIRES[m['id']]))
         MURS_RDC.remove(m)
-    elif m['id'] == 'mur-RDC-019':
-        MURS_RETIRES_DATA.append(dict(m, retire_selon=CONSTAT, description_retrait=(
-            f"cloison salon / passage-cuisine (axe B, y = 13'-1\") barrée en rouge de x = 18'-6\" jusqu'à l'arche 6'-0\" ; "
-            f"seul le trumeau à droite de l'arche (x ≥ {X_STUB:.1f}) est conservé")))
-        m['x1'] = round(X_STUB, 2)
-        m['source_position'] = 'ESTIMÉ'
-        m['note'] = (f"Trumeau conservé entre l'ancienne arche 6'-0\" et le mur droit (axe B). Le reste de la cloison "
-                     f"salon / passage-cuisine n'existe plus ({CONSTAT}). Extrémité x = jambage de l'arche, position ESTIMÉE au dessin (P3).")
 for o in list(OUV_RDC):
     if o['mur_id'] in MURS_RETIRES or o['id'] == 'ouv-RDC-013':
         OUV_RETIREES.append(dict(o, retire_selon=CONSTAT))
@@ -536,7 +530,6 @@ PIECES_DEF = {
         ('piece-RDC-LIN', "Lin.", "LIN.", (160, 145)),
         ('piece-RDC-SAL', "Salon", "SALON", (330, 80)),
         ('piece-RDC-CUI', "Cuisine", "CUISINE S.-À-MANGER (1957) ; « Cuisine » (2016)", (380, 270)),
-        ('piece-RDC-ESC', "Escalier", "(aucun nom au plan)", (295, 300)),
         ('piece-RDC-EAR', "Entrée arr.", "(aucun nom ; « ARMOIRES » écrit)", (270, 405)),
     ],
 }
@@ -546,7 +539,7 @@ DESC = {
     'piece-SS-PERRON': "Excroissance de fondation sous le perron avant ; contenu (vide / remblai) inconnu ; accès non dessiné",
     'piece-RDC-GR1': "Garde-robe 1 de la chambre arrière", 'piece-RDC-GR2': "Garde-robe 2 de la chambre arrière",
     'piece-RDC-GRU': "Garde-robe de la chambre d'utilité",
-    'piece-RDC-UTI': "Salle à manger : ancienne chambre d'utilité (1957), ouverte sur la cuisine, l'escalier et le dégagement (constat 2026-10-29) ; nommée « Salle à manger » sur le croquis 2016 (P2)",
+    'piece-RDC-UTI': "Salle à manger : ancienne chambre d'utilité (1957), ouverte sur la cuisine et le dégagement ; inclut l'emplacement de l'ancien escalier et du placard à balais (constat 2026-10-29) ; nommée « Salle à manger » sur le croquis 2016 (P2)",
     'piece-RDC-ENT': "Entrée avant (aucun nom au plan)", 'piece-RDC-VES': "Vestiaire (garde-robe d'entrée, ouvert)",
     'piece-RDC-GRA': "Garde-robe de la chambre avant", 'piece-RDC-LIN': "Lingerie",
     'piece-RDC-CUI': "Cuisine (« Cuisine » sur le croquis 2016) ; aire ouverte sur la salle à manger et le salon ; mobilier, électroménagers et comptoirs non représentés",
@@ -558,8 +551,7 @@ COUPES = {
     'SS': [],
     'RDC': [((173, 157), (446, 157), "hall-dégagement / salon-cuisine : axe B ; cloison retirée de 18'-6\" à l'arche (constat 2026-10-29)"),
             ((316, 157), (316, 373), "cuisine / escalier-dégagement : axe de l'ancienne cloison x = 26'-4\" (retirée)"),
-            ((146, 204), (316, 204), "dégagement / salle à manger-escalier : axe C, ancienne cloison retirée"),
-            ((275, 204), (275, 373), "salle à manger / escalier : axe de l'ancienne cloison x = 22'-11\" (retirée)"),
+            ((146, 204), (316, 204), "dégagement / salle à manger : axe C, ancienne cloison retirée"),
             ((175, 5), (175, 54), "entrée / vestiaire (VEST. ouvert)")],
 }
 
@@ -715,7 +707,7 @@ for s_ in EX['RDC']['structure']:
                         "source": "LU", "photo": "P3", "ref": lab(s_['id']),
                         "note": "2 pièces de 2\" ; longueur = baie ; appuis non indiqués"}
 STR_RDC += [
-    st('str-RDC-S01', 'solives', "SOLIVES 2\"x7\" @ 16\" c/c", "2x7 @ 16 c/c", "LU", "P3", {"x1": 177.25, "y1": 206.25, "x2": 272.75, "y2": 370, "espacement": 16}, 'y',
+    st('str-RDC-S01', 'solives', "SOLIVES 2\"x7\" @ 16\" c/c", "2x7 @ 16 c/c", "LU", "P3", {"x1": 148.25, "y1": 206.25, "x2": 316, "y2": 370, "espacement": 16}, 'y',
        "écrit dans la chambre d'utilité ; flèche orientée avant-arrière ; solives de plafond probables (non précisé)"),
     st('str-RDC-S02', 'solives', "SOLIVES 2\"x7\" @ 16\" c/c", "2x7 @ 16 c/c", "LU", "P3", {"x1": 224.25, "y1": 10, "x2": 446, "y2": 154.75, "espacement": 16}, 'y',
        "écrit dans le salon ; solives de plafond probables"),
@@ -1093,6 +1085,7 @@ maison = {
         "photos": PHOTOS,
         "date": "2026-10-29",
         "revision": "R0",
+        "affichage": {"noms_pieces": False, "note": "noms des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv"},
         "implantation": {"source": "P5", "note": "cotes du plan d'implantation (pieds décimaux convertis en pouces) ; maison « projetée » 1957",
                          "cotes": IMPL},
     },
@@ -1114,12 +1107,31 @@ for niv in maison["niveaux"]:
 
 # 1b) constat du propriétaire (2026-10-29) : mobilier retiré, cotes intérieures qui visaient des cloisons disparues
 ELEM_RETIRES_IDS = {'elem-RDC-ARM-AR', 'elem-RDC-ARM-DR', 'elem-RDC-ARM-EAR', 'elem-RDC-BAIN', 'elem-RDC-COMPT',
-                    'elem-RDC-EVIER', 'elem-RDC-LAV', 'elem-RDC-SEC', 'elem-RDC-POELE', 'elem-RDC-REF'}
+                    'elem-RDC-EVIER', 'elem-RDC-LAV', 'elem-RDC-SEC', 'elem-RDC-POELE', 'elem-RDC-REF',
+                    # 2e constat : tout le mobilier et les appareils, et l'escalier qui n'existe plus (aux deux niveaux)
+                    'elem-RDC-WC', 'elem-RDC-LAVABO', 'elem-RDC-ESC1',
+                    'elem-SS-CE', 'elem-SS-EVIER', 'elem-SS-FOUR', 'elem-SS-HUILE', 'elem-SS-ESC'}
+MOTIF_RETRAIT = {
+    'escalier': "l'escalier entre le sous-sol et le RDC n'existe plus (2e constat du propriétaire, 2026-10-29)",
+}
+for niv_ in maison["niveaux"]:
+    niv_["elements_retires"] = [dict(e, retire_selon=MOTIF_RETRAIT.get(e["type"], (
+        "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), "
+        "comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire")))
+        for e in niv_["elements"] if e["id"] in ELEM_RETIRES_IDS]
+    niv_["elements"] = [e for e in niv_["elements"] if e["id"] not in ELEM_RETIRES_IDS]
 rdc = next(n for n in maison["niveaux"] if n["id"] == "RDC")
-rdc["elements_retires"] = [dict(e, retire_selon="demande du propriétaire (2026-10-29) : meubles, électroménagers, comptoirs et baignoire "
-                                "non représentés ; position d'origine conservée ici pour mémoire")
-                           for e in rdc["elements"] if e["id"] in ELEM_RETIRES_IDS]
-rdc["elements"] = [e for e in rdc["elements"] if e["id"] not in ELEM_RETIRES_IDS]
+# poutre apparente au plafond du RDC sur l'axe B (côté rue), dans le prolongement de la poutre str-SS-P02 du sous-sol
+rdc["structure"].append({
+    "id": "str-RDC-P02", "type": "poutre",
+    "dimension": {"texte_original": None, "valeur": None, "source": "ILLISIBLE", "photo": None,
+                  "note": "section non relevée"},
+    "sens": "x",
+    "geometrie": {"x1": 175.0, "y1": 157.0, "x2": 446.0, "y2": 157.0},
+    "note": ("Poutre au plafond du RDC côté rue, qui suit la poutre 8\"x10\" du sous-sol (str-SS-P02, axe B) — 2e constat du "
+             "propriétaire (2026-10-29). Étendue PRÉSUMÉE sur la partie ouverte de l'axe B (de la fin de la cloison "
+             "S. de bain / chambre avant au mur droit) ; aucune poutre sur l'axe C selon le propriétaire.")})
+rdc["structure"].sort(key=lambda x: x["id"])
 rdc["murs_retires"] = MURS_RETIRES_DATA
 rdc["ouvertures_retirees"] = [{k: v for k, v in o.items() if not k.startswith('_')} for o in OUV_RETIREES]
 
@@ -1162,14 +1174,33 @@ ECARTS.append({
                             "existence du trumeau près du mur droit sur l'axe B ; cloison hall / salon (arche 4'-0\") toujours en place ?"),
     "position": [262.0, 180.0]})
 ECARTS[-1]["description"] += (" La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la "
-                              "salle de bain).")
+                              "salle de bain). 2e constat (2026-10-29) : le trumeau à droite de l'ancienne arche n'existe plus ; "
+                              "l'escalier entre le sous-sol et le RDC n'existe plus ; une poutre est visible au plafond du RDC "
+                              "côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) — aucune sur l'axe C.")
+ECARTS[-1]["hypothese_retenue"] = ECARTS[-1]["hypothese_retenue"].replace(
+    "Escalier conservé (seul accès au sous-sol) ; garde-corps et reprises structurales (poutres, linteaux, retombées) non relevés. "
+    "Trumeau à droite de l'ancienne arche conservé (position ESTIMÉE).",
+    "Escalier et trumeau retirés ; ouverture de plancher présumée refermée. Poutre de l'axe B dessinée (str-RDC-P02), section "
+    "inconnue, étendue PRÉSUMÉE sur la partie ouverte de l'axe.")
+ECARTS[-1]["a_valider_sur_place"] = (
+    "Au RDC : section, hauteur libre et appuis de la poutre apparente sur l'axe B (13'-1\" du nu ext. avant) et son étendue exacte ; "
+    "sur l'axe C (17'-0\"), comment le plafond est porté sans cloison ni poutre ; cloison hall / salon (arche 4'-0\") toujours en place ? "
+    "Accès actuel au sous-sol (l'escalier intérieur n'existe plus) et plancher refait à l'emplacement de l'ancienne trémie.")
 
 # 1c) QC R2 : ids uniques, écarts sans objet, textes périmés, limites des zones ouvertes
-for m in rdc["murs_retires"]:
-    if m["id"] == "mur-RDC-019":
-        m["id"] = "mur-RDC-019-1957"
-        m["note_id"] = "cloison d'origine complète ; le trumeau conservé garde l'id mur-RDC-019"
 for e in ECARTS:
+    if e["id"] == EC['escalier']:
+        e["statut"] = "sans objet"
+        e.pop("position", None)
+        e["a_valider_sur_place"] = ""
+        e["hypothese_retenue"] = "Sans objet : l'escalier n'existe plus (2e constat du propriétaire, 2026-10-29). " + e["hypothese_retenue"]
+    if e["id"] == EC['axes']:
+        e["a_valider_sur_place"] = ("Relever la poutre apparente au plafond du RDC sur l'axe B (13'-1\" du nu ext. avant) : section, "
+                                    "hauteur libre dessous, appuis aux extrémités ; sur l'axe C (17'-0\"), où aucune poutre n'est "
+                                    "visible : comment le plafond et les solives sont-ils portés depuis le retrait de la cloison ?")
+    if e["id"] == EC['plomberie']:
+        e["hypothese_retenue"] += (" Appareils du sous-sol (chauffe-eau, fournaise, réservoir à l'huile, évier à lessive) et de la "
+                                   "S. de bain retirés du plan à la demande du propriétaire ; positions 1957 dans elements_retires.")
     if e["id"] == EC['porte-uti']:
         e.pop("position", None)
         e["a_valider_sur_place"] = ""

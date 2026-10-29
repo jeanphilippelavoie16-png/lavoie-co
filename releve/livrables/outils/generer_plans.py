@@ -2338,6 +2338,12 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
                 variantes.append(([(t, f, True) for t in nn], rot, False))
     if mode == "complet":
         variantes = [v for v in variantes if v[2]]
+    if not NOMS_PIECES:
+        # sans noms : dimensions et superficie seules, dans la pièce ; sinon rien (voir tableau_pieces.csv)
+        variantes = []
+        for sous, complet in (([(f"{tx} × {ty}", fc, False), (ta, fc, False)], True),
+                              ([(f"{tx} ×", fc, False), (ty, fc, False), (ta, fc, False)], True)):
+            variantes.append((sous, 0.0, complet))
     try:
         pole = polylabel(poly, tolerance=1.0)
     except Exception:
@@ -2369,6 +2375,8 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
             break
     if choix is None and passe == 1:
         return None
+    if choix is None and not NOMS_PIECES:
+        return True
     if choix is None:
         # hors de toute pièce nommée, renvoi court vers la pièce
         coeur = poly.buffer(-mm(1.2), join_style=2)
@@ -2446,6 +2454,9 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
     if F is not None:
         F.etiquettes[pid] = (env, Point(ld.coords[-1]) if ld is not None else None, poly, complet, boites)
     return not complet
+
+
+NOMS_PIECES = True
 
 
 CIRCULATION = ("DEGAGEMENT", "PASSAGE", "HALL", "CORRIDOR", "COULOIR", "CIRCULATION")
@@ -2712,7 +2723,8 @@ def cartouche(F, niv, projet, ctx):
     if getattr(F, "typ", False):
         items.append(("vide", "(typ.) : libellé typique, vaut pour les éléments identiques"))
     if getattr(F, "dims_omises", False):
-        items.append(("vide", "Petites pièces : nom seul ; dimensions et superficie dans tableau_pieces.csv"))
+        items.append(("vide", "Petites pièces : nom seul ; dimensions et superficie dans tableau_pieces.csv" if NOMS_PIECES
+                      else "Noms des pièces, et dimensions des petites pièces : voir tableau_pieces.csv"))
     for kind, t in items:
         if not peut(0.2):
             break
@@ -3203,6 +3215,9 @@ def main(argv=None):
         print(f"ERREUR : JSON invalide ({e})", file=sys.stderr)
         return 2
     projet = data.get("projet") or {}
+    # projet.affichage.noms_pieces = false : aucun nom de pièce sur les plans (ils restent dans maison.json et le CSV)
+    global NOMS_PIECES
+    NOMS_PIECES = bool(((projet.get("affichage") or {}).get("noms_pieces", True)))
     verif = Verif()
     controle_ids(data, verif)
     ctx = numeroter(data, verif)
