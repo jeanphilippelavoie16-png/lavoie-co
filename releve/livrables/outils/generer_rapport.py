@@ -26,6 +26,15 @@ def nf(x, d=1):
     return f"{x:,.{d}f}".replace(",", " ").replace(".", ",")
 
 
+def premiere_phrase(t, maxi=260):
+    """Première phrase complète (parenthèses et guillemets équilibrés) ; texte entier si aucune coupure propre."""
+    for m in re.finditer(r"(?<=[.;:])\s", t):
+        bout = t[:m.start()].rstrip(" ;:")
+        if len(bout) >= 40 and bout.count("(") == bout.count(")") and bout.count("«") == bout.count("»"):
+            return bout if len(bout) <= maxi or True else bout
+    return t
+
+
 def cell(t):
     return str(t if t is not None else "").replace("|", "\\|").replace("\n", " ")
 
@@ -172,10 +181,15 @@ def main():
         w(f"### Impact {imp}")
         w("")
         for e in lot:
+            if e.get("statut") == "sans objet":
+                continue
+            # une même mesure à faire (même texte) n'est listée qu'une fois, avec tous ses repères
+            meme = [x for x in E if x.get("a_valider_sur_place") == e["a_valider_sur_place"] and x.get("statut") != "sans objet"]
+            if meme[0] is not e:
+                continue
             i += 1
-            num = int(e["id"].split("-")[1])
-            pourquoi = e["description"].split(" ; ")[0]
-            w(f"{i}. **{cell(e['a_valider_sur_place'])}** — Pourquoi : {cell(pourquoi)} (⚠{num}, {e['niveau']})")
+            nums = ", ".join(f"⚠{int(x['id'].split('-')[1])}" for x in meme)
+            w(f"{i}. **{cell(e['a_valider_sur_place'])}** — Pourquoi : {cell(premiere_phrase(e['description']))} ({nums}, {e['niveau']})")
         w("")
 
     w("## 8. Modifier et régénérer")

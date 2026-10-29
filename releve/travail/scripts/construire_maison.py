@@ -454,7 +454,7 @@ OUV_RDC = [
           "porte d'entrée avant ; pentures côté salon ; ouvre vers l'intérieur ; donne sur le perron de béton", "DÉDUIT", "axe à 8'-2\" + 8'-5\" (cote-RDC-011)"),
     porte('ouv-RDC-011', 'mur-RDC-017', 198.5, lab('ouv-RDC-011'), 178, '+y', "porte entrée → hall ; pentures côté gauche ; ouvre vers le hall"),
     porte('ouv-RDC-014', 'mur-RDC-012', 127, lab('ouv-RDC-014'), 143, '-y', "porte de la chambre avant ; ouvre dans la chambre"),
-    porte('ouv-RDC-015', 'mur-RDC-011', 178, lab('ouv-RDC-015'), 163, '-x', "porte de la S. de bain ; ouvre dans la S. de bain"),
+    porte('ouv-RDC-015', 'mur-RDC-011', 178, lab('ouv-RDC-015'), 163, '+x', "porte de la S. de bain ; ouvre vers le dégagement (constat du propriétaire 2026-10-29 ; au plan 1957 elle ouvrait dans la S. de bain)"),
     porte('ouv-RDC-016', 'mur-RDC-020', 127, lab('ouv-RDC-016'), 143, '+y', "porte de la chambre arrière ; ouvre dans la chambre"),
     porte('ouv-RDC-017', 'mur-RDC-026', 163, lab('ouv-RDC-017'), 148, '+y',
           "porte de la chambre d'utilité (alcôve sous le G.R.) ; étiquetée 2'-6\" dans une baie cotée 2'-5\" d'axe en axe — voir écart"),
