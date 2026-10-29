@@ -116,8 +116,8 @@ def main():
     w("- **État représenté : les plans d'origine (1957) corrigés par le constat du propriétaire du 2026-10-29**" + rc + " : "
       "au rez-de-chaussée, les cloisons de la cage d'escalier, du placard à balais et des axes porteurs d'origine B et C "
       "(chambre d'utilité / dégagement, salon / passage, trumeau compris) n'existent plus ; l'escalier entre le sous-sol et le "
-      "rez-de-chaussée n'existe plus ; une poutre est visible au plafond du rez-de-chaussée côté rue seulement, dans l'axe de la "
-      "poutre avant du sous-sol ; la porte de la salle de bain ouvre vers le dégagement ; le mobilier et les appareils "
+      "rez-de-chaussée n'existe plus ; au plafond du rez-de-chaussée, une poutre dans l'axe de la poutre avant du sous-sol et une poutre autoportante sur l'axe arrière (17'-0\") ; colonnes 8\"x8\" continues du sous-sol jusqu'en haut, sauf C4 et C6 retirées au rez-de-chaussée ; "
+      "la porte de la salle de bain ouvre vers le dégagement ; le mobilier et les appareils "
       "(plomberie, chauffage, électroménagers, comptoirs) ne sont pas représentés (positions 1957 conservées dans `maison.json`). "
       "Les autres cloisons de 1957 absentes du croquis d'ingénieur de 2016 (photo 1, qui n'est pas un relevé complet) "
       "sont conservées et consignées comme écart à valider en visite.")

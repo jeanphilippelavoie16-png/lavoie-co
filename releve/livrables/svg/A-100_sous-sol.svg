@@ -312,7 +312,8 @@
 <polygon class="str" points="356.135,340.979 356.135,332.979 348.135,332.979 348.135,340.979"/>
 <polyline class="str-fin" points="356.135,340.979 348.135,332.979"/>
 <polyline class="str-fin" points="356.135,332.979 348.135,340.979"/>
-<text x="386.343" y="346.022" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">COL. 8x8 (typ.)</text>
+<polyline class="rappel" points="362.567,335.775 356.135,335.775"/>
+<text x="392.39" y="333.927" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">COL. 8x8 (typ.)</text>
 </g>
 <g id="str-SS-C02">
 <polygon class="str" points="452.135,340.979 452.135,332.979 444.135,332.979 444.135,340.979"/>
@@ -791,12 +792,12 @@
 <text x="504.487" y="150.466" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">21</text>
 </g>
 <g id="ecart-024">
-<circle class="inc" cx="352.135" cy="336.979" r="1.512"/>
-<polyline class="inc-c" points="339.625,344.202 352.135,336.979"/>
-<path class="inc" fill-rule="evenodd" d="M 334.234 352.32 L 344.312 352.32 L 339.273 343.591 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 338.568 349.585 L 339.979 349.585 L 339.837 345.744 L 338.709 345.744 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 338.568 351.156 L 339.979 351.156 L 339.979 350.283 L 338.568 350.283 Z"/>
-<text x="345.32" y="352.32" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">24</text>
+<circle class="inc" cx="359.135" cy="336.979" r="1.512"/>
+<polyline class="inc-c" points="346.625,344.202 359.135,336.979"/>
+<path class="inc" fill-rule="evenodd" d="M 341.234 352.32 L 351.312 352.32 L 346.273 343.591 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 345.568 349.585 L 346.979 349.585 L 346.837 345.744 L 345.709 345.744 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 345.568 351.156 L 346.979 351.156 L 346.979 350.283 L 345.568 350.283 Z"/>
+<text x="352.32" y="352.32" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">24</text>
 </g>
 <g id="ecart-025">
 <circle class="inc" cx="260.135" cy="350.979" r="1.512"/>

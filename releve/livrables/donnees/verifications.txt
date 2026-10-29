@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : R0    Date : 2026-10-29
-Données  : maison.json, sha256 758d67d44890b5abf7b48a8c943e76af6c4f96b9f7e4f6b8af147e7e848b3eb0
+Données  : maison.json, sha256 6e2d69574e9d62ff06ceeb2a503aa1de4ff87e0926470d37f54696b2004b40ea
 Feuilles : A-100 Sous-sol (3/16" = 1'-0") ; A-101 Rez-de-chaussée (3/16" = 1'-0")
 
 SOMMAIRE
@@ -19,7 +19,7 @@ SOMMAIRE
 
 1. IDENTIFIANTS
 ------------------------------------------------------------------------
-  [OK] 469 identifiants, aucun doublon
+  [OK] 470 identifiants, aucun doublon
 
 2. MURS
 ------------------------------------------------------------------------
@@ -37,7 +37,7 @@ SOMMAIRE
 ------------------------------------------------------------------------
   [OK] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1138,1 pi² + murs 134,3 pi² − chevauchement pièces/murs 0,0 pi² = 1272,3 pi² ; écart -0,0 pi²
   [OK] [SS] aucun trou > 1 pi² entre pièces et murs
-  [OK] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1106,3 pi² + murs 142,0 pi² − chevauchement pièces/murs 0,0 pi² = 1248,3 pi² ; écart -0,0 pi²
+  [OK] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1081,8 pi² + murs 166,5 pi² − chevauchement pièces/murs 0,0 pi² = 1248,3 pi² ; écart 0,0 pi²
   [OK] [RDC] aucun trou > 1 pi² entre pièces et murs
 
 6. CHAÎNES DE COTES
@@ -66,7 +66,7 @@ SOMMAIRE
   [INFO] ⚠2 = ecart-002 [RDC, impact moyen] : Cote en conflit cote-RDC-018 — Segment arrière droit 10'-9" / 10'-5" (nu ext. droit de l'entrée arrière → coin arrière droit). Lecture 1 « 10'-9" », lecture 2 « 10-9" », 3e lecture « 10'-5" » (basse). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png.
   [INFO] ⚠3 = ecart-003 [RDC, impact moyen] (positionné) : Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0" » (2 lectures) contre 6'-0" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0" », lecture 2 « ARCHE 4'-0" », 3e lecture « ARCHE 6'-0" » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png. — Ce n'est plus une arche : baie ouverte au même endroit, avec la colonne de l'axe B (réponses du propriétaire (2026-10-29)).
   [INFO] ⚠4 = ecart-004 [SS, impact faible] (positionné) : Cote en conflit cote-SS-017 — Largeur de la fenêtre gauche basse du sous-sol (au-dessus de l'évier à lessive). Lecture 1 « 3'-0" », lecture 2 « 3'-0" », 3e lecture « 3'-0" » (basse). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-SS-07_P1.png, arbitrage/vignettes/d-SS-07_P7.png.
-  [INFO] ⚠5 = ecart-005 [RDC, impact moyen] (positionné) : Épaisseur des murs extérieurs du RDC : 10" écrit sur le croquis 2016 (P1, chaînes 10" aux 4 côtés — valeur typique d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 montre ≈ 11 po ; aucune épaisseur écrite sur la feuille RDC (P4, P5 et P6).
+  [INFO] ⚠5 = ecart-005 [RDC, impact moyen] : Épaisseur des murs extérieurs du RDC : 10" écrit sur le croquis 2016 (P1, chaînes 10" aux 4 côtés — valeur typique d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 montre ≈ 11 po ; aucune épaisseur écrite sur la feuille RDC (P4, P5 et P6).
   [INFO] ⚠6 = ecart-006 [RDC, impact moyen] (positionné) : Épaisseur des cloisons du RDC non cotée (sauf cloison chambre arrière / S. de bain 6" LU, tranchée par 3e lecture) ; dessin ≈ 6 po.
   [INFO] ⚠7 = ecart-007 [global, impact faible] (positionné) : Épaisseurs PRÉSUMÉES par analogie ou par défaut : murs gauche et du fond du caveau (10"), murs avant et droit de l'excroissance du perron (6"), murs de l'entrée arrière (6", dessin ≈ 11") ; profondeur de l'entrée arrière non cotée : nu ext. PRÉSUMÉ à 5'-0" du mur arrière (= caveau cote-SS-009), alors que le dessin RDC montre ≈ 5'-7".
   [INFO] ⚠8 = ecart-008 [global, impact moyen] : Hauteurs de plafond inconnues aux deux niveaux (aucune coupe ni élévation ; aucune hauteur écrite).
@@ -85,13 +85,13 @@ SOMMAIRE
   [INFO] ⚠21 = ecart-021 [SS, impact faible] (positionné) : Porte du caveau « PORTE 2'-6" » positionnée par la cote 3'-6" dont le point de départ n'est pas dessiné (nu ext. ou int. du mur gauche du caveau).
   [INFO] ⚠22 = ecart-022 [global, impact faible] : Escalier SS ↔ RDC : superposition à 5 po près (SS largeur ≈ 37 po ESTIMÉ, RDC 3'-5" à l'axe des anciennes cloisons (cote-RDC-033), cage retirée) ; 14 C.M. écrit aux deux niveaux mais ≈ 10 girons visibles au RDC (les marches inférieures passaient sous le placard BALAIS) ; échappée sous la poutre arrière (17'-0" du nu ext. avant) au pied de l'escalier non vérifiable.
   [INFO] ⚠23 = ecart-023 [RDC, impact faible] (positionné) : Poutre 6"x10" FLUSH (cuisine) non cotée en position : ≈ 17'-2" du nu ext. avant ESTIMÉ (P4), à 2 po de l'axe C (17'-0") et de la poutre arrière du SS.
-  [INFO] ⚠24 = ecart-024 [SS, impact faible] (positionné) : Colonne str-SS-C01 (11'-0" du coin gauche, sur la poutre arrière à 17'-0" du nu ext. avant) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, ≈ 17'-8") ; la cloison à 12'-2" passe à 14 po de la rangée de colonnes à 11'-0".
+  [INFO] ⚠24 = ecart-024 [SS, impact moyen] (positionné) : Colonne str-SS-C01 (11'-0" du coin gauche, sur la poutre arrière à 17'-0" du nu ext. avant) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, ≈ 17'-8") ; la cloison à 12'-2" passe à 14 po de la rangée de colonnes à 11'-0". — Précision du propriétaire (2026-10-29) : au RDC, cette colonne est au coin droit du mur de la chambre arrière (12'-2" du coin gauche), soit 14 po à droite de la position du plan 1957 au sous-sol (11'-0").
   [INFO] ⚠25 = ecart-025 [global, impact faible] (positionné) : Superposition de la plomberie : chauffe-eau du sous-sol à 2'-2" du coin gauche et 9'-0" du nu ext. avant : à 4'-4" de la S. de bain et 24'-6" de la cuisine (en plan) ; évier à lessive du sous-sol à 1'-10" du coin gauche et 4'-3" du nu ext. avant : à 9'-0" de la S. de bain et 26'-0" de la cuisine (en plan). Aucun drain, colonne de chute ni panneau électrique dessiné au sous-sol.
   [INFO] ⚠26 = ecart-026 [global, impact faible] (positionné) : Cheminée : massif extérieur au mur gauche non coté (seule sa face avant, à 11'-0" du nu ext. avant, est située par la chaîne gauche du sous-sol) ; saillie et profondeur ≈ 20 × 21 po ESTIMÉES.
   [INFO] ⚠27 = ecart-027 [global, impact faible] : Plan d'implantation P7 (1957, « maison projetée ») : rectangle 38'-0" × 31'-8" concordant ; excroissance avant dessinée ≈ 12,6–19,0 pi du coin gauche (perron SS : 13'-6"–19'-6") ; volume arrière ≈ 17,0–26,4 pi (entrée arrière : 18'-3"–27'-3") et marches ≈ 26,4–34,5 pi ; profondeur mesurée ≈ 32,1 pi (1 %). Implantation projetée, pas un relevé ; marges 40' (avant), 7.79' et 9' (latérales).
   [INFO] ⚠28 = ecart-028 [global, impact moyen] : Aucune mesure prise sur place n'a été fournie par le propriétaire (ancres vides) : toute la géométrie provient des plans de 1957 et du croquis 2016.
   [INFO] ⚠29 = ecart-029 [SS, impact faible] (positionné) : Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) : ouv-SS-005 « PORTE 2'-8" » (mur droit, axe à 6'-3" du nu ext. avant) et ouv-SS-008 « PORTE 2'-6" » (porte du caveau, mur arrière). Les tiretés près de la porte 2'-8" sont des circuits électriques. Depuis, la porte du mur droit a été déplacée à la place de la fenêtre du milieu (réponses du propriétaire (2026-10-29)).
-  [INFO] ⚠30 = ecart-030 [RDC, impact critique] (positionné) : constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0") est conservée. La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la salle de bain). 2e constat (2026-10-29) : le trumeau à droite de l'ancienne arche n'existe plus ; l'escalier entre le sous-sol et le RDC n'existe plus ; une poutre est visible au plafond du RDC côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) — aucune sur l'axe C.
+  [INFO] ⚠30 = ecart-030 [RDC, impact critique] (positionné) : constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0") est conservée. La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la salle de bain). 2e constat (2026-10-29) : le trumeau à droite de l'ancienne arche n'existe plus ; l'escalier entre le sous-sol et le RDC n'existe plus ; une poutre est visible au plafond du RDC côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) ; une poutre autoportante a été installée dans le plafond sur l'axe C.
   [INFO] ⚠31 = ecart-031 [SS, impact moyen] (positionné) : réponses du propriétaire (2026-10-29) : la porte du mur droit et la fenêtre du milieu ont été permutées ; la grande fenêtre arrière gauche (6'-8") a été séparée en deux, la moitié gauche déplacée de 2'-0" vers la gauche. Largeurs et positions déduites de la description, non mesurées.
 
 8. TEXTES (CHEVAUCHEMENTS)
@@ -109,7 +109,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 3436112d74a0a340… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
-  [OK] [RDC] DXF A-101_rdc.dxf : sha256 b0895b08071f7837… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 c530304ba304cb7a… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF A-101_rdc.dxf : sha256 494047c22f2d6628… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

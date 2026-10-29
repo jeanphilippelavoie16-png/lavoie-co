@@ -257,7 +257,7 @@ def V(cid):
 
 # ============================================================================ 3. épaisseurs et convention
 T_FOND = 10.0      # LU (P1 : cote-SS-019, -034, -037, -045)
-T_EXT = 8.0        # PRÉSUMÉ : valeur provisoire du propriétaire (2026-10-29), à valider ; P2 (2016) écrit 10", dessin 1957 ≈ 11 po
+T_EXT = 10.0       # MESURÉ : 10" confirmé par le propriétaire (2026-10-29) ; = croquis 2016 (P2) ; dessin 1957 ≈ 11 po
 H_EXT = T_EXT / 2
 T_INT = 4.5        # PRÉSUMÉ (dessin ≈ 6 po)
 T_6 = V('cote-RDC-047')   # cloison chambre arrière / S. de bain : 6" (tranché 3e lecture)
@@ -265,9 +265,9 @@ assert T_6 == 6
 T_EAR = T_EXT      # entrée arrière : mur extérieur, même valeur provisoire
 T_PERRON = 6.0     # cote-SS-036 (LU) ; murs avant/droit par analogie
 
-E_EXT = D(T_EXT, "PRÉSUMÉ", None, "8\" : valeur provisoire donnée par le propriétaire (2026-10-29), à valider sur place ; le croquis 2016 écrit 10\" (cote-RDC-203/210/211/215) et le dessin 1957 montre ≈ 11 po (ESTIMÉ) ; voir écart")
+E_EXT = D(T_EXT, "MESURÉ", None, "10\" confirmé par le propriétaire (2026-10-29) ; concorde avec le croquis 2016 (cote-RDC-203/210/211/215) ; dessin 1957 ≈ 11 po (ESTIMÉ)")
 E_INT = D(T_INT, "PRÉSUMÉ", None, "cloison non cotée ; 4½\" usuel (dessin ≈ 6 po, ESTIMÉ)")
-E_EAR = D(T_EAR, "PRÉSUMÉ", None, "mur extérieur de l'entrée arrière : 8\" provisoire du propriétaire (2026-10-29), à valider ; dessin ≈ 11 po (ESTIMÉ)")
+E_EAR = D(T_EAR, "PRÉSUMÉ", None, "mur extérieur de l'entrée arrière : 10\" pris égal aux murs de la maison (confirmés par le propriétaire) ; dessin ≈ 11 po (ESTIMÉ)")
 
 CONVENTION = ("Hors-tout et chaînes extérieures au NU EXTÉRIEUR des murs de fondation (SS) et des murs extérieurs (RDC) ; "
               "fenêtres et portes extérieures cotées à l'AXE (centre) de l'ouverture, largeurs = baie entre jambages ; "
@@ -1166,7 +1166,7 @@ rdc["structure"].append({
     "geometrie": {"x1": 175.0, "y1": 157.0, "x2": 446.0, "y2": 157.0},
     "note": ("Poutre au plafond du RDC côté rue, qui suit la poutre 8\"x10\" du sous-sol (str-SS-P02, axe B) — 2e constat du "
              "propriétaire (2026-10-29). Étendue PRÉSUMÉE sur la partie ouverte de l'axe B (de la fin de la cloison "
-             "S. de bain / chambre avant au mur droit) ; aucune poutre sur l'axe C selon le propriétaire.")})
+             "S. de bain / chambre avant au mur droit) ; sur l'axe C : poutre autoportante (str-RDC-P03).")})
 rdc["structure"].sort(key=lambda x: x["id"])
 rdc["murs_retires"] = MURS_RETIRES_DATA
 rdc["ouvertures_retirees"] = [{k: v for k, v in o.items() if not k.startswith('_')} for o in OUV_RETIREES]
@@ -1212,7 +1212,7 @@ ECARTS.append({
 ECARTS[-1]["description"] += (" La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la "
                               "salle de bain). 2e constat (2026-10-29) : le trumeau à droite de l'ancienne arche n'existe plus ; "
                               "l'escalier entre le sous-sol et le RDC n'existe plus ; une poutre est visible au plafond du RDC "
-                              "côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) — aucune sur l'axe C.")
+                              "côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) ; une poutre autoportante a été installée dans le plafond sur l'axe C.")
 ECARTS[-1]["hypothese_retenue"] = ECARTS[-1]["hypothese_retenue"].replace(
     "Escalier conservé (seul accès au sous-sol) ; garde-corps et reprises structurales (poutres, linteaux, retombées) non relevés. "
     "Trumeau à droite de l'ancienne arche conservé (position ESTIMÉE).",
@@ -1231,9 +1231,8 @@ for e in ECARTS:
         e["a_valider_sur_place"] = ""
         e["hypothese_retenue"] = "Sans objet : l'escalier n'existe plus (2e constat du propriétaire, 2026-10-29). " + e["hypothese_retenue"]
     if e["id"] == EC['axes']:
-        e["a_valider_sur_place"] = ("Relever la poutre apparente au plafond du RDC sur l'axe B (13'-1\" du nu ext. avant) : section, "
-                                    "hauteur libre dessous, appuis aux extrémités ; sur l'axe C (17'-0\"), où aucune poutre n'est "
-                                    "visible : comment le plafond et les solives sont-ils portés depuis le retrait de la cloison ?")
+        e["a_valider_sur_place"] = ("Relever au plafond du RDC la poutre de l'axe B (13'-1\" du nu ext. avant) et la poutre autoportante "
+                                    "de l'axe C (17'-0\") : section, longueur, appuis aux extrémités (colonnes, murs) et hauteur libre dessous.")
     if e["id"] == EC['plomberie']:
         e["hypothese_retenue"] += (" Appareils du sous-sol (chauffe-eau, fournaise, réservoir à l'huile, évier à lessive) et de la "
                                    "S. de bain retirés du plan à la demande du propriétaire ; positions 1957 dans elements_retires.")
@@ -1275,7 +1274,7 @@ for st_ in rdc["structure"]:
         st_["geometrie"] = {"x1": sx["x1"], "y1": sx["y1"], "x2": sx["x2"], "y2": sx["y2"]}
         st_["note"] = (f"Poutre au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du "
                        f"sous-sol str-SS-P02 (axe B) ({REPONSES}). Étendue prise identique à celle de la poutre du sous-sol. "
-                       "Aucune poutre sur l'axe C.")
+                       "Sur l'axe C : poutre autoportante str-RDC-P03.")
 COL_RETIREES_RDC = {'str-SS-C02': "C4", 'str-SS-C03': "C6"}   # « Colonne C4 / C6 retirée » (P2, 2016), axe C
 for c_ in ss["structure"]:
     if c_["type"] != "colonne":
@@ -1295,6 +1294,23 @@ for c_ in ss["structure"]:
         "note": (f"prolongement au RDC de {c_['id']} ({REPONSES}) ; position DÉDUITE de celle du sous-sol"
                  + (" ; noyée dans la cloison S. de bain / chambre avant (axe B)" if (g_["x"], g_["y"]) == (132, 157) else "")
                  + (" ; tombe devant la porte de la chambre arrière — à valider" if (g_["x"], g_["y"]) == (132, 204) else ""))})
+# poutre autoportante installée dans le plafond sur l'axe C, là où la cloison et les colonnes C4 / C6 ont été retirées
+rdc["structure"].append({
+    "id": "str-RDC-P03", "type": "poutre", "libelle": "POUTRE AUTOPORTANTE",
+    "dimension": {"texte_original": None, "valeur": None, "source": "ILLISIBLE", "photo": None, "note": "section non relevée"},
+    "sens": "x",
+    "geometrie": {"x1": 146.0, "y1": 204.0, "x2": 456 - T_EXT, "y2": 204.0},
+    "note": (f"Poutre autoportante installée dans le plafond du RDC sur l'axe C (17'-0\" du nu ext. avant), à l'emplacement de la "
+             f"cloison et des colonnes C4 / C6 retirées ({REPONSES}). Étendue PRÉSUMÉE : de la colonne au coin du mur de la "
+             "chambre arrière (12'-2\") jusqu'au mur droit ; appuis et section à relever. La poutre FLUSH 6\"x10\" du plan 1957 "
+             "(cuisine) est sur la même ligne.")})
+for c_ in rdc["structure"]:
+    if c_["id"] == "str-RDC-C01":
+        # précision du propriétaire : la colonne est au coin droit du mur de la chambre arrière (axe x = 12'-2", axe C)
+        c_["geometrie"] = dict(c_["geometrie"], x=146.0, y=204.0)
+        c_["note"] = ("prolongement au RDC de str-SS-C01 ; au coin droit (côté avant) du mur de la chambre arrière, à l'intersection "
+                      "de la cloison x = 12'-2\" (mur-RDC-021) et de l'axe C — précision du propriétaire (2026-10-29) ; "
+                      "position DÉDUITE de ce coin. Au plan 1957 du sous-sol, str-SS-C01 est à 11'-0\" (14 po plus à gauche) : voir écart.")
 rdc["structure"].sort(key=lambda x: x["id"])
 ANCRES = [
     {"id": "ancre-01", "description": "hors-tout de la façade avant (nu ext.)", "valeur": 456, "source": "MESURÉ", "reference": "38'-0\" (cote-SS-031 / RDC)"},
@@ -1330,11 +1346,19 @@ for e in ECARTS:
         e["description"] += f" — Ce n'est plus une arche : baie ouverte au même endroit, avec la colonne de l'axe B ({REPONSES})."
         e["a_valider_sur_place"] = "Mesurer la largeur libre de la baie entre le hall et le salon (ancienne arche ; 4'-0\" écrit, ≈ 6'-2\" dessiné)."
     if e["id"] == EC.get('ep-ext-rdc'):
-        e["hypothese_retenue"] = (f"8\" PRÉSUMÉ : valeur provisoire du propriétaire ({REPONSES}), à valider ; murs placés au nu extérieur "
-                                  "(hors-tout confirmés), seules les dimensions intérieures en dépendent.")
+        e["statut"] = "résolu"
+        e["hypothese_retenue"] = f"10\" confirmé par le propriétaire ({REPONSES}). " + e["hypothese_retenue"]
+        e["a_valider_sur_place"] = ""
+        e.pop("position", None)
     if e["id"] == EC.get('col-plancher'):
-        e["a_valider_sur_place"] = ("Vérifier au RDC la colonne 8\"x8\" à 11'-0\" du coin gauche sur l'axe C (17'-0\" du nu ext. avant) : "
-                                    "elle tomberait devant la porte de la chambre arrière.")
+        e["description"] += (" — Précision du propriétaire (2026-10-29) : au RDC, cette colonne est au coin droit du mur de la chambre "
+                             "arrière (12'-2\" du coin gauche), soit 14 po à droite de la position du plan 1957 au sous-sol (11'-0\").")
+        e["hypothese_retenue"] = ("RDC : colonne dessinée au coin du mur (12'-2\") ; sous-sol : position 1957 (11'-0\") conservée faute "
+                                  "de mesure. Si la colonne est continue, l'une des deux positions est fausse.")
+        e["a_valider_sur_place"] = ("Au sous-sol, mesurer la position de la colonne de la poutre arrière la plus à gauche (attendue à 11'-0\" "
+                                    "du coin gauche au plan 1957, ou à 12'-2\" si elle est dans l'axe du mur de la chambre arrière).")
+        e["impact"] = "moyen"
+        e["position"] = [139.0, 204.0]
     if e["id"] == EC.get('fen-ss'):
         e["description"] += f" — La fenêtre arrière gauche a depuis été séparée en deux fenêtres ({REPONSES})."
         e["a_valider_sur_place"] = ("Mesurer la largeur des deux fenêtres arrière gauches (issues de l'ancienne 6'-8\") et leur position "

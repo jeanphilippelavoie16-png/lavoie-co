@@ -1174,7 +1174,7 @@ def construire(niv, idx, projet, ctx, verif):
             g += pr
             PL.prims(pr, sid)
             if typ == "poutre":
-                lib = ("POUTRE " + dt).strip()
+                lib = str(s.get("libelle") or ("POUTRE " + dt)).strip()
             elif typ == "axe":
                 lib = dt.upper() if dt else "AXE PORTEUR D'ORIGINE"
             else:
