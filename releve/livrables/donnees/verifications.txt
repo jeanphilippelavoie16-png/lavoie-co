@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : R0    Date : 2026-10-29
-Données  : maison.json, sha256 79137367cb5f80a0617cd68d850ec1a52b8c5cf07984b08be05044fbba4e8cea
+Données  : maison.json, sha256 af99b326871d97b92bad199c567b42495b85b9fe61533b91f6f4416a3c96ce46
 Feuilles : A-100 Sous-sol (3/16" = 1'-0") ; A-101 Rez-de-chaussée (3/16" = 1'-0")
 
 SOMMAIRE
@@ -61,7 +61,7 @@ SOMMAIRE
 
 7. REPÈRES D'INCERTITUDE
 ------------------------------------------------------------------------
-  [INFO] [SS] écarts non ouverts, sans repère dessiné : ⚠7, ⚠20
+  [INFO] [SS] écarts non ouverts, sans repère dessiné : ⚠7, ⚠20, ⚠29
   [INFO] [RDC] écarts non ouverts, sans repère dessiné : ⚠7
   [INFO] ⚠1 = ecart-001 [global, impact faible] : Cote en conflit cote-IMP-010 — Longueur de la ligne latérale gauche du lot : 115.17' (2 lectures) ou 115,14' (3e lecture). Lecture 1 « 115.17' », lecture 2 « 115.17' », 3e lecture « 115,14' » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-P5-04_P5.png.
   [INFO] ⚠2 = ecart-002 [RDC, impact moyen] : Cote en conflit cote-RDC-018 — Segment arrière droit 10'-9" / 10'-5" (nu ext. droit de l'entrée arrière → coin arrière droit). Lecture 1 « 10'-9" », lecture 2 « 10-9" », 3e lecture « 10'-5" » (basse). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png.
@@ -97,7 +97,7 @@ SOMMAIRE
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
-  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (109 textes vérifiés)
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (108 textes vérifiés)
   [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (94 textes vérifiés)
 
 9. MISE EN PAGE
@@ -110,7 +110,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 edf5ac82511ac29c… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF A-100_sous-sol.dxf : sha256 3b053de07520f622… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
   [OK] [RDC] DXF A-101_rdc.dxf : sha256 6f397d053a943fde… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

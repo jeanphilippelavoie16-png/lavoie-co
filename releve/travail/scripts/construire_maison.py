@@ -1480,6 +1480,19 @@ for o in ss["ouvertures"]:
         o["sens"] = {"charniere": "debut", "ouvre_vers": "gauche",
                      "note": "ouvre vers l'intérieur (propriétaire) ; côté des pentures PRÉSUMÉ (non précisé)"}
         o["texte_original"] = "PORTE 2'-8\" (plan 1957) ; aujourd'hui porte de 36\""
+# porte du caveau : ouvre vers la maison (sous-sol principal) — réponse du propriétaire (2026-10-29)
+for o in ss["ouvertures"]:
+    if o["id"] == "ouv-SS-008":
+        o["operation"] = "battante"
+        o["sens"] = {"charniere": "debut", "ouvre_vers": "gauche",
+                     "note": "ouvre vers la maison (sous-sol principal) selon le propriétaire ; côté des pentures PRÉSUMÉ (non précisé)"}
+for e in ECARTS:
+    if e["id"] == EC.get('portes-ss'):
+        e["statut"] = "résolu"
+        e["hypothese_retenue"] = ("Réponse du propriétaire (2026-10-29) : porte du caveau ouvre vers la maison, porte du mur droit vers "
+                                  "l'intérieur ; côté des pentures PRÉSUMÉ pour les deux. " + e["hypothese_retenue"])
+        e["a_valider_sur_place"] = ""
+        e.pop("position", None)
 # cotes : seulement à l'extérieur
 for niv_ in (rdc, ss):
     niv_["lignes_cote"] = [l for l in niv_["lignes_cote"] if l["facade"] != "int"]

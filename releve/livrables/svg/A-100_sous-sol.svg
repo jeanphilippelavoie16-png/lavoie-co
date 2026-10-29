@@ -123,26 +123,22 @@
 <text x="906.24" y="275.303" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Noms, dimensions et superficies des</text>
 <text x="906.24" y="286.327" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">pièces : voir tableau_pieces.csv</text>
 <polyline class="cart-l" points="867.2,293.687 1072,293.687"/>
-<text x="872.96" y="303.826" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">REPÈRES SUR CETTE FEUILLE</text>
-<path class="inc" fill-rule="evenodd" d="M 873.681 314.985 L 883.759 314.985 L 878.72 306.257 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 878.014 312.25 L 879.426 312.25 L 879.284 308.41 L 878.156 308.41 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 878.014 313.821 L 879.426 313.821 L 879.426 312.948 L 878.014 312.948 Z"/>
-<text x="884.767" y="314.985" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">29</text>
-<text x="899.84" y="314.535" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Sens d'ouverture non dessiné pour les</text>
-<text x="899.84" y="325.558" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">deux portes du sous-sol (rectangle barré</text>
-<text x="899.84" y="336.582" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">d'un X dans le mur, aucun arc) : …</text>
-<text x="899.84" y="347.606" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">[ecart-029 — voir RAPPORT.md]</text>
-<polyline class="cart-l" points="867.2,357.45 1072,357.45"/>
-<text x="872.96" y="367.589" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DU PLAN D'ORIGINE (traduites)</text>
-<text x="872.96" y="378.298" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Solives de plancher 2 po × 10 po espacées de</text>
-<text x="872.96" y="389.322" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">20 po c/c (plancher du RDC), parallèles à y. [«</text>
-<text x="872.96" y="400.345" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">SOLIVES 2&quot;x10&quot; @ 20&quot; c/c »]</text>
-<text x="872.96" y="413.289" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Solives doublées sous les cloisons parallèles</text>
-<text x="872.96" y="424.312" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">aux solives (un double trait dessiné à x ≈ 137, de</text>
-<text x="872.96" y="435.336" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">la poutre arrière au mur arrière). [« SOLIVES</text>
-<text x="872.96" y="446.36" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">DOUBLES SOUS LES CLOISONS</text>
-<text x="872.96" y="457.383" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">PARALLÈLES »]</text>
-<text x="872.96" y="470.327" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">… autres notes : voir maison.json</text>
+<text x="872.96" y="303.826" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DU PLAN D'ORIGINE (traduites)</text>
+<text x="872.96" y="314.535" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Solives de plancher 2 po × 10 po espacées de</text>
+<text x="872.96" y="325.558" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">20 po c/c (plancher du RDC), parallèles à y. [«</text>
+<text x="872.96" y="336.582" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">SOLIVES 2&quot;x10&quot; @ 20&quot; c/c »]</text>
+<text x="872.96" y="349.526" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Solives doublées sous les cloisons parallèles</text>
+<text x="872.96" y="360.549" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">aux solives (un double trait dessiné à x ≈ 137, de</text>
+<text x="872.96" y="371.573" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">la poutre arrière au mur arrière). [« SOLIVES</text>
+<text x="872.96" y="382.597" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">DOUBLES SOUS LES CLOISONS</text>
+<text x="872.96" y="393.62" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">PARALLÈLES »]</text>
+<text x="872.96" y="406.564" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Rangées d'entretoises en croix entre les</text>
+<text x="872.96" y="417.587" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">solives (dessinées dans la moitié gauche</text>
+<text x="872.96" y="428.611" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">seulement). [« CROIX ST ANDRÉ (3 fois) »]</text>
+<text x="872.96" y="441.555" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Deux poutres de 8 × 10 po sur colonnes de</text>
+<text x="872.96" y="452.578" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">bois de 8 × 8 po (3 par poutre). [« POUTRE</text>
+<text x="872.96" y="463.602" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">8&quot;x10&quot; (2 fois) ; COL. BOIS, 8&quot;x8&quot; »]</text>
+<text x="872.96" y="476.546" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">… autres notes : voir maison.json</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="10-Murs" id="10-Murs">
@@ -238,8 +234,8 @@
 <polyline class="ouv" points="220.135,510.979 230.135,510.979"/>
 </g>
 <g id="ouv-SS-008">
-<polyline class="ouv-tir" points="496.135,160.979 466.135,160.979"/>
-<polyline class="ouv-tir" points="496.135,170.979 466.135,170.979"/>
+<polyline class="ouv" points="496.135,170.979 496.135,200.979"/>
+<path class="ouv-fin" d="M 466.135 170.979 A 30 30 0 0 0 496.135 200.979"/>
 </g>
 <g id="ouv-SS-009">
 <polyline class="ouv" points="416.135,160.979 376.135,160.979"/>
@@ -619,14 +615,6 @@
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="70-Incertitudes" id="70-Incertitudes">
-<g id="ecart-029">
-<circle class="inc" cx="481.135" cy="165.979" r="1.512"/>
-<polyline class="inc-c" points="481.135,151.802 481.135,165.979"/>
-<path class="inc" fill-rule="evenodd" d="M 480.092 151.802 L 490.171 151.802 L 485.132 143.074 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 484.426 149.067 L 485.837 149.067 L 485.696 145.227 L 484.567 145.227 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 484.426 150.638 L 485.837 150.638 L 485.837 149.766 L 484.426 149.766 Z"/>
-<text x="491.179" y="151.802" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">29</text>
-</g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="90-RENO-Propose" id="90-RENO-Propose">
 </g>

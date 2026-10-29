@@ -800,7 +800,7 @@
     {
      "id": "ouv-SS-008",
      "type": "porte",
-     "operation": "aucune",
+     "operation": "battante",
      "mur_id": "mur-SS-003",
      "position": {
       "valeur": 190.0,
@@ -828,7 +828,12 @@
      },
      "texte_original": "PORTE 2'-6\"",
      "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus — voir ecart-029",
-     "repere": "ecart-029"
+     "repere": "ecart-029",
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche",
+      "note": "ouvre vers la maison (sous-sol principal) selon le propriétaire ; côté des pentures PRÉSUMÉ (non précisé)"
+     }
     },
     {
      "id": "ouv-SS-009",
@@ -10046,10 +10051,10 @@
    "niveau": "SS",
    "description": "Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) : ouv-SS-005 « PORTE 2'-8\" » (mur droit, axe à 6'-3\" du nu ext. avant) et ouv-SS-008 « PORTE 2'-6\" » (porte du caveau, mur arrière). Les tiretés près de la porte 2'-8\" sont des circuits électriques. Depuis, la porte du mur droit a été déplacée à la place de la fenêtre du milieu (réponses du propriétaire (2026-10-29)). — Porte du mur droit : 36\", ouvre vers l'intérieur (annotateur en ligne (2026-10-29)) ; côté des pentures non précisé.",
    "impact": "faible",
-   "hypothese_retenue": "Portes dessinées comme baies (opération « aucune ») ; aucun sens inventé.",
-   "a_valider_sur_place": "Côté des pentures de la porte du mur droit du sous-sol et sens d'ouverture de la porte du caveau.",
+   "hypothese_retenue": "Réponse du propriétaire (2026-10-29) : porte du caveau ouvre vers la maison, porte du mur droit vers l'intérieur ; côté des pentures PRÉSUMÉ pour les deux. Portes dessinées comme baies (opération « aucune ») ; aucun sens inventé.",
+   "a_valider_sur_place": "",
    "photo": "P2",
-   "statut": "ouvert",
+   "statut": "résolu",
    "position": [
     261.0,
     375.0
