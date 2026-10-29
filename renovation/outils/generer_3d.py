@@ -67,6 +67,90 @@ def boites_mur(m, ouvs, H, sill, head):
     return out, t
 
 
+def lattes(m, H, pas=3.5, larg=1.5, ep=1.5):
+    """Claustra : lattes de chêne verticales du plancher au plafond, lisses haute et basse."""
+    x1, y1, x2, y2 = m["x1"], m["y1"], m["x2"], m["y2"]
+    L = math.hypot(x2 - x1, y2 - y1)
+    horiz = abs(y2 - y1) < 0.01
+    n = max(1, int(L // pas))
+    out = []
+    for i in range(n + 1):
+        a = min(L, i * pas)
+        x, y = x1 + (x2 - x1) * a / L, y1 + (y2 - y1) * a / L
+        if horiz:
+            out.append({"x0": x - larg / 2, "x1": x + larg / 2, "y0": y - ep / 2, "y1": y + ep / 2, "z0": 0, "z1": H, "mat": "placage"})
+        else:
+            out.append({"x0": x - ep / 2, "x1": x + ep / 2, "y0": y - larg / 2, "y1": y + larg / 2, "z0": 0, "z1": H, "mat": "placage"})
+    for z0, z1 in ((0, 3), (H - 3, H)):
+        out.append({"x0": min(x1, x2) - (0 if horiz else ep / 2), "x1": max(x1, x2) + (0 if horiz else ep / 2),
+                    "y0": min(y1, y2) - (ep / 2 if horiz else 0), "y1": max(y1, y2) + (ep / 2 if horiz else 0),
+                    "z0": z0, "z1": z1, "mat": "placage"})
+    return out
+
+
+def escalier(e, H, etage):
+    """Volée droite : girons de chêne, contremarches blanches, dessous fermé ; trémie et cage au-dessus du plafond.
+    Retourne (boîtes, trémie [x0, y0, x1, y1], obstacle)."""
+    es = e.get("escalier") or {}
+    n = int(round(es["nb_contremarches"]["valeur"]))
+    L, W = e["dimensions"]["longueur"]["valeur"], e["dimensions"]["largeur"]["valeur"]
+    cx, cy = e["position"]["x"], e["position"]["y"]
+    d = {"+y": (0, 1), "-y": (0, -1), "+x": (1, 0), "-x": (-1, 0)}[es.get("direction", "+y")]
+    r, pas = etage / n, L / (n - 1)
+
+    def rect(s0, s1, z0, z1, mat):
+        # s le long de la montée depuis le pied, sur toute la largeur
+        if d[0] == 0:
+            ya, yb = sorted([cy - d[1] * L / 2 + d[1] * s0, cy - d[1] * L / 2 + d[1] * s1])
+            return {"x0": cx - W / 2, "x1": cx + W / 2, "y0": ya, "y1": yb, "z0": z0, "z1": z1, "mat": mat}
+        xa, xb = sorted([cx - d[0] * L / 2 + d[0] * s0, cx - d[0] * L / 2 + d[0] * s1])
+        return {"x0": xa, "x1": xb, "y0": cy - W / 2, "y1": cy + W / 2, "z0": z0, "z1": z1, "mat": mat}
+
+    out = []
+    for i in range(n - 1):
+        z = (i + 1) * r
+        out.append(rect(i * pas, (i + 1) * pas, 0, z - 1.25, "gypse"))                 # dessous fermé
+        out.append(rect(max(0, i * pas - 1), (i + 1) * pas, z - 1.25, z, "placage"))   # giron (nez de 1 po)
+        out.append(rect(i * pas, i * pas + 0.75, i * r, z - 1.25, "porte"))           # contremarche
+    # trémie : dès que l'échappée (77 po au-dessus du nez) dépasse le plafond fini
+    s_tr = max(0.0, min(L, ((H - 77) / r - 1) * pas))
+    t0 = rect(s_tr, L, 0, 1, "")
+    tremie = [t0["x0"], t0["y0"], t0["x1"], t0["y1"]]
+    haut = H + etage
+    cage = [{"x0": tremie[0] - 2, "x1": tremie[0], "y0": tremie[1] - 2, "y1": tremie[3] + 2, "z0": H, "z1": haut, "mat": "gypse"},
+            {"x0": tremie[2], "x1": tremie[2] + 2, "y0": tremie[1] - 2, "y1": tremie[3] + 2, "z0": H, "z1": haut, "mat": "gypse"},
+            {"x0": tremie[0], "x1": tremie[2], "y0": tremie[1] - 2, "y1": tremie[1], "z0": H, "z1": haut, "mat": "gypse"},
+            {"x0": tremie[0], "x1": tremie[2], "y0": tremie[3], "y1": tremie[3] + 2, "z0": H, "z1": haut, "mat": "gypse"},
+            {"x0": tremie[0] - 2, "x1": tremie[2] + 2, "y0": tremie[1] - 2, "y1": tremie[3] + 2, "z0": haut, "z1": haut + 1, "mat": "plafond"}]
+    tout = rect(0, L, 0, 1, "")
+    return out + cage, tremie, {k: tout[k] for k in ("x0", "x1", "y0", "y1")}
+
+
+def peindre(boites, pieces, S):
+    """Peinture par pièce : chaque grande face de mur prend la couleur de la pièce qu'elle regarde.
+    SCENE["peinture"] = {id de pièce: nom de couleur}, SCENE["accents"] = [{"piece", "mur", "peinture"}]."""
+    from shapely.geometry import Point, Polygon
+    couleurs = S.get("peinture") or {}
+    accents = {(a["piece"], a["mur"]): a["peinture"] for a in S.get("accents", [])}
+    if not couleurs and not accents:
+        return
+    polys = [(p["id"], Polygon(p["polygone"])) for p in pieces]
+    for b in boites:
+        if b.get("mat") not in ("gypse", "fondation") or "mur" not in b:
+            continue
+        cx, cy = (b["x0"] + b["x1"]) / 2, (b["y0"] + b["y1"]) / 2
+        horiz = (b["x1"] - b["x0"]) >= (b["y1"] - b["y0"])
+        faces = {}
+        for cote, (px, py) in ((("+y", (cx, b["y1"] + 2)), ("-y", (cx, b["y0"] - 2))) if horiz else
+                               (("+x", (b["x1"] + 2, cy)), ("-x", (b["x0"] - 2, cy)))):
+            pid = next((i for i, P in polys if P.contains(Point(px, py))), None)
+            nom = accents.get((pid, b["mur"])) or couleurs.get(pid)
+            if nom:
+                faces[cote] = nom
+        if faces:
+            b["faces"] = faces
+
+
 def feuille_porte(m, o, t):
     """Vantail ouvert à 90° (porte battante) : boîte mince depuis la charnière, du côté où la porte pousse."""
     x1, y1, x2, y2 = m["x1"], m["y1"], m["x2"], m["y2"]
@@ -97,6 +181,9 @@ def main(dossier):
         par_mur.setdefault(o["mur_id"], []).append(o)
     boites, portes = [], []
     for m in niv["murs"]:
+        if m.get("materiau") == "lattes":
+            boites += lattes(m, H)
+            continue
         bx, t = boites_mur(m, par_mur.get(m["id"], []), H, sill, head)
         boites += bx
         for o in par_mur.get(m["id"], []):
@@ -161,6 +248,13 @@ def main(dossier):
             boites.append({"x0": min(g["x1"], g["x2"]) - (0 if horiz else e), "x1": max(g["x1"], g["x2"]) + (0 if horiz else e),
                            "y0": min(g["y1"], g["y2"]) - (e if horiz else 0), "y1": max(g["y1"], g["y2"]) + (e if horiz else 0),
                            "z0": H - 10, "z1": H, "mat": "gypse"})
+    # escaliers projetés : marches, trémie dans le plafond, cage au-dessus, obstacle pour la visite
+    tremies, obstacles = [], []
+    for e in niv["elements"]:
+        if e["type"] == "escalier" and e.get("etat") == "nouveau":
+            bx, tr, ob = escalier(e, H, S.get("hauteur_etage", 105))
+            boites += bx; tremies.append(tr); obstacles.append(ob)
+    peindre(boites, niv["pieces"], S)
     mats = S.get("sols", {})
     sols = []
     for p in niv["pieces"]:
@@ -176,7 +270,8 @@ def main(dossier):
              "revetements": S.get("revetements", []), "lumieres": S.get("lumieres", []),
              "visites": S.get("visites", []), "depart": S.get("depart", {"x": 400, "y": 180, "cap": 200}),
              "bornes": [min(xs), min(ys), max(xs), max(ys)], "titre": S.get("titre", M["projet"].get("proposition", "")),
-             "projet": M["projet"]["nom"], "palette": S.get("palette", [])}
+             "projet": M["projet"]["nom"], "palette": S.get("palette", []),
+             "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
     textures = {}
     for f in sorted(os.listdir(TEX)):
         if f.endswith(".jpg"):

@@ -2323,6 +2323,8 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
     pid = str(d.get("id"))
     if not NOMS_PIECES and not DIMS_PIECES:
         return False                    # aucune étiquette de pièce sur le plan (données dans tableau_pieces.csv)
+    if d.get("etiquette") is False:
+        return False                    # pièce sans étiquette (ex. cage d'escalier : le symbole suffit)
     nom = str(d.get("nom") or d.get("nom_original") or pid).upper()
     dims = d.get("dimensions") if isinstance(d.get("dimensions"), dict) else {}
     minx, miny, maxx, maxy = poly.bounds

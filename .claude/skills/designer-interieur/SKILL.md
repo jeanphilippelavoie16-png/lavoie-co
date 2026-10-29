@@ -70,7 +70,9 @@ proposition claire, belle, réaliste et justifiée, dessinée avec les outils du
 
 ## 6. Livrables d'une proposition
 1. Plan généré (cloisons projetées en blanc, verre au trait), avec pièces nommées et superficies.
-2. Maquette 3D (`3d/visite.html`) avec les matériaux et le mobilier ; publiée et lien donné au client.
+2. Maquette 3D (`3d/visite.html`) avec les matériaux, la peinture et le mobilier ; publiée et lien donné au client.
+   Peinture : `peintures` (nom → couleur, référence de nuancier « à valider sur échantillon »), `peinture` (pièce → couleur)
+   et `accents` (pièce + mur → couleur) dans `scene_3d.py`. Arrêts de visite (`visites`) dans un ordre logique de parcours.
 3. `DESIGN.md` : programme, parti pris, ce qui a changé par rapport à la version précédente et pourquoi, options A/B,
    points à vérifier sur place, ordre de grandeur de coût (fourchette, source citée).
 4. Un message court au client : ce qui est nouveau, 3 à 5 décisions qu'on lui demande, liens.
@@ -82,3 +84,5 @@ proposition claire, belle, réaliste et justifiée, dessinée avec les outils du
 - [ ] Colonnes cachées dans des cloisons ou habillées volontairement.
 - [ ] Superficies et dimensions plausibles (comparer au tableau de la section 3).
 - [ ] Le plan et la 3D racontent la même chose (mêmes murs, mêmes portes, même porte vitrée, etc.).
+- [ ] Escalier : giron, hauteur de marche, échappée (1,95 m) et trémie signalés comme à valider ; garde et main courante.
+- [ ] Chaque pièce de service (lavage, utilité) a un accès réaliste ; si on traverse une autre pièce, le dire et donner l'option B.

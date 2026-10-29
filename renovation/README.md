@@ -19,10 +19,16 @@
 | SS-01 | Aménagement du sous-sol : 2 chambres, grande salle de bain, salon / salle de jeu, salle d'entraînement, salle d'utilité | esquisse |
 | SS-02 | Copie de SS-01 : aire ouverte, salle d'entraînement vitrée, direction de design, maquette 3D visitable (`3d/visite.html`) | esquisse |
 | SS-03 | Copie de SS-02 : grande salle de bain à double vanité, cuisine en ligne, caveau en rangement, buanderie (skill designer-interieur) | esquisse |
+| SS-04 | Copie de SS-03 : escalier vers le rez-de-chaussée (emplacement de 1957), coin bar avec lavabo et frigo (plus de salle à manger), vraie salle de lavage, peinture et textures | esquisse |
 
 ## Maquette 3D
     python3 renovation/outils/generer_3d.py renovation/<projet>
-Lit `donnees/maison.json` et `scene_3d.py` (matériaux, mobilier, éclairage) du projet.
+Lit `donnees/maison.json` et `scene_3d.py` (matériaux, peinture, mobilier, éclairage, arrêts de visite) du projet.
+La visite est pensée pour une tablette à l'horizontale : toucher le plancher ou le petit plan pour y marcher (chemin
+automatique par les portes), glisser pour regarder, ◀ ▶ pour la visite guidée, liste des pièces à gauche, maquette sans
+plafond (un doigt tourne, deux doigts zooment). Les escaliers projetés (`etat: nouveau`) sont modélisés avec leur trémie ;
+`peinture` / `accents` dans `scene_3d.py` colorent les murs pièce par pièce. Les visites déjà publiées de SS-02 et SS-03
+gardent l'ancienne visionneuse tant qu'on ne les régénère pas.
 
 ## Skill de design
 `.claude/skills/designer-interieur/SKILL.md` : méthode, dégagements, code à vérifier, direction de design, livrables.
