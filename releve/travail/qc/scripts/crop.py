@@ -1,11 +1,13 @@
-import sys, json
+import sys, json, os
 from PIL import Image, ImageDraw
 S='/tmp/claude-0/-home-user-lavoie-co/a2f554a7-a4f7-5946-bdd4-2eb9d5a22192/scratchpad'
 R='/home/user/lavoie-co/releve/travail/prep/redresse/'
-OUT='/home/user/lavoie-co/releve/travail/qc/preuves/'
+OUT=os.environ.get('QCOUT','/home/user/lavoie-co/releve/travail/qc/preuves/')
 K=5100/1088
-TF={'SS':(220.135,540.979),'RDC':(218.21,538.479)}
-SVGPNG={'SS':S+'/A-100_sous-sol.png','RDC':S+'/A-101_rdc.png'}
+TF={'SS':(220.135,540.979),'RDC':(223.21,538.479)}
+import os
+SUF=os.environ.get('QCSUF','')
+SVGPNG={'SS':S+'/A-100_sous-sol'+SUF+'.png','RDC':S+'/A-101_rdc'+SUF+'.png'}
 def svgcrop(niv,x0,y0,x1,y1):
     ox,oy=TF[niv]; im=Image.open(SVGPNG[niv]).convert('RGB')
     box=(int((ox+x0)*K),int((oy-y1)*K),int((ox+x1)*K),int((oy-y0)*K))

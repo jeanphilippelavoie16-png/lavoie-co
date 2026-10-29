@@ -1,8 +1,8 @@
-import json,sys
+import json,sys,os
 from PIL import Image, ImageDraw, ImageFont
-J='/tmp/claude-0/-home-user-lavoie-co/a2f554a7-a4f7-5946-bdd4-2eb9d5a22192/scratchpad/snap/releve/livrables/donnees/maison.json'
+J=os.environ.get('QCJ','/tmp/claude-0/-home-user-lavoie-co/a2f554a7-a4f7-5946-bdd4-2eb9d5a22192/scratchpad/snap/releve/livrables/donnees/maison.json')
 R='/home/user/lavoie-co/releve/travail/prep/redresse/'
-OUT='/home/user/lavoie-co/releve/travail/qc/preuves/'
+OUT=os.environ.get('QCOUT','/home/user/lavoie-co/releve/travail/qc/preuves/')
 MAP={'P2':'P1','P3':'P7','P4':'P3','P5':'P4','P6':'P6','P1':'P2','P7':'P5'}
 d=json.load(open(J))
 C={}

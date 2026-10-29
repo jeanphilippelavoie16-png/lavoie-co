@@ -1161,6 +1161,35 @@ ECARTS.append({
                             "C (17'-0\") là où les cloisons ont été enlevées, et sa hauteur libre ; garde-corps de l'escalier ; "
                             "existence du trumeau près du mur droit sur l'axe B ; cloison hall / salon (arche 4'-0\") toujours en place ?"),
     "position": [262.0, 180.0]})
+ECARTS[-1]["description"] += (" La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la "
+                              "salle de bain).")
+
+# 1c) QC R2 : ids uniques, écarts sans objet, textes périmés, limites des zones ouvertes
+for m in rdc["murs_retires"]:
+    if m["id"] == "mur-RDC-019":
+        m["id"] = "mur-RDC-019-1957"
+        m["note_id"] = "cloison d'origine complète ; le trumeau conservé garde l'id mur-RDC-019"
+for e in ECARTS:
+    if e["id"] == EC['porte-uti']:
+        e.pop("position", None)
+        e["a_valider_sur_place"] = ""
+    if e["id"] == EC['escalier']:
+        e["description"] = e["description"].replace("RDC cage 36½ po DÉDUIT", "RDC 3'-5\" à l'axe des anciennes cloisons (cote-RDC-033), cage retirée")
+        e["hypothese_retenue"] = e["hypothese_retenue"].replace("position x alignée sur la cage du RDC",
+                                                                "position x alignée sur les axes des anciennes cloisons de la cage (retirées)")
+    if e["id"] == EC['usage']:
+        e["a_valider_sur_place"] = "Constater l'usage et l'aménagement actuels de la salle à manger (ancienne chambre d'utilité) et de la cuisine."
+for e in rdc["elements"]:
+    if e["id"] == "elem-RDC-ESC1":
+        lg = (e.get("dimensions") or {}).get("largeur") or {}
+        if lg.get("note"):
+            lg["note"] = lg["note"].replace("entre cloisons x = 23'-0\" et 26'-4\"",
+                                            "entre les axes des anciennes cloisons x = 23'-0\" et 26'-4\" (retirées, constat 2026-10-29)")
+for c in rdc["cotes"]:
+    if c["id"] == "cote-RDC-058":
+        c["emplacement"] += " (état 1957 ; la porte ouvre aujourd'hui vers le dégagement, constat 2026-10-29)"
+rdc["limites_zones"] = [{"id": f"lz-RDC-{i:03d}", "p1": list(a), "p2": list(b), "note": n}
+                        for i, (a, b, n) in enumerate(COUPES['RDC'], 1)]
 
 # 2) renumérotation des photos dans l'ordre d'envoi du propriétaire (1 à 7).
 #    Les fichiers de travail (photos/, prep/, arbitrage/vignettes/) gardent la numérotation interne ;

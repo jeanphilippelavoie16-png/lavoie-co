@@ -57,7 +57,8 @@ def main():
     w("")
     w(f"**RELEVÉ DE L'EXISTANT — PRÉLIMINAIRE, À VALIDER SUR PLACE** · Révision {P.get('revision', 'R0')} · {P.get('date', '')}")
     w("")
-    w("Ce relevé reproduit, en plans propres et modifiables, les plans d'origine dessinés à la main. "
+    w("Ce relevé reproduit, en plans propres et modifiables, les plans d'origine dessinés à la main (1957), "
+      "corrigés par le constat du propriétaire (cloisons disparues, porte de la salle de bain). "
       "Il ne contient aucune proposition de rénovation. Aucune mesure n'a été prise sur place : "
       "toutes les dimensions viennent des documents photographiés, avec leur source.")
     w("")
@@ -110,9 +111,14 @@ def main():
     # ------------------------------------------------------------------ hypothèses
     w("## 4. Hypothèses retenues")
     w("")
-    w("- **État représenté : les plans d'origine (1957).** Le croquis d'ingénieur de 2016 (photo 1) montre moins de cloisons "
-      "et des colonnes retirées ; il n'est pas un relevé complet (la salle de bain n'y figure même pas). Les cloisons de 1957 "
-      "sont donc conservées et chaque différence est consignée comme écart critique, à valider en visite.")
+    constat = next((e for e in M.get("ecarts", []) if e.get("description", "").startswith("constat du propriétaire")), None)
+    rc = f" (⚠{int(constat['id'].split('-')[1])})" if constat else ""
+    w("- **État représenté : les plans d'origine (1957) corrigés par le constat du propriétaire du 2026-10-29**" + rc + " : "
+      "au rez-de-chaussée, les cloisons de la cage d'escalier, du placard à balais et des axes porteurs d'origine B et C "
+      "(chambre d'utilité / dégagement, salon / passage) n'existent plus ; la porte de la salle de bain ouvre vers le dégagement ; "
+      "meubles, électroménagers, comptoirs et baignoire ne sont pas représentés (conservés pour mémoire dans `maison.json`). "
+      "Les autres cloisons de 1957 absentes du croquis d'ingénieur de 2016 (photo 1, qui n'est pas un relevé complet) "
+      "sont conservées et consignées comme écart à valider en visite.")
     w("- **Aucune mesure sur place (ancres vides)** : le relevé n'est calé sur aucune mesure du bâtiment réel.")
     w("- **Les cotes écrites priment sur le dessin** : la géométrie est construite à partir des chaînes de cotes ; "
       "les proportions du dessin servent seulement à combler les trous (ESTIMÉ).")

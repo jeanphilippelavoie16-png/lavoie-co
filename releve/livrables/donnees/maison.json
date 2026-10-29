@@ -6069,7 +6069,7 @@
        "valeur": 36.5,
        "source": "DÉDUIT",
        "photo": "P4",
-       "note": "entre cloisons x = 23'-0\" et 26'-4\" (axes LU, cloisons 4½\" PRÉSUMÉ)"
+       "note": "entre les axes des anciennes cloisons x = 23'-0\" et 26'-4\" (retirées, constat 2026-10-29) (axes LU, cloisons 4½\" PRÉSUMÉ)"
       }
      },
      "texte_original": "2.R. 14 C.M.",
@@ -7525,7 +7525,7 @@
      "lecture_2": "2'-6\"x6'-8\"",
      "statut": "confirmee",
      "photo": "P4",
-     "emplacement": "porte de la S. de bain ; pentures côté avant (y≈164), ouvre dans la S. de bain (-x)",
+     "emplacement": "porte de la S. de bain ; pentures côté avant (y≈164), ouvre dans la S. de bain (-x) (état 1957 ; la porte ouvre aujourd'hui vers le dégagement, constat 2026-10-29)",
      "px": [
       778,
       995
@@ -9800,7 +9800,7 @@
    ],
    "murs_retires": [
     {
-     "id": "mur-RDC-019",
+     "id": "mur-RDC-019-1957",
      "type": "int",
      "porteur": "inconnu",
      "indices_porteur": [
@@ -9821,7 +9821,8 @@
      "note": "Cloison salon / passage et salon / cuisine (ARCHE 6'-0\") ; axe y = 13'-1\" (cote-RDC-044, -046).",
      "source_position": "DÉDUIT",
      "retire_selon": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)",
-     "description_retrait": "cloison salon / passage-cuisine (axe B, y = 13'-1\") barrée en rouge de x = 18'-6\" jusqu'à l'arche 6'-0\" ; seul le trumeau à droite de l'arche (x ≥ 439.5) est conservé"
+     "description_retrait": "cloison salon / passage-cuisine (axe B, y = 13'-1\") barrée en rouge de x = 18'-6\" jusqu'à l'arche 6'-0\" ; seul le trumeau à droite de l'arche (x ≥ 439.5) est conservé",
+     "note_id": "cloison d'origine complète ; le trumeau conservé garde l'id mur-RDC-019"
     },
     {
      "id": "mur-RDC-026",
@@ -10093,6 +10094,68 @@
      "note": "porte palier de l'escalier → cuisine ; ouvre dans la cuisine",
      "retire_selon": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)"
     }
+   ],
+   "limites_zones": [
+    {
+     "id": "lz-RDC-001",
+     "p1": [
+      173,
+      157
+     ],
+     "p2": [
+      446,
+      157
+     ],
+     "note": "hall-dégagement / salon-cuisine : axe B ; cloison retirée de 18'-6\" à l'arche (constat 2026-10-29)"
+    },
+    {
+     "id": "lz-RDC-002",
+     "p1": [
+      316,
+      157
+     ],
+     "p2": [
+      316,
+      373
+     ],
+     "note": "cuisine / escalier-dégagement : axe de l'ancienne cloison x = 26'-4\" (retirée)"
+    },
+    {
+     "id": "lz-RDC-003",
+     "p1": [
+      146,
+      204
+     ],
+     "p2": [
+      316,
+      204
+     ],
+     "note": "dégagement / salle à manger-escalier : axe C, ancienne cloison retirée"
+    },
+    {
+     "id": "lz-RDC-004",
+     "p1": [
+      275,
+      204
+     ],
+     "p2": [
+      275,
+      373
+     ],
+     "note": "salle à manger / escalier : axe de l'ancienne cloison x = 22'-11\" (retirée)"
+    },
+    {
+     "id": "lz-RDC-005",
+     "p1": [
+      175,
+      5
+     ],
+     "p2": [
+      175,
+      54
+     ],
+     "note": "entrée / vestiaire (VEST. ouvert)"
+    }
    ]
   }
  ],
@@ -10305,7 +10368,7 @@
    "description": "Usage des pièces : le croquis 2016 nomme « Salle à manger » l'espace que le plan 1957 nomme « CHAMBRE D'UTILITÉ », et « Cuisine » la « CUISINE S.-À-MANGER » d'origine ; l'absence de cloisons grises aux lignes 5 et 6 suggère un espace ouvert (NON écrit).",
    "impact": "moyen",
    "hypothese_retenue": "Noms 2016 adoptés (Salle à manger, Cuisine) : l'aire est ouverte selon le constat du 2026-10-29 ; noms 1957 conservés dans nom_original.",
-   "a_valider_sur_place": "Constater l'usage et l'aménagement actuels de la chambre d'utilité et de la cuisine.",
+   "a_valider_sur_place": "Constater l'usage et l'aménagement actuels de la salle à manger (ancienne chambre d'utilité) et de la cuisine.",
    "photo": "P1",
    "statut": "ouvert",
    "position": [
@@ -10333,13 +10396,9 @@
    "description": "Porte de la chambre d'utilité étiquetée « 2'-6\"x6'-8\" » (3 lectures) dans une baie cotée 2'-5\" d'axe en axe (cote-RDC-031) : une porte de 30 po ne peut pas y tenir avec ses montants ; le dessin place la porte en avant de la colonne des G.R., dans le prolongement de la cloison à 17'-0\" du nu ext. avant.",
    "impact": "faible",
    "hypothese_retenue": "Sans objet : la porte et sa cloison n'existent plus (constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)). Porte de 30 po placée sur la cloison de l'axe C, entre ≈ 12'-4\" et 14'-10\" du coin gauche (ESTIMÉ).",
-   "a_valider_sur_place": "Mesurer la largeur et la position de la porte de la chambre d'utilité.",
+   "a_valider_sur_place": "",
    "photo": "P4",
-   "statut": "sans objet",
-   "position": [
-    163,
-    204
-   ]
+   "statut": "sans objet"
   },
   {
    "id": "ecart-019",
@@ -10386,7 +10445,7 @@
   {
    "id": "ecart-022",
    "niveau": "global",
-   "description": "Escalier SS ↔ RDC : superposition à 5 po près (SS largeur ≈ 37 po ESTIMÉ, RDC cage 36½ po DÉDUIT) ; 14 C.M. écrit aux deux niveaux mais ≈ 10 girons visibles au RDC (les marches inférieures passaient sous le placard BALAIS) ; échappée sous la poutre arrière (17'-0\" du nu ext. avant) au pied de l'escalier non vérifiable.",
+   "description": "Escalier SS ↔ RDC : superposition à 5 po près (SS largeur ≈ 37 po ESTIMÉ, RDC 3'-5\" à l'axe des anciennes cloisons (cote-RDC-033), cage retirée) ; 14 C.M. écrit aux deux niveaux mais ≈ 10 girons visibles au RDC (les marches inférieures passaient sous le placard BALAIS) ; échappée sous la poutre arrière (17'-0\" du nu ext. avant) au pied de l'escalier non vérifiable.",
    "impact": "faible",
    "hypothese_retenue": "Course ESTIMÉE au dessin ; position alignée sur la cage du RDC.",
    "a_valider_sur_place": "Mesurer la hauteur et le giron des marches, la largeur de l'escalier et l'échappée sous la poutre arrière.",
@@ -10493,7 +10552,7 @@
    "impact": "critique",
    "statut": "ouvert",
    "photo": "P1",
-   "description": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0\" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0\") est conservée.",
+   "description": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0\" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0\") est conservée. La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la salle de bain).",
    "hypothese_retenue": "Cloisons retirées du plan (conservées dans murs_retires pour mémoire) ; aire ouverte découpée en zones (dégagement, salle à manger, escalier, cuisine, salon) aux axes des anciennes cloisons, sans mur. Escalier conservé (seul accès au sous-sol) ; garde-corps et reprises structurales (poutres, linteaux, retombées) non relevés. Trumeau à droite de l'ancienne arche conservé (position ESTIMÉE).",
    "a_valider_sur_place": "Au RDC : présence d'une retombée ou poutre au plafond le long des axes B (13'-1\" du nu ext. avant) et C (17'-0\") là où les cloisons ont été enlevées, et sa hauteur libre ; garde-corps de l'escalier ; existence du trumeau près du mur droit sur l'axe B ; cloison hall / salon (arche 4'-0\") toujours en place ?",
    "position": [

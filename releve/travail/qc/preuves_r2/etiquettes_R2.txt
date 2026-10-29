@@ -1,0 +1,22 @@
+svg/A-100_sous-sol.svg
+  piece-SS-PRINC   "SOUS-SOL" dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-SS-LEG     "CAVEAU" dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-SS-PERRON  "EXCROISSANCE SOUS PERRON" dans sa pièce 0% renvoi=True ; texte dans autre pièce: []
+svg/A-101_rdc.svg
+  piece-RDC-SAL    "SALON" dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-RDC-CUI    "CUISINE" dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-RDC-CH2    "CHAMBRE" dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-RDC-CH1    "CHAMBRE" dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-RDC-UTI    "SALLE À" dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-RDC-DEG    "DÉGAGEMENT" dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-RDC-GRA    "G.R." dans sa pièce 100% renvoi=None ; texte dans autre pièce: []
+  piece-RDC-LIN    "LIN." dans sa pièce 0% renvoi=True ; texte dans autre pièce: [('piece-RDC-HALL', 1.0)]  <<< 
+  piece-RDC-GR1    "G.R. 1" dans sa pièce 0% renvoi=True ; texte dans autre pièce: []
+  piece-RDC-GR2    "G.R. 2" dans sa pièce 0% renvoi=True ; texte dans autre pièce: [('piece-RDC-UTI', 0.43), ('piece-RDC-GRU', 0.46)]  <<< 
+  piece-RDC-GRU    "G.R. 3" dans sa pièce 0% renvoi=True ; texte dans autre pièce: [('piece-RDC-UTI', 1.0)]  <<< 
+  piece-RDC-VES    "VEST." dans sa pièce 0% renvoi=True ; texte dans autre pièce: [('piece-RDC-CH2', 0.47), ('piece-RDC-GRA', 0.42)]  <<< 
+  piece-RDC-ENT    "ENTRÉE" dans sa pièce 0% renvoi=True ; texte dans autre pièce: [('piece-RDC-SAL', 1.0)]  <<< 
+  piece-RDC-HALL   "HALL" dans sa pièce 0% renvoi=True ; texte dans autre pièce: [('piece-RDC-ENT', 1.0)]  <<< 
+  piece-RDC-EAR    "ENTRÉE ARR." dans sa pièce 0% renvoi=True ; texte dans autre pièce: []
+  piece-RDC-SDB    "SALLE DE BAIN" dans sa pièce 0% renvoi=True ; texte dans autre pièce: []
+  piece-RDC-ESC    "ESCALIER" dans sa pièce 0% renvoi=True ; texte dans autre pièce: []
