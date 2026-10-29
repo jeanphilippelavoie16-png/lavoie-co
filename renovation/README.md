@@ -17,3 +17,8 @@
 | Code | Projet | État |
 |---|---|---|
 | SS-01 | Aménagement du sous-sol : 2 chambres, grande salle de bain, salon / salle de jeu, salle d'entraînement, salle d'utilité | esquisse |
+| SS-02 | Copie de SS-01 : aire ouverte, salle d'entraînement vitrée, direction de design, maquette 3D visitable (`3d/visite.html`) | esquisse |
+
+## Maquette 3D
+    python3 renovation/outils/generer_3d.py renovation/<projet>
+Lit `donnees/maison.json` et `scene_3d.py` (matériaux, mobilier, éclairage) du projet.

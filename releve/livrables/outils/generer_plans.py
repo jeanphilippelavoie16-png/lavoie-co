@@ -1002,6 +1002,7 @@ def construire(niv, idx, projet, ctx, verif):
     F = Feuille()
     F.types_legende = set()
     F.murs_neufs = False
+    F.murs_verre = False
     F.types_str = set()
     nid = str(niv.get("id") or f"N{idx}")
     F.nid = nid
@@ -1123,6 +1124,9 @@ def construire(niv, idx, projet, ctx, verif):
         if neuf:
             F.murs_neufs = True
         g += poly_prims(m.poly, "mur-lourd" if m.lourd else ("mur-neuf" if neuf else "mur-leger"))
+        if str(m.d.get("materiau") or "") == "verre":        # cloison vitrée : trait central comme une fenêtre
+            F.murs_verre = True
+            g.append(P_pl([m.p1, m.p2], "ouv-fin"))
         PL.ligne(m.poly, m.id)
     if not leger.is_empty:
         lg = leger.boundary
@@ -2745,6 +2749,8 @@ def cartouche(F, niv, projet, ctx):
              ("cote", "Cotes en pi-po (métrique en m)" if METRIQUE else "Cotes en pieds-pouces")]
     if neufs:
         items.insert(2, ("neuf", "Cloison projetée (nouvelle)"))
+        if getattr(F, "murs_verre", False):
+            items.insert(3, ("verre", "Cloison vitrée projetée"))
         items[1] = ("leger", "Mur intérieur existant")
     if vis is not None:   # n'expliquer que les symboles réellement dessinés sur cette feuille
         besoin = {"poutre": "poutre", "axe": "axe", "col": "colonne", "sol": "solives"}
@@ -2773,6 +2779,9 @@ def cartouche(F, niv, projet, ctx):
             rect(sx0, yc - sh / 2 * 0.75, sx1, yc + sh / 2 * 0.75, "cart-leger")
         elif kind == "neuf":
             rect(sx0, yc - sh / 2 * 0.75, sx1, yc + sh / 2 * 0.75, "cart-neuf")
+        elif kind == "verre":
+            rect(sx0, yc - sh / 2 * 0.35, sx1, yc + sh / 2 * 0.35, "cart-neuf")
+            g.append(P_pl([S(sx0, yc), S(sx1, yc)], "ouv-fin"))
         elif kind in ("poutre", "axe"):
             g.append(P_pl([S(sx0, yc), S(sx1, yc)], "str-poutre" if kind == "poutre" else "str-axe"))
         elif kind == "col":

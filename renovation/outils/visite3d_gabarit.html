@@ -1,0 +1,333 @@
+<title>Visite 3D du sous-sol</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Plein écran : la maquette occupe tout ; barre d'outils flottante en haut, joystick tactile en bas à gauche. */
+:root {
+  --bg: #e9e6e0; --panel: rgba(255,255,255,.92); --ink: #1d1f22; --muted: #5b5f66; --line: #d6d2ca;
+  --accent: #1e1e1e; --accent-ink: #ffffff; --wood: #b98e5e;
+  --f-ui: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #15171a; --panel: rgba(28,31,36,.92); --ink: #ecebe8; --muted: #a3a7ad; --line: #3a3f47; --accent: #ecebe8; --accent-ink: #15171a; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #15171a; --panel: rgba(28,31,36,.92); --ink: #ecebe8; --muted: #a3a7ad; --line: #3a3f47; --accent: #ecebe8; --accent-ink: #15171a; color-scheme: dark; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-ui); overflow: hidden; }
+#vue { position: fixed; inset: 0; }
+#vue canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.barre { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 10px); left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px));
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; pointer-events: none; }
+.barre > * { pointer-events: auto; }
+.carte { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 6px; display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
+  backdrop-filter: blur(6px); box-shadow: 0 2px 12px rgba(0,0,0,.12); }
+.titre { padding: 4px 8px; font-weight: 700; font-size: .95rem; }
+.titre small { display: block; font-weight: 400; color: var(--muted); font-size: .78rem; }
+button { font: inherit; font-size: .85rem; color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 7px; padding: 7px 10px; cursor: pointer; min-height: 36px; }
+button:hover { border-color: var(--line); }
+button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+button:focus-visible { outline: 2px solid var(--wood); outline-offset: 1px; }
+.aide { position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 12px); right: max(12px, env(safe-area-inset-right, 0px)); max-width: 340px;
+  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.palette { position: fixed; top: 74px; right: max(12px, env(safe-area-inset-right, 0px)); width: 300px; max-width: calc(100vw - 24px);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: .82rem; }
+.palette h2 { margin: 0 0 6px; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.palette ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.palette li { display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 8px; align-items: start; }
+.palette i { width: 18px; height: 18px; border-radius: 4px; border: 1px solid var(--line); display: block; }
+.palette b { display: block; }
+#joy { position: fixed; left: max(18px, env(safe-area-inset-left, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(255,255,255,.25); border: 2px solid rgba(255,255,255,.6); touch-action: none; }
+#joy span { position: absolute; left: 40px; top: 40px; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.85); }
+#viseur { position: fixed; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: rgba(255,255,255,.8); box-shadow: 0 0 0 1px rgba(0,0,0,.35); pointer-events: none; }
+#erreur { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; }
+@media (max-width: 700px) { .palette { top: auto; bottom: 150px; width: auto; left: 12px; } .aide { display: none; } }
+</style>
+
+<div id="vue"></div>
+<div id="viseur" hidden></div>
+<div class="barre">
+  <div class="carte"><div class="titre">__TITRE__<small id="projet"></small></div></div>
+  <div class="carte" role="group" aria-label="Mode">
+    <button id="m-visite" aria-pressed="true">Visite</button>
+    <button id="m-maquette" aria-pressed="false">Maquette</button>
+  </div>
+  <div class="carte" id="pieces" role="group" aria-label="Aller à"></div>
+  <div class="carte">
+    <button id="t-mob" aria-pressed="true">Mobilier</button>
+    <button id="t-pal" aria-pressed="false">Matériaux</button>
+  </div>
+</div>
+<div class="palette" id="palette" hidden><h2>Matériaux proposés</h2><ul id="pal"></ul></div>
+<div id="joy" hidden><span></span></div>
+<div class="aide" id="aide">Cliquez dans la vue pour regarder avec la souris ; W A S D ou les flèches pour marcher ; Échap pour libérer la souris.</div>
+<div id="erreur" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+<script>
+const S = /*__SCENE__*/null;
+const TX = /*__TEXTURES__*/null;
+const K = 0.0254;                       // pouces → mètres
+const P = (x, y, z) => new THREE.Vector3(x * K, z * K, -y * K);
+const tactile = matchMedia("(pointer: coarse)").matches;
+
+if (!window.THREE) {
+  const e = document.getElementById("erreur"); e.hidden = false;
+  e.textContent = "La bibliothèque 3D n'a pas pu se charger. Rechargez la page.";
+  throw new Error("three.js absent");
+}
+document.getElementById("projet").textContent = S.projet;
+
+// ---------- rendu
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.92;
+renderer.physicallyCorrectLights = true;
+document.getElementById("vue").appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color("#dfe6ec");
+const camera = new THREE.PerspectiveCamera(70, 1, 0.05, 200);
+
+// ---------- matériaux
+const loader = new THREE.TextureLoader();
+function tex(nom, couleur) {
+  const t = loader.load(TX[nom]); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
+  if (couleur) t.encoding = THREE.sRGBEncoding;
+  return t;
+}
+function porcelaine() {               // dalles 24 x 48 po gris pâle, joints fins (procédural)
+  const c = document.createElement("canvas"); c.width = c.height = 1024; const g = c.getContext("2d");
+  g.fillStyle = "#dedbd5"; g.fillRect(0, 0, 1024, 1024);
+  const d = g.getImageData(0, 0, 1024, 1024);
+  for (let i = 0; i < d.data.length; i += 4) { const n = (Math.random() - .5) * 10; d.data[i] += n; d.data[i + 1] += n; d.data[i + 2] += n; }
+  g.putImageData(d, 0, 0);
+  g.strokeStyle = "#c4c0b8"; g.lineWidth = 3;
+  g.strokeRect(1, 1, 1022, 510); g.strokeRect(1, 513, 1022, 510);
+  g.beginPath(); g.moveTo(512, 0); g.lineTo(512, 512); g.stroke();
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.encoding = THREE.sRGBEncoding; t.anisotropy = 8;
+  return t;
+}
+const ECHELLE = {};                    // mètres couverts par une répétition de texture
+function M(nom, opt, ech) { ECHELLE[nom] = ech || 1; return new THREE.MeshStandardMaterial(opt); }
+const MAT = {
+  chene: M("chene", { map: tex("chene_couleur", 1), normalMap: tex("chene_relief"), roughness: .55 }, 1.5),
+  placage: M("placage", { map: tex("placage_couleur", 1), normalMap: tex("placage_relief"), roughness: .5 }, .9),
+  caoutchouc: M("caoutchouc", { map: tex("caoutchouc_couleur", 1), normalMap: tex("caoutchouc_relief"), roughness: .9 }, 1.0),
+  tissu: M("tissu", { map: tex("tissu_couleur", 1), normalMap: tex("tissu_relief"), color: "#a9aeb3", roughness: .95 }, .45),
+  tapis: M("tapis", { map: tex("tissu_couleur", 1), normalMap: tex("tissu_relief"), color: "#d8d1c4", roughness: 1 }, .6),
+  tuile_blanche: M("tuile_blanche", { map: tex("tuile_blanche_couleur", 1), normalMap: tex("tuile_blanche_relief"), roughness: .2 }, .6),
+  beton: M("beton", { map: tex("beton_couleur", 1), normalMap: tex("beton_relief"), roughness: .65 }, 2),
+  porcelaine: M("porcelaine", { map: porcelaine(), roughness: .3 }, 1.22),
+  gypse: M("gypse", { color: "#f1eee8", roughness: .93 }),
+  fondation: M("fondation", { color: "#f1eee8", roughness: .93 }),
+  plafond: M("plafond", { color: "#f6f4ef", roughness: .95 }),
+  verre: M("verre", { color: "#d8ecee", transparent: true, opacity: .16, roughness: .05, metalness: .1, depthWrite: false }),
+  vitre: M("vitre", { color: "#eaf4fb", transparent: true, opacity: .25, roughness: .05, depthWrite: false }),
+  "verre-cadre": M("verre-cadre", { color: "#1e1e1e", roughness: .4, metalness: .6 }),
+  metal: M("metal", { color: "#1e1e1e", roughness: .4, metalness: .6 }),
+  porte: M("porte", { color: "#f4f2ee", roughness: .6 }),
+  "porte-ext": M("porte-ext", { color: "#232323", roughness: .5, metalness: .3 }),
+  "porte-verre": M("porte-verre", { color: "#d8ecee", transparent: true, opacity: .22, roughness: .05, depthWrite: false }),
+  ecran: M("ecran", { color: "#0c0c0d", roughness: .15, metalness: .4 }),
+  miroir: M("miroir", { color: "#e8eef0", roughness: .02, metalness: 1, envMapIntensity: 1.2 }),
+  blanc: M("blanc", { color: "#f8f8f6", roughness: .2 }),
+  eau: M("eau", { color: "#bfdde3", transparent: true, opacity: .6, roughness: .05 }),
+  comptoir: M("comptoir", { color: "#efeeea", roughness: .3 }),
+  draps: M("draps", { color: "#f3f1ec", roughness: .95 }),
+  jete: M("jete", { color: "#8f9c8c", roughness: .95 }),
+  gris: M("gris", { color: "#8d8f93", roughness: .5, metalness: .4 }),
+  "caoutchouc-noir": M("caoutchouc-noir", { color: "#202020", roughness: .9 }),
+  "abat-jour": M("abat-jour", { color: "#fff3df", emissive: "#ffcf8f", emissiveIntensity: .8, roughness: 1 }),
+  spot: M("spot", { color: "#ffffff", emissive: "#fff1dc", emissiveIntensity: 2.5 }),
+};
+for (const [n, m] of Object.entries(MAT)) m.name = n;
+
+// boîte avec coordonnées de texture en mètres (les matériaux gardent la même échelle partout)
+function boite(b, groupe) {
+  const w = (b.x1 - b.x0) * K, h = (b.z1 - b.z0) * K, d = (b.y1 - b.y0) * K;
+  if (w <= 0 || h <= 0 || d <= 0) return;
+  const g = new THREE.BoxGeometry(w, h, d);
+  const mat = MAT[b.mat] || MAT.gypse, e = ECHELLE[b.mat] || 1;
+  const pos = g.attributes.position, nor = g.attributes.normal, uv = g.attributes.uv;
+  const cx = (b.x0 + b.x1) / 2 * K, cy = (b.z0 + b.z1) / 2 * K, cz = -(b.y0 + b.y1) / 2 * K;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i) + cx, y = pos.getY(i) + cy, z = pos.getZ(i) + cz;
+    const nx = Math.abs(nor.getX(i)), ny = Math.abs(nor.getY(i));
+    if (nx > .5) uv.setXY(i, z / e, y / e); else if (ny > .5) uv.setXY(i, x / e, z / e); else uv.setXY(i, x / e, y / e);
+  }
+  const m = new THREE.Mesh(g, mat); m.position.set(cx, cy, cz); groupe.add(m);
+  return m;
+}
+function cylindre(c, groupe) {
+  const g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.z1 - c.z0) * K, 32);
+  const m = new THREE.Mesh(g, MAT[c.mat] || MAT.blanc); m.position.copy(P(c.x, c.y, (c.z0 + c.z1) / 2)); groupe.add(m);
+}
+
+// ---------- construction
+const gMurs = new THREE.Group(), gMob = new THREE.Group(), gPlafond = new THREE.Group();
+scene.add(gMurs, gMob, gPlafond);
+const obstacles = [];
+for (const b of S.boites) {
+  boite(b, gMurs);
+  if (b.z0 < 60 && b.z1 > 20) obstacles.push(b);
+}
+for (const b of S.portes) boite(b, gMurs);
+for (const b of S.revetements) boite(b, gMurs);
+for (const s of S.sols) {
+  const sh = new THREE.Shape(s.pts.map(([x, y]) => new THREE.Vector2(x * K, y * K)));
+  const g = new THREE.ShapeGeometry(sh);
+  const e = ECHELLE[s.mat] || 1, uv = g.attributes.uv;
+  for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / e, uv.getY(i) / e);
+  g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, MAT[s.mat] || MAT.chene); m.position.y = 0.001; gMurs.add(m);
+}
+const [bx0, by0, bx1, by1] = S.bornes;
+{ // sous-plancher (sous les murs) et plafond
+  const sol = new THREE.Mesh(new THREE.PlaneGeometry((bx1 - bx0) * K + 4, (by1 - by0) * K + 4), MAT.beton);
+  sol.rotation.x = -Math.PI / 2; sol.position.set((bx0 + bx1) / 2 * K, -0.002, -(by0 + by1) / 2 * K); scene.add(sol);
+  const pl = new THREE.Mesh(new THREE.PlaneGeometry((bx1 - bx0 + 20) * K, (by1 - by0 + 20) * K), MAT.plafond);
+  pl.rotation.x = Math.PI / 2; pl.position.set((bx0 + bx1) / 2 * K, S.H * K, -(by0 + by1) / 2 * K); gPlafond.add(pl);
+}
+for (const o of S.mobilier) (o.forme === "cylindre" ? cylindre : boite)(o, gMob);
+
+// ---------- éclairage : encastrés blanc chaud + lumière d'ambiance douce
+scene.add(new THREE.HemisphereLight("#ffffff", "#c9b8a0", 0.55));
+for (const l of S.lumieres) {
+  const p = new THREE.PointLight("#ffe2c0", 9, 0, 2); p.position.copy(P(l.x, l.y, S.H - 8)); scene.add(p);
+  const spot = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, .01, 24), MAT.spot);
+  spot.position.copy(P(l.x, l.y, S.H - 0.3)); gPlafond.add(spot);
+}
+
+// ---------- reflets : une image à 360° de la pièce sert d'environnement (miroirs, métal, verre)
+{
+  const rt = new THREE.WebGLCubeRenderTarget(256, { type: THREE.HalfFloatType });
+  const cc = new THREE.CubeCamera(0.05, 60, rt);
+  cc.position.copy(P(S.depart.x - 120, S.depart.y - 40, 55)); scene.add(cc);
+  const vis = gMob.visible; cc.update(renderer, scene); gMob.visible = vis;
+  const pm = new THREE.PMREMGenerator(renderer);
+  scene.environment = pm.fromCubemap(rt.texture).texture;
+  MAT.miroir.envMap = rt.texture; MAT.miroir.needsUpdate = true;
+}
+
+// ---------- caméra : visite (première personne) ou maquette (orbite)
+let mode = "visite";
+const joueur = { x: S.depart.x, y: S.depart.y, cap: S.depart.cap * Math.PI / 180, tangage: -0.05 };
+const orbite = { az: -0.6, el: 0.95, dist: 17, cx: (bx0 + bx1) / 2, cy: (by0 + by1) / 2 };
+const OEIL = 63;           // 5'-3"
+function placerCamera() {
+  if (mode === "visite") {
+    camera.position.copy(P(joueur.x, joueur.y, OEIL));
+    const dx = Math.cos(joueur.cap) * Math.cos(joueur.tangage), dy = Math.sin(joueur.cap) * Math.cos(joueur.tangage), dz = Math.sin(joueur.tangage);
+    camera.lookAt(P(joueur.x + dx * 100, joueur.y + dy * 100, OEIL + dz * 100));
+  } else {
+    const c = new THREE.Vector3(orbite.cx * K, 0, -orbite.cy * K);
+    camera.position.set(c.x + orbite.dist * Math.cos(orbite.el) * Math.sin(orbite.az), orbite.dist * Math.sin(orbite.el),
+                        c.z + orbite.dist * Math.cos(orbite.el) * Math.cos(orbite.az));
+    camera.lookAt(c);
+  }
+}
+function libre(x, y) {
+  const r = 10;   // rayon du visiteur (po)
+  for (const b of obstacles) if (x > b.x0 - r && x < b.x1 + r && y > b.y0 - r && y < b.y1 + r) return false;
+  return x > bx0 && x < bx1 && y > by0 - 60 && y < by1 + 80;
+}
+function marcher(av, lat, dt) {
+  const v = 55 * dt;   // po/s
+  const dx = (Math.cos(joueur.cap) * av + Math.cos(joueur.cap - Math.PI / 2) * lat) * v;
+  const dy = (Math.sin(joueur.cap) * av + Math.sin(joueur.cap - Math.PI / 2) * lat) * v;
+  if (libre(joueur.x + dx, joueur.y)) joueur.x += dx;
+  if (libre(joueur.x, joueur.y + dy)) joueur.y += dy;
+}
+
+// clavier
+const touches = new Set();
+addEventListener("keydown", (e) => { touches.add(e.key.toLowerCase()); });
+addEventListener("keyup", (e) => { touches.delete(e.key.toLowerCase()); });
+// souris / doigt : regarder (visite) ou tourner (maquette)
+const cnv = renderer.domElement;
+let glisse = null;
+cnv.addEventListener("pointerdown", (e) => {
+  if (mode === "visite" && !tactile && document.pointerLockElement !== cnv) {
+    try { const r = cnv.requestPointerLock(); if (r && r.catch) r.catch(() => {}); } catch (_) {}
+  }
+  glisse = { x: e.clientX, y: e.clientY, id: e.pointerId }; cnv.setPointerCapture(e.pointerId);
+});
+cnv.addEventListener("pointermove", (e) => {
+  if (document.pointerLockElement === cnv) { tourner(e.movementX, e.movementY); return; }
+  if (!glisse || glisse.id !== e.pointerId) return;
+  tourner(e.clientX - glisse.x, e.clientY - glisse.y); glisse.x = e.clientX; glisse.y = e.clientY;
+});
+cnv.addEventListener("pointerup", () => (glisse = null));
+cnv.addEventListener("wheel", (e) => { if (mode === "maquette") { orbite.dist = Math.min(40, Math.max(5, orbite.dist * (e.deltaY > 0 ? 1.1 : 0.9))); e.preventDefault(); } }, { passive: false });
+function tourner(dx, dy) {
+  if (mode === "visite") {
+    joueur.cap -= dx * 0.0035; joueur.tangage = Math.max(-1.2, Math.min(1.2, joueur.tangage - dy * 0.0035));
+  } else {
+    orbite.az -= dx * 0.006; orbite.el = Math.max(0.25, Math.min(1.5, orbite.el + dy * 0.005));
+  }
+}
+// joystick tactile
+const joy = document.getElementById("joy"), bouton = joy.querySelector("span");
+let jv = { x: 0, y: 0 };
+if (tactile) { joy.hidden = false; document.getElementById("aide").textContent = "Joystick : marcher. Glissez ailleurs pour regarder."; }
+joy.addEventListener("pointerdown", (e) => { joy.setPointerCapture(e.pointerId); bougerJoy(e); });
+joy.addEventListener("pointermove", (e) => { if (e.buttons || e.pressure) bougerJoy(e); });
+joy.addEventListener("pointerup", () => { jv = { x: 0, y: 0 }; bouton.style.transform = ""; });
+function bougerJoy(e) {
+  const r = joy.getBoundingClientRect(); let x = (e.clientX - r.left - 60) / 50, y = (e.clientY - r.top - 60) / 50;
+  const n = Math.hypot(x, y); if (n > 1) { x /= n; y /= n; }
+  jv = { x, y }; bouton.style.transform = `translate(${x * 40}px, ${y * 40}px)`;
+}
+
+// ---------- interface
+function choisirMode(m) {
+  mode = m; gPlafond.visible = m === "visite";
+  document.getElementById("m-visite").setAttribute("aria-pressed", String(m === "visite"));
+  document.getElementById("m-maquette").setAttribute("aria-pressed", String(m === "maquette"));
+  document.getElementById("viseur").hidden = m !== "visite" || tactile;
+  joy.hidden = !(tactile && m === "visite");
+  if (m === "maquette" && document.pointerLockElement) document.exitPointerLock();
+}
+document.getElementById("m-visite").onclick = () => choisirMode("visite");
+document.getElementById("m-maquette").onclick = () => choisirMode("maquette");
+const zone = document.getElementById("pieces");
+for (const v of S.visites) {
+  const b = document.createElement("button"); b.textContent = v.nom;
+  b.onclick = () => { joueur.x = v.x; joueur.y = v.y; joueur.cap = v.cap * Math.PI / 180; joueur.tangage = -0.05; choisirMode("visite"); };
+  zone.appendChild(b);
+}
+document.getElementById("t-mob").onclick = (e) => { gMob.visible = !gMob.visible; e.currentTarget.setAttribute("aria-pressed", String(gMob.visible)); };
+document.getElementById("t-pal").onclick = (e) => {
+  const p = document.getElementById("palette"); p.hidden = !p.hidden; e.currentTarget.setAttribute("aria-pressed", String(!p.hidden));
+};
+for (const [nom, desc, coul] of S.palette) {
+  const li = document.createElement("li"); const i = document.createElement("i"); i.style.background = coul;
+  const t = document.createElement("span"); const b = document.createElement("b"); b.textContent = nom; t.append(b, desc);
+  li.append(i, t); document.getElementById("pal").append(li);
+}
+choisirMode("visite");
+
+// ---------- boucle
+function taille() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+addEventListener("resize", taille); taille();
+let t0 = performance.now();
+function boucle(t) {
+  const dt = Math.min(0.05, (t - t0) / 1000); t0 = t;
+  if (mode === "visite") {
+    let av = 0, lat = 0;
+    if (touches.has("w") || touches.has("arrowup") || touches.has("z")) av += 1;
+    if (touches.has("s") || touches.has("arrowdown")) av -= 1;
+    if (touches.has("a") || touches.has("q")) lat -= 1;
+    if (touches.has("d")) lat += 1;
+    if (touches.has("arrowleft")) joueur.cap += 1.8 * dt;
+    if (touches.has("arrowright")) joueur.cap -= 1.8 * dt;
+    av -= jv.y; lat += jv.x;
+    if (av || lat) marcher(av, lat, dt);
+  }
+  placerCamera(); renderer.render(scene, camera); requestAnimationFrame(boucle);
+}
+requestAnimationFrame(boucle);
+</script>
