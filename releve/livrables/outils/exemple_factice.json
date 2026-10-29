@@ -139,7 +139,8 @@
             "valeur": 8,
             "source": "PRÉSUMÉ",
             "photo": null,
-            "note": "épaisseur non cotée ; béton 8\" usuel"
+            "note": "épaisseur non cotée ; béton 8\" usuel",
+            "ref": "ecart-004"
           },
           "x1": 10,
           "y1": 250,
@@ -1181,7 +1182,7 @@
           "statut": "confirmee",
           "ref": null,
           "valeur_attendue": null,
-          "repere": null
+          "repere": "ecart-002"
         },
         {
           "id": "lc-SS-009",
@@ -1441,7 +1442,8 @@
             "valeur": 4.5,
             "source": "PRÉSUMÉ",
             "photo": null,
-            "note": "cloison 2x3 + gypse, usuel"
+            "note": "cloison 2x3 + gypse, usuel",
+            "ref": "ecart-004"
           },
           "x1": 6,
           "y1": 152.25,
@@ -1457,7 +1459,8 @@
             "valeur": 4.5,
             "source": "PRÉSUMÉ",
             "photo": null,
-            "note": "cloison 2x3 + gypse, usuel"
+            "note": "cloison 2x3 + gypse, usuel",
+            "ref": "ecart-004"
           },
           "x1": 6,
           "y1": 232.25,
@@ -2713,6 +2716,16 @@
         200,
         190
       ]
+    },
+    {
+      "id": "ecart-004",
+      "niveau": "global",
+      "description": "Épaisseurs de murs non cotées : valeurs usuelles présumées (cloisons 4½\", béton 8\").",
+      "impact": "faible",
+      "hypothese_retenue": "valeurs usuelles",
+      "a_valider_sur_place": "Mesurer l'épaisseur aux baies.",
+      "photo": "P1",
+      "statut": "ouvert"
     }
   ]
 }

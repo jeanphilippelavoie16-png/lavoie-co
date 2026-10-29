@@ -112,11 +112,13 @@ doubles et pliantes exigent au moins `ouvre_vers`.
 | `LU` | aucun effet |
 | `DÉDUIT` | aucun effet |
 | `ESTIMÉ` | préfixe « ≈ » sur la cote ou la dimension |
-| `PRÉSUMÉ` | repère ⚠ : épaisseur de mur ou cote présumée |
+| `PRÉSUMÉ` | repère ⚠n de l'écart référencé (`epaisseur.ref` pour un mur, `repere` pour une cote) |
 | `ILLISIBLE` | « ? » après la cote |
 
-Pour lier une cote à un écart du registre, mettez `"repere": "ecart-007"`. Pour placer un repère sur le plan,
-ajoutez `"position": [x, y]` à l'écart, dans le repère du niveau `ecart.niveau`.
+Pour lier une cote à un écart du registre, mettez `"repere": "ecart-007"`. Pour lier un mur d'épaisseur
+présumée, mettez `"ref": "ecart-006"` dans son objet `epaisseur`. Pour placer un repère sur le plan, ajoutez
+`"position": [x, y]` à l'écart, dans le repère du niveau `ecart.niveau`. Un écart `global` positionné apparaît
+sur chaque feuille dont la géométrie passe à moins de 24 po de cette position.
 
 ### Autres conventions (extensions tolérées)
 
@@ -173,12 +175,15 @@ lisibles.
   écrite sur celui-ci. À confirmer sur place.
 - **⚠n** (triangle orange suivi d'un numéro) : incertitude à consulter dans le **registre des écarts** de
   `RAPPORT.md`.
-  - n est le numéro de l'écart : `ecart-007` → ⚠7.
-  - Les repères qui ne renvoient à aucun écart reçoivent un numéro propre, à la suite des écarts :
-    - un numéro par niveau, commun à tous les murs d'épaisseur présumée ;
-    - un numéro par cote présumée ou en conflit.
+  - n est **toujours** le numéro d'un écart de `ecarts[]` : `ecart-007` → ⚠7. Aucun numéro inventé.
+  - Chaque écart n'apparaît **qu'une fois par feuille**. Il est placé, par ordre de priorité, à sa
+    `position`, sinon près de la première cote qui le référence, sinon près du premier mur qui le référence.
+    Exemple : toutes les cloisons dont `epaisseur.ref` vaut `ecart-006` partagent un seul ⚠6. La ligne
+    correspondante du cartouche précise « Toutes les cloisons sans cote d'épaisseur : 4½" présumé ».
+  - Une cote présumée ou en conflit, ou un mur d'épaisseur présumée, sans écart référencé ne reçoit aucun
+    repère. Il est signalé en [AVERT] dans `verifications.txt`.
   - La liste complète figure dans `verifications.txt` (section « Repères d'incertitude ») et, pour chaque
-    feuille, dans son cartouche.
+    feuille, dans son cartouche (descriptions abrégées).
 - L'orange est réservé aux incertitudes. Tout le reste est en noir et gris.
 
 ## Échelle et mise en page
@@ -187,9 +192,39 @@ Le générateur choisit automatiquement la plus grande échelle parmi 1/4" = 1'-
 1/8" = 1'-0". Le plan, ses 3 chaînes de cotes et ses étiquettes doivent tenir dans la zone de dessin (feuille
 moins les marges et le cartouche).
 
-Les étiquettes sont placées sans chevauchement : le script détecte les collisions par boîtes englobantes et
-déplace les textes automatiquement, avec une ligne de rappel au besoin. Les chevauchements qui restent sont
-listés dans `verifications.txt`.
+Les textes sont placés sans chevauchement : le script détecte les collisions par boîtes englobantes, mesurées
+avec les métriques de Liberation Sans (identiques à celles d'Arial). Un texte ne doit toucher ni un autre texte
+ni un trait : mur, ouverture, élément, structure, cote, ligne de rappel ou repère. Il ne doit pas non plus
+sortir de la zone de dessin. Ordre de priorité :
+
+1. **Cotes de façade.**
+   - Les rangs présents sont empilés à 9 mm d'intervalle, ce qui laisse une bande de texte au-dessus ET
+     au-dessous de chaque ligne.
+   - Les cotes les plus contraintes, celles dont le texte est plus large que le segment, sont placées en
+     premier. Ordre d'essai : centré au-dessus, au-dessous, décalé le long du segment, sur deux lignes
+     (pi-po sur métrique), au-delà d'une extrémité, puis plus loin avec une ligne de rappel.
+2. **Repères ancrés** (positions d'écarts, murs, cotes de façade).
+3. **Étiquettes de pièces dans leur propre pièce.**
+   - Variantes essayées : complète, nom + superficie, nom seul sur une ou deux lignes, nom tourné de 90°
+     pour une pièce étroite.
+   - Les couloirs des cotes intérieures sont d'abord laissés libres.
+4. **Cotes intérieures, par chaînes colinéaires.**
+   - Le `decalage` est un souhait : la chaîne entière peut être déplacée parallèlement, et le script retient
+     la position sans collision qui garde les textes au plus près de leur ligne.
+   - Si la chaîne entière n'a pas de place, ses cotes sont placées une à une. En dernier recours, le texte va
+     à proximité avec une ligne de rappel.
+5. **Libellés d'éléments**, à l'intérieur du symbole ou autour.
+6. **Libellés de structure.**
+   - Un libellé répété (par exemple COL. 8x8 ×6) n'est écrit qu'une fois, suivi de « (typ.) ».
+   - La flèche des solives est placée avec son libellé.
+7. **Étiquettes des petites pièces qui ne tiennent pas dans leur polygone.**
+   - Nom seul, placé dans la zone libre la plus proche : de préférence hors des autres pièces, une pièce
+     voisine étant tolérée.
+   - Une ligne de rappel, terminée par un point, relie le nom à la pièce.
+   - Les dimensions et la superficie de ces pièces sont alors omises sur le plan ; la légende le signale.
+     Elles restent dans `tableau_pieces.csv`.
+
+`verifications.txt` (section 8) doit indiquer « aucun chevauchement ». Sinon, il liste chaque cas restant.
 
 ## Contrôles (verifications.txt)
 

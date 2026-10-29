@@ -15,6 +15,7 @@ Usage :  python3 generer_plans.py [--json ../donnees/maison.json] [--sortie ..]
 
 Sortie déterministe : aucune date système, aucun aléatoire.
 """
+import subprocess
 import argparse
 import csv
 import glob
@@ -30,7 +31,7 @@ import unicodedata
 from shapely import STRtree, affinity
 from shapely.geometry import (LineString, MultiLineString, MultiPolygon, Point,
                               Polygon, GeometryCollection, box as sbox)
-from shapely.ops import nearest_points, polylabel, unary_union
+from shapely.ops import nearest_points, polylabel, substring, unary_union
 
 # ---------------------------------------------------------------------------
 # Constantes de mise en page
@@ -44,14 +45,14 @@ CAP = 0.716            # hauteur des capitales / taille de police (Arial)
 FEUILLE_L, FEUILLE_H = 17.0, 11.0      # po imprimés (tabloïd paysage)
 MARGE = 0.25                           # cadre de feuille
 CART_L = 3.2                           # largeur du cartouche (po imprimés)
-ZONE = (MARGE + 0.1, MARGE + 0.1, FEUILLE_L - MARGE - CART_L - 0.1, FEUILLE_H - MARGE - 0.1)
+ZONE = (MARGE + 0.03, MARGE + 0.03, FEUILLE_L - MARGE - CART_L - 0.05, FEUILLE_H - MARGE - 0.03)
 # (dénominateur, libellé, graduations de l'échelle graphique en pi)
 ECHELLES = [(48, '1/4" = 1\'-0"', (0, 2, 4, 8)),
             (64, '3/16" = 1\'-0"', (0, 4, 8, 12)),
             (96, '1/8" = 1\'-0"', (0, 4, 8, 16))]
 # Cotation (mm imprimés)
-C_D1 = 8.0       # face du bâtiment → 1re chaîne
-C_ESP = 7.0      # espacement entre chaînes
+C_D1 = 6.5       # face du bâtiment → 1re chaîne
+C_ESP = 9.0      # espacement entre chaînes (texte possible au-dessus ET au-dessous de chaque ligne)
 C_GAP = 0.8      # ligne de cote → bas du texte
 C_DEP = 1.5      # dépassement des lignes d'attache au-delà de la ligne de cote
 C_ECART = 1.5    # écart objet → début de ligne d'attache
@@ -378,6 +379,7 @@ class Placeur:
         self.Z, self.Zo = [], []      # zones (aires d'éléments, pour les étiquettes de pièces)
         self.T, self.To, self.Td = [], [], []
         self._t = {"L": None, "Z": None, "T": None}
+        self.pieces = []          # polygones des pièces (pénalité « dans une autre pièce »)
 
     def ligne(self, g, own):
         if g is not None and not g.is_empty:
@@ -392,6 +394,13 @@ class Placeur:
                 if p["k"] == "poly" and g is not None and STYLES[p["st"]][0] in ("#FFFFFF",):
                     continue
                 self.ligne(g, own)
+
+    def retirer(self, own):
+        for L, O, k in ((self.L, self.Lo, "L"), (self.Z, self.Zo, "Z")):
+            keep = [i for i, o in enumerate(O) if o != own]
+            L[:] = [L[i] for i in keep]
+            O[:] = [O[i] for i in keep]
+            self._t[k] = None
 
     def zone(self, g, own):
         if g is not None and not g.is_empty:
@@ -410,6 +419,18 @@ class Placeur:
             lst = {"L": self.L, "Z": self.Z, "T": self.T}[k]
             self._t[k] = STRtree(lst) if lst else False
         return self._t[k]
+
+    def conflits_textes(self, g, ignore=()):
+        t = self._arbre("T")
+        if not t or g is None:
+            return 0
+        return sum(1 for i in t.query(g, predicate="intersects") if self.To[int(i)] not in ignore)
+
+    def conflits_sel(self, g, owners):
+        t = self._arbre("L")
+        if not t or g is None:
+            return 0
+        return sum(1 for i in t.query(g, predicate="intersects") if self.Lo[int(i)] in owners)
 
     def conflits(self, g, ignore=(), zones=False):
         n = 0
@@ -1019,31 +1040,23 @@ def construire(niv, idx, projet, ctx, verif):
     geoms = [m.emprise() for m in murs] + [p for _, p in pieces] + [g for _, g in strs]
     for el in elems:
         geoms.append(rect_element(el))
-    for ec in ctx["ecarts"]:
-        if str(ec.get("niveau")) == nid and isinstance(ec.get("position"), list) and len(ec["position"]) >= 2:
-            geoms.append(Point(float(ec["position"][0]), float(ec["position"][1])).buffer(1))
     if not geoms:
         geoms = [sbox(0, 0, 120, 120)]
     G = unary_union(geoms).bounds   # minx, miny, maxx, maxy
 
     # --- choix de l'échelle
-    rmax = {f: 0 for f in FACADES}
+    rangs_f = {f: set() for f in FACADES}
     for l in lcs:
         f = l.get("facade")
-        if f in rmax:
-            rmax[f] = max(rmax[f], int(num(l.get("rang")) or 1))
+        if f in rangs_f:
+            rangs_f[f].add(int(num(l.get("rang")) or 1))
     f_c = H_COTE / CAP          # taille de police des cotes (mm)
 
     def ext_mm(f):
-        r = rmax[f]
-        if not r:
-            base = 0.0
-        else:
-            base = C_D1 + (r - 1) * C_ESP
-        if f in ("arriere", "gauche"):
-            return base + (C_GAP + f_c * 1.0 + 2.0 if r else 0)
+        r = len(rangs_f[f])
+        base = C_D1 + (r - 1) * C_ESP + 4.2 if r else 0.0
         if f == "avant":
-            return base + (C_DEP if r else 3.0) + 3.0 + (H_FACADE / CAP) * 1.0
+            return (base if r else 3.0) + 1.5 + 1.14 * (H_FACADE / CAP)
         return base + (C_DEP if r else 0)
 
     ext = {f: ext_mm(f) for f in FACADES}
@@ -1075,6 +1088,10 @@ def construire(niv, idx, projet, ctx, verif):
     D = Dessin()
     PL = Placeur()
     F.dessin, F.placeur = D, PL
+    zx0, zy0 = ZONE[0] * k - F.X0, F.Y0 - ZONE[1] * k
+    zx1, zy1 = ZONE[2] * k - F.X0, F.Y0 - ZONE[3] * k
+    big = 100 * k
+    PL.ligne(sbox(zx0 - big, zy1 - big, zx1 + big, zy0 + big).difference(sbox(zx0, zy1, zx1, zy0)), "cadre")
     fc = mm(f_c)                 # police cotes / libellés (po réels)
     fn = mm(H_NOM / CAP)         # police noms de pièces
 
@@ -1100,11 +1117,14 @@ def construire(niv, idx, projet, ctx, verif):
     # =============================== 30-Escaliers-Elements ===============================
     grp_elem = {}
     lib_elems = []
+    textes_esc = []
     for el in elems:
         g = D.g("30-Escaliers-Elements", el["id"])
         grp_elem[el["id"]] = g
         if el["typ"] == "escalier" or (el["typ"] == "marches-ext" and isinstance(el["d"].get("escalier"), dict)):
-            dessiner_escalier(el, g, PL, mm, fc, verif, nid)
+            sp = dessiner_escalier(el, g, PL, mm, fc, verif, nid)
+            if sp:
+                textes_esc.append(sp)
             continue
         pr, cont = symbole(el["typ"], el["L"], el["W"], mm)
 
@@ -1140,7 +1160,7 @@ def construire(niv, idx, projet, ctx, verif):
             if typ == "poutre":
                 lib = ("POUTRE " + dt).strip()
             elif typ == "axe":
-                lib = "AXE PORTEUR D'ORIGINE"
+                lib = dt.upper() if dt else "AXE PORTEUR D'ORIGINE"
             else:
                 lib = ("LINTEAU " + dt).strip()
             lib_str.append(("ligne", sid, geo, lib, g))
@@ -1159,11 +1179,8 @@ def construire(niv, idx, projet, ctx, verif):
                 PL.prims(pr, sid)
         elif typ == "solives":
             fl = fleche_solives(s, geo, murs, elem_zones, mm)
-            if fl is None:
+            if not fl:
                 continue
-            pr, seg = fl
-            g += pr
-            PL.prims(pr, sid)
             esp = None
             gg = s.get("geometrie") or {}
             for cand in (gg.get("espacement"), s.get("espacement"), (s.get("dimension") or {}).get("espacement")):
@@ -1171,9 +1188,9 @@ def construire(niv, idx, projet, ctx, verif):
                     esp = num(cand)
                     break
             lib = ("SOLIVES " + dt).strip()
-            if esp:
+            if esp and "@" not in dt:
                 lib += f" @ {f3(esp)}\" c/c"
-            lib_str.append(("ligne", sid, seg, lib, g))
+            lib_str.append(("solives", sid, fl, lib, g))
         else:
             for p in polys_de(geo) or []:
                 pr = [P_pl(list(p.exterior.coords)[:-1], "str-tir", True)]
@@ -1184,67 +1201,142 @@ def construire(niv, idx, projet, ctx, verif):
                 g += pr
                 PL.prims(pr, sid)
 
-    # =============================== 50-Cotes (traits) ===============================
-    Gb = G
-    cotes = preparer_cotes(lcs, Gb, mm, verif, nid)
+    # =============================== 50-Cotes (traits de façade) ===============================
+    cotes = preparer_cotes(lcs, G, mm, verif, nid)
     emp_m = unary_union([m.emprise() for m in murs]) if murs else Polygon()
     masque = unary_union([z.buffer(mm(0.8), join_style=2) for z in elem_zones if not z.within(emp_m.envelope)]) \
         if elem_zones else None
     dessiner_traits_cotes(cotes, D, PL, mm, masque)
 
     # =============================== Libellé de façade (fixe) ===============================
-    y_bas = min([c["ligne"] for c in cotes if c["facade"] == "avant"] + [G[1]])
+    av = [c["ligne"] for c in cotes if c["facade"] == "avant"]
     tf_ = mm(H_FACADE / CAP)
-    yb = y_bas - mm(C_DEP + 3.0) - 0.8 * tf_ if any(c["facade"] == "avant" for c in cotes) else G[1] - mm(6) - 0.8 * tf_
-    murs_b = unary_union([m.emprise() for m in murs]).bounds if murs else G
+    yb = (min(av) - mm(4.2 + 1.5) - 0.93 * tf_) if av else G[1] - mm(4.5) - 0.93 * tf_
+    murs_b = emp_m.bounds if murs else G
     xf = (murs_b[0] + murs_b[2]) / 2
     txt = "FAÇADE AVANT (RUE)"
     gfa = D.g("60-Etiquettes", "facade-avant")
     gfa.append(P_txt(xf, yb, txt, tf_, "middle", 0, True))
     PL.texte(boite(xf, yb, MET.l(txt, tf_, True), tf_, "middle", 0, 0, txt), "facade-avant", "libellé de façade")
 
-    # =============================== Textes des cotes ===============================
-    reperes_cotes = placer_textes_cotes(cotes, D, PL, mm, fc, ctx, nid, verif)
-
-    # =============================== Libellés d'éléments ===============================
-    for el, cont, libs, g in lib_elems:
-        placer_libelle_element(el, cont, libs, g, PL, mm, fc)
-
-    # =============================== Libellés de structure ===============================
-    for kind, sid, geo, lib, g in lib_str:
-        if kind == "ligne":
-            placer_long_ligne(geo, lib, sid, g, PL, mm, fc)
-        else:
-            placer_autour(geo, [(lib, fc, False)], sid, g, PL, mm, interieur=False)
-
-    # =============================== Étiquettes de pièces ===============================
-    for d, poly in pieces:
-        placer_etiquette_piece(d, poly, D, PL, mm, fn, fc)
-
-    # =============================== 70-Incertitudes ===============================
-    F.reperes = []
+    # points visés par les repères d'écart : réservés avant de placer les textes
+    empreinte = unary_union([emp_m] + [p for _, p in pieces]) if (murs or pieces) else Polygon()
     for ec in ctx["ecarts"]:
-        if str(ec.get("niveau")) != nid:
-            continue
         pos = ec.get("position")
-        n = ctx["num_ecart"].get(str(ec.get("id")))
-        F.reperes.append((n, str(ec.get("id")), str(ec.get("description") or "")))
+        if str(ec.get("niveau")) in (nid, "global") and isinstance(pos, list) and len(pos) >= 2 \
+                and num(pos[0]) is not None and num(pos[1]) is not None:
+            P0 = Point(float(pos[0]), float(pos[1]))
+            if empreinte.is_empty or empreinte.distance(P0) <= 24.0:
+                PL.ligne(P0.buffer(mm(1.0)), str(ec.get("id")))
+
+    # =============================== Textes (ordre de priorité) ===============================
+    placer_textes_cotes(cotes, PL, mm, fc)
+    for sp in textes_esc:
+        placer_textes_escalier(sp, PL, mm, fc)
+    # --- 70-Incertitudes (repères ancrés : avant les libellés mobiles)
+    demandes = []
+    for ec in ctx["ecarts"]:
+        eid = str(ec.get("id"))
+        n = ctx["num_ecart"].get(eid)
+        pos = ec.get("position")
+        if str(ec.get("niveau")) not in (nid, "global"):
+            continue
         if isinstance(pos, list) and len(pos) >= 2 and num(pos[0]) is not None and num(pos[1]) is not None:
             P0 = Point(float(pos[0]), float(pos[1]))
-            g = D.g("70-Incertitudes", str(ec.get("id")))
-            g.append(P_cercle((P0.x, P0.y), mm(0.6), "inc"))
-            placer_marqueur(n, P0.buffer(mm(0.6)), str(ec.get("id")), g, PL, mm, point=(P0.x, P0.y))
-    np_ = ctx["num_presume"].get(nid)
+            if empreinte.is_empty or empreinte.distance(P0) <= 24.0:
+                demandes.append((n, 0, P0.buffer(mm(0.6)), P0, eid))
+    for c in [c for c in cotes if c["facade"] != "int"]:
+        rep_ = c["l"].get("repere")
+        if rep_:
+            n = ctx["num_ecart"].get(str(rep_))
+            if n is None:
+                verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : repère « {rep_} » absent du registre — aucun repère dessiné")
+            else:
+                demandes.append((n, 1, c["boite"], c["boite"], "rep-" + c["id"]))
+        elif c["source"] == "PRÉSUMÉ" or c["statut"] == "conflit":
+            verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : cote présumée ou en conflit sans écart référencé (repere) — aucun repère dessiné")
+    murs_ref = {}
+    sans_ref = []
     for m in murs:
-        if m.t_src == "PRÉSUMÉ" and np_ is not None:
-            mid = m.pt(m.L / 2)
-            g = D.g("70-Incertitudes", "rep-" + m.id)
-            placer_marqueur(np_, Point(mid).buffer(m.t / 2 + mm(0.3)), "rep-" + m.id, g, PL, mm, point=mid)
-    if np_ is not None and any(m.t_src == "PRÉSUMÉ" for m in murs):
-        F.reperes.append((np_, "", "Épaisseur de mur présumée (non cotée)"))
-    for n, lid, desc in reperes_cotes:
-        if not any(r[0] == n for r in F.reperes):
-            F.reperes.append((n, lid, desc))
+        if m.t_src != "PRÉSUMÉ":
+            continue
+        ref = (m.d.get("epaisseur") or {}).get("ref") if isinstance(m.d.get("epaisseur"), dict) else None
+        n = ctx["num_ecart"].get(str(ref)) if ref else None
+        if n is None:
+            sans_ref.append(m.id)
+            continue
+        murs_ref.setdefault(n, []).append(m)
+        mid = Point(m.pt(m.L / 2))
+        demandes.append((n, 2, mid.buffer(m.t / 2 + mm(0.3)), mid, "rep-" + m.id))
+    if sans_ref:
+        verif.add("Repères d'incertitude", "AVERT", f"[{nid}] épaisseur présumée sans écart référencé (epaisseur.ref) : "
+                                                   f"{', '.join(sans_ref)} — aucun repère dessiné")
+    places = placer_reperes(demandes, D, PL, mm)
+    PL.pieces = [p for _, p in pieces]
+    # étiquettes de pièces à l'intérieur de leur pièce : d'abord en laissant libres les couloirs
+    # des cotes intérieures (position souhaitée), puis sans cette réserve
+    for c in cotes:
+        if c["facade"] == "int":
+            A, B = pt_cote(c, c["c1"], c["ligne"]), pt_cote(c, c["c2"], c["ligne"])
+            PL.ligne(LineString([A, B]).buffer(mm(C_GAP + 0.97 * H_COTE / CAP + 0.3), cap_style="flat"), "__reserve__")
+    F.dims_omises = False
+    restants = []
+    for d, poly in sorted(pieces, key=lambda dp: -dp[1].area):
+        r = placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1)
+        if r is None:
+            restants.append((d, poly))
+        elif r:
+            F.dims_omises = True
+    PL.retirer("__reserve__")
+    encore = []
+    for d, poly in restants:
+        r = placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1)
+        if r is None:
+            encore.append((d, poly))
+        elif r:
+            F.dims_omises = True
+    restants = encore
+    placer_cotes_int(cotes, PL, mm, fc, set(m.id for m in murs))
+    for el, cont, libs, g in lib_elems:
+        placer_libelle_element(el, cont, libs, g, PL, mm, fc)
+    for d, poly in sorted(restants, key=lambda dp: dp[1].area):
+        placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=2, autres=[p for _, p in pieces if p is not poly])
+        F.dims_omises = True
+    groupes = {}
+    for kind, sid, geo, lib, g in lib_str:
+        groupes.setdefault((kind, lib), []).append((sid, geo, g))
+    F.typ = any(len(v) > 1 for v in groupes.values())
+    for (kind, lib), items in groupes.items():
+        if kind == "ligne":
+            placer_long_ligne(items, lib, PL, mm, fc)
+        elif kind == "solives":
+            placer_solives(items, lib, PL, mm, fc)
+        else:
+            placer_autour_groupe(items, lib, PL, mm, fc)
+
+    demandes2 = []
+    for c in [c for c in cotes if c["facade"] == "int"]:
+        rep_ = c["l"].get("repere")
+        if rep_:
+            n = ctx["num_ecart"].get(str(rep_))
+            if n is None:
+                verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : repère « {rep_} » absent du registre — aucun repère dessiné")
+            elif n not in places:
+                demandes2.append((n, 1, c["boite"], c["boite"], "rep-" + c["id"]))
+        elif c["source"] == "PRÉSUMÉ" or c["statut"] == "conflit":
+            verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : cote présumée ou en conflit sans écart référencé (repere) — aucun repère dessiné")
+    places += placer_reperes(demandes2, D, PL, mm)
+    F.reperes = []
+    for ec in ctx["ecarts"]:
+        n = ctx["num_ecart"].get(str(ec.get("id")))
+        if n in places or str(ec.get("niveau")) == nid:
+            desc = str(ec.get("description") or "")
+            if n in murs_ref:
+                ms = murs_ref[n]
+                vals = sorted(set(pipo(m.t) for m in ms))
+                quoi = "toutes les cloisons" if all(not m.lourd for m in ms) else "tous les murs"
+                desc = f"{quoi.capitalize()} sans cote d'épaisseur : {', '.join(vals)} présumé ({len(ms)} murs, repère unique). " + desc
+            F.reperes.append((n, str(ec.get("id")), desc))
     F.reperes.sort(key=lambda r: r[0])
 
     # =============================== 00-Cartouche ===============================
@@ -1319,36 +1411,29 @@ def dessiner_escalier(el, g, PL, mm, fc, verif, nid):
     PL.prims(pr, el["id"])
     PL.zone(Polygon(R), el["id"])
     if el["typ"] != "escalier":
-        return
-    rot = 0.0 if abs(dv[0]) > 0.5 else 90.0
-    up = rot2((0, 1), rot)
+        return None
     textes = []
     if texte_fl in ("MONTE", "DESCEND"):
         textes.append(texte_fl)
     elif texte_fl:
         textes.append(texte_fl)
     textes.append(f"{n} CM" if n else "≈ GIRON 10\"")
-    for i, t in enumerate(textes[:2]):
-        larg = MET.l(t, fc, False)
-        off = (mm(0.9) + 0.21 * fc) if i == 0 else -(mm(0.9) + 0.76 * fc)
-        x, y = c[0] + up[0] * off, c[1] + up[1] * off
-        b = boite(x, y, larg, fc, "middle", rot, 0, t)
-        mb = boite(x, y, larg, fc, "middle", rot, mm(0.4), t)
-        g.append(P_poly([list(mb.exterior.coords)[:-1]], "masque"))
-        g.append(P_txt(x, y, t, fc, "middle", rot))
-        PL.texte(b, el["id"], f"escalier {el['id']} « {t} »")
+    return (el["id"], g, c, dv, run, wid, textes[:2])
 
 
 def fleche_solives(s, zone, murs, elem_zones, mm):
+    """Flèches candidates (prims, segment) pour une zone de solives, de la plus longue à la plus courte."""
     sens = str(s.get("sens") or "").lower()
     if sens not in ("x", "y"):
         sens = "y"
     minx, miny, maxx, maxy = zone.bounds
     obst = unary_union([m.emprise().buffer(mm(3)) for m in murs] + [z.buffer(mm(2)) for z in elem_zones]) \
         if (murs or elem_zones) else Polygon()
-    best = None
-    for i in range(15):
-        fr_ = [0.5, 0.42, 0.58, 0.35, 0.65, 0.28, 0.72, 0.2, 0.8, 0.14, 0.86, 0.46, 0.54, 0.38, 0.62][i]
+    cands = []
+    k = 0
+    while 0.06 + 0.04 * k <= 0.94 + 1e-9:
+        fr_ = 0.06 + 0.04 * k
+        k += 1
         if sens == "x":
             yy = miny + (maxy - miny) * fr_
             ln = LineString([(minx, yy), (maxx, yy)])
@@ -1358,30 +1443,194 @@ def fleche_solives(s, zone, murs, elem_zones, mm):
         rest = ln.difference(obst) if not obst.is_empty else ln
         for part in lignes_de(rest):
             L = LineString(part)
-            if best is None or L.length > best.length + 1e-6:
-                best = L
-    if best is None or best.length < mm(10):
-        return None
-    c = best.interpolate(0.5, normalized=True)
-    half = min(best.length * 0.35, mm(30))
-    if sens == "x":
-        A, B = (c.x - half, c.y), (c.x + half, c.y)
-    else:
-        A, B = (c.x, c.y - half), (c.x, c.y + half)
-    dv = ((B[0] - A[0]) / (2 * half), (B[1] - A[1]) / (2 * half))
-    pv = (-dv[1], dv[0])
-    ah, aw = mm(2.4), mm(0.9)
-    pr = [P_pl([A, B], "str-fin")]
-    for T, sg in ((B, 1), (A, -1)):
-        Bb = (T[0] - sg * dv[0] * ah, T[1] - sg * dv[1] * ah)
-        pr.append(P_poly([[T, (Bb[0] + pv[0] * aw, Bb[1] + pv[1] * aw), (Bb[0] - pv[0] * aw, Bb[1] - pv[1] * aw)]], "str-plein"))
-    return pr, LineString([A, B])
+            if L.length < mm(12):
+                continue
+            half = min(L.length * 0.35, mm(30))
+            for pos in (0.5, 0.35, 0.65):
+                c = L.interpolate(pos, normalized=True)
+                if sens == "x":
+                    A, B = (c.x - half, c.y), (c.x + half, c.y)
+                else:
+                    A, B = (c.x, c.y - half), (c.x, c.y + half)
+                cands.append((-round(L.length / mm(10)), abs(fr_ - 0.5), abs(pos - 0.5), round(A[0], 4), round(A[1], 4), A, B))
+    cands.sort(key=lambda t: t[:5])
+    out = []
+    for *_, A, B in cands:
+        L = math.hypot(B[0] - A[0], B[1] - A[1])
+        dv = ((B[0] - A[0]) / L, (B[1] - A[1]) / L)
+        pv = (-dv[1], dv[0])
+        ah, aw = mm(2.4), mm(0.9)
+        pr = [P_pl([A, B], "str-fin")]
+        for T, sg in ((B, 1), (A, -1)):
+            Bb = (T[0] - sg * dv[0] * ah, T[1] - sg * dv[1] * ah)
+            pr.append(P_poly([[T, (Bb[0] + pv[0] * aw, Bb[1] + pv[1] * aw), (Bb[0] - pv[0] * aw, Bb[1] - pv[1] * aw)]], "str-plein"))
+        out.append((pr, LineString([A, B])))
+    return out
+
+
+def placer_solives(items, lib, PL, mm, fc):
+    """Flèche(s) de solives et libellé (unique, « typ. » si plusieurs zones), placés après les étiquettes."""
+    if len(items) > 1:
+        lib = lib + " (typ.)"
+    etiquete = False
+    for own, cands, g in items:
+        choix = None
+        repli = None
+        for pr, seg in cands:
+            geos = [geom_prim(p) for p in pr]
+            if sum(PL.conflits_textes(gm, (own,)) for gm in geos):
+                continue
+            if etiquete:
+                choix = (pr, seg, None)
+                break
+            def gen(seg=seg):
+                for fr_, off, ang, up, w in cands_long_ligne(seg, lib, fc, mm):
+                    p = seg.interpolate(fr_, normalized=True)
+                    x, y = p.x + up[0] * off, p.y + up[1] * off
+                    b = boite(x, y, w, fc, "middle", ang, 0, lib)
+                    if abs(off) > mm(1.5) + 0.8 * fc:
+                        continue
+                    yield b.buffer(mm(0.3), join_style=2), None, (x, y, ang, b)
+            pay, _, cout = essayer(PL, gen(), ignore=(own,), zones=True)
+            if cout == 0:
+                choix = (pr, seg, pay)
+                break
+            if repli is None:
+                repli = (pr, seg, pay)
+        if choix is None:
+            choix = repli if repli is not None else ((cands[0][0], cands[0][1], None) if cands else None)
+        if choix is None:
+            continue
+        pr, seg, pay = choix
+        g += pr
+        PL.prims(pr, own)
+        if etiquete:
+            continue
+        if pay is not None and choix is not repli:
+            x, y, ang, b = pay
+            g.append(P_txt(x, y, lib, fc, "middle", ang))
+            PL.texte(b, own, f"libellé {own} « {lib} »")
+        else:
+            placer_long_ligne([(own, seg, g)], lib, PL, mm, fc)     # le long de la flèche ou à proximité
+        etiquete = True
+
+
+# ---------------------------------------------------------------------------
+# Recherche générique d'emplacement sans chevauchement
+# ---------------------------------------------------------------------------
+def essayer(PL, cands, ignore=(), zones=True):
+    """cands : itérable de (zone, rappel|None, données). Retourne (données, rappel, coût) du premier
+    candidat sans conflit, sinon du moins coûteux. Une ligne de rappel ne doit croiser aucun texte."""
+    best = None
+    for z, ld, pay in cands:
+        c = PL.conflits(z, ignore=ignore, zones=zones)
+        if ld is not None:
+            c += PL.conflits_textes(ld, ignore)
+        if c == 0:
+            return pay, ld, 0
+        if best is None or c < best[2]:
+            best = (pay, ld, c)
+    return best if best is not None else (None, None, 1)
+
+
+def bloc(lignes, rot=0.0):
+    """Bloc de lignes de texte centré sur (0, 0) : (prims, boîtes, enveloppe)."""
+    hs = [f * (1.18 if i else 1.0) for i, (t, f, g) in enumerate(lignes)]
+    y = sum(hs) / 2
+    prims, boites = [], []
+    for (t, f, gr), h in zip(lignes, hs):
+        y -= h
+        yb = y + 0.24 * f
+        prims.append(P_txt(0.0, yb, t, f, "middle", 0, gr))
+        boites.append(boite(0.0, yb, MET.l(t, f, gr), f, "middle", 0, 0, t))
+    env = unary_union(boites).envelope
+    if rot:
+        prims = [transformer(p, lambda q: rot2(q, rot), rot) for p in prims]
+        boites = [affinity.rotate(b, rot, origin=(0, 0)) for b in boites]
+        env = affinity.rotate(env, rot, origin=(0, 0))
+    return prims, boites, env
+
+
+def poser(bl, x, y):
+    prims, boites, env = bl
+    return ([transformer(p, lambda q: (q[0] + x, q[1] + y), 0.0) for p in prims],
+            [affinity.translate(b, x, y) for b in boites], affinity.translate(env, x, y))
+
+
+def anneaux(geom, W, H, dists, nang=16):
+    """Centres candidats autour de la boîte englobante de geom, par distances croissantes."""
+    minx, miny, maxx, maxy = geom.bounds
+    cx, cy = (minx + maxx) / 2, (miny + maxy) / 2
+    hw, hh = (maxx - minx) / 2, (maxy - miny) / 2
+    for d in dists:
+        for i in range(nang):
+            a = 2 * math.pi * i / nang
+            ca, sa = math.cos(a), math.sin(a)
+            yield d, (cx + ca * (hw + d + W / 2), cy + sa * (hh + d + H / 2))
+
+
+def grille_autour(cible, W, H, rayon, pas, limite=6000):
+    """Centres candidats sur une grille autour de `cible`, triés par distance croissante à la cible."""
+    minx, miny, maxx, maxy = cible.bounds
+    x0, y0 = minx - rayon - W / 2, miny - rayon - H / 2
+    nx = int((maxx - minx + 2 * rayon + W) / pas) + 1
+    ny = int((maxy - miny + 2 * rayon + H) / pas) + 1
+    pts = []
+    for i in range(nx):
+        for j in range(ny):
+            x, y = x0 + i * pas, y0 + j * pas
+            dx = max(minx - x - W / 2, 0, x - W / 2 - maxx)
+            dy = max(miny - y - H / 2, 0, y - H / 2 - maxy)
+            dd = math.hypot(dx, dy)
+            if dd <= rayon:
+                pts.append((round(dd, 6), round(x, 6), round(y, 6)))
+    pts.sort()
+    return pts[:limite]
+
+
+def rappel(env, cible):
+    a, b = nearest_points(env, cible)
+    return LineString([(a.x, a.y), (b.x, b.y)]) if a.distance(b) > 1e-6 else None
+
+
+def poser_libelle(lignes, ancre, own, g, PL, mm, dists, interieur=None, zones=True, cible=None, rot_ok=False):
+    """Place un bloc de texte près de `ancre` (à l'intérieur de `interieur` si possible), sinon autour,
+    avec ligne de rappel. Retourne le coût (0 = aucun chevauchement)."""
+    rots = [0.0, 90.0] if rot_ok else [0.0]
+    cible = cible if cible is not None else ancre
+    def gen():
+        if interieur is not None and not interieur.is_empty:
+            c = interieur.representative_point() if not interieur.contains(ancre.centroid) else ancre.centroid
+            for rot in rots:
+                bl = bloc(lignes, rot)
+                _, _, env = poser(bl, c.x, c.y)
+                z = env.buffer(mm(0.3), join_style=2)
+                if z.within(interieur):
+                    yield z, None, (bl, c.x, c.y)
+        yield from cands_autour(bloc(lignes), ancre, mm, dists, PL.pieces)
+    pay, ld, cout = essayer(PL, gen(), ignore=(own,), zones=zones)
+    bl, x, y = pay
+    prims, boites, env = poser(bl, x, y)
+    if ld is not None:
+        lp = [P_pl(list(ld.coords), "rappel")]
+        g += lp
+        PL.prims(lp, own)
+    g += prims
+    for b, (t, f, gr) in zip(boites, lignes):
+        PL.texte(b, own, f"libellé {own} « {t} »")
+    return cout
 
 
 # ---------------------------------------------------------------------------
 # Cotes
 # ---------------------------------------------------------------------------
 def preparer_cotes(lcs, G, mm, verif, nid):
+    rangs = {}
+    for l in lcs:
+        f = str(l.get("facade") or "int").lower()
+        if f in FACADES:
+            rangs.setdefault(f, set()).add(int(num(l.get("rang")) or 1))
+    index = {f: {r: i for i, r in enumerate(sorted(v))} for f, v in rangs.items()}
     cotes = []
     for l in lcs:
         lid = str(l.get("id"))
@@ -1400,21 +1649,30 @@ def preparer_cotes(lcs, G, mm, verif, nid):
             verif.add("Chaînes de cotes", "AVERT", f"[{nid}] {lid} : longueur nulle — ignorée")
             continue
         c1, c2 = sorted((p1[ax], p2[ax]))
+        dec = 0.0
         if facade in FACADES:
             nax, sg = FACADES[facade]
             if nax == ax:
                 verif.add("Chaînes de cotes", "ERREUR", f"[{nid}] {lid} : direction {d} incompatible avec la façade {facade}")
                 continue
             face = (G[1] if sg < 0 else G[3]) if nax == 1 else (G[0] if sg < 0 else G[2])
-            ligne = face + sg * mm(C_D1 + (max(1, min(rang, 3)) - 1) * C_ESP)
+            ligne = face + sg * mm(C_D1 + index[facade][rang] * C_ESP)
         else:
             facade = "int"
             dec = num(l.get("decalage")) or 0.0
             ligne = p1[1 - ax] + dec
             sg = 1 if dec >= 0 else -1
+        src_ = norm_src(l.get("source")) or ""
+        statut = str(l.get("statut") or "")
+        prefix = "≈ " if src_ == "ESTIMÉ" else ""
+        suffix = " ?" if src_ == "ILLISIBLE" or statut == "illisible" else ""
         cotes.append({"l": l, "id": lid, "p1": p1, "p2": p2, "ax": ax, "facade": facade, "rang": rang,
-                      "c1": c1, "c2": c2, "ligne": ligne, "sg": sg, "longueur": longueur,
-                      "source": norm_src(l.get("source")) or "", "statut": str(l.get("statut") or "")})
+                      "c1": c1, "c2": c2, "ligne": ligne, "sg": sg, "longueur": longueur, "dec": dec,
+                      "source": src_, "statut": statut,
+                      "texte": f"{prefix}{pipo(longueur)} ({metres(longueur)}){suffix}",
+                      "imp": f"{prefix}{pipo(longueur)}{suffix}", "met": f"({metres(longueur)})",
+                      "rot": 0.0 if ax == 0 else 90.0,
+                      "up": (0.0, 1.0) if ax == 0 else (-1.0, 0.0)})
     return cotes
 
 
@@ -1423,7 +1681,7 @@ def pt_cote(c, along, normal):
 
 
 def dessiner_traits_cotes(cotes, D, PL, mm, masque=None):
-    # lignes d'attache des façades, fusionnées par (façade, abscisse)
+    """Traits des cotes de façade (lignes d'attache fusionnées par façade et abscisse)."""
     attache = {}
     for c in cotes:
         c["grp"] = D.g("50-Cotes", c["id"])
@@ -1458,120 +1716,237 @@ def dessiner_traits_cotes(cotes, D, PL, mm, masque=None):
             c["grp"].append(pr)
             PL.prims([pr], c["id"])
     ticks = set()
-    tk = mm(C_TICK) / 2 / math.sqrt(2)
     for c in cotes:
-        A = pt_cote(c, c["c1"], c["ligne"])
-        B = pt_cote(c, c["c2"], c["ligne"])
-        pr = [P_pl([A, B], "cote")]
         if c["facade"] == "int":
-            for p in (c["p1"], c["p2"]):
-                n = p[1 - c["ax"]]
-                if abs(n - c["ligne"]) > mm(C_ECART) * 1.5:
-                    s = 1 if c["ligne"] > n else -1
-                    pr.append(P_pl([pt_cote(c, p[c["ax"]], n + s * mm(C_ECART)),
-                                    pt_cote(c, p[c["ax"]], c["ligne"] + s * mm(C_DEP))], "cote"))
-        for T in (A, B):
-            key = (c["facade"], c["rang"] if c["facade"] != "int" else c["id"], round(T[0], 2), round(T[1], 2))
-            if key in ticks:
-                continue
-            ticks.add(key)
-            pr.append(P_pl([(T[0] - tk, T[1] - tk), (T[0] + tk, T[1] + tk)], "cote-tick"))
+            continue
+        pr = traits_ligne_cote(c, c["ligne"], mm, ticks)
         c["grp"].extend(pr)
         PL.prims(pr, c["id"])
 
 
-def placer_textes_cotes(cotes, D, PL, mm, fc, ctx, nid, verif):
-    reperes = []
+def traits_ligne_cote(c, ligne, mm, ticks=None):
+    tk = mm(C_TICK) / 2 / math.sqrt(2)
+    A = pt_cote(c, c["c1"], ligne)
+    B = pt_cote(c, c["c2"], ligne)
+    pr = [P_pl([A, B], "cote")]
+    if c["facade"] == "int":
+        for p in (c["p1"], c["p2"]):
+            n = p[1 - c["ax"]]
+            if abs(n - ligne) > mm(C_ECART) * 1.5:
+                s = 1 if ligne > n else -1
+                pr.append(P_pl([pt_cote(c, p[c["ax"]], n + s * mm(C_ECART)),
+                                pt_cote(c, p[c["ax"]], ligne + s * mm(C_DEP))], "cote"))
+    for T in (A, B):
+        if ticks is not None:
+            key = (c["facade"], round(ligne, 2), round(T[0], 2), round(T[1], 2))
+            if key in ticks:
+                continue
+            ticks.add(key)
+        pr.append(P_pl([(T[0] - tk, T[1] - tk), (T[0] + tk, T[1] + tk)], "cote-tick"))
+    return pr
+
+
+def cands_texte_cote(c, ligne, fc, mm, loin=True, etages=False, grille=True):
+    """Positions candidates du texte d'une cote : (textes, None, None, boîte, rappel).
+    textes = [(x, y, ancre, chaîne)] ; une ligne « 12'-6" (3,81 m) » ou deux lignes (pi-po / métrique)."""
+    t1 = c["texte"]
+    imp, met = c["imp"], c["met"]
+    w = MET.l(t1, fc)
     gap = mm(C_GAP)
-    for c in cotes:
-        prefix = "≈ " if c["source"] == "ESTIMÉ" else ""
-        suffix = " ?" if c["source"] == "ILLISIBLE" or c["statut"] == "illisible" else ""
-        c["texte"] = f"{prefix}{pipo(c['longueur'])} ({metres(c['longueur'])}){suffix}"
-        c["rot"] = 0.0 if c["ax"] == 0 else 90.0
-        c["up"] = (0.0, 1.0) if c["ax"] == 0 else (-1.0, 0.0)
-        c["along"] = (1.0, 0.0) if c["ax"] == 0 else (0.0, 1.0)
+    haut = gap + 0.21 * fc
+    bas = -(gap + 0.78 * fc)
+    pas = 1.18 * fc
+    mid = (c["c1"] + c["c2"]) / 2
+    span = c["c2"] - c["c1"]
+    up = c["up"]
 
-    def cand(c, i):
-        w = MET.l(c["texte"], fc)
-        mid = (c["c1"] + c["c2"]) / 2
-        lvl0 = gap + 0.21 * fc
-        lvl1 = lvl0 + fc * 1.0 + mm(0.4)
-        opts = [(mid, lvl0, "middle")]
-        span = c["c2"] - c["c1"]
-        if w + mm(2) < span:
-            for fr_ in (0.35, 0.65, 0.25, 0.75):
-                a = c["c1"] + span * fr_
-                a = min(max(a, c["c1"] + w / 2 + mm(1)), c["c2"] - w / 2 - mm(1))
-                opts.append((a, lvl0, "middle"))
-        opts += [(c["c2"] + mm(1.5), lvl0, "start"), (c["c1"] - mm(1.5), lvl0, "end")]
-        if not (c["facade"] in ("avant", "droite") and c["rang"] < 3):
-            opts += [(mid, lvl1, "middle"), (c["c2"] + mm(1.5), lvl1, "start"), (c["c1"] - mm(1.5), lvl1, "end")]
-        if i >= len(opts):
-            return None
-        a, off, anc = opts[i]
-        base = pt_cote(c, a, c["ligne"])
-        x, y = base[0] + c["up"][0] * off, base[1] + c["up"][1] * off
-        return x, y, anc, boite(x, y, w, fc, anc, c["rot"], mm(0.25), c["texte"]), off > lvl0 + 1e-9, a
+    def P(a, off):
+        b = pt_cote(c, a, ligne)
+        return b[0] + up[0] * off, b[1] + up[1] * off
 
+    def cand(lignes, ld_cible=None):
+        textes, boites = [], []
+        for a, off, anc, t in lignes:
+            x, y = P(a, off)
+            textes.append((x, y, anc, t))
+            boites.append(boite(x, y, MET.l(t, fc), fc, anc, c["rot"], 0, t))
+        bx = unary_union(boites) if len(boites) > 1 else boites[0]
+        rp = rappel(bx, Point(ld_cible)) if ld_cible is not None else None
+        return textes, None, None, bx, rp
+
+    yield cand([(mid, haut, "middle", t1)])
+    yield cand([(mid, bas, "middle", t1)])
+    if w + mm(2) < span:
+        for fr_ in (0.3, 0.7, 0.2, 0.8):
+            a = min(max(c["c1"] + span * fr_, c["c1"] + w / 2 + mm(1)), c["c2"] - w / 2 - mm(1))
+            yield cand([(a, haut, "middle", t1)])
+            yield cand([(a, bas, "middle", t1)])
+    # deux lignes (pi-po au-dessus du métrique) entre les lignes d'attache
+    yield cand([(mid, haut + pas, "middle", imp), (mid, haut, "middle", met)])
+    yield cand([(mid, bas, "middle", imp), (mid, bas - pas, "middle", met)])
+    for lvl in (haut, bas):
+        yield cand([(c["c2"] + mm(1.3), lvl, "start", t1)])
+        yield cand([(c["c1"] - mm(1.3), lvl, "end", t1)])
+    if etages:
+        cible = pt_cote(c, mid, ligne)
+        for k in (1, 2, 3):
+            for sgn in (1, -1):
+                lvl = (haut + k * pas) if sgn > 0 else (bas - k * pas)
+                for da in (0.0, mm(4), -mm(4), mm(8), -mm(8)):
+                    yield cand([(mid + da, lvl, "middle", t1)], cible)
+    if loin:
+        for k in range(1, 9):
+            for lvl in (haut, bas):
+                yield cand([(c["c2"] + mm(1.3) + k * mm(3.5), lvl, "start", t1)], pt_cote(c, c["c2"], ligne))
+                yield cand([(c["c1"] - mm(1.3) - k * mm(3.5), lvl, "end", t1)], pt_cote(c, c["c1"], ligne))
+    if etages and grille:
+        # dernier recours : n'importe où à proximité, avec ligne de rappel vers le milieu de la cote
+        cible = pt_cote(c, mid, ligne)
+        seg = LineString([pt_cote(c, c["c1"], ligne), pt_cote(c, c["c2"], ligne)])
+        hh = 0.97 * fc
+        W_, H_ = (w, hh) if c["ax"] == 0 else (hh, w)
+        for dd, x, y in grille_autour(seg, W_, H_, mm(25), mm(1.2), 3000):
+            if c["ax"] == 0:
+                xb, yb = x, y - 0.27 * fc
+            else:
+                xb, yb = x + 0.27 * fc, y
+            bx = boite(xb, yb, w, fc, "middle", c["rot"], 0, t1)
+            yield [(xb, yb, "middle", t1)], None, None, bx, rappel(bx, Point(cible))
+
+
+def ecrire_texte_cote(c, choix, PL, fc):
+    textes, _, _, bx, rp = choix
+    for x, y, anc, t in textes:
+        c["grp"].append(P_txt(x, y, t, fc, anc, c["rot"]))
+    if rp is not None:
+        lp = P_pl(list(rp.coords), "rappel")
+        c["grp"].append(lp)
+        PL.prims([lp], c["id"])
+    for x, y, anc, t in textes:
+        PL.texte(boite(x, y, MET.l(t, fc), fc, anc, c["rot"], 0, t), c["id"], f"cote {c['id']}")
+    c["boite"] = bx
+
+
+def placer_textes_cotes(cotes, PL, mm, fc):
+    """Textes des cotes de façade : centré, sinon décalé, au-dessous, au-delà des extrémités (rappel)."""
+    fac = [c for c in cotes if c["facade"] != "int"]
+    # les cotes les plus contraintes (texte plus large que le segment) d'abord
+    fac = sorted(fac, key=lambda c: (round((c["c2"] - c["c1"]) - MET.l(c["texte"], fc), 6), fac.index(c)))
     places = {}
-    for phase in (0, 1):
-        for c in cotes:
+    for phase in (1,):
+        for c in fac:
             if c["id"] in places:
                 continue
-            idxs = [0] if phase == 0 else range(1, 12)
-            for i in idxs:
-                r = cand(c, i)
-                if r is None:
+            gen = cands_texte_cote(c, c["ligne"], fc, mm)
+            if phase == 0:
+                gen = [next(gen)]
+            def zgen(gen=gen):
+                for ch in gen:
+                    yield ch[3].buffer(mm(0.25), join_style=2), ch[4], ch
+            pay, ld, cout = essayer(PL, zgen(), ignore=(c["id"],), zones=False)
+            if cout == 0 or phase == 1:
+                places[c["id"]] = pay
+                ecrire_texte_cote(c, pay, PL, fc)
+
+
+def chaines_int(cotes):
+    """Regroupe les cotes intérieures colinéaires et contiguës (même direction, même ligne) en chaînes."""
+    ints = [c for c in cotes if c["facade"] == "int"]
+    groupes = {}
+    for c in ints:
+        groupes.setdefault((c["ax"], round(c["p1"][1 - c["ax"]] + c["dec"], 1)), []).append(c)
+    out = []
+    for key in groupes:
+        lst = sorted(groupes[key], key=lambda c: (c["c1"], c["c2"]))
+        cur = [lst[0]]
+        for c in lst[1:]:
+            if c["c1"] <= max(x["c2"] for x in cur) + 0.5:
+                cur.append(c)
+            else:
+                out.append(cur)
+                cur = [c]
+        out.append(cur)
+    out.sort(key=lambda ch: min(ints.index(c) for c in ch))
+    return out
+
+
+def evaluer_chaine(ch, ligne, PL, mm, fc, grille):
+    """Évalue une chaîne de cotes intérieures sur une ligne donnée : (conflits, pénalité, traits, choix)."""
+    ids = tuple(c["id"] for c in ch)
+    prs = {c["id"]: traits_ligne_cote(c, ligne, mm) for c in ch}
+    geos = [(cid, geom_prim(p)) for cid, pr in prs.items() for p in pr]
+    cout = sum(PL.conflits_textes(g, ids) for _, g in geos)
+    if cout:
+        return cout, 0.0, prs, None
+    choix, extra, pen = {}, [], 0.0
+    ordre = sorted(ch, key=lambda c: (round((c["c2"] - c["c1"]) - MET.l(c["texte"], fc), 6), ch.index(c)))
+    for c in ordre:
+        autres = [g for cid, g in geos if cid != c["id"]]
+        seg = LineString([pt_cote(c, c["c1"], ligne), pt_cote(c, c["c2"], ligne)])
+        bestc = None
+        for cand in cands_texte_cote(c, ligne, fc, mm, loin=True, etages=True, grille=grille):
+            z = cand[3].buffer(mm(0.25), join_style=2)
+            k_ = PL.conflits(z, ignore=ids, zones=True) + sum(1 for g in extra + autres if g.intersects(z))
+            if cand[4] is not None:
+                k_ += PL.conflits_textes(cand[4], ids) + sum(1 for g in extra if g.intersects(cand[4]))
+            if bestc is None or k_ < bestc[0]:
+                bestc = (k_, cand)
+            if k_ == 0:
+                break
+        choix[c["id"]] = bestc[1]
+        extra.append(bestc[1][3])
+        if bestc[1][4] is not None:
+            extra.append(bestc[1][4])
+        cout += bestc[0]
+        pen += max(0.0, bestc[1][3].distance(seg) - mm(1.2))
+    return cout, pen, prs, choix
+
+
+def placer_cotes_int(cotes, PL, mm, fc, murs_ids):
+    """Cotes intérieures, par chaînes colinéaires : la chaîne entière peut être déplacée parallèlement
+    (decalage = souhait) ; chaque texte glisse le long de la ligne, change de côté, s'empile ou sort
+    au-delà des extrémités (ligne de rappel). Parmi les positions sans collision, on retient celle qui
+    garde les textes le plus près de leur ligne et la ligne le plus près de sa position souhaitée."""
+    file_ = list(chaines_int(cotes))
+    while file_:
+        ch = file_.pop(0)
+        c0 = ch[0]
+        base = c0["p1"][1 - c0["ax"]]
+        decs = [c0["dec"]]
+        for k in range(1, 21):
+            decs += [c0["dec"] + k * mm(2.5), c0["dec"] - k * mm(2.5)]
+        best = None
+        for grille in (False, True):
+            for dec in decs:
+                cout, pen, prs, choix = evaluer_chaine(ch, base + dec, PL, mm, fc, grille)
+                if choix is None:
+                    continue
+                score = (cout, pen + 0.4 * abs(dec - c0["dec"]))
+                if best is None or score < best[0]:
+                    best = (score, dec, prs, choix)
+                if cout == 0 and pen < mm(0.5) and abs(dec - c0["dec"]) < mm(0.1):
                     break
-                if PL.conflits(r[3], ignore=(c["id"],)) == 0:
-                    places[c["id"]] = r
-                    PL.texte(boite(r[0], r[1], MET.l(c["texte"], fc), fc, r[2], c["rot"], 0, c["texte"]),
-                             c["id"], f"cote {c['id']}")
-                    break
-    for c in cotes:
-        if c["id"] not in places:
-            r = cand(c, 0)
-            places[c["id"]] = r
-            PL.texte(boite(r[0], r[1], MET.l(c["texte"], fc), fc, r[2], c["rot"], 0, c["texte"]), c["id"], f"cote {c['id']}")
-        x, y, anc, b, haut, a_txt = places[c["id"]]
-        c["grp"].append(P_txt(x, y, c["texte"], fc, anc, c["rot"]))
-        if haut:
-            base = pt_cote(c, a_txt if anc == "middle" else (c["c2"] if anc == "start" else c["c1"]), c["ligne"])
-            tip = (x - c["up"][0] * 0.21 * fc, y - c["up"][1] * 0.21 * fc)
-            if anc != "middle":
-                tip = base[0] + c["up"][0] * (gap + fc * 1.2), base[1] + c["up"][1] * (gap + fc * 1.2)
-            ld = P_pl([base, tip], "rappel")
-            c["grp"].append(ld)
-            PL.prims([ld], c["id"])
-        c["boite"] = boite(x, y, MET.l(c["texte"], fc), fc, anc, c["rot"], 0, c["texte"])
-        # repère ⚠
-        l = c["l"]
-        n, desc = None, None
-        rep = l.get("repere")
-        if rep:
-            n = ctx["num_ecart"].get(str(rep))
-            if n is None:
-                verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : repère « {rep} » sans écart correspondant")
-                n = ctx["num_propre"].get(c["id"])
-            desc = next((str(e.get("description") or "") for e in ctx["ecarts"] if str(e.get("id")) == str(rep)), "")
-        elif c["source"] == "PRÉSUMÉ" or c["statut"] == "conflit":
-            n = ctx["num_propre"].get(c["id"])
-            desc = ("Cote présumée" if c["source"] == "PRÉSUMÉ" else "Cote en conflit") + f" ({c['id']})"
-        if n is not None:
-            g = D.g("70-Incertitudes", "rep-" + c["id"])
-            placer_marqueur(n, c["boite"], "rep-" + c["id"], g, PL, mm, ignore=(c["id"],))
-            reperes.append((n, str(rep or c["id"]), desc))
-        # écart valeur attendue
-        va = num(l.get("valeur_attendue"))
-        if va is not None and abs(va - c["longueur"]) > 0.5:
-            verif.add("Chaînes de cotes", "AVERT",
-                      f"[{nid}] {c['id']} : longueur dessinée {pipo(c['longueur'])} ({f3(c['longueur'])} po) ≠ "
-                      f"valeur attendue {pipo(va)} ({f3(va)} po), écart {f3(c['longueur'] - va)} po")
-    return reperes
+            if best is not None and best[0][0] == 0:
+                break
+        if best is None:
+            cout, pen, prs, choix = evaluer_chaine(ch, base + c0["dec"], PL, mm, fc, True)
+            choix = choix or {c["id"]: next(cands_texte_cote(c, base + c0["dec"], fc, mm)) for c in ch}
+            best = ((cout, pen), c0["dec"], prs, choix)
+        (cout, pen), dec, prs, choix = best
+        if cout > 0 and len(ch) > 1:
+            # la chaîne entière ne trouve pas de place nette : cotes placées une à une
+            file_ = [[c] for c in ch] + file_
+            continue
+        for c in ch:
+            c["ligne"] = base + dec
+            c["grp"].extend(prs[c["id"]])
+            PL.prims(prs[c["id"]], c["id"])
+        for c in ch:
+            ecrire_texte_cote(c, choix[c["id"]], PL, fc)
 
 
 # ---------------------------------------------------------------------------
-# Marqueurs ⚠n et libellés
+# Repères ⚠n
 # ---------------------------------------------------------------------------
 def marqueur_prims(n, cx, cy, mm):
     s = mm(TRI)
@@ -1590,128 +1965,142 @@ def marqueur_prims(n, cx, cy, mm):
     return pr, Polygon(tri), tb
 
 
-def placer_marqueur(n, ancre, own, g, PL, mm, point=None, ignore=()):
+def cands_marqueur(n, ancre, cible, own, mm):
     s = mm(TRI)
     f = mm(H_COTE / CAP)
     larg = s + mm(0.4) + MET.l(str(n), f, True)
-    haut = max(s * 0.87, f)
-    minx, miny, maxx, maxy = ancre.bounds
-    cx, cy = (minx + maxx) / 2, (miny + maxy) / 2
-    best = None
-    for d in (mm(0.8), mm(2.5), mm(5), mm(9), mm(14)):
-        for dx, dy in ((1, 0), (0, 1), (-1, 0), (0, -1), (1, 1), (-1, 1), (1, -1), (-1, -1)):
-            x = cx + dx * ((maxx - minx) / 2 + d + larg / 2) - (s / 2 + mm(0.4) + MET.l(str(n), f, True) - s / 2) / 2 * 0
-            y = cy + dy * ((maxy - miny) / 2 + d + haut / 2)
-            tx = x - larg / 2 + s / 2           # centre du triangle
-            pr, tri, tb = marqueur_prims(n, tx, y, mm)
-            zone = unary_union([tri, tb]).envelope.buffer(mm(0.3), join_style=2)
-            nconf = PL.conflits(zone, ignore=tuple(ignore) + (own,))
-            if nconf == 0:
-                best = (pr, tri, tb, d)
+    haut = max(s * 0.87, 0.97 * f)
+    for d, (x, y) in anneaux(ancre, larg, haut, (mm(0.5), mm(1.5), mm(3), mm(5), mm(8), mm(12), mm(17), mm(23)), 16):
+        tx = x - larg / 2 + s / 2
+        pr, tri, tb = marqueur_prims(n, tx, y, mm)
+        zone = unary_union([tri, tb]).envelope.buffer(mm(0.3), join_style=2)
+        ld = rappel(tri, cible) if (d > mm(1.0) or cible.geom_type == "Point") else None
+        yield zone, ld, (pr, tri, tb, ld)
+    for dd, x, y in grille_autour(ancre, larg, haut, mm(25), mm(1.2), 3000):
+        tx = x - larg / 2 + s / 2
+        pr, tri, tb = marqueur_prims(n, tx, y, mm)
+        zone = unary_union([tri, tb]).envelope.buffer(mm(0.3), join_style=2)
+        ld = rappel(tri, cible)
+        yield zone, ld, (pr, tri, tb, ld)
+
+
+def placer_reperes(demandes, D, PL, mm):
+    """demandes : (n, priorité, ancre, cible, own). Un seul repère par numéro et par feuille."""
+    places = []
+    par_n = {}
+    for i, dm in enumerate(demandes):
+        par_n.setdefault(dm[0], []).append((dm[1], i, dm))
+    for n in sorted(par_n):
+        best = None
+        for _, _, (n_, pr_, ancre, cible, own) in sorted(par_n[n], key=lambda t: (t[0], t[1])):
+            pay, ld, cout = essayer(PL, cands_marqueur(n, ancre, cible, own, mm), ignore=(own,), zones=True)
+            if best is None or cout < best[0]:
+                best = (cout, pay, own, cible)
+            if cout == 0:
                 break
-            if best is None:
-                best = (pr, tri, tb, d, nconf)
-        if best is not None and len(best) == 4:
-            break
-    pr, tri, tb = best[0], best[1], best[2]
-    if best[3] > mm(1.0) or point is not None:
-        a, b = nearest_points(tri, Point(point) if point else ancre)
-        if a.distance(b) > mm(0.5):
-            ld = P_pl([(a.x, a.y), (b.x, b.y)], "inc-c")
-            g.append(ld)
-            PL.prims([ld], own)
-    g += pr
-    PL.ligne(tri, own)
-    PL.texte(tb, own, f"repère ⚠{n} ({own})")
+        cout, (pr, tri, tb, ld), own, cible = best
+        g = D.g("70-Incertitudes", own)
+        if cible.geom_type == "Point":
+            g.append(P_cercle((cible.x, cible.y), mm(0.6), "inc"))
+        if ld is not None:
+            lp = P_pl(list(ld.coords), "inc-c")
+            g.append(lp)
+            PL.prims([lp], own)
+        g += pr
+        PL.ligne(tri, own)
+        PL.texte(tb, own, f"repère ⚠{n} ({own})")
+        places.append(n)
+    return places
 
 
-def bloc_lignes(lignes, cx, cy):
-    """lignes = [(texte, police, gras)] → prims, boîte, liste de boîtes, centrées en (cx, cy)."""
-    hs = [f * (1.18 if i else 1.0) for i, (t, f, g) in enumerate(lignes)]
-    H = sum(hs) - 0.21 * lignes[-1][1] * 0
-    top = cy + H / 2
-    prims, boites = [], []
-    y = top
-    for (t, f, gr), h in zip(lignes, hs):
-        y -= h
-        yb = y + 0.24 * f
-        prims.append(P_txt(cx, yb, t, f, "middle", 0, gr))
-        boites.append(boite(cx, yb, MET.l(t, f, gr), f, "middle", 0, 0, t))
-    return prims, unary_union(boites).envelope, boites
-
-
-def placer_autour(geom, lignes, own, g, PL, mm, interieur=True, zones=False, extra_ignore=()):
-    W = max(MET.l(t, f, gr) for t, f, gr in lignes)
-    H = sum(f * (1.18 if i else 1.0) for i, (t, f, gr) in enumerate(lignes))
-    minx, miny, maxx, maxy = geom.bounds
-    cx, cy = (minx + maxx) / 2, (miny + maxy) / 2
-    cands = []
-    if interieur:
-        cands.append((cx, cy, 0.0))
-    for d in (mm(1.2), mm(4), mm(8), mm(13)):
-        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (1, -1), (-1, -1)):
-            cands.append((cx + dx * ((maxx - minx) / 2 + d + W / 2), cy + dy * ((maxy - miny) / 2 + d + H / 2), d))
-    choix = None
-    for x, y, d in cands:
-        pr, env, bx = bloc_lignes(lignes, x, y)
-        zone = env.buffer(mm(0.3), join_style=2)
-        if d == 0.0 and not zone.within(geom):
-            continue
-        if PL.conflits(zone, ignore=(own,) + tuple(extra_ignore), zones=zones) == 0:
-            choix = (pr, env, bx, d)
-            break
-    if choix is None:
-        x, y, d = cands[1] if len(cands) > 1 else cands[0]
-        pr, env, bx = bloc_lignes(lignes, x, y)
-        choix = (pr, env, bx, d)
-    pr, env, bx, d = choix
-    if d > mm(1.5):
-        a, b = nearest_points(env, geom)
-        ld = P_pl([(a.x, a.y), (b.x, b.y)], "rappel")
-        g.append(ld)
-        PL.prims([ld], own)
-    g += pr
-    for i, b in enumerate(bx):
-        PL.texte(b, own, f"libellé {own} « {lignes[i][0]} »")
-    return True
+# ---------------------------------------------------------------------------
+# Libellés d'éléments, de structure, d'escaliers ; étiquettes de pièces
+# ---------------------------------------------------------------------------
+DISTS = (1.2, 3, 5, 8, 12, 17, 23, 30)
 
 
 def placer_libelle_element(el, cont, libs, g, PL, mm, fc):
-    interieur_ok = el["typ"] not in SANS_INTERIEUR
-    # 1) à l'intérieur du symbole
-    if interieur_ok:
-        for t in libs:
-            pr, env, bx = bloc_lignes([(t, fc, False)], cont.centroid.x, cont.centroid.y)
-            zone = env.buffer(mm(0.3), join_style=2)
-            if zone.within(cont.buffer(-mm(0.2))) and PL.conflits(zone, ignore=(el["id"],)) == 0:
-                g += pr
-                PL.texte(bx[0], el["id"], f"libellé {el['id']} « {t} »")
-                return
-    # 2) autour
+    """Libellé d'un élément : à l'intérieur du symbole si possible (1 ou 2 lignes), sinon autour, dans la
+    zone libre la plus proche (ligne de rappel)."""
+    dists = [mm(d) for d in DISTS]
+    variantes = []
     for t in libs:
-        lignes = [(t, fc, False)]
-        W = MET.l(t, fc)
-        minx, miny, maxx, maxy = cont.bounds
-        cx, cy = (minx + maxx) / 2, (miny + maxy) / 2
-        for d in (mm(1.2), mm(4), mm(8)):
-            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (1, -1), (-1, -1)):
-                x = cx + dx * ((maxx - minx) / 2 + d + W / 2)
-                y = cy + dy * ((maxy - miny) / 2 + d + fc / 2)
-                pr, env, bx = bloc_lignes(lignes, x, y)
-                zone = env.buffer(mm(0.3), join_style=2)
-                if PL.conflits(zone, ignore=(el["id"],), zones=True) == 0:
-                    if d > mm(1.5):
-                        a, b = nearest_points(env, cont)
-                        ld = P_pl([(a.x, a.y), (b.x, b.y)], "rappel")
-                        g.append(ld)
-                        PL.prims([ld], el["id"])
-                    g += pr
-                    PL.texte(bx[0], el["id"], f"libellé {el['id']} « {t} »")
+        variantes.append([(t, fc, False)])
+        deux = lignes_nom_2(t, fc) if " " in t else None
+        if deux:
+            variantes.append([(x, fc, False) for x in deux])
+    interieur = cont.buffer(-mm(0.2)) if el["typ"] not in SANS_INTERIEUR else None
+    if interieur is not None and not interieur.is_empty:
+        minx, miny, maxx, maxy = interieur.bounds
+        c0 = cont.centroid
+        pts = [(0.0, c0.x, c0.y)]
+        pas = mm(1.0)
+        for i in range(int((maxx - minx) / pas) + 1):
+            for j in range(int((maxy - miny) / pas) + 1):
+                x, y = minx + i * pas, miny + j * pas
+                pts.append((round(math.hypot(x - c0.x, y - c0.y), 6), round(x, 6), round(y, 6)))
+        pts.sort()
+        for lignes in variantes:
+            bl = bloc(lignes)
+            e0 = bl[2].buffer(mm(0.3), join_style=2)
+            if e0.bounds[2] - e0.bounds[0] > maxx - minx or e0.bounds[3] - e0.bounds[1] > maxy - miny:
+                continue
+            for _, x, y in pts:
+                z = affinity.translate(e0, x, y)
+                if z.within(interieur) and PL.conflits(z, ignore=(el["id"],)) == 0:
+                    prims, boites, _ = poser(bl, x, y)
+                    g += prims
+                    for b, (t, f, gr) in zip(boites, lignes):
+                        PL.texte(b, el["id"], f"libellé {el['id']} « {t} »")
                     return
-    placer_autour(cont, [(libs[-1], fc, False)], el["id"], g, PL, mm, interieur=False)
+    for i, lignes in enumerate(variantes):
+        cout = poser_libelle_test(lignes, cont, el["id"], PL, mm, dists)
+        if cout == 0 or i == len(variantes) - 1:
+            poser_libelle(lignes, cont, el["id"], g, PL, mm, dists)
+            return
 
 
-def placer_long_ligne(geo, lib, own, g, PL, mm, fc):
+def penalite_pieces(pts, ancre, pieces, pen_voisine, pen_autre, siennes=None):
+    """Trie des centres candidats par distance + pénalité s'ils tombent dans une autre pièce que celle de
+    l'ancre : faible pour une pièce voisine, forte pour une pièce éloignée (étiquette ambiguë)."""
+    if not pieces:
+        return pts
+    from shapely.prepared import prep
+    if siennes is None:
+        c = ancre.centroid
+        siennes = [p for p in pieces if p.buffer(1.0).contains(c)]
+    autres = [p for p in pieces if not any(p is q for q in siennes)]
+    ref = unary_union(siennes) if siennes else ancre
+    vois = [p for p in autres if p.distance(ref) <= 10.0]
+    loin = [p for p in autres if p.distance(ref) > 10.0]
+    pv = prep(unary_union(vois)) if vois else None
+    pl = prep(unary_union(loin)) if loin else None
+
+    def pen(x, y):
+        q = Point(x, y)
+        if pl is not None and pl.contains(q):
+            return pen_autre
+        if pv is not None and pv.contains(q):
+            return pen_voisine
+        return 0.0
+    return sorted(pts, key=lambda t: (t[0] + pen(t[1], t[2]), t[1], t[2]))
+
+
+def cands_autour(bl, ancre, mm, dists, pieces=None):
+    minx, miny, maxx, maxy = bl[2].bounds
+    W, H = maxx - minx, maxy - miny
+    for dd, x, y in penalite_pieces(grille_autour(ancre, W, H, mm(45), mm(1.2), 6000), ancre, pieces, mm(25), mm(25)):
+        _, _, env = poser(bl, x, y)
+        if env.intersects(ancre):
+            continue
+        yield env.buffer(mm(0.3), join_style=2), (rappel(env, ancre) if dd > mm(1.6) else None), (bl, x, y)
+
+
+def poser_libelle_test(lignes, ancre, own, PL, mm, dists, zones=True):
+    return essayer(PL, cands_autour(bloc(lignes), ancre, mm, dists, PL.pieces), ignore=(own,), zones=zones)[2]
+
+
+def cands_long_ligne(geo, lib, fc, mm):
     coords = list(geo.coords)
     A, B = coords[0], coords[-1]
     ang = math.degrees(math.atan2(B[1] - A[1], B[0] - A[0]))
@@ -1721,29 +2110,105 @@ def placer_long_ligne(geo, lib, own, g, PL, mm, fc):
             ang -= 360
     up = rot2((0, 1), ang)
     w = MET.l(lib, fc)
-    L = geo.length
-    choix = None
-    for frac in (0.5, 0.35, 0.65, 0.22, 0.78, 0.12, 0.88, 0.42, 0.58, 0.3, 0.7):
-        p = geo.interpolate(frac, normalized=True)
-        for off in (mm(0.9) + 0.21 * fc, -(mm(0.9) + 0.76 * fc), mm(2.5) + 0.21 * fc, -(mm(2.5) + 0.76 * fc),
-                    mm(4.5) + 0.21 * fc, -(mm(4.5) + 0.76 * fc)):
-            x, y = p.x + up[0] * off, p.y + up[1] * off
-            b = boite(x, y, w, fc, "middle", ang, mm(0.3), lib)
-            if PL.conflits(b, ignore=(own,), zones=True) == 0:
-                choix = (x, y)
-                break
-        if choix:
+    fracs = [0.5] + [0.5 + s * k * 0.04 for k in range(1, 12) for s in (-1, 1)]
+    offs = []
+    for e in (0.9, 2.4, 4.0, 6.0):
+        offs += [mm(e) + 0.21 * fc, -(mm(e) + 0.78 * fc)]
+    for off in offs[:2]:
+        for fr_ in fracs:
+            yield fr_, off, ang, up, w
+    for off in offs[2:]:
+        for fr_ in fracs:
+            yield fr_, off, ang, up, w
+
+
+def placer_long_ligne(items, lib, PL, mm, fc):
+    """items : [(own, geo, g)] portant le même libellé ; un seul est étiqueté (« typ. » si plusieurs)."""
+    if len(items) > 1:
+        lib = lib + " (typ.)"
+    best = None
+    for own, geo, g in items:
+        def gen(geo=geo):
+            for fr_, off, ang, up, w in cands_long_ligne(geo, lib, fc, mm):
+                p = geo.interpolate(fr_, normalized=True)
+                x, y = p.x + up[0] * off, p.y + up[1] * off
+                b = boite(x, y, w, fc, "middle", ang, 0, lib)
+                ld = None
+                if abs(off) > mm(1.5) + 0.8 * fc:
+                    q = (p.x + up[0] * math.copysign(mm(0.3), off), p.y + up[1] * math.copysign(mm(0.3), off))
+                    ld = rappel(b, Point(q))
+                yield b.buffer(mm(0.3), join_style=2), ld, (x, y, ang, b)
+        pay, ld, cout = essayer(PL, gen(), ignore=(own,), zones=True)
+        if best is None or cout < best[0]:
+            best = (cout, pay, ld, own, g)
+        if cout == 0:
             break
-    if choix is None:
-        p = geo.interpolate(0.5, normalized=True)
-        choix = (p.x + up[0] * (mm(0.9) + 0.21 * fc), p.y + up[1] * (mm(0.9) + 0.21 * fc))
-    g.append(P_txt(choix[0], choix[1], lib, fc, "middle", ang))
-    PL.texte(boite(choix[0], choix[1], w, fc, "middle", ang, 0, lib), own, f"libellé {own} « {lib} »")
+    if best[0] > 0:
+        for own, geo, g in items:
+            w = MET.l(lib, fc)
+            def gen2(geo=geo, w=w):
+                for dd, x, y in grille_autour(geo, w, 0.97 * fc, mm(60), mm(1.5), 12000):
+                    yb = y - 0.27 * fc
+                    b = boite(x, yb, w, fc, "middle", 0.0, 0, lib)
+                    yield b.buffer(mm(0.3), join_style=2), rappel(b, geo), (x, yb, 0.0, b)
+            pay, ld, cout = essayer(PL, gen2(), ignore=(own,), zones=True)
+            if cout < best[0]:
+                best = (cout, pay, ld, own, g)
+            if cout == 0:
+                break
+    cout, (x, y, ang, b), ld, own, g = best
+    if ld is not None:
+        lp = P_pl(list(ld.coords), "rappel")
+        g.append(lp)
+        PL.prims([lp], own)
+    g.append(P_txt(x, y, lib, fc, "middle", ang))
+    PL.texte(b, own, f"libellé {own} « {lib} »")
+
+
+def placer_autour_groupe(items, lib, PL, mm, fc):
+    if len(items) > 1:
+        lib = lib + " (typ.)"
+    dists = [mm(d) for d in DISTS]
+    best = None
+    for own, geo, g in items:
+        cout = poser_libelle_test([(lib, fc, False)], geo, own, PL, mm, dists)
+        if best is None or cout < best[0]:
+            best = (cout, own, geo, g)
+        if cout == 0:
+            break
+    _, own, geo, g = best
+    poser_libelle([(lib, fc, False)], geo, own, g, PL, mm, dists)
+
+
+def placer_textes_escalier(spec, PL, mm, fc):
+    own, g, c, dv, run, wid, textes = spec
+    rot = 0.0 if abs(dv[0]) > 0.5 else 90.0
+    up = rot2((0, 1), rot)
+    for i, t in enumerate(textes):
+        larg = MET.l(t, fc, False)
+        def gen(i=i, t=t, larg=larg):
+            for fr_ in (0.0, -0.15, 0.15, -0.28, 0.28, -0.38, 0.38):
+                for side in ((0, 1) if i == 0 else (1, 0)):
+                    off = (mm(0.9) + 0.21 * fc) if side == 0 else -(mm(0.9) + 0.78 * fc)
+                    x = c[0] + dv[0] * run * fr_ + up[0] * off
+                    y = c[1] + dv[1] * run * fr_ + up[1] * off
+                    b = boite(x, y, larg, fc, "middle", rot, 0, t)
+                    yield b.buffer(mm(0.2), join_style=2), None, (x, y, b)
+        pay, _, cout = essayer(PL, gen(), ignore=(own,), zones=False)
+        x, y, b = pay
+        mb = boite(x, y, larg, fc, "middle", rot, mm(0.4), t)
+        g.append(P_poly([list(mb.exterior.coords)[:-1]], "masque"))
+        g.append(P_txt(x, y, t, fc, "middle", rot))
+        PL.texte(b, f"{own}#{i}", f"escalier {own} « {t} »")
 
 
 def lignes_nom(nom, fn, lmax):
     if MET.l(nom, fn, True) <= lmax:
         return [nom]
+    return lignes_nom_2(nom, fn) or [nom]
+
+
+def lignes_nom_2(nom, fn):
     mots = nom.split()
     best = None
     for i in range(1, len(mots)):
@@ -1751,13 +2216,14 @@ def lignes_nom(nom, fn, lmax):
         w = max(MET.l(l1, fn, True), MET.l(l2, fn, True))
         if best is None or w < best[0]:
             best = (w, [l1, l2])
-    return best[1] if best else [nom]
+    return best[1] if best else None
 
 
-def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc):
+def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None):
+    """Étiquette de pièce : complète à l'intérieur si possible ; sinon nom seul (1 ou 2 lignes, ou
+    tourné de 90° pour une pièce étroite) ; sinon à l'extérieur, dans la zone libre la plus proche,
+    avec ligne de rappel. Retourne True si les dimensions ont dû être omises."""
     pid = str(d.get("id"))
-    g = D.g("60-Etiquettes", pid)
-    g.append(P_poly([list(poly.exterior.coords)[:-1]], "invisible"))
     nom = str(d.get("nom") or d.get("nom_original") or pid).upper()
     dims = d.get("dimensions") if isinstance(d.get("dimensions"), dict) else {}
     minx, miny, maxx, maxy = poly.bounds
@@ -1774,80 +2240,87 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc):
     if a is None:
         a = poly.area / 144
     ta = ("≈" if src(sup) == "ESTIMÉ" else "") + f"{fr(a, 1)} pi² ({fr(a * 0.09290304, 1)} m²)"
-    lmax = (maxx - minx) * 0.92
-    noms = lignes_nom(nom, fn, lmax)
-    jeux = [noms]
-    if len(noms) == 1 and len(nom.split()) > 1:
-        jeux.append(lignes_nom(nom, fn, 0))          # nom coupé en deux lignes
-    variantes = []
-    for sous in ([(f"{tx} × {ty}", fc, False), (ta, fc, False)], [(ta, fc, False)], []):
+    noms1 = [nom]
+    noms2 = lignes_nom_2(nom, fn)
+    jeux = [noms1] + ([noms2] if noms2 else [])
+    variantes = []          # (lignes, rotation, complet)
+    for sous, complet in (([(f"{tx} × {ty}", fc, False), (ta, fc, False)], True), ([(ta, fc, False)], False), ([], False)):
         for nn in jeux:
-            variantes.append([(t, fn, True) for t in nn] + sous)
+            variantes.append(([(t, fn, True) for t in nn] + sous, 0.0, complet))
+    for nn in jeux:
+        variantes.append(([(t, fn, True) for t in nn], 90.0, False))
     try:
         pole = polylabel(poly, tolerance=1.0)
     except Exception:
         pole = poly.representative_point()
     interieur = poly.buffer(-mm(0.6), join_style=2)
     choix = None
-    for lignes in variantes:
-        W = max(MET.l(t, f, gr) for t, f, gr in lignes)
-        H = sum(f * (1.18 if i else 1.0) for i, (t, f, gr) in enumerate(lignes))
-        if W > (maxx - minx) or H > (maxy - miny):
+    for lignes, rot, complet in variantes:
+        bl = bloc(lignes, rot)
+        e0 = bl[2].buffer(mm(0.4), join_style=2)
+        bminx, bminy, bmaxx, bmaxy = e0.bounds
+        if bmaxx - bminx > maxx - minx or bmaxy - bminy > maxy - miny:
             continue
-        step = max(mm(1.5), min(W, H) / 4)
-        pts = [(pole.x, pole.y)]
-        nx = int((maxx - minx) / step) + 1
-        ny = int((maxy - miny) / step) + 1
+        step = max(mm(1.2), min(bmaxx - bminx, bmaxy - bminy) / 4)
         grille = []
-        for i in range(nx + 1):
-            for j in range(ny + 1):
+        for i in range(int((maxx - minx) / step) + 2):
+            for j in range(int((maxy - miny) / step) + 2):
                 x, y = minx + i * step, miny + j * step
                 grille.append(((x - pole.x) ** 2 + (y - pole.y) ** 2, round(x, 4), round(y, 4)))
         grille.sort()
-        pts += [(x, y) for _, x, y in grille[:900]]
-        env0 = bloc_lignes(lignes, 0.0, 0.0)[1].buffer(mm(0.4), join_style=2)
+        pts = [(pole.x, pole.y)] + [(x, y) for _, x, y in grille[:1500]]
         for x, y in pts:
-            zone = affinity.translate(env0, x, y)
-            if not zone.within(interieur):
+            z = affinity.translate(e0, x, y)
+            if not z.within(interieur):
                 continue
-            if PL.conflits(zone, ignore=(pid,), zones=True) == 0:
-                choix = (lignes, x, y)
+            if PL.conflits(z, ignore=(pid,), zones=True) == 0:
+                choix = (bl, x, y, None, complet, lignes)
                 break
         if choix:
             break
-    leader = None
+    if choix is None and passe == 1:
+        return None
     if choix is None:
-        # hors de la pièce, avec ligne de rappel vers le pôle
-        for lignes in ([(t, fn, True) for t in noms] + [(ta, fc, False)], [(t, fn, True) for t in noms]):
-            W = max(MET.l(t, f, gr) for t, f, gr in lignes)
-            H = sum(f * (1.18 if i else 1.0) for i, (t, f, gr) in enumerate(lignes))
-            env0 = bloc_lignes(lignes, 0.0, 0.0)[1]
-            for d in (mm(4), mm(7), mm(11), mm(16), mm(22), mm(30)):
-                for ang in range(0, 360, 30):
-                    x = pole.x + math.cos(math.radians(ang)) * (d + W / 2)
-                    y = pole.y + math.sin(math.radians(ang)) * (d + H / 2)
-                    env = affinity.translate(env0, x, y)
-                    a_, b_ = nearest_points(env, Point(pole.x, pole.y))
-                    ld = LineString([(a_.x, a_.y), (pole.x, pole.y)])
-                    if PL.conflits(env.buffer(mm(0.4), join_style=2), ignore=(pid,), zones=True) == 0 and \
-                            not any(PL.T[i].intersects(ld) for i in range(len(PL.T))):
-                        choix, leader = (lignes, x, y), ld
-                        break
-                if choix:
-                    break
-            if choix:
+        # à l'extérieur, avec ligne de rappel vers la pièce
+        cible = Point(pole.x, pole.y)
+        coeur = poly.buffer(-mm(1.2), join_style=2)
+        vise = coeur if not coeur.is_empty else cible
+        dists = [mm(v) for v in (2, 4, 6, 9, 12, 16, 20, 25, 31, 38, 46)]
+        best = None
+        for nn in jeux:
+            lignes = [(t, fn, True) for t in nn]
+            bl = bloc(lignes)
+            W = bl[2].bounds[2] - bl[2].bounds[0]
+            H = bl[2].bounds[3] - bl[2].bounds[1]
+            def gen(bl=bl, W=W, H=H):
+                pts = grille_autour(poly, W, H, mm(100), mm(1.5), 20000)
+                if autres:
+                    # zone libre la plus proche ; pièce voisine tolérée, pièce éloignée fortement pénalisée
+                    pts = penalite_pieces(pts, poly, autres, mm(35), mm(45), siennes=[poly])
+                for dd, x, y in pts:
+                    _, _, env = poser(bl, x, y)
+                    if env.intersects(interieur):
+                        continue
+                    yield env.buffer(mm(0.4), join_style=2), rappel(env, vise), (bl, x, y, lignes)
+            pay, ld, cout = essayer(PL, gen(), ignore=(pid,), zones=True)
+            if best is None or cout < best[0]:
+                best = (cout, pay, ld)
+            if cout == 0:
                 break
-    if choix is None:
-        choix = (variantes[-1], pole.x, pole.y)
-    lignes, x, y = choix
-    pr, env, bx = bloc_lignes(lignes, x, y)
-    if leader is not None:
-        lp = [P_pl(list(leader.coords), "rappel"), P_cercle(leader.coords[-1], mm(0.5), "elem-plein")]
+        cout, (bl, x, y, lignes), ld = best
+        choix = (bl, x, y, ld, False, lignes)
+    bl, x, y, ld, complet, lignes = choix
+    g = D.g("60-Etiquettes", pid)
+    g.append(P_poly([list(poly.exterior.coords)[:-1]], "invisible"))
+    prims, boites, env = poser(bl, x, y)
+    if ld is not None:
+        lp = [P_pl(list(ld.coords), "rappel"), P_cercle(ld.coords[-1], mm(0.5), "elem-plein")]
         g += lp
         PL.prims(lp, pid)
-    g += pr
-    for i, b in enumerate(bx):
-        PL.texte(b, pid, f"étiquette {pid} « {lignes[i][0]} »")
+    g += prims
+    for b, (t, f, gr) in zip(boites, lignes):
+        PL.texte(b, pid, f"étiquette {pid} « {t} »")
+    return not complet
 
 
 def verifier_textes(F, verif):
@@ -1873,7 +2346,7 @@ def verifier_textes(F, verif):
         for i, g in enumerate(T):
             for j in lt.query(g, predicate="intersects"):
                 j = int(j)
-                if PL.Lo[j] == PL.To[i]:
+                if PL.Lo[j] == PL.To[i].split("#")[0] or (PL.Lo[j] == "cadre" and PL.To[i] == "cartouche"):
                     continue
                 c = g.centroid
                 verif.add("Textes (chevauchements)", "AVERT",
@@ -1927,7 +2400,7 @@ def cartouche(F, niv, projet, ctx):
     p = 0.09
     L = x1 - x0 - 2 * p
     cap_s, cap_m = 2.5, 3.0
-    pas_s = 2.5 / 25.4 * 1.55
+    pas_s = 2.5 / 25.4 * 1.75
     y = y0 + p
 
     def cap(t, yy):
@@ -2040,8 +2513,8 @@ def cartouche(F, niv, projet, ctx):
         stxt = f"{f3(ang)}° (sens horaire depuis +y). Source : {nord.get('source') or '—'}"
         if nord.get("photo"):
             stxt += f" ({nord.get('photo')})"
-        for t in couper(stxt, 2.5 / CAP, (x1 - p - tx) * 25.4)[:5]:
-            yy += 2.5 / 25.4 * 1.5
+        for t in couper(stxt, 2.5 / CAP, (x1 - p - tx) * 25.4)[:4]:
+            yy += pas_s
             texte(tx, yy, t, 2.5)
         yb -= hrow
 
@@ -2062,6 +2535,10 @@ def cartouche(F, niv, projet, ctx):
              ("approx", "Valeur estimée (mesurée sur l'image)"),
              ("rep", "Voir registre des écarts dans RAPPORT.md"),
              ("cote", "Cotes en pi-po (métrique en m)")]
+    if getattr(F, "typ", False):
+        items.append(("vide", "(typ.) : libellé typique, vaut pour les éléments identiques"))
+    if getattr(F, "dims_omises", False):
+        items.append(("vide", "Petites pièces : nom seul ; dimensions et superficie dans tableau_pieces.csv"))
     for kind, t in items:
         if not peut(0.2):
             break
@@ -2112,7 +2589,16 @@ def cartouche(F, niv, projet, ctx):
         ycur = cap("REPÈRES ⚠ SUR CETTE FEUILLE".replace("⚠ ", ""), ycur)
         tronque = False
         for n, rid, desc in F.reperes:
-            lignes = couper(f"{desc}" + (f" [{rid}]" if rid and rid not in desc else ""), 2.5 / CAP, (L - 0.42) * 25.4)
+            lignes = couper(f"{desc}", 2.5 / CAP, (L - 0.42) * 25.4)
+            if len(lignes) > 3:
+                lignes = lignes[:3]
+                der = lignes[-1].rstrip(" ,;.") + " …"
+                while lw(der, 2.5) > L - 0.42 and " " in der[:-2]:
+                    der = der[:-2].rsplit(" ", 1)[0].rstrip(" ,;.") + " …"
+                lignes[-1] = der
+            lignes[-1] = lignes[-1]
+            if rid:
+                lignes.append(f"[{rid} — voir RAPPORT.md]")
             h = len(lignes) * pas_s + 0.05
             if not peut(h + 0.05):
                 tronque = True
@@ -2431,6 +2917,12 @@ def bilan_surface(F, verif):
 
 
 def controle_chaines(F, verif):
+    for c in F.cotes:
+        va = num(c["l"].get("valeur_attendue"))
+        if va is not None and abs(va - c["longueur"]) > 0.5:
+            verif.add("Chaînes de cotes", "AVERT",
+                      f"[{F.nid}] {c['id']} : longueur dessinée {pipo(c['longueur'])} ({f3(c['longueur'])} po) ≠ "
+                      f"valeur attendue {pipo(va)} ({f3(va)} po), écart {f3(c['longueur'] - va)} po")
     par = {}
     for c in F.cotes:
         if c["facade"] == "int":
@@ -2490,23 +2982,7 @@ def numeroter(data, verif):
     for i, e in enumerate(ecarts, 1):
         m = re.search(r"(\d+)", str(e.get("id") or ""))
         num_ecart[str(e.get("id"))] = int(m.group(1)) if m else i
-    nxt = max(num_ecart.values(), default=0) + 1
-    num_presume, num_propre = {}, {}
-    for n in data.get("niveaux") or []:
-        nid = str(n.get("id"))
-        if any(src(m.get("epaisseur")) == "PRÉSUMÉ" or num(m.get("epaisseur")) is None for m in n.get("murs") or []):
-            num_presume[nid] = nxt
-            nxt += 1
-        lcs = n.get("lignes_cote") or []
-        for l in lcs:
-            if not isinstance(l, dict):
-                continue
-            if (norm_src(l.get("source")) == "PRÉSUMÉ" or str(l.get("statut")) == "conflit") or \
-                    (l.get("repere") and str(l.get("repere")) not in num_ecart):
-                if not l.get("repere") or str(l.get("repere")) not in num_ecart:
-                    num_propre[str(l.get("id"))] = nxt
-                    nxt += 1
-    return {"ecarts": ecarts, "num_ecart": num_ecart, "num_presume": num_presume, "num_propre": num_propre}
+    return {"ecarts": ecarts, "num_ecart": num_ecart}
 
 
 def main(argv=None):
@@ -2546,10 +3022,6 @@ def main(argv=None):
         feuilles.append((F, niv))
 
     # repères (registre)
-    for n, nid in sorted((v, k) for k, v in ctx["num_presume"].items()):
-        verif.add("Repères d'incertitude", "INFO", f"⚠{n} [{nid}] : épaisseurs de murs présumées")
-    for lid, n in sorted(ctx["num_propre"].items(), key=lambda kv: kv[1]):
-        verif.add("Repères d'incertitude", "INFO", f"⚠{n} : cote {lid} présumée ou en conflit (pas d'écart référencé)")
     for e in ctx["ecarts"]:
         n = ctx["num_ecart"][str(e.get("id"))]
         pos = " (positionné)" if isinstance(e.get("position"), list) else ""
@@ -2623,6 +3095,10 @@ def main(argv=None):
     for p in produits:
         print("  " + os.path.relpath(p, sortie))
     print(f"Détails : {os.path.relpath(p_ver, sortie)}")
+    # RAPPORT.md (registre des écarts, mesures à prendre) — régénéré avec le reste
+    p_rap = os.path.join(ici, "generer_rapport.py")
+    if os.path.isfile(p_rap):
+        subprocess.run([sys.executable, p_rap, "--json", chemin_json, "--sortie", sortie], check=True)
     return 0
 
 
