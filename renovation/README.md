@@ -26,6 +26,9 @@
 | SS-08 | Copie de SS-07 : escalier en L, palier dans le coin arrière (étude de 3 implantations dans DESIGN.md) ; feuilles P-109 et P-110 | esquisse |
 | SS-09 | Copie de SS-08 : escalier déplacé à l'est de la fenêtre de la chambre 1 (étude 2), chambre 1 agrandie ; feuilles P-111 et P-112 | esquisse |
 
+## Études
+- `etudes/escalier/` : six emplacements possibles pour l'escalier, en haut et en bas (étude 3).
+
 ## Maquette 3D
     python3 renovation/outils/generer_3d.py renovation/<projet>
 Lit `donnees/maison.json` et `scene_3d.py` (matériaux, peinture, mobilier, éclairage, arrêts de visite) du projet.
