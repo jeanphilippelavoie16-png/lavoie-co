@@ -1199,7 +1199,7 @@
       "largeur": 8,
       "profondeur": 8
      },
-     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" …"
+     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" … ; colonne 8\"x8\" continue jusqu'en haut (réponses du propriétaire (2026-10-29))"
     },
     {
      "id": "str-SS-C02",
@@ -1217,7 +1217,7 @@
       "largeur": 8,
       "profondeur": 8
      },
-     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" … ; croquis 2016 : « Colonne C4 retirée » (ligne 4 à x = 222) — présence actuelle douteuse, voir écart"
+     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" … ; croquis 2016 : « Colonne C4 retirée » (ligne 4 à x = 222) — présence actuelle douteuse, voir écart ; présente au sous-sol, mais son prolongement au RDC (« Colonne C4 retirée », P1) n'existe plus (réponses du propriétaire (2026-10-29))"
     },
     {
      "id": "str-SS-C03",
@@ -1235,7 +1235,7 @@
       "largeur": 8,
       "profondeur": 8
      },
-     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" … ; croquis 2016 : « Colonne C6 retirée » (ligne 6 à x = 316) — présence actuelle douteuse, voir écart"
+     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" … ; croquis 2016 : « Colonne C6 retirée » (ligne 6 à x = 316) — présence actuelle douteuse, voir écart ; présente au sous-sol, mais son prolongement au RDC (« Colonne C6 retirée », P1) n'existe plus (réponses du propriétaire (2026-10-29))"
     },
     {
      "id": "str-SS-C04",
@@ -1253,7 +1253,7 @@
       "largeur": 8,
       "profondeur": 8
      },
-     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière"
+     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière ; colonne 8\"x8\" continue jusqu'en haut (réponses du propriétaire (2026-10-29))"
     },
     {
      "id": "str-SS-C05",
@@ -1271,7 +1271,7 @@
       "largeur": 8,
       "profondeur": 8
      },
-     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière"
+     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière ; colonne 8\"x8\" continue jusqu'en haut (réponses du propriétaire (2026-10-29))"
     },
     {
      "id": "str-SS-C06",
@@ -1289,7 +1289,7 @@
       "largeur": 8,
       "profondeur": 8
      },
-     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière"
+     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière ; colonne 8\"x8\" continue jusqu'en haut (réponses du propriétaire (2026-10-29))"
     },
     {
      "id": "str-SS-S01",
@@ -4073,15 +4073,16 @@
       "solives de plafond 2\"x7\" @ 16\" orientées avant-arrière (P4) : appui probable — non écrit"
      ],
      "epaisseur": {
-      "valeur": 10.0,
-      "source": "LU",
-      "photo": "P1",
-      "note": "10\" écrit sur le croquis 2016 (cote-RDC-203/210/211/215 : chaînes 10\" aux 4 murs) ; dessin 1957 (P4) ≈ 11 po ESTIMÉ ; voir écart"
+      "valeur": 8.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "8\" : valeur provisoire donnée par le propriétaire (2026-10-29), à valider sur place ; le croquis 2016 écrit 10\" (cote-RDC-203/210/211/215) et le dessin 1957 montre ≈ 11 po (ESTIMÉ) ; voir écart",
+      "ref": "ecart-007"
      },
-     "x1": 5,
-     "y1": 5,
-     "x2": 451,
-     "y2": 5,
+     "x1": 4.0,
+     "y1": 4.0,
+     "x2": 452.0,
+     "y2": 4.0,
      "note": "Mur avant (façade, rue).",
      "source_position": "DÉDUIT"
     },
@@ -4093,15 +4094,16 @@
       "sur le mur de fondation (P2)"
      ],
      "epaisseur": {
-      "valeur": 10.0,
-      "source": "LU",
-      "photo": "P1",
-      "note": "10\" écrit sur le croquis 2016 (cote-RDC-203/210/211/215 : chaînes 10\" aux 4 murs) ; dessin 1957 (P4) ≈ 11 po ESTIMÉ ; voir écart"
+      "valeur": 8.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "8\" : valeur provisoire donnée par le propriétaire (2026-10-29), à valider sur place ; le croquis 2016 écrit 10\" (cote-RDC-203/210/211/215) et le dessin 1957 montre ≈ 11 po (ESTIMÉ) ; voir écart",
+      "ref": "ecart-007"
      },
-     "x1": 451,
-     "y1": 5,
-     "x2": 451,
-     "y2": 375,
+     "x1": 452.0,
+     "y1": 4.0,
+     "x2": 452.0,
+     "y2": 376.0,
      "note": "Mur latéral droit (salon, cuisine).",
      "source_position": "DÉDUIT"
     },
@@ -4114,15 +4116,16 @@
       "solives de plafond 2\"x7\" @ 16\" orientées avant-arrière (P4) : appui probable — non écrit"
      ],
      "epaisseur": {
-      "valeur": 10.0,
-      "source": "LU",
-      "photo": "P1",
-      "note": "10\" écrit sur le croquis 2016 (cote-RDC-203/210/211/215 : chaînes 10\" aux 4 murs) ; dessin 1957 (P4) ≈ 11 po ESTIMÉ ; voir écart"
+      "valeur": 8.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "8\" : valeur provisoire donnée par le propriétaire (2026-10-29), à valider sur place ; le croquis 2016 écrit 10\" (cote-RDC-203/210/211/215) et le dessin 1957 montre ≈ 11 po (ESTIMÉ) ; voir écart",
+      "ref": "ecart-007"
      },
-     "x1": 5,
-     "y1": 375,
-     "x2": 451,
-     "y2": 375,
+     "x1": 4.0,
+     "y1": 376.0,
+     "x2": 452.0,
+     "y2": 376.0,
      "note": "Mur arrière.",
      "source_position": "DÉDUIT"
     },
@@ -4134,15 +4137,16 @@
       "sur le mur de fondation (P2)"
      ],
      "epaisseur": {
-      "valeur": 10.0,
-      "source": "LU",
-      "photo": "P1",
-      "note": "10\" écrit sur le croquis 2016 (cote-RDC-203/210/211/215 : chaînes 10\" aux 4 murs) ; dessin 1957 (P4) ≈ 11 po ESTIMÉ ; voir écart"
+      "valeur": 8.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "8\" : valeur provisoire donnée par le propriétaire (2026-10-29), à valider sur place ; le croquis 2016 écrit 10\" (cote-RDC-203/210/211/215) et le dessin 1957 montre ≈ 11 po (ESTIMÉ) ; voir écart",
+      "ref": "ecart-007"
      },
-     "x1": 5,
-     "y1": 5,
-     "x2": 5,
-     "y2": 375,
+     "x1": 4.0,
+     "y1": 4.0,
+     "x2": 4.0,
+     "y2": 376.0,
      "note": "Mur latéral gauche (chambres, S. de bain) ; cheminée accolée à l'extérieur.",
      "source_position": "DÉDUIT"
     },
@@ -4154,16 +4158,16 @@
       "sur le mur gauche du caveau mur-SS-005 (alignement en plan)"
      ],
      "epaisseur": {
-      "valeur": 6.0,
+      "valeur": 8.0,
       "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "entrée arrière : épaisseur non cotée (dessin ≈ 11 po, ESTIMÉ)",
+      "note": "mur extérieur de l'entrée arrière : 8\" provisoire du propriétaire (2026-10-29), à valider ; dessin ≈ 11 po (ESTIMÉ)",
       "ref": "ecart-007"
      },
-     "x1": 222,
-     "y1": 375,
-     "x2": 222,
-     "y2": 437,
+     "x1": 223.0,
+     "y1": 376.0,
+     "x2": 223.0,
+     "y2": 436.0,
      "note": "Entrée arrière — mur gauche ; nu ext. x = 18'-3\" (cote-RDC-016).",
      "source_position": "DÉDUIT"
     },
@@ -4175,16 +4179,16 @@
       "sur le mur du fond du caveau mur-SS-006 (PRÉSUMÉ)"
      ],
      "epaisseur": {
-      "valeur": 6.0,
+      "valeur": 8.0,
       "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "entrée arrière : épaisseur non cotée (dessin ≈ 11 po, ESTIMÉ)",
+      "note": "mur extérieur de l'entrée arrière : 8\" provisoire du propriétaire (2026-10-29), à valider ; dessin ≈ 11 po (ESTIMÉ)",
       "ref": "ecart-007"
      },
-     "x1": 222,
-     "y1": 437,
-     "x2": 324,
-     "y2": 437,
+     "x1": 223.0,
+     "y1": 436.0,
+     "x2": 323.0,
+     "y2": 436.0,
      "note": "Entrée arrière — mur arrière ; profondeur non cotée : nu ext. PRÉSUMÉ à 5'-0\" du mur arrière (= caveau, cote-SS-009) ; dessin ≈ 5'-7\".",
      "source_position": "PRÉSUMÉ"
     },
@@ -4196,16 +4200,16 @@
       "sur le mur droit du caveau mur-SS-007 (alignement en plan)"
      ],
      "epaisseur": {
-      "valeur": 6.0,
+      "valeur": 8.0,
       "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "entrée arrière : épaisseur non cotée (dessin ≈ 11 po, ESTIMÉ)",
+      "note": "mur extérieur de l'entrée arrière : 8\" provisoire du propriétaire (2026-10-29), à valider ; dessin ≈ 11 po (ESTIMÉ)",
       "ref": "ecart-007"
      },
-     "x1": 324,
-     "y1": 437,
-     "x2": 324,
-     "y2": 375,
+     "x1": 323.0,
+     "y1": 436.0,
+     "x2": 323.0,
+     "y2": 376.0,
      "note": "Entrée arrière — mur droit (porte extérieure) ; nu ext. x = 27'-3\" (18'-3\" + 9'-0\").",
      "source_position": "DÉDUIT"
     },
@@ -4505,7 +4509,7 @@
      "operation": "fixe",
      "mur_id": "mur-RDC-001",
      "position": {
-      "valeur": 93,
+      "valeur": 94.0,
       "source": "DÉDUIT",
       "photo": "P4",
       "note": "axe à 8'-2\" (cote-RDC-010)"
@@ -4546,7 +4550,7 @@
      "operation": "fixe",
      "mur_id": "mur-RDC-001",
      "position": {
-      "valeur": 372,
+      "valeur": 373.0,
       "source": "DÉDUIT",
       "photo": "P4",
       "note": "axe à 6'-7\" du nu ext. droit (cote-RDC-013)"
@@ -4587,7 +4591,7 @@
      "operation": "fixe",
      "mur_id": "mur-RDC-003",
      "position": {
-      "valeur": 93,
+      "valeur": 94.0,
       "source": "DÉDUIT",
       "photo": "P4",
       "note": "axe à 8'-2\" (cote-RDC-019)"
@@ -4628,7 +4632,7 @@
      "operation": "fixe",
      "mur_id": "mur-RDC-003",
      "position": {
-      "valeur": 192.0,
+      "valeur": 193.0,
       "source": "DÉDUIT",
       "photo": "P4",
       "note": "8'-2\" + 8'-3\""
@@ -4669,7 +4673,7 @@
      "operation": "fixe",
      "mur_id": "mur-RDC-003",
      "position": {
-      "valeur": 370.0,
+      "valeur": 371.0,
       "source": "DÉDUIT",
       "photo": "P4",
       "note": "axe à 6'-9\" du nu ext. droit (cote-RDC-023)"
@@ -4710,7 +4714,7 @@
      "operation": "fixe",
      "mur_id": "mur-RDC-004",
      "position": {
-      "valeur": 186,
+      "valeur": 187.0,
       "source": "DÉDUIT",
       "photo": "P4",
       "note": "axe à 15'-11\" du nu ext. avant (cote-RDC-003)"
@@ -4751,7 +4755,7 @@
      "operation": "fixe",
      "mur_id": "mur-RDC-002",
      "position": {
-      "valeur": 175,
+      "valeur": 176.0,
       "source": "DÉDUIT",
       "photo": "P4",
       "note": "axe à 15'-0\" du nu ext. avant (cote-RDC-007)"
@@ -4792,7 +4796,7 @@
      "operation": "fixe",
      "mur_id": "mur-RDC-006",
      "position": {
-      "valeur": 71.0,
+      "valeur": 70.0,
       "source": "DÉDUIT",
       "photo": "P6",
       "note": "8'-2\" + 8'-3\" + 8'-0\""
@@ -4824,7 +4828,7 @@
      "operation": "battante",
      "mur_id": "mur-RDC-001",
      "position": {
-      "valeur": 194,
+      "valeur": 195.0,
       "source": "DÉDUIT",
       "photo": "P4",
       "note": "axe à 8'-2\" + 8'-5\" (cote-RDC-011)"
@@ -4889,6 +4893,39 @@
      },
      "texte_original": "2'-8\"x6'-8\"",
      "note": "porte entrée → hall ; pentures côté gauche ; ouvre vers le hall"
+    },
+    {
+     "id": "ouv-RDC-012",
+     "type": "arche",
+     "operation": "aucune",
+     "mur_id": "mur-RDC-018",
+     "position": {
+      "valeur": 113.6,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "centre mesuré au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 48,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-048",
+      "note": "statut conflit — voir ecart-003 ; dessin ≈ 74 po"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "ARCHE 4'-0\" (plan 1957) ; aujourd'hui baie ouverte sans arche",
+     "note": "baie ouverte entre le hall et le salon, à l'emplacement de l'ancienne arche ; ce n'est plus une arche (réponses du propriétaire, 2026-10-29) ; la colonne 8\"x8\" de l'axe B monte à cet endroit ; largeur 4'-0\" écrite (en conflit, voir écart)"
     },
     {
      "id": "ouv-RDC-014",
@@ -5184,7 +5221,7 @@
      "operation": "battante",
      "mur_id": "mur-RDC-003",
      "position": {
-      "valeur": 290,
+      "valeur": 291.0,
       "source": "ESTIMÉ",
       "photo": "P4",
       "note": "position non cotée, mesurée au dessin (P4)"
@@ -5220,7 +5257,7 @@
      "operation": "battante",
      "mur_id": "mur-RDC-007",
      "position": {
-      "valeur": 28,
+      "valeur": 27.0,
       "source": "ESTIMÉ",
       "photo": "P4",
       "note": "position non cotée, mesurée au dessin (P4)"
@@ -5259,7 +5296,7 @@
      "description": null,
      "polygone": [
       [
-       10.0,
+       8.0,
        226.0
       ],
       [
@@ -5276,15 +5313,15 @@
       ],
       [
        143.75,
-       370.0
+       372.0
       ],
       [
-       10.0,
-       370.0
+       8.0,
+       372.0
       ]
      ],
      "superficie": {
-      "valeur": 136.5,
+      "valeur": 140.4,
       "source": "ESTIMÉ",
       "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5325,16 +5362,16 @@
        220.0
       ],
       [
-       10.0,
+       8.0,
        220.0
       ],
       [
-       10.0,
+       8.0,
        159.25
       ]
      ],
      "superficie": {
-      "valeur": 40.4,
+      "valeur": 41.2,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5347,7 +5384,7 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 95.75,
+       "valeur": 97.75,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5368,23 +5405,23 @@
      "polygone": [
       [
        143.75,
-       10.0
+       8.0
       ],
       [
        143.75,
        154.75
       ],
       [
-       10.0,
+       8.0,
        154.75
       ],
       [
-       10.0,
-       10.0
+       8.0,
+       8.0
       ]
      ],
      "superficie": {
-      "valeur": 134.4,
+      "valeur": 138.3,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5397,13 +5434,13 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 133.75,
+       "valeur": 135.75,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       },
       "y": {
-       "valeur": 144.75,
+       "valeur": 146.75,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5426,15 +5463,15 @@
       ],
       [
        172.75,
-       370.0
+       372.0
       ],
       [
        148.25,
-       370.0
+       372.0
       ]
      ],
      "superficie": {
-      "valeur": 5.1,
+      "valeur": 5.5,
       "source": "ESTIMÉ",
       "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5453,7 +5490,7 @@
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       },
       "y": {
-       "valeur": 30.25,
+       "valeur": 32.25,
        "source": "ESTIMÉ",
        "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5576,11 +5613,11 @@
       ],
       [
        316.0,
-       370.0
+       372.0
       ],
       [
        177.25,
-       370.0
+       372.0
       ],
       [
        177.25,
@@ -5592,7 +5629,7 @@
       ]
      ],
      "superficie": {
-      "valeur": 169.4,
+      "valeur": 171.3,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5611,7 +5648,7 @@
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       },
       "y": {
-       "valeur": 166.0,
+       "valeur": 168.0,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5746,11 +5783,11 @@
       ],
       [
        175.0,
-       10.0
+       8.0
       ],
       [
        219.75,
-       10.0
+       8.0
       ],
       [
        219.75,
@@ -5766,7 +5803,7 @@
       ]
      ],
      "superficie": {
-      "valeur": 15.6,
+      "valeur": 16.3,
       "source": "ESTIMÉ",
       "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5785,7 +5822,7 @@
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       },
       "y": {
-       "valeur": 50.75,
+       "valeur": 52.75,
        "source": "ESTIMÉ",
        "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5800,7 +5837,7 @@
      "polygone": [
       [
        175.0,
-       10.0
+       8.0
       ],
       [
        175.0,
@@ -5812,11 +5849,11 @@
       ],
       [
        148.25,
-       10.0
+       8.0
       ]
      ],
      "superficie": {
-      "valeur": 7.8,
+      "valeur": 8.1,
       "source": "ESTIMÉ",
       "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5835,7 +5872,7 @@
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       },
       "y": {
-       "valeur": 41.75,
+       "valeur": 43.75,
        "source": "ESTIMÉ",
        "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5949,7 +5986,7 @@
      "description": null,
      "polygone": [
       [
-       446.0,
+       448.0,
        157.0
       ],
       [
@@ -5958,15 +5995,15 @@
       ],
       [
        224.25,
-       10.0
+       8.0
       ],
       [
-       446.0,
-       10.0
+       448.0,
+       8.0
       ]
      ],
      "superficie": {
-      "valeur": 226.4,
+      "valeur": 231.5,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -5979,13 +6016,13 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 221.75,
+       "valeur": 223.75,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       },
       "y": {
-       "valeur": 147.0,
+       "valeur": 149.0,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -6000,23 +6037,23 @@
      "polygone": [
       [
        316.0,
-       370.0
+       372.0
       ],
       [
        316.0,
        157.0
       ],
       [
-       446.0,
+       448.0,
        157.0
       ],
       [
-       446.0,
-       370.0
+       448.0,
+       372.0
       ]
      ],
      "superficie": {
-      "valeur": 192.3,
+      "valeur": 197.1,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -6029,13 +6066,13 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 130.0,
+       "valeur": 132.0,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       },
       "y": {
-       "valeur": 213.0,
+       "valeur": 215.0,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -6049,24 +6086,24 @@
      "description": "Entrée arrière (« ARMOIRES »)",
      "polygone": [
       [
-       225.0,
-       434.0
+       227.0,
+       432.0
       ],
       [
-       225.0,
+       227.0,
        380.0
       ],
       [
-       321.0,
+       319.0,
        380.0
       ],
       [
-       321.0,
-       434.0
+       319.0,
+       432.0
       ]
      ],
      "superficie": {
-      "valeur": 36.0,
+      "valeur": 33.2,
       "source": "PRÉSUMÉ",
       "photo": "P4",
       "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -6079,13 +6116,13 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 96.0,
+       "valeur": 92.0,
        "source": "DÉDUIT",
        "photo": null,
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       },
       "y": {
-       "valeur": 54.0,
+       "valeur": 52.0,
        "source": "PRÉSUMÉ",
        "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
@@ -6290,6 +6327,82 @@
      "note": "axe C du croquis 2016 : y = 157 + 3'-11\" = 204 (cote-RDC-213) ; coïncide avec l'axe de la poutre str-SS-P01 et la cloison mur-RDC-026 ; la poutre FLUSH str-RDC-P01 (≈ 206) le prolonge dans la cuisine ; colonnes C4 et C6 « retirées »"
     },
     {
+     "id": "str-RDC-C01",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "8x8",
+      "valeur": "8x8",
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "colonne 8\"x8\" qui monte du sous-sol (réponse du propriétaire, réponses du propriétaire (2026-10-29))"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 132.0,
+      "y": 204.0,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "prolongement au RDC de str-SS-C01 (réponses du propriétaire (2026-10-29)) ; position DÉDUITE de celle du sous-sol ; tombe devant la porte de la chambre arrière — à valider"
+    },
+    {
+     "id": "str-RDC-C04",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "8x8",
+      "valeur": "8x8",
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "colonne 8\"x8\" qui monte du sous-sol (réponse du propriétaire, réponses du propriétaire (2026-10-29))"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 132.0,
+      "y": 157,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "prolongement au RDC de str-SS-C04 (réponses du propriétaire (2026-10-29)) ; position DÉDUITE de celle du sous-sol ; noyée dans la cloison S. de bain / chambre avant (axe B)"
+    },
+    {
+     "id": "str-RDC-C05",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "8x8",
+      "valeur": "8x8",
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "colonne 8\"x8\" qui monte du sous-sol (réponse du propriétaire, réponses du propriétaire (2026-10-29))"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 228.0,
+      "y": 157,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "prolongement au RDC de str-SS-C05 (réponses du propriétaire (2026-10-29)) ; position DÉDUITE de celle du sous-sol"
+    },
+    {
+     "id": "str-RDC-C06",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "8x8",
+      "valeur": "8x8",
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "colonne 8\"x8\" qui monte du sous-sol (réponse du propriétaire, réponses du propriétaire (2026-10-29))"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 324.0,
+      "y": 157,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "prolongement au RDC de str-SS-C06 (réponses du propriétaire (2026-10-29)) ; position DÉDUITE de celle du sous-sol"
+    },
+    {
      "id": "str-RDC-P01",
      "type": "poutre",
      "dimension": {
@@ -6311,11 +6424,11 @@
      "id": "str-RDC-P02",
      "type": "poutre",
      "dimension": {
-      "texte_original": "8x8",
-      "valeur": "8x8",
-      "source": "MESURÉ",
+      "texte_original": null,
+      "valeur": null,
+      "source": "ILLISIBLE",
       "photo": null,
-      "note": "8\"x8\" selon le propriétaire (réponses du propriétaire (2026-10-29))"
+      "note": "section non relevée (le 8\"x8\" donné par le propriétaire désigne les colonnes)"
      },
      "sens": "x",
      "geometrie": {
@@ -6324,7 +6437,7 @@
       "x2": 446,
       "y2": 157
      },
-     "note": "Poutre 8\"x8\" au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe B) (réponses du propriétaire (2026-10-29)). Étendue prise identique à celle de la poutre du sous-sol. Aucune poutre sur l'axe C."
+     "note": "Poutre au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe B) (réponses du propriétaire (2026-10-29)). Étendue prise identique à celle de la poutre du sous-sol. Aucune poutre sur l'axe C."
     },
     {
      "id": "str-RDC-S01",
@@ -10010,40 +10123,6 @@
    ],
    "ouvertures_retirees": [
     {
-     "id": "ouv-RDC-012",
-     "type": "arche",
-     "operation": "aucune",
-     "mur_id": "mur-RDC-018",
-     "position": {
-      "valeur": 113.6,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "centre mesuré au dessin (P4)"
-     },
-     "largeur": {
-      "valeur": 48,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-048",
-      "note": "statut conflit — voir ecart-003 ; dessin ≈ 74 po"
-     },
-     "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "hauteur non écrite"
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "texte_original": "ARCHE 4'-0\"",
-     "note": "arche hall / salon ; position ESTIMÉE (dessin)",
-     "retire_selon": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)"
-    },
-    {
      "id": "ouv-RDC-013",
      "type": "arche",
      "operation": "aucune",
@@ -10233,7 +10312,7 @@
       157
      ],
      "p2": [
-      446,
+      456,
       157
      ],
      "note": "hall-dégagement / salon-cuisine : axe B ; cloison retirée de 18'-6\" à l'arche (constat 2026-10-29)"
@@ -10246,7 +10325,7 @@
      ],
      "p2": [
       316,
-      373
+      380
      ],
      "note": "cuisine / escalier-dégagement : axe de l'ancienne cloison x = 26'-4\" (retirée)"
     },
@@ -10302,12 +10381,16 @@
   {
    "id": "ecart-003",
    "niveau": "RDC",
-   "description": "Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0\" » (2 lectures) contre 6'-0\" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0\" », lecture 2 « ARCHE 4'-0\" », 3e lecture « ARCHE 6'-0\" » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png.",
+   "description": "Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0\" » (2 lectures) contre 6'-0\" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0\" », lecture 2 « ARCHE 4'-0\" », 3e lecture « ARCHE 6'-0\" » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png. — Ce n'est plus une arche : baie ouverte au même endroit, avec la colonne de l'axe B (réponses du propriétaire (2026-10-29)).",
    "impact": "moyen",
-   "hypothese_retenue": "Le mur hall / salon est plein : l'arche n'existe plus (réponses du propriétaire (2026-10-29)). ARCHE 4'-0\" (4'-0\" po) — lectures 1 et 2 : 4'-0\" ; 3e lecture (aveugle) : 6'-0\" ; ouverture dessinée ≈ 74 po (ESTIMÉ). Valeur écrite majoritaire retenue (les cotes écrites priment sur le dessin) — à mesurer",
-   "a_valider_sur_place": "",
+   "hypothese_retenue": "ARCHE 4'-0\" (4'-0\" po) — lectures 1 et 2 : 4'-0\" ; 3e lecture (aveugle) : 6'-0\" ; ouverture dessinée ≈ 74 po (ESTIMÉ). Valeur écrite majoritaire retenue (les cotes écrites priment sur le dessin) — à mesurer",
+   "a_valider_sur_place": "Mesurer la largeur libre de la baie entre le hall et le salon (ancienne arche ; 4'-0\" écrit, ≈ 6'-2\" dessiné).",
    "photo": "P4",
-   "statut": "sans objet"
+   "statut": "ouvert",
+   "position": [
+    222,
+    118.6
+   ]
   },
   {
    "id": "ecart-004",
@@ -10328,20 +10411,28 @@
    "niveau": "RDC",
    "description": "Épaisseur des murs extérieurs du RDC : 10\" écrit sur le croquis 2016 (P1, chaînes 10\" aux 4 côtés — valeur typique d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 montre ≈ 11 po ; aucune épaisseur écrite sur la feuille RDC (P4, P5 et P6).",
    "impact": "moyen",
-   "hypothese_retenue": "Confirmé par le propriétaire (« tout est bon », réponses du propriétaire (2026-10-29)). 10\" (LU P1) appliqué aux 4 murs ext. du RDC ; les dimensions intérieures des pièces en dépendent (± 1 po).",
-   "a_valider_sur_place": "",
+   "hypothese_retenue": "8\" PRÉSUMÉ : valeur provisoire du propriétaire (réponses du propriétaire (2026-10-29)), à valider ; murs placés au nu extérieur (hors-tout confirmés), seules les dimensions intérieures en dépendent.",
+   "a_valider_sur_place": "Mesurer l'épaisseur totale du mur extérieur au jambage de la porte d'entrée avant et d'une fenêtre (revêtement int. au revêtement ext.).",
    "photo": "P1",
-   "statut": "résolu"
+   "statut": "ouvert",
+   "position": [
+    5,
+    100
+   ]
   },
   {
    "id": "ecart-006",
    "niveau": "RDC",
    "description": "Épaisseur des cloisons du RDC non cotée (sauf cloison chambre arrière / S. de bain 6\" LU, tranchée par 3e lecture) ; dessin ≈ 6 po.",
    "impact": "moyen",
-   "hypothese_retenue": "Confirmé par le propriétaire (« tout est bon », réponses du propriétaire (2026-10-29)). 4½\" PRÉSUMÉ (cloison 2x4 + plâtre) ; les cloisons sont positionnées à l'AXE (convention déduite) donc seules les dimensions nettes des pièces varient.",
-   "a_valider_sur_place": "",
+   "hypothese_retenue": "4½\" PRÉSUMÉ (cloison 2x4 + plâtre) ; les cloisons sont positionnées à l'AXE (convention déduite) donc seules les dimensions nettes des pièces varient.",
+   "a_valider_sur_place": "Mesurer l'épaisseur d'une cloison à un cadre de porte (ex. porte de la chambre avant) et la largeur nette du hall (attendu 3'-11\" − 4½\" ≈ 42½\").",
    "photo": "P4",
-   "statut": "résolu"
+   "statut": "ouvert",
+   "position": [
+    146,
+    120
+   ]
   },
   {
    "id": "ecart-007",
@@ -10382,7 +10473,7 @@
    "niveau": "SS",
    "description": "Croquis 2016 : « Colonne C4 retirée » (axe C à 17'-0\" du nu ext. avant × ligne 4 à 18'-6\" du coin gauche). Au plan 1957 (P2), la colonne la plus proche est str-SS-C02 à 19'-0\" (DÉDUIT de la chaîne 9'-10\" + 8\" + 7'-4\") : décalage de 6 po entre les deux documents.",
    "impact": "critique",
-   "hypothese_retenue": "Selon le propriétaire, toutes les colonnes sont présentes au sous-sol (réponses du propriétaire (2026-10-29)) : « Colonne C4 retirée » (2016) ne vise donc pas une colonne du sous-sol. str-SS-C02 conservée au plan (état 1957) avec mention ; portée de la poutre arrière possiblement doublée (≈ 15'-4\" entre C01 et C03 sans C02).",
+   "hypothese_retenue": "Colonnes 8\"x8\" continues du sous-sol jusqu'en haut ; « C4 retirée » (2016) = prolongement au RDC de str-SS-C02, retiré avec la cloison de l'axe C ; la colonne du sous-sol est présente (réponses du propriétaire (2026-10-29)). str-SS-C02 conservée au plan (état 1957) avec mention ; portée de la poutre arrière possiblement doublée (≈ 15'-4\" entre C01 et C03 sans C02).",
    "a_valider_sur_place": "",
    "photo": "P1",
    "statut": "résolu"
@@ -10392,7 +10483,7 @@
    "niveau": "SS",
    "description": "Croquis 2016 : « Colonne C6 retirée » (axe C × ligne 6 à 26'-4\" du coin gauche). Au plan 1957 : str-SS-C03 à 27'-0\" (8 po de décalage).",
    "impact": "critique",
-   "hypothese_retenue": "Selon le propriétaire, toutes les colonnes sont présentes au sous-sol (réponses du propriétaire (2026-10-29)). str-SS-C03 conservée au plan (état 1957) avec mention ; zone de fissures 2016 au droit (ligne 6 / axe C).",
+   "hypothese_retenue": "« C6 retirée » (2016) = prolongement au RDC de str-SS-C03, retiré ; la colonne du sous-sol est présente (réponses du propriétaire (2026-10-29)). str-SS-C03 conservée au plan (état 1957) avec mention ; zone de fissures 2016 au droit (ligne 6 / axe C).",
    "a_valider_sur_place": "",
    "photo": "P1",
    "statut": "résolu"
@@ -10466,12 +10557,16 @@
   {
    "id": "ecart-017",
    "niveau": "RDC",
-   "description": "ARCHE hall / salon : texte « ARCHE 4'-0\" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'ancienne « ARCHE 6'-0\" » salon / cuisine.",
+   "description": "ARCHE hall / salon : texte « ARCHE 4'-0\" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'ancienne « ARCHE 6'-0\" » salon / cuisine. — Ce n'est plus une arche : baie ouverte au même endroit, avec la colonne de l'axe B (réponses du propriétaire (2026-10-29)).",
    "impact": "moyen",
-   "hypothese_retenue": "Le mur hall / salon est plein : l'arche n'existe plus (réponses du propriétaire (2026-10-29)). Voir ecart-003 (cote en conflit) : 4'-0\" retenu.",
-   "a_valider_sur_place": "",
+   "hypothese_retenue": "Voir ecart-003 (cote en conflit) : 4'-0\" retenu.",
+   "a_valider_sur_place": "Mesurer la largeur libre de la baie entre le hall et le salon (ancienne arche ; 4'-0\" écrit, ≈ 6'-2\" dessiné).",
    "photo": "P4",
-   "statut": "sans objet"
+   "statut": "ouvert",
+   "position": [
+    222,
+    118.6
+   ]
   },
   {
    "id": "ecart-018",
@@ -10555,7 +10650,7 @@
    "description": "Colonne str-SS-C01 (11'-0\" du coin gauche, sur la poutre arrière à 17'-0\" du nu ext. avant) : aucune cloison RDC au-dessus (zone de la porte de la chambre arrière, ≈ 17'-8\") ; la cloison à 12'-2\" passe à 14 po de la rangée de colonnes à 11'-0\".",
    "impact": "faible",
    "hypothese_retenue": "Aucune incidence sur le relevé ; information pour la structure.",
-   "a_valider_sur_place": "Vérifier l'appui de la cloison à 12'-2\" du coin gauche sur la solive doublée (note « solives doubles sous les cloisons »).",
+   "a_valider_sur_place": "Vérifier au RDC la colonne 8\"x8\" à 11'-0\" du coin gauche sur l'axe C (17'-0\" du nu ext. avant) : elle tomberait devant la porte de la chambre arrière.",
    "photo": "P2",
    "statut": "ouvert",
    "position": [

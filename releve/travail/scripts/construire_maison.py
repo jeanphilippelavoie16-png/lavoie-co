@@ -257,16 +257,17 @@ def V(cid):
 
 # ============================================================================ 3. épaisseurs et convention
 T_FOND = 10.0      # LU (P1 : cote-SS-019, -034, -037, -045)
-T_EXT = 10.0       # LU sur P2 (2016) — dessin 1957 ≈ 11 po
+T_EXT = 8.0        # PRÉSUMÉ : valeur provisoire du propriétaire (2026-10-29), à valider ; P2 (2016) écrit 10", dessin 1957 ≈ 11 po
+H_EXT = T_EXT / 2
 T_INT = 4.5        # PRÉSUMÉ (dessin ≈ 6 po)
 T_6 = V('cote-RDC-047')   # cloison chambre arrière / S. de bain : 6" (tranché 3e lecture)
 assert T_6 == 6
-T_EAR = 6.0        # entrée arrière : PRÉSUMÉ
+T_EAR = T_EXT      # entrée arrière : mur extérieur, même valeur provisoire
 T_PERRON = 6.0     # cote-SS-036 (LU) ; murs avant/droit par analogie
 
-E_EXT = D(T_EXT, "LU", "P2", "10\" écrit sur le croquis 2016 (cote-RDC-203/210/211/215 : chaînes 10\" aux 4 murs) ; dessin 1957 (P3) ≈ 11 po ESTIMÉ ; voir écart")
+E_EXT = D(T_EXT, "PRÉSUMÉ", None, "8\" : valeur provisoire donnée par le propriétaire (2026-10-29), à valider sur place ; le croquis 2016 écrit 10\" (cote-RDC-203/210/211/215) et le dessin 1957 montre ≈ 11 po (ESTIMÉ) ; voir écart")
 E_INT = D(T_INT, "PRÉSUMÉ", None, "cloison non cotée ; 4½\" usuel (dessin ≈ 6 po, ESTIMÉ)")
-E_EAR = D(T_EAR, "PRÉSUMÉ", None, "entrée arrière : épaisseur non cotée (dessin ≈ 11 po, ESTIMÉ)")
+E_EAR = D(T_EAR, "PRÉSUMÉ", None, "mur extérieur de l'entrée arrière : 8\" provisoire du propriétaire (2026-10-29), à valider ; dessin ≈ 11 po (ESTIMÉ)")
 
 CONVENTION = ("Hors-tout et chaînes extérieures au NU EXTÉRIEUR des murs de fondation (SS) et des murs extérieurs (RDC) ; "
               "fenêtres et portes extérieures cotées à l'AXE (centre) de l'ouverture, largeurs = baie entre jambages ; "
@@ -313,14 +314,14 @@ IND_RDC_LAT = ["sur le mur de fondation (P1)"]
 IND_B = ["au-dessus de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe y = 157)", "axe B « porteur à l'origine » (P2, ing. 2016)"]
 IND_C = ["au-dessus de la poutre 8\"x10\" du sous-sol str-SS-P01 (axe y = 204)", "axe C « porteur à l'origine » (P2, ing. 2016)"]
 MURS_RDC = [
-    mur('mur-RDC-001', 'ext', 5, 5, 451, 5, E_EXT, "Mur avant (façade, rue).", IND_RDC_FAC),
-    mur('mur-RDC-002', 'ext', 451, 5, 451, 375, E_EXT, "Mur latéral droit (salon, cuisine).", IND_RDC_LAT),
-    mur('mur-RDC-003', 'ext', 5, 375, 451, 375, E_EXT, "Mur arrière.", IND_RDC_FAC),
-    mur('mur-RDC-004', 'ext', 5, 5, 5, 375, E_EXT, "Mur latéral gauche (chambres, S. de bain) ; cheminée accolée à l'extérieur.", IND_RDC_LAT),
-    mur('mur-RDC-005', 'ext', 222, 375, 222, 437, E_EAR, "Entrée arrière — mur gauche ; nu ext. x = 18'-3\" (cote-RDC-016).", ["sur le mur gauche du caveau mur-SS-005 (alignement en plan)"]),
-    mur('mur-RDC-006', 'ext', 222, 437, 324, 437, E_EAR, "Entrée arrière — mur arrière ; profondeur non cotée : nu ext. PRÉSUMÉ à 5'-0\" du mur arrière (= caveau, cote-SS-009) ; dessin ≈ 5'-7\".",
+    mur('mur-RDC-001', 'ext', H_EXT, H_EXT, 456 - H_EXT, H_EXT, E_EXT, "Mur avant (façade, rue).", IND_RDC_FAC),
+    mur('mur-RDC-002', 'ext', 456 - H_EXT, H_EXT, 456 - H_EXT, 380 - H_EXT, E_EXT, "Mur latéral droit (salon, cuisine).", IND_RDC_LAT),
+    mur('mur-RDC-003', 'ext', H_EXT, 380 - H_EXT, 456 - H_EXT, 380 - H_EXT, E_EXT, "Mur arrière.", IND_RDC_FAC),
+    mur('mur-RDC-004', 'ext', H_EXT, H_EXT, H_EXT, 380 - H_EXT, E_EXT, "Mur latéral gauche (chambres, S. de bain) ; cheminée accolée à l'extérieur.", IND_RDC_LAT),
+    mur('mur-RDC-005', 'ext', 219 + T_EAR / 2, 380 - H_EXT, 219 + T_EAR / 2, 440 - T_EAR / 2, E_EAR, "Entrée arrière — mur gauche ; nu ext. x = 18'-3\" (cote-RDC-016).", ["sur le mur gauche du caveau mur-SS-005 (alignement en plan)"]),
+    mur('mur-RDC-006', 'ext', 219 + T_EAR / 2, 440 - T_EAR / 2, 327 - T_EAR / 2, 440 - T_EAR / 2, E_EAR, "Entrée arrière — mur arrière ; profondeur non cotée : nu ext. PRÉSUMÉ à 5'-0\" du mur arrière (= caveau, cote-SS-009) ; dessin ≈ 5'-7\".",
         ["sur le mur du fond du caveau mur-SS-006 (PRÉSUMÉ)"], 'PRÉSUMÉ'),
-    mur('mur-RDC-007', 'ext', 324, 437, 324, 375, E_EAR, "Entrée arrière — mur droit (porte extérieure) ; nu ext. x = 27'-3\" (18'-3\" + 9'-0\").", ["sur le mur droit du caveau mur-SS-007 (alignement en plan)"]),
+    mur('mur-RDC-007', 'ext', 327 - T_EAR / 2, 440 - T_EAR / 2, 327 - T_EAR / 2, 380 - H_EXT, E_EAR, "Entrée arrière — mur droit (porte extérieure) ; nu ext. x = 27'-3\" (18'-3\" + 9'-0\").", ["sur le mur droit du caveau mur-SS-007 (alignement en plan)"]),
     mur('mur-RDC-010', 'int', 5, 223, 108, 223, D(T_6, "LU", "P3", "tranché par 3e lecture (6\") — lectures 9\"/6\"", ref="cote-RDC-047"),
         "Cloison chambre arrière / S. de bain ; axe y = 31'-8\" − 13'-1\" (cote-RDC-035)."),
     mur('mur-RDC-011', 'int', 108, 157, 108, 223, E_INT, "Cloison droite de la S. de bain ; axe x = 9'-0\" (cote-RDC-029)."),
@@ -507,6 +508,13 @@ for oid, mid, centre, cid, note in (('ouv-RDC-012', 'mur-RDC-018', 118.6, 'cote-
                        pos_src="ESTIMÉ", pos_note="centre mesuré au dessin (P3)"))
 OUV_RDC.sort(key=lambda o: o['id'])
 
+for o in OUV_RDC:
+    if o['id'] == 'ouv-RDC-012':
+        o['note'] = ("baie ouverte entre le hall et le salon, à l'emplacement de l'ancienne arche ; ce n'est plus une arche "
+                     "(réponses du propriétaire, 2026-10-29) ; la colonne 8\"x8\" de l'axe B monte à cet endroit ; "
+                     "largeur 4'-0\" écrite (en conflit, voir écart)")
+        o['texte_original'] = "ARCHE 4'-0\" (plan 1957) ; aujourd'hui baie ouverte sans arche"
+
 # ============================================================================ 5b. CONSTAT DU PROPRIÉTAIRE (2026-10-29)
 # Le propriétaire a barré en rouge, sur l'épreuve A-101 R0, les cloisons qui n'existent plus, et demandé de retirer
 # meubles, électroménagers, comptoirs et baignoire. Le constat sur place prime sur les plans (principe 4).
@@ -528,7 +536,7 @@ for m in list(MURS_RDC):
         MURS_RETIRES_DATA.append(dict(m, retire_selon=CONSTAT, description_retrait=MURS_RETIRES[m['id']]))
         MURS_RDC.remove(m)
 for o in list(OUV_RDC):
-    if o['mur_id'] in MURS_RETIRES or o['id'] in ('ouv-RDC-013', 'ouv-RDC-012'):   # 012 : le mur hall / salon est plein
+    if o['mur_id'] in MURS_RETIRES or o['id'] == 'ouv-RDC-013':
         OUV_RETIREES.append(dict(o, retire_selon=CONSTAT))
         OUV_RDC.remove(o)
 
@@ -576,8 +584,8 @@ DESC = {
 # lignes fictives (aucun mur dessiné) séparant des espaces ouverts
 COUPES = {
     'SS': [],
-    'RDC': [((173, 157), (446, 157), "hall-dégagement / salon-cuisine : axe B ; cloison retirée de 18'-6\" à l'arche (constat 2026-10-29)"),
-            ((316, 157), (316, 373), "cuisine / escalier-dégagement : axe de l'ancienne cloison x = 26'-4\" (retirée)"),
+    'RDC': [((173, 157), (456, 157), "hall-dégagement / salon-cuisine : axe B ; cloison retirée de 18'-6\" à l'arche (constat 2026-10-29)"),
+            ((316, 157), (316, 380), "cuisine / escalier-dégagement : axe de l'ancienne cloison x = 26'-4\" (retirée)"),
             ((146, 204), (316, 204), "dégagement / salle à manger : axe C, ancienne cloison retirée"),
             ((175, 5), (175, 54), "entrée / vestiaire (VEST. ouvert)")],
 }
@@ -606,6 +614,7 @@ def pieces(niv, murs):
     for pid, nom, nomo, seed in PIECES_DEF[niv]:
         hit = [i for i, r in enumerate(regions) if r.contains(Point(seed))]
         assert len(hit) == 1, (pid, hit)
+        assert hit[0] not in used, f"{pid} : même région qu'une autre pièce (ligne fictive qui n'atteint pas un mur ?)"
         used.add(hit[0])
         r = orient(regions[hit[0]].simplify(0.001), 1.0)
         coords = [[round(x, 2), round(y, 2)] for x, y in list(r.exterior.coords)[:-1]]
@@ -1260,13 +1269,33 @@ ss["notes"].append({"id": "note-SS-REP", "texte_original": None,
 rdc["usage"] = f"logement du RDC ; l'escalier vers le sous-sol n'existe plus ({REPONSES})"
 for st_ in rdc["structure"]:
     if st_["id"] == "str-RDC-P02":
-        st_["dimension"] = {"texte_original": "8x8", "valeur": "8x8", "source": "MESURÉ", "photo": None,
-                            "note": f"8\"x8\" selon le propriétaire ({REPONSES})"}
+        st_["dimension"] = {"texte_original": None, "valeur": None, "source": "ILLISIBLE", "photo": None,
+                            "note": "section non relevée (le 8\"x8\" donné par le propriétaire désigne les colonnes)"}
         sx = next(x for x in ss["structure"] if x["id"] == "str-SS-P02")["geometrie"]
         st_["geometrie"] = {"x1": sx["x1"], "y1": sx["y1"], "x2": sx["x2"], "y2": sx["y2"]}
-        st_["note"] = (f"Poutre 8\"x8\" au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du "
+        st_["note"] = (f"Poutre au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du "
                        f"sous-sol str-SS-P02 (axe B) ({REPONSES}). Étendue prise identique à celle de la poutre du sous-sol. "
                        "Aucune poutre sur l'axe C.")
+COL_RETIREES_RDC = {'str-SS-C02': "C4", 'str-SS-C03': "C6"}   # « Colonne C4 / C6 retirée » (P2, 2016), axe C
+for c_ in ss["structure"]:
+    if c_["type"] != "colonne":
+        continue
+    c_["note"] = (c_.get("note") or "") + (f" ; colonne 8\"x8\" continue jusqu'en haut ({REPONSES})"
+                                          if c_["id"] not in COL_RETIREES_RDC else
+                                          f" ; présente au sous-sol, mais son prolongement au RDC (« Colonne {COL_RETIREES_RDC[c_['id']]} "
+                                          f"retirée », P2) n'existe plus ({REPONSES})")
+    if c_["id"] in COL_RETIREES_RDC:
+        continue
+    g_ = c_["geometrie"]
+    rdc["structure"].append({
+        "id": c_["id"].replace("-SS-", "-RDC-"), "type": "colonne",
+        "dimension": {"texte_original": "8x8", "valeur": "8x8", "source": "MESURÉ", "photo": None,
+                      "note": f"colonne 8\"x8\" qui monte du sous-sol (réponse du propriétaire, {REPONSES})"},
+        "sens": None, "geometrie": dict(g_),
+        "note": (f"prolongement au RDC de {c_['id']} ({REPONSES}) ; position DÉDUITE de celle du sous-sol"
+                 + (" ; noyée dans la cloison S. de bain / chambre avant (axe B)" if (g_["x"], g_["y"]) == (132, 157) else "")
+                 + (" ; tombe devant la porte de la chambre arrière — à valider" if (g_["x"], g_["y"]) == (132, 204) else ""))})
+rdc["structure"].sort(key=lambda x: x["id"])
 ANCRES = [
     {"id": "ancre-01", "description": "hors-tout de la façade avant (nu ext.)", "valeur": 456, "source": "MESURÉ", "reference": "38'-0\" (cote-SS-031 / RDC)"},
     {"id": "ancre-02", "description": "hors-tout en profondeur (nu ext.)", "valeur": 380, "source": "MESURÉ", "reference": "31'-8\""},
@@ -1284,15 +1313,11 @@ for lc_ in rdc["lignes_cote"]:
         lc_["statut"] = "confirmee"; lc_["repere"] = None
 RESOLUS = {
     'conf-cote-RDC-018': ("résolu", f"10'-9\" confirmé sur place ({REPONSES})."),
-    'conf-cote-RDC-048': ("sans objet", f"Le mur hall / salon est plein : l'arche n'existe plus ({REPONSES})."),
-    'arche': ("sans objet", f"Le mur hall / salon est plein : l'arche n'existe plus ({REPONSES})."),
     'p2-cloisons': ("résolu", f"Les cloisons restantes (G.R., lingerie, vestiaire, S. de bain, mur hall / salon) existent toutes ({REPONSES})."),
-    'col-c4': ("résolu", f"Selon le propriétaire, toutes les colonnes sont présentes au sous-sol ({REPONSES}) : « Colonne C4 retirée » (2016) ne vise donc pas une colonne du sous-sol."),
-    'col-c6': ("résolu", f"Selon le propriétaire, toutes les colonnes sont présentes au sous-sol ({REPONSES})."),
+    'col-c4': ("résolu", f"Colonnes 8\"x8\" continues du sous-sol jusqu'en haut ; « C4 retirée » (2016) = prolongement au RDC de str-SS-C02, retiré avec la cloison de l'axe C ; la colonne du sous-sol est présente ({REPONSES})."),
+    'col-c6': ("résolu", f"« C6 retirée » (2016) = prolongement au RDC de str-SS-C03, retiré ; la colonne du sous-sol est présente ({REPONSES})."),
     'col-p2': ("résolu", f"Les 6 colonnes du plan 1957 sont présentes selon le propriétaire ({REPONSES})."),
     'ancres': ("résolu", f"Hors-tout et cote arrière confirmés par le propriétaire ({REPONSES}) ; voir projet.ancres."),
-    'ep-ext-rdc': ("résolu", f"Confirmé par le propriétaire (« tout est bon », {REPONSES})."),
-    'ep-int-rdc': ("résolu", f"Confirmé par le propriétaire (« tout est bon », {REPONSES})."),
 }
 for e in ECARTS:
     for cle, (stat, txt) in RESOLUS.items():
@@ -1301,6 +1326,15 @@ for e in ECARTS:
             e["hypothese_retenue"] = txt + " " + e["hypothese_retenue"]
             e["a_valider_sur_place"] = ""
             e.pop("position", None)
+    if e["id"] in (EC.get('conf-cote-RDC-048'), EC.get('arche')):
+        e["description"] += f" — Ce n'est plus une arche : baie ouverte au même endroit, avec la colonne de l'axe B ({REPONSES})."
+        e["a_valider_sur_place"] = "Mesurer la largeur libre de la baie entre le hall et le salon (ancienne arche ; 4'-0\" écrit, ≈ 6'-2\" dessiné)."
+    if e["id"] == EC.get('ep-ext-rdc'):
+        e["hypothese_retenue"] = (f"8\" PRÉSUMÉ : valeur provisoire du propriétaire ({REPONSES}), à valider ; murs placés au nu extérieur "
+                                  "(hors-tout confirmés), seules les dimensions intérieures en dépendent.")
+    if e["id"] == EC.get('col-plancher'):
+        e["a_valider_sur_place"] = ("Vérifier au RDC la colonne 8\"x8\" à 11'-0\" du coin gauche sur l'axe C (17'-0\" du nu ext. avant) : "
+                                    "elle tomberait devant la porte de la chambre arrière.")
     if e["id"] == EC.get('fen-ss'):
         e["description"] += f" — La fenêtre arrière gauche a depuis été séparée en deux fenêtres ({REPONSES})."
         e["a_valider_sur_place"] = ("Mesurer la largeur des deux fenêtres arrière gauches (issues de l'ancienne 6'-8\") et leur position "
