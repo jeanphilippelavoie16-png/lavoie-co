@@ -207,7 +207,14 @@ const quartz = () => toile(1024, (g, n) => {          // quartz blanc à veines 
 });
 const ECHELLE = {};                    // mètres couverts par une répétition de texture
 function M(nom, opt, ech) { ECHELLE[nom] = ech || 1; return new THREE.MeshStandardMaterial(opt); }
-const platre = tex("platre_relief");
+// bibliothèque de matériaux (ambientCG / Poly Haven, CC0, ou fichiers de fournisseurs) : remplace les matériaux de base
+const LIB = S.materiaux || {};
+function carte(uri, couleur) {
+  const t = loader.load(uri); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
+  if (couleur) t.encoding = THREE.sRGBEncoding;
+  return t;
+}
+const platre = LIB.platre ? carte(LIB.platre.relief) : tex("platre_relief");
 const MAT = {
   chene: M("chene", { map: tex("chene_couleur", 1), normalMap: tex("chene_relief"), roughness: .55 }, 1.5),
   placage: M("placage", { map: tex("placage_couleur", 1), normalMap: tex("placage_relief"), roughness: .5 }, .9),
@@ -249,6 +256,12 @@ const MAT = {
   "abat-jour": M("abat-jour", { color: "#fff3df", emissive: "#ffcf8f", emissiveIntensity: .8, roughness: 1 }),
   spot: M("spot", { color: "#ffffff", emissive: "#fff1dc", emissiveIntensity: 2.5 }),
 };
+for (const [k, m] of Object.entries(LIB)) {
+  if (m.relief_seul) continue;
+  const o = { map: carte(m.couleur, 1), normalMap: carte(m.relief), metalness: m.metal || 0, roughness: m.rugosite ?? 1 };
+  if (m.carte_rugosite && m.rugosite == null) o.roughnessMap = carte(m.carte_rugosite);
+  MAT[k] = M(k, o, m.taille_m);
+}
 // peintures : une couleur par nom (scene_3d.py), fini mat velouté sur le relief de plâtre
 for (const [nom, v] of Object.entries(S.peintures || {})) {
   MAT["peinture:" + nom] = M("peinture:" + nom, { color: v[0], roughness: .88, normalMap: platre, normalScale: new THREE.Vector2(.25, .25) }, 1.2);

@@ -20,6 +20,7 @@
 | SS-02 | Copie de SS-01 : aire ouverte, salle d'entraînement vitrée, direction de design, maquette 3D visitable (`3d/visite.html`) | esquisse |
 | SS-03 | Copie de SS-02 : grande salle de bain à double vanité, cuisine en ligne, caveau en rangement, buanderie (skill designer-interieur) | esquisse |
 | SS-04 | Copie de SS-03 : escalier vers le rez-de-chaussée (emplacement de 1957), coin bar avec lavabo et frigo (plus de salle à manger), vraie salle de lavage, peinture et textures | esquisse |
+| SS-05 | Copie de SS-04 : salle de bain revue (toilette contre le mur, bain en coin, douche de 6 pi), matériaux réels dans la maquette | esquisse |
 
 ## Maquette 3D
     python3 renovation/outils/generer_3d.py renovation/<projet>
@@ -29,6 +30,10 @@ automatique par les portes), glisser pour regarder, ◀ ▶ pour la visite guid�
 plafond (un doigt tourne, deux doigts zooment). Les escaliers projetés (`etat: nouveau`) sont modélisés avec leur trémie ;
 `peinture` / `accents` dans `scene_3d.py` colorent les murs pièce par pièce. Les visites déjà publiées de SS-02 et SS-03
 gardent l'ancienne visionneuse tant qu'on ne les régénère pas.
+
+## Matériaux
+`renovation/outils/materiaux/` : bibliothèque de matériaux réels (ambientCG, Poly Haven, CC0, ou fichiers de
+fournisseurs), décrite dans `renovation/outils/catalogue_materiaux.py` ; voir `renovation/outils/materiaux/README.md`.
 
 ## Skill de design
 `.claude/skills/designer-interieur/SKILL.md` : méthode, dégagements, code à vérifier, direction de design, livrables.

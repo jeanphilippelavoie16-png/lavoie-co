@@ -126,6 +126,33 @@ def escalier(e, H, etage):
     return out + cage, tremie, {k: tout[k] for k in ("x0", "x1", "y0", "y1")}
 
 
+def bibliotheque(scene, S):
+    """Matériaux du catalogue (catalogue_materiaux.py) employés par la scène, intégrés au fichier en data URI."""
+    sys.path.insert(0, ICI)
+    from catalogue_materiaux import CATALOGUE
+    employes = {"platre", S.get("mat_colonne", "placage")}
+    for groupe in ("boites", "portes", "mobilier", "sols", "revetements"):
+        employes |= {o.get("mat") for o in scene[groupe]}
+    out = {}
+    for cle in sorted(employes & set(CATALOGUE)):
+        e, d = CATALOGUE[cle], os.path.join(ICI, "materiaux", cle)
+        if not os.path.isfile(os.path.join(d, "relief.jpg")):
+            print(f"  matériau {cle} absent : python3 renovation/outils/materiaux.py telecharger {cle}")
+            continue
+        uri = lambda f: "data:image/jpeg;base64," + base64.b64encode(open(os.path.join(d, f), "rb").read()).decode()
+        m = {"taille_m": e["taille_m"], "relief": uri("relief.jpg"), "metal": e.get("metal", 0)}
+        if e.get("relief_seul"):
+            m["relief_seul"] = True
+        else:
+            m["couleur"] = uri("couleur.jpg")
+        if "rugosite" in e:
+            m["rugosite"] = e["rugosite"]
+        elif os.path.isfile(os.path.join(d, "rugosite.jpg")):
+            m["carte_rugosite"] = uri("rugosite.jpg")
+        out[cle] = m
+    return out
+
+
 def peindre(boites, pieces, S):
     """Peinture par pièce : chaque grande face de mur prend la couleur de la pièce qu'elle regarde.
     SCENE["peinture"] = {id de pièce: nom de couleur}, SCENE["accents"] = [{"piece", "mur", "peinture"}]."""
@@ -272,6 +299,7 @@ def main(dossier):
              "bornes": [min(xs), min(ys), max(xs), max(ys)], "titre": S.get("titre", M["projet"].get("proposition", "")),
              "projet": M["projet"]["nom"], "palette": S.get("palette", []),
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
+    scene["materiaux"] = bibliotheque(scene, S)
     textures = {}
     for f in sorted(os.listdir(TEX)):
         if f.endswith(".jpg"):
