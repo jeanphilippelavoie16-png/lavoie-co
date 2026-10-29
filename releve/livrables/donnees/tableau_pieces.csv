@@ -1,5 +1,5 @@
 ﻿niveau;piece_id;piece;longueur;largeur;superficie_pi2;superficie_m2;perimetre;hauteur_plafond;surface_murale_brute_pi2;nb_portes;nb_fenetres;fiabilite
-SS;piece-SS-PRINC;Sous-sol;"36'-4""";"30'-0""";1090,00;101,26;"132'-8""";;;2;6;DÉDUIT
+SS;piece-SS-PRINC;Sous-sol;"36'-4""";"30'-0""";1090,00;101,26;"132'-8""";;;2;7;DÉDUIT
 SS;piece-SS-LEG;Caveau;"7'-4""";"4'-2""";30,60;2,84;"23'-0""";;;1;0;DÉDUIT
 SS;piece-SS-PERRON;Excroissance sous perron;"5'-0""";"3'-6""";17,50;1,63;"17'-0""";;;0;0;DÉDUIT
 RDC;piece-RDC-CH1;Chambre arrière;"12'-0""";"11'-1¾""";136,50;12,68;"48'-3""";;;3;1;ESTIMÉ

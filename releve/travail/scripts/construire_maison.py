@@ -8,7 +8,7 @@ Sortie  : livrables/donnees/maison.json  (+ résumé des vérifications à l'éc
 Principes : aucune valeur inventée ; chaque dimension porte sa source ; cotes écrites > dessin ;
 tout écart → registre ; murs porteurs « inconnu » sauf mention écrite.
 """
-import json, math, os, re, sys
+import copy, json, math, os, re, sys
 sys.path.insert(0, '/home/user/lavoie-co/releve/livrables/outils')
 import generer_plans as gp                                   # noqa: E402
 from shapely.geometry import Polygon, LineString, Point, box  # noqa: E402
@@ -413,6 +413,33 @@ OUV_SS = [
         pos_note="axe à 3'-6\" (cote-SS-010) du nu ext. du mur gauche du caveau (x = 219) — point de départ ambigu, voir écart"),
 ]
 
+# ============================================================================ 4b. RÉPONSES DU PROPRIÉTAIRE (2026-10-29) — sous-sol
+# Le sous-sol est devenu un appartement indépendant. Mur droit : la porte et la fenêtre du milieu ont été permutées.
+# Mur arrière : la grande fenêtre de gauche (6'-8") a été séparée en deux ; la moitié droite est restée en place,
+# la moitié gauche a été déplacée de 2'-0" vers la gauche. Les ouvertures d'origine restent dans ouvertures_retirees.
+REPONSES = "réponses du propriétaire (2026-10-29)"
+_os = {o['id']: o for o in OUV_SS}
+OUV_SS_RETIREES = [dict(copy.deepcopy(_os[i]), id=i + '-1957', retire_selon=REPONSES) for i in ('ouv-SS-001', 'ouv-SS-004', 'ouv-SS-005')]
+_p, _f = _os['ouv-SS-005'], _os['ouv-SS-004']
+_pos_p, _pos_f, _c_p, _c_f = _p['position'], _f['position'], _p['_centre'], _f['_centre']
+_p['position'] = dict(_pos_f, note=f"à la place de l'ancienne fenêtre du milieu ({REPONSES}) ; " + (_pos_f.get('note') or ''))
+_f['position'] = dict(_pos_p, note=f"à la place de l'ancienne porte ({REPONSES}) ; " + (_pos_p.get('note') or ''))
+_p['_centre'], _f['_centre'] = _c_f, _c_p
+_p['note'] = (f"porte extérieure de l'appartement du sous-sol, déplacée à la place de l'ancienne fenêtre du milieu ({REPONSES}) ; "
+              "largeur 2'-8\" du plan 1957 PRÉSUMÉE conservée ; battant et sens non relevés")
+_p['largeur'] = dict(_p['largeur'], note="largeur 1957 PRÉSUMÉE conservée après le déplacement")
+_f['note'] = (f"fenêtre déplacée à la place de l'ancienne porte ({REPONSES}) ; largeur 3'-0\" du plan 1957 PRÉSUMÉE conservée")
+_f['largeur'] = dict(_f['largeur'], note="largeur 1957 PRÉSUMÉE conservée après le déplacement")
+OUV_SS.remove(_os['ouv-SS-001'])
+_L1 = W('cote-SS-006')['valeur']
+for _oid, _cx, _quoi in (('ouv-SS-009', V('cote-SS-005') + _L1 / 4, "moitié droite, restée à l'emplacement d'origine"),
+                         ('ouv-SS-010', V('cote-SS-005') - _L1 / 4 - 24, "moitié gauche, déplacée de 2'-0\" vers la gauche")):
+    OUV_SS.append(ouv(_oid, 'fenetre', 'fixe', MURS_SS, 'mur-SS-003', _cx,
+                      D(_L1 / 2, "PRÉSUMÉ", "P1", note="moitié de la fenêtre 6'-8\" d'origine (« comme coupée en deux »)"),
+                      texte=None, note=f"{_quoi} de l'ancienne fenêtre 6'-8\" ({REPONSES})",
+                      pos_src="DÉDUIT", pos_note=f"axe d'origine 13'-0\" (cote-SS-005) ± ¼ de la largeur{' − 2' + chr(39) + '-0' + chr(34) if _oid == 'ouv-SS-010' else ''} ({REPONSES})"))
+OUV_SS.sort(key=lambda o: o['id'])
+
 LH = lambda L, H, ph='P3', ref=None, note=None: (D(L, "LU", ph, ref=ref, note=note), D(H, "LU", ph, ref=ref))
 
 
@@ -501,7 +528,7 @@ for m in list(MURS_RDC):
         MURS_RETIRES_DATA.append(dict(m, retire_selon=CONSTAT, description_retrait=MURS_RETIRES[m['id']]))
         MURS_RDC.remove(m)
 for o in list(OUV_RDC):
-    if o['mur_id'] in MURS_RETIRES or o['id'] == 'ouv-RDC-013':
+    if o['mur_id'] in MURS_RETIRES or o['id'] in ('ouv-RDC-013', 'ouv-RDC-012'):   # 012 : le mur hall / salon est plein
         OUV_RETIREES.append(dict(o, retire_selon=CONSTAT))
         OUV_RDC.remove(o)
 
@@ -765,13 +792,14 @@ o = {x['id']: x for x in OUV_SS}
 p, r = larg_chain([(382, V('cote-SS-032'), 'cote-SS-032')], 456); chaine('SS', 'avant', 1, p, r, 0)
 chaine('SS', 'avant', 2, [0, 162, 234, 382, 456], ['cote-SS-027', 'cote-SS-028', 'cote-SS-029', 'cote-SS-030'], 0)
 lc('SS', (0, 0), (456, 0), 'x', 'avant', 3, None, 'DÉDUIT')
-p, r = larg_chain([(156, V('cote-SS-006'), 'cote-SS-006')], 456); chaine('SS', 'arriere', 1, p, r, 380)
+p, r = larg_chain([(V('cote-SS-005') - _L1 / 4 - 24, _L1 / 2, None), (V('cote-SS-005') + _L1 / 4, _L1 / 2, None)], 456)
+chaine('SS', 'arriere', 1, p, r, 380)   # fenêtre séparée en deux (réponses du propriétaire)
 chaine('SS', 'arriere', 2, [0, 219, 327, 456], ['cote-SS-002', 'cote-SS-003', 'cote-SS-004'], 380)
 lc('SS', (0, 380), (456, 380), 'x', 'arriere', 3, 'cote-SS-001')
 p, r = larg_chain([(48, V('cote-SS-017'), 'cote-SS-017'), (180, V('cote-SS-016'), 'cote-SS-016')], 380); chaine('SS', 'gauche', 1, p, r, 0)
 chaine('SS', 'gauche', 2, [0, 48, 132, 180, 380], ['cote-SS-015', 'cote-SS-014', 'cote-SS-013', 'cote-SS-012'], 0)
 lc('SS', (0, 0), (0, 380), 'y', 'gauche', 3, 'cote-SS-011')
-p, r = larg_chain([(75, V('cote-SS-050'), 'cote-SS-050'), (180, V('cote-SS-026'), 'cote-SS-026'), (308, V('cote-SS-025'), 'cote-SS-025')], 380)
+p, r = larg_chain([(75, V('cote-SS-026'), 'cote-SS-026'), (180, V('cote-SS-050'), 'cote-SS-050'), (308, V('cote-SS-025'), 'cote-SS-025')], 380)  # porte et fenêtre permutées
 chaine('SS', 'droite', 1, p, r, 456)
 chaine('SS', 'droite', 2, [0, 75, 180, 308, 380], ['cote-SS-024', 'cote-SS-023', 'cote-SS-022', 'cote-SS-021'], 456)
 lc('SS', (456, 0), (456, 380), 'y', 'droite', 3, 'cote-SS-020')
@@ -782,7 +810,6 @@ for (a, b), rf in zip(zip(xs[:-1], xs[1:]), ['cote-SS-037', 'cote-SS-038', 'cote
 ys = [(380, 370, None), (370, 204, 'cote-SS-046'), (204, 157, 'cote-SS-047'), (157, 10, 'cote-SS-048'), (10, 0, 'cote-SS-034')]
 for a, b, rf in ys:
     lc('SS', (261, b), (261, a), 'y', 'int', 2, rf, decalage=0)
-lc('SS', (0, 370), (156, 370), 'x', 'int', 1, 'cote-SS-005', decalage=-14)
 lc('SS', (219, 392), (261, 392), 'x', 'int', 1, 'cote-SS-010', decalage=0)
 lc('SS', (327, 380), (327, 440), 'y', 'int', 1, 'cote-SS-009', decalage=14)
 lc('SS', (234, -48), (234, 0), 'y', 'int', 1, 'cote-SS-033', decalage=14)
@@ -1085,7 +1112,7 @@ maison = {
         "photos": PHOTOS,
         "date": "2026-10-29",
         "revision": "R0",
-        "affichage": {"noms_pieces": False, "note": "noms des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv"},
+        "affichage": {"noms_pieces": False, "dimensions_pieces": False, "note": "noms, dimensions et superficies des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv"},
         "implantation": {"source": "P5", "note": "cotes du plan d'implantation (pieds décimaux convertis en pouces) ; maison « projetée » 1957",
                          "cotes": IMPL},
     },
@@ -1221,6 +1248,78 @@ for c in rdc["cotes"]:
         c["emplacement"] += " (état 1957 ; la porte ouvre aujourd'hui vers le dégagement, constat 2026-10-29)"
 rdc["limites_zones"] = [{"id": f"lz-RDC-{i:03d}", "p1": list(a), "p2": list(b), "note": n}
                         for i, (a, b, n) in enumerate(COUPES['RDC'], 1)]
+
+# 1d) réponses du propriétaire (2026-10-29) aux questions de la R0
+ss = next(n for n in maison["niveaux"] if n["id"] == "SS")
+ss["ouvertures_retirees"] = [{k: v for k, v in o.items() if not k.startswith('_')} for o in OUV_SS_RETIREES]
+ss["usage"] = f"appartement indépendant ; aucun accès intérieur depuis le RDC ({REPONSES})"
+ss["notes"].append({"id": "note-SS-REP", "texte_original": None,
+                    "interpretation": (f"{REPONSES} : le sous-sol est un appartement indépendant ; aucune cloison ajoutée depuis 1957 ; "
+                                       "porte et fenêtre du milieu du mur droit permutées ; grande fenêtre arrière gauche séparée en deux."),
+                    "photo": None})
+rdc["usage"] = f"logement du RDC ; l'escalier vers le sous-sol n'existe plus ({REPONSES})"
+for st_ in rdc["structure"]:
+    if st_["id"] == "str-RDC-P02":
+        st_["dimension"] = {"texte_original": "8x8", "valeur": "8x8", "source": "MESURÉ", "photo": None,
+                            "note": f"8\"x8\" selon le propriétaire ({REPONSES})"}
+        sx = next(x for x in ss["structure"] if x["id"] == "str-SS-P02")["geometrie"]
+        st_["geometrie"] = {"x1": sx["x1"], "y1": sx["y1"], "x2": sx["x2"], "y2": sx["y2"]}
+        st_["note"] = (f"Poutre 8\"x8\" au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du "
+                       f"sous-sol str-SS-P02 (axe B) ({REPONSES}). Étendue prise identique à celle de la poutre du sous-sol. "
+                       "Aucune poutre sur l'axe C.")
+ANCRES = [
+    {"id": "ancre-01", "description": "hors-tout de la façade avant (nu ext.)", "valeur": 456, "source": "MESURÉ", "reference": "38'-0\" (cote-SS-031 / RDC)"},
+    {"id": "ancre-02", "description": "hors-tout en profondeur (nu ext.)", "valeur": 380, "source": "MESURÉ", "reference": "31'-8\""},
+    {"id": "ancre-03", "description": "mur arrière : coin arrière droit → nu ext. du mur droit de l'entrée arrière", "valeur": 129, "source": "MESURÉ", "reference": "10'-9\" (cote-RDC-018)"},
+]
+for an in ANCRES:
+    an["note"] = f"valeur attendue confirmée par le propriétaire ({REPONSES} : « tout est bon »)"
+maison["projet"]["ancres"] = ANCRES
+for c in rdc["cotes"]:
+    if c["id"] == "cote-RDC-018":
+        c["statut"] = "confirmee"
+        c["note_constat"] = f"10'-9\" confirmé sur place ({REPONSES})"
+for lc_ in rdc["lignes_cote"]:
+    if lc_.get("ref") == "cote-RDC-018":
+        lc_["statut"] = "confirmee"; lc_["repere"] = None
+RESOLUS = {
+    'conf-cote-RDC-018': ("résolu", f"10'-9\" confirmé sur place ({REPONSES})."),
+    'conf-cote-RDC-048': ("sans objet", f"Le mur hall / salon est plein : l'arche n'existe plus ({REPONSES})."),
+    'arche': ("sans objet", f"Le mur hall / salon est plein : l'arche n'existe plus ({REPONSES})."),
+    'p2-cloisons': ("résolu", f"Les cloisons restantes (G.R., lingerie, vestiaire, S. de bain, mur hall / salon) existent toutes ({REPONSES})."),
+    'col-c4': ("résolu", f"Selon le propriétaire, toutes les colonnes sont présentes au sous-sol ({REPONSES}) : « Colonne C4 retirée » (2016) ne vise donc pas une colonne du sous-sol."),
+    'col-c6': ("résolu", f"Selon le propriétaire, toutes les colonnes sont présentes au sous-sol ({REPONSES})."),
+    'col-p2': ("résolu", f"Les 6 colonnes du plan 1957 sont présentes selon le propriétaire ({REPONSES})."),
+    'ancres': ("résolu", f"Hors-tout et cote arrière confirmés par le propriétaire ({REPONSES}) ; voir projet.ancres."),
+    'ep-ext-rdc': ("résolu", f"Confirmé par le propriétaire (« tout est bon », {REPONSES})."),
+    'ep-int-rdc': ("résolu", f"Confirmé par le propriétaire (« tout est bon », {REPONSES})."),
+}
+for e in ECARTS:
+    for cle, (stat, txt) in RESOLUS.items():
+        if EC.get(cle) == e["id"]:
+            e["statut"] = stat
+            e["hypothese_retenue"] = txt + " " + e["hypothese_retenue"]
+            e["a_valider_sur_place"] = ""
+            e.pop("position", None)
+    if e["id"] == EC.get('fen-ss'):
+        e["description"] += f" — La fenêtre arrière gauche a depuis été séparée en deux fenêtres ({REPONSES})."
+        e["a_valider_sur_place"] = ("Mesurer la largeur des deux fenêtres arrière gauches (issues de l'ancienne 6'-8\") et leur position "
+                                    "depuis le coin arrière gauche ; largeur de la fenêtre droite haute (6'-0\" du coin arrière).")
+    if e["id"] == EC.get('porte-ss') or "Sens d'ouverture non dessiné" in e["description"]:
+        e["description"] += f" Depuis, la porte du mur droit a été déplacée à la place de la fenêtre du milieu ({REPONSES})."
+    if e["id"] == ECARTS[-1]["id"] or e["description"].startswith("constat du propriétaire"):
+        e["a_valider_sur_place"] = ("Au RDC, sur l'axe C (17'-0\" du nu ext. avant) où il n'y a ni cloison ni poutre : comment le plafond "
+                                    "et les solives sont-ils portés ? Hauteur libre sous la poutre 8\"x8\" de l'axe B.")
+# le sous-sol a des ouvertures déplacées : un écart pour les positions et tailles présumées
+ECARTS.append({"id": f"ecart-{len(ECARTS) + 1:03d}", "niveau": "SS", "impact": "moyen", "statut": "ouvert", "photo": "P2",
+               "description": (f"{REPONSES} : la porte du mur droit et la fenêtre du milieu ont été permutées ; la grande fenêtre "
+                               "arrière gauche (6'-8\") a été séparée en deux, la moitié gauche déplacée de 2'-0\" vers la gauche. "
+                               "Largeurs et positions déduites de la description, non mesurées."),
+               "hypothese_retenue": "Largeurs d'origine conservées (porte 2'-8\", fenêtre 3'-0\") ; chaque moitié de l'ancienne fenêtre = 3'-4\".",
+               "a_valider_sur_place": ("Mesurer, au mur droit du sous-sol, la largeur et l'axe de la porte (attendu à 15'-0\" du nu ext. avant) "
+                                       "et de la fenêtre (attendu à 6'-3\") ; au mur arrière, la largeur et l'axe des deux fenêtres de gauche "
+                                       "(attendus à 9'-4\" et 14'-8\" du coin arrière gauche)."),
+               "position": [451.0, 180.0]})
 
 # 2) renumérotation des photos dans l'ordre d'envoi du propriétaire (1 à 7).
 #    Les fichiers de travail (photos/, prep/, arbitrage/vignettes/) gardent la numérotation interne ;

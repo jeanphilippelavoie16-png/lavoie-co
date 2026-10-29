@@ -4,7 +4,32 @@
   "unites": "pouces (affichage pi-po, métrique entre parenthèses)",
   "origine": "coin extérieur avant-gauche de la fondation, vu de la rue ; x le long de la façade, y vers l'arrière",
   "convention_cotation": "Hors-tout et chaînes extérieures au NU EXTÉRIEUR des murs de fondation (SS) et des murs extérieurs (RDC) ; fenêtres et portes extérieures cotées à l'AXE (centre) de l'ouverture, largeurs = baie entre jambages ; cloisons du RDC cotées à l'AXE (DÉDUIT : chaque chaîne intérieure ferme sur le hors-tout depuis les nus ext. ; les axes y = 13'-1\" (157) et 17'-0\" (204) coïncident avec les axes des poutres 8\"x10\" du sous-sol et avec les axes B et C du croquis 2016 ; la ligne 2 du croquis tombe sur l'axe de la cloison) ; au sous-sol, chaîne intérieure en x au nu intérieur des murs et aux faces des colonnes (10\" + 9'-10\" + 8\" + 7'-4\" …), chaîne en y du nu intérieur aux AXES des poutres. Épaisseurs : fondation 10\" LU (P2) ; murs ext. RDC 10\" LU (P1 2016, à confronter : dessin 1957 ≈ 11\") ; cloisons 4½\" PRÉSUMÉ sauf cloison chambre arrière / S. de bain 6\" LU ; murs du caveau 10\" (droit LU, autres PRÉSUMÉ par analogie) ; murs de l'excroissance du perron 6\" (gauche LU, autres PRÉSUMÉ) ; entrée arrière 6\" PRÉSUMÉ. Toute la géométrie est générée par code (scripts/construire_maison.py).",
-  "ancres": [],
+  "ancres": [
+   {
+    "id": "ancre-01",
+    "description": "hors-tout de la façade avant (nu ext.)",
+    "valeur": 456,
+    "source": "MESURÉ",
+    "reference": "38'-0\" (cote-SS-031 / RDC)",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   },
+   {
+    "id": "ancre-02",
+    "description": "hors-tout en profondeur (nu ext.)",
+    "valeur": 380,
+    "source": "MESURÉ",
+    "reference": "31'-8\"",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   },
+   {
+    "id": "ancre-03",
+    "description": "mur arrière : coin arrière droit → nu ext. du mur droit de l'entrée arrière",
+    "valeur": 129,
+    "source": "MESURÉ",
+    "reference": "10'-9\" (cote-RDC-018)",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   }
+  ],
   "ancres_note": "Aucune mesure sur place n'a été fournie par le propriétaire ; voir ecart-028.",
   "nord": {
    "angle_deg": 9.8,
@@ -46,7 +71,8 @@
   "revision": "R0",
   "affichage": {
    "noms_pieces": false,
-   "note": "noms des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv"
+   "dimensions_pieces": false,
+   "note": "noms, dimensions et superficies des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv"
   },
   "implantation": {
    "source": "P7",
@@ -571,38 +597,6 @@
    ],
    "ouvertures": [
     {
-     "id": "ouv-SS-001",
-     "type": "fenetre",
-     "operation": "fixe",
-     "mur_id": "mur-SS-003",
-     "position": {
-      "valeur": 295.0,
-      "source": "DÉDUIT",
-      "photo": "P2",
-      "note": "axe à 13'-0\" du nu ext. gauche (cote-SS-005)"
-     },
-     "largeur": {
-      "valeur": 80.0,
-      "source": "LU",
-      "photo": "P2",
-      "ref": "cote-SS-006"
-     },
-     "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "hauteur non écrite"
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "texte_original": "6'-8\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis ; dessin ≈ 73 po (ESTIMÉ) — voir écart"
-    },
-    {
      "id": "ouv-SS-002",
      "type": "fenetre",
      "operation": "fixe",
@@ -672,16 +666,17 @@
      "operation": "fixe",
      "mur_id": "mur-SS-002",
      "position": {
-      "valeur": 175,
+      "valeur": 70.0,
       "source": "DÉDUIT",
       "photo": "P2",
-      "note": "6'-0\" + 10'-8\" du nu ext. arrière"
+      "note": "à la place de l'ancienne porte (réponses du propriétaire (2026-10-29)) ; axe à 6'-3\" du nu ext. avant (cote-SS-024)"
      },
      "largeur": {
       "valeur": 36,
       "source": "LU",
       "photo": "P2",
-      "ref": "cote-SS-026"
+      "ref": "cote-SS-026",
+      "note": "largeur 1957 PRÉSUMÉE conservée après le déplacement"
      },
      "hauteur": {
       "valeur": null,
@@ -696,7 +691,7 @@
       "note": "non écrite"
      },
      "texte_original": "3'-0\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut)"
+     "note": "fenêtre déplacée à la place de l'ancienne porte (réponses du propriétaire (2026-10-29)) ; largeur 3'-0\" du plan 1957 PRÉSUMÉE conservée"
     },
     {
      "id": "ouv-SS-005",
@@ -704,16 +699,17 @@
      "operation": "aucune",
      "mur_id": "mur-SS-002",
      "position": {
-      "valeur": 70.0,
+      "valeur": 175,
       "source": "DÉDUIT",
       "photo": "P2",
-      "note": "axe à 6'-3\" du nu ext. avant (cote-SS-024)"
+      "note": "à la place de l'ancienne fenêtre du milieu (réponses du propriétaire (2026-10-29)) ; 6'-0\" + 10'-8\" du nu ext. arrière"
      },
      "largeur": {
       "valeur": 32,
       "source": "LU",
       "photo": "P2",
-      "ref": "cote-SS-050"
+      "ref": "cote-SS-050",
+      "note": "largeur 1957 PRÉSUMÉE conservée après le déplacement"
      },
      "hauteur": {
       "valeur": null,
@@ -728,7 +724,7 @@
       "note": "non écrite"
      },
      "texte_original": "PORTE 2'-8\"",
-     "note": "porte dans le mur de fondation droit (rectangle barré d'un X) ; aucun arc dessiné : battant et sens inconnus — voir ecart-029",
+     "note": "porte extérieure de l'appartement du sous-sol, déplacée à la place de l'ancienne fenêtre du milieu (réponses du propriétaire (2026-10-29)) ; largeur 2'-8\" du plan 1957 PRÉSUMÉE conservée ; battant et sens non relevés — voir ecart-029",
      "repere": "ecart-029"
     },
     {
@@ -828,6 +824,68 @@
      "texte_original": "PORTE 2'-6\"",
      "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus — voir ecart-029",
      "repere": "ecart-029"
+    },
+    {
+     "id": "ouv-SS-009",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-003",
+     "position": {
+      "valeur": 275.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe d'origine 13'-0\" (cote-SS-005) ± ¼ de la largeur (réponses du propriétaire (2026-10-29))"
+     },
+     "largeur": {
+      "valeur": 40.0,
+      "source": "PRÉSUMÉ",
+      "photo": "P2",
+      "note": "moitié de la fenêtre 6'-8\" d'origine (« comme coupée en deux »)"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "note": "moitié droite, restée à l'emplacement d'origine de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29))"
+    },
+    {
+     "id": "ouv-SS-010",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-003",
+     "position": {
+      "valeur": 339.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe d'origine 13'-0\" (cote-SS-005) ± ¼ de la largeur − 2'-0\" (réponses du propriétaire (2026-10-29))"
+     },
+     "largeur": {
+      "valeur": 40.0,
+      "source": "PRÉSUMÉ",
+      "photo": "P2",
+      "note": "moitié de la fenêtre 6'-8\" d'origine (« comme coupée en deux »)"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "note": "moitié gauche, déplacée de 2'-0\" vers la gauche de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29))"
     }
    ],
    "pieces": [
@@ -2615,6 +2673,12 @@
      "texte_original": "3W ; $ ; ⊕ ; Θ",
      "interpretation": "Symboles électriques (interrupteurs, sorties) non légendés : non reportés sur ce plan (voir extraction/SS.json).",
      "photo": "P2"
+    },
+    {
+     "id": "note-SS-REP",
+     "texte_original": null,
+     "interpretation": "réponses du propriétaire (2026-10-29) : le sous-sol est un appartement indépendant ; aucune cloison ajoutée depuis 1957 ; porte et fenêtre du milieu du mur droit permutées ; grande fenêtre arrière gauche séparée en deux.",
+     "photo": null
     }
    ],
    "lignes_cote": [
@@ -2777,7 +2841,7 @@
       380
      ],
      "p2": [
-      116.0,
+      92.0,
       380
      ],
      "direction": "x",
@@ -2792,7 +2856,45 @@
     {
      "id": "lc-SS-010",
      "p1": [
-      116.0,
+      92.0,
+      380
+     ],
+     "p2": [
+      132.0,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-011",
+     "p1": [
+      132.0,
+      380
+     ],
+     "p2": [
+      156.0,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-012",
+     "p1": [
+      156.0,
       380
      ],
      "p2": [
@@ -2802,14 +2904,14 @@
      "direction": "x",
      "facade": "arriere",
      "rang": 1,
-     "source": "LU",
+     "source": "DÉDUIT",
      "statut": "confirmee",
-     "ref": "cote-SS-006",
-     "valeur_attendue": 80.0,
-     "repere": "ecart-020"
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
     },
     {
-     "id": "lc-SS-011",
+     "id": "lc-SS-013",
      "p1": [
       196.0,
       380
@@ -2828,7 +2930,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-012",
+     "id": "lc-SS-014",
      "p1": [
       0,
       380
@@ -2847,7 +2949,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-013",
+     "id": "lc-SS-015",
      "p1": [
       219,
       380
@@ -2866,7 +2968,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-014",
+     "id": "lc-SS-016",
      "p1": [
       327,
       380
@@ -2885,7 +2987,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-015",
+     "id": "lc-SS-017",
      "p1": [
       0,
       380
@@ -2904,7 +3006,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-016",
+     "id": "lc-SS-018",
      "p1": [
       0,
       0
@@ -2923,7 +3025,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-017",
+     "id": "lc-SS-019",
      "p1": [
       0,
       30.0
@@ -2942,7 +3044,7 @@
      "repere": "ecart-004"
     },
     {
-     "id": "lc-SS-018",
+     "id": "lc-SS-020",
      "p1": [
       0,
       66.0
@@ -2961,7 +3063,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-019",
+     "id": "lc-SS-021",
      "p1": [
       0,
       162.0
@@ -2980,7 +3082,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-020",
+     "id": "lc-SS-022",
      "p1": [
       0,
       198.0
@@ -2999,7 +3101,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-021",
+     "id": "lc-SS-023",
      "p1": [
       0,
       0
@@ -3018,7 +3120,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-022",
+     "id": "lc-SS-024",
      "p1": [
       0,
       48
@@ -3037,7 +3139,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-023",
+     "id": "lc-SS-025",
      "p1": [
       0,
       132
@@ -3056,7 +3158,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-024",
+     "id": "lc-SS-026",
      "p1": [
       0,
       180
@@ -3075,7 +3177,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-025",
+     "id": "lc-SS-027",
      "p1": [
       0,
       0
@@ -3094,52 +3196,14 @@
      "repere": null
     },
     {
-     "id": "lc-SS-026",
+     "id": "lc-SS-028",
      "p1": [
       456,
       0
      ],
      "p2": [
       456,
-      59.0
-     ],
-     "direction": "y",
-     "facade": "droite",
-     "rang": 1,
-     "source": "DÉDUIT",
-     "statut": "confirmee",
-     "ref": null,
-     "valeur_attendue": null,
-     "repere": null
-    },
-    {
-     "id": "lc-SS-027",
-     "p1": [
-      456,
-      59.0
-     ],
-     "p2": [
-      456,
-      91.0
-     ],
-     "direction": "y",
-     "facade": "droite",
-     "rang": 1,
-     "source": "LU",
-     "statut": "confirmee",
-     "ref": "cote-SS-050",
-     "valeur_attendue": 32,
-     "repere": null
-    },
-    {
-     "id": "lc-SS-028",
-     "p1": [
-      456,
-      91.0
-     ],
-     "p2": [
-      456,
-      162.0
+      57.0
      ],
      "direction": "y",
      "facade": "droite",
@@ -3154,11 +3218,11 @@
      "id": "lc-SS-029",
      "p1": [
       456,
-      162.0
+      57.0
      ],
      "p2": [
       456,
-      198.0
+      93.0
      ],
      "direction": "y",
      "facade": "droite",
@@ -3173,7 +3237,45 @@
      "id": "lc-SS-030",
      "p1": [
       456,
-      198.0
+      93.0
+     ],
+     "p2": [
+      456,
+      164.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-031",
+     "p1": [
+      456,
+      164.0
+     ],
+     "p2": [
+      456,
+      196.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-050",
+     "valeur_attendue": 32,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-032",
+     "p1": [
+      456,
+      196.0
      ],
      "p2": [
       456,
@@ -3189,7 +3291,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-031",
+     "id": "lc-SS-033",
      "p1": [
       456,
       268.0
@@ -3208,7 +3310,7 @@
      "repere": "ecart-020"
     },
     {
-     "id": "lc-SS-032",
+     "id": "lc-SS-034",
      "p1": [
       456,
       348.0
@@ -3227,7 +3329,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-033",
+     "id": "lc-SS-035",
      "p1": [
       456,
       0
@@ -3246,7 +3348,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-034",
+     "id": "lc-SS-036",
      "p1": [
       456,
       75
@@ -3265,7 +3367,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-035",
+     "id": "lc-SS-037",
      "p1": [
       456,
       180
@@ -3284,7 +3386,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-036",
+     "id": "lc-SS-038",
      "p1": [
       456,
       308
@@ -3303,7 +3405,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-037",
+     "id": "lc-SS-039",
      "p1": [
       456,
       0
@@ -3322,7 +3424,7 @@
      "repere": null
     },
     {
-     "id": "lc-SS-038",
+     "id": "lc-SS-040",
      "p1": [
       0,
       216
@@ -3342,7 +3444,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-039",
+     "id": "lc-SS-041",
      "p1": [
       10,
       216
@@ -3362,7 +3464,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-040",
+     "id": "lc-SS-042",
      "p1": [
       128,
       216
@@ -3382,7 +3484,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-041",
+     "id": "lc-SS-043",
      "p1": [
       136,
       216
@@ -3402,7 +3504,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-042",
+     "id": "lc-SS-044",
      "p1": [
       224,
       216
@@ -3422,7 +3524,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-043",
+     "id": "lc-SS-045",
      "p1": [
       232,
       216
@@ -3442,7 +3544,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-044",
+     "id": "lc-SS-046",
      "p1": [
       320,
       216
@@ -3462,7 +3564,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-045",
+     "id": "lc-SS-047",
      "p1": [
       328,
       216
@@ -3482,7 +3584,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-046",
+     "id": "lc-SS-048",
      "p1": [
       446,
       216
@@ -3502,7 +3604,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-047",
+     "id": "lc-SS-049",
      "p1": [
       261,
       370
@@ -3522,7 +3624,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-048",
+     "id": "lc-SS-050",
      "p1": [
       261,
       204
@@ -3542,7 +3644,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-049",
+     "id": "lc-SS-051",
      "p1": [
       261,
       157
@@ -3562,7 +3664,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-050",
+     "id": "lc-SS-052",
      "p1": [
       261,
       10
@@ -3582,7 +3684,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-051",
+     "id": "lc-SS-053",
      "p1": [
       261,
       0
@@ -3602,27 +3704,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-052",
-     "p1": [
-      0,
-      370
-     ],
-     "p2": [
-      156,
-      370
-     ],
-     "direction": "x",
-     "facade": "int",
-     "rang": 1,
-     "source": "LU",
-     "statut": "confirmee",
-     "ref": "cote-SS-005",
-     "valeur_attendue": 156.0,
-     "repere": null,
-     "decalage": -14
-    },
-    {
-     "id": "lc-SS-053",
+     "id": "lc-SS-054",
      "p1": [
       219,
       392
@@ -3642,7 +3724,7 @@
      "decalage": 0
     },
     {
-     "id": "lc-SS-054",
+     "id": "lc-SS-055",
      "p1": [
       327,
       380
@@ -3662,7 +3744,7 @@
      "decalage": 14
     },
     {
-     "id": "lc-SS-055",
+     "id": "lc-SS-056",
      "p1": [
       234,
       -48
@@ -3862,7 +3944,109 @@
      "note": "Rectangle contre le mur avant, à gauche de l'excroissance du perron.",
      "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
     }
-   ]
+   ],
+   "ouvertures_retirees": [
+    {
+     "id": "ouv-SS-001-1957",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-003",
+     "position": {
+      "valeur": 295.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 13'-0\" du nu ext. gauche (cote-SS-005)"
+     },
+     "largeur": {
+      "valeur": 80.0,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-006"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "6'-8\"",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis ; dessin ≈ 73 po (ESTIMÉ) — voir écart",
+     "retire_selon": "réponses du propriétaire (2026-10-29)"
+    },
+    {
+     "id": "ouv-SS-004-1957",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-002",
+     "position": {
+      "valeur": 175,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "6'-0\" + 10'-8\" du nu ext. arrière"
+     },
+     "largeur": {
+      "valeur": 36,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-026"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "3'-0\"",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut)",
+     "retire_selon": "réponses du propriétaire (2026-10-29)"
+    },
+    {
+     "id": "ouv-SS-005-1957",
+     "type": "porte",
+     "operation": "aucune",
+     "mur_id": "mur-SS-002",
+     "position": {
+      "valeur": 70.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 6'-3\" du nu ext. avant (cote-SS-024)"
+     },
+     "largeur": {
+      "valeur": 32,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-050"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "PORTE 2'-8\"",
+     "note": "porte dans le mur de fondation droit (rectangle barré d'un X) ; aucun arc dessiné : battant et sens inconnus",
+     "retire_selon": "réponses du propriétaire (2026-10-29)"
+    }
+   ],
+   "usage": "appartement indépendant ; aucun accès intérieur depuis le RDC (réponses du propriétaire (2026-10-29))"
   },
   {
    "id": "RDC",
@@ -4705,39 +4889,6 @@
      },
      "texte_original": "2'-8\"x6'-8\"",
      "note": "porte entrée → hall ; pentures côté gauche ; ouvre vers le hall"
-    },
-    {
-     "id": "ouv-RDC-012",
-     "type": "arche",
-     "operation": "aucune",
-     "mur_id": "mur-RDC-018",
-     "position": {
-      "valeur": 113.6,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "centre mesuré au dessin (P4)"
-     },
-     "largeur": {
-      "valeur": 48,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-048",
-      "note": "statut conflit — voir ecart-003 ; dessin ≈ 74 po"
-     },
-     "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "hauteur non écrite"
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "texte_original": "ARCHE 4'-0\"",
-     "note": "arche hall / salon ; position ESTIMÉE (dessin)"
     },
     {
      "id": "ouv-RDC-014",
@@ -6160,20 +6311,20 @@
      "id": "str-RDC-P02",
      "type": "poutre",
      "dimension": {
-      "texte_original": null,
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "texte_original": "8x8",
+      "valeur": "8x8",
+      "source": "MESURÉ",
       "photo": null,
-      "note": "section non relevée"
+      "note": "8\"x8\" selon le propriétaire (réponses du propriétaire (2026-10-29))"
      },
      "sens": "x",
      "geometrie": {
-      "x1": 175.0,
-      "y1": 157.0,
-      "x2": 446.0,
-      "y2": 157.0
+      "x1": 10,
+      "y1": 157,
+      "x2": 446,
+      "y2": 157
      },
-     "note": "Poutre au plafond du RDC côté rue, qui suit la poutre 8\"x10\" du sous-sol (str-SS-P02, axe B) — 2e constat du propriétaire (2026-10-29). Étendue PRÉSUMÉE sur la partie ouverte de l'axe B (de la fin de la cloison S. de bain / chambre avant au mur droit) ; aucune poutre sur l'axe C selon le propriétaire."
+     "note": "Poutre 8\"x8\" au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe B) (réponses du propriétaire (2026-10-29)). Étendue prise identique à celle de la poutre du sous-sol. Aucune poutre sur l'axe C."
     },
     {
      "id": "str-RDC-S01",
@@ -6525,7 +6676,7 @@
      "valeur": 129,
      "lecture_1": "10'-9\"",
      "lecture_2": "10-9\"",
-     "statut": "conflit",
+     "statut": "confirmee",
      "photo": "P6",
      "emplacement": "chaîne ext. arrière, rang 3, 3e segment (droite) — absente de P4",
      "px": [
@@ -6549,7 +6700,8 @@
        "raison": null
       }
      ],
-     "contrainte_de_bouclage": "chaîne arrière rang 3 (P5/P6, = 38'-0\") : 10'-9\" → somme 456 po (écart +0) ; 10'-5\" → somme 452 po (écart -4) ⇒ ferme avec 10'-9\" | même chaîne au sous-sol (cote-SS-002/003/004 : 18'-3\" + 9'-0\" + 10'-9\")"
+     "contrainte_de_bouclage": "chaîne arrière rang 3 (P5/P6, = 38'-0\") : 10'-9\" → somme 456 po (écart +0) ; 10'-5\" → somme 452 po (écart -4) ⇒ ferme avec 10'-9\" | même chaîne au sous-sol (cote-SS-002/003/004 : 18'-3\" + 9'-0\" + 10'-9\")",
+     "note_constat": "10'-9\" confirmé sur place (réponses du propriétaire (2026-10-29))"
     },
     {
      "id": "cote-RDC-019",
@@ -8778,10 +8930,10 @@
      "facade": "arriere",
      "rang": 2,
      "source": "LU",
-     "statut": "conflit",
+     "statut": "confirmee",
      "ref": "cote-RDC-018",
      "valeur_attendue": 129,
-     "repere": "ecart-002"
+     "repere": null
     },
     {
      "id": "lc-RDC-021",
@@ -9858,6 +10010,40 @@
    ],
    "ouvertures_retirees": [
     {
+     "id": "ouv-RDC-012",
+     "type": "arche",
+     "operation": "aucune",
+     "mur_id": "mur-RDC-018",
+     "position": {
+      "valeur": 113.6,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "centre mesuré au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 48,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-048",
+      "note": "statut conflit — voir ecart-003 ; dessin ≈ 74 po"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "ARCHE 4'-0\"",
+     "note": "arche hall / salon ; position ESTIMÉE (dessin)",
+     "retire_selon": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29)"
+    },
+    {
      "id": "ouv-RDC-013",
      "type": "arche",
      "operation": "aucune",
@@ -10088,7 +10274,8 @@
      ],
      "note": "entrée / vestiaire (VEST. ouvert)"
     }
-   ]
+   ],
+   "usage": "logement du RDC ; l'escalier vers le sous-sol n'existe plus (réponses du propriétaire (2026-10-29))"
   }
  ],
  "ecarts": [
@@ -10107,28 +10294,20 @@
    "niveau": "RDC",
    "description": "Cote en conflit cote-RDC-018 — Segment arrière droit 10'-9\" / 10'-5\" (nu ext. droit de l'entrée arrière → coin arrière droit). Lecture 1 « 10'-9\" », lecture 2 « 10-9\" », 3e lecture « 10'-5\" » (basse). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-03_P4.png, arbitrage/vignettes/d-RDC-03_P6.png.",
    "impact": "moyen",
-   "hypothese_retenue": "10'-9\" (10'-9\" po) — 3e lecture 10'-5\" en confiance basse ; seule 10'-9\" ferme la chaîne arrière 18'-3\" + 9'-0\" + 10'-9\" = 38'-0\" (10'-5\" donne 37'-8\") ; la même chaîne au sous-sol (cote-SS-004) est confirmée 10'-9\"",
-   "a_valider_sur_place": "Mesurer à l'extérieur, le long du mur arrière, du coin arrière droit au nu extérieur du mur droit de l'entrée arrière (attendu 10'-9\" = 129 po).",
+   "hypothese_retenue": "10'-9\" confirmé sur place (réponses du propriétaire (2026-10-29)). 10'-9\" (10'-9\" po) — 3e lecture 10'-5\" en confiance basse ; seule 10'-9\" ferme la chaîne arrière 18'-3\" + 9'-0\" + 10'-9\" = 38'-0\" (10'-5\" donne 37'-8\") ; la même chaîne au sous-sol (cote-SS-004) est confirmée 10'-9\"",
+   "a_valider_sur_place": "",
    "photo": "P6",
-   "statut": "ouvert",
-   "position": [
-    391,
-    380
-   ]
+   "statut": "résolu"
   },
   {
    "id": "ecart-003",
    "niveau": "RDC",
    "description": "Cote en conflit cote-RDC-048 — Largeur de l'arche hall / salon : écrit « ARCHE 4'-0\" » (2 lectures) contre 6'-0\" (3e lecture) ; dessin ≈ 74 po. Lecture 1 « ARCHE 4'-0\" », lecture 2 « ARCHE 4'-0\" », 3e lecture « ARCHE 6'-0\" » (moyenne). Vignettes (fichiers de travail, numérotation interne des photos) : arbitrage/vignettes/d-RDC-11_P3.png, arbitrage/vignettes/d-RDC-11_P4.png, arbitrage/vignettes/d-RDC-11_P6.png.",
    "impact": "moyen",
-   "hypothese_retenue": "ARCHE 4'-0\" (4'-0\" po) — lectures 1 et 2 : 4'-0\" ; 3e lecture (aveugle) : 6'-0\" ; ouverture dessinée ≈ 74 po (ESTIMÉ). Valeur écrite majoritaire retenue (les cotes écrites priment sur le dessin) — à mesurer",
-   "a_valider_sur_place": "Mesurer la largeur libre de l'arche hall / salon (cloison à 18'-6\" du coin avant gauche).",
+   "hypothese_retenue": "Le mur hall / salon est plein : l'arche n'existe plus (réponses du propriétaire (2026-10-29)). ARCHE 4'-0\" (4'-0\" po) — lectures 1 et 2 : 4'-0\" ; 3e lecture (aveugle) : 6'-0\" ; ouverture dessinée ≈ 74 po (ESTIMÉ). Valeur écrite majoritaire retenue (les cotes écrites priment sur le dessin) — à mesurer",
+   "a_valider_sur_place": "",
    "photo": "P4",
-   "statut": "ouvert",
-   "position": [
-    222,
-    118.6
-   ]
+   "statut": "sans objet"
   },
   {
    "id": "ecart-004",
@@ -10149,28 +10328,20 @@
    "niveau": "RDC",
    "description": "Épaisseur des murs extérieurs du RDC : 10\" écrit sur le croquis 2016 (P1, chaînes 10\" aux 4 côtés — valeur typique d'une fondation, peut-être reprise du plan de fondation) ; le dessin 1957 montre ≈ 11 po ; aucune épaisseur écrite sur la feuille RDC (P4, P5 et P6).",
    "impact": "moyen",
-   "hypothese_retenue": "10\" (LU P1) appliqué aux 4 murs ext. du RDC ; les dimensions intérieures des pièces en dépendent (± 1 po).",
-   "a_valider_sur_place": "Mesurer l'épaisseur totale du mur extérieur au jambage de la porte d'entrée avant et d'une fenêtre (revêtement int. au revêtement ext.).",
+   "hypothese_retenue": "Confirmé par le propriétaire (« tout est bon », réponses du propriétaire (2026-10-29)). 10\" (LU P1) appliqué aux 4 murs ext. du RDC ; les dimensions intérieures des pièces en dépendent (± 1 po).",
+   "a_valider_sur_place": "",
    "photo": "P1",
-   "statut": "ouvert",
-   "position": [
-    5,
-    100
-   ]
+   "statut": "résolu"
   },
   {
    "id": "ecart-006",
    "niveau": "RDC",
    "description": "Épaisseur des cloisons du RDC non cotée (sauf cloison chambre arrière / S. de bain 6\" LU, tranchée par 3e lecture) ; dessin ≈ 6 po.",
    "impact": "moyen",
-   "hypothese_retenue": "4½\" PRÉSUMÉ (cloison 2x4 + plâtre) ; les cloisons sont positionnées à l'AXE (convention déduite) donc seules les dimensions nettes des pièces varient.",
-   "a_valider_sur_place": "Mesurer l'épaisseur d'une cloison à un cadre de porte (ex. porte de la chambre avant) et la largeur nette du hall (attendu 3'-11\" − 4½\" ≈ 42½\").",
+   "hypothese_retenue": "Confirmé par le propriétaire (« tout est bon », réponses du propriétaire (2026-10-29)). 4½\" PRÉSUMÉ (cloison 2x4 + plâtre) ; les cloisons sont positionnées à l'AXE (convention déduite) donc seules les dimensions nettes des pièces varient.",
+   "a_valider_sur_place": "",
    "photo": "P4",
-   "statut": "ouvert",
-   "position": [
-    146,
-    120
-   ]
+   "statut": "résolu"
   },
   {
    "id": "ecart-007",
@@ -10201,56 +10372,40 @@
    "niveau": "RDC",
    "description": "Croquis 2016 (P1, « plan d'origine et plan actuel ») : seules quelques cloisons sont redessinées en gris (murs ext., cloison ligne 3 à ≈ 14'-5\" du coin gauche, de l'axe C au mur arrière ; placards en H entre les lignes 2 et 3 ; bout de cloison ligne 4 à 18'-6\", de ≈ 6'-4\" au mur avant). Absentes du gris : murs de la S. de bain, cloisons des G.R. de la chambre arrière (≈ 12'-1\" à 13'-5\"), cloisons de la cage d'escalier (lignes 5 et 6, entre C et D), escalier, cloison médiane des placards avant, cloisons le long des axes B et C. État actuel incertain : cloisons retirées ou simple croquis partiel. — CONFIRMÉ en partie par le constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : cloisons de la cage d'escalier, du placard à balais, chambre d'utilité / dégagement (axe C) et salon / passage (axe B) retirées.",
    "impact": "critique",
-   "hypothese_retenue": "Le relevé reproduit le plan de 1957 (P4), corrigé par le constat du propriétaire ; les autres cloisons absentes du gris 2016 sont conservées et signalées ici.",
-   "a_valider_sur_place": "Constater les cloisons qui restent incertaines (absentes du gris 2016 et non barrées par le propriétaire) : G.R. de la chambre arrière (entre 12'-2\" et 14'-7\" du coin gauche), murs de la S. de bain, lingerie (LIN.) et cloison hall / salon (18'-6\", arche 4'-0\") ; position réelle de la cloison ligne 3 (≈ 14'-5\" sur P1 contre 14'-7\" en 1957).",
+   "hypothese_retenue": "Les cloisons restantes (G.R., lingerie, vestiaire, S. de bain, mur hall / salon) existent toutes (réponses du propriétaire (2026-10-29)). Le relevé reproduit le plan de 1957 (P4), corrigé par le constat du propriétaire ; les autres cloisons absentes du gris 2016 sont conservées et signalées ici.",
+   "a_valider_sur_place": "",
    "photo": "P1",
-   "statut": "ouvert",
-   "position": [
-    160,
-    300
-   ]
+   "statut": "résolu"
   },
   {
    "id": "ecart-010",
    "niveau": "SS",
    "description": "Croquis 2016 : « Colonne C4 retirée » (axe C à 17'-0\" du nu ext. avant × ligne 4 à 18'-6\" du coin gauche). Au plan 1957 (P2), la colonne la plus proche est str-SS-C02 à 19'-0\" (DÉDUIT de la chaîne 9'-10\" + 8\" + 7'-4\") : décalage de 6 po entre les deux documents.",
    "impact": "critique",
-   "hypothese_retenue": "str-SS-C02 conservée au plan (état 1957) avec mention ; portée de la poutre arrière possiblement doublée (≈ 15'-4\" entre C01 et C03 sans C02).",
-   "a_valider_sur_place": "Au sous-sol, sous la poutre arrière (17'-0\" du nu ext. avant) : vérifier la présence / l'absence de colonne à x ≈ 18'-6\"–19'-0\", la flèche de la poutre et tout appui ajouté.",
+   "hypothese_retenue": "Selon le propriétaire, toutes les colonnes sont présentes au sous-sol (réponses du propriétaire (2026-10-29)) : « Colonne C4 retirée » (2016) ne vise donc pas une colonne du sous-sol. str-SS-C02 conservée au plan (état 1957) avec mention ; portée de la poutre arrière possiblement doublée (≈ 15'-4\" entre C01 et C03 sans C02).",
+   "a_valider_sur_place": "",
    "photo": "P1",
-   "statut": "ouvert",
-   "position": [
-    228,
-    204
-   ]
+   "statut": "résolu"
   },
   {
    "id": "ecart-011",
    "niveau": "SS",
    "description": "Croquis 2016 : « Colonne C6 retirée » (axe C × ligne 6 à 26'-4\" du coin gauche). Au plan 1957 : str-SS-C03 à 27'-0\" (8 po de décalage).",
    "impact": "critique",
-   "hypothese_retenue": "str-SS-C03 conservée au plan (état 1957) avec mention ; zone de fissures 2016 au droit (ligne 6 / axe C).",
-   "a_valider_sur_place": "Au sous-sol, sous la poutre arrière : vérifier la colonne à x ≈ 26'-4\"–27'-0\" ; mesurer la flèche de la poutre entre C02 et le mur droit.",
+   "hypothese_retenue": "Selon le propriétaire, toutes les colonnes sont présentes au sous-sol (réponses du propriétaire (2026-10-29)). str-SS-C03 conservée au plan (état 1957) avec mention ; zone de fissures 2016 au droit (ligne 6 / axe C).",
+   "a_valider_sur_place": "",
    "photo": "P1",
-   "statut": "ouvert",
-   "position": [
-    324,
-    204
-   ]
+   "statut": "résolu"
   },
   {
    "id": "ecart-012",
    "niveau": "SS",
    "description": "Le croquis 2016 ne marque des colonnes qu'aux lignes 4 et 6 (B4, B6 pleines ; C4, C6 retirées) ; le plan 1957 en montre 3 par poutre (à 11'-0\", 19'-0\" et 27'-0\" du coin gauche). Les colonnes à 11'-0\" (C01, C04) n'apparaissent pas sur P1 ; positions décalées de 6 à 8 po entre documents.",
    "impact": "moyen",
-   "hypothese_retenue": "Positions 1957 retenues (DÉDUITES des cotes du sous-sol).",
-   "a_valider_sur_place": "Relever au sous-sol la position et la section de chaque colonne sous les deux poutres 8x10.",
+   "hypothese_retenue": "Les 6 colonnes du plan 1957 sont présentes selon le propriétaire (réponses du propriétaire (2026-10-29)). Positions 1957 retenues (DÉDUITES des cotes du sous-sol).",
+   "a_valider_sur_place": "",
    "photo": "P2",
-   "statut": "ouvert",
-   "position": [
-    132,
-    180
-   ]
+   "statut": "résolu"
   },
   {
    "id": "ecart-013",
@@ -10313,14 +10468,10 @@
    "niveau": "RDC",
    "description": "ARCHE hall / salon : texte « ARCHE 4'-0\" » (lectures 1 et 2) mais ouverture dessinée ≈ 74 po, aussi grande que l'ancienne « ARCHE 6'-0\" » salon / cuisine.",
    "impact": "moyen",
-   "hypothese_retenue": "Voir ecart-003 (cote en conflit) : 4'-0\" retenu.",
-   "a_valider_sur_place": "Mesurer la largeur libre de l'arche hall / salon (cloison à 18'-6\" du coin avant gauche).",
+   "hypothese_retenue": "Le mur hall / salon est plein : l'arche n'existe plus (réponses du propriétaire (2026-10-29)). Voir ecart-003 (cote en conflit) : 4'-0\" retenu.",
+   "a_valider_sur_place": "",
    "photo": "P4",
-   "statut": "ouvert",
-   "position": [
-    222,
-    118.6
-   ]
+   "statut": "sans objet"
   },
   {
    "id": "ecart-018",
@@ -10349,10 +10500,10 @@
   {
    "id": "ecart-020",
    "niveau": "SS",
-   "description": "Fenêtres arrière et droite haute du sous-sol : « 6'-8\" » confirmé par la 3e lecture, mais dessinées de la même longueur que la fenêtre avant cotée 6'-3\" (≈ 72–73 po).",
+   "description": "Fenêtres arrière et droite haute du sous-sol : « 6'-8\" » confirmé par la 3e lecture, mais dessinées de la même longueur que la fenêtre avant cotée 6'-3\" (≈ 72–73 po). — La fenêtre arrière gauche a depuis été séparée en deux fenêtres (réponses du propriétaire (2026-10-29)).",
    "impact": "faible",
    "hypothese_retenue": "6'-8\" (LU, confirmé).",
-   "a_valider_sur_place": "Mesurer la largeur des fenêtres du mur arrière (13'-0\" du coin gauche) et du mur droit (6'-0\" du coin arrière).",
+   "a_valider_sur_place": "Mesurer la largeur des deux fenêtres arrière gauches (issues de l'ancienne 6'-8\") et leur position depuis le coin arrière gauche ; largeur de la fenêtre droite haute (6'-0\" du coin arrière).",
    "photo": "P2",
    "statut": "ouvert",
    "position": [
@@ -10455,15 +10606,15 @@
    "niveau": "global",
    "description": "Aucune mesure prise sur place n'a été fournie par le propriétaire (ancres vides) : toute la géométrie provient des plans de 1957 et du croquis 2016.",
    "impact": "moyen",
-   "hypothese_retenue": "Plans d'origine reproduits sans calage sur le bâtiment réel.",
-   "a_valider_sur_place": "Mesurer au minimum les deux hors-tout extérieurs (38'-0\" et 31'-8\") et une diagonale au sous-sol pour caler le relevé.",
+   "hypothese_retenue": "Hors-tout et cote arrière confirmés par le propriétaire (réponses du propriétaire (2026-10-29)) ; voir projet.ancres. Plans d'origine reproduits sans calage sur le bâtiment réel.",
+   "a_valider_sur_place": "",
    "photo": "P2",
-   "statut": "ouvert"
+   "statut": "résolu"
   },
   {
    "id": "ecart-029",
    "niveau": "SS",
-   "description": "Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) : ouv-SS-005 « PORTE 2'-8\" » (mur droit, axe à 6'-3\" du nu ext. avant) et ouv-SS-008 « PORTE 2'-6\" » (porte du caveau, mur arrière). Les tiretés près de la porte 2'-8\" sont des circuits électriques.",
+   "description": "Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) : ouv-SS-005 « PORTE 2'-8\" » (mur droit, axe à 6'-3\" du nu ext. avant) et ouv-SS-008 « PORTE 2'-6\" » (porte du caveau, mur arrière). Les tiretés près de la porte 2'-8\" sont des circuits électriques. Depuis, la porte du mur droit a été déplacée à la place de la fenêtre du milieu (réponses du propriétaire (2026-10-29)).",
    "impact": "faible",
    "hypothese_retenue": "Portes dessinées comme baies (opération « aucune ») ; aucun sens inventé.",
    "a_valider_sur_place": "Constater pour chaque porte le type de battant, le côté des pentures et le côté d'ouverture.",
@@ -10482,9 +10633,23 @@
    "photo": "P1",
    "description": "constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) : les cloisons mur-RDC-026, -027, -028, -029 et la partie de mur-RDC-019 à gauche de l'arche 6'-0\" n'existent plus ; 4 portes (ouv-RDC-017, -023, -024, -025) et l'arche ouv-RDC-013 disparaissent avec elles. Deux de ces cloisons étaient sur les axes porteurs d'origine B et C (P1) ; les colonnes str-SS-C01, C02, C05, C06 du sous-sol ne sont plus sous aucune cloison. Le trait diagonal au coin hall / salon est interprété comme le début du trait de l'axe B : la cloison hall / salon (arche 4'-0\") est conservée. La porte de la salle de bain ouv-RDC-015 ouvre aujourd'hui vers le dégagement (au plan 1957 : dans la salle de bain). 2e constat (2026-10-29) : le trumeau à droite de l'ancienne arche n'existe plus ; l'escalier entre le sous-sol et le RDC n'existe plus ; une poutre est visible au plafond du RDC côté rue seulement, dans l'axe de la poutre avant du sous-sol (axe B) — aucune sur l'axe C.",
    "hypothese_retenue": "Cloisons retirées du plan (conservées dans murs_retires pour mémoire) ; aire ouverte découpée en zones (dégagement, salle à manger, escalier, cuisine, salon) aux axes des anciennes cloisons, sans mur. Escalier et trumeau retirés ; ouverture de plancher présumée refermée. Poutre de l'axe B dessinée (str-RDC-P02), section inconnue, étendue PRÉSUMÉE sur la partie ouverte de l'axe.",
-   "a_valider_sur_place": "Au RDC : section, hauteur libre et appuis de la poutre apparente sur l'axe B (13'-1\" du nu ext. avant) et son étendue exacte ; sur l'axe C (17'-0\"), comment le plafond est porté sans cloison ni poutre ; cloison hall / salon (arche 4'-0\") toujours en place ? Accès actuel au sous-sol (l'escalier intérieur n'existe plus) et plancher refait à l'emplacement de l'ancienne trémie.",
+   "a_valider_sur_place": "Au RDC, sur l'axe C (17'-0\" du nu ext. avant) où il n'y a ni cloison ni poutre : comment le plafond et les solives sont-ils portés ? Hauteur libre sous la poutre 8\"x8\" de l'axe B.",
    "position": [
     262.0,
+    180.0
+   ]
+  },
+  {
+   "id": "ecart-031",
+   "niveau": "SS",
+   "impact": "moyen",
+   "statut": "ouvert",
+   "photo": "P1",
+   "description": "réponses du propriétaire (2026-10-29) : la porte du mur droit et la fenêtre du milieu ont été permutées ; la grande fenêtre arrière gauche (6'-8\") a été séparée en deux, la moitié gauche déplacée de 2'-0\" vers la gauche. Largeurs et positions déduites de la description, non mesurées.",
+   "hypothese_retenue": "Largeurs d'origine conservées (porte 2'-8\", fenêtre 3'-0\") ; chaque moitié de l'ancienne fenêtre = 3'-4\".",
+   "a_valider_sur_place": "Mesurer, au mur droit du sous-sol, la largeur et l'axe de la porte (attendu à 15'-0\" du nu ext. avant) et de la fenêtre (attendu à 6'-3\") ; au mur arrière, la largeur et l'axe des deux fenêtres de gauche (attendus à 9'-4\" et 14'-8\" du coin arrière gauche).",
+   "position": [
+    451.0,
     180.0
    ]
   }

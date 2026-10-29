@@ -7,7 +7,7 @@ Appelé automatiquement à la fin de generer_plans.py. Déterministe.
 import argparse, json, os, re
 
 IMPACTS = ["critique", "moyen", "faible"]
-ORDRE_SOURCE = ["LU", "DÉDUIT", "ESTIMÉ", "PRÉSUMÉ", "ILLISIBLE"]
+ORDRE_SOURCE = ["MESURÉ", "LU", "DÉDUIT", "ESTIMÉ", "PRÉSUMÉ", "ILLISIBLE"]
 
 
 def pp(v):
@@ -59,8 +59,8 @@ def main():
     w("")
     w("Ce relevé reproduit, en plans propres et modifiables, les plans d'origine dessinés à la main (1957), "
       "corrigés par le constat du propriétaire (cloisons disparues, porte de la salle de bain). "
-      "Il ne contient aucune proposition de rénovation. Aucune mesure n'a été prise sur place : "
-      "toutes les dimensions viennent des documents photographiés, avec leur source.")
+      "Il ne contient aucune proposition de rénovation. Les dimensions viennent des documents photographiés, avec leur source ; "
+      "le propriétaire a confirmé sur place les hors-tout et la cote arrière (voir les ancres, section 3).")
     w("")
 
     # ------------------------------------------------------------------ livrables
@@ -103,7 +103,7 @@ def main():
         w(f"- **Nord :** {nord['angle_deg']}° dans le sens horaire depuis l'axe façade → arrière ({nord.get('source', '')}, "
           f"photo {nord.get('photo', '')}{' ; ' + nord['note'] if nord.get('note') else ''}). La façade avant regarde donc à peu près vers le sud.")
     w(f"- **Convention de cotation de l'original :** {P.get('convention_cotation', '')}")
-    w("- **Sources des dimensions :** LU (écrit sur le plan) · DÉDUIT (calculé à partir d'autres cotes) · "
+    w("- **Sources des dimensions :** MESURÉ (constaté sur place par le propriétaire) · LU (écrit sur le plan) · DÉDUIT (calculé à partir d'autres cotes) · "
       "ESTIMÉ (mesuré dans l'image, précédé de « ≈ » sur les plans) · PRÉSUMÉ (standard de construction faute d'info) · ILLISIBLE. "
       "Un repère orange ⚠n renvoie à l'écart n du registre (section 6).")
     w("")
@@ -124,7 +124,12 @@ def main():
     if (P.get("affichage") or {}).get("noms_pieces") is False:
         w("- **Noms des pièces retirés des plans** à la demande du propriétaire : ils restent dans `maison.json` et "
           "`tableau_pieces.csv` (identifiants piece-…) ; les plans gardent les dimensions et superficies des pièces principales.")
-    w("- **Aucune mesure sur place (ancres vides)** : le relevé n'est calé sur aucune mesure du bâtiment réel.")
+    an = P.get("ancres") or []
+    if an:
+        w("- **Calage sur place** : " + " ; ".join(f"{a_['description']} = {pp(a_['valeur'])} ({a_['source']})" for a_ in an)
+          + ". Les hauteurs plancher-plafond restent inconnues.")
+    else:
+        w("- **Aucune mesure sur place (ancres vides)** : le relevé n'est calé sur aucune mesure du bâtiment réel.")
     w("- **Les cotes écrites priment sur le dessin** : la géométrie est construite à partir des chaînes de cotes ; "
       "les proportions du dessin servent seulement à combler les trous (ESTIMÉ).")
     w("- **Lecture des cotes** : deux lectures indépendantes de chaque cote, puis une 3e lecture à l'aveugle pour chaque désaccord ; "
@@ -151,16 +156,18 @@ def main():
 
     # ------------------------------------------------------------------ registre
     E = M.get("ecarts", [])
-    cnt = {i: sum(e["impact"] == i for e in E) for i in IMPACTS}
+    ouverts = [e for e in E if e.get("statut", "ouvert") == "ouvert"]
+    cnt = {i: sum(e["impact"] == i for e in ouverts) for i in IMPACTS}
     w("## 6. Registre des écarts")
     w("")
-    w(f"{len(E)} écarts : **{cnt['critique']} critiques**, {cnt['moyen']} moyens, {cnt['faible']} faibles.")
+    w(f"{len(E)} écarts au registre, dont **{len(ouverts)} ouverts** : **{cnt['critique']} critiques**, {cnt['moyen']} moyens, "
+      f"{cnt['faible']} faibles ; {len(E) - len(ouverts)} résolus ou sans objet depuis le constat et les réponses du propriétaire.")
     w("")
-    w("| # | Niveau | Impact | Description | Hypothèse retenue |")
-    w("|---|---|---|---|---|")
+    w("| # | Niveau | Impact | Statut | Description | Hypothèse retenue |")
+    w("|---|---|---|---|---|---|")
     for e in E:
         num = int(e["id"].split("-")[1])
-        w(f"| ⚠{num} | {e['niveau']} | {e['impact']} | {cell(e['description'])} | {cell(e['hypothese_retenue'])} |")
+        w(f"| ⚠{num} | {e['niveau']} | {e['impact']} | {e.get('statut', 'ouvert')} | {cell(e['description'])} | {cell(e['hypothese_retenue'])} |")
     w("")
 
     # cotes en conflit / illisibles
@@ -192,10 +199,10 @@ def main():
         w(f"### Impact {imp}")
         w("")
         for e in lot:
-            if e.get("statut") == "sans objet":
+            if e.get("statut", "ouvert") != "ouvert":
                 continue
             # une même mesure à faire (même texte) n'est listée qu'une fois, avec tous ses repères
-            meme = [x for x in E if x.get("a_valider_sur_place") == e["a_valider_sur_place"] and x.get("statut") != "sans objet"]
+            meme = [x for x in E if x.get("a_valider_sur_place") == e["a_valider_sur_place"] and x.get("statut", "ouvert") == "ouvert"]
             if meme[0] is not e:
                 continue
             i += 1

@@ -64,7 +64,7 @@ H_NOM_MIN = 3.5  # noms de pièces, taille réduite (police 4,9 mm) pour les pet
 H_FACADE = 3.5
 TRI = 4.0        # côté du triangle de repère ⚠ (mm)
 
-ORDRE_SRC = ["LU", "DÉDUIT", "ESTIMÉ", "PRÉSUMÉ", "ILLISIBLE"]
+ORDRE_SRC = ["MESURÉ", "LU", "DÉDUIT", "ESTIMÉ", "PRÉSUMÉ", "ILLISIBLE"]   # MESURÉ = sur place (propriétaire)
 T_DEFAUT = {"ext": 6.0, "fondation": 10.0, "int": 4.5}
 
 # Styles : remplissage, trait, épaisseur (mm), tirets (mm), épaisseur DXF (1/100 mm), type de ligne DXF
@@ -2299,6 +2299,8 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
     nommée, avec un renvoi court qui ne croise ni chaîne de cotes, ni élément, ni colonne.
     Retourne True si les dimensions ont dû être omises, None si rien n'a été posé (passe 1)."""
     pid = str(d.get("id"))
+    if not NOMS_PIECES and not DIMS_PIECES:
+        return False                    # aucune étiquette de pièce sur le plan (données dans tableau_pieces.csv)
     nom = str(d.get("nom") or d.get("nom_original") or pid).upper()
     dims = d.get("dimensions") if isinstance(d.get("dimensions"), dict) else {}
     minx, miny, maxx, maxy = poly.bounds
@@ -2457,6 +2459,7 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
 
 
 NOMS_PIECES = True
+DIMS_PIECES = True
 
 
 CIRCULATION = ("DEGAGEMENT", "PASSAGE", "HALL", "CORRIDOR", "COULOIR", "CIRCULATION")
@@ -2722,7 +2725,9 @@ def cartouche(F, niv, projet, ctx):
         items.append(("limite", "Limite de zone ouverte (aucun mur)"))
     if getattr(F, "typ", False):
         items.append(("vide", "(typ.) : libellé typique, vaut pour les éléments identiques"))
-    if getattr(F, "dims_omises", False):
+    if not NOMS_PIECES and not DIMS_PIECES:
+        items.append(("vide", "Noms, dimensions et superficies des pièces : voir tableau_pieces.csv"))
+    elif getattr(F, "dims_omises", False):
         items.append(("vide", "Petites pièces : nom seul ; dimensions et superficie dans tableau_pieces.csv" if NOMS_PIECES
                       else "Noms des pièces, et dimensions des petites pièces : voir tableau_pieces.csv"))
     for kind, t in items:
@@ -3216,8 +3221,9 @@ def main(argv=None):
         return 2
     projet = data.get("projet") or {}
     # projet.affichage.noms_pieces = false : aucun nom de pièce sur les plans (ils restent dans maison.json et le CSV)
-    global NOMS_PIECES
+    global NOMS_PIECES, DIMS_PIECES
     NOMS_PIECES = bool(((projet.get("affichage") or {}).get("noms_pieces", True)))
+    DIMS_PIECES = bool(((projet.get("affichage") or {}).get("dimensions_pieces", True)))
     verif = Verif()
     controle_ids(data, verif)
     ctx = numeroter(data, verif)
