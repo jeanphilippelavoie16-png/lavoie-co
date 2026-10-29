@@ -133,6 +133,11 @@ textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px 
       <div class="carte">
         <h2 id="t-quest">Questions ⚠ ouvertes</h2>
         <ul class="liste" id="liste-quest"></ul>
+        <p class="vide" id="vide-quest" hidden>Aucune question ouverte sur ce niveau.</p>
+      </div>
+      <div class="carte">
+        <h2 id="t-rep">Vos réponses</h2>
+        <ul class="liste" id="liste-rep"></ul>
       </div>
     </aside>
   </div>
@@ -393,6 +398,16 @@ function listes() {
       el("span", { class: "txt" }, e.a_valider || e.description, el("small", { class: ok ? "ok" : "" }, ok ? "Répondu : " + rep.texte : "impact " + e.impact + (e.niveau === "global" ? " · général" : ""))));
     li.addEventListener("click", () => selectionner({ type: "ecart", id: e.id }, true));
     uq.append(li);
+  }
+  $("#vide-quest").hidden = qs.length > 0;
+  const ur = $("#liste-rep"); ur.textContent = "";
+  const reps = [...st.reps.entries()].filter(([, r]) => (r.texte || "").trim()).sort(([a], [b]) => a.localeCompare(b));
+  $("#t-rep").textContent = `Vos réponses (${reps.length})`;
+  for (const [id, r] of reps) {
+    const e = D.ecarts.find((x) => x.id === id);
+    ur.append(el("li", {}, el("span", { class: "pastille p-ecart" }, "⚠" + (e ? e.num : id)),
+      el("span", { class: "txt" }, r.texte, el("small", {}, e ? (e.a_valider || e.description).slice(0, 90) : ""),
+        r.reponse_claude ? el("span", { class: "claude" }, r.reponse_claude) : null)));
   }
 }
 

@@ -1407,6 +1407,92 @@ ECARTS.append({"id": f"ecart-{len(ECARTS) + 1:03d}", "niveau": "SS", "impact": "
                                        "(attendus à 9'-4\" et 14'-8\" du coin arrière gauche)."),
                "position": [451.0, 180.0]})
 
+# 1e) annotations et réponses du propriétaire dans l'annotateur en ligne (2026-10-29)
+ANNOT = "annotateur en ligne (2026-10-29)"
+REP_ANNOT = {   # réponse du propriétaire, par clé d'écart
+    'conf-cote-RDC-048': ("résolu", "« C'est correct comme ça »"),
+    'conf-cote-SS-017': ("résolu", "« 3' » : largeur 3'-0\" confirmée"),
+    'ep-pres': ("résolu", "« C'est correct comme elle est là »"),
+    'fissures': ("sans objet", "« C'est réparé »"),
+    'fiss-salon': ("sans objet", "« C'est réparé, enlève ça »"),
+    'usage': ("sans objet", "« On s'en fout des noms, on les enlève »"),
+    'arche': ("résolu", "« C'est correct comme ça »"),
+    'ear-1po': ("résolu", "« C'est beau comme elle est là »"),
+    'fen-ss': ("résolu", "« C'est beau »"),
+    'porte-cav': ("résolu", "« Porte ici, la position est bonne »"),
+    'poutre-flush': ("sans objet", "« Il n'y a plus de poutre à cet endroit, on peut enlever »"),
+    'col-plancher': ("résolu", "« Enligne-les avec ceux en haut » : colonnes du sous-sol alignées sur celles du RDC"),
+    'plomberie': ("sans objet", "« On s'en fout de la plomberie, enlève la trappe, ça existe plus »"),
+    'cheminee': ("résolu", "« C'est OK comme ça »"),
+    'axes': ("sans objet", "« Axe B 2016 on s'en fout » / « axe C 2016 on enlève » : axes retirés du plan"),
+}
+for e in ECARTS:
+    for cle, (stat, txt) in REP_ANNOT.items():
+        if EC.get(cle) == e["id"]:
+            e["statut"] = stat
+            e["hypothese_retenue"] = f"Réponse du propriétaire ({ANNOT}) : {txt}. " + e["hypothese_retenue"]
+            e["a_valider_sur_place"] = ""
+            e.pop("position", None)
+    if e["description"].startswith(REPONSES) and "permutées" in e["description"]:
+        e["statut"] = "résolu"
+        e["hypothese_retenue"] = (f"Réponse du propriétaire ({ANNOT}) : « Porte de 36\" qui s'ouvre par en dedans ». "
+                                  + e["hypothese_retenue"])
+        e["a_valider_sur_place"] = ""
+        e.pop("position", None)
+    if e["id"] == EC.get('portes-ss'):
+        e["description"] += f" — Porte du mur droit : 36\", ouvre vers l'intérieur ({ANNOT}) ; côté des pentures non précisé."
+        e["a_valider_sur_place"] = "Côté des pentures de la porte du mur droit du sous-sol et sens d'ouverture de la porte du caveau."
+for c in ss["cotes"]:
+    if c["id"] == "cote-SS-017":
+        c["statut"] = "confirmee"; c["note_constat"] = f"3'-0\" confirmé par le propriétaire ({ANNOT})"
+for lc_ in ss["lignes_cote"]:
+    if lc_.get("ref") == "cote-SS-017":
+        lc_["statut"] = "confirmee"; lc_["repere"] = None
+# structure retirée du plan : axes 2016, poutre autoportante, solives, poutre FLUSH (n'existe plus)
+RETIRER_STR = {"str-RDC-AXB": "axe B du croquis 2016 : retiré du plan à la demande du propriétaire",
+               "str-RDC-AXC": "axe C du croquis 2016 : retiré du plan à la demande du propriétaire",
+               "str-RDC-P03": "poutre autoportante : retirée du plan à la demande du propriétaire",
+               "str-RDC-S01": "solives 2x7 : retirées du plan à la demande du propriétaire",
+               "str-RDC-S02": "solives 2x7 : retirées du plan à la demande du propriétaire",
+               "str-RDC-P01": "poutre 6x10 FLUSH : n'existe plus selon le propriétaire"}
+rdc["structure_retiree"] = [dict(x, retire_selon=f"{RETIRER_STR[x['id']]} ({ANNOT})") for x in rdc["structure"] if x["id"] in RETIRER_STR]
+rdc["structure"] = [x for x in rdc["structure"] if x["id"] not in RETIRER_STR]
+# trappe : n'existe plus
+rdc["elements_retires"] += [dict(e, retire_selon=f"la trappe n'existe plus ({ANNOT})") for e in rdc["elements"] if e["id"] == "elem-RDC-TRAPPE"]
+rdc["elements"] = [e for e in rdc["elements"] if e["id"] != "elem-RDC-TRAPPE"]
+# colonnes : celle de l'axe B à 11'-0" se met en face de celle de l'axe C (12'-2") ; au sous-sol, alignées sur le RDC
+for niv_, ids_ in ((rdc, ("str-RDC-C04",)), (ss, ("str-SS-C01", "str-SS-C04"))):
+    for c_ in niv_["structure"]:
+        if c_["id"] in ids_:
+            c_["geometrie"] = dict(c_["geometrie"], x=146.0)
+            c_["note"] = (c_.get("note") or "") + (f" ; déplacée à 12'-2\" du coin gauche, en face de la colonne de l'axe C "
+                                                   f"(au coin du mur de la chambre arrière) ({ANNOT})")
+# portes qui n'existent pas : baies sans porte
+for o in rdc["ouvertures"]:
+    if o["id"] in ("ouv-RDC-011", "ouv-RDC-026"):
+        o["operation"] = "aucune"; o.pop("sens", None)
+        o["note"] = f"baie sans porte : « la porte n'existe pas ici » ({ANNOT}) ; " + (o.get("note") or "")
+# porte du sous-sol : 36", ouvre vers l'intérieur
+for o in ss["ouvertures"]:
+    if o["id"] == "ouv-SS-005":
+        o["largeur"] = {"valeur": 36, "source": "MESURÉ", "photo": None, "note": f"36\" selon le propriétaire ({ANNOT})"}
+        o["operation"] = "battante"
+        o["sens"] = {"charniere": "debut", "ouvre_vers": "gauche",
+                     "note": "ouvre vers l'intérieur (propriétaire) ; côté des pentures PRÉSUMÉ (non précisé)"}
+        o["texte_original"] = "PORTE 2'-8\" (plan 1957) ; aujourd'hui porte de 36\""
+# cotes : seulement à l'extérieur
+for niv_ in (rdc, ss):
+    niv_["lignes_cote"] = [l for l in niv_["lignes_cote"] if l["facade"] != "int"]
+# notes du plan d'origine qui ne décrivent plus l'existant (éléments retirés, réparés ou jugés inutiles par le propriétaire)
+NOTES_RET = {"note-RDC-03", "note-RDC-04", "note-RDC-05", "note-RDC-06", "note-RDC-07", "note-RDC-09"}
+rdc["notes_retirees"] = [dict(n, retire_selon=ANNOT) for n in rdc["notes"] if n["id"] in NOTES_RET]
+rdc["notes"] = [n for n in rdc["notes"] if n["id"] not in NOTES_RET]
+for e in ECARTS:
+    if e["id"] == EC.get('portes-ss'):
+        e["position"] = [261.0, 375.0]          # reste : la porte du caveau (sens) et le côté des pentures de la porte du mur droit
+maison["projet"]["affichage"]["metrique"] = False
+maison["projet"]["affichage"]["note"] += " ; cotes intérieures et métrique retirées des plans (annotateur, 2026-10-29)"
+
 # 2) renumérotation des photos dans l'ordre d'envoi du propriétaire (1 à 7).
 #    Les fichiers de travail (photos/, prep/, arbitrage/vignettes/) gardent la numérotation interne ;
 #    la correspondance est dans RAPPORT.md. Les identifiants (cote-P2-…) et les chemins ne sont pas touchés.

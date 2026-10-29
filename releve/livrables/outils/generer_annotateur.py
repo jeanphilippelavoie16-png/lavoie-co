@@ -20,7 +20,7 @@ def origine(svg, niv):
     """(X0, Y0) : position SVG du point maison (0, 0), lue sur le mur avant mur-<niv>-001."""
     i = svg.index(f'id="mur-{niv}-001"')
     bloc = svg[i:svg.index("</g>", i)]
-    nums = [float(v) for v in re.findall(r"-?\d+(?:\.\d+)?", " ".join(re.findall(r'd="([^"]+)"', bloc)))]
+    nums = [float(v) for v in re.findall(r"-?\d+(?:\.\d+)?", " ".join(re.findall(r'\sd="([^"]+)"', bloc)))]
     xs, ys = nums[0::2], nums[1::2]
     return min(xs), max(ys)
 

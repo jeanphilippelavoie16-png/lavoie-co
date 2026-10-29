@@ -1747,7 +1747,8 @@ def preparer_cotes(lcs, G, mm, verif, nid):
         cotes.append({"l": l, "id": lid, "p1": p1, "p2": p2, "ax": ax, "facade": facade, "rang": rang,
                       "c1": c1, "c2": c2, "ligne": ligne, "sg": sg, "longueur": longueur, "dec": dec,
                       "source": src_, "statut": statut,
-                      "texte": f"{prefix}{pipo(longueur)} ({metres(longueur)}){suffix}",
+                      "texte": (f"{prefix}{pipo(longueur)} ({metres(longueur)}){suffix}" if METRIQUE
+                                else f"{prefix}{pipo(longueur)}{suffix}"),
                       "imp": f"{prefix}{pipo(longueur)}{suffix}", "met": f"({metres(longueur)})",
                       "rot": 0.0 if ax == 0 else 90.0,
                       "up": (0.0, 1.0) if ax == 0 else (-1.0, 0.0)})
@@ -1869,7 +1870,7 @@ def cands_texte_cote(c, ligne, fc, mm, loin=True, etages=False, grille=True, int
             yield cand([(a, bas, "middle", t1)])
     # deux lignes (pi-po au-dessus du métrique) entre les lignes d'attache
     w2 = max(MET.l(imp, fc), MET.l(met, fc))
-    if w2 + mm(1.0) <= span:
+    if METRIQUE and w2 + mm(1.0) <= span:
         yield cand([(mid, haut + pas, "middle", imp), (mid, haut, "middle", met)])
         yield cand([(mid, bas, "middle", imp), (mid, bas - pas, "middle", met)])
         if w2 + mm(2) < span:
@@ -2460,6 +2461,7 @@ def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mod
 
 NOMS_PIECES = True
 DIMS_PIECES = True
+METRIQUE = True      # projet.affichage.metrique = false : cotes en pi-po seulement
 
 
 CIRCULATION = ("DEGAGEMENT", "PASSAGE", "HALL", "CORRIDOR", "COULOIR", "CIRCULATION")
@@ -2720,7 +2722,7 @@ def cartouche(F, niv, projet, ctx):
              ("col", "Colonne"), ("sol", "Solives (sens)"),
              ("approx", "Valeur estimée (mesurée sur l'image)"),
              ("rep", "Voir registre des écarts dans RAPPORT.md"),
-             ("cote", "Cotes en pi-po (métrique en m)")]
+             ("cote", "Cotes en pi-po (métrique en m)" if METRIQUE else "Cotes en pieds-pouces")]
     if getattr(F, "limites", False):
         items.append(("limite", "Limite de zone ouverte (aucun mur)"))
     if getattr(F, "typ", False):
@@ -3221,7 +3223,8 @@ def main(argv=None):
         return 2
     projet = data.get("projet") or {}
     # projet.affichage.noms_pieces = false : aucun nom de pièce sur les plans (ils restent dans maison.json et le CSV)
-    global NOMS_PIECES, DIMS_PIECES
+    global NOMS_PIECES, DIMS_PIECES, METRIQUE
+    METRIQUE = bool(((projet.get("affichage") or {}).get("metrique", True)))
     NOMS_PIECES = bool(((projet.get("affichage") or {}).get("noms_pieces", True)))
     DIMS_PIECES = bool(((projet.get("affichage") or {}).get("dimensions_pieces", True)))
     verif = Verif()
