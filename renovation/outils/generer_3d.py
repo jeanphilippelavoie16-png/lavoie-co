@@ -153,6 +153,20 @@ def bibliotheque(scene, S):
     return out
 
 
+def modeles(scene):
+    """Modèles GLB du catalogue (catalogue_modeles.py) employés par le mobilier, intégrés en data URI."""
+    sys.path.insert(0, ICI)
+    from catalogue_modeles import CATALOGUE
+    out = {}
+    for cle in sorted({o["cle"] for o in scene["mobilier"] if o.get("forme") == "modele"}):
+        f = os.path.join(ICI, "modeles", CATALOGUE[cle]["fichier"])
+        if not os.path.isfile(f):
+            print(f"  modèle {cle} absent : {f}")
+            continue
+        out[cle] = "data:model/gltf-binary;base64," + base64.b64encode(open(f, "rb").read()).decode()
+    return out
+
+
 def peindre(boites, pieces, S):
     """Peinture par pièce : chaque grande face de mur prend la couleur de la pièce qu'elle regarde.
     SCENE["peinture"] = {id de pièce: nom de couleur}, SCENE["accents"] = [{"piece", "mur", "peinture"}]."""
@@ -300,6 +314,7 @@ def main(dossier):
              "projet": M["projet"]["nom"], "palette": S.get("palette", []),
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
     scene["materiaux"] = bibliotheque(scene, S)
+    scene["modeles_glb"] = modeles(scene)
     textures = {}
     for f in sorted(os.listdir(TEX)):
         if f.endswith(".jpg"):

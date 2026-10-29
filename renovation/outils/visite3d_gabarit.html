@@ -120,8 +120,18 @@ body.sans-joy #rail { bottom: var(--sb); }
 </div></div>
 <div id="erreur" hidden></div>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
 <script>
+// si la bibliothèque 3D ne se charge pas (réseau), on le dit au lieu d'afficher un écran vide
+setTimeout(() => { if (!window.VISITE_PRETE) { const e = document.getElementById("erreur"); e.hidden = false;
+  e.textContent = "La visite 3D n'a pas pu se charger. Vérifiez la connexion et rechargez la page."; } }, 30000);
+</script>
+<script type="importmap">{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.149.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 const S = /*__SCENE__*/null;
 const TX = /*__TEXTURES__*/null;
 const K = 0.0254;                       // pouces → mètres
@@ -129,11 +139,6 @@ const P = (x, y, z) => new THREE.Vector3(x * K, z * K, -y * K);
 const tactile = matchMedia("(pointer: coarse)").matches;
 const $ = (id) => document.getElementById(id);
 
-if (!window.THREE) {
-  const e = $("erreur"); e.hidden = false;
-  e.textContent = "La bibliothèque 3D n'a pas pu se charger. Rechargez la page.";
-  throw new Error("three.js absent");
-}
 $("projet").textContent = S.projet;
 
 // ---------- rendu (couleurs données en sRGB, comme un nuancier de peinture)
@@ -253,6 +258,9 @@ const MAT = {
   inox: M("inox", { color: "#c9cbcc", roughness: .3, metalness: .9 }),
   "caoutchouc-noir": M("caoutchouc-noir", { color: "#202020", roughness: .9 }),
   plante: M("plante", { color: "#5d7a4e", roughness: .9 }),
+  carbone: M("carbone", { color: "#1b1c1e", roughness: .28, metalness: .25 }),
+  "rouge-velo": M("rouge-velo", { color: "#a3241d", roughness: .25, metalness: .35, envMapIntensity: 1.3 }),
+  pneu: M("pneu", { color: "#141414", roughness: .75 }),
   "abat-jour": M("abat-jour", { color: "#fff3df", emissive: "#ffcf8f", emissiveIntensity: .8, roughness: 1 }),
   spot: M("spot", { color: "#ffffff", emissive: "#fff1dc", emissiveIntensity: 2.5 }),
 };
@@ -274,7 +282,8 @@ const FACE = { "+x": 0, "-x": 1, "+y": 5, "-y": 4 };   // repère maison → ord
 function boite(b, groupe) {
   const w = (b.x1 - b.x0) * K, h = (b.z1 - b.z0) * K, d = (b.y1 - b.y0) * K;
   if (w <= 0 || h <= 0 || d <= 0) return;
-  const g = new THREE.BoxGeometry(w, h, d);
+  // r : arêtes arrondies (meubles, coussins, appareils) au lieu d'arêtes vives
+  const g = b.r ? new RoundedBoxGeometry(w, h, d, 3, Math.min(b.r * K, w / 2, h / 2, d / 2) * 0.999) : new THREE.BoxGeometry(w, h, d);
   const mat = MAT[b.mat] || MAT.gypse, e = ECHELLE[b.mat] || 1;
   const pos = g.attributes.position, nor = g.attributes.normal, uv = g.attributes.uv;
   const cx = (b.x0 + b.x1) / 2 * K, cy = (b.z0 + b.z1) / 2 * K, cz = -(b.y0 + b.y1) / 2 * K;
@@ -294,10 +303,71 @@ function boite(b, groupe) {
 }
 function cylindre(c, groupe) {
   let g, p;
-  if (c.axe === "y") { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.y1 - c.y0) * K, 32); g.rotateX(Math.PI / 2); p = P(c.x, (c.y0 + c.y1) / 2, c.z); }
-  else if (c.axe === "x") { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.x1 - c.x0) * K, 32); g.rotateZ(Math.PI / 2); p = P((c.x0 + c.x1) / 2, c.y, c.z); }
-  else { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.z1 - c.z0) * K, 32); p = P(c.x, c.y, (c.z0 + c.z1) / 2); }
+  if (c.axe === "y") { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.y1 - c.y0) * K, c.pans || 32); g.rotateX(Math.PI / 2); p = P(c.x, (c.y0 + c.y1) / 2, c.z); }
+  else if (c.axe === "x") { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.x1 - c.x0) * K, c.pans || 32); g.rotateZ(Math.PI / 2); p = P((c.x0 + c.x1) / 2, c.y, c.z); }
+  else { g = new THREE.CylinderGeometry((c.r2 ?? c.r) * K, c.r * K, (c.z1 - c.z0) * K, c.pans || 32); p = P(c.x, c.y, (c.z0 + c.z1) / 2); }
   const m = new THREE.Mesh(g, MAT[c.mat] || MAT.blanc); m.position.copy(p); groupe.add(m);
+}
+
+// formes arrondies et organiques (meubles, appareils, robinetterie) : coordonnées en pouces, repère de la maison
+function uvMonde(g, mat) {               // coordonnées de texture en mètres, comme les boîtes
+  const e = ECHELLE[mat] || 1, pos = g.attributes.position, nor = g.attributes.normal, uv = g.attributes.uv;
+  if (!uv) return;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i), nx = Math.abs(nor.getX(i)), ny = Math.abs(nor.getY(i));
+    if (nx > .5) uv.setXY(i, z / e, y / e); else if (ny > .5) uv.setXY(i, x / e, z / e); else uv.setXY(i, x / e, y / e);
+  }
+}
+function placer(g, o, groupe, mat) {
+  const m = new THREE.Mesh(g, MAT[mat || o.mat] || MAT.blanc); groupe.add(m); return m;
+}
+function rectArrondi(x0, y0, x1, y1, r) {
+  r = Math.max(0.01, Math.min(r, (x1 - x0) / 2 - 0.01, (y1 - y0) / 2 - 0.01));
+  const s = new THREE.Shape();
+  s.moveTo((x0 + r) * K, y0 * K); s.lineTo((x1 - r) * K, y0 * K); s.quadraticCurveTo(x1 * K, y0 * K, x1 * K, (y0 + r) * K);
+  s.lineTo(x1 * K, (y1 - r) * K); s.quadraticCurveTo(x1 * K, y1 * K, (x1 - r) * K, y1 * K);
+  s.lineTo((x0 + r) * K, y1 * K); s.quadraticCurveTo(x0 * K, y1 * K, x0 * K, (y1 - r) * K);
+  s.lineTo(x0 * K, (y0 + r) * K); s.quadraticCurveTo(x0 * K, y0 * K, (x0 + r) * K, y0 * K);
+  return s;
+}
+function arrondi(o, groupe) {
+  // bloc à coins arrondis en plan (rayon r) et arêtes adoucies (biseau b) ; « trou » = paroi d'épaisseur donnée (bain, vasque)
+  const b = o.b ?? 0.5, r = o.r ?? 3;
+  const sh = rectArrondi(o.x0 + b, o.y0 + b, o.x1 - b, o.y1 - b, r);
+  if (o.trou) { const t = o.trou; sh.holes.push(rectArrondi(o.x0 + t, o.y0 + t, o.x1 - t, o.y1 - t, Math.max(0.5, r - t + b))); }
+  const g = new THREE.ExtrudeGeometry(sh, { depth: Math.max(0.01, (o.z1 - o.z0 - 2 * b) * K), bevelEnabled: b > 0,
+    bevelThickness: b * K, bevelSize: b * K, bevelSegments: 3, curveSegments: 16 });
+  g.rotateX(-Math.PI / 2); g.translate(0, (o.z0 + b) * K, 0); g.computeVertexNormals(); uvMonde(g, o.mat);
+  return placer(g, o, groupe);
+}
+function tube(o, groupe) {
+  const pts = o.pts.map(([x, y, z]) => P(x, y, z));
+  const c = pts.length === 2 ? new THREE.LineCurve3(pts[0], pts[1]) : new THREE.CatmullRomCurve3(pts, false, "centripetal");
+  const g = new THREE.TubeGeometry(c, pts.length === 2 ? 1 : 48, o.r * K, o.pans || 12, false);
+  const m = placer(g, o, groupe);
+  if (o.bouts) for (const q of [pts[0], pts[pts.length - 1]]) { const s = new THREE.Mesh(new THREE.SphereGeometry(o.r * K, 12, 8), m.material); s.position.copy(q); groupe.add(s); }
+  return m;
+}
+function sphere(o, groupe) {
+  const g = new THREE.SphereGeometry(o.r * K, 24, 16);
+  if (o.ecrase) g.scale(1, o.ecrase, 1);
+  const m = placer(g, o, groupe); m.position.copy(P(o.x, o.y, o.z)); return m;
+}
+function tore(o, groupe) {
+  const g = new THREE.TorusGeometry(o.R * K, o.r * K, 12, 40, o.arc ?? Math.PI * 2);
+  if (o.axe === "x") g.rotateY(Math.PI / 2); else if (o.axe === "z") g.rotateX(-Math.PI / 2);
+  if (o.tourne) g.rotateY(o.tourne * Math.PI / 180);
+  const m = placer(g, o, groupe); m.position.copy(P(o.x, o.y, o.z)); return m;
+}
+function modele(o, groupe) {
+  // GLB normalisé : sa plus grande dimension en plan devient o.L (po), ou sa hauteur o.H ; posé au sol (o.z), centré en (x, y)
+  const src = GLB[o.cle]; if (!src) return;
+  const m = src.clone(true), bb = new THREE.Box3().setFromObject(m), t = bb.getSize(new THREE.Vector3()), c = bb.getCenter(new THREE.Vector3());
+  const s = o.H ? o.H * K / t.y : o.L ? o.L * K / Math.max(t.x, t.z) : (o.echelle || 1);
+  const pivot = new THREE.Group(); m.position.set(-c.x, -bb.min.y, -c.z); pivot.add(m);
+  pivot.scale.setScalar(s); pivot.rotation.y = (o.rot || 0) * Math.PI / 180; pivot.position.copy(P(o.x, o.y, o.z || 0));
+  m.traverse((n) => { if (n.isMesh) { n.material.envMapIntensity = 1; if (o.mat && MAT[o.mat]) n.material = MAT[o.mat]; } });
+  groupe.add(pivot); return pivot;
 }
 
 // ---------- construction
@@ -328,7 +398,16 @@ const [bx0, by0, bx1, by1] = S.bornes;
   const g = new THREE.ShapeGeometry(sh); g.rotateX(-Math.PI / 2);
   const pl = new THREE.Mesh(g, MAT.plafond); pl.material.side = THREE.DoubleSide; pl.position.y = S.H * K; gPlafond.add(pl);
 }
-for (const o of S.mobilier) (o.forme === "cylindre" ? cylindre : boite)(o, gMob);
+// modèles 3D (GLB) du catalogue, chargés une fois puis copiés à chaque emplacement
+const GLB = {};
+{
+  const ld = new GLTFLoader(); ld.setMeshoptDecoder(MeshoptDecoder);
+  await Promise.all(Object.entries(S.modeles_glb || {}).map(async ([cle, uri]) => {
+    try { GLB[cle] = (await ld.loadAsync(uri)).scene; } catch (e) { console.warn("modèle", cle, e); }
+  }));
+}
+const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele };
+for (const o of S.mobilier) (FORMES[o.forme] || boite)(o, gMob);
 
 // ---------- éclairage : encastrés blanc chaud + lumière d'ambiance douce
 // lumière renvoyée par le plancher et les murs (simplifiée) : le plafond reste clair au lieu de virer au brun
@@ -730,4 +809,9 @@ function boucle(t) {
   requestAnimationFrame(boucle);
 }
 requestAnimationFrame(boucle);
+window.VISITE_PRETE = true;
+// accès pour les tests automatiques (Playwright)
+Object.assign(window, { joueur, orbite, choisirMode, masquerAstuce, solSous, allerA, vx, vy, plan, scene, camera, renderer, MAT });
+Object.defineProperty(window, "trajet", { get: () => trajet });
+Object.defineProperty(window, "mode", { get: () => mode });
 </script>
