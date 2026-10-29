@@ -1310,6 +1310,11 @@ for e in ECARTS:
     if e["id"] == ECARTS[-1]["id"] or e["description"].startswith("constat du propriétaire"):
         e["a_valider_sur_place"] = ("Au RDC, sur l'axe C (17'-0\" du nu ext. avant) où il n'y a ni cloison ni poutre : comment le plafond "
                                     "et les solives sont-ils portés ? Hauteur libre sous la poutre 8\"x8\" de l'axe B.")
+# une seule mesure pour la structure des axes B et C (écart « axes » et écart du constat)
+_ax = next(e for e in ECARTS if e["id"] == EC['axes'])
+for e in ECARTS:
+    if e["description"].startswith("constat du propriétaire"):
+        e["a_valider_sur_place"] = _ax["a_valider_sur_place"]
 # le sous-sol a des ouvertures déplacées : un écart pour les positions et tailles présumées
 ECARTS.append({"id": f"ecart-{len(ECARTS) + 1:03d}", "niveau": "SS", "impact": "moyen", "statut": "ouvert", "photo": "P2",
                "description": (f"{REPONSES} : la porte du mur droit et la fenêtre du milieu ont été permutées ; la grande fenêtre "

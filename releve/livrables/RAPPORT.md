@@ -115,31 +115,30 @@ Aucune zone de rénovation n'a été désignée : le tri suit l'impact des écar
 
 ### Impact critique
 
-1. **Relever la poutre apparente au plafond du RDC sur l'axe B (13'-1" du nu ext. avant) : section, hauteur libre dessous, appuis aux extrémités ; sur l'axe C (17'-0"), où aucune poutre n'est visible : comment le plafond et les solives sont-ils portés depuis le retrait de la cloison ?** — Pourquoi : Axes porteurs d'origine (P1) : B à 13'-1" et C à 17'-0" du nu ext. (⚠13, RDC)
+1. **Relever la poutre apparente au plafond du RDC sur l'axe B (13'-1" du nu ext. avant) : section, hauteur libre dessous, appuis aux extrémités ; sur l'axe C (17'-0"), où aucune poutre n'est visible : comment le plafond et les solives sont-ils portés depuis le retrait de la cloison ?** — Pourquoi : Axes porteurs d'origine (P1) : B à 13'-1" et C à 17'-0" du nu ext. (⚠13, ⚠30, RDC)
 2. **Relever les fissures (longueur, ouverture, évolution) au plafond de la cuisine le long de l'ancienne cloison de l'escalier et de la poutre FLUSH, et au plafond du salon à ≈ 26'-7" du coin gauche.** — Pourquoi : Fissures signalées en 2016 (P1) : « zone de fissures au plafond de plâtre » le long de la ligne 6 (≈ 26'-1" à 26'-7" du coin gauche), de l'axe C au mur arrière, et le long de l'axe C (≈ 16'-3" à 17'-0" du nu ext. avant), de 26'-4" à ≈ 31'-7" (⚠14, RDC)
-3. **Au RDC, sur l'axe C (17'-0" du nu ext. avant) où il n'y a ni cloison ni poutre : comment le plafond et les solives sont-ils portés ? Hauteur libre sous la poutre 8"x8" de l'axe B.** — Pourquoi : constat du propriétaire (épreuve A-101 R0 annotée, 2026-10-29) (⚠30, RDC)
 
 ### Impact moyen
 
-4. **Mesurer la hauteur plancher-plafond au sous-sol (sous solives et sous les poutres 8x10) et au RDC (salon, cuisine sous la poutre FLUSH).** — Pourquoi : Hauteurs de plafond inconnues aux deux niveaux (aucune coupe ni élévation ; aucune hauteur écrite). (⚠8, global)
-5. **Mesurer la fissure au plafond du salon, près de 26'-7" du coin avant gauche.** — Pourquoi : Fissure ± 1,2 m au plafond de stucco du salon (P1) (⚠15, RDC)
-6. **Constater l'usage et l'aménagement actuels de la salle à manger (ancienne chambre d'utilité) et de la cuisine.** — Pourquoi : Usage des pièces : le croquis 2016 nomme « Salle à manger » l'espace que le plan 1957 nomme « CHAMBRE D'UTILITÉ », et « Cuisine » la « CUISINE S.-À-MANGER » d'origine (⚠16, RDC)
-7. **Mesurer, au mur droit du sous-sol, la largeur et l'axe de la porte (attendu à 15'-0" du nu ext. avant) et de la fenêtre (attendu à 6'-3") ; au mur arrière, la largeur et l'axe des deux fenêtres de gauche (attendus à 9'-4" et 14'-8" du coin arrière gauche).** — Pourquoi : réponses du propriétaire (2026-10-29) : la porte du mur droit et la fenêtre du milieu ont été permutées (⚠31, SS)
+3. **Mesurer la hauteur plancher-plafond au sous-sol (sous solives et sous les poutres 8x10) et au RDC (salon, cuisine sous la poutre FLUSH).** — Pourquoi : Hauteurs de plafond inconnues aux deux niveaux (aucune coupe ni élévation ; aucune hauteur écrite). (⚠8, global)
+4. **Mesurer la fissure au plafond du salon, près de 26'-7" du coin avant gauche.** — Pourquoi : Fissure ± 1,2 m au plafond de stucco du salon (P1) (⚠15, RDC)
+5. **Constater l'usage et l'aménagement actuels de la salle à manger (ancienne chambre d'utilité) et de la cuisine.** — Pourquoi : Usage des pièces : le croquis 2016 nomme « Salle à manger » l'espace que le plan 1957 nomme « CHAMBRE D'UTILITÉ », et « Cuisine » la « CUISINE S.-À-MANGER » d'origine (⚠16, RDC)
+6. **Mesurer, au mur droit du sous-sol, la largeur et l'axe de la porte (attendu à 15'-0" du nu ext. avant) et de la fenêtre (attendu à 6'-3") ; au mur arrière, la largeur et l'axe des deux fenêtres de gauche (attendus à 9'-4" et 14'-8" du coin arrière gauche).** — Pourquoi : réponses du propriétaire (2026-10-29) : la porte du mur droit et la fenêtre du milieu ont été permutées (⚠31, SS)
 
 ### Impact faible
 
-8. **Consulter le certificat de localisation / plan cadastral (aucune mesure de maison en jeu).** — Pourquoi : Cote en conflit cote-IMP-010 — Longueur de la ligne latérale gauche du lot (⚠1, global)
-9. **Mesurer la largeur brute de la fenêtre du mur gauche du sous-sol, côté avant (au-dessus de l'évier à lessive).** — Pourquoi : Cote en conflit cote-SS-017 — Largeur de la fenêtre gauche basse du sous-sol (au-dessus de l'évier à lessive). (⚠4, SS)
-10. **Mesurer l'épaisseur des murs du caveau à la porte 2'-6", la profondeur hors-tout et l'épaisseur des murs de l'entrée arrière à la porte extérieure.** — Pourquoi : Épaisseurs PRÉSUMÉES par analogie ou par défaut (⚠7, global)
-11. **Mesurer de l'axe de la fenêtre de l'entrée arrière au nu ext. de son mur droit.** — Pourquoi : Entrée arrière : 8'-2" + 8'-3" + 8'-0" + 2'-9" = 27'-2" (axe de la fenêtre + 2'-9") alors que 18'-3" + 9'-0" = 27'-3" au nu ext. (⚠19, RDC)
-12. **Mesurer la largeur des deux fenêtres arrière gauches (issues de l'ancienne 6'-8") et leur position depuis le coin arrière gauche ; largeur de la fenêtre droite haute (6'-0" du coin arrière).** — Pourquoi : Fenêtres arrière et droite haute du sous-sol (⚠20, SS)
-13. **Mesurer la position de la porte du caveau depuis le coin intérieur arrière gauche du sous-sol.** — Pourquoi : Porte du caveau « PORTE 2'-6" » positionnée par la cote 3'-6" dont le point de départ n'est pas dessiné (nu ext. ou int. du mur gauche du caveau). (⚠21, SS)
-14. **Repérer la poutre au plafond de la cuisine (bande de plâtre, fissures) et mesurer sa distance au mur arrière.** — Pourquoi : Poutre 6"x10" FLUSH (cuisine) non cotée en position (⚠23, RDC)
-15. **Vérifier l'appui de la cloison à 12'-2" du coin gauche sur la solive doublée (note « solives doubles sous les cloisons »).** — Pourquoi : Colonne str-SS-C01 (11'-0" du coin gauche, sur la poutre arrière à 17'-0" du nu ext. avant) (⚠24, SS)
-16. **Repérer au sous-sol la colonne de chute sous la S. de bain (0 à 9'-0" du coin gauche, 13'-1" à 18'-7" du nu ext. avant) et sous l'ancien évier de cuisine.** — Pourquoi : Superposition de la plomberie : chauffe-eau du sous-sol à 2'-2" du coin gauche et 9'-0" du nu ext. (⚠25, global)
-17. **Mesurer la saillie et la largeur du massif de cheminée à l'extérieur, côté gauche.** — Pourquoi : Cheminée : massif extérieur au mur gauche non coté (seule sa face avant, à 11'-0" du nu ext. avant, est située par la chaîne gauche du sous-sol) (⚠26, global)
-18. **Certificat de localisation récent pour l'implantation réelle et l'orientation.** — Pourquoi : Plan d'implantation P7 (1957, « maison projetée ») (⚠27, global)
-19. **Constater pour chaque porte le type de battant, le côté des pentures et le côté d'ouverture.** — Pourquoi : Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) (⚠29, SS)
+7. **Consulter le certificat de localisation / plan cadastral (aucune mesure de maison en jeu).** — Pourquoi : Cote en conflit cote-IMP-010 — Longueur de la ligne latérale gauche du lot (⚠1, global)
+8. **Mesurer la largeur brute de la fenêtre du mur gauche du sous-sol, côté avant (au-dessus de l'évier à lessive).** — Pourquoi : Cote en conflit cote-SS-017 — Largeur de la fenêtre gauche basse du sous-sol (au-dessus de l'évier à lessive). (⚠4, SS)
+9. **Mesurer l'épaisseur des murs du caveau à la porte 2'-6", la profondeur hors-tout et l'épaisseur des murs de l'entrée arrière à la porte extérieure.** — Pourquoi : Épaisseurs PRÉSUMÉES par analogie ou par défaut (⚠7, global)
+10. **Mesurer de l'axe de la fenêtre de l'entrée arrière au nu ext. de son mur droit.** — Pourquoi : Entrée arrière : 8'-2" + 8'-3" + 8'-0" + 2'-9" = 27'-2" (axe de la fenêtre + 2'-9") alors que 18'-3" + 9'-0" = 27'-3" au nu ext. (⚠19, RDC)
+11. **Mesurer la largeur des deux fenêtres arrière gauches (issues de l'ancienne 6'-8") et leur position depuis le coin arrière gauche ; largeur de la fenêtre droite haute (6'-0" du coin arrière).** — Pourquoi : Fenêtres arrière et droite haute du sous-sol (⚠20, SS)
+12. **Mesurer la position de la porte du caveau depuis le coin intérieur arrière gauche du sous-sol.** — Pourquoi : Porte du caveau « PORTE 2'-6" » positionnée par la cote 3'-6" dont le point de départ n'est pas dessiné (nu ext. ou int. du mur gauche du caveau). (⚠21, SS)
+13. **Repérer la poutre au plafond de la cuisine (bande de plâtre, fissures) et mesurer sa distance au mur arrière.** — Pourquoi : Poutre 6"x10" FLUSH (cuisine) non cotée en position (⚠23, RDC)
+14. **Vérifier l'appui de la cloison à 12'-2" du coin gauche sur la solive doublée (note « solives doubles sous les cloisons »).** — Pourquoi : Colonne str-SS-C01 (11'-0" du coin gauche, sur la poutre arrière à 17'-0" du nu ext. avant) (⚠24, SS)
+15. **Repérer au sous-sol la colonne de chute sous la S. de bain (0 à 9'-0" du coin gauche, 13'-1" à 18'-7" du nu ext. avant) et sous l'ancien évier de cuisine.** — Pourquoi : Superposition de la plomberie : chauffe-eau du sous-sol à 2'-2" du coin gauche et 9'-0" du nu ext. (⚠25, global)
+16. **Mesurer la saillie et la largeur du massif de cheminée à l'extérieur, côté gauche.** — Pourquoi : Cheminée : massif extérieur au mur gauche non coté (seule sa face avant, à 11'-0" du nu ext. avant, est située par la chaîne gauche du sous-sol) (⚠26, global)
+17. **Certificat de localisation récent pour l'implantation réelle et l'orientation.** — Pourquoi : Plan d'implantation P7 (1957, « maison projetée ») (⚠27, global)
+18. **Constater pour chaque porte le type de battant, le côté des pentures et le côté d'ouverture.** — Pourquoi : Sens d'ouverture non dessiné pour les deux portes du sous-sol (rectangle barré d'un X dans le mur, aucun arc) (⚠29, SS)
 
 ## 8. Modifier et régénérer
 

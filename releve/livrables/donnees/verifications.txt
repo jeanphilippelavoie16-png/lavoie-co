@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : R0    Date : 2026-10-29
-Données  : maison.json, sha256 83993030762c85e3b15350beaa2b91c2a904fd092f86a7e6c5f1e78d80c37dbd
+Données  : maison.json, sha256 eec2684749e30edb5a2afba14774ffae62150eb55f17ac6af7025cc2f5bf8cc1
 Feuilles : A-100 Sous-sol (3/16" = 1'-0") ; A-101 Rez-de-chaussée (3/16" = 1'-0")
 
 SOMMAIRE
