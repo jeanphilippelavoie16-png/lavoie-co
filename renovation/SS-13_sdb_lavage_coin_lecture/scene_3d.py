@@ -167,6 +167,12 @@ M = []
 # --- séjour épuré, tourné vers le mur de droite : un sofa, une télé ; on voit l'escalier et le gym derrière la vitre
 M += [A(428, 96, 446, 150, 4, 17, "placage", r=1, b=0.4), MOD("tele", 444.5, 123, face="-x", z=30)]
 M += [A(330, 70, 416, 176, 0, 0.5, "tapis", r=2, b=0.2), MOD("canape", 350, 123, face="+x")]
+# grand cadre photo sur le mur avant, entre l'escalier vitré et la fenêtre : cadre noir, passe-partout blanc, lampe laiton
+M += [B(288.5, 10, 325.5, 10.8, 21.5, 80.25, "blanc"),
+      B(287, 10, 288.5, 11.5, 20, 81.75, "metal"), B(325.5, 10, 327, 11.5, 20, 81.75, "metal"),
+      B(287, 10, 327, 11.5, 20, 21.5, "metal"), B(287, 10, 327, 11.5, 80.25, 81.75, "metal"),
+      {"forme": "image", "cle": "photo_salon", "x": 307, "y": 10.85, "z0": 25.5, "z1": 76.25, "larg": 29, "face": "+y"},
+      T([(300, 10.2, 86), (300, 14, 87), (314, 14, 87), (314, 10.2, 86)], 0.4, "laiton"), CX(298, 316, 15, 86.5, 1.2, "laiton")]
 # --- vestiaire près de l'entrée : banc, cases à souliers, crochets, tablette ; armoire à manteaux fermée
 M += [B(334, 210, 402, 227.75, 0, 3, "metal"), A(334, 209.75, 402, 227.75, 15.5, 17.5, "placage", r=0.3, b=0.3),
       A(334, 211, 402, 227.75, 66, 67.5, "placage", r=0.3, b=0.3), A(334, 209.75, 402, 227.75, 70, 88, "laque-vert", r=0.3, b=0.3),
@@ -271,6 +277,7 @@ SCENE = {
     "accents": [{"piece": "piece-SS-VEST", "mur": "mur-SS-P11", "peinture": "Vert forêt"},
                 {"piece": "piece-SS-CH1", "mur": "mur-SS-003", "peinture": "Argile"},
                 {"piece": "piece-SS-BUREAU", "mur": "mur-SS-P07", "peinture": "Vert forêt"}],
+    "images": {"photo_salon": "../prive/photo_salon.jpg"},    # photo personnelle : hors du dépôt (renovation/prive/)
     "mobilier": M,
     "revetements": [],
     "lumieres": [{"x": 300, "y": 80}, {"x": 404, "y": 90}, {"x": 368, "y": 196}, {"x": 424, "y": 190}, {"x": 400, "y": 126}, {"x": 190, "y": 182},

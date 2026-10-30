@@ -371,6 +371,15 @@ function tore(o, groupe) {
 const OMBRES = [];                       // empreintes au sol des meubles (ombres de contact)
 const VECT = { "+z": [0, 1], "-z": [0, -1], "+x": [1, 0], "-x": [-1, 0] };         // dans le fichier GLB (x, z)
 const FACE3 = { "+x": [1, 0], "-x": [-1, 0], "+y": [0, -1], "-y": [0, 1] };       // repère maison → three (x, z)
+function image(o, groupe) {
+  // photo plane contre un mur : o.face = vers où elle regarde (repère maison), centrée en (x, y), de z0 à z1, largeur o.larg
+  const uri = (S.images || {})[o.cle]; if (!uri) return;
+  const g = new THREE.PlaneGeometry(o.larg * K, (o.z1 - o.z0) * K);
+  const t = loader.load(uri); t.encoding = THREE.sRGBEncoding; t.anisotropy = 8;
+  const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: t, roughness: .55 }));
+  m.rotation.y = { "-y": 0, "+y": Math.PI, "+x": Math.PI / 2, "-x": -Math.PI / 2 }[o.face || "+y"];
+  m.position.copy(P(o.x, o.y, (o.z0 + o.z1) / 2)); groupe.add(m); return m;
+}
 function modele(o, groupe) {
   // GLB à l'échelle réelle (ou forcé : o.L en plan, o.H en hauteur), posé au sol (o.z), centré en (x, y),
   // tourné pour que son devant (« avant » du catalogue) regarde vers o.face ; o.rot ajoute des degrés
@@ -434,7 +443,7 @@ const GLB = {}, ECHECS = [];
     ld.parseAsync(octets(uri), "").then((g) => { GLB[cle] = g.scene; }).catch((e) => { ECHECS.push(cle); console.warn("modèle", cle, e); })));
   try { window.createImageBitmap = cib; } catch (_) {}
 }
-const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele };
+const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele, image };
 for (const o of S.mobilier) (FORMES[o.forme] || boite)(o, gMob);
 { // ombres de contact sous les meubles : empreintes au sol unies puis floues, un seul plan transparent
   const mx = 12, W = Math.ceil(bx1 - bx0 + 2 * mx), Hh = Math.ceil(by1 - by0 + 2 * mx);

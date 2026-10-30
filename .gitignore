@@ -4,3 +4,6 @@ serveur/
 # Relevé : tuiles régénérables par releve/livrables/outils/pretraitement.py
 releve/travail/prep/
 __pycache__/
+
+# Photos personnelles : jamais dans le dépôt (public) ; seulement dans les visites publiées, privées
+renovation/prive/

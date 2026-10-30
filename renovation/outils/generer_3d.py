@@ -352,6 +352,29 @@ def finitions(niv, par_mur, H, sill, head, S):
     return out
 
 
+def couper_aux_cloisons(boites, niv):
+    """Coupe les boîtes des murs de fondation là où une cloison les rejoint, pour que chaque pièce ait sa peinture
+    (sinon un long mur prend la couleur de la pièce où tombe son milieu)."""
+    cloisons = [m for m in niv["murs"] if m["type"] == "int"]
+    out = []
+    for b in boites:
+        mur = next((m for m in niv["murs"] if m["id"] == b.get("mur")), None)
+        if not mur or mur["type"] not in ("fondation", "ext") or b.get("mat") not in ("gypse", "fondation"):
+            out.append(b); continue
+        horiz = (b["x1"] - b["x0"]) >= (b["y1"] - b["y0"])
+        k, autre = ("x", "y") if horiz else ("y", "x")
+        coupes = []
+        for c in cloisons:
+            for (cx, cy) in ((c["x1"], c["y1"]), (c["x2"], c["y2"])):
+                v, w = (cx, cy) if horiz else (cy, cx)
+                if b[k + "0"] + 1 < v < b[k + "1"] - 1 and b[autre + "0"] - 8 < w < b[autre + "1"] + 8:
+                    coupes.append(v)
+        bords = [b[k + "0"]] + sorted(set(coupes)) + [b[k + "1"]]
+        for a0, a1 in zip(bords, bords[1:]):
+            out.append(dict(b, **{k + "0": a0, k + "1": a1}))
+    return out
+
+
 def peindre(boites, pieces, S):
     """Peinture par pièce : chaque grande face de mur prend la couleur de la pièce qu'elle regarde.
     SCENE["peinture"] = {id de pièce: nom de couleur}, SCENE["accents"] = [{"piece", "mur", "peinture"}]."""
@@ -489,6 +512,7 @@ def main(dossier):
                 rects.append(tr)
     tremies, cage = cage_tremie(rects, H, S.get("hauteur_etage", 105)) if rects else ([], [])
     boites += cage
+    boites = couper_aux_cloisons(boites, niv)
     reculer_bouts_de_murs(boites)
     finis = finitions(niv, par_mur, H, sill, head, S)
     peindre(boites, niv["pieces"], S)
@@ -511,6 +535,16 @@ def main(dossier):
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
     scene["materiaux"] = bibliotheque(scene, S)
     scene["modeles_glb"], scene["modeles_info"], scene["credits"] = modeles(scene)
+    # photos et cadres : SCENE["images"] = {clé: chemin relatif au projet}. Un fichier absent (ex. dossier renovation/prive/,
+    # gardé hors du dépôt) est simplement omis : le cadre reste, vide. SANS_PRIVE=1 force l'omission (version à committer).
+    scene["images"] = {}
+    for cle, rel in (S.get("images") or {}).items():
+        f = os.path.normpath(os.path.join(dossier, rel))
+        if os.path.isfile(f) and not os.environ.get("SANS_PRIVE"):
+            mime = "image/png" if f.lower().endswith(".png") else "image/jpeg"
+            scene["images"][cle] = f"data:{mime};base64," + base64.b64encode(open(f, "rb").read()).decode()
+        else:
+            print(f"  image {cle} omise ({rel})")
     textures = {}
     for f in sorted(os.listdir(TEX)):
         if f.endswith(".jpg"):
