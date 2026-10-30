@@ -42,5 +42,10 @@ gardent l'ancienne visionneuse tant qu'on ne les régénère pas.
 `renovation/outils/materiaux/` : bibliothèque de matériaux réels (ambientCG, Poly Haven, CC0, ou fichiers de
 fournisseurs), décrite dans `renovation/outils/catalogue_materiaux.py` ; voir `renovation/outils/materiaux/README.md`.
 
+## Modèles 3D
+`renovation/outils/modeles/` : 31 modèles réels optimisés (Amazon Berkeley Objects, Sketchfab, Poly Haven ; CC BY 4.0 ou CC0),
+décrits dans `renovation/outils/catalogue_modeles.py` (sens, licence, attribution) ; recherche et sources dans
+`renovation/outils/modeles/SOURCES.md`. Les crédits sont affichés dans la visite (panneau Matériaux).
+
 ## Skill de design
 `.claude/skills/designer-interieur/SKILL.md` : méthode, dégagements, code à vérifier, direction de design, livrables.

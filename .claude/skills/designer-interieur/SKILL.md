@@ -73,6 +73,10 @@ proposition claire, belle, réaliste et justifiée, dessinée avec les outils du
 2. Maquette 3D (`3d/visite.html`) avec les matériaux, la peinture et le mobilier ; publiée et lien donné au client.
    Peinture : `peintures` (nom → couleur, référence de nuancier « à valider sur échantillon »), `peinture` (pièce → couleur)
    et `accents` (pièce + mur → couleur) dans `scene_3d.py`. Arrêts de visite (`visites`) dans un ordre logique de parcours.
+   Meubles et appareils : de vrais modèles 3D du catalogue `renovation/outils/catalogue_modeles.py`
+   (`{"forme": "modele", "cle", "x", "y", "face"}`, échelle réelle) plutôt que des boîtes ; matériaux du catalogue
+   `catalogue_materiaux.py`. Les crédits CC BY s'affichent dans le panneau Matériaux : ne jamais ajouter un modèle sans
+   licence vérifiée (CC0 ou CC BY ; jamais NC, ND, éditorial).
 3. `DESIGN.md` : programme, parti pris, ce qui a changé par rapport à la version précédente et pourquoi, options A/B,
    points à vérifier sur place, ordre de grandeur de coût (fourchette, source citée).
 4. Un message court au client : ce qui est nouveau, 3 à 5 décisions qu'on lui demande, liens.

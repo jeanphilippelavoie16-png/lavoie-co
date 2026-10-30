@@ -135,7 +135,7 @@ def escalier(e, H, etage):
         bas = 0 if z < 60 else z - 12            # dessous fermé jusqu'au sol, ou sous-face de 1 pi quand on passe dessous
         out.append(rect(i * pas, (i + 1) * pas, bas, z - 1.25, "gypse"))
         out.append(rect(max(0, i * pas - 1), (i + 1) * pas, z - 1.25, z, "placage"))   # giron (nez de 1 po)
-        out.append(rect(i * pas, i * pas + 0.75, z - r, z - 1.25, "porte"))           # contremarche
+        out.append(rect(i * pas - 0.75, i * pas, z - r, z - 1.25, "porte"))           # contremarche, devant le dessous
         if bas < 72:
             q = rect(i * pas, (i + 1) * pas, 0, 1, "")
             obst.append({k: q[k] for k in ("x0", "x1", "y0", "y1")})
@@ -220,13 +220,117 @@ def modeles(scene):
     """Modèles GLB du catalogue (catalogue_modeles.py) employés par le mobilier, intégrés en data URI."""
     sys.path.insert(0, ICI)
     from catalogue_modeles import CATALOGUE
-    out = {}
+    out, info, credits = {}, {}, []
     for cle in sorted({o["cle"] for o in scene["mobilier"] if o.get("forme") == "modele"}):
-        f = os.path.join(ICI, "modeles", CATALOGUE[cle]["fichier"])
+        e = CATALOGUE[cle]
+        f = os.path.join(ICI, "modeles", e["fichier"])
         if not os.path.isfile(f):
             print(f"  modèle {cle} absent : {f}")
             continue
         out[cle] = "data:model/gltf-binary;base64," + base64.b64encode(open(f, "rb").read()).decode()
+        info[cle] = {"avant": e.get("avant", "+z")}
+        credits.append([e["usage"], e["attribution"], e["licence"]])
+    from catalogue_materiaux import CATALOGUE as MATS
+    for cle in sorted(scene.get("materiaux") or {}):
+        m = MATS.get(cle) or {}
+        if m.get("source") in ("ambientcg", "polyhaven"):
+            credits.append([m["usage"], {"ambientcg": "ambientCG", "polyhaven": "Poly Haven"}[m["source"]] + " " + m["id"], "CC0 1.0"])
+    return out, info, credits
+
+
+def porte_fermee(m, o, t):
+    """Porte extérieure fermée dans l'épaisseur du mur, avec poignée côté intérieur."""
+    L = math.hypot(m["x2"] - m["x1"], m["y2"] - m["y1"])
+    ux, uy = (m["x2"] - m["x1"]) / L, (m["y2"] - m["y1"]) / L
+    c, w = o["position"]["valeur"], o["largeur"]["valeur"]
+    pa = (m["x1"] + ux * (c - w / 2), m["y1"] + uy * (c - w / 2)); pb = (m["x1"] + ux * (c + w / 2), m["y1"] + uy * (c + w / 2))
+    if abs(ux) > 0.5:
+        f = {"x0": min(pa[0], pb[0]), "x1": max(pa[0], pb[0]), "y0": m["y1"] - 0.9, "y1": m["y1"] + 0.9}
+        cy = m["y1"] + (2 if m["y1"] < 190 else -2)
+        poignee = {"x0": f["x1"] - 4, "x1": f["x1"] - 3, "y0": min(cy, m["y1"]), "y1": max(cy, m["y1"])}
+    else:
+        f = {"x0": m["x1"] - 0.9, "x1": m["x1"] + 0.9, "y0": min(pa[1], pb[1]), "y1": max(pa[1], pb[1])}
+        cx = m["x1"] + (2 if m["x1"] < 228 else -2)
+        poignee = {"x0": min(cx, m["x1"]), "x1": max(cx, m["x1"]), "y0": f["y1"] - 4, "y1": f["y1"] - 3}
+    return [dict(f, z0=0.5, z1=80, mat="porte-ext"), dict(poignee, z0=37, z1=39, mat="inox")]
+
+
+def reculer_bouts_de_murs(boites):
+    """Un bout de mur qui aboutit sur la face d'un autre mur est reculé de 0,05 po : plus de faces confondues
+    (scintillement aux jonctions en T, surtout quand les deux faces ont des peintures différentes)."""
+    murs = [b for b in boites if "mur" in b]
+    for b in murs:
+        for k in ("x", "y"):
+            autre = "y" if k == "x" else "x"
+            for s_, kk in ((-1, k + "0"), (1, k + "1")):
+                v = b[kk]
+                for o in murs:
+                    if o is b or o["mur"] == b["mur"]:
+                        continue
+                    for ok in (k + "0", k + "1"):
+                        if abs(o[ok] - v) < 0.02 and ((ok.endswith("0") and s_ < 0) or (ok.endswith("1") and s_ > 0)):
+                            chev = min(b[autre + "1"], o[autre + "1"]) - max(b[autre + "0"], o[autre + "0"])
+                            if chev > 0.3 and (b[autre + "1"] - b[autre + "0"]) < (o[autre + "1"] - o[autre + "0"]):
+                                b[kk] = v - s_ * 0.05
+
+
+def finitions(niv, par_mur, H, sill, head, S):
+    """Plinthes, chambranles et seuils des portes, cadres, meneaux et tablettes des fenêtres."""
+    sol = S.get("sol_defaut", "chene")
+    out = []
+    cx0, cy0 = 228, 190                                   # vers l'intérieur de la maison
+    for m in niv["murs"]:
+        if m.get("materiau") in ("verre", "lattes"):
+            continue
+        t = (m.get("epaisseur") or {}).get("valeur") or 4.5
+        L = math.hypot(m["x2"] - m["x1"], m["y2"] - m["y1"])
+        ux, uy = (m["x2"] - m["x1"]) / L, (m["y2"] - m["y1"]) / L
+        horiz = abs(ux) > 0.5
+        ext = m["type"] in ("fondation", "ext")
+        cotes = [1, -1]
+        if ext:                                           # mur extérieur : seulement la face intérieure
+            cotes = [1 if ((cy0 - m["y1"]) if horiz else (cx0 - m["x1"])) > 0 else -1]
+
+        def b_(a, b, n0, n1, z0, z1, mat):
+            # a, b le long de l'axe ; n0, n1 décalage perpendiculaire depuis l'axe
+            pa = (m["x1"] + ux * a, m["y1"] + uy * a); pb = (m["x1"] + ux * b, m["y1"] + uy * b)
+            if horiz:
+                return {"x0": min(pa[0], pb[0]), "x1": max(pa[0], pb[0]), "y0": m["y1"] + min(n0, n1), "y1": m["y1"] + max(n0, n1), "z0": z0, "z1": z1, "mat": mat}
+            return {"x0": m["x1"] + min(n0, n1), "x1": m["x1"] + max(n0, n1), "y0": min(pa[1], pb[1]), "y1": max(pa[1], pb[1]), "z0": z0, "z1": z1, "mat": mat}
+
+        trous = sorted(((o["position"]["valeur"] - o["largeur"]["valeur"] / 2, o["position"]["valeur"] + o["largeur"]["valeur"] / 2, o)
+                        for o in par_mur.get(m["id"], []) if o.get("position", {}).get("valeur") is not None), key=lambda z: z[0])
+        # plinthes de 4 po entre les portes (sous les fenêtres aussi)
+        pos = -t / 2 if not ext else 0
+        bouts = []
+        for a, b, o in trous:
+            if o["type"] != "fenetre":
+                bouts.append((pos, a)); pos = b
+        bouts.append((pos, L + (t / 2 if not ext else 0)))
+        for a, b in bouts:
+            if b - a < 1:
+                continue
+            for s_ in cotes:
+                out.append(b_(a, b, s_ * t / 2, s_ * (t / 2 + 0.5), 0, 4, "plinthe"))
+        for a, b, o in trous:
+            if o["type"] == "fenetre":
+                # cadre noir et meneau dans le plan de la vitre, jambages blancs, tablette de chêne
+                f, d = 1.5, 2.5
+                out += [b_(a, b, -d / 2, d / 2, sill, sill + f, "metal"), b_(a, b, -d / 2, d / 2, head - f, head, "metal"),
+                        b_(a, a + f, -d / 2, d / 2, sill, head, "metal"), b_(b - f, b, -d / 2, d / 2, sill, head, "metal"),
+                        b_((a + b) / 2 - 0.75, (a + b) / 2 + 0.75, -d / 2, d / 2, sill, head, "metal")]
+                for s_ in cotes:
+                    out += [b_(a, a + 0.5, s_ * d / 2, s_ * t / 2, sill, head, "porte"), b_(b - 0.5, b, s_ * d / 2, s_ * t / 2, sill, head, "porte"),
+                            b_(a, b, s_ * d / 2, s_ * t / 2, head - 0.5, head, "porte"),
+                            b_(a - 1.5, b + 1.5, s_ * d / 2, s_ * (t / 2 + 1.25), sill - 0.75, sill, "placage")]
+                continue
+            # porte : seuil, doublage de l'ouverture et chambranles de 2½ po des deux côtés
+            out.append(b_(a, b, -t / 2, t / 2, 0, 0.06, sol))
+            out += [b_(a, a + 0.5, -t / 2, t / 2, 0, 80, "porte"), b_(b - 0.5, b, -t / 2, t / 2, 0, 80, "porte"),
+                    b_(a, b, -t / 2, t / 2, 79.5, 80, "porte")]
+            for s_ in cotes:
+                out += [b_(a - 2.5, a, s_ * t / 2, s_ * (t / 2 + 0.6), 0, 82.5, "porte"), b_(b, b + 2.5, s_ * t / 2, s_ * (t / 2 + 0.6), 0, 82.5, "porte"),
+                        b_(a - 2.5, b + 2.5, s_ * t / 2, s_ * (t / 2 + 0.6), 80, 82.5, "porte")]
     return out
 
 
@@ -319,8 +423,10 @@ def main(dossier):
                         cadres = [(f["y0"], f["y0"] + c, 0.5, 80), (f["y1"] - c, f["y1"], 0.5, 80), (f["y0"], f["y1"], 0.5, 2), (f["y0"], f["y1"], 78.5, 80)]
                         portes += [{"x0": f["x0"] - 0.2, "x1": f["x1"] + 0.2, "y0": a0, "y1": a1, "z0": z0, "z1": z1, "mat": "metal"} for a0, a1, z0, z1 in cadres]
                     portes.append({**f, "z0": 38, "z1": 40, "mat": "metal", **({"x0": f["x1"] - 4, "x1": f["x1"] - 3} if long_x else {"y0": f["y1"] - 4, "y1": f["y1"] - 3})})
+                elif m["type"] != "int":
+                    portes += porte_fermee(m, o, t)
                 else:
-                    f.update({"z0": 0.5, "z1": 80, "mat": "porte-ext" if m["type"] != "int" else "porte"})
+                    f.update({"z0": 0.5, "z1": 80, "mat": "porte"})
                     portes.append(f)
     # meneaux des cloisons vitrées
     for m in niv["murs"]:
@@ -343,7 +449,7 @@ def main(dossier):
     for s in niv["structure"]:
         g = s.get("geometrie") or {}
         if s["type"] == "colonne":
-            w = g.get("largeur", 8) + 2
+            w = g.get("largeur", 8) + 2.5            # habillage de 1¼ po : dépasse la retombée de poutre
             boites.append({"x0": g["x"] - w / 2, "x1": g["x"] + w / 2, "y0": g["y"] - w / 2, "y1": g["y"] + w / 2, "z0": 0, "z1": H,
                            "mat": S.get("mat_colonne", "placage")})
         elif s["type"] == "poutre" and "x1" in g:
@@ -351,7 +457,7 @@ def main(dossier):
             e = 5
             boites.append({"x0": min(g["x1"], g["x2"]) - (0 if horiz else e), "x1": max(g["x1"], g["x2"]) + (0 if horiz else e),
                            "y0": min(g["y1"], g["y2"]) - (e if horiz else 0), "y1": max(g["y1"], g["y2"]) + (e if horiz else 0),
-                           "z0": H - 10, "z1": H, "mat": "gypse"})
+                           "z0": H - 10.03, "z1": H, "mat": "gypse"})
     # escaliers projetés : marches, trémie dans le plafond, cage au-dessus, obstacle pour la visite
     rects, obstacles = [], []
     for e in niv["elements"]:
@@ -365,6 +471,8 @@ def main(dossier):
                 rects.append(tr)
     tremies, cage = cage_tremie(rects, H, S.get("hauteur_etage", 105)) if rects else ([], [])
     boites += cage
+    reculer_bouts_de_murs(boites)
+    finis = finitions(niv, par_mur, H, sill, head, S)
     peindre(boites, niv["pieces"], S)
     mats = S.get("sols", {})
     sols = []
@@ -377,14 +485,14 @@ def main(dossier):
         if m["type"] == "fondation":
             empreinte += [[m["x1"], m["y1"]], [m["x2"], m["y2"]]]
     xs = [q[0] for q in empreinte]; ys = [q[1] for q in empreinte]
-    scene = {"H": H, "boites": boites, "portes": portes, "sols": sols, "mobilier": S.get("mobilier", []),
+    scene = {"H": H, "boites": boites + finis, "portes": portes, "sols": sols, "mobilier": S.get("mobilier", []),
              "revetements": S.get("revetements", []), "lumieres": S.get("lumieres", []),
              "visites": S.get("visites", []), "depart": S.get("depart", {"x": 400, "y": 180, "cap": 200}),
              "bornes": [min(xs), min(ys), max(xs), max(ys)], "titre": S.get("titre", M["projet"].get("proposition", "")),
              "projet": M["projet"]["nom"], "palette": S.get("palette", []),
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
     scene["materiaux"] = bibliotheque(scene, S)
-    scene["modeles_glb"] = modeles(scene)
+    scene["modeles_glb"], scene["modeles_info"], scene["credits"] = modeles(scene)
     textures = {}
     for f in sorted(os.listdir(TEX)):
         if f.endswith(".jpg"):

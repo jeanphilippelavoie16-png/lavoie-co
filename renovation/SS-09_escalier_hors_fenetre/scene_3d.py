@@ -87,7 +87,7 @@ def table_chevet(x, y):
 
 def etagere(x0, y0, x1, y1):
     out = [B(x0, y0, x0 + 1.5, y1, 0, 84, "metal"), B(x1 - 1.5, y0, x1, y1, 0, 84, "metal")]
-    out += [B(x0, y0, x1, y1, z, z + 1, "placage") for z in (4, 22, 40, 58, 76)]
+    out += [B(x0 + 1.5, y0, x1 - 1.5, y1, z, z + 1, "placage") for z in (4, 22, 40, 58, 76)]
     return out
 
 
@@ -166,17 +166,15 @@ def kettlebell(x, y, r, mat="carbone"):
 M = []
 # --- séjour : mur de lattes de chêne, télé, sofa en L, coin lecture
 M += [B(234 + 3 * i, 10, 236 + 3 * i, 11.6, 0, 95, "placage") for i in range(33)]
-M += [A(250, 11.6, 322, 27, 4, 18, "placage", r=1, b=0.4), B(258, 11.7, 314, 13, 30, 62, "ecran", r=0.4)]
+M += [A(250, 11.6, 322, 27, 4, 18, "placage", r=1, b=0.4), MOD("tele", 286, 13, face="+y", z=30), MOD("vase", 312, 19, z=18)]
 M += [A(238, 40, 350, 132, 0, 0.5, "tapis", r=2, b=0.2)]
-M += sofa(244, 98, 340, 136, "+y") + sofa(340, 66, 378, 136, "+x")
-M += [A(268, 56, 318, 84, 13, 15, "placage", r=4, b=0.6), C(271, 59, 0.8, 0, 13, "metal"), C(315, 59, 0.8, 0, 13, "metal"),
-      C(271, 81, 0.8, 0, 13, "metal"), C(315, 81, 0.8, 0, 13, "metal")]
-M += fauteuil(426, 35, "+x") + fauteuil(426, 75, "+x")
-M += [C(432, 55, 4.5, 20, 21.5, "placage"), C(432, 55, 1, 0, 20, "laiton"), C(404, 18, 6, 0, 13, "osier", r2=7.5), SPH(404, 18, 26, 11, "plante", ecrase=1.3)]
+M += [MOD("canape", 292, 120, face="-y"), MOD("fauteuil_cuir", 364, 92, face="-x", rot=-20),
+      MOD("table_basse", 292, 76, face="-y"), MOD("fauteuil_cuir", 424, 34, face="-x"), MOD("fauteuil_cuir", 424, 72, face="-x"),
+      MOD("table_appoint", 434, 53), MOD("lampe_pied", 442, 90, face="-x"), MOD("plante_sansevieria", 402, 18)]
 # --- coin frigo : niche de chêne contre le mur de droite (garde-manger 18 po + frigo 30 po, armoire au-dessus)
 M += [A(414, 98, 446, 99.5, 0, 88, "placage", r=0.3, b=0.3), A(414, 152.5, 446, 154, 0, 88, "placage", r=0.3, b=0.3),
       A(415, 99.5, 446, 117.5, 0, 88, "placage", r=0.3, b=0.3), T([(414.5, 116, 30), (414.5, 116, 54)], 0.35, "laiton"),
-      A(416, 119, 445.5, 151, 0, 70, "inox", r=0.8, b=0.4), T([(415.3, 121.5, 38), (415.3, 121.5, 64)], 0.45, "metal"),
+      MOD("frigo_30", 431, 135, face="-x", H=69),
       A(415, 117.5, 446, 152.5, 72, 88, "placage", r=0.3, b=0.3), B(415, 118, 415.5, 152, 71.2, 71.6, "spot")]
 # --- vestiaire près de l'entrée : banc, cases à souliers, crochets, tablette ; armoire à manteaux fermée
 M += [B(334, 210, 402, 227.75, 0, 3, "metal"), A(334, 209.75, 402, 227.75, 15.5, 17.5, "placage", r=0.3, b=0.3),
@@ -195,26 +193,24 @@ M += [A(158, 166, 214, 202, 0, 0.5, "tapis", r=2, b=0.2)]
 M += [A(262, 282, 275.5, 330, 0, 17, "placage", r=1, b=0.5)] + [T([(275.6, y, 62), (273.5, y, 63)], 0.35, "laiton") for y in (288, 298, 308, 318)]
 # --- salle d'entraînement : tapis roulant, vélo de route sur base d'entraînement, petits poids au sol, miroir
 M += [B(118, 10.2, 224, 10.8, 6, 84, "miroir")]
-M += tapis_roulant(150, 16)
-M += [A(116, 86, 200, 122, 0, 0.35, "caoutchouc-noir", r=2, b=0.15)] + velo_route(136, 104)
-M += [A(118, 52, 206, 84, 0, 0.35, "caoutchouc-noir", r=2, b=0.15)]
-M += haltere(130, 59, 1.9) + haltere(130, 65, 1.9) + haltere(146, 59, 2.3) + haltere(146, 65, 2.3) + haltere(162, 59, 2.7) + haltere(162, 65, 2.7)
-M += kettlebell(178, 62, 3.6) + kettlebell(190, 62, 4.2) + kettlebell(184, 75, 4.6)
-M += [CX(122, 142, 77, 3, 3, "jete")]
+M += [MOD("tapis_roulant", 186, 37, face="+x")]
+M += [A(116, 84, 206, 120, 0, 0.35, "caoutchouc-noir", r=2, b=0.15), MOD("velo_route_base", 160, 101, face="+x")]
+M += [A(118, 60, 214, 80, 0, 0.35, "caoutchouc-noir", r=2, b=0.15)]
+M += [MOD("haltere_a", 128, 65), MOD("haltere_a", 128, 71), MOD("haltere_b", 142, 65), MOD("haltere_b", 142, 71),
+      MOD("haltere_c", 157, 65), MOD("haltere_c", 157, 71), MOD("kettlebell", 178, 70), MOD("kettlebell", 192, 70, H=11)]
 # --- salle de lavage : laveuse et sécheuse frontales sous un comptoir de pliage en chêne de 8 pi, bac, armoires marine
-M += appareil(12, 39, 10.5, 36.5) + appareil(41, 68, 10.5, 36.5)
-M += [A(10, 10, 109.75, 37.5, 37, 38.5, "placage", r=0.3, b=0.3),
-      A(70, 11, 102, 35, 4, 37, "laque-marine", r=0.3, b=0.3), B(70, 13, 102, 35, 0, 4, "metal"),
-      A(76, 14, 96, 32, 38.3, 38.7, "inox", r=2, b=0.1), T([(86, 12, 38.5), (86, 12, 51), (86, 15, 52), (86, 20, 50)], 0.45, "metal"),
+M += [MOD("laveuse_secheuse", 40, 24, face="+y", L=54)]
+M += [A(10, 10, 109.75, 37.5, 40.5, 42, "placage", r=0.3, b=0.3),
+      A(70, 11, 102, 35, 4, 40.5, "laque-marine", r=0.3, b=0.3), B(70, 13, 102, 35, 0, 4, "metal"),
+      A(76, 14, 96, 32, 41.8, 42.2, "inox", r=2, b=0.1), T([(86, 12, 42), (86, 12, 54), (86, 15, 55), (86, 20, 53)], 0.45, "metal"),
       A(10, 10, 70, 23, 54, 86, "laque-marine", r=0.3, b=0.3), B(70, 10, 109.75, 20, 58, 59.5, "placage"), B(70, 10, 109.75, 20, 72, 73.5, "placage")]
 M += [C(80, 15, 4.5, 59.5, 68, "osier"), C(92, 15, 4.5, 59.5, 68, "osier"), C(101, 15, 4.5, 73.5, 80, "osier")]
 M += [A(85.75, 44, 109.75, 112, 0, 86, "laque-marine", r=0.3, b=0.3)] + [T([(85.3, y, 32), (85.3, y, 52)], 0.3, "laiton") for y in (76, 80)]
-M += [C(28, 24, 7, 38.5, 48, "osier", r2=8), A(44, 16, 64, 32, 38.5, 42, "draps", r=1.5, b=0.8)]
+M += [C(28, 24, 7, 42, 51, "osier", r2=8), A(44, 16, 64, 32, 42, 45, "draps", r=1.5, b=0.8)]
 M += [CX(30, 80, y, 80, 0.5, "placage") for y in (66, 72, 78, 84)] + [B(30, 64, 31, 86, 80, 89.5, "metal"), B(79, 64, 80, 86, 80, 89.5, "metal")]
-M += [C(34, 138, 11, 0, 58, "blanc"), A(10.2, 99, 14, 119, 40, 70, "gris", r=0.5, b=0.3)]
+M += [MOD("chauffe_eau", 34, 138, face="+x", H=66), A(10.2, 99, 14, 119, 40, 70, "gris", r=0.5, b=0.3)]
 # --- salle de bain : bain autoportant sous la fenêtre, robinet sur pied noir, douche vitrée, toilette, double vanité
-M += [A(16, 166, 48, 232, 0, 3, "blanc", r=14, b=1), A(16, 166, 48, 232, 0, 22, "blanc", r=14, b=1, trou=1.8),
-      A(18.2, 168.2, 45.8, 229.8, 14.8, 15, "eau", r=12, b=0)]
+M += [MOD("bain_autoportant", 32, 199, face="+x")]
 M += [C(54, 199, 1.8, 0, 0.5, "metal"), T([(54, 199, 0.5), (54, 199, 37), (53.6, 199, 40.2), (51.6, 199, 41.4), (49.2, 199, 40.4),
                                            (48.2, 199, 38.4)], 0.55, "metal"),
       C(54, 199, 0.9, 30, 31.5, "metal"), T([(54, 199, 31), (56.5, 199, 31.5)], 0.25, "metal"),
@@ -224,20 +220,23 @@ M += [B(80, 159.3, 139.75, 159.8, 0, 84, "tuile_blanche"), B(139.25, 159.25, 139
       B(80, 159.25, 139.75, 195, 0, 0.5, "porcelaine"),
       B(79.5, 159.5, 80.5, 195, 0, 76, "verre"), B(79.3, 159.5, 80.7, 195.5, 75, 76, "metal"),
       B(80, 194.5, 110, 195.5, 0, 76, "verre"), B(109, 194.2, 110, 195.8, 0, 76, "metal"),
-      C(110, 168, 5, 77, 77.5, "metal"), T([(110, 159.8, 78), (110, 168, 78)], 0.4, "metal"),
+      MOD("colonne_douche_noire", 110, 160.5, face="+y", z=30),
       B(112, 159.8, 124, 163.5, 44, 45, "metal")]
-M += [A(54, 240.5, 72, 247.6, 15, 29, "blanc", r=2, b=0.8), A(55.5, 222, 70.5, 242, 0, 15, "blanc", r=7, b=1.2),
-      A(55.3, 221.6, 70.7, 242, 15, 16, "blanc", r=7, b=0.5), B(62, 247, 64, 247.6, 31, 33, "metal")]
+M += [MOD("toilette_suspendue", 63, 240, face="-y", z=15), MOD("plaque_chasse", 63, 247.4, face="-y", z=40)]
 M += [A(79, 226, 139, 247.75, 12, 32, "placage", r=0.5, b=0.4), A(78.5, 225.5, 139.5, 247.75, 32, 33.5, "quartz", r=0.6, b=0.4)]
 for xs in (94, 124):
-    M += [A(xs - 7.5, 229, xs + 7.5, 244, 33.5, 34.5, "blanc", r=7, b=0.4), A(xs - 7.5, 229, xs + 7.5, 244, 33.5, 38.5, "blanc", r=7, b=0.6, trou=0.7),
-          T([(xs, 247.6, 45), (xs, 242, 45), (xs, 241, 44)], 0.45, "metal"),
+    M += [MOD("vasque_carree", xs, 235.5, face="-y", z=33.5), MOD("robinet_vasque_noir", xs, 244.5, face="-y", z=33.5),
           CY(xs, 247.2, 247.7, 59, 11, "miroir"), TOR(xs, 247.5, 59, 11, 0.45, "metal")]
+M += [MOD("distributeurs_marbre", 109, 243, z=33.5), MOD("serviettes_pliees", 135, 240, z=84)]
 # --- chambre 1 (réduite par l'escalier)
-M += lit(78, 288, 138, 366) + table_chevet(64, 356) + table_chevet(152, 356) + [A(62, 270, 154, 368, 0, 0.5, "tapis", r=2, b=0.2)]
+M += [MOD("lit_queen", 110, 325, face="-y"), MOD("table_chevet", 58, 357, face="-y"), MOD("table_chevet", 162, 357, face="-y"),
+      MOD("lampe_chevet", 58, 357, z=24), MOD("lampe_chevet", 162, 357, z=24), A(62, 262, 158, 368, 0, 0.5, "tapis", r=2, b=0.2)]
 M += [B(37.5, 295, 39, 355, 0, 80, "placage")]
 # --- chambre 2 (agrandie)
-M += lit(333, 288, 393, 366) + table_chevet(319, 356) + table_chevet(407, 356) + [A(317, 270, 409, 368, 0, 0.5, "tapis", r=2, b=0.2)]
+M += [MOD("lit_queen", 363, 325, face="-y"), MOD("table_chevet", 311, 357, face="-y"), MOD("table_chevet", 415, 357, face="-y"),
+      MOD("lampe_chevet", 311, 357, z=24), MOD("lampe_chevet", 415, 357, z=24), A(315, 262, 411, 368, 0, 0.5, "tapis", r=2, b=0.2),
+      MOD("cadre_monstera_1", 281.5, 300, face="+x", z=48), MOD("cadre_monstera_2", 281.5, 318, face="+x", z=48),
+      MOD("plante_sansevieria", 436, 250)]
 M += [B(391, 257.5, 439, 259, 0, 80, "placage")]
 M += [A(420, 282, 445, 330, 28.5, 30, "placage", r=0.5, b=0.4)] + [T([(422, y, 0), (422, y, 28.5)], 0.6, "metal") for y in (284, 328)] + \
      [T([(443, y, 0), (443, y, 28.5)], 0.6, "metal") for y in (284, 328)]
@@ -276,9 +275,9 @@ SCENE = {
                  {"x": 273, "y": 408}, {"x": 218, "y": 300, "z": 185, "i": 7}],
     "visites": [{"nom": "Entrée", "x": 430, "y": 178, "cap": 168},
                 {"nom": "Vestiaire", "x": 350, "y": 172, "cap": 50},
-                {"nom": "Coin frigo", "x": 370, "y": 170, "cap": 325},
+                {"nom": "Coin frigo", "x": 352, "y": 160, "cap": 335},
                 {"nom": "Escalier", "x": 218, "y": 192, "cap": 90},
-                {"nom": "Séjour", "x": 300, "y": 150, "cap": 270},
+                {"nom": "Séjour", "x": 400, "y": 135, "cap": 205},
                 {"nom": "Gym (porte vitrée)", "x": 168, "y": 192, "cap": 270},
                 {"nom": "Vélo et tapis roulant", "x": 126, "y": 146, "cap": 320},
                 {"nom": "Salle de lavage", "x": 70, "y": 128, "cap": 262},
