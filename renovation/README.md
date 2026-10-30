@@ -25,6 +25,7 @@
 | SS-07 | Copie de SS-06 : vestiaire à la place du coin bar, coin frigo dans le séjour, escalier à 3 marches tournantes en haut, tapis roulant dans le sens du vélo ; feuilles P-107 et P-108 | esquisse |
 | SS-08 | Copie de SS-07 : escalier en L, palier dans le coin arrière (étude de 3 implantations dans DESIGN.md) ; feuilles P-109 et P-110 | esquisse |
 | SS-09 | Copie de SS-08 : escalier déplacé à l'est de la fenêtre de la chambre 1 (étude 2), chambre 1 agrandie ; feuilles P-111 et P-112 | esquisse |
+| SS-10 | Copie de SS-09 : **escalier à l'entrée avant (option 2, choisie)**, vestibule commun en haut, sous-sol refait (chambre 1 pleine largeur, mur télé sur la cage), vrais modèles 3D ; feuilles P-113 et P-114 | esquisse |
 
 ## Études
 - `etudes/escalier/` : six emplacements possibles pour l'escalier, en haut et en bas (étude 3).
