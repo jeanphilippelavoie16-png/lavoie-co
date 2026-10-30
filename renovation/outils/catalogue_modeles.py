@@ -1,6 +1,6 @@
 """Catalogue des modèles 3D (GLB) de la maquette : provenance, licence, attribution, sens du modèle.
 
-Fichiers optimisés (meshopt, textures WebP 512 px) dans modeles/, choisis et vérifiés par l'équipe de recherche du
+Fichiers optimisés (géométrie quantifiée sans WebAssembly, textures WebP 512 px ; lisibles dans la page publiée) dans modeles/, choisis et vérifiés par l'équipe de recherche du
 2026-10-29 (licences confirmées sur la page de chaque modèle ; voir modeles/SOURCES.md). Dans scene_3d.py :
 {"forme": "modele", "cle", "x", "y", "z", "face" ("+x", "-x", "+y" ou "-y" : vers où le devant du meuble regarde,
 repère de la maison), "L" ou "H" facultatifs (longueur ou hauteur en po si l'on veut forcer la taille)}.
@@ -28,10 +28,6 @@ CATALOGUE = {
         "usage": 'haltère hexagonal',
         "page": 'https://amazon-berkeley-objects.s3.amazonaws.com/index.html',
         "attribution": '3D model: Amazon Berkeley Objects (ABO), © Amazon.com, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), modified (optimised)'},
-    'kettlebell': {"fichier": "kettlebell.glb", "avant": "+z", "licence": 'CC BY 4.0',
-        "usage": 'kettlebell noir à bande laiton (recoloré)',
-        "page": 'https://sketchfab.com/3d-models/2e09cbcbde964a658d51838e2f9866bb',
-        "attribution": '"kettlebell" by anesbe89 (https://sketchfab.com/anesbe89), CC BY 4.0, https://sketchfab.com/3d-models/2e09cbcbde964a658d51838e2f9866bb — modified (optimised, rescaled, recoloured)'},
     'tapis_exercice': {"fichier": "tapis_exercice.glb", "avant": "+z", "licence": 'CC BY 4.0',
         "usage": "tapis d'exercice gris",
         "page": 'https://amazon-berkeley-objects.s3.amazonaws.com/index.html',

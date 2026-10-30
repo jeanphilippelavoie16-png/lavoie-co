@@ -197,7 +197,7 @@ M += [MOD("tapis_roulant", 186, 37, face="+x")]
 M += [A(116, 84, 206, 120, 0, 0.35, "caoutchouc-noir", r=2, b=0.15), MOD("velo_route_base", 160, 101, face="+x")]
 M += [A(118, 60, 214, 80, 0, 0.35, "caoutchouc-noir", r=2, b=0.15)]
 M += [MOD("haltere_a", 128, 65), MOD("haltere_a", 128, 71), MOD("haltere_b", 142, 65), MOD("haltere_b", 142, 71),
-      MOD("haltere_c", 157, 65), MOD("haltere_c", 157, 71), MOD("kettlebell", 178, 70), MOD("kettlebell", 192, 70, H=11)]
+      MOD("haltere_c", 157, 65), MOD("haltere_c", 157, 71), ] + kettlebell(178, 70, 3.6) + kettlebell(192, 70, 4.2)
 # --- salle de lavage : laveuse et sécheuse frontales sous un comptoir de pliage en chêne de 8 pi, bac, armoires marine
 M += [MOD("laveuse_secheuse", 40, 24, face="+y", L=54)]
 M += [A(10, 10, 109.75, 37.5, 40.5, 42, "placage", r=0.3, b=0.3),

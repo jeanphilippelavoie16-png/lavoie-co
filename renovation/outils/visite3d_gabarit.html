@@ -132,7 +132,6 @@ setTimeout(() => { if (!window.VISITE_PRETE) { const e = document.getElementById
 <script type="module">
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 const S = /*__SCENE__*/null;
 const TX = /*__TEXTURES__*/null;
@@ -422,12 +421,18 @@ const [bx0, by0, bx1, by1] = S.bornes;
   const pl = new THREE.Mesh(g, MAT.plafond); pl.material.side = THREE.DoubleSide; pl.position.y = S.H * K; gPlafond.add(pl);
 }
 // modèles 3D (GLB) du catalogue, chargés une fois puis copiés à chaque emplacement
-const GLB = {};
+// La page publiée interdit fetch(), même vers une data: URI : on décode le base64 nous-mêmes et on passe les octets au
+// chargeur ; ses textures passent par <img> (blob:), permis, plutôt que par createImageBitmap + fetch.
+const GLB = {}, ECHECS = [];
 {
-  const ld = new GLTFLoader(); ld.setMeshoptDecoder(MeshoptDecoder);
-  await Promise.all(Object.entries(S.modeles_glb || {}).map(async ([cle, uri]) => {
-    try { GLB[cle] = (await ld.loadAsync(uri)).scene; } catch (e) { console.warn("modèle", cle, e); }
-  }));
+  const octets = (uri) => { const b = atob(uri.slice(uri.indexOf(",") + 1)), a = new Uint8Array(b.length);
+    for (let i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a.buffer; };
+  const cib = window.createImageBitmap;
+  try { window.createImageBitmap = undefined; } catch (_) {}
+  const ld = new GLTFLoader();
+  await Promise.all(Object.entries(S.modeles_glb || {}).map(([cle, uri]) =>
+    ld.parseAsync(octets(uri), "").then((g) => { GLB[cle] = g.scene; }).catch((e) => { ECHECS.push(cle); console.warn("modèle", cle, e); })));
+  try { window.createImageBitmap = cib; } catch (_) {}
 }
 const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele };
 for (const o of S.mobilier) (FORMES[o.forme] || boite)(o, gMob);
@@ -871,6 +876,7 @@ function majEtiquettes() {
 const astuce = $("astuce");
 astuce.textContent = tactile ? "Touchez le plancher pour y marcher · glissez pour regarder · ◀ ▶ pour la visite guidée"
                              : "Cliquez sur le plancher pour y marcher · glissez pour regarder · W A S D ou flèches · ◀ ▶ visite guidée";
+if (ECHECS.length) astuce.textContent = `${ECHECS.length} modèle(s) 3D n'ont pas pu se charger (${ECHECS.join(", ")}). Rechargez la page.`;
 let astuceVue = false;
 function masquerAstuce() { if (astuceVue) return; astuceVue = true; astuce.style.opacity = "0"; setTimeout(() => (astuce.hidden = true), 700); }
 setTimeout(masquerAstuce, 9000);
