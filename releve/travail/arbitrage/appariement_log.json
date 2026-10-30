@@ -1,0 +1,2243 @@
+{
+ "homographies": {
+  "P1->P7": {
+   "appariements": 2733,
+   "inliers": 2639,
+   "residu_median_px": 0.33,
+   "H": [
+    [
+     0.978298,
+     0.014626,
+     25.472298
+    ],
+    [
+     -0.004045,
+     0.983479,
+     -4.856685
+    ],
+    [
+     1e-06,
+     7e-06,
+     1.0
+    ]
+   ]
+  },
+  "P3->P4": {
+   "appariements": 2611,
+   "inliers": 2079,
+   "residu_median_px": 1.44,
+   "H": [
+    [
+     0.702081,
+     0.048805,
+     204.561254
+    ],
+    [
+     -0.04194,
+     0.757119,
+     117.847389
+    ],
+    [
+     -3.8e-05,
+     3.9e-05,
+     1.0
+    ]
+   ]
+  },
+  "P3->P6": {
+   "appariements": 2853,
+   "inliers": 2258,
+   "residu_median_px": 1.32,
+   "H": [
+    [
+     0.781893,
+     0.055736,
+     185.979846
+    ],
+    [
+     -0.028649,
+     0.830015,
+     99.810723
+    ],
+    [
+     -2e-05,
+     4.2e-05,
+     1.0
+    ]
+   ]
+  },
+  "P6->P4": {
+   "appariements": 3566,
+   "inliers": 3465,
+   "residu_median_px": 0.45,
+   "H": [
+    [
+     0.945308,
+     -0.001862,
+     7.516648
+    ],
+    [
+     0.000279,
+     0.937461,
+     3.313821
+    ],
+    [
+     -0.0,
+     -2e-06,
+     1.0
+    ]
+   ]
+  }
+ },
+ "controle_homographies": [
+  {
+   "id": "cote-RDC-016",
+   "de": "P6",
+   "vers": "P4",
+   "px_l1_projete": [
+    811,
+    21
+   ],
+   "px_l2": [
+    806,
+    20
+   ],
+   "ecart_px": 5.3
+  },
+  {
+   "id": "cote-RDC-017",
+   "de": "P6",
+   "vers": "P4",
+   "px_l1_projete": [
+    1267,
+    24
+   ],
+   "px_l2": [
+    1270,
+    22
+   ],
+   "ecart_px": 3.8
+  },
+  {
+   "id": "d-RDC-03",
+   "de": "P6",
+   "vers": "P4",
+   "px_l1_projete": [
+    1608,
+    34
+   ],
+   "px_l2": [
+    1610,
+    34
+   ],
+   "ecart_px": 2.5
+  },
+  {
+   "id": "d-RDC-06",
+   "de": "P6",
+   "vers": "P4",
+   "px_l1_projete": [
+    1333,
+    54
+   ],
+   "px_l2": [
+    1338,
+    52
+   ],
+   "ecart_px": 5.3
+  },
+  {
+   "id": "d-RDC-07",
+   "de": "P6",
+   "vers": "P4",
+   "px_l1_projete": [
+    1390,
+    37
+   ],
+   "px_l2": [
+    1394,
+    34
+   ],
+   "ecart_px": 4.8
+  }
+ ],
+ "paires": {
+  "SS": [
+   {
+    "id": "cote-SS-001",
+    "l1": [
+     "cote-SS-001"
+    ],
+    "l2_n": 1,
+    "texte_1": "38'-0\"",
+    "texte_2": "38'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 15.0
+   },
+   {
+    "id": "cote-SS-002",
+    "l1": [
+     "cote-SS-002"
+    ],
+    "l2_n": 2,
+    "texte_1": "18'-3\"",
+    "texte_2": "18'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 2.0
+   },
+   {
+    "id": "cote-SS-003",
+    "l1": [
+     "cote-SS-003"
+    ],
+    "l2_n": 3,
+    "texte_1": "9'-0\"",
+    "texte_2": "9'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 0.0
+   },
+   {
+    "id": "cote-SS-004",
+    "l1": [
+     "cote-SS-004"
+    ],
+    "l2_n": 4,
+    "texte_1": "10'-9\"",
+    "texte_2": "10'-9\"",
+    "compat": "meme",
+    "distance_px_ref": 0.0
+   },
+   {
+    "id": "cote-SS-005",
+    "l1": [
+     "cote-SS-005"
+    ],
+    "l2_n": 5,
+    "texte_1": "13'-0\"",
+    "texte_2": "13'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 0.0
+   },
+   {
+    "id": "cote-SS-006",
+    "l1": [
+     "cote-SS-006"
+    ],
+    "l2_n": 6,
+    "texte_1": "6'-8\"",
+    "texte_2": "6'-3\"",
+    "compat": "alt",
+    "distance_px_ref": 6.3
+   },
+   {
+    "id": "cote-SS-007",
+    "l1": [
+     "cote-SS-007"
+    ],
+    "l2_n": 8,
+    "texte_1": "10\"",
+    "texte_2": "10\"",
+    "compat": "meme",
+    "distance_px_ref": 3.2
+   },
+   {
+    "id": "cote-SS-008",
+    "l1": [
+     "cote-SS-008"
+    ],
+    "l2_n": 7,
+    "texte_1": "22\"",
+    "texte_2": "22\"",
+    "compat": "meme",
+    "distance_px_ref": 3.0
+   },
+   {
+    "id": "cote-SS-009",
+    "l1": [
+     "cote-SS-009"
+    ],
+    "l2_n": 9,
+    "texte_1": "5'-0\"",
+    "texte_2": "5'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 5.8
+   },
+   {
+    "id": "cote-SS-010",
+    "l1": [
+     "cote-SS-010"
+    ],
+    "l2_n": 10,
+    "texte_1": "3'-6\"",
+    "texte_2": "3'-6\"",
+    "compat": "meme",
+    "distance_px_ref": 2.0
+   },
+   {
+    "id": "cote-SS-011",
+    "l1": [
+     "cote-SS-011"
+    ],
+    "l2_n": 13,
+    "texte_1": "31'-8\"",
+    "texte_2": "31'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 5.0
+   },
+   {
+    "id": "cote-SS-012",
+    "l1": [
+     "cote-SS-012"
+    ],
+    "l2_n": 14,
+    "texte_1": "16'-8\"",
+    "texte_2": "16'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 7.1
+   },
+   {
+    "id": "cote-SS-013",
+    "l1": [
+     "cote-SS-013"
+    ],
+    "l2_n": 15,
+    "texte_1": "4'-0\"",
+    "texte_2": "4'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 5.0
+   },
+   {
+    "id": "cote-SS-014",
+    "l1": [
+     "cote-SS-014"
+    ],
+    "l2_n": 16,
+    "texte_1": "7'-0\"",
+    "texte_2": "7'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 6.4
+   },
+   {
+    "id": "cote-SS-015",
+    "l1": [
+     "cote-SS-015"
+    ],
+    "l2_n": 17,
+    "texte_1": "4'-0\"",
+    "texte_2": "4'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 1.0
+   },
+   {
+    "id": "cote-SS-016",
+    "l1": [
+     "cote-SS-016"
+    ],
+    "l2_n": 18,
+    "texte_1": "3'-0\"",
+    "texte_2": "3'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 11.2
+   },
+   {
+    "id": "cote-SS-017",
+    "l1": [
+     "cote-SS-017"
+    ],
+    "l2_n": 19,
+    "texte_1": "3'-0\"",
+    "texte_2": "3'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 6.4
+   },
+   {
+    "id": "cote-SS-018",
+    "l1": [
+     "cote-SS-018"
+    ],
+    "l2_n": 20,
+    "texte_1": "22\"",
+    "texte_2": "22\"",
+    "compat": "meme",
+    "distance_px_ref": 2.0
+   },
+   {
+    "id": "cote-SS-019",
+    "l1": [
+     "cote-SS-019"
+    ],
+    "l2_n": 21,
+    "texte_1": "10\"",
+    "texte_2": "10\"",
+    "compat": "meme",
+    "distance_px_ref": 2.8
+   },
+   {
+    "id": "cote-SS-020",
+    "l1": [
+     "cote-SS-020"
+    ],
+    "l2_n": 42,
+    "texte_1": "31'-8\"",
+    "texte_2": "31'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 20.0
+   },
+   {
+    "id": "cote-SS-021",
+    "l1": [
+     "cote-SS-021"
+    ],
+    "l2_n": 43,
+    "texte_1": "6'-0\"",
+    "texte_2": "6'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 10.4
+   },
+   {
+    "id": "cote-SS-022",
+    "l1": [
+     "cote-SS-022"
+    ],
+    "l2_n": 44,
+    "texte_1": "10'-8\"",
+    "texte_2": "10'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 4.2
+   },
+   {
+    "id": "cote-SS-023",
+    "l1": [
+     "cote-SS-023"
+    ],
+    "l2_n": 45,
+    "texte_1": "8'-9\"",
+    "texte_2": "8'-9\"",
+    "compat": "meme",
+    "distance_px_ref": 14.1
+   },
+   {
+    "id": "cote-SS-024",
+    "l1": [
+     "cote-SS-024"
+    ],
+    "l2_n": 46,
+    "texte_1": "6'-3\"",
+    "texte_2": "6'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 5.0
+   },
+   {
+    "id": "cote-SS-025",
+    "l1": [
+     "cote-SS-025"
+    ],
+    "l2_n": 47,
+    "texte_1": "6'-8\"",
+    "texte_2": "6'-3\"",
+    "compat": "alt",
+    "distance_px_ref": 20.1
+   },
+   {
+    "id": "cote-SS-026",
+    "l1": [
+     "cote-SS-026"
+    ],
+    "l2_n": 48,
+    "texte_1": "3'-0\"",
+    "texte_2": "3'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 10.2
+   },
+   {
+    "id": "cote-SS-027",
+    "l1": [
+     "cote-SS-027"
+    ],
+    "l2_n": 51,
+    "texte_1": "13'-6\"",
+    "texte_2": "13'-6\"",
+    "compat": "meme",
+    "distance_px_ref": 1.4
+   },
+   {
+    "id": "cote-SS-028",
+    "l1": [
+     "cote-SS-028"
+    ],
+    "l2_n": 52,
+    "texte_1": "6'-0\"",
+    "texte_2": "6'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 1.4
+   },
+   {
+    "id": "cote-SS-029",
+    "l1": [
+     "cote-SS-029"
+    ],
+    "l2_n": 53,
+    "texte_1": "12'-4\"",
+    "texte_2": "12'-4\"",
+    "compat": "meme",
+    "distance_px_ref": 4.5
+   },
+   {
+    "id": "cote-SS-030",
+    "l1": [
+     "cote-SS-030"
+    ],
+    "l2_n": 54,
+    "texte_1": "6'-2\"",
+    "texte_2": "6'-2\"",
+    "compat": "meme",
+    "distance_px_ref": 2.0
+   },
+   {
+    "id": "cote-SS-031",
+    "l1": [
+     "cote-SS-031"
+    ],
+    "l2_n": 55,
+    "texte_1": "6'-2\"",
+    "texte_2": "6'-2\"",
+    "compat": "meme",
+    "distance_px_ref": 6.0
+   },
+   {
+    "id": "cote-SS-032",
+    "l1": [
+     "cote-SS-032"
+    ],
+    "l2_n": 56,
+    "texte_1": "6'-3\"",
+    "texte_2": "6'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 11.0
+   },
+   {
+    "id": "cote-SS-033",
+    "l1": [
+     "cote-SS-033"
+    ],
+    "l2_n": 57,
+    "texte_1": "4'-0\"",
+    "texte_2": "4'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 4.1
+   },
+   {
+    "id": "cote-SS-034",
+    "l1": [
+     "cote-SS-034"
+    ],
+    "l2_n": 34,
+    "texte_1": "10\"",
+    "texte_2": "10",
+    "compat": "meme",
+    "distance_px_ref": 4.1
+   },
+   {
+    "id": "cote-SS-035",
+    "l1": [
+     "cote-SS-035"
+    ],
+    "l2_n": 58,
+    "texte_1": "18\"",
+    "texte_2": "18\"",
+    "compat": "meme",
+    "distance_px_ref": 4.0
+   },
+   {
+    "id": "cote-SS-036",
+    "l1": [
+     "cote-SS-036"
+    ],
+    "l2_n": 59,
+    "texte_1": "6\"",
+    "texte_2": "6\"",
+    "compat": "meme",
+    "distance_px_ref": 1.0
+   },
+   {
+    "id": "cote-SS-037",
+    "l1": [
+     "cote-SS-037"
+    ],
+    "l2_n": 22,
+    "texte_1": "10\"",
+    "texte_2": "10",
+    "compat": "meme",
+    "distance_px_ref": 2.0
+   },
+   {
+    "id": "cote-SS-038",
+    "l1": [
+     "cote-SS-038"
+    ],
+    "l2_n": 23,
+    "texte_1": "9'-10\"",
+    "texte_2": "9'-10\"",
+    "compat": "meme",
+    "distance_px_ref": 0.0
+   },
+   {
+    "id": "cote-SS-039",
+    "l1": [
+     "cote-SS-039"
+    ],
+    "l2_n": 24,
+    "texte_1": "8\"",
+    "texte_2": "8\"",
+    "compat": "meme",
+    "distance_px_ref": 2.2
+   },
+   {
+    "id": "cote-SS-040",
+    "l1": [
+     "cote-SS-040"
+    ],
+    "l2_n": 25,
+    "texte_1": "7'-4\"",
+    "texte_2": "7'-4\"",
+    "compat": "meme",
+    "distance_px_ref": 6.3
+   },
+   {
+    "id": "cote-SS-041",
+    "l1": [
+     "cote-SS-041"
+    ],
+    "l2_n": 26,
+    "texte_1": "8\"",
+    "texte_2": "8\"",
+    "compat": "meme",
+    "distance_px_ref": 8.0
+   },
+   {
+    "id": "cote-SS-042",
+    "l1": [
+     "cote-SS-042"
+    ],
+    "l2_n": 27,
+    "texte_1": "7'-4\"",
+    "texte_2": "7'-4\"",
+    "compat": "meme",
+    "distance_px_ref": 5.1
+   },
+   {
+    "id": "cote-SS-043",
+    "l1": [
+     "cote-SS-043"
+    ],
+    "l2_n": 28,
+    "texte_1": "8\"",
+    "texte_2": "8\"",
+    "compat": "meme",
+    "distance_px_ref": 1.0
+   },
+   {
+    "id": "cote-SS-044",
+    "l1": [
+     "cote-SS-044"
+    ],
+    "l2_n": 29,
+    "texte_1": "9'-10\"",
+    "texte_2": "9'-10\"",
+    "compat": "meme",
+    "distance_px_ref": 6.7
+   },
+   {
+    "id": "cote-SS-045",
+    "l1": [
+     "cote-SS-045"
+    ],
+    "l2_n": 30,
+    "texte_1": "10\"",
+    "texte_2": "10",
+    "compat": "meme",
+    "distance_px_ref": 4.5
+   },
+   {
+    "id": "cote-SS-046",
+    "l1": [
+     "cote-SS-046"
+    ],
+    "l2_n": 31,
+    "texte_1": "13'-10\"",
+    "texte_2": "13'-10\"",
+    "compat": "meme",
+    "distance_px_ref": 5.1
+   },
+   {
+    "id": "cote-SS-047",
+    "l1": [
+     "cote-SS-047"
+    ],
+    "l2_n": 32,
+    "texte_1": "3'-11\"",
+    "texte_2": "3'-11\"",
+    "compat": "meme",
+    "distance_px_ref": 6.1
+   },
+   {
+    "id": "cote-SS-048",
+    "l1": [
+     "cote-SS-048"
+    ],
+    "l2_n": 33,
+    "texte_1": "12'-3\"",
+    "texte_2": "12'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 37.0
+   },
+   {
+    "id": "cote-SS-049",
+    "l1": [
+     "cote-SS-049"
+    ],
+    "l2_n": 11,
+    "texte_1": "PORTE 2'-6\"",
+    "texte_2": "PORTE 2'-6\"",
+    "compat": "meme",
+    "distance_px_ref": 12.0
+   },
+   {
+    "id": "cote-SS-050",
+    "l1": [
+     "cote-SS-050"
+    ],
+    "l2_n": 49,
+    "texte_1": "PORTE 2'-8\"",
+    "texte_2": "PORTE 2'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 30.0
+   },
+   {
+    "id": "cote-SS-051",
+    "l1": [
+     "cote-SS-051",
+     "str-SS-S01"
+    ],
+    "l2_n": 38,
+    "texte_1": "SOLIVES 2\"x10\" @ 20\" c/c",
+    "texte_2": "SOLIVES 2\"x10\" @ 20\" c/c",
+    "compat": "meme",
+    "distance_px_ref": 40.7
+   },
+   {
+    "id": "cote-SS-052",
+    "l1": [
+     "str-SS-P01"
+    ],
+    "l2_n": 35,
+    "texte_1": "POUTRE 8\"x10\"",
+    "texte_2": "POUTRE 8\"x10\"",
+    "compat": "meme",
+    "distance_px_ref": 63.1
+   },
+   {
+    "id": "cote-SS-053",
+    "l1": [
+     "str-SS-P02"
+    ],
+    "l2_n": 36,
+    "texte_1": "POUTRE 8\"x10\"",
+    "texte_2": "POUTRE 8\"x10\"",
+    "compat": "meme",
+    "distance_px_ref": 120
+   },
+   {
+    "id": "cote-SS-054",
+    "l1": [
+     "str-SS-C01",
+     "str-SS-C02",
+     "str-SS-C03",
+     "str-SS-C04",
+     "str-SS-C05",
+     "str-SS-C06"
+    ],
+    "l2_n": 37,
+    "texte_1": "COL. BOIS, 8\"x8\"",
+    "texte_2": "COL. BOIS, 8\"x8\"",
+    "compat": "meme",
+    "distance_px_ref": 20.1
+   },
+   {
+    "id": "cote-SS-055",
+    "l1": [
+     "note-SS-20"
+    ],
+    "l2_n": 39,
+    "texte_1": "14 C.M.",
+    "texte_2": "14 C.M.",
+    "compat": "meme",
+    "distance_px_ref": 22.0
+   },
+   {
+    "id": "cote-SS-056",
+    "l1": [
+     "note-SS-02"
+    ],
+    "l2_n": 60,
+    "texte_1": "ECHELLE: 1/4\" = 1'-0\"",
+    "texte_2": "ÉCHELLE: 1/4\" = 1'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 18.2
+   }
+  ],
+  "RDC": [
+   {
+    "id": "cote-RDC-001",
+    "l1": [
+     "cote-RDC-001"
+    ],
+    "l2_n": 16,
+    "texte_1": "31'-8\"",
+    "texte_2": "31'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 65.3
+   },
+   {
+    "id": "cote-RDC-002",
+    "l1": [
+     "cote-RDC-002"
+    ],
+    "l2_n": 14,
+    "texte_1": "15'-9\"",
+    "texte_2": "15'-9\"",
+    "compat": "meme",
+    "distance_px_ref": 5.7
+   },
+   {
+    "id": "cote-RDC-003",
+    "l1": [
+     "cote-RDC-003"
+    ],
+    "l2_n": 15,
+    "texte_1": "15'-11\"",
+    "texte_2": "15'-11\"",
+    "compat": "meme",
+    "distance_px_ref": 7.1
+   },
+   {
+    "id": "cote-RDC-004",
+    "l1": [
+     "cote-RDC-004"
+    ],
+    "l2_n": 17,
+    "texte_1": "3'-0\"",
+    "texte_2": "3'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 11.3
+   },
+   {
+    "id": "cote-RDC-005",
+    "l1": [
+     "cote-RDC-005"
+    ],
+    "l2_n": 20,
+    "texte_1": "31'-8\"",
+    "texte_2": "31'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 11.0
+   },
+   {
+    "id": "cote-RDC-006",
+    "l1": [
+     "cote-RDC-006"
+    ],
+    "l2_n": 18,
+    "texte_1": "16'-8\"",
+    "texte_2": "16 8\"",
+    "compat": "meme",
+    "distance_px_ref": 11.4
+   },
+   {
+    "id": "cote-RDC-007",
+    "l1": [
+     "cote-RDC-007"
+    ],
+    "l2_n": 19,
+    "texte_1": "15'-0\"",
+    "texte_2": "15'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 20.1
+   },
+   {
+    "id": "cote-RDC-008",
+    "l1": [
+     "cote-RDC-008"
+    ],
+    "l2_n": 21,
+    "texte_1": "3'-0\"",
+    "texte_2": "3'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 5.1
+   },
+   {
+    "id": "cote-RDC-009",
+    "l1": [
+     "cote-RDC-009"
+    ],
+    "l2_n": 28,
+    "texte_1": "38'-0\"",
+    "texte_2": "38'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 10.3
+   },
+   {
+    "id": "cote-RDC-010",
+    "l1": [
+     "cote-RDC-010"
+    ],
+    "l2_n": 24,
+    "texte_1": "8'-2\"",
+    "texte_2": "8'-2\"",
+    "compat": "meme",
+    "distance_px_ref": 4.5
+   },
+   {
+    "id": "cote-RDC-011",
+    "l1": [
+     "cote-RDC-011"
+    ],
+    "l2_n": 25,
+    "texte_1": "8'-5\"",
+    "texte_2": "8'-5\"",
+    "compat": "meme",
+    "distance_px_ref": 11.0
+   },
+   {
+    "id": "cote-RDC-012",
+    "l1": [
+     "cote-RDC-012"
+    ],
+    "l2_n": 26,
+    "texte_1": "14'-10\"",
+    "texte_2": "14'-10\"",
+    "compat": "meme",
+    "distance_px_ref": 4.5
+   },
+   {
+    "id": "cote-RDC-013",
+    "l1": [
+     "cote-RDC-013"
+    ],
+    "l2_n": 27,
+    "texte_1": "6'-7\"",
+    "texte_2": "6'-7\"",
+    "compat": "meme",
+    "distance_px_ref": 1.4
+   },
+   {
+    "id": "cote-RDC-014",
+    "l1": [
+     "cote-RDC-014"
+    ],
+    "l2_n": 22,
+    "texte_1": "6'-3\"",
+    "texte_2": "6'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 25.3
+   },
+   {
+    "id": "cote-RDC-015",
+    "l1": [
+     "cote-RDC-015"
+    ],
+    "l2_n": 23,
+    "texte_1": "9'-0\"",
+    "texte_2": "9'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 4.5
+   },
+   {
+    "id": "cote-RDC-016",
+    "l1": [
+     "cote-RDC-016"
+    ],
+    "l2_n": 9,
+    "texte_1": "18'-3\"",
+    "texte_2": "18'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 18.1
+   },
+   {
+    "id": "cote-RDC-017",
+    "l1": [
+     "cote-RDC-017"
+    ],
+    "l2_n": 10,
+    "texte_1": "9'-0\"",
+    "texte_2": "9'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 5.8
+   },
+   {
+    "id": "cote-RDC-018",
+    "l1": [
+     "cote-RDC-018"
+    ],
+    "l2_n": 11,
+    "texte_1": "10'-9\"",
+    "texte_2": "10-9\"",
+    "compat": "meme",
+    "distance_px_ref": 7.9
+   },
+   {
+    "id": "cote-RDC-019",
+    "l1": [
+     "cote-RDC-019"
+    ],
+    "l2_n": 1,
+    "texte_1": "8'-2\"",
+    "texte_2": "8'-2\"",
+    "compat": "meme",
+    "distance_px_ref": 4.5
+   },
+   {
+    "id": "cote-RDC-020",
+    "l1": [
+     "cote-RDC-020"
+    ],
+    "l2_n": 2,
+    "texte_1": "8'-3\"",
+    "texte_2": "8'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 10.3
+   },
+   {
+    "id": "cote-RDC-021",
+    "l1": [
+     "cote-RDC-021"
+    ],
+    "l2_n": 3,
+    "texte_1": "8'-0\"",
+    "texte_2": "8'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 2.2
+   },
+   {
+    "id": "cote-RDC-022",
+    "l1": [
+     "cote-RDC-022"
+    ],
+    "l2_n": 4,
+    "texte_1": "6'-10\"",
+    "texte_2": "6'-10'",
+    "compat": "meme",
+    "distance_px_ref": 2.0
+   },
+   {
+    "id": "cote-RDC-023",
+    "l1": [
+     "cote-RDC-023"
+    ],
+    "l2_n": 5,
+    "texte_1": "6'-9\"",
+    "texte_2": "6'-9\"",
+    "compat": "meme",
+    "distance_px_ref": 5.0
+   },
+   {
+    "id": "cote-RDC-024",
+    "l1": [
+     "cote-RDC-024"
+    ],
+    "l2_n": 6,
+    "texte_1": "6'-3\"",
+    "texte_2": "6'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 5.0
+   },
+   {
+    "id": "cote-RDC-025",
+    "l1": [
+     "cote-RDC-025"
+    ],
+    "l2_n": 7,
+    "texte_1": "3'-0\"",
+    "texte_2": "3'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 1.4
+   },
+   {
+    "id": "cote-RDC-026",
+    "l1": [
+     "cote-RDC-026"
+    ],
+    "l2_n": 12,
+    "texte_1": "3'-6\"",
+    "texte_2": "3'-6\"",
+    "compat": "meme",
+    "distance_px_ref": 6.3
+   },
+   {
+    "id": "cote-RDC-027",
+    "l1": [
+     "cote-RDC-027"
+    ],
+    "l2_n": 13,
+    "texte_1": "2'-9\"",
+    "texte_2": "2'-9\"",
+    "compat": "meme",
+    "distance_px_ref": 4.5
+   },
+   {
+    "id": "cote-RDC-028",
+    "l1": [
+     "cote-RDC-028"
+    ],
+    "l2_n": 8,
+    "texte_1": "6'-3\"",
+    "texte_2": "6'-3\"",
+    "compat": "meme",
+    "distance_px_ref": 2.2
+   },
+   {
+    "id": "cote-RDC-029",
+    "l1": [
+     "cote-RDC-029"
+    ],
+    "l2_n": 29,
+    "texte_1": "9'-0\"",
+    "texte_2": "9'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 4.2
+   },
+   {
+    "id": "cote-RDC-030",
+    "l1": [
+     "cote-RDC-030"
+    ],
+    "l2_n": 30,
+    "texte_1": "3'-2\"",
+    "texte_2": "3'-2\"",
+    "compat": "meme",
+    "distance_px_ref": 2.2
+   },
+   {
+    "id": "cote-RDC-031",
+    "l1": [
+     "cote-RDC-031"
+    ],
+    "l2_n": 31,
+    "texte_1": "2'-5\"",
+    "texte_2": "2'-5\"",
+    "compat": "meme",
+    "distance_px_ref": 12.0
+   },
+   {
+    "id": "cote-RDC-032",
+    "l1": [
+     "cote-RDC-032"
+    ],
+    "l2_n": 32,
+    "texte_1": "8'-4\"",
+    "texte_2": "8'-4\"",
+    "compat": "meme",
+    "distance_px_ref": 5.8
+   },
+   {
+    "id": "cote-RDC-033",
+    "l1": [
+     "cote-RDC-033"
+    ],
+    "l2_n": 33,
+    "texte_1": "3'-5\"",
+    "texte_2": "3'-5\"",
+    "compat": "meme",
+    "distance_px_ref": 9.2
+   },
+   {
+    "id": "cote-RDC-034",
+    "l1": [
+     "cote-RDC-034"
+    ],
+    "l2_n": 34,
+    "texte_1": "11'-8\"",
+    "texte_2": "11'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 3.2
+   },
+   {
+    "id": "cote-RDC-035",
+    "l1": [
+     "cote-RDC-035"
+    ],
+    "l2_n": 39,
+    "texte_1": "13'-1\"",
+    "texte_2": "13'-1\"",
+    "compat": "meme",
+    "distance_px_ref": 5.4
+   },
+   {
+    "id": "cote-RDC-036",
+    "l1": [
+     "cote-RDC-036"
+    ],
+    "l2_n": 40,
+    "texte_1": "5'-6\"",
+    "texte_2": "5'-6\"",
+    "compat": "meme",
+    "distance_px_ref": 17.1
+   },
+   {
+    "id": "cote-RDC-037",
+    "l1": [
+     "cote-RDC-037"
+    ],
+    "l2_n": 41,
+    "texte_1": "13'-1\"",
+    "texte_2": "13'-1\"",
+    "compat": "meme",
+    "distance_px_ref": 6.1
+   },
+   {
+    "id": "cote-RDC-038",
+    "l1": [
+     "cote-RDC-038"
+    ],
+    "l2_n": 35,
+    "texte_1": "12'-2\"",
+    "texte_2": "12'-2\"",
+    "compat": "meme",
+    "distance_px_ref": 5.4
+   },
+   {
+    "id": "cote-RDC-039",
+    "l1": [
+     "cote-RDC-039"
+    ],
+    "l2_n": 36,
+    "texte_1": "2'-5\"",
+    "texte_2": "2'-5\"",
+    "compat": "meme",
+    "distance_px_ref": 2.2
+   },
+   {
+    "id": "cote-RDC-040",
+    "l1": [
+     "cote-RDC-040"
+    ],
+    "l2_n": 37,
+    "texte_1": "3'-11\"",
+    "texte_2": "3'-11\"",
+    "compat": "meme",
+    "distance_px_ref": 4.1
+   },
+   {
+    "id": "cote-RDC-041",
+    "l1": [
+     "cote-RDC-041"
+    ],
+    "l2_n": 38,
+    "texte_1": "19'-6\"",
+    "texte_2": "19'-6\"",
+    "compat": "meme",
+    "distance_px_ref": 6.1
+   },
+   {
+    "id": "cote-RDC-042",
+    "l1": [
+     "cote-RDC-042"
+    ],
+    "l2_n": 43,
+    "texte_1": "14'-8\"",
+    "texte_2": "14'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 3.6
+   },
+   {
+    "id": "cote-RDC-043",
+    "l1": [
+     "cote-RDC-043"
+    ],
+    "l2_n": 44,
+    "texte_1": "3'-11\"",
+    "texte_2": "3'-11\"",
+    "compat": "meme",
+    "distance_px_ref": 13.3
+   },
+   {
+    "id": "cote-RDC-044",
+    "l1": [
+     "cote-RDC-044"
+    ],
+    "l2_n": 45,
+    "texte_1": "13'-1\"",
+    "texte_2": "13-1",
+    "compat": "meme",
+    "distance_px_ref": 7.3
+   },
+   {
+    "id": "cote-RDC-045",
+    "l1": [
+     "cote-RDC-045"
+    ],
+    "l2_n": 46,
+    "texte_1": "18'-7\"",
+    "texte_2": "18'-7\"",
+    "compat": "meme",
+    "distance_px_ref": 14.3
+   },
+   {
+    "id": "cote-RDC-046",
+    "l1": [
+     "cote-RDC-046"
+    ],
+    "l2_n": 47,
+    "texte_1": "13'-1\"",
+    "texte_2": "13'-1\"",
+    "compat": "meme",
+    "distance_px_ref": 3.6
+   },
+   {
+    "id": "cote-RDC-047",
+    "l1": [
+     "cote-RDC-047"
+    ],
+    "l2_n": 42,
+    "texte_1": "9\"",
+    "texte_2": "6\"",
+    "compat": "alt",
+    "distance_px_ref": 8.2
+   },
+   {
+    "id": "cote-RDC-048",
+    "l1": [
+     "cote-RDC-048"
+    ],
+    "l2_n": 65,
+    "texte_1": "ARCHE 4'-0\"",
+    "texte_2": "ARCHE 4'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 40.1
+   },
+   {
+    "id": "cote-RDC-049",
+    "l1": [
+     "cote-RDC-049"
+    ],
+    "l2_n": 64,
+    "texte_1": "ARCHE 6'-0\"",
+    "texte_2": "ARCHE 6'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 6.7
+   },
+   {
+    "id": "cote-RDC-050",
+    "l1": [
+     "ouv-RDC-027"
+    ],
+    "l2_n": 48,
+    "texte_1": "2'-10\"x6'-10\"",
+    "texte_2": "2'-10\"x6'-10\"",
+    "compat": "meme",
+    "distance_px_ref": 100.1
+   },
+   {
+    "id": "cote-RDC-051",
+    "l1": [
+     "ouv-RDC-026"
+    ],
+    "l2_n": 49,
+    "texte_1": "2'-8\"x6'-8\"",
+    "texte_2": "2'-8\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 60.6
+   },
+   {
+    "id": "cote-RDC-052",
+    "l1": [
+     "ouv-RDC-025"
+    ],
+    "l2_n": 50,
+    "texte_1": "2'-8\"x6'-8\"",
+    "texte_2": "2'-8x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 66.5
+   },
+   {
+    "id": "cote-RDC-053",
+    "l1": [
+     "ouv-RDC-019"
+    ],
+    "l2_n": 51,
+    "texte_1": "2'-4\"x6'-8\"",
+    "texte_2": "2'-4\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 75.7
+   },
+   {
+    "id": "cote-RDC-054",
+    "l1": [
+     "ouv-RDC-020"
+    ],
+    "l2_n": 52,
+    "texte_1": "2'-4\"x6'-8\"",
+    "texte_2": "2'-4\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 100.4
+   },
+   {
+    "id": "cote-RDC-055",
+    "l1": [
+     "ouv-RDC-018"
+    ],
+    "l2_n": 53,
+    "texte_1": "2'-4\"x6'-8\"",
+    "texte_2": "2'-4\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 66.0
+   },
+   {
+    "id": "cote-RDC-056",
+    "l1": [
+     "ouv-RDC-016"
+    ],
+    "l2_n": 54,
+    "texte_1": "2'-6\"x6'-8\"",
+    "texte_2": "2'-6\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 49.7
+   },
+   {
+    "id": "cote-RDC-057",
+    "l1": [
+     "ouv-RDC-017"
+    ],
+    "l2_n": 55,
+    "texte_1": "2'-6\"x6'-8\"",
+    "texte_2": "2'-6\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 51.1
+   },
+   {
+    "id": "cote-RDC-058",
+    "l1": [
+     "ouv-RDC-015"
+    ],
+    "l2_n": 56,
+    "texte_1": "2'-6\"x6'-8\"",
+    "texte_2": "2'-6\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 86.8
+   },
+   {
+    "id": "cote-RDC-059",
+    "l1": [
+     "ouv-RDC-022"
+    ],
+    "l2_n": 57,
+    "texte_1": "1'-6\"x6'-8\"",
+    "texte_2": "1'-9\"x6'-8\"",
+    "compat": "alt",
+    "distance_px_ref": 32.8
+   },
+   {
+    "id": "cote-RDC-060",
+    "l1": [
+     "ouv-RDC-014"
+    ],
+    "l2_n": 58,
+    "texte_1": "2'-6\"x6'-8\"",
+    "texte_2": "2'-6\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 72.7
+   },
+   {
+    "id": "cote-RDC-061",
+    "l1": [
+     "ouv-RDC-021"
+    ],
+    "l2_n": 59,
+    "texte_1": "2'-6\"x6'-8\"",
+    "texte_2": "2'-6\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 78.3
+   },
+   {
+    "id": "cote-RDC-062",
+    "l1": [
+     "ouv-RDC-011"
+    ],
+    "l2_n": 60,
+    "texte_1": "2'-8\"x6'-8\"",
+    "texte_2": "2'-8\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 67.7
+   },
+   {
+    "id": "cote-RDC-063",
+    "l1": [
+     "ouv-RDC-010"
+    ],
+    "l2_n": 61,
+    "texte_1": "2'-10\"x6'-10\"",
+    "texte_2": "2'-10\"x6'-10\"",
+    "compat": "meme",
+    "distance_px_ref": 82.8
+   },
+   {
+    "id": "cote-RDC-064",
+    "l1": [
+     "ouv-RDC-023"
+    ],
+    "l2_n": 62,
+    "texte_1": "2'-4\"x6'-8\"",
+    "texte_2": "2'-4\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 99.1
+   },
+   {
+    "id": "cote-RDC-065",
+    "l1": [
+     "ouv-RDC-024"
+    ],
+    "l2_n": 63,
+    "texte_1": "2'-8\"x6'-8\"",
+    "texte_2": "2'-8\"x6'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 81.4
+   },
+   {
+    "id": "cote-RDC-066",
+    "l1": [
+     "str-RDC-L03"
+    ],
+    "l2_n": 66,
+    "texte_1": "LINTEAU 2-2\"x8\"",
+    "texte_2": "LINTEAU 2-2\"x8\"",
+    "compat": "meme",
+    "distance_px_ref": 43.3
+   },
+   {
+    "id": "cote-RDC-067",
+    "l1": [
+     "str-RDC-L04"
+    ],
+    "l2_n": 67,
+    "texte_1": "LIN. 2-2\"x6\"",
+    "texte_2": "LIN. 2-2x6",
+    "compat": "meme",
+    "distance_px_ref": 33.7
+   },
+   {
+    "id": "cote-RDC-068",
+    "l1": [
+     "str-RDC-L05"
+    ],
+    "l2_n": 68,
+    "texte_1": "LINTEAU 2-2\"x8\"",
+    "texte_2": "LINTEAU 2-2\"x8\"",
+    "compat": "meme",
+    "distance_px_ref": 49.0
+   },
+   {
+    "id": "cote-RDC-069",
+    "l1": [
+     "str-RDC-L06"
+    ],
+    "l2_n": 69,
+    "texte_1": "LIN. 2-2\"x6\"",
+    "texte_2": "LIN. 2-2\"x6\"",
+    "compat": "meme",
+    "distance_px_ref": 38.5
+   },
+   {
+    "id": "cote-RDC-070",
+    "l1": [
+     "str-RDC-L07"
+    ],
+    "l2_n": 70,
+    "texte_1": "LIN. 2-2\"x6\"",
+    "texte_2": "LIN. 2-2\"x6\"",
+    "compat": "meme",
+    "distance_px_ref": 35.8
+   },
+   {
+    "id": "cote-RDC-071",
+    "l1": [
+     "str-RDC-L01"
+    ],
+    "l2_n": 71,
+    "texte_1": "LINTEAU 2-2\"x8\"",
+    "texte_2": "LINTEAU 2-2\"x8\"",
+    "compat": "meme",
+    "distance_px_ref": 15.3
+   },
+   {
+    "id": "cote-RDC-072",
+    "l1": [
+     "str-RDC-L02"
+    ],
+    "l2_n": 72,
+    "texte_1": "LINTEAU 2-2\"x10\"",
+    "texte_2": "LINTEAU 2-2\"x10\"",
+    "compat": "meme",
+    "distance_px_ref": 25.9
+   },
+   {
+    "id": "cote-RDC-073",
+    "l1": [
+     "str-RDC-S01"
+    ],
+    "l2_n": 73,
+    "texte_1": "SOLIVES 2\"x7\" @ 16\" c/c",
+    "texte_2": "SOLIVES 2\"x7\" @ 16\" c/c",
+    "compat": "meme",
+    "distance_px_ref": 91.0
+   },
+   {
+    "id": "cote-RDC-074",
+    "l1": [
+     "str-RDC-S02"
+    ],
+    "l2_n": 74,
+    "texte_1": "SOLIVES 2\"x7\" @ 16\" c/c",
+    "texte_2": "SOLIVES 2\"x7\" @ 16\" c/c",
+    "compat": "meme",
+    "distance_px_ref": null
+   },
+   {
+    "id": "cote-RDC-075",
+    "l1": [
+     "str-RDC-P01"
+    ],
+    "l2_n": 75,
+    "texte_1": "POUTRE 6\"x10\" FLUSH",
+    "texte_2": "POUTRE 6\"x10\" FLUSH",
+    "compat": "meme",
+    "distance_px_ref": 52.5
+   },
+   {
+    "id": "cote-RDC-076",
+    "l1": [
+     "note-RDC-04"
+    ],
+    "l2_n": 76,
+    "texte_1": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
+    "texte_2": "REN. AVEC BARRE ½\"ø @ 10\" c/c",
+    "compat": "meme",
+    "distance_px_ref": 120
+   },
+   {
+    "id": "cote-RDC-077",
+    "l1": [
+     "note-RDC-08"
+    ],
+    "l2_n": 77,
+    "texte_1": "2.R. 14 C.M.",
+    "texte_2": "14 C.M.",
+    "compat": "meme",
+    "distance_px_ref": 120
+   },
+   {
+    "id": "cote-RDC-078",
+    "l1": [
+     "note-RDC-02"
+    ],
+    "l2_n": 84,
+    "texte_1": "ÉCHELLE : 1/4\" = 1'-0\"",
+    "texte_2": "ÉCHELLE: 1/4\" = 1'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 120
+   }
+  ],
+  "P2": [
+   {
+    "id": "cote-P2-001",
+    "l1": [
+     "cote-P2-001"
+    ],
+    "l2_n": 1,
+    "texte_1": "38'",
+    "texte_2": "38'",
+    "compat": "meme",
+    "distance_px_ref": 3.2
+   },
+   {
+    "id": "cote-P2-002",
+    "l1": [
+     "cote-P2-002"
+    ],
+    "l2_n": 2,
+    "texte_1": "31' 8\"",
+    "texte_2": "31' 8\"",
+    "compat": "meme",
+    "distance_px_ref": 24.1
+   },
+   {
+    "id": "cote-P2-003",
+    "l1": [
+     "cote-P2-003"
+    ],
+    "l2_n": 3,
+    "texte_1": "10\"",
+    "texte_2": "10\"",
+    "compat": "meme",
+    "distance_px_ref": 1.0
+   },
+   {
+    "id": "cote-P2-004",
+    "l1": [
+     "cote-P2-004"
+    ],
+    "l2_n": 4,
+    "texte_1": "11' 4\"",
+    "texte_2": "11' 4\"",
+    "compat": "meme",
+    "distance_px_ref": 3.6
+   },
+   {
+    "id": "cote-P2-005",
+    "l1": [
+     "cote-P2-005"
+    ],
+    "l2_n": 5,
+    "texte_1": "2' 5\"",
+    "texte_2": "2' 5\"",
+    "compat": "meme",
+    "distance_px_ref": 3.6
+   },
+   {
+    "id": "cote-P2-006",
+    "l1": [
+     "cote-P2-006"
+    ],
+    "l2_n": 6,
+    "texte_1": "3' 11\"",
+    "texte_2": "3' 11\"",
+    "compat": "meme",
+    "distance_px_ref": 3.0
+   },
+   {
+    "id": "cote-P2-007",
+    "l1": [
+     "cote-P2-007"
+    ],
+    "l2_n": 7,
+    "texte_1": "4' 5\"",
+    "texte_2": "4' 5\"",
+    "compat": "meme",
+    "distance_px_ref": 3.6
+   },
+   {
+    "id": "cote-P2-008",
+    "l1": [
+     "cote-P2-008"
+    ],
+    "l2_n": 8,
+    "texte_1": "3' 5\"",
+    "texte_2": "3' 5\"",
+    "compat": "meme",
+    "distance_px_ref": 2.2
+   },
+   {
+    "id": "cote-P2-009",
+    "l1": [
+     "cote-P2-009"
+    ],
+    "l2_n": 9,
+    "texte_1": "10' 10\"",
+    "texte_2": "10' 10\"",
+    "compat": "meme",
+    "distance_px_ref": 2.8
+   },
+   {
+    "id": "cote-P2-010",
+    "l1": [
+     "cote-P2-010"
+    ],
+    "l2_n": 10,
+    "texte_1": "10\"",
+    "texte_2": "10\"",
+    "compat": "meme",
+    "distance_px_ref": 2.8
+   },
+   {
+    "id": "cote-P2-011",
+    "l1": [
+     "cote-P2-011"
+    ],
+    "l2_n": 11,
+    "texte_1": "10\"",
+    "texte_2": "10\"",
+    "compat": "meme",
+    "distance_px_ref": 36.0
+   },
+   {
+    "id": "cote-P2-012",
+    "l1": [
+     "cote-P2-012"
+    ],
+    "l2_n": 12,
+    "texte_1": "13' 10\"",
+    "texte_2": "13' 10\"",
+    "compat": "meme",
+    "distance_px_ref": 9.2
+   },
+   {
+    "id": "cote-P2-013",
+    "l1": [
+     "cote-P2-013"
+    ],
+    "l2_n": 13,
+    "texte_1": "3' 11\"",
+    "texte_2": "3' 11\"",
+    "compat": "meme",
+    "distance_px_ref": 2.2
+   },
+   {
+    "id": "cote-P2-014",
+    "l1": [
+     "cote-P2-014"
+    ],
+    "l2_n": 14,
+    "texte_1": "12' 3\"",
+    "texte_2": "12' 3\"",
+    "compat": "meme",
+    "distance_px_ref": 1.4
+   },
+   {
+    "id": "cote-P2-015",
+    "l1": [
+     "cote-P2-015"
+    ],
+    "l2_n": 15,
+    "texte_1": "10\"",
+    "texte_2": "10\"",
+    "compat": "meme",
+    "distance_px_ref": 16.0
+   },
+   {
+    "id": "cote-P2-016",
+    "l1": [
+     "cote-P2-016"
+    ],
+    "l2_n": 16,
+    "texte_1": "5 / 12",
+    "texte_2": "5 / 12",
+    "compat": "meme",
+    "distance_px_ref": 20.6
+   },
+   {
+    "id": "cote-P2-017",
+    "l1": [
+     "cote-P2-017"
+    ],
+    "l2_n": 24,
+    "texte_1": "8'-4\" ?",
+    "texte_2": "8'-4\"",
+    "compat": "meme",
+    "distance_px_ref": 25.6
+   },
+   {
+    "id": "cote-P2-018",
+    "l1": [
+     "cote-P2-018"
+    ],
+    "l2_n": 25,
+    "texte_1": "3'-5\"",
+    "texte_2": "3'-5\"",
+    "compat": "meme",
+    "distance_px_ref": 25.1
+   },
+   {
+    "id": "cote-P2-019",
+    "l1": [
+     "cote-P2-019"
+    ],
+    "l2_n": 26,
+    "texte_1": "11'-8\"",
+    "texte_2": "11'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 25.9
+   },
+   {
+    "id": "cote-P2-020",
+    "l1": [
+     "cote-P2-020"
+    ],
+    "l2_n": null,
+    "texte_1": "9'-0\" ?",
+    "texte_2": null,
+    "compat": null,
+    "distance_px_ref": null
+   },
+   {
+    "id": "cote-P2-021",
+    "l1": [
+     "cote-P2-021"
+    ],
+    "l2_n": 27,
+    "texte_1": "POUTRE … 10\" FLUSH ?",
+    "texte_2": "POUTRE … 10' FLUSH",
+    "compat": "meme",
+    "distance_px_ref": 43.0
+   },
+   {
+    "id": "cote-P2-022",
+    "l1": [
+     "cote-P2-022"
+    ],
+    "l2_n": null,
+    "texte_1": "(nombreuses cotes manuscrites pâles : linteaux, ouvertures, placards, « 2'-4\" »…)",
+    "texte_2": null,
+    "compat": null,
+    "distance_px_ref": null
+   },
+   {
+    "id": "cote-P2-023",
+    "l1": [
+     "P2.annotations"
+    ],
+    "l2_n": 17,
+    "texte_1": "Fissure ± 1,2 m au plafond de stucco",
+    "texte_2": "Fissure ± 1,2 m au plafond de stucco",
+    "compat": "meme",
+    "distance_px_ref": 61.1
+   },
+   {
+    "id": "cote-P2-024",
+    "l1": null,
+    "l2_n": 28,
+    "texte_1": null,
+    "texte_2": "?'-5\"",
+    "compat": null,
+    "distance_px_ref": null
+   },
+   {
+    "id": "cote-P2-025",
+    "l1": null,
+    "l2_n": 29,
+    "texte_1": null,
+    "texte_2": "?'-5\"",
+    "compat": null,
+    "distance_px_ref": null
+   },
+   {
+    "id": "cote-P2-026",
+    "l1": null,
+    "l2_n": 30,
+    "texte_1": null,
+    "texte_2": "3'-?0\"",
+    "compat": null,
+    "distance_px_ref": null
+   }
+  ],
+  "P5": [
+   {
+    "id": "cote-P5-001",
+    "l1": [
+     "cote-P5-001"
+    ],
+    "l2_n": 40,
+    "texte_1": "38'-0\"",
+    "texte_2": "38'-0\"",
+    "compat": "meme",
+    "distance_px_ref": 44.1
+   },
+   {
+    "id": "cote-P5-002",
+    "l1": [
+     "cote-P5-002"
+    ],
+    "l2_n": 37,
+    "texte_1": "31'-8\"",
+    "texte_2": "31'-8\"",
+    "compat": "meme",
+    "distance_px_ref": 13.0
+   },
+   {
+    "id": "cote-P5-003",
+    "l1": [
+     "cote-P5-003"
+    ],
+    "l2_n": 39,
+    "texte_1": "7.79'",
+    "texte_2": "7.79'",
+    "compat": "meme",
+    "distance_px_ref": 9.4
+   },
+   {
+    "id": "cote-P5-004",
+    "l1": [
+     "cote-P5-004"
+    ],
+    "l2_n": 41,
+    "texte_1": "9'",
+    "texte_2": "9'",
+    "compat": "meme",
+    "distance_px_ref": 16.8
+   },
+   {
+    "id": "cote-P5-005",
+    "l1": [
+     "cote-P5-005"
+    ],
+    "l2_n": 38,
+    "texte_1": "9'",
+    "texte_2": "9'",
+    "compat": "meme",
+    "distance_px_ref": 2.0
+   },
+   {
+    "id": "cote-P5-006",
+    "l1": [
+     "cote-P5-006"
+    ],
+    "l2_n": 42,
+    "texte_1": "40'",
+    "texte_2": "40'",
+    "compat": "meme",
+    "distance_px_ref": 1.4
+   },
+   {
+    "id": "cote-P5-007",
+    "l1": [
+     "cote-P5-007"
+    ],
+    "l2_n": 43,
+    "texte_1": "40'",
+    "texte_2": "40'",
+    "compat": "meme",
+    "distance_px_ref": 11.4
+   },
+   {
+    "id": "cote-P5-008",
+    "l1": [
+     "cote-P5-008"
+    ],
+    "l2_n": 44,
+    "texte_1": "57.23",
+    "texte_2": "57.23",
+    "compat": "meme",
+    "distance_px_ref": 1.0
+   },
+   {
+    "id": "cote-P5-009",
+    "l1": [
+     "cote-P5-009"
+    ],
+    "l2_n": 31,
+    "texte_1": "50.27'",
+    "texte_2": "50.27'",
+    "compat": "meme",
+    "distance_px_ref": 7.6
+   },
+   {
+    "id": "cote-P5-010",
+    "l1": [
+     "cote-P5-010"
+    ],
+    "l2_n": 35,
+    "texte_1": "115.17'",
+    "texte_2": "115.17'",
+    "compat": "meme",
+    "distance_px_ref": 20.0
+   },
+   {
+    "id": "cote-P5-011",
+    "l1": [
+     "cote-P5-011"
+    ],
+    "l2_n": 36,
+    "texte_1": "112.28'",
+    "texte_2": "112,28'",
+    "compat": "meme",
+    "distance_px_ref": 10.0
+   },
+   {
+    "id": "cote-P5-012",
+    "l1": [
+     "cote-P5-012"
+    ],
+    "l2_n": 46,
+    "texte_1": "1\" = 20'",
+    "texte_2": "ECHELLE: 1\" = 20'",
+    "compat": "meme",
+    "distance_px_ref": 32.0
+   }
+  ]
+ },
+ "exclus": {
+  "SS": [
+   {
+    "n": 12,
+    "texte": "3",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 40,
+    "texte": "E 14",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 41,
+    "texte": "3W",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 50,
+    "texte": "3W",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 61,
+    "texte": "(marque pâle illisible)",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   }
+  ],
+  "RDC": [
+   {
+    "n": 78,
+    "texte": "#220",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 79,
+    "texte": "#220",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 80,
+    "texte": "3W",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 81,
+    "texte": "3W",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 82,
+    "texte": "3W",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 83,
+    "texte": "3W",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   }
+  ],
+  "P2": [
+   {
+    "n": 18,
+    "texte": "Colonne C4 retirée",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 19,
+    "texte": "Colonne C6 retirée",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 20,
+    "texte": "Croquis no. 1",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 21,
+    "texte": "Résidence du 86, Laurier",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 22,
+    "texte": "Le 19 septembre 2016",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 23,
+    "texte": "129, av. Parent",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   }
+  ],
+  "P5": [
+   {
+    "n": 32,
+    "texte": "1-488",
+    "categorie": "lot",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 33,
+    "texte": "1-487",
+    "categorie": "lot",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 34,
+    "texte": "1-486",
+    "categorie": "lot",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 45,
+    "texte": "…SUR LE LOT 1-487",
+    "categorie": "lot",
+    "raison": "non dimensionnel"
+   },
+   {
+    "n": 47,
+    "texte": "6 NOV. 1957",
+    "categorie": "autre",
+    "raison": "non dimensionnel"
+   }
+  ]
+ },
+ "orphelines_mineures": {},
+ "stats": {
+  "SS": {
+   "accords": 42,
+   "desaccords": 14,
+   "orphelines": 0,
+   "l1_items": 56,
+   "l2_items": 56,
+   "l2_exclus_non_dimensionnels": 5
+  },
+  "RDC": {
+   "accords": 63,
+   "desaccords": 15,
+   "orphelines": 0,
+   "l1_items": 78,
+   "l2_items": 78,
+   "l2_exclus_non_dimensionnels": 6
+  },
+  "P2": {
+   "accords": 16,
+   "desaccords": 5,
+   "orphelines": 5,
+   "l1_items": 23,
+   "l2_items": 24,
+   "l2_exclus_non_dimensionnels": 6
+  },
+  "P5": {
+   "accords": 7,
+   "desaccords": 5,
+   "orphelines": 0,
+   "l1_items": 12,
+   "l2_items": 12,
+   "l2_exclus_non_dimensionnels": 5
+  }
+ }
+}

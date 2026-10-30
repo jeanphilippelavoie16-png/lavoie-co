@@ -1,0 +1,89 @@
+RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
+========================================================================
+Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
+Révision : A    Date : 2026-10-29
+Données  : maison.json, sha256 87b47273993ace0bd5ee58e5d5b590e16e1855a421ac975e4705b7f685bc8227
+Feuilles : P-109 Sous-sol proposé (3/16" = 1'-0") ; P-110 RDC proposé (3/16" = 1'-0")
+
+SOMMAIRE
+  Identifiants                 OK      0 erreur(s), 0 avertissement(s)
+  Murs                         OK      0 erreur(s), 0 avertissement(s)
+  Ouvertures                   OK      0 erreur(s), 0 avertissement(s)
+  Pièces                       OK      0 erreur(s), 0 avertissement(s)
+  Bilan de surface             AVERT.  0 erreur(s), 1 avertissement(s)
+  Chaînes de cotes             OK      0 erreur(s), 0 avertissement(s)
+  Repères d'incertitude        AVERT.  0 erreur(s), 3 avertissement(s)
+  Textes (chevauchements)      OK      0 erreur(s), 0 avertissement(s)
+  Mise en page                 OK      0 erreur(s), 0 avertissement(s)
+  Reproductibilité             OK      0 erreur(s), 0 avertissement(s)
+
+1. IDENTIFIANTS
+------------------------------------------------------------------------
+  [OK] 450 identifiants, aucun doublon
+
+2. MURS
+------------------------------------------------------------------------
+  (rien à signaler)
+
+3. OUVERTURES
+------------------------------------------------------------------------
+  (rien à signaler)
+
+4. PIÈCES
+------------------------------------------------------------------------
+  [OK] [SS] 13 étiquettes de pièces : chacune dans sa pièce ou reliée à elle par un renvoi qui s'y termine ; aucun texte lu à plus de 20 % dans une autre pièce
+
+5. BILAN DE SURFACE
+------------------------------------------------------------------------
+  [OK] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1097,0 pi² + murs 175,2 pi² − chevauchement pièces/murs 0,0 pi² = 1272,3 pi² ; écart 0,1 pi²
+  [OK] [SS] aucun trou > 1 pi² entre pièces et murs
+  [AVERT] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1083,8 pi² + murs 166,1 pi² − chevauchement pièces/murs 1,5 pi² = 1248,3 pi² ; écart 0,0 pi²
+  [OK] [RDC] aucun trou > 1 pi² entre pièces et murs
+
+6. CHAÎNES DE COTES
+------------------------------------------------------------------------
+  [OK] [SS] façade avant, rang 1 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [SS] façade avant, rang 2 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [SS] façade arriere, rang 1 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [SS] façade arriere, rang 2 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [SS] façade gauche, rang 1 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [SS] façade gauche, rang 2 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [SS] façade droite, rang 1 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [SS] façade droite, rang 2 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [RDC] façade avant, rang 1 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [RDC] façade avant, rang 2 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [RDC] façade arriere, rang 1 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [RDC] façade arriere, rang 2 : Σ = 38'-0" = hors-tout 38'-0"
+  [OK] [RDC] façade gauche, rang 1 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [RDC] façade gauche, rang 2 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [RDC] façade droite, rang 1 : Σ = 31'-8" = hors-tout 31'-8"
+  [OK] [RDC] façade droite, rang 2 : Σ = 31'-8" = hors-tout 31'-8"
+
+7. REPÈRES D'INCERTITUDE
+------------------------------------------------------------------------
+  [AVERT] [SS] lc-SS-033 : repère « ecart-020 » absent du registre — aucun repère dessiné
+  [AVERT] [SS] épaisseur présumée sans écart référencé (epaisseur.ref) : mur-SS-005, mur-SS-006, mur-SS-009, mur-SS-010, mur-SS-P01, mur-SS-P10, mur-SS-P09, mur-SS-P08, mur-SS-P04, mur-SS-P05, mur-SS-P17, mur-SS-P16, mur-SS-P07, mur-SS-P11, mur-SS-P12, mur-SS-P13, mur-SS-P14, mur-SS-P15 — aucun repère dessiné
+  [AVERT] [RDC] épaisseur présumée sans écart référencé (epaisseur.ref) : mur-RDC-005, mur-RDC-006, mur-RDC-007, mur-RDC-P01, mur-RDC-P02 — aucun repère dessiné
+
+8. TEXTES (CHEVAUCHEMENTS)
+------------------------------------------------------------------------
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (138 textes vérifiés)
+  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (86 textes vérifiés)
+
+9. MISE EN PAGE
+------------------------------------------------------------------------
+  [INFO] [SS] elem-SS-DR-BAIN : dimensions absentes → symbole par défaut 6" × 6"
+  [INFO] [SS] elem-SS-DR-LAV : dimensions absentes → symbole par défaut 6" × 6"
+  [INFO] [SS] elem-SS-DR-WC : dimensions absentes → symbole par défaut 6" × 6"
+  [INFO] [SS] elem-SS-PANNEAU : dimensions absentes → symbole par défaut 1'-4" × 4"
+  [INFO] [SS] elem-SS-ROB1 : dimensions absentes → symbole par défaut 4" × 4"
+  [INFO] [SS] elem-SS-ROB2 : dimensions absentes → symbole par défaut 4" × 4"
+  [INFO] [SS] feuille P-109 : échelle 3/16" = 1'-0"
+  [INFO] [RDC] feuille P-110 : échelle 3/16" = 1'-0"
+
+10. REPRODUCTIBILITÉ
+------------------------------------------------------------------------
+  [OK] [SS] DXF P-109_sous-sol.dxf : sha256 36f78fb9270a3a82… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF P-110_rdc.dxf : sha256 2a49eed2eb045102… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+
+Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

@@ -1,0 +1,4671 @@
+{
+ "projet": {
+  "nom": "Résidence — 86, avenue Laurier, Baie-Comeau",
+  "unites": "pouces (affichage pi-po, métrique entre parenthèses)",
+  "origine": "coin extérieur avant-gauche de la fondation, vu de la rue ; x le long de la façade, y vers l'arrière",
+  "convention_cotation": "Hors-tout et chaînes extérieures au NU EXTÉRIEUR des murs de fondation (SS) et des murs extérieurs (RDC) ; fenêtres et portes extérieures cotées à l'AXE (centre) de l'ouverture, largeurs = baie entre jambages ; cloisons du RDC cotées à l'AXE (DÉDUIT : chaque chaîne intérieure ferme sur le hors-tout depuis les nus ext. ; les axes y = 13'-1\" (157) et 17'-0\" (204) coïncident avec les axes des poutres 8\"x10\" du sous-sol et avec les axes B et C du croquis 2016 ; la ligne 2 du croquis tombe sur l'axe de la cloison) ; au sous-sol, chaîne intérieure en x au nu intérieur des murs et aux faces des colonnes (10\" + 9'-10\" + 8\" + 7'-4\" …), chaîne en y du nu intérieur aux AXES des poutres. Épaisseurs : fondation 10\" LU (P2) ; murs ext. RDC 10\" LU (P1 2016, à confronter : dessin 1957 ≈ 11\") ; cloisons 4½\" PRÉSUMÉ sauf cloison chambre arrière / S. de bain 6\" LU ; murs du caveau 10\" (droit LU, autres PRÉSUMÉ par analogie) ; murs de l'excroissance du perron 6\" (gauche LU, autres PRÉSUMÉ) ; entrée arrière 6\" PRÉSUMÉ. Toute la géométrie est générée par code (scripts/construire_maison.py).",
+  "ancres": [
+   {
+    "id": "ancre-01",
+    "description": "hors-tout de la façade avant (nu ext.)",
+    "valeur": 456,
+    "source": "MESURÉ",
+    "reference": "38'-0\" (cote-SS-031 / RDC)",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   },
+   {
+    "id": "ancre-02",
+    "description": "hors-tout en profondeur (nu ext.)",
+    "valeur": 380,
+    "source": "MESURÉ",
+    "reference": "31'-8\"",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   },
+   {
+    "id": "ancre-03",
+    "description": "mur arrière : coin arrière droit → nu ext. du mur droit de l'entrée arrière",
+    "valeur": 129,
+    "source": "MESURÉ",
+    "reference": "10'-9\" (cote-RDC-018)",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   }
+  ],
+  "ancres_note": "Aucune mesure sur place n'a été fournie par le propriétaire ; voir ecart-028.",
+  "nord": {
+   "angle_deg": 9.8,
+   "source": "ESTIMÉ",
+   "photo": "P7",
+   "note": "mesuré par code sur la flèche du plan d'implantation (prep/redresse/P5.jpg), ± 1,5° ; angle horaire de +y (vers l'arrière) au nord ; nord non qualifié (vrai/magnétique)"
+  },
+  "photos": [
+   {
+    "id": "P1",
+    "description": "Croquis no 1 — « Plan d'origine et plan actuel du RDC », Claude Mazerolle, ing., 19 septembre 2016 (quadrillage 1–7 / A–D, axes porteurs d'origine, colonnes retirées, fissures, ferme 5/12)"
+   },
+   {
+    "id": "P2",
+    "description": "Feuille « FONDATIONS & SOUS-SOL », éch. 1/4\" = 1'-0\" — gros plan (source principale sous-sol)"
+   },
+   {
+    "id": "P3",
+    "description": "Feuille « FONDATIONS & SOUS-SOL », vue entière avec cartouche (source secondaire)"
+   },
+   {
+    "id": "P4",
+    "description": "Feuille « REZ-DE-CHAUSSÉE », éch. 1/4\" = 1'-0\" — gros plan (source principale RDC ; haut un peu coupé)"
+   },
+   {
+    "id": "P5",
+    "description": "Feuille RDC, vue entière (source secondaire)"
+   },
+   {
+    "id": "P6",
+    "description": "Feuille RDC, vue entière, autre prise redressée en perspective (source secondaire)"
+   },
+   {
+    "id": "P7",
+    "description": "Plan d'implantation de la maison projetée sur le lot 1-487, Ville de Baie-Comeau, éch. 1\" = 20', 6 nov. 1957, flèche du nord"
+   }
+  ],
+  "date": "2026-10-29",
+  "revision": "A",
+  "affichage": {
+   "noms_pieces": true,
+   "dimensions_pieces": true,
+   "note": "noms, dimensions et superficies des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv ; cotes intérieures et métrique retirées des plans (annotateur, 2026-10-29)",
+   "metrique": false,
+   "textes_structure": false
+  },
+  "implantation": {
+   "source": "P7",
+   "note": "cotes du plan d'implantation (pieds décimaux convertis en pouces) ; maison « projetée » 1957",
+   "cotes": [
+    {
+     "id": "cote-IMP-001",
+     "texte_original": "38'-0\"",
+     "valeur": 456,
+     "lecture_1": "38'-0\"",
+     "lecture_2": "38'-0\"",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "au-dessus de la façade de la maison",
+     "px": [
+      875,
+      1218
+     ],
+     "mesure": "largeur de la maison (façade sur l'av. Laurier)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-IMP-002",
+     "texte_original": "31'-8\"",
+     "valeur": 380.0,
+     "lecture_1": "31'-8\"",
+     "lecture_2": "31'-8\"",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "écrit verticalement le long du côté droit de la maison",
+     "px": [
+      1018,
+      1030
+     ],
+     "mesure": "profondeur de la maison",
+     "lecture_3": {
+      "texte": "31'-8\"",
+      "valeur_po": 380,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "Écrit verticalement. Le 3 est net. Le 2e chiffre est une hampe verticale ; la petite barre en haut vient des hachures du mur qui le chevauchent, pas d'un 7 (le 7 de ce dessinateur, dans 57.23, a une diagonale). Le 8 a deux boucles nettes."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-01_P5.png",
+     "alternatives": [
+      {
+       "texte": "31'-6\"",
+       "valeur": 378,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "hors-tout aussi lu 31'-8\" sur SS, RDC et P1"
+    },
+    {
+     "id": "cote-IMP-003",
+     "texte_original": "7.79'",
+     "valeur": 93.48,
+     "lecture_1": "7.79'",
+     "lecture_2": "7.79'",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "à gauche de la maison, sur le prolongement de la façade, flèche vers la ligne de lot gauche",
+     "px": [
+      603,
+      1220
+     ],
+     "mesure": "marge latérale gauche (ligne de lot gauche oblique → coin avant-gauche de la maison), en pieds décimaux = 7,79 pi",
+     "lecture_3": {
+      "texte": "7.79",
+      "valeur_po": 7.79,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "Le 1er chiffre est en partie masqué par la ligne de lot et la flèche, mais la barre et la diagonale d'un 7 se voient. On lit ensuite « .79 », avec un 7 identique et un 9 à boucle fermée."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-02_P5.png",
+     "alternatives": [
+      {
+       "texte": "7.19'",
+       "valeur": 86.28,
+       "propose_par": "lecture_2",
+       "raison": null
+      },
+      {
+       "texte": "1.79'",
+       "valeur": 21.48,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "7.79' + 38'-0\" + 9' = 54,79 pi ; lecture 1 : largeur du lot mesurée dans l'image à 40 pi de la rue ≈ 54,3 pi (ESTIMÉ)"
+    },
+    {
+     "id": "cote-IMP-004",
+     "texte_original": "9'",
+     "valeur": 108,
+     "lecture_1": "9'",
+     "lecture_2": "9'",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "à droite de la maison, prolongement de la façade, flèche vers la ligne de lot droite",
+     "px": [
+      1080,
+      1220
+     ],
+     "mesure": "marge latérale droite à l'avant (coin avant-droit → ligne de lot droite)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-IMP-005",
+     "texte_original": "9'",
+     "valeur": 108,
+     "lecture_1": "9'",
+     "lecture_2": "9'",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "à droite de la maison, prolongement du mur arrière, flèche vers la ligne de lot droite",
+     "px": [
+      1066,
+      889
+     ],
+     "mesure": "marge latérale droite à l'arrière",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-IMP-006",
+     "texte_original": "40'",
+     "valeur": 480,
+     "lecture_1": "40'",
+     "lecture_2": "40'",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "écrit verticalement le long de la ligne de lot gauche, devant la maison",
+     "px": [
+      557,
+      1429
+     ],
+     "mesure": "marge avant (rue → façade), côté gauche",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-IMP-007",
+     "texte_original": "40'",
+     "valeur": 480,
+     "lecture_1": "40'",
+     "lecture_2": "40'",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "écrit verticalement près de la ligne de lot droite, à côté de « ALLÉE »",
+     "px": [
+      1112,
+      1421
+     ],
+     "mesure": "marge avant, côté droit",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-IMP-008",
+     "texte_original": "57.23",
+     "valeur": 686.76,
+     "lecture_1": "57.23",
+     "lecture_2": "57.23",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "le long de l'av. Laurier (façade du lot)",
+     "px": [
+      845,
+      1629
+     ],
+     "mesure": "largeur du lot sur rue, pieds décimaux (unité non écrite, PRÉSUMÉ pi)",
+     "lecture_3": {
+      "texte": "57.23",
+      "valeur_po": 57.23,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Les chiffres sont nets : 5 avec drapeau, 7 à barre et diagonale, 2 et 3 sans ambiguïté."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-03_P5.png",
+     "alternatives": [
+      {
+       "texte": "57.28",
+       "valeur": 8248.32,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne"
+    },
+    {
+     "id": "cote-IMP-009",
+     "texte_original": "50.27'",
+     "valeur": 603.24,
+     "lecture_1": "50.27'",
+     "lecture_2": "50.27'",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "ligne arrière du lot",
+     "px": [
+      882,
+      502
+     ],
+     "mesure": "largeur du lot à l'arrière",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-IMP-010",
+     "texte_original": "115.17'",
+     "valeur": 1382.04,
+     "lecture_1": "115.17'",
+     "lecture_2": "115.17'",
+     "statut": "conflit",
+     "photo": "P7",
+     "emplacement": "écrit verticalement le long de la ligne de lot gauche (oblique)",
+     "px": [
+      558,
+      960
+     ],
+     "mesure": "longueur de la ligne latérale gauche du lot",
+     "lecture_3": {
+      "texte": "115,14'",
+      "valeur_po": 115.14,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "« 115,1 » est net. Le dernier chiffre a un court trait gauche, une barre médiane et un jambage droit plus long qui descend sous la ligne de base (forme Ч) : c'est un 4 ouvert. Les 7 de la feuille (57.23) ont une barre haute et une diagonale sans trait gauche."
+     },
+     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : lectures 1 et 2 : 115.17' ; 3e lecture 115,14' ; aucune chaîne fermée ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-04_P5.png ; écart ecart-001",
+     "alternatives": [
+      {
+       "texte": "115.14'",
+       "valeur": 1381.68,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne"
+    },
+    {
+     "id": "cote-IMP-011",
+     "texte_original": "112.28'",
+     "valeur": 1347.36,
+     "lecture_1": "112.28'",
+     "lecture_2": "112,28'",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "écrit verticalement le long de la ligne de lot droite",
+     "px": [
+      1140,
+      966
+     ],
+     "mesure": "longueur de la ligne latérale droite du lot (dessinée ⟂ à la rue)",
+     "lecture_3": {
+      "texte": "112,28'",
+      "valeur_po": 112.28,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Les chiffres sont nets : le 2 a une base plate, et le 8 a deux boucles fermées."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-P5-05_P5.png",
+     "alternatives": [
+      {
+       "texte": "112.26'",
+       "valeur": 1347.12,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne"
+    },
+    {
+     "id": "cote-IMP-012",
+     "texte_original": "1\" = 20'",
+     "valeur": null,
+     "lecture_1": "1\" = 20'",
+     "lecture_2": "ECHELLE: 1\" = 20'",
+     "statut": "confirmee",
+     "photo": "P7",
+     "emplacement": "titre",
+     "px": [
+      979,
+      2067
+     ],
+     "mesure": "échelle du plan (rapport 1:240)",
+     "dimension_nominale": "1\"=20'",
+     "note": "lectures 1 et 2 concordantes"
+    }
+   ]
+  },
+  "correspondance_photos_internes": {
+   "P1": "P2",
+   "P2": "P1",
+   "P3": "P7",
+   "P4": "P3",
+   "P5": "P4",
+   "P6": "P6",
+   "P7": "P5"
+  },
+  "proposition": "SS-02",
+  "mention": "PROPOSITION SS-02 — AIRE OUVERTE, SALLE D'ENTRAÎNEMENT VITRÉE — ESQUISSE À VALIDER",
+  "titre_notes": "NOTES DE LA PROPOSITION",
+  "nom_pdf": "SS-02_aire_ouverte_gym_vitre.pdf",
+  "base": "copie de releve/livrables/donnees/maison.json (plans de base R0, étiquette plans-de-base-R0)"
+ },
+ "niveaux": [
+  {
+   "id": "SS",
+   "nom": "Sous-sol proposé",
+   "feuille": "P-101",
+   "photos_sources": [
+    "P2",
+    "P3"
+   ],
+   "hauteur_plafond": {
+    "valeur": null,
+    "source": "ILLISIBLE",
+    "photo": null,
+    "note": "aucune hauteur de plafond écrite sur la feuille ; voir ecart-008"
+   },
+   "murs": [
+    {
+     "id": "mur-SS-001",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation en béton coulé (P2)",
+      "appui probable des solives 2\"x10\" @ 20\" c/c (P2) — non écrit"
+     ],
+     "epaisseur": {
+      "valeur": 10.0,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-034"
+     },
+     "x1": 5,
+     "y1": 5,
+     "x2": 451,
+     "y2": 5,
+     "note": "Mur avant (côté rue) ; axe y = 5 (nu ext. y = 0).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-002",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation en béton coulé (P2)",
+      "appui probable des solives 2\"x10\" @ 20\" c/c (P2) — non écrit"
+     ],
+     "epaisseur": {
+      "valeur": 10.0,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-045"
+     },
+     "x1": 451,
+     "y1": 5,
+     "x2": 451,
+     "y2": 375,
+     "note": "Mur latéral droit ; axe x = 38'-0\" − 5.",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-003",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation en béton coulé (P2)",
+      "appui probable des solives 2\"x10\" @ 20\" c/c (P2) — non écrit"
+     ],
+     "epaisseur": {
+      "valeur": 10.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "non écrite sur cette chaîne ; 10\" sur P1 (cote-RDC-211) et fermeture 10 + 13'-10\" + 3'-11\" + 12'-3\" + 10 = 31'-8\""
+     },
+     "x1": 451,
+     "y1": 375,
+     "x2": 5,
+     "y2": 375,
+     "note": "Mur arrière ; axe y = 31'-8\" − 5.",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-004",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation en béton coulé (P2)",
+      "appui probable des solives 2\"x10\" @ 20\" c/c (P2) — non écrit"
+     ],
+     "epaisseur": {
+      "valeur": 10.0,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-019"
+     },
+     "x1": 5,
+     "y1": 375,
+     "x2": 5,
+     "y2": 5,
+     "note": "Mur latéral gauche (cheminée) ; axe x = 5.",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-005",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation (P2)"
+     ],
+     "epaisseur": {
+      "valeur": 10,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "non cotée ; par analogie avec le mur droit du caveau (10\" LU, cote-SS-007)",
+      "ref": "ecart-007"
+     },
+     "x1": 224,
+     "y1": 375,
+     "x2": 224,
+     "y2": 435,
+     "note": "Caveau à légumes — mur gauche (évent grillagé) ; nu ext. x = 18'-3\" (cote-SS-002).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-006",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation (P2)"
+     ],
+     "epaisseur": {
+      "valeur": 10,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "non cotée ; par analogie avec le mur droit du caveau (10\" LU)",
+      "ref": "ecart-007"
+     },
+     "x1": 224,
+     "y1": 435,
+     "x2": 322,
+     "y2": 435,
+     "note": "Caveau — mur du fond ; nu ext. y = 31'-8\" + 5'-0\" (cote-SS-009).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-007",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation (P2)"
+     ],
+     "epaisseur": {
+      "valeur": 10,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-007"
+     },
+     "x1": 322,
+     "y1": 435,
+     "x2": 322,
+     "y2": 375,
+     "note": "Caveau — mur droit ; nu ext. x = 18'-3\" + 9'-0\" = 27'-3\".",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-008",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation sous le perron (P2)"
+     ],
+     "epaisseur": {
+      "valeur": 6.0,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-036",
+      "note": "tranché par 3e lecture"
+     },
+     "x1": 165,
+     "y1": 5,
+     "x2": 165,
+     "y2": -45,
+     "note": "Excroissance de fondation sous le perron — mur gauche ; nu ext. x = 13'-6\" (cote-SS-027).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-009",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation sous le perron (P2)"
+     ],
+     "epaisseur": {
+      "valeur": 6.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "non cotée ; par analogie avec le mur gauche du perron (6\" LU)",
+      "ref": "ecart-007"
+     },
+     "x1": 165,
+     "y1": -45,
+     "x2": 231,
+     "y2": -45,
+     "note": "Excroissance du perron — mur avant ; nu ext. y = −4'-0\" (cote-SS-033).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-010",
+     "type": "fondation",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "mur de fondation sous le perron (P2)"
+     ],
+     "epaisseur": {
+      "valeur": 6.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "non cotée ; par analogie avec le mur gauche du perron (6\" LU)",
+      "ref": "ecart-007"
+     },
+     "x1": 231,
+     "y1": -45,
+     "x2": 231,
+     "y2": 5,
+     "note": "Excroissance du perron — mur droit ; nu ext. x = 13'-6\" + 6'-0\" = 19'-6\".",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-SS-P01",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison projetée 2x4 + gypse"
+     },
+     "x1": 10,
+     "y1": 157,
+     "x2": 146,
+     "y2": 157,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — salle d'utilité, salle de bain (axe de la poutre avant) (proposition SS-02 (esquisse))."
+    },
+    {
+     "id": "mur-SS-P10",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 2.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison vitrée, cadre d'aluminium noir"
+     },
+     "x1": 146,
+     "y1": 157,
+     "x2": 228,
+     "y2": 157,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — VERRE : salle d'entraînement / corridor (axe de la poutre avant) (proposition SS-02 (esquisse)).",
+     "materiau": "verre"
+    },
+    {
+     "id": "mur-SS-P02",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison projetée 2x4 + gypse"
+     },
+     "x1": 146,
+     "y1": 204,
+     "x2": 228,
+     "y2": 204,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — corridor / rangement (axe de la poutre arrière) (proposition SS-02 (esquisse))."
+    },
+    {
+     "id": "mur-SS-P03",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison projetée 2x4 + gypse"
+     },
+     "x1": 300,
+     "y1": 204,
+     "x2": 446,
+     "y2": 204,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — corridor / chambre 2 (axe de la poutre arrière) (proposition SS-02 (esquisse))."
+    },
+    {
+     "id": "mur-SS-P04",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison projetée 2x4 + gypse"
+     },
+     "x1": 146,
+     "y1": 157,
+     "x2": 146,
+     "y2": 250,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — salle de bain / corridor et rangement (proposition SS-02 (esquisse))."
+    },
+    {
+     "id": "mur-SS-P05",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison projetée 2x4 + gypse"
+     },
+     "x1": 10,
+     "y1": 250,
+     "x2": 228,
+     "y2": 250,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — salle de bain et rangement / chambre 1 (proposition SS-02 (esquisse))."
+    },
+    {
+     "id": "mur-SS-P06",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison projetée 2x4 + gypse"
+     },
+     "x1": 228,
+     "y1": 204,
+     "x2": 228,
+     "y2": 370,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — chambre 1 et rangement / passage du caveau (proposition SS-02 (esquisse))."
+    },
+    {
+     "id": "mur-SS-P07",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison projetée 2x4 + gypse"
+     },
+     "x1": 300,
+     "y1": 204,
+     "x2": 300,
+     "y2": 370,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — passage du caveau / chambre 2 (proposition SS-02 (esquisse))."
+    },
+    {
+     "id": "mur-SS-P08",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison projetée 2x4 + gypse"
+     },
+     "x1": 100,
+     "y1": 10,
+     "x2": 100,
+     "y2": 157,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — salle d'utilité / salle d'entraînement (proposition SS-02 (esquisse))."
+    },
+    {
+     "id": "mur-SS-P09",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 2.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "cloison vitrée, cadre d'aluminium noir"
+     },
+     "x1": 228,
+     "y1": 10,
+     "x2": 228,
+     "y2": 157,
+     "source_position": "PRÉSUMÉ",
+     "note": "Cloison projetée — VERRE : salle d'entraînement / salon (proposition SS-02 (esquisse)).",
+     "materiau": "verre"
+    }
+   ],
+   "ouvertures": [
+    {
+     "id": "ouv-SS-002",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-001",
+     "position": {
+      "valeur": 377,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 6'-2\" du nu ext. droit (cote-SS-030)"
+     },
+     "largeur": {
+      "valeur": 75,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-032"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "6'-3\"",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis"
+    },
+    {
+     "id": "ouv-SS-003",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-002",
+     "position": {
+      "valeur": 303,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 6'-0\" du nu ext. arrière (cote-SS-021)"
+     },
+     "largeur": {
+      "valeur": 80.0,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-025"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "6'-8\"",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis ; dessin ≈ 72 po (ESTIMÉ) — voir écart"
+    },
+    {
+     "id": "ouv-SS-004",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-002",
+     "position": {
+      "valeur": 70.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "à la place de l'ancienne porte (réponses du propriétaire (2026-10-29)) ; axe à 6'-3\" du nu ext. avant (cote-SS-024)"
+     },
+     "largeur": {
+      "valeur": 36,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-026",
+      "note": "largeur 1957 PRÉSUMÉE conservée après le déplacement"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "3'-0\"",
+     "note": "fenêtre déplacée à la place de l'ancienne porte (réponses du propriétaire (2026-10-29)) ; largeur 3'-0\" du plan 1957 PRÉSUMÉE conservée"
+    },
+    {
+     "id": "ouv-SS-005",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-SS-002",
+     "position": {
+      "valeur": 175,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "à la place de l'ancienne fenêtre du milieu (réponses du propriétaire (2026-10-29)) ; 6'-0\" + 10'-8\" du nu ext. arrière"
+     },
+     "largeur": {
+      "valeur": 36,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "36\" selon le propriétaire (annotateur en ligne (2026-10-29))"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "PORTE 2'-8\" (plan 1957) ; aujourd'hui porte de 36\"",
+     "note": "porte extérieure de l'appartement du sous-sol, déplacée à la place de l'ancienne fenêtre du milieu (réponses du propriétaire (2026-10-29)) ; largeur 2'-8\" du plan 1957 PRÉSUMÉE conservée ; battant et sens non relevés — voir ecart-029",
+     "repere": "ecart-029",
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche",
+      "note": "ouvre vers l'intérieur (propriétaire) ; côté des pentures PRÉSUMÉ (non précisé)"
+     }
+    },
+    {
+     "id": "ouv-SS-006",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-004",
+     "position": {
+      "valeur": 195,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 16'-8\" du nu ext. arrière (cote-SS-012)"
+     },
+     "largeur": {
+      "valeur": 36.0,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-016"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "3'-0\"",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; près de la fournaise"
+    },
+    {
+     "id": "ouv-SS-007",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-004",
+     "position": {
+      "valeur": 327,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 4'-0\" du nu ext. avant (cote-SS-015)"
+     },
+     "largeur": {
+      "valeur": 36,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-017",
+      "note": "statut conflit — voir ecart-004"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "3'-0\"",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; au-dessus de l'évier à lessive"
+    },
+    {
+     "id": "ouv-SS-008",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-SS-003",
+     "position": {
+      "valeur": 190.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 3'-6\" (cote-SS-010) du nu ext. du mur gauche du caveau (x = 219) — point de départ ambigu, voir écart"
+     },
+     "largeur": {
+      "valeur": 30,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-049"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "PORTE 2'-6\"",
+     "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus — voir ecart-029",
+     "repere": "ecart-029",
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche",
+      "note": "ouvre vers la maison (sous-sol principal) selon le propriétaire ; côté des pentures PRÉSUMÉ (non précisé)"
+     }
+    },
+    {
+     "id": "ouv-SS-009",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-003",
+     "position": {
+      "valeur": 275.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe d'origine 13'-0\" (cote-SS-005) ± ¼ de la largeur (réponses du propriétaire (2026-10-29))"
+     },
+     "largeur": {
+      "valeur": 40.0,
+      "source": "PRÉSUMÉ",
+      "photo": "P2",
+      "note": "moitié de la fenêtre 6'-8\" d'origine (« comme coupée en deux »)"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "note": "moitié droite, restée à l'emplacement d'origine de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29))"
+    },
+    {
+     "id": "ouv-SS-010",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-003",
+     "position": {
+      "valeur": 339.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe d'origine 13'-0\" (cote-SS-005) ± ¼ de la largeur − 2'-0\" (réponses du propriétaire (2026-10-29))"
+     },
+     "largeur": {
+      "valeur": 40.0,
+      "source": "PRÉSUMÉ",
+      "photo": "P2",
+      "note": "moitié de la fenêtre 6'-8\" d'origine (« comme coupée en deux »)"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "note": "moitié gauche, déplacée de 2'-0\" vers la gauche de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29))"
+    },
+    {
+     "id": "ouv-SS-P01",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-SS-P10",
+     "etat": "nouveau",
+     "position": {
+      "valeur": 44.0,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "largeur": {
+      "valeur": 32,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "droite"
+     },
+     "note": "porte vitrée de la salle d'entraînement (proposition SS-02 (esquisse))",
+     "materiau": "verre"
+    },
+    {
+     "id": "ouv-SS-P02",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-SS-P08",
+     "etat": "nouveau",
+     "position": {
+      "valeur": 115.0,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "largeur": {
+      "valeur": 30,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche"
+     },
+     "note": "porte de la salle d'utilité (depuis la salle d'entraînement) (proposition SS-02 (esquisse))"
+    },
+    {
+     "id": "ouv-SS-P03",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-SS-P04",
+     "etat": "nouveau",
+     "position": {
+      "valeur": 23.5,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "largeur": {
+      "valeur": 30,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche"
+     },
+     "note": "porte de la salle de bain (proposition SS-02 (esquisse))"
+    },
+    {
+     "id": "ouv-SS-P04",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-SS-P05",
+     "etat": "nouveau",
+     "position": {
+      "valeur": 180.0,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "largeur": {
+      "valeur": 28,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche"
+     },
+     "note": "porte du rangement (walk-in de la chambre 1) (proposition SS-02 (esquisse))"
+    },
+    {
+     "id": "ouv-SS-P05",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-SS-P06",
+     "etat": "nouveau",
+     "position": {
+      "valeur": 96.0,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "largeur": {
+      "valeur": 32,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche"
+     },
+     "note": "porte de la chambre 1 (proposition SS-02 (esquisse))"
+    },
+    {
+     "id": "ouv-SS-P06",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-SS-P07",
+     "etat": "nouveau",
+     "position": {
+      "valeur": 96.0,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "largeur": {
+      "valeur": 32,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "droite"
+     },
+     "note": "porte de la chambre 2 (proposition SS-02 (esquisse))"
+    }
+   ],
+   "pieces": [
+    {
+     "id": "piece-SS-UTIL",
+     "nom": "Salle d'utilité",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Salle d'utilité — proposition SS-02 (esquisse)",
+     "polygone": [
+      [
+       10.0,
+       10.0
+      ],
+      [
+       97.75,
+       10.0
+      ],
+      [
+       97.75,
+       154.75
+      ],
+      [
+       10.0,
+       154.75
+      ]
+     ],
+     "superficie": {
+      "valeur": 88.2,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu des cloisons projetées"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 87.75,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 144.75,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-SS-GYM",
+     "nom": "Salle d'entraînement",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Salle d'entraînement — proposition SS-02 (esquisse)",
+     "polygone": [
+      [
+       102.25,
+       10.0
+      ],
+      [
+       227.0,
+       10.0
+      ],
+      [
+       227.0,
+       156.0
+      ],
+      [
+       148.25,
+       156.0
+      ],
+      [
+       148.25,
+       154.75
+      ],
+      [
+       102.25,
+       154.75
+      ]
+     ],
+     "superficie": {
+      "valeur": 126.1,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu des cloisons projetées"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 124.75,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 146.0,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-SS-SALON",
+     "nom": "Aire ouverte — salon / salle de jeu",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Aire ouverte — salon / salle de jeu — proposition SS-02 (esquisse)",
+     "polygone": [
+      [
+       446.0,
+       10.0
+      ],
+      [
+       446.0,
+       201.75
+      ],
+      [
+       297.75,
+       201.75
+      ],
+      [
+       297.75,
+       204.0
+      ],
+      [
+       230.25,
+       204.0
+      ],
+      [
+       230.25,
+       201.75
+      ],
+      [
+       148.25,
+       201.75
+      ],
+      [
+       148.25,
+       158.0
+      ],
+      [
+       229.0,
+       158.0
+      ],
+      [
+       229.0,
+       10.0
+      ]
+     ],
+     "superficie": {
+      "valeur": 314.5,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu des cloisons projetées"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 297.75,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 194.0,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-SS-SDB",
+     "nom": "Salle de bain",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Salle de bain — proposition SS-02 (esquisse)",
+     "polygone": [
+      [
+       10.0,
+       247.75
+      ],
+      [
+       10.0,
+       159.25
+      ],
+      [
+       143.75,
+       159.25
+      ],
+      [
+       143.75,
+       247.75
+      ]
+     ],
+     "superficie": {
+      "valeur": 82.2,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu des cloisons projetées"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 133.75,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 88.5,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-SS-RANG",
+     "nom": "G.-R.",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "G.-R. — proposition SS-02 (esquisse)",
+     "polygone": [
+      [
+       148.25,
+       247.75
+      ],
+      [
+       148.25,
+       206.25
+      ],
+      [
+       225.75,
+       206.25
+      ],
+      [
+       225.75,
+       247.75
+      ]
+     ],
+     "superficie": {
+      "valeur": 22.3,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu des cloisons projetées"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 77.5,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 41.5,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-SS-CH1",
+     "nom": "Chambre 1",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Chambre 1 — proposition SS-02 (esquisse)",
+     "polygone": [
+      [
+       10.0,
+       370.0
+      ],
+      [
+       10.0,
+       252.25
+      ],
+      [
+       225.75,
+       252.25
+      ],
+      [
+       225.75,
+       370.0
+      ]
+     ],
+     "superficie": {
+      "valeur": 176.4,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu des cloisons projetées"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 215.75,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 117.75,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-SS-PASS",
+     "nom": "Passage (caveau)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Passage (caveau) — proposition SS-02 (esquisse)",
+     "polygone": [
+      [
+       230.25,
+       204.0
+      ],
+      [
+       297.75,
+       204.0
+      ],
+      [
+       297.75,
+       370.0
+      ],
+      [
+       230.25,
+       370.0
+      ]
+     ],
+     "superficie": {
+      "valeur": 77.8,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu des cloisons projetées"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 67.5,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 166.0,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-SS-CH2",
+     "nom": "Chambre 2",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Chambre 2 — proposition SS-02 (esquisse)",
+     "polygone": [
+      [
+       446.0,
+       370.0
+      ],
+      [
+       302.25,
+       370.0
+      ],
+      [
+       302.25,
+       206.25
+      ],
+      [
+       446.0,
+       206.25
+      ]
+     ],
+     "superficie": {
+      "valeur": 163.5,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu des cloisons projetées"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 143.75,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 163.75,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-SS-LEG",
+     "nom": "Caveau",
+     "nom_original": "LEGUMES",
+     "description": "Caveau à légumes (« LEGUMES »)",
+     "polygone": [
+      [
+       317.0,
+       430.0
+      ],
+      [
+       229.0,
+       430.0
+      ],
+      [
+       229.0,
+       380.0
+      ],
+      [
+       317.0,
+       380.0
+      ]
+     ],
+     "superficie": {
+      "valeur": 30.6,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (fondation 10\" LU)"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 88.0,
+       "source": "DÉDUIT",
+       "photo": null,
+       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (fondation 10\" LU)"
+      },
+      "y": {
+       "valeur": 50.0,
+       "source": "DÉDUIT",
+       "photo": null,
+       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (fondation 10\" LU)"
+      }
+     }
+    },
+    {
+     "id": "piece-SS-PERRON",
+     "nom": "Excroissance sous perron",
+     "nom_original": "(aucun nom au plan)",
+     "description": "Excroissance de fondation sous le perron avant ; contenu (vide / remblai) inconnu ; accès non dessiné",
+     "polygone": [
+      [
+       228.0,
+       -42.0
+      ],
+      [
+       228.0,
+       0.0
+      ],
+      [
+       168.0,
+       0.0
+      ],
+      [
+       168.0,
+       -42.0
+      ]
+     ],
+     "superficie": {
+      "valeur": 17.5,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (fondation 10\" LU)"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 60.0,
+       "source": "DÉDUIT",
+       "photo": null,
+       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (fondation 10\" LU)"
+      },
+      "y": {
+       "valeur": 42.0,
+       "source": "DÉDUIT",
+       "photo": null,
+       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (fondation 10\" LU)"
+      }
+     }
+    }
+   ],
+   "elements": [
+    {
+     "id": "elem-SS-CHEM",
+     "type": "cheminee",
+     "nom": "Cheminée (base, avec conduit)",
+     "nom_original": null,
+     "position": {
+      "x": -10.2,
+      "y": 142.8,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 20.3,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "saillie hors du nu ext. du mur gauche ; ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire"
+      },
+      "largeur": {
+       "valeur": 21.6,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "sens y ; face avant y=132 DÉDUIT"
+      }
+     },
+     "texte_original": null,
+     "note": "Massif en saillie hors du mur gauche (elem-SS-CHEM), conduit rectangulaire dessiné à l'intérieur (≈ x -13.3 à -5.6, y 137.1 à 148.7, ESTIMÉ). Semelle tiretée autour. Aucun texte « CHEMINÉE » ; identifié par la porte de ramonage et la virole."
+    },
+    {
+     "id": "elem-SS-DR-BAIN",
+     "type": "drain",
+     "nom": "Drain de bain",
+     "nom_original": null,
+     "libelle": false,
+     "position": {
+      "x": 27.9,
+      "y": 203.0,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ",
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29)) ; aligné avec l'autre drain (même y) à la demande du propriétaire"
+     },
+     "dimensions": null,
+     "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
+    },
+    {
+     "id": "elem-SS-DR-LAV",
+     "type": "drain",
+     "nom": "Drain de lavabo",
+     "nom_original": null,
+     "libelle": false,
+     "position": {
+      "x": 432.5,
+      "y": 314.3,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ",
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29))"
+     },
+     "dimensions": null,
+     "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29)) ; dans la chambre 2 de la proposition SS-01 : à condamner ou à réutiliser"
+    },
+    {
+     "id": "elem-SS-DR-WC",
+     "type": "drain",
+     "nom": "Drain de toilette",
+     "nom_original": null,
+     "libelle": false,
+     "position": {
+      "x": 54.7,
+      "y": 203.0,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ",
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29)) ; aligné avec l'autre drain (même y) à la demande du propriétaire"
+     },
+     "dimensions": null,
+     "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
+    },
+    {
+     "id": "elem-SS-EVENT",
+     "type": "event",
+     "nom": "Évent grillagé (caveau)",
+     "nom_original": "EVENT GRILLAGÉ",
+     "position": {
+      "x": 224,
+      "y": 398.9,
+      "rotation_deg": 90,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 12.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "dimension le long du mur ; ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire"
+      },
+      "largeur": {
+       "valeur": 10,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "épaisseur du mur"
+      }
+     },
+     "texte_original": "EVENT GRILLAGÉ",
+     "note": "Dans le mur gauche du caveau (mur-SS-005).",
+     "mur_id": "mur-SS-005"
+    },
+    {
+     "id": "elem-SS-P-BAIN",
+     "type": "baignoire",
+     "nom": "Baignoire",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 25.5,
+      "y": 220,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 60,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-02 (esquisse)"
+    },
+    {
+     "id": "elem-SS-P-CE",
+     "type": "chauffe-eau",
+     "nom": "Chauffe-eau",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 34,
+      "y": 136,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 22,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 22,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-02 (esquisse)"
+    },
+    {
+     "id": "elem-SS-P-DOUCHE",
+     "type": "autre",
+     "nom": "Douche",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 126,
+      "y": 230,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 36,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 36,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-02 (esquisse)",
+     "libelle": "DOUCHE"
+    },
+    {
+     "id": "elem-SS-P-VAN",
+     "type": "lavabo",
+     "nom": "Vanité",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 78,
+      "y": 171,
+      "rotation_deg": 180,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 44,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 22,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-02 (esquisse)"
+    },
+    {
+     "id": "elem-SS-P-WC",
+     "type": "toilette",
+     "nom": "Toilette",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 60,
+      "y": 212,
+      "rotation_deg": 180,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 28,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 18,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-02 (esquisse)"
+    },
+    {
+     "id": "elem-SS-PANNEAU",
+     "type": "panneau-electrique",
+     "nom": "Panneau électrique",
+     "nom_original": null,
+     "libelle": false,
+     "position": {
+      "x": 12.0,
+      "y": 109.2,
+      "rotation_deg": 90,
+      "source": "ESTIMÉ",
+      "note": "position pointée par le propriétaire sur le plan (annotateur en ligne, 2e série (2026-10-29))"
+     },
+     "dimensions": null,
+     "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
+    },
+    {
+     "id": "elem-SS-ROB1",
+     "type": "robinet-exterieur",
+     "nom": "Robinet d'arrosage (arrière)",
+     "nom_original": "ROBINET D'ARROSAGE",
+     "position": {
+      "x": 383.2,
+      "y": 380,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": null,
+     "texte_original": "ROBINET D'ARROSAGE",
+     "note": "Symbole sur le nu ext. du mur arrière, à droite du caveau ; x ESTIMÉ (383.2).",
+     "mur_id": "mur-SS-003"
+    },
+    {
+     "id": "elem-SS-ROB2",
+     "type": "robinet-exterieur",
+     "nom": "Robinet (avant)",
+     "nom_original": "ROBINET",
+     "position": {
+      "x": 323.8,
+      "y": 0,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": null,
+     "texte_original": "ROBINET",
+     "note": "Symbole sur le nu ext. du mur avant, à droite du perron ; x ESTIMÉ (323.8).",
+     "mur_id": "mur-SS-001"
+    }
+   ],
+   "structure": [
+    {
+     "id": "str-SS-P01",
+     "type": "poutre",
+     "dimension": {
+      "texte_original": "POUTRE 8\"x10\"",
+      "valeur": "8x10",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": "x",
+     "geometrie": {
+      "x1": 10,
+      "y1": 204.0,
+      "x2": 446,
+      "y2": 204.0
+     },
+     "note": "poutre arrière ; axe y = 31'-8\" − 10\" − 13'-10\" (DÉDUIT) ; repose sur str-SS-C01 à C03 ; = axe C du croquis 2016 (« porteur à l'origine »)",
+     "afficher": false
+    },
+    {
+     "id": "str-SS-P02",
+     "type": "poutre",
+     "dimension": {
+      "texte_original": "POUTRE 8\"x10\"",
+      "valeur": "8x10",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": "x",
+     "geometrie": {
+      "x1": 10,
+      "y1": 157,
+      "x2": 446,
+      "y2": 157
+     },
+     "note": "poutre avant ; axe y = 10\" + 12'-3\" (DÉDUIT) ; repose sur str-SS-C04 à C06 ; = axe B du croquis 2016",
+     "afficher": false
+    },
+    {
+     "id": "str-SS-C01",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "COL. BOIS, 8\"x8\"",
+      "valeur": "8x8",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 146.0,
+      "y": 204.0,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" … ; colonne 8\"x8\" continue jusqu'en haut (réponses du propriétaire (2026-10-29)) ; déplacée à 12'-2\" du coin gauche, en face de la colonne de l'axe C (au coin du mur de la chambre arrière) (annotateur en ligne (2026-10-29))"
+    },
+    {
+     "id": "str-SS-C02",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "COL. BOIS, 8\"x8\"",
+      "valeur": "8x8",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 228.0,
+      "y": 204.0,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" … ; croquis 2016 : « Colonne C4 retirée » (ligne 4 à x = 222) — présence actuelle douteuse, voir écart ; présente au sous-sol, mais son prolongement au RDC (« Colonne C4 retirée », P1) n'existe plus (réponses du propriétaire (2026-10-29))"
+    },
+    {
+     "id": "str-SS-C03",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "COL. BOIS, 8\"x8\"",
+      "valeur": "8x8",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 324.0,
+      "y": 204.0,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "x DÉDUIT de la chaîne 10\" + 9'-10\" + 8\" + 7'-4\" … ; croquis 2016 : « Colonne C6 retirée » (ligne 6 à x = 316) — présence actuelle douteuse, voir écart ; présente au sous-sol, mais son prolongement au RDC (« Colonne C6 retirée », P1) n'existe plus (réponses du propriétaire (2026-10-29))"
+    },
+    {
+     "id": "str-SS-C04",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "COL. BOIS, 8\"x8\"",
+      "valeur": "8x8",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 146.0,
+      "y": 157,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière ; colonne 8\"x8\" continue jusqu'en haut (réponses du propriétaire (2026-10-29)) ; déplacée à 12'-2\" du coin gauche, en face de la colonne de l'axe C (au coin du mur de la chambre arrière) (annotateur en ligne (2026-10-29))"
+    },
+    {
+     "id": "str-SS-C05",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "COL. BOIS, 8\"x8\"",
+      "valeur": "8x8",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 228.0,
+      "y": 157,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière ; colonne 8\"x8\" continue jusqu'en haut (réponses du propriétaire (2026-10-29))"
+    },
+    {
+     "id": "str-SS-C06",
+     "type": "colonne",
+     "dimension": {
+      "texte_original": "COL. BOIS, 8\"x8\"",
+      "valeur": "8x8",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x": 324.0,
+      "y": 157,
+      "largeur": 8,
+      "profondeur": 8
+     },
+     "note": "x non coté pour la rangée avant : alignée au dessin sur la rangée arrière ; colonne 8\"x8\" continue jusqu'en haut (réponses du propriétaire (2026-10-29))"
+    },
+    {
+     "id": "str-SS-S01",
+     "type": "solives",
+     "dimension": {
+      "texte_original": "SOLIVES 2\"x10\" @ 20\" c/c",
+      "valeur": "2x10 @ 20 c/c",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": "y",
+     "geometrie": {
+      "x1": 10,
+      "y1": 208,
+      "x2": 446,
+      "y2": 370,
+      "espacement": 20
+     },
+     "note": "plancher du RDC ; note écrite dans la travée arrière ; solives parallèles à y sur toute la maison (PRÉSUMÉ pour les autres travées), appuyées sur les murs avant/arrière et les poutres",
+     "afficher": false
+    },
+    {
+     "id": "str-SS-F01",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "22\"",
+      "valeur": "22",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 0,
+      "y1": 5,
+      "x2": 456,
+      "y2": 5,
+      "largeur": 22
+     },
+     "note": "semelle du mur avant ; largeur cotée au mur gauche (cote-SS-018), PRÉSUMÉE identique et centrée"
+    },
+    {
+     "id": "str-SS-F02",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "22\"",
+      "valeur": "22",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 451,
+      "y1": 0,
+      "x2": 451,
+      "y2": 380,
+      "largeur": 22
+     },
+     "note": "semelle du mur droit (PRÉSUMÉE 22\" centrée)"
+    },
+    {
+     "id": "str-SS-F03",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "22\"",
+      "valeur": "22",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 0,
+      "y1": 375,
+      "x2": 456,
+      "y2": 375,
+      "largeur": 22
+     },
+     "note": "semelle du mur arrière (PRÉSUMÉE 22\" centrée)"
+    },
+    {
+     "id": "str-SS-F04",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "22\"",
+      "valeur": "22",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 5,
+      "y1": 0,
+      "x2": 5,
+      "y2": 380,
+      "largeur": 22
+     },
+     "note": "semelle du mur gauche, 22\" LU (cote-SS-018), PRÉSUMÉE centrée"
+    },
+    {
+     "id": "str-SS-F05",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "22\"",
+      "valeur": "22",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 224,
+      "y1": 380,
+      "x2": 224,
+      "y2": 440,
+      "largeur": 22
+     },
+     "note": "semelle du caveau (22\" cotée au mur droit, cote-SS-008)"
+    },
+    {
+     "id": "str-SS-F06",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "22\"",
+      "valeur": "22",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 219,
+      "y1": 435,
+      "x2": 327,
+      "y2": 435,
+      "largeur": 22
+     },
+     "note": "semelle du caveau"
+    },
+    {
+     "id": "str-SS-F07",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "22\"",
+      "valeur": "22",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 322,
+      "y1": 380,
+      "x2": 322,
+      "y2": 440,
+      "largeur": 22
+     },
+     "note": "semelle du caveau, 22\" LU (cote-SS-008)"
+    },
+    {
+     "id": "str-SS-F08",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "18\"",
+      "valeur": "18",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 165,
+      "y1": 0,
+      "x2": 165,
+      "y2": -48,
+      "largeur": 18
+     },
+     "note": "semelle du perron, 18\" LU (cote-SS-035)"
+    },
+    {
+     "id": "str-SS-F09",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "18\"",
+      "valeur": "18",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 162,
+      "y1": -45,
+      "x2": 234,
+      "y2": -45,
+      "largeur": 18
+     },
+     "note": "semelle du perron (PRÉSUMÉE 18\")"
+    },
+    {
+     "id": "str-SS-F10",
+     "type": "semelle",
+     "dimension": {
+      "texte_original": "18\"",
+      "valeur": "18",
+      "source": "LU",
+      "photo": "P2"
+     },
+     "sens": null,
+     "geometrie": {
+      "x1": 231,
+      "y1": 0,
+      "x2": 231,
+      "y2": -48,
+      "largeur": 18
+     },
+     "note": "semelle du perron (PRÉSUMÉE 18\")"
+    }
+   ],
+   "cotes": [
+    {
+     "id": "cote-SS-001",
+     "texte_original": "38'-0\"",
+     "valeur": 456,
+     "lecture_1": "38'-0\"",
+     "lecture_2": "38'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne arrière (haut), rang 3 (hors-tout), ligne la plus éloignée du mur",
+     "px": [
+      1311,
+      122
+     ],
+     "mesure": "hors-tout x de la fondation principale, nu ext. mur gauche (mur-SS-004) au nu ext. mur droit (mur-SS-002)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-002",
+     "texte_original": "18'-3\"",
+     "valeur": 219,
+     "lecture_1": "18'-3\"",
+     "lecture_2": "18'-3\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne arrière, rang 2, 1er segment depuis la gauche",
+     "px": [
+      915,
+      150
+     ],
+     "mesure": "du nu ext. du mur gauche (mur-SS-004) au nu ext. du mur gauche du caveau à légumes (mur-SS-005)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-003",
+     "texte_original": "9'-0\"",
+     "valeur": 108,
+     "lecture_1": "9'-0\"",
+     "lecture_2": "9'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne arrière, rang 2, 2e segment (devant le caveau)",
+     "px": [
+      1361,
+      140
+     ],
+     "mesure": "largeur hors-tout du caveau à légumes : nu ext. mur-SS-005 au nu ext. mur-SS-007",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-004",
+     "texte_original": "10'-9\"",
+     "valeur": 129.0,
+     "lecture_1": "10'-9\"",
+     "lecture_2": "10'-9\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne arrière, rang 2, 3e segment",
+     "px": [
+      1741,
+      152
+     ],
+     "mesure": "du nu ext. du mur droit du caveau (mur-SS-007) au nu ext. du mur droit principal (mur-SS-002)",
+     "lecture_3": {
+      "texte": "10'-9\"",
+      "valeur_po": 129,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "Le 1 et le 0 sont nets sur P2 et P3. Le chiffre des pouces a la forme en crochet du 9 de ce dessinateur (boucle haute pleine, queue qui redescend), la même que le 9 de 9'-10\" (d-SS-13) et de 8'-9\" (d-SS-08). On ne voit pas les deux boucles fermées du 8 de ce dessinateur."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-01_P1.png, arbitrage/vignettes/d-SS-01_P7.png",
+     "alternatives": [
+      {
+       "texte": "10'-3\"",
+       "valeur": 123,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "chaîne arrière rang 2 (= hors-tout 38'-0\") : 10'-9\" → somme 456 po (écart +0) ; 10'-3\" → somme 450 po (écart -6) ⇒ ferme avec 10'-9\" | même chaîne arrière sur la feuille RDC (cote-RDC-016/017/018 : 18'-3\" + 9'-0\" + 10'-?\")"
+    },
+    {
+     "id": "cote-SS-005",
+     "texte_original": "13'-0\"",
+     "valeur": 156.0,
+     "lecture_1": "13'-0\"",
+     "lecture_2": "13'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne arrière, rang 1 (ouvertures), 1er segment depuis la gauche",
+     "px": [
+      798,
+      290
+     ],
+     "mesure": "du nu ext. du mur gauche (mur-SS-004) à l'axe (meneau) de la fenêtre arrière ouv-SS-001",
+     "lecture_3": {
+      "texte": "13'-0\"",
+      "valeur_po": 156,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "Le 2e chiffre, collé au 1, a une encoche ouverte à gauche au milieu sur P2 et P3. C'est la forme des 3 de 3'-0\" (d-SS-06) et 6'-3\" (d-SS-09). Les 8 du même dessinateur, de forme B avec un trou fermé (d-SS-03, d-SS-08), ne correspondent pas. Encre empâtée : un 8 reste possible."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-02_P1.png, arbitrage/vignettes/d-SS-02_P7.png",
+     "alternatives": [
+      {
+       "texte": "10'-0\"",
+       "valeur": 120,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne fermée ; lecture 2 : à l'échelle ≈ 13'-1\" jusqu'au trait de rappel du meneau"
+    },
+    {
+     "id": "cote-SS-006",
+     "texte_original": "6'-8\"",
+     "valeur": 80.0,
+     "lecture_1": "6'-8\"",
+     "lecture_2": "6'-3\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne arrière, rang 1, au-dessus de la fenêtre arrière (texte de part et d'autre du trait d'axe)",
+     "px": [
+      1022,
+      310
+     ],
+     "mesure": "largeur de la fenêtre arrière ouv-SS-001 (ouverture brute probable)",
+     "lecture_3": {
+      "texte": "6'-8\"",
+      "valeur_po": 80,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "Le 6 est net. Le trait d'axe passe entre 6' et le chiffre des pouces. Ce chiffre montre un trou intérieur fermé (forme B) sur P2 et P3, comme le 8 de 8'-9\". Le 3 de ce dessinateur reste ouvert à gauche."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-03_P1.png, arbitrage/vignettes/d-SS-03_P7.png",
+     "alternatives": [
+      {
+       "texte": "6'-3\"",
+       "valeur": 75,
+       "propose_par": "lecture_1",
+       "raison": "confusion 3/8 possible ; la longueur dessinée (~227 px ≈ 73 po) est semblable à celle de la fenêtre avant cotée 6'-3\""
+      },
+      {
+       "texte": "6'-8\"",
+       "valeur": 80,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne fermée ; lecture 1 : longueur dessinée ≈ 73 po, semblable à la fenêtre avant cotée 6'-3\""
+    },
+    {
+     "id": "cote-SS-007",
+     "texte_original": "10\"",
+     "valeur": 10,
+     "lecture_1": "10\"",
+     "lecture_2": "10\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "caveau à légumes, mur droit, cote horizontale entre deux points",
+     "px": [
+      1517,
+      248
+     ],
+     "mesure": "épaisseur du mur droit du caveau (mur-SS-007)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-008",
+     "texte_original": "22\"",
+     "valeur": 22,
+     "lecture_1": "22\"",
+     "lecture_2": "22\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "caveau à légumes, côté droit, cote horizontale sur les tiretés de semelle",
+     "px": [
+      1567,
+      217
+     ],
+     "mesure": "largeur de la semelle sous le mur droit du caveau (tireté int. au tireté ext.)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-009",
+     "texte_original": "5'-0\"",
+     "valeur": 60,
+     "lecture_1": "5'-0\"",
+     "lecture_2": "5'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "cote verticale à droite du caveau, entre le nu ext. du mur arrière principal et la ligne d'attache du dos du caveau",
+     "px": [
+      1587,
+      267
+     ],
+     "mesure": "saillie du caveau : du nu ext. du mur arrière (mur-SS-003) au nu ext. du mur du fond du caveau (mur-SS-006)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-010",
+     "texte_original": "3'-6\"",
+     "valeur": 42.0,
+     "lecture_1": "3'-6\"",
+     "lecture_2": "3'-6\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "à l'intérieur du caveau, texte entre le mur gauche du caveau et une ligne d'attache verticale descendant à l'axe de la porte 2'-6\" ; pas de ligne de cote horizontale visible",
+     "px": [
+      1275,
+      300
+     ],
+     "mesure": "DOUTEUX : du nu ext. du mur gauche du caveau (mur-SS-005, x=219) à l'axe de la porte ouv-SS-008 (retenu : écart mesuré en image ≈ 38 po)",
+     "lecture_3": {
+      "texte": "3'-6\"",
+      "valeur_po": 42,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Lecture « 3'-6\" » nette et identique sur P2 et P3. Le 3 a deux lobes, et le 6 a sa hampe montante et sa boucle basse."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-04_P1.png, arbitrage/vignettes/d-SS-04_P7.png",
+     "alternatives": [
+      {
+       "texte": "3'-0\"",
+       "valeur": 36,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne ; point de départ de la cote non dessiné (lecture 1)"
+    },
+    {
+     "id": "cote-SS-011",
+     "texte_original": "31'-8\"",
+     "valeur": 380,
+     "lecture_1": "31'-8\"",
+     "lecture_2": "31'-8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne gauche, rang 3 (hors-tout)",
+     "px": [
+      272,
+      950
+     ],
+     "mesure": "hors-tout y de la fondation principale, nu ext. mur avant (mur-SS-001) au nu ext. mur arrière (mur-SS-003)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-012",
+     "texte_original": "16'-8\"",
+     "valeur": 200,
+     "lecture_1": "16'-8\"",
+     "lecture_2": "16'-8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne gauche, rang 2, 1er segment depuis l'arrière",
+     "px": [
+      417,
+      675
+     ],
+     "mesure": "du nu ext. du mur arrière (mur-SS-003) à l'axe de la fenêtre gauche haute ouv-SS-006",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-013",
+     "texte_original": "4'-0\"",
+     "valeur": 48,
+     "lecture_1": "4'-0\"",
+     "lecture_2": "4'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne gauche, rang 2, 2e segment depuis l'arrière",
+     "px": [
+      392,
+      1030
+     ],
+     "mesure": "de l'axe de la fenêtre ouv-SS-006 à la face avant (côté rue) du massif de cheminée (elem-SS-CHEM)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-014",
+     "texte_original": "7'-0\"",
+     "valeur": 84.0,
+     "lecture_1": "7'-0\"",
+     "lecture_2": "7'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne gauche, rang 2, 3e segment depuis l'arrière",
+     "px": [
+      382,
+      1240
+     ],
+     "mesure": "de la face avant du massif de cheminée à l'axe de la fenêtre gauche basse ouv-SS-007",
+     "lecture_3": {
+      "texte": "7'-0\"",
+      "valeur_po": 84,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Le 1er chiffre a une barre supérieure horizontale franche et une hampe verticale (forme ᒣ) sur P2 et P3. Le 1 de ce dessinateur est un simple trait sans barre. On lit donc 7. Le 0 et le \" sont nets."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-05_P1.png, arbitrage/vignettes/d-SS-05_P7.png",
+     "alternatives": [
+      {
+       "texte": "1'-0\"",
+       "valeur": 12,
+       "propose_par": "lecture_1 + lecture_2",
+       "raison": "7 écrit comme un 1 ; rejeté : la chaîne ne somme à 31'-8\" qu'avec 7'-0\", et la longueur dessinée ≈ 88 po"
+      }
+     ],
+     "contrainte_de_bouclage": "chaîne gauche rang 2 (= 31'-8\") : 7'-0\" → somme 380 po (écart +0) ; 1'-0\" → somme 308 po (écart -72) ⇒ ferme avec 7'-0\""
+    },
+    {
+     "id": "cote-SS-015",
+     "texte_original": "4'-0\"",
+     "valeur": 48,
+     "lecture_1": "4'-0\"",
+     "lecture_2": "4'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne gauche, rang 2, dernier segment (côté rue)",
+     "px": [
+      370,
+      1457
+     ],
+     "mesure": "de l'axe de la fenêtre ouv-SS-007 au nu ext. du mur avant (mur-SS-001)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-016",
+     "texte_original": "3'-0\"",
+     "valeur": 36.0,
+     "lecture_1": "3'-0\"",
+     "lecture_2": "3'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne gauche, rang 1, fenêtre haute",
+     "px": [
+      467,
+      965
+     ],
+     "mesure": "largeur de la fenêtre gauche haute ouv-SS-006",
+     "lecture_3": {
+      "texte": "3'-0\"",
+      "valeur_po": 36,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Le 3 a deux lobes nets et une encoche à gauche, identiques sur P2 et P3. Le 0 est fermé."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-06_P1.png, arbitrage/vignettes/d-SS-06_P7.png",
+     "alternatives": [
+      {
+       "texte": "3'-6\"",
+       "valeur": 42,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne ; lecture 2 : mesure ≈ 3'-1\""
+    },
+    {
+     "id": "cote-SS-017",
+     "texte_original": "3'-0\"",
+     "valeur": 36,
+     "lecture_1": "3'-0\"",
+     "lecture_2": "3'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne gauche, rang 1, fenêtre basse (près de l'évier à lessive)",
+     "px": [
+      442,
+      1375
+     ],
+     "mesure": "largeur de la fenêtre gauche basse ouv-SS-007",
+     "lecture_3": {
+      "texte": "3'-0\"",
+      "valeur_po": 36,
+      "confiance": "basse",
+      "lisible": true,
+      "justification": "Le 1er chiffre est une masse oblique empâtée, avec un léger renflement à mi-hauteur, sur P2 et P3. Gabarit et épaisseur compatibles avec le 3 de d-SS-06, mais les lobes ne se séparent pas. Un 2 est peu probable (pas de base horizontale), et un 1 est trop large. Le 0 et le \" sont nets."
+     },
+     "note": "conflit non tranché par la 3e lecture — hypothèse retenue : les lectures 1 et 2 lisent 3'-0\" ; 3e lecture 3'-0\" mais en confiance basse ; aucune chaîne ne contient cette largeur ; dessin ≈ 37 po (ESTIMÉ) compatible ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-07_P1.png, arbitrage/vignettes/d-SS-07_P7.png ; écart ecart-004",
+     "alternatives": [
+      {
+       "texte": "1'-0\"",
+       "valeur": 12,
+       "propose_par": "lecture_1",
+       "raison": "1er chiffre peu net ; longueur dessinée ≈ 37 po → 3'-0\""
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne ; lecture 1 : longueur dessinée ≈ 37 po",
+     "note_constat": "3'-0\" confirmé par le propriétaire (annotateur en ligne (2026-10-29))"
+    },
+    {
+     "id": "cote-SS-018",
+     "texte_original": "22\"",
+     "valeur": 22,
+     "lecture_1": "22\"",
+     "lecture_2": "22\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "mur gauche, côté intérieur, cote horizontale entre les tiretés de semelle",
+     "px": [
+      605,
+      642
+     ],
+     "mesure": "largeur de la semelle du mur de fondation gauche (tireté ext. au tireté int.)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-019",
+     "texte_original": "10\"",
+     "valeur": 10,
+     "lecture_1": "10\"",
+     "lecture_2": "10\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "mur gauche, côté intérieur, juste sous la cote 22\"",
+     "px": [
+      605,
+      686
+     ],
+     "mesure": "épaisseur du mur de fondation gauche (mur-SS-004)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-020",
+     "texte_original": "31'-8\"",
+     "valeur": 380,
+     "lecture_1": "31'-8\"",
+     "lecture_2": "31'-8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne droite, rang 3 (hors-tout)",
+     "px": [
+      2172,
+      975
+     ],
+     "mesure": "hors-tout y, nu ext. mur avant au nu ext. mur arrière, côté droit",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-021",
+     "texte_original": "6'-0\"",
+     "valeur": 72,
+     "lecture_1": "6'-0\"",
+     "lecture_2": "6'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne droite, rang 2, 1er segment depuis l'arrière",
+     "px": [
+      2005,
+      465
+     ],
+     "mesure": "du nu ext. du mur arrière (mur-SS-003) à l'axe (meneau) de la fenêtre droite haute ouv-SS-003",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-022",
+     "texte_original": "10'-8\"",
+     "valeur": 128,
+     "lecture_1": "10'-8\"",
+     "lecture_2": "10'-8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne droite, rang 2, 2e segment",
+     "px": [
+      2022,
+      765
+     ],
+     "mesure": "de l'axe de la fenêtre ouv-SS-003 à l'axe de la fenêtre droite basse ouv-SS-004",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-023",
+     "texte_original": "8'-9\"",
+     "valeur": 105.0,
+     "lecture_1": "8'-9\"",
+     "lecture_2": "8'-9\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne droite, rang 2, 3e segment",
+     "px": [
+      2032,
+      1140
+     ],
+     "mesure": "de l'axe de la fenêtre ouv-SS-004 à l'axe de la porte 2'-8\" ouv-SS-005",
+     "lecture_3": {
+      "texte": "8'-9\"",
+      "valeur_po": 105,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Le 1er chiffre a deux boucles fermées (forme B), comme le 8 de ce dessinateur. Le chiffre des pouces a une boucle haute fermée et une queue descendante : c'est un 9. Lecture identique sur P2 et P3."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-08_P1.png, arbitrage/vignettes/d-SS-08_P7.png",
+     "alternatives": [
+      {
+       "texte": "8'-5\"",
+       "valeur": 101,
+       "propose_par": "lecture_1 + lecture_2",
+       "raison": "9/5 peu net ; rejeté : la chaîne ne somme à 31'-8\" qu'avec 8'-9\""
+      }
+     ],
+     "contrainte_de_bouclage": "chaîne droite rang 2 (= 31'-8\") : 8'-9\" → somme 380 po (écart +0) ; 8'-5\" → somme 376 po (écart -4) ⇒ ferme avec 8'-9\""
+    },
+    {
+     "id": "cote-SS-024",
+     "texte_original": "6'-3\"",
+     "valeur": 75.0,
+     "lecture_1": "6'-3\"",
+     "lecture_2": "6'-3\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne droite, rang 2, dernier segment (côté rue)",
+     "px": [
+      2042,
+      1410
+     ],
+     "mesure": "de l'axe de la porte ouv-SS-005 au nu ext. du mur avant (mur-SS-001)",
+     "lecture_3": {
+      "texte": "6'-3\"",
+      "valeur_po": 75,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Le 6 a une hampe montante et une boucle basse (même forme que le 6\" de d-SS-11). Le 3 est à tête plate, de forme ʒ, avec une encoche centrale. Lecture identique sur P2 et P3."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-09_P1.png, arbitrage/vignettes/d-SS-09_P7.png",
+     "alternatives": [
+      {
+       "texte": "6'-8\"",
+       "valeur": 80,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "chaîne droite rang 2 (= 31'-8\") : 6'-3\" → somme 380 po (écart +0) ; 6'-8\" → somme 385 po (écart +5) ⇒ ferme avec 6'-3\""
+    },
+    {
+     "id": "cote-SS-025",
+     "texte_original": "6'-8\"",
+     "valeur": 80.0,
+     "lecture_1": "6'-8\"",
+     "lecture_2": "6'-3\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne droite, rang 1, fenêtre haute",
+     "px": [
+      1942,
+      580
+     ],
+     "mesure": "largeur de la fenêtre droite haute ouv-SS-003",
+     "lecture_3": {
+      "texte": "6'-8\"",
+      "valeur_po": 80,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "Le 6 est net. Le chiffre des pouces touche la ligne de cote supérieure. Sa partie basse est une boucle fermée avec un trou net sur P2 et P3, et sa partie haute se confond avec la ligne. Un 3 n'aurait pas de boucle fermée : on retient 8."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-10_P1.png, arbitrage/vignettes/d-SS-10_P7.png",
+     "alternatives": [
+      {
+       "texte": "6'-3\"",
+       "valeur": 75,
+       "propose_par": "lecture_1",
+       "raison": "confusion 3/8 possible ; longueur dessinée ≈ 72 po"
+      },
+      {
+       "texte": "6'-8\"",
+       "valeur": 80,
+       "propose_par": "lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne ; lecture 1 : longueur dessinée ≈ 72 po ; lecture 2 : ≈ 6'-1\""
+    },
+    {
+     "id": "cote-SS-026",
+     "texte_original": "3'-0\"",
+     "valeur": 36,
+     "lecture_1": "3'-0\"",
+     "lecture_2": "3'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne droite, rang 1, fenêtre basse",
+     "px": [
+      1952,
+      975
+     ],
+     "mesure": "largeur de la fenêtre droite basse ouv-SS-004",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-027",
+     "texte_original": "13'-6\"",
+     "valeur": 162,
+     "lecture_1": "13'-6\"",
+     "lecture_2": "13'-6\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne avant (bas), rang 3, 1er segment depuis la gauche",
+     "px": [
+      727,
+      1757
+     ],
+     "mesure": "du nu ext. du mur gauche au nu ext. du mur gauche de l'excroissance sous le perron (mur-SS-008)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-028",
+     "texte_original": "6'-0\"",
+     "valeur": 72,
+     "lecture_1": "6'-0\"",
+     "lecture_2": "6'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne avant, rang 3, 2e segment",
+     "px": [
+      1117,
+      1762
+     ],
+     "mesure": "largeur hors-tout de l'excroissance de fondation sous le perron (mur-SS-008 à mur-SS-010)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-029",
+     "texte_original": "12'-4\"",
+     "valeur": 148,
+     "lecture_1": "12'-4\"",
+     "lecture_2": "12'-4\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne avant, rang 3, 3e segment",
+     "px": [
+      1477,
+      1765
+     ],
+     "mesure": "du nu ext. du mur droit du perron (mur-SS-010) à l'axe (meneau) de la fenêtre avant ouv-SS-002",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-030",
+     "texte_original": "6'-2\"",
+     "valeur": 74,
+     "lecture_1": "6'-2\"",
+     "lecture_2": "6'-2\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne avant, rang 3, 4e segment",
+     "px": [
+      1842,
+      1760
+     ],
+     "mesure": "de l'axe de la fenêtre avant ouv-SS-002 au nu ext. du mur droit (mur-SS-002)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-031",
+     "texte_original": "6'-2\"",
+     "valeur": 74,
+     "lecture_1": "6'-2\"",
+     "lecture_2": "6'-2\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne avant, rang 2 (isolée)",
+     "px": [
+      1840,
+      1650
+     ],
+     "mesure": "de l'axe de la fenêtre avant ouv-SS-002 au nu ext. du mur droit — doublon de cote-SS-030",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-032",
+     "texte_original": "6'-3\"",
+     "valeur": 75,
+     "lecture_1": "6'-3\"",
+     "lecture_2": "6'-3\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne avant, rang 1, sous la fenêtre avant",
+     "px": [
+      1715,
+      1572
+     ],
+     "mesure": "largeur de la fenêtre avant ouv-SS-002",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-033",
+     "texte_original": "4'-0\"",
+     "valeur": 48,
+     "lecture_1": "4'-0\"",
+     "lecture_2": "4'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "cote verticale à droite de l'excroissance du perron",
+     "px": [
+      1302,
+      1625
+     ],
+     "mesure": "saillie de l'excroissance sous le perron : nu ext. mur avant (mur-SS-001) au nu ext. du mur avant du perron (mur-SS-009)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-034",
+     "texte_original": "10\"",
+     "valeur": 10,
+     "lecture_1": "10\"",
+     "lecture_2": "10",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "mur avant, cote verticale entre deux points, dans l'axe de la chaîne intérieure",
+     "px": [
+      1312,
+      1520
+     ],
+     "mesure": "épaisseur du mur de fondation avant (mur-SS-001)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-035",
+     "texte_original": "18\"",
+     "valeur": 18,
+     "lecture_1": "18\"",
+     "lecture_2": "18\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "excroissance du perron, cote horizontale dans le coin arrière-gauche",
+     "px": [
+      1090,
+      1576
+     ],
+     "mesure": "largeur de la semelle sous le mur gauche du perron (tireté ext. au tireté int.)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-036",
+     "texte_original": "6\"",
+     "valeur": 6.0,
+     "lecture_1": "6\"",
+     "lecture_2": "6\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "excroissance du perron, juste sous la cote 18\"",
+     "px": [
+      1072,
+      1608
+     ],
+     "mesure": "épaisseur du mur gauche du perron (mur-SS-008)",
+     "lecture_3": {
+      "texte": "6\"",
+      "valeur_po": 6,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Un seul chiffre, 6 net (hampe montante, boucle basse), sous la cote 18\", identique sur P2 et P3."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-11_P1.png, arbitrage/vignettes/d-SS-11_P7.png",
+     "alternatives": [
+      {
+       "texte": "8\"",
+       "valeur": 8,
+       "propose_par": "lecture_1",
+       "raison": "6/8 ; lu 6 sur P2 et P3"
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne"
+    },
+    {
+     "id": "cote-SS-037",
+     "texte_original": "10\"",
+     "valeur": 10,
+     "lecture_1": "10\"",
+     "lecture_2": "10",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale au-dessus de la poutre arrière, 1er segment (mur gauche)",
+     "px": [
+      540,
+      812
+     ],
+     "mesure": "épaisseur du mur gauche (mur-SS-004)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-038",
+     "texte_original": "9'-10\"",
+     "valeur": 118.0,
+     "lecture_1": "9'-10\"",
+     "lecture_2": "9'-10\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale, 2e segment",
+     "px": [
+      765,
+      812
+     ],
+     "mesure": "du nu int. du mur gauche à la face gauche de la colonne str-SS-C01",
+     "lecture_3": {
+      "texte": "9'-10\"",
+      "valeur_po": 118,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "Le 1er chiffre est un arc en ↄ sans encoche centrale, avec un départ épaissi en haut. Il correspond au 9 de ce dessinateur (cf. 9'-10\" de d-SS-13, où la boucle est fermée). Le 3 de cette feuille a une encoche à gauche, absente ici. Le 10 est net."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-12_P1.png, arbitrage/vignettes/d-SS-12_P7.png",
+     "alternatives": [
+      {
+       "texte": "3'-10\"",
+       "valeur": 46,
+       "propose_par": "lecture_1",
+       "raison": "9 écrit comme un 3 ; rejeté : la chaîne ne somme à 38'-0\" qu'avec 9'-10\", longueur dessinée ≈ 120 po"
+      }
+     ],
+     "contrainte_de_bouclage": "chaîne intérieure x murs+colonnes (= 38'-0\") : 9'-10\" → somme 456 po (écart +0) ; 3'-10\" → somme 384 po (écart -72) ⇒ ferme avec 9'-10\""
+    },
+    {
+     "id": "cote-SS-039",
+     "texte_original": "8\"",
+     "valeur": 8,
+     "lecture_1": "8\"",
+     "lecture_2": "8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale, 3e segment",
+     "px": [
+      935,
+      807
+     ],
+     "mesure": "largeur de la colonne str-SS-C01",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-040",
+     "texte_original": "7'-4\"",
+     "valeur": 88,
+     "lecture_1": "7'-4\"",
+     "lecture_2": "7'-4\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale, 4e segment",
+     "px": [
+      1080,
+      810
+     ],
+     "mesure": "de la face droite de str-SS-C01 à la face gauche de str-SS-C02 (entre-colonnes)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-041",
+     "texte_original": "8\"",
+     "valeur": 8,
+     "lecture_1": "8\"",
+     "lecture_2": "8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale, 5e segment (sur le pli du papier)",
+     "px": [
+      1225,
+      812
+     ],
+     "mesure": "largeur de la colonne str-SS-C02",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-042",
+     "texte_original": "7'-4\"",
+     "valeur": 88,
+     "lecture_1": "7'-4\"",
+     "lecture_2": "7'-4\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale, 6e segment",
+     "px": [
+      1307,
+      804
+     ],
+     "mesure": "de la face droite de str-SS-C02 à la face gauche de str-SS-C03",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-043",
+     "texte_original": "8\"",
+     "valeur": 8,
+     "lecture_1": "8\"",
+     "lecture_2": "8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale, 7e segment",
+     "px": [
+      1517,
+      805
+     ],
+     "mesure": "largeur de la colonne str-SS-C03",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-044",
+     "texte_original": "9'-10\"",
+     "valeur": 118.0,
+     "lecture_1": "9'-10\"",
+     "lecture_2": "9'-10\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale, 8e segment",
+     "px": [
+      1705,
+      807
+     ],
+     "mesure": "de la face droite de str-SS-C03 au nu int. du mur droit",
+     "lecture_3": {
+      "texte": "9'-10\"",
+      "valeur_po": 118,
+      "confiance": "haute",
+      "lisible": true,
+      "justification": "Le 9 a une boucle haute fermée et une queue descendante, net sur P2 et P3. Le 10\" est net."
+     },
+     "note": "tranché par 3e lecture (haute) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-13_P1.png, arbitrage/vignettes/d-SS-13_P7.png",
+     "alternatives": [
+      {
+       "texte": "3'-10\"",
+       "valeur": 46,
+       "propose_par": "lecture_1",
+       "raison": "idem cote-SS-038"
+      }
+     ],
+     "contrainte_de_bouclage": "chaîne intérieure x murs+colonnes (= 38'-0\") : 9'-10\" → somme 456 po (écart +0) ; 3'-10\" → somme 384 po (écart -72) ⇒ ferme avec 9'-10\""
+    },
+    {
+     "id": "cote-SS-045",
+     "texte_original": "10\"",
+     "valeur": 10,
+     "lecture_1": "10\"",
+     "lecture_2": "10",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure horizontale, dernier segment (mur droit)",
+     "px": [
+      1907,
+      810
+     ],
+     "mesure": "épaisseur du mur droit (mur-SS-002)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-046",
+     "texte_original": "13'-10\"",
+     "valeur": 166.0,
+     "lecture_1": "13'-10\"",
+     "lecture_2": "13'-10\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure verticale (x ≈ axe de la porte 2'-6\"), 1er segment depuis l'arrière",
+     "px": [
+      1312,
+      635
+     ],
+     "mesure": "du nu int. du mur arrière (mur-SS-003) à l'axe de la poutre arrière str-SS-P01",
+     "lecture_3": {
+      "texte": "13'-10\"",
+      "valeur_po": 166,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "On lit 1 puis un chiffre à tête plate oblique avec un ventre bas (forme ʒ), identique au 3 à tête plate de 6'-3\" (d-SS-09). Un 5 aurait une hampe verticale et un drapeau à droite. Lecture identique sur P2 et P3."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-SS-14_P1.png, arbitrage/vignettes/d-SS-14_P7.png",
+     "alternatives": [
+      {
+       "texte": "15'-10\"",
+       "valeur": 190,
+       "propose_par": "lecture_1",
+       "raison": "3/5 ; rejeté : la chaîne 10+13'-10\"+3'-11\"+12'-3\"+10 = 31'-8\""
+      }
+     ],
+     "contrainte_de_bouclage": "chaîne intérieure y (= 31'-8\", + 10\" mur arrière non écrit sur cette chaîne, cf. P1 cote-RDC-211) : 13'-10\" → somme 380 po (écart +0) ; 15'-10\" → somme 404 po (écart +24) ⇒ ferme avec 13'-10\" | P1 (2016) cote-RDC-212 « 13' 10\" » pour le même segment (nu int. mur arrière → axe C)"
+    },
+    {
+     "id": "cote-SS-047",
+     "texte_original": "3'-11\"",
+     "valeur": 47,
+     "lecture_1": "3'-11\"",
+     "lecture_2": "3'-11\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure verticale, 2e segment",
+     "px": [
+      1312,
+      952
+     ],
+     "mesure": "entre les axes des deux poutres str-SS-P01 et str-SS-P02",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-048",
+     "texte_original": "12'-3\"",
+     "valeur": 147,
+     "lecture_1": "12'-3\"",
+     "lecture_2": "12'-3\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "chaîne intérieure verticale, 3e segment",
+     "px": [
+      1316,
+      1300
+     ],
+     "mesure": "de l'axe de la poutre avant str-SS-P02 au nu int. du mur avant (mur-SS-001)",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-049",
+     "texte_original": "PORTE 2'-6\"",
+     "valeur": 30,
+     "lecture_1": "PORTE 2'-6\"",
+     "lecture_2": "PORTE 2'-6\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "étiquette de la porte du mur arrière vers le caveau",
+     "px": [
+      1408,
+      380
+     ],
+     "mesure": "largeur de la porte ouv-SS-008",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-050",
+     "texte_original": "PORTE 2'-8\"",
+     "valeur": 32,
+     "lecture_1": "PORTE 2'-8\"",
+     "lecture_2": "PORTE 2'-8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "étiquette de la porte du mur droit",
+     "px": [
+      1795,
+      1281
+     ],
+     "mesure": "largeur de la porte ouv-SS-005",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-051",
+     "texte_original": "SOLIVES 2\"x10\" @ 20\" c/c",
+     "valeur": null,
+     "lecture_1": "SOLIVES 2\"x10\" @ 20\" c/c",
+     "lecture_2": "SOLIVES 2\"x10\" @ 20\" c/c",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "note des solives, ligne 2",
+     "px": [
+      1207,
+      657
+     ],
+     "mesure": "entraxe des solives 2\"x10\" (str-SS-S01) — étiquette str-SS-S01",
+     "dimension_nominale": "2x10@20",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-052",
+     "texte_original": "POUTRE 8\"x10\"",
+     "valeur": null,
+     "lecture_1": "POUTRE 8\"x10\"",
+     "lecture_2": "POUTRE 8\"x10\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "Poutre arrière ; axe y=204 DÉDUIT (10 + 12'-3\" + 3'-11\" = 370 − 13'-10\"). Trait unique d'un mur à l'autre ; appuis dans les murs non détaillés. Repose sur str-SS-C01 à C03. Matériau non écrit (« COL. BOIS » pour les colonnes seulement).",
+     "px": [
+      1087,
+      867
+     ],
+     "mesure": "membrure str-SS-P01 (poutre)",
+     "dimension_nominale": "8x10",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-053",
+     "texte_original": "POUTRE 8\"x10\"",
+     "valeur": null,
+     "lecture_1": "POUTRE 8\"x10\"",
+     "lecture_2": "POUTRE 8\"x10\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "Poutre avant ; axe y=157 DÉDUIT (10 + 12'-3\"). Repose sur str-SS-C04 à C06.",
+     "px": null,
+     "mesure": "membrure str-SS-P02 (poutre)",
+     "dimension_nominale": "8x10",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-054",
+     "texte_original": "COL. BOIS, 8\"x8\"",
+     "valeur": null,
+     "lecture_1": "COL. BOIS, 8\"x8\"",
+     "lecture_2": "COL. BOIS, 8\"x8\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "Colonne de bois 8\"x8\" (une seule étiquette pour toutes). x : 10 + 9'-10\" + 4 (chaîne des poutres). Dessinée : carré hachuré dans un carré plus grand (≈14 po ESTIMÉ, probablement base/semelle de colonne — non écrit).",
+     "px": [
+      1110,
+      940
+     ],
+     "mesure": "membrure str-SS-C01 (colonne)",
+     "dimension_nominale": "8x8",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-055",
+     "texte_original": "14 C.M.",
+     "valeur": 14,
+     "lecture_1": "14 C.M.",
+     "lecture_2": "14 C.M.",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "14 contremarches (escalier).",
+     "px": [
+      1435,
+      757
+     ],
+     "mesure": "14 contremarches (escalier).",
+     "note": "lectures 1 et 2 concordantes"
+    },
+    {
+     "id": "cote-SS-056",
+     "texte_original": "ECHELLE: 1/4\" = 1'-0\"",
+     "valeur": null,
+     "lecture_1": "ECHELLE: 1/4\" = 1'-0\"",
+     "lecture_2": "ÉCHELLE: 1/4\" = 1'-0\"",
+     "statut": "confirmee",
+     "photo": "P2",
+     "emplacement": "Échelle 1/4 po = 1 pi (1:48). Dessin non fidèle à l'échelle : les cotes écrites priment.",
+     "px": [
+      2330,
+      1762
+     ],
+     "mesure": "Échelle 1/4 po = 1 pi (1:48). Dessin non fidèle à l'échelle : les cotes écrites priment.",
+     "dimension_nominale": "1/4\"=1'0\"",
+     "note": "lectures 1 et 2 concordantes"
+    }
+   ],
+   "notes": [
+    {
+     "id": "note-SS-P01",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Esquisse : cloisons, portes et équipements de salle de bain projetés ; tout le reste est l'existant (plans de base R0)."
+    },
+    {
+     "id": "note-SS-P04",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Aire ouverte : salon / salle de jeu ouvert sur le corridor ; salle d'entraînement fermée par des cloisons vitrées à cadre noir et une porte vitrée."
+    },
+    {
+     "id": "note-SS-P02",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Les murs du corridor passent sur les deux poutres et les six colonnes 8\"x8\" existantes."
+    },
+    {
+     "id": "note-SS-P03",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Fenêtres des chambres à vérifier pour l'évacuation (dimension et hauteur d'allège) ; hauteur sous poutres à mesurer."
+    }
+   ],
+   "lignes_cote": [
+    {
+     "id": "lc-SS-001",
+     "p1": [
+      0,
+      0
+     ],
+     "p2": [
+      344.5,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-002",
+     "p1": [
+      344.5,
+      0
+     ],
+     "p2": [
+      419.5,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-032",
+     "valeur_attendue": 75,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-003",
+     "p1": [
+      419.5,
+      0
+     ],
+     "p2": [
+      456,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-004",
+     "p1": [
+      0,
+      0
+     ],
+     "p2": [
+      162,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-027",
+     "valeur_attendue": 162,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-005",
+     "p1": [
+      162,
+      0
+     ],
+     "p2": [
+      234,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-028",
+     "valeur_attendue": 72,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-006",
+     "p1": [
+      234,
+      0
+     ],
+     "p2": [
+      382,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-029",
+     "valeur_attendue": 148,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-007",
+     "p1": [
+      382,
+      0
+     ],
+     "p2": [
+      456,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-030",
+     "valeur_attendue": 74,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-008",
+     "p1": [
+      0,
+      0
+     ],
+     "p2": [
+      456,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 3,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-009",
+     "p1": [
+      0,
+      380
+     ],
+     "p2": [
+      92.0,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-010",
+     "p1": [
+      92.0,
+      380
+     ],
+     "p2": [
+      132.0,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-011",
+     "p1": [
+      132.0,
+      380
+     ],
+     "p2": [
+      156.0,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-012",
+     "p1": [
+      156.0,
+      380
+     ],
+     "p2": [
+      196.0,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-013",
+     "p1": [
+      196.0,
+      380
+     ],
+     "p2": [
+      456,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-014",
+     "p1": [
+      0,
+      380
+     ],
+     "p2": [
+      219,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-002",
+     "valeur_attendue": 219,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-015",
+     "p1": [
+      219,
+      380
+     ],
+     "p2": [
+      327,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-003",
+     "valeur_attendue": 108,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-016",
+     "p1": [
+      327,
+      380
+     ],
+     "p2": [
+      456,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-004",
+     "valeur_attendue": 129.0,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-017",
+     "p1": [
+      0,
+      380
+     ],
+     "p2": [
+      456,
+      380
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 3,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-001",
+     "valeur_attendue": 456,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-018",
+     "p1": [
+      0,
+      0
+     ],
+     "p2": [
+      0,
+      30.0
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-019",
+     "p1": [
+      0,
+      30.0
+     ],
+     "p2": [
+      0,
+      66.0
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-017",
+     "valeur_attendue": 36,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-020",
+     "p1": [
+      0,
+      66.0
+     ],
+     "p2": [
+      0,
+      162.0
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-021",
+     "p1": [
+      0,
+      162.0
+     ],
+     "p2": [
+      0,
+      198.0
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-016",
+     "valeur_attendue": 36.0,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-022",
+     "p1": [
+      0,
+      198.0
+     ],
+     "p2": [
+      0,
+      380
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-023",
+     "p1": [
+      0,
+      0
+     ],
+     "p2": [
+      0,
+      48
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-015",
+     "valeur_attendue": 48,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-024",
+     "p1": [
+      0,
+      48
+     ],
+     "p2": [
+      0,
+      132
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-014",
+     "valeur_attendue": 84.0,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-025",
+     "p1": [
+      0,
+      132
+     ],
+     "p2": [
+      0,
+      180
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-013",
+     "valeur_attendue": 48,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-026",
+     "p1": [
+      0,
+      180
+     ],
+     "p2": [
+      0,
+      380
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-012",
+     "valeur_attendue": 200,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-027",
+     "p1": [
+      0,
+      0
+     ],
+     "p2": [
+      0,
+      380
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 3,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-011",
+     "valeur_attendue": 380,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-028",
+     "p1": [
+      456,
+      0
+     ],
+     "p2": [
+      456,
+      57.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-029",
+     "p1": [
+      456,
+      57.0
+     ],
+     "p2": [
+      456,
+      93.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-026",
+     "valeur_attendue": 36,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-030",
+     "p1": [
+      456,
+      93.0
+     ],
+     "p2": [
+      456,
+      164.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-031",
+     "p1": [
+      456,
+      164.0
+     ],
+     "p2": [
+      456,
+      196.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-050",
+     "valeur_attendue": 32,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-032",
+     "p1": [
+      456,
+      196.0
+     ],
+     "p2": [
+      456,
+      268.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-033",
+     "p1": [
+      456,
+      268.0
+     ],
+     "p2": [
+      456,
+      348.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-025",
+     "valeur_attendue": 80.0,
+     "repere": "ecart-020"
+    },
+    {
+     "id": "lc-SS-034",
+     "p1": [
+      456,
+      348.0
+     ],
+     "p2": [
+      456,
+      380
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-035",
+     "p1": [
+      456,
+      0
+     ],
+     "p2": [
+      456,
+      75
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-024",
+     "valeur_attendue": 75.0,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-036",
+     "p1": [
+      456,
+      75
+     ],
+     "p2": [
+      456,
+      180
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-023",
+     "valeur_attendue": 105.0,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-037",
+     "p1": [
+      456,
+      180
+     ],
+     "p2": [
+      456,
+      308
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-022",
+     "valeur_attendue": 128,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-038",
+     "p1": [
+      456,
+      308
+     ],
+     "p2": [
+      456,
+      380
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 2,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-021",
+     "valeur_attendue": 72,
+     "repere": null
+    },
+    {
+     "id": "lc-SS-039",
+     "p1": [
+      456,
+      0
+     ],
+     "p2": [
+      456,
+      380
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 3,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-SS-020",
+     "valeur_attendue": 380,
+     "repere": null
+    }
+   ],
+   "elements_electriques_non_reportes": [
+    "Virole (raccord du tuyau à fumée dans la cheminée)",
+    "Tuyau à fumée (interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Sortie d'éclairage au plafond (symbole ⊕, interprétation)",
+    "Interrupteur « $ » près de la porte du caveau",
+    "Interrupteur « $ » sur la colonne avant gauche",
+    "Interrupteur 3 voies probable, porte 2'-8\"",
+    "Symbole sur la colonne arrière gauche (prise ? interprétation)",
+    "Symbole sur la colonne avant droite (prise ? interprétation)",
+    "Symbole « Θ » à droite de la colonne avant droite (interprétation : prise/sortie)"
+   ],
+   "elements_retires": [
+    {
+     "id": "elem-SS-CE",
+     "type": "chauffe-eau",
+     "nom": "Chauffe-eau",
+     "nom_original": "EAU CHAUDE",
+     "position": {
+      "x": 26.0,
+      "y": 107.7,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 22.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "diamètre du cercle dessiné ; ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire"
+      },
+      "largeur": {
+       "valeur": 22.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "cercle"
+      }
+     },
+     "texte_original": "EAU CHAUDE",
+     "note": "Cercle contre le mur gauche, devant (côté rue) la cheminée.",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-SS-ESC",
+     "type": "escalier",
+     "nom": "Escalier vers le rez-de-chaussée",
+     "nom_original": "14 C.M. / RAMPE",
+     "position": {
+      "x": 293.2,
+      "y": 268.1,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 121.7,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "course mesurée au dessin, du pied (≈ poutre arrière) au palier"
+      },
+      "largeur": {
+       "valeur": 37,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "largeur non cotée"
+      }
+     },
+     "texte_original": "14 C.M.",
+     "escalier": {
+      "nb_contremarches": {
+       "valeur": 14,
+       "source": "LU",
+       "photo": "P2",
+       "ref": "cote-SS-055"
+      },
+      "fleche": "MONTE",
+      "direction": "+y",
+      "texte_original": "14 C.M."
+     },
+     "note": "volée droite ; 13 girons dessinés ; mot MONTE absent (flèche seule) ; échappée sous la poutre arrière à vérifier ; rampe (main courante) écrite « RAMPE » du côté gauche de la volée (P2)",
+     "rampe": {
+      "texte_original": "RAMPE",
+      "cote": "gauche de la volée (côté −x, ≈ 22'-11\" du coin gauche)",
+      "source": "LU",
+      "photo": "P2",
+      "note": "« RAMPE » écrit avec une flèche vers le côté gauche de la volée ; position ESTIMÉE ; non dessinée"
+     },
+     "retire_selon": "l'escalier entre le sous-sol et le RDC n'existe plus (2e constat du propriétaire, 2026-10-29)"
+    },
+    {
+     "id": "elem-SS-EVIER",
+     "type": "bac-lavage",
+     "nom": "Évier à lessive",
+     "nom_original": "EVIER À LESSIVE",
+     "position": {
+      "x": 22.4,
+      "y": 51.0,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 20.9,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
+      },
+      "largeur": {
+       "valeur": 43.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
+      }
+     },
+     "texte_original": "EVIER À LESSIVE",
+     "note": "Contre le mur gauche, sous la fenêtre basse ouv-SS-007.",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-SS-FOUR",
+     "type": "fournaise",
+     "nom": "Fournaise",
+     "nom_original": "FOURNAISE",
+     "position": {
+      "x": 72.2,
+      "y": 180.1,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 32.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
+      },
+      "largeur": {
+       "valeur": 41.5,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
+      }
+     },
+     "texte_original": "FOURNAISE",
+     "note": "Rectangle entre les deux poutres, près du mur gauche. Tracés tiretés la reliant à la cheminée (voir tuyau à fumée (non reporté)).",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-SS-HUILE",
+     "type": "reservoir-huile",
+     "nom": "Réservoir à l'huile",
+     "nom_original": "RESERVOIR À L'HUILE",
+     "position": {
+      "x": 98.8,
+      "y": 22.4,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 73.3,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens x)"
+      },
+      "largeur": {
+       "valeur": 20.0,
+       "source": "ESTIMÉ",
+       "photo": "P2",
+       "note": "ESTIMÉ : mesuré dans P2 redressé, calibrage par morceaux sur les cotes lues (chaîne des poutres en x, chaîne intérieure 13'-10\"/3'-11\"/12'-3\" en y), correction de perspective linéaire (sens y)"
+      }
+     },
+     "texte_original": "RESERVOIR À L'HUILE",
+     "note": "Rectangle contre le mur avant, à gauche de l'excroissance du perron.",
+     "retire_selon": "demande du propriétaire (2026-10-29) : mobilier, appareils (plomberie, chauffage, électroménagers), comptoirs et armoires non représentés ; position d'origine (plan 1957) conservée ici pour mémoire"
+    },
+    {
+     "id": "elem-SS-RAMO",
+     "type": "autre",
+     "nom": "P. de ramonage",
+     "nom_original": "PORTE DE RAMONAGE",
+     "position": {
+      "x": 10.5,
+      "y": 146.3,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": null,
+     "texte_original": "PORTE DE RAMONAGE",
+     "note": "Flèche vers la jonction cheminée / mur gauche, face intérieure. Position ESTIMÉE (pointe de flèche). ; libellé abrégé de « PORTE DE RAMONAGE »",
+     "retire_selon": "retiré du plan à la demande du propriétaire (annotateur en ligne, 2e série (2026-10-29))"
+    }
+   ],
+   "ouvertures_retirees": [
+    {
+     "id": "ouv-SS-001-1957",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-003",
+     "position": {
+      "valeur": 295.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 13'-0\" du nu ext. gauche (cote-SS-005)"
+     },
+     "largeur": {
+      "valeur": 80.0,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-006"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "6'-8\"",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis ; dessin ≈ 73 po (ESTIMÉ) — voir écart",
+     "retire_selon": "réponses du propriétaire (2026-10-29)"
+    },
+    {
+     "id": "ouv-SS-004-1957",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-SS-002",
+     "position": {
+      "valeur": 175,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "6'-0\" + 10'-8\" du nu ext. arrière"
+     },
+     "largeur": {
+      "valeur": 36,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-026"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "3'-0\"",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut)",
+     "retire_selon": "réponses du propriétaire (2026-10-29)"
+    },
+    {
+     "id": "ouv-SS-005-1957",
+     "type": "porte",
+     "operation": "aucune",
+     "mur_id": "mur-SS-002",
+     "position": {
+      "valeur": 70.0,
+      "source": "DÉDUIT",
+      "photo": "P2",
+      "note": "axe à 6'-3\" du nu ext. avant (cote-SS-024)"
+     },
+     "largeur": {
+      "valeur": 32,
+      "source": "LU",
+      "photo": "P2",
+      "ref": "cote-SS-050"
+     },
+     "hauteur": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "hauteur non écrite"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "PORTE 2'-8\"",
+     "note": "porte dans le mur de fondation droit (rectangle barré d'un X) ; aucun arc dessiné : battant et sens inconnus",
+     "retire_selon": "réponses du propriétaire (2026-10-29)"
+    }
+   ],
+   "usage": "appartement indépendant ; aucun accès intérieur depuis le RDC (réponses du propriétaire (2026-10-29))",
+   "notes_retirees": [
+    {
+     "id": "note-SS-05",
+     "texte_original": "PORTE DE RAMONAGE ; VÉROLE",
+     "interpretation": "Trappe de ramonage au pied de la cheminée ; « virole » (raccord du tuyau de fumée) — lecture « VÉROLE ».",
+     "photo": "P2",
+     "retire_selon": "élément retiré du plan (propriétaire, 2026-10-29)"
+    }
+   ]
+  }
+ ],
+ "ecarts": []
+}
