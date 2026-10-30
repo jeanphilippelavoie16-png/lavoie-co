@@ -128,4 +128,12 @@ CATALOGUE = {
         "usage": 'chauffe-eau électrique 60 gal',
         "page": '/tmp/claude-0/-home-user-lavoie-co/a2f554a7-a4f7-5946-bdd4-2eb9d5a22192/scratchpad/outils3d/construire_chauffe_eau_sdb.js',
         "attribution": 'Modèle procédural créé pour le projet (aucune restriction)'},
+    'bureau': {"fichier": "bureau.glb", "avant": "+z", "licence": 'CC BY 4.0',
+        "usage": 'bureau de chêne pâle, piètement acier noir (Rivet Mid-Century Desk)',
+        "page": 'https://amazon-berkeley-objects.s3.amazonaws.com/index.html',
+        "attribution": '3D model: Amazon Berkeley Objects (ABO), © Amazon.com, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), modified (optimised)'},
+    'chaise_bureau': {"fichier": "chaise_bureau.glb", "avant": "+z", "licence": 'CC BY 4.0',
+        "usage": 'chaise pivotante en feutre gris clair, pied noir (Rivet Swope)',
+        "page": 'https://amazon-berkeley-objects.s3.amazonaws.com/index.html',
+        "attribution": '3D model: Amazon Berkeley Objects (ABO), © Amazon.com, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), modified (optimised)'},
 }

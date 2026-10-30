@@ -117,21 +117,33 @@ def escalier(e, H, etage):
     pas = L / girons
     z0v = depart * r
 
-    def rect(s0, s1, z0, z1, mat):
-        # s le long de la montée depuis le pied, sur toute la largeur
+    def rect(s0, s1, z0, z1, mat, t0=None, t1=None):
+        # s le long de la montée depuis le pied ; t en travers (par défaut toute la largeur)
+        t0 = -W / 2 if t0 is None else t0
+        t1 = W / 2 if t1 is None else t1
         if d[0] == 0:
             ya, yb = sorted([cy - d[1] * L / 2 + d[1] * s0, cy - d[1] * L / 2 + d[1] * s1])
-            return {"x0": cx - W / 2, "x1": cx + W / 2, "y0": ya, "y1": yb, "z0": z0, "z1": z1, "mat": mat}
+            return {"x0": cx + t0, "x1": cx + t1, "y0": ya, "y1": yb, "z0": z0, "z1": z1, "mat": mat}
         xa, xb = sorted([cx - d[0] * L / 2 + d[0] * s0, cx - d[0] * L / 2 + d[0] * s1])
-        return {"x0": xa, "x1": xb, "y0": cy - W / 2, "y1": cy + W / 2, "z0": z0, "z1": z1, "mat": mat}
+        return {"x0": xa, "x1": xb, "y0": cy + t0, "y1": cy + t1, "z0": z0, "z1": z1, "mat": mat}
 
     out, obst = [], []
     tr = es.get("tournant")
     nd = girons - (int(tr["nb"]) if tr else 0)
     if tr:                                       # marches tournantes en haut : la volée droite s'arrête au carré
         pas = (L - (tr["carre"][3] - tr["carre"][1] if d[0] == 0 else tr["carre"][2] - tr["carre"][0])) / nd
+    flottant = es.get("style") == "flottant"
     for i in range(nd):
         z = z0v + (i + 1) * r
+        if flottant:
+            # marche de chêne de 2 po posée sur un limon central en acier noir (crémaillère) : on voit à travers
+            out.append(rect(max(0, i * pas - 1), (i + 1) * pas, z - 2, z, "placage"))
+            out.append(rect(i * pas, (i + 1) * pas, z - 3, z - 2, "metal", -2.5, 2.5))
+            out.append(rect(i * pas, i * pas + 1, max(0, z - r - 3), z - 2, "metal", -2.5, 2.5))
+            if z - 2 < 72:
+                q = rect(i * pas, (i + 1) * pas, 0, 1, "")
+                obst.append({k: q[k] for k in ("x0", "x1", "y0", "y1")})
+            continue
         bas = 0 if z < 60 else z - 12            # dessous fermé jusqu'au sol, ou sous-face de 1 pi quand on passe dessous
         out.append(rect(i * pas, (i + 1) * pas, bas, z - 1.25, "gypse"))
         out.append(rect(max(0, i * pas - 1), (i + 1) * pas, z - 1.25, z, "placage"))   # giron (nez de 1 po)
@@ -147,8 +159,14 @@ def escalier(e, H, etage):
             entoure = abs(a_[0] - coin[0]) < 0.01 and abs(b_[1] - coin[1]) < 0.01 and a_ != coin and b_ != coin
             pts = [p0, a_] + ([coin] if entoure else []) + [b_]
             z = (nd + j + 1) * r
-            out.append({"pts": [list(q) for q in pts], "z0": 0, "z1": z - 1.25, "mat": "gypse"})
-            out.append({"pts": [list(q) for q in pts], "z0": z - 1.25, "z1": z, "mat": "placage"})
+            if flottant:
+                out.append({"pts": [list(q) for q in pts], "z0": z - 2, "z1": z, "mat": "placage"})
+            else:
+                out.append({"pts": [list(q) for q in pts], "z0": 0, "z1": z - 1.25, "mat": "gypse"})
+                out.append({"pts": [list(q) for q in pts], "z0": z - 1.25, "z1": z, "mat": "placage"})
+        if flottant:                             # poteau d'acier au pivot des marches tournantes
+            px, py = tr["pivot"]
+            out.append({"x0": px - 1.5, "x1": px + 1.5, "y0": py - 1.5, "y1": py + 1.5, "z0": 0, "z1": (nd + int(tr["nb"])) * r + 36, "mat": "metal"})
     # trémie : dès que l'échappée (77 po au-dessus du nez) dépasse le plafond fini
     s_tr = max(0.0, min(L, ((H - 77 - z0v) / r - 1) * pas))
     t0 = rect(s_tr, L, 0, 1, "")
