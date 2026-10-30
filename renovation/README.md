@@ -26,6 +26,7 @@
 | SS-08 | Copie de SS-07 : escalier en L, palier dans le coin arrière (étude de 3 implantations dans DESIGN.md) ; feuilles P-109 et P-110 | esquisse |
 | SS-09 | Copie de SS-08 : escalier déplacé à l'est de la fenêtre de la chambre 1 (étude 2), chambre 1 agrandie ; feuilles P-111 et P-112 | esquisse |
 | SS-10 | Copie de SS-09 : **escalier à l'entrée avant (option 2, choisie)**, vestibule commun en haut, sous-sol refait (chambre 1 pleine largeur, mur télé sur la cage), vrais modèles 3D ; feuilles P-113 et P-114 | esquisse |
+| SS-11 | Copie de SS-10 : petit frigo sous comptoir (coin café) au sous-sol, salle de bain du haut agrandie de 1½ pi vers la chambre avant ; feuilles P-115 et P-116 | esquisse |
 
 ## Études
 - `etudes/escalier/` : six emplacements possibles pour l'escalier, en haut et en bas (étude 3).
