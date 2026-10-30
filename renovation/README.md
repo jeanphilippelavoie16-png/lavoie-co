@@ -28,6 +28,7 @@
 | SS-10 | Copie de SS-09 : **escalier à l'entrée avant (option 2, choisie)**, vestibule commun en haut, sous-sol refait (chambre 1 pleine largeur, mur télé sur la cage), vrais modèles 3D ; feuilles P-113 et P-114 | esquisse |
 | SS-11 | Copie de SS-10 : petit frigo sous comptoir (coin café) au sous-sol, salle de bain du haut agrandie de 1½ pi vers la chambre avant ; feuilles P-115 et P-116 | esquisse |
 | SS-12 | Copie de SS-11 : escalier flottant (limon acier, marches de chêne, garde vitrée), séjour épuré (sofa + télé), bureau commun entre les chambres ; feuilles P-117 et P-118 | esquisse |
+| SS-13 | Copie de SS-12 : salle de bain refaite (porte depuis le hall, vanité simple, douche de 7 pi, bain sur pied), salle de lavage revue (laveuse à chargement par le dessus, bac dégagé, comptoir de pliage), coin lecture et travail ouvert ; feuilles P-119 et P-120 | esquisse |
 
 ## Études
 - `etudes/escalier/` : six emplacements possibles pour l'escalier, en haut et en bas (étude 3).
