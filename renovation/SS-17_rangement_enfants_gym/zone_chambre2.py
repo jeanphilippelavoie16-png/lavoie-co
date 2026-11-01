@@ -252,7 +252,7 @@ def appliquer_scene(S, h):
     M += [A(325, 285, 385, 365, 12, 22, "draps", r=3, b=2.5),
           A(324.4, 284.4, 385.6, 344, 20.8, 23.6, "tissu", r=2.5, b=1.2),                              # couette
           A(324.6, 338, 385.4, 346, 22.6, 24.4, "draps", r=2, b=1),                                     # rabat du drap
-          A(324.2, 285.5, 385.8, 299, 23.4, 24.6, "osier", r=1.5, b=0.6),                              # jeté au pied
+          A(324.2, 285.5, 385.8, 299, 23.4, 24.6, "laque-marine", r=1.5, b=0.6),                       # jeté au pied
           A(329, 345, 353, 362, 21, 27.5, "draps", r=4, b=3), A(357, 345, 381, 362, 21, 27.5, "draps", r=4, b=3),
           SPH(372, 342, 27.6, 3.4, "osier", ecrase=0.9), SPH(372, 343, 32.4, 2.5, "osier"),
           SPH(370.4, 343, 34.4, 0.9, "osier"), SPH(373.6, 343, 34.4, 0.9, "osier"), SPH(372, 340.7, 32, 0.8, "art-sable")]
@@ -384,8 +384,7 @@ def appliquer_scene(S, h):
         M += [C(245.4 + dx, y + dy, 0.18, 62, 65.6, cc, pans=8) for dx, dy, cc in ((-0.5, 0.4, "rouge-velo"), (0.4, -0.3, "osier"), (0.2, 0.6, "laque-marine"))]
     M += [CX(243.25, 247, 287, 64, 0.22, "metal"), CX(244.6, 246.8, 287, 64, 1.5, "art-argile", pans=20),
           CX(243.25, 247, 292.5, 64, 0.22, "metal"), CX(244.6, 246.8, 292.5, 64, 1.5, "laque-marine", pans=20),
-          B(243.3, 321, 243.6, 322.6, 50, 66, "osier"), T([(243.3, 324.5, 62), (245.5, 324.5, 62)], 0.2, "metal"),
-          A(243.4, 322.8, 244.6, 326.2, 52.5, 61.6, "carbone", r=0.5, b=0.3)]
+          B(243.3, 321, 243.6, 322.6, 50, 66, "osier")]
     # armoires hautes (z 72-96, 3 portes, adulte) et DEL dessous
     M += [A(242.25, 265 + 21 * k + 0.08, 254.25, 265 + 21 * (k + 1) - 0.08, 72, 96, BLANC, r=0.25, b=0.25) for k in range(3)]
     M += [B(252.8, 266, 253.6, 327, 71.5, 72, "spot")]
@@ -408,8 +407,9 @@ def appliquer_scene(S, h):
     # ------------------------------------------------------------------ WALK-IN (ancien caveau) : fini 83 × 47½, plafond 84
     M += [B(229, 380, 231.5, 430, 0, 84, "art-sauge"), B(314.5, 380, 317, 430, 0, 84, "art-sauge"),
           B(231.5, 427.5, 314.5, 430, 0, 84, "art-sauge"), B(229, 380, 317, 430, 84, 96, "plafond")]
-    # miroir pleine hauteur au dos de la porte (vu du walk-in), cadre noir mince
-    M += [B(247, 375.95, 275, 376.3, 8, 76, "miroir"), B(246.6, 375.9, 247, 376.4, 7.6, 76.4, "metal"),
+    # miroir pleine hauteur au dos de la porte (vu du walk-in), cadre noir mince. Rendu « inox » (satiné) : la visite 3D
+    # capture le reflet d'un miroir placé au nord de y = 190 du côté sud (la chambre) ; ici il regarde le walk-in.
+    M += [B(247, 375.95, 275, 376.3, 8, 76, "inox"), B(246.6, 375.9, 247, 376.4, 7.6, 76.4, "metal"),
           B(275, 375.9, 275.4, 376.4, 7.6, 76.4, "metal"), B(246.6, 375.9, 275.4, 376.4, 7.6, 8, "metal"),
           B(246.6, 375.9, 275.4, 376.4, 76, 76.4, "metal")]
     # penderie double sur crémaillères noires (x 233, 260, 287, 313), tringles z 34 (lui) et z 70 (plus tard)
@@ -482,9 +482,9 @@ def appliquer_scene(S, h):
     vis[i:i] = [{"nom": "Chambre 2 — la bibliothèque secrète", "x": 268, "y": 250, "cap": 62},
                 {"nom": "Chambre 2 — lit queen et mur de tête", "x": 355, "y": 258, "cap": 90},
                 {"nom": "Chambre 2 — banc-cabane et tour à trésors", "x": 300, "y": 300, "cap": 5},
-                {"nom": "Chambre 2 — mur d'activité (bureau à rabat)", "x": 318, "y": 300, "cap": 180},
-                {"nom": "Walk-in — penderie qui grandit", "x": 262, "y": 384, "cap": 62},
-                {"nom": "Walk-in — le miroir (dos de la porte-bibliothèque)", "x": 268, "y": 404, "cap": 262}]
+                {"nom": "Chambre 2 — mur d'activité (bureau à rabat)", "x": 330, "y": 268, "cap": 160},
+                {"nom": "Walk-in — penderie qui grandit", "x": 261, "y": 378, "cap": 90},
+                {"nom": "Walk-in — banc, tiroirs et miroir", "x": 272, "y": 402, "cap": 270}]
     for p in S.get("palette", []):
         if p[0] == "Chambres" and "chambre 2" in p[1]:
             p[1] = p[1].split("; chambre 2")[0].rstrip(" ;")

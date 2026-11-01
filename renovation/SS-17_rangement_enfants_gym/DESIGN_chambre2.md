@@ -48,7 +48,11 @@ le battant uni de ouv-SS-008 (remplacé par la porte-bibliothèque).
 - Porte-bibliothèque : 5 rebords minces à lèvre, livres de petit format de dos et un livre de face par rebord (sécurité
   « rien de grimpable » de la spec) plutôt que des tablettes profondes.
 - Miroir : dans la maquette, posé sur le battant caché dans la baie (y ≈ 376) plutôt qu'au dos même de la
-  bibliothèque (y = 370) ; en réalité il est vissé au dos de la porte-bibliothèque.
+  bibliothèque (y = 370), et rendu en inox satiné (la visite 3D calcule le reflet d'un miroir du côté de la chambre,
+  pas du walk-in) ; en réalité c'est un miroir de sécurité (verre laminé ou acrylique) vissé au dos de la
+  porte-bibliothèque.
+- Tabouret rond du pupitre et jouets (camion, train de bois, ballon, LEGO dans le bac-wagon sorti) : accessoires de
+  mise en scène seulement.
 
 ### Coût (estimation du designer, non sourcée — 2 ou 3 soumissions d'ébénistes de la Côte-Nord)
 | Poste | Fourchette |
