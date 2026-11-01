@@ -1,6 +1,7 @@
 """Maquette 3D de SS-16 (le bain en vedette, douche simple, béton poli dans tout le sous-sol), reprise de SS-15 :
-chambres agrandies, caveau en walk-in (chambre 2), rampe de métal à l'escalier, divan en L avec projecteur et toile,
-rangement sous l'escalier, vestiaire près de l'entrée, gym (tapis roulant et vélo de route, poids au sol).
+chambres agrandies, caveau en walk-in (chambre 2, isolé, évents fermés), rampe de métal à l'escalier (dessous dégagé :
+plus de rangement), divan en L, projecteur au plafond et toile motorisée de 120 po centrée qu'on monte et descend dans la
+visite (SCENE["commandes"]), vestiaire près de l'entrée, gym (tapis roulant et vélo de route, poids au sol).
 Matériaux réels (catalogue_materiaux.py) et modèles 3D (catalogue_modeles.py).
 
 Coordonnées en pouces, repère de la maison. Le mobilier sert à juger les volumes et l'ambiance ; ce n'est pas un choix
@@ -166,8 +167,8 @@ def kettlebell(x, y, r, mat="carbone"):
 
 # ---------------------------------------------------------------------------------------------------- scène
 M = []
-# --- séjour : coin cinéma. Divan en L dos à l'escalier, projecteur sur un guéridon au bout du divan, toile motorisée
-#     au plafond devant le mur de droite (là où était la télé), meuble bas et barre de son dessous
+# --- séjour : coin cinéma. Divan en L dos à l'escalier, projecteur au plafond derrière le divan, toile motorisée de
+#     120 po centrée sur le mur de droite (là où était la télé), meuble bas et barre de son dessous
 def divan_L(x0, y0, x1, y1, xr, yr):
     """Divan en L : section principale x0–x1 (dossier à x0), méridienne x1–xr le long de y0–yr (dossier à y0)."""
     out = [A(x0, y0, x1, y1, 3, 15, "tissu", r=2, b=1.5), A(x1 - 1, y0, xr, yr, 3, 15, "tissu", r=2, b=1.5),        # bases
@@ -184,16 +185,43 @@ M += [A(296, 22, 424, 150, 0, 0.5, "tapis", r=2, b=0.2)] + divan_L(302, 40, 340,
 M += [A(344, 48, 366, 70, 20, 21.5, "jete", r=3, b=1)]                                                         # jeté sur la méridienne
 M += [C(372, 98, 15, 14, 15.5, "placage", pans=48), C(372, 98, 12, 0, 14, "carbone", pans=48),                 # table basse ronde
       A(364, 92, 376, 100, 15.5, 17, "draps", r=0.4, b=0.3), C(380, 102, 3, 15.5, 19, "blanc")]
-# guéridon et projecteur au bout du divan, objectif vers la toile
-M += [C(318, 140, 7, 0, 1, "metal", pans=32), C(318, 140, 0.9, 1, 27, "metal"), C(318, 140, 8.5, 27, 28.5, "placage", pans=40),
-      A(310.5, 133, 325, 147, 28.5, 33.5, "blanc", r=1.8, b=1), A(324.5, 136, 325.5, 144, 29.5, 32.5, "carbone", r=0.5, b=0.3),
-      CX(325, 327, 137.5, 31, 1.6, "carbone", pans=32), CX(326.6, 327.2, 137.5, 31, 1.2, "ecran", pans=32),
-      B(311, 133.2, 316, 133.6, 29.5, 32.5, "carbone")]
-# toile motorisée : boîtier noir au plafond, toile mate blanche de 96 po (16:9), bordure noire ; meuble bas et barre de son
-M += [B(438.5, 64, 443.5, 156, 91.5, 96, "carbone"), B(440.8, 68, 441.2, 152, 41, 86.5, "blanc"),
-      B(440.8, 68, 441.2, 152, 86.5, 91.5, "carbone"), B(440.4, 67.5, 441.6, 152.5, 40, 41, "carbone")]
-M += [A(428, 82, 446, 138, 4, 17, "placage", r=1, b=0.4), A(434, 92, 443, 128, 17, 20, "carbone", r=1, b=0.6),
-      MOD("plante_sansevieria", 438, 72)]
+# toile motorisée 16:9 de 120 po (image 104,6 × 58,8 po), CENTRÉE sur le mur du séjour (y 10 → 157 : centre 83,5, marges
+# de 15½ po au boîtier de chaque côté) ; boîtier noir au plafond, 2½ po devant le cadrage de la fenêtre ; en position
+# basse, le bas de l'image est à 28 po du sol et la toile passe devant la fenêtre (noir complet). Les objets liés à la
+# commande « toile » sont décrits en position basse : le moteur de la visite les enroule vers le boîtier (pivot_z).
+DIAG, XS, YT = 120, 440.5, 83.5                                 # diagonale, plan de la toile, axe de la toile
+IW, IH = DIAG * 16 / math.hypot(16, 9), DIAG * 9 / math.hypot(16, 9)
+ZB, ZP = 28.0, 91.5                                             # bas de l'image (position basse) ; bas du boîtier
+TY0, TY1 = YT - IW / 2, YT + IW / 2
+
+
+def TOILE(o, anim="etirer"):
+    o["commande"] = "toile"
+    if anim != "etirer":
+        o["anim"] = anim
+    return o
+
+
+M += [A(437.5, YT - 58, 443.5, YT + 58, ZP, 96, "carbone", r=0.8, b=0.5),                     # boîtier (fixe)
+      B(440, YT - 55, 441, YT + 55, ZP - 0.05, ZP, "pneu")]                                   # fente
+M += [TOILE(B(XS - 0.1, TY0, XS + 0.1, TY1, ZB, ZB + IH, "plafond")),                         # surface blanc mat
+      TOILE(B(XS - 0.12, TY0 - 2, XS + 0.12, TY0, ZB - 1.5, ZP, "pneu")),                     # bordures noires
+      TOILE(B(XS - 0.12, TY1, XS + 0.12, TY1 + 2, ZB - 1.5, ZP, "pneu")),
+      TOILE(B(XS - 0.12, TY0, XS + 0.12, TY1, ZB - 1.5, ZB, "pneu")),
+      TOILE(B(XS - 0.12, TY0, XS + 0.12, TY1, ZB + IH, ZP, "pneu")),                          # retombée noire du haut
+      TOILE(A(XS - 0.6, TY0 - 2.5, XS + 0.6, TY1 + 2.5, ZB - 2.7, ZB - 1.5, "metal", r=0.5, b=0.4), "suivre")]  # barre de lestage
+# meuble bas suspendu centré sous la toile (dessus à 15 po, barre de son à 18 po : sous l'image en position basse)
+M += [A(430, YT - 36, 446, YT + 36, 3, 15, "placage", r=0.6, b=0.4), B(430.6, YT - 35.5, 430.8, YT + 35.5, 4, 14, "carbone"),
+      A(431.5, YT - 18, 437, YT + 18, 15, 18.2, "carbone", r=1, b=0.6), MOD("plante_sansevieria", 432, 21)]
+# projecteur 4K au plafond, dans l'axe de la toile : support noir court (tige de 5 po), corps noir ; rapport de projection
+# 1,35 → objectif à 1,35 × 104,6 ≈ 141 po (11'-9") de la toile. Bas du projecteur à 84½ po du sol (passage derrière le
+# divan) ; faisceau entièrement au-dessus de 74 po jusqu'au dossier du divan, loin de la trémie (x < 272) et des poutres.
+PX, PY = 290, YT
+M += [C(PX, PY, 2.6, 95.5, 96, "carbone", pans=32), C(PX, PY, 0.6, 90.6, 95.5, "carbone"),
+      A(PX - 4.5, PY - 4.5, PX + 4.5, PY + 4.5, 90.2, 90.8, "carbone", r=1, b=0.2),
+      A(PX - 8, PY - 7.5, PX + 8, PY + 7.5, 84.6, 90.2, "carbone", r=1.6, b=1),
+      B(PX + 7.9, PY - 6.5, PX + 8.1, PY - 3, 85.6, 89.2, "pneu"), B(PX + 7.9, PY + 4.5, PX + 8.1, PY + 6.5, 85.6, 89.2, "pneu"),
+      CX(PX + 8, PX + 9.6, PY, 87.4, 2.2, "carbone", pans=32), CX(PX + 9.5, PX + 9.8, PY, 87.4, 1.7, "ecran", pans=32)]
 # grand cadre sur le mur avant, au-dessus du dossier du divan : cadre noir, passe-partout blanc ; œuvre abstraite générique
 # (champs de couleur argile, sable et sauge) — aucune photo personnelle dans la maquette
 Z = 10
@@ -216,12 +244,7 @@ M += [T([(XR, 151, 43.5), (XR, yc, 95.75)], 0.85, "metal", bouts=True),
       T([(XR, 150, 4.5), (XR, 150 - (95 - 4.5) / 0.75, 95)], 0.5, "metal", bouts=True),
       B(XR - 0.75, 16, XR + 0.75, yc, 95, 96, "metal"),
       B(XR - 1.25, 149.75, XR + 1.25, 152.25, 0, 44, "metal"), B(XR - 1.75, 149.25, XR + 1.75, 152.75, 0, 0.5, "metal")]
-# rangement encastré sous les marches (derrière le divan) : trois caissons de chêne en escalier, portes côté séjour
-for ya, yb, h in ((20, 48, 74), (50, 74, 54), (76, 100, 33)):
-    M += [A(236, ya, 270, yb, 0, h, "placage", r=0.3, b=0.25), B(236.5, ya + 0.5, 269.5, yb - 0.5, 0, 3, "carbone")]
-    ym = (ya + yb) / 2
-    M += [B(270, ym - 0.15, 270.2, ym + 0.15, 3.5, h - 0.5, "carbone")]                                    # joint des portes
-    M += [B(270, ym - 2.5, 270.6, ym - 1.5, h / 2 - 5, h / 2 + 5, "metal"), B(270, ym + 1.5, 270.6, ym + 2.5, h / 2 - 5, h / 2 + 5, "metal")]
+# dessous de l'escalier : dégagé (plus de rangement, demande du 2026-11-01) ; béton poli continu jusqu'au verre du gym
 # --- vestiaire près de l'entrée : banc, cases à souliers, crochets, tablette ; armoire à manteaux fermée
 M += [B(334, 210, 402, 227.75, 0, 3, "metal"), A(334, 209.75, 402, 227.75, 15.5, 17.5, "placage", r=0.3, b=0.3),
       A(334, 211, 402, 227.75, 66, 67.5, "placage", r=0.3, b=0.3), A(334, 209.75, 402, 227.75, 70, 88, "laque-vert", r=0.3, b=0.3),
@@ -358,7 +381,9 @@ M += commode(300, 232.25, 360, 252.25, "+y") + [C(312, 242, 4, 32, 40, "blanc", 
 M += [A(420, 282, 445, 330, 28.5, 30, "placage", r=0.5, b=0.4)] + [T([(422, y, 0), (422, y, 28.5)], 0.6, "metal") for y in (284, 328)] + \
      [T([(443, y, 0), (443, y, 28.5)], 0.6, "metal") for y in (284, 328)]
 M += [MOD("chaise_bureau", 409, 306, face="+x"), B(442, 296, 443, 316, 36, 49, "ecran", r=0.3), B(440, 305, 442, 307, 30, 36, "metal")]
-# --- walk-in (ancien caveau, isolé et chauffé) : tringle et tablette au fond, tablettes de côté, souliers
+# --- walk-in (ancien caveau) : évent fermé et isolé, plafond (dalle au-dessus) et murs isolés et finis en gypse peint,
+#     chauffé (plinthe électrique basse sur le mur avant, hors des vêtements) ; tringle et tablette au fond, tablettes de côté
+M += [A(278, 380, 302, 383, 3, 9.5, "blanc", r=0.6, b=0.4), B(279, 382.95, 301, 383.05, 4, 8.5, "gris")]
 M += [CX(231, 315, 419, 66, 0.6, "metal"), A(229, 412, 317, 430, 70, 71.5, "placage", r=0.3, b=0.3),
       A(229, 380, 243, 410, 0, 84, "placage", r=0.3, b=0.3, trou=0.75), A(303, 380, 317, 410, 0, 84, "placage", r=0.3, b=0.3, trou=0.75)]
 M += [A(229.75, 380.5, 242.25, 409.5, z, z + 0.75, "placage", r=0.2, b=0.15) for z in (14, 30, 46, 62)]
@@ -402,21 +427,20 @@ SCENE = {
         "Greige": ["#D9D2C8", "murs de la salle de bain hors céramique", "art-sable"],
     },
     "peinture": {"piece-SS-LAVAGE": "Bleu-gris", "piece-SS-GYM": "Anthracite", "piece-SS-CH2": "Sauge",
-                 "piece-SS-GR2": "Sauge", "piece-SS-SDB": "Greige"},
+                 "piece-SS-GR2": "Sauge", "piece-SS-LEG": "Sauge", "piece-SS-SDB": "Greige"},
     "accents": [{"piece": "piece-SS-VEST", "mur": "mur-SS-P11", "peinture": "Vert forêt"},
                 {"piece": "piece-SS-CH1", "mur": "mur-SS-003", "peinture": "Argile"}],
     "mobilier": M,
     "revetements": [],
-    "lumieres": [{"x": 300, "y": 80}, {"x": 404, "y": 90}, {"x": 368, "y": 196}, {"x": 424, "y": 190}, {"x": 400, "y": 126}, {"x": 190, "y": 182},
+    "lumieres": [{"x": 288, "y": 132}, {"x": 404, "y": 90}, {"x": 368, "y": 196}, {"x": 424, "y": 190}, {"x": 400, "y": 126}, {"x": 190, "y": 182},
                  {"x": 198, "y": 214}, {"x": 170, "y": 50}, {"x": 160, "y": 120}, {"x": 50, "y": 60}, {"x": 60, "y": 120},
                  {"x": 106, "y": 188}, {"x": 30, "y": 182}, {"x": 28, "y": 214, "i": 6}, {"x": 95.5, "y": 225.25, "z": 78, "i": 4}, {"x": 100, "y": 310}, {"x": 360, "y": 300}, {"x": 190, "y": 300}, {"x": 330, "y": 80},
                  {"x": 273, "y": 408}, {"x": 252, "y": 60, "z": 185, "i": 7}],
     "visites": [{"nom": "Entrée", "x": 430, "y": 178, "cap": 168},
                 {"nom": "Vestiaire", "x": 350, "y": 172, "cap": 50},
                 {"nom": "Escalier", "x": 252, "y": 196, "cap": 270},
-                {"nom": "Séjour", "x": 424, "y": 146, "cap": 200},
-                {"nom": "Coin cinéma (toile)", "x": 286, "y": 112, "cap": 352},
-                {"nom": "Rangement sous l'escalier", "x": 336, "y": 146, "cap": 215},
+                {"nom": "Séjour", "x": 424, "y": 146, "cap": 200, "commandes": {"toile": "haut"}},
+                {"nom": "Coin cinéma (toile)", "x": 294, "y": 84, "cap": 0, "commandes": {"toile": "bas"}},
                 {"nom": "Gym (porte vitrée)", "x": 168, "y": 192, "cap": 270},
                 {"nom": "Vélo et tapis roulant", "x": 126, "y": 146, "cap": 320},
                 {"nom": "Salle de lavage", "x": 70, "y": 128, "cap": 262},
@@ -429,13 +453,16 @@ SCENE = {
                 {"nom": "Walk-in (caveau)", "x": 270, "y": 330, "cap": 100},
                 {"nom": "Escalier vu du séjour", "x": 330, "y": 112, "cap": 185}],
     "depart": {"x": 430, "y": 178, "cap": 168},
+    # toile motorisée : on la monte et la descend dans la visite (bouton, ou toucher la toile) ; départ : enroulée
+    "commandes": [{"id": "toile", "nom": "Toile de projection", "libelle_bas": "Descendre la toile",
+                   "libelle_haut": "Monter la toile", "pivot_z": ZP, "fraction_min": 0.02, "depart": "haut", "duree": 3.0}],
     "palette": [["Plancher", "béton poli gris pâle d'un seul tenant dans tout le sous-sol (traits de scie discrets) ; tapis de laine dans les chambres et le séjour ; escalier en chêne massif", "#A4A5A3"],
                                 ["Vestiaire", "banc et cases en chêne, crochets laiton, armoire à manteaux et armoires du haut vert forêt", "#34473B"],
-                ["Escalier flottant", "limon central en acier noir, marches de chêne de 2 po ; verre côté gym, rampe à barreaux d'acier noir côté séjour ; rangement de chêne dessous", "#1E1E1E"],
-                ["Chambres", "chambre 1 : lit entre les deux fenêtres, bureau, commode de chêne ; chambre 2 (sauge) : bureau sous la fenêtre, walk-in dans l'ancien caveau", "#A6AF9A"],
+                ["Escalier flottant", "limon central en acier noir, marches de chêne de 2 po ; verre côté gym, rampe à barreaux d'acier noir côté séjour ; dessous dégagé (béton poli continu)", "#1E1E1E"],
+                ["Chambres", "chambre 1 : lit entre les deux fenêtres, bureau, commode de chêne ; chambre 2 (sauge) : bureau sous la fenêtre, walk-in dans l'ancien caveau (isolé, évents fermés, chauffé)", "#A6AF9A"],
                 ["Salle de bain", "bain sculptural en pierre de résine dans une alcôve de zellige vert, niche éclairée, suspension globe, robinet sur pied noir mat ; douche simple 36 × 48 vitrée, une pomme pluie noire ; vanité de chêne suspendue", "#2F5A45"],
                 ["Gym", "béton poli, tapis de caoutchouc noir sous les appareils et les poids, murs anthracite, miroir, tapis roulant, vélo de route sur base d'entraînement", "#2A2A2A"],
                 ["Salle de lavage", "béton poli, laveuse à chargement par le dessus, comptoir de pliage en L en chêne avec bac inox encastré, armoires marine, séchoir suspendu", "#2E3B4E"],
-                ["Séjour", "divan en L en tissu gris chaud, projecteur sur guéridon, toile motorisée de 96 po au plafond, table basse ronde en chêne, tapis de laine crème", "#9A5B32"],
+                ["Séjour", "divan en L en tissu gris chaud, projecteur 4K au plafond (support noir court), toile motorisée de 120 po centrée (boîtier noir au plafond, descend devant la fenêtre), meuble bas de chêne, table basse ronde en chêne, tapis de laine crème", "#9A5B32"],
                 ["Accents", "noir mat : cadres vitrés, robinetterie, luminaires ; laiton au bar", "#1E1E1E"]],
 }
