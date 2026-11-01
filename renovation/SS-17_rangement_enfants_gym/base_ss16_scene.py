@@ -222,14 +222,44 @@ M += [C(PX, PY, 2.6, 95.5, 96, "carbone", pans=32), C(PX, PY, 0.6, 90.6, 95.5, "
       A(PX - 8, PY - 7.5, PX + 8, PY + 7.5, 84.6, 90.2, "carbone", r=1.6, b=1),
       B(PX + 7.9, PY - 6.5, PX + 8.1, PY - 3, 85.6, 89.2, "pneu"), B(PX + 7.9, PY + 4.5, PX + 8.1, PY + 6.5, 85.6, 89.2, "pneu"),
       CX(PX + 8, PX + 9.6, PY, 87.4, 2.2, "carbone", pans=32), CX(PX + 9.5, PX + 9.8, PY, 87.4, 1.7, "ecran", pans=32)]
-# grand cadre sur le mur avant, au-dessus du dossier du divan : cadre noir, passe-partout blanc ; œuvre abstraite générique
-# (champs de couleur argile, sable et sauge) — aucune photo personnelle dans la maquette
-Z = 10
-M += [B(288.5, 10, 325.5, 10.8, 21.5 + Z, 80.25 + Z, "blanc"),
-      B(287, 10, 288.5, 11.5, 20 + Z, 81.75 + Z, "metal"), B(325.5, 10, 327, 11.5, 20 + Z, 81.75 + Z, "metal"),
-      B(287, 10, 327, 11.5, 20 + Z, 21.5 + Z, "metal"), B(287, 10, 327, 11.5, 80.25 + Z, 81.75 + Z, "metal"),
-      B(292.5, 10.8, 321.5, 11.0, 25.5 + Z, 76.25 + Z, "art-sable"), B(294.5, 11.0, 319.5, 11.15, 52 + Z, 73.5 + Z, "art-argile"),
-      B(294.5, 11.0, 319.5, 11.15, 29 + Z, 49 + Z, "art-sauge"), B(294.5, 11.0, 319.5, 11.2, 49.6 + Z, 50.6 + Z, "laque-marine")]
+# galerie de photos de famille sur le mur avant, au-dessus du divan (demande expresse du client, 2026-11-01 : exception
+# voulue à la règle des cadres génériques ; photos dans renovation/prive/famille/, intégrées à la visite, publication
+# acceptée par le client). Six cadres identiques : métal noir mat de ¾ po (1 po de profondeur), passe-partout blanc chaud
+# de 2 po, photo en retrait ; portrait 10 × 15 po (cadre 15½ × 20½), paysage 15 × 10 po (cadre 20½ × 15½). Grille de
+# 3 colonnes × 2 rangées, espacement de 2½ po, rangées alignées sur leurs centres, ensemble de 56½ × 43½ po centré sur le
+# mur libre entre la trémie (x = 271) et la fenêtre (x = 344½) : marge de 8½ po de chaque côté. Centre à 61 po du sol :
+# bas des cadres à 39¼ po, 8¼ po au-dessus du dossier du divan (31 po) ; haut à 82¾ po.
+GX, GZ, GJ = 307.75, 61.0, 2.5                                  # centre de la galerie ; espacement
+PP, FC = 2.0, 0.75                                             # passe-partout ; profilé du cadre
+
+
+def cadre(cx, cz, w, h, cle):
+    """Cadre mince de métal noir mat, passe-partout blanc chaud, photo w × h en retrait, contre le mur avant (y = 10)."""
+    X0, X1, Z0, Z1 = cx - w / 2 - PP - FC, cx + w / 2 + PP + FC, cz - h / 2 - PP - FC, cz + h / 2 + PP + FC
+    xi0, xi1, zi0, zi1 = cx - w / 2, cx + w / 2, cz - h / 2, cz + h / 2
+    return [B(X0, 10, X0 + FC, 11, Z0, Z1, "metal"), B(X1 - FC, 10, X1, 11, Z0, Z1, "metal"),
+            B(X0 + FC, 10, X1 - FC, 11, Z0, Z0 + FC, "metal"), B(X0 + FC, 10, X1 - FC, 11, Z1 - FC, Z1, "metal"),
+            B(X0 + FC, 10, xi0, 10.75, Z0 + FC, Z1 - FC, "plafond"), B(xi1, 10, X1 - FC, 10.75, Z0 + FC, Z1 - FC, "plafond"),
+            B(xi0, 10, xi1, 10.75, Z0 + FC, zi0, "plafond"), B(xi0, 10, xi1, 10.75, zi1, Z1 - FC, "plafond"),
+            B(xi0, 10, xi1, 10.45, zi0, zi1, "plafond"),
+            {"forme": "image", "cle": cle, "x": cx, "y": 10.55, "z0": zi0, "z1": zi1, "larg": w, "face": "+y"}]
+
+
+PORT, PAYS = (10, 15), (15, 10)
+LP, LL = PORT[0] + 2 * (PP + FC), PAYS[0] + 2 * (PP + FC)      # largeurs hors tout : 15½ et 20½ po
+HR = PORT[1] + 2 * (PP + FC)                                    # hauteur d'une rangée : 20½ po
+# colonnes de gauche à droite VUES DU SÉJOUR : on regarde vers -y, la gauche est donc du côté +x (vers la fenêtre)
+COLS = [GX + LL / 2 + GJ + LP / 2, GX, GX - LL / 2 - GJ - LP / 2]
+RANGS = [GZ + HR / 2 + GJ / 2, GZ - HR / 2 - GJ / 2]           # haut, bas
+GALERIE = [["famille_3_freres_portrait", "famille_1_papa_garcons_paysage", "famille_4_famille_debout_portrait"],
+           ["famille_2_couple_plage_portrait", "famille_6_maman_garcons_paysage", "famille_5_freres_rire_portrait"]]
+for zr, rang in zip(RANGS, GALERIE):
+    for xc, cle in zip(COLS, rang):
+        M += cadre(xc, zr, *(PAYS if cle.endswith("paysage") else PORT), cle)
+# éclairage doux de la galerie : deux petits encastrés orientables (garniture noire) au plafond, à 20 po du mur, pointés
+# sur les cadres (lumière chaude, faisceau large, pas de reflet direct : pas de verre devant les photos)
+GLX = (GX - 15.5, GX + 15.5)                                     # encastrés de la galerie
+M += [C(x, 30, 2.3, 95.7, 96, "carbone", pans=32) for x in GLX] + [C(x, 30, 1.4, 95.5, 95.7, "spot", pans=32) for x in GLX]
 # --- escalier : rampe de métal simple côté séjour (barreaux carrés de ¾ po à 4½ po, main courante noire)
 XR = 271
 zl = lambda y: 0.75 * (150 - y) + 7.5                       # ligne des nez de marche le long du côté séjour
@@ -285,28 +315,32 @@ M += [A(97.75, 92, 109.75, 110, z, z + 1.5, "placage", r=0.3, b=0.3) for z in (5
      [C(103, 98 + 7 * k, 3, 55.5, 63, "osier") for k in range(2)] + [A(90, 44, 104, 62, 36, 39, "draps", r=1.5, b=0.8)]
 M += [CX(30, 80, y, 80, 0.5, "placage") for y in (66, 72, 78, 84)] + [B(30, 64, 31, 86, 80, 89.5, "metal"), B(79, 64, 80, 86, 80, 89.5, "metal")]
 M += [MOD("chauffe_eau", 34, 138, face="+x", H=66), A(10.2, 99, 14, 119, 40, 70, "gris", r=0.5, b=0.3)]
-# --- salle de bain (SS-16) : le bain en vedette. Bain sculptural centré dans une alcôve de zellige vert (mur de la
-#     chambre 1, fourré de 2½ po pour une niche éclairée), bordée par la retombée de la poutre arrière (y = 204) et par le
+# --- salle de bain (SS-16) : le bain en vedette. Bain sculptural centré dans une alcôve de pierre (travertin beige-gris
+#     pâle adouci en dalles verticales de 24 × 48 po à joints fins, à la place du zellige vert refusé par le client ; mur
+#     de la chambre 1, fourré de 2½ po pour une niche éclairée), bordée par la retombée de la poutre arrière (y = 204) et par le
 #     muret de la douche ; suspension globe au-dessus, robinet sur pied noir, plateau de chêne. Douche simple 36 × 48 dans
 #     le coin arrière gauche (verre clair, profilés noirs, une seule pomme pluie noire). Toilette et vanité le long du mur
 #     de la salle de lavage, comme avant. Béton poli au sol partout, y compris dans la douche (pente vers un drain linéaire).
-XB0, XB1, YB, ZN0, ZN1 = 50.5, 139.75, 247.75, 33.5, 48.5      # alcôve : muret → mur du hall ; face du mur ; niche (z)
-FOUR = 2.5                                                      # mur d'accent fourré : face du zellige à y = 245.25
+XB0, XB1, YB, ZN0, ZN1 = 50.5, 139.75, 247.75, 33.5, 48.0      # alcôve : muret → mur du hall ; face du mur ; niche (z)
+FOUR = 2.5                                                      # mur d'accent fourré : face de la pierre à y = 245.25
 YF = YB - FOUR
-XC, YC = (XB0 + 0.75 + XB1) / 2, YF - 4 - 16                    # centre du bain : 4 po du zellige
+XC, YC = (XB0 + 0.75 + XB1) / 2, YF - 4 - 16                    # centre du bain : 4 po de la pierre
 NX0, NX1 = XC - 24, XC + 24                                     # niche de 48 po centrée sur le bain
-# mur d'accent en zellige vert (plancher au plafond), percé de la niche
-M += [B(XB0 + 0.75, YF, XB1, YB, 0, ZN0, "zellige-vert"), B(XB0 + 0.75, YF, XB1, YB, ZN1, 96, "zellige-vert"),
-      B(XB0 + 0.75, YF, NX0, YB, ZN0, ZN1, "zellige-vert"), B(NX1, YF, XB1, YB, ZN0, ZN1, "zellige-vert")]
-M += [B(XB0, 209, XB0 + 0.75, YF, 0, 96, "zellige-vert"), B(XB0, 199.75, XB0 + 0.75, 209, 0, 86, "zellige-vert")]   # face du muret côté bain
+# calepinage : joints verticaux à x = 71½, 95½ et 119½ (bords de la niche et axe du bain : dalles de 24 po, coupes
+# égales de 20¼ po aux deux bouts), joints horizontaux à 48 po (= linteau de la niche) ; voir le matériau
+# pierre_travertin (catalogue_materiaux.py)
+# mur d'accent en pierre (plancher au plafond), percé de la niche
+M += [B(XB0 + 0.75, YF, XB1, YB, 0, ZN0, "pierre_travertin"), B(XB0 + 0.75, YF, XB1, YB, ZN1, 96, "pierre_travertin"),
+      B(XB0 + 0.75, YF, NX0, YB, ZN0, ZN1, "pierre_travertin"), B(NX1, YF, XB1, YB, ZN0, ZN1, "pierre_travertin")]
+M += [B(XB0, 209, XB0 + 0.75, YF, 0, 96, "pierre_travertin"), B(XB0, 199.75, XB0 + 0.75, 209, 0, 86, "pierre_travertin")]   # face du muret côté bain
 M += [B(NX0, YF, NX1, YF + 0.75, ZN0 - 0.6, ZN0, "quartz"),                                         # appui de la niche
-      B(NX0, YB - 0.4, NX1, YB, ZN0, ZN1, "zellige-vert"),                                          # fond de la niche
+      B(NX0, YB - 0.4, NX1, YB, ZN0, ZN1, "pierre_travertin"),                                          # fond de la niche
       B(NX0 + 0.5, YF + 0.3, NX1 - 0.5, YB - 0.4, ZN1 - 0.45, ZN1, "spot")]                          # DEL sous le linteau
 # objets dans la niche : bougies, vase, serviettes roulées
 M += [C(NX0 + 6, YB - 1.4, 1.3, ZN0, ZN0 + 4.5, "blanc"), C(NX0 + 9.5, YB - 1.4, 1.3, ZN0, ZN0 + 3, "blanc"),
       MOD("vase", XC + 2, YB - 1.4, z=ZN0, H=9)]
 M += [CX(NX1 - 14 + 4.6 * k, NX1 - 10 + 4.6 * k, YB - 1.4, ZN0 + 2.1, 2.0, "draps", pans=24) for k in range(3)]
-# lueur rasante sur le zellige : DEL linéaire cachée sous la retombée de la poutre, côté alcôve
+# lueur rasante sur la pierre : DEL linéaire cachée sous la retombée de la poutre, côté alcôve
 M += [B(XB0 + 1, 208.6, XB1 - 0.5, 209.2, 85.4, 85.9, "spot")]
 # bain sculptural (pièce maîtresse) et plateau de chêne
 M += [MOD("bain_sculptural", XC, YC, face="-y")]
@@ -323,8 +357,8 @@ M += [MOD("suspension_globe", XC, YC, z=96 - 30, H=30)]
 # plante au bout du bain (côté hall) et petite serviette sur le muret
 M += [MOD("plante_sansevieria", XB1 - 7, YF - 9)]
 # douche simple 36 × 48 : tuile blanche, verre clair (panneau fixe + porte), profilés noirs, pomme pluie au plafond
-M += [B(10, 199.75, 10.5, YB, 0, 96, "tuile_blanche"), B(10, YB - 0.5, 46, YB, 0, 96, "tuile_blanche"),
-      B(45.5, 199.75, 46, YB, 0, 96, "tuile_blanche")]
+M += [B(10, 199.75, 10.625, YB, 0, 96, "tuile_blanche"), B(10, YB - 0.625, 46, YB, 0, 96, "tuile_blanche"),
+      B(45.375, 199.75, 46, YB, 0, 96, "tuile_blanche")]
 M += [B(10.5, 199.5, 45.5, 200.0, 0.4, 78, "verre"),                                                   # verre clair
       B(10.5, 199.3, 11.3, 200.2, 0.4, 78, "metal"), B(44.7, 199.3, 45.5, 200.2, 0.4, 78, "metal"),        # profilés muraux
       B(21.8, 199.3, 22.2, 200.2, 0.4, 78, "metal"), B(10.5, 199.3, 45.5, 200.2, 77.6, 78.4, "metal"),    # joint porte, traverse
@@ -337,15 +371,15 @@ M += [B(40.5, 214, 45.5, 238, 40, 41, "quartz"), C(43, 220, 1.3, 41, 48, "blanc"
 # vanité simple de chêne suspendue (36 po), quartz, vasque, mitigeur noir, miroir rond, deux appliques
 M += [A(88, 159.25, 124, 181.25, 12, 32, "placage", r=0.5, b=0.4), A(87.5, 159.25, 124.5, 181.75, 32, 33.5, "quartz", r=0.6, b=0.4),
       B(105.8, 181.25, 106.2, 181.45, 13, 31, "carbone"),
-      MOD("vasque_carree", 106, 171.5, face="+y", z=33.5), MOD("robinet_vasque_noir", 106, 162, face="+y", z=33.5),
+      MOD("vasque_carree", 106, 171.5, face="+y", z=33.5), MOD("robinet_vasque_noir", 106, 165, face="+y", z=33.5),
       CY(106, 159.3, 159.8, 60, 13, "miroir"), TOR(106, 159.6, 60, 13, 0.45, "metal"),
-      MOD("distributeurs_marbre", 119, 165, z=33.5), MOD("serviettes_pliees", 93, 172, z=33.5),
+      MOD("distributeurs_marbre", 119, 165, z=33.5), MOD("serviettes_pliees", 92.6, 172, z=33.5, L=9.5),
       MOD("panier_osier", 106, 170, z=1)]
 for xa in (88.5, 123.5):
     M += [CY(xa, 159.25, 159.7, 64, 2.2, "laiton", pans=32), CY(xa, 159.7, 163.5, 64, 0.35, "laiton"),
           SPH(xa, 165, 64, 3, "abat-jour")]
 # toilette suspendue (muret technique), plaque noire
-M += [MOD("toilette_suspendue", 66, 166, face="+y", z=15), MOD("plaque_chasse", 66, 159.6, face="+y", z=40)]
+M += [MOD("toilette_suspendue", 66, 169.7, face="+y", z=2), MOD("plaque_chasse", 66, 159.6, face="+y", z=40)]
 # plante sous la fenêtre, tapis de bain devant le bain
 M += [MOD("plante_syngonium", 20, 171, H=24)]
 M += [A(XC - 16, 190, XC + 16, 205, 0, 0.45, "draps", r=2, b=0.3)]
@@ -422,9 +456,9 @@ SCENE = {
         "Bleu-gris": ["#8FA1A8", "murs de la salle de lavage (≈ Benjamin Moore Boothbay Gray HC-165)"],
         "Marine": ["#2E3B4E", "armoires de la salle de lavage (≈ Benjamin Moore Hale Navy HC-154)", "laque-marine"],
         "Anthracite": ["#3E4042", "murs pleins de la salle d'entraînement (≈ Benjamin Moore Wrought Iron 2124-10)"],
-        "Sauge": ["#A6AF9A", "chambre 2 (≈ Benjamin Moore October Mist 1495)", "art-sauge"],
-        "Argile": ["#C39A82", "mur de tête de lit de la chambre 1 (terracotta adouci, à choisir sur nuancier)", "art-argile"],
-        "Greige": ["#D9D2C8", "murs de la salle de bain hors céramique", "art-sable"],
+        "Sauge": ["#A6AF9A", "chambre 2 (≈ Benjamin Moore October Mist 1495)"],
+        "Argile": ["#C39A82", "mur de tête de lit de la chambre 1 (terracotta adouci, à choisir sur nuancier)"],
+        "Greige": ["#D9D2C8", "murs de la salle de bain hors pierre"],
     },
     "peinture": {"piece-SS-LAVAGE": "Bleu-gris", "piece-SS-GYM": "Anthracite", "piece-SS-CH2": "Sauge",
                  "piece-SS-GR2": "Sauge", "piece-SS-LEG": "Sauge", "piece-SS-SDB": "Greige"},
@@ -432,21 +466,26 @@ SCENE = {
                 {"piece": "piece-SS-CH1", "mur": "mur-SS-003", "peinture": "Argile"}],
     "mobilier": M,
     "revetements": [],
+    # galerie de famille (séjour) : photos fournies par le client, gardées hors de git (renovation/prive/famille/) ;
+    # generer_3d.py les intègre à la visite (sans SANS_PRIVE) — publication acceptée par le client
+    "images": {cle: f"../prive/famille/{cle}.jpg" for rang in GALERIE for cle in rang},
     "lumieres": [{"x": 288, "y": 132}, {"x": 404, "y": 90}, {"x": 368, "y": 196}, {"x": 424, "y": 190}, {"x": 400, "y": 126}, {"x": 190, "y": 182},
                  {"x": 198, "y": 214}, {"x": 170, "y": 50}, {"x": 160, "y": 120}, {"x": 50, "y": 60}, {"x": 60, "y": 120},
                  {"x": 106, "y": 188}, {"x": 30, "y": 182}, {"x": 28, "y": 214, "i": 6}, {"x": 95.5, "y": 225.25, "z": 78, "i": 4}, {"x": 100, "y": 310}, {"x": 360, "y": 300}, {"x": 190, "y": 300}, {"x": 330, "y": 80},
-                 {"x": 273, "y": 408}, {"x": 252, "y": 60, "z": 185, "i": 7}],
+                 {"x": 273, "y": 408}, {"x": 252, "y": 60, "z": 185, "i": 7},
+                 {"x": GLX[0], "y": 30, "z": 96, "i": 2.5}, {"x": GLX[1], "y": 30, "z": 96, "i": 2.5}],   # galerie
     "visites": [{"nom": "Entrée", "x": 430, "y": 178, "cap": 168},
                 {"nom": "Vestiaire", "x": 350, "y": 172, "cap": 50},
                 {"nom": "Escalier", "x": 252, "y": 196, "cap": 270},
                 {"nom": "Séjour", "x": 424, "y": 146, "cap": 200, "commandes": {"toile": "haut"}},
+                {"nom": "Galerie de famille", "x": 296, "y": 118, "cap": 276, "commandes": {"toile": "haut"}},
                 {"nom": "Coin cinéma (toile)", "x": 294, "y": 84, "cap": 0, "commandes": {"toile": "bas"}},
                 {"nom": "Gym (porte vitrée)", "x": 168, "y": 192, "cap": 270},
                 {"nom": "Vélo et tapis roulant", "x": 126, "y": 146, "cap": 320},
                 {"nom": "Salle de lavage", "x": 70, "y": 128, "cap": 262},
                 {"nom": "Salle de bain (entrée)", "x": 134, "y": 184, "cap": 168},
-                {"nom": "Le bain (alcôve de zellige)", "x": 130, "y": 176, "cap": 134},
-                {"nom": "Douche simple", "x": 70, "y": 176, "cap": 132},
+                {"nom": "Le bain (alcôve de pierre)", "x": 130, "y": 176, "cap": 134},
+                {"nom": "Douche simple", "x": 34, "y": 186, "cap": 90},
                 {"nom": "Vanité", "x": 106, "y": 204, "cap": 270},
                 {"nom": "Chambre 1", "x": 222, "y": 246, "cap": 132},
                 {"nom": "Chambre 2", "x": 262, "y": 250, "cap": 40},
@@ -460,9 +499,9 @@ SCENE = {
                                 ["Vestiaire", "banc et cases en chêne, crochets laiton, armoire à manteaux et armoires du haut vert forêt", "#34473B"],
                 ["Escalier flottant", "limon central en acier noir, marches de chêne de 2 po ; verre côté gym, rampe à barreaux d'acier noir côté séjour ; dessous dégagé (béton poli continu)", "#1E1E1E"],
                 ["Chambres", "chambre 1 : lit entre les deux fenêtres, bureau, commode de chêne ; chambre 2 (sauge) : bureau sous la fenêtre, walk-in dans l'ancien caveau (isolé, évents fermés, chauffé)", "#A6AF9A"],
-                ["Salle de bain", "bain sculptural en pierre de résine dans une alcôve de zellige vert, niche éclairée, suspension globe, robinet sur pied noir mat ; douche simple 36 × 48 vitrée, une pomme pluie noire ; vanité de chêne suspendue", "#2F5A45"],
+                ["Salle de bain", "bain sculptural en pierre de résine dans une alcôve de travertin beige-gris pâle adouci (dalles verticales 24 × 48 po, joints fins, plancher au plafond ; à la place du zellige vert, à la demande du client), niche éclairée, suspension globe, robinet sur pied noir mat, plateau de chêne ; douche simple 36 × 48 vitrée, une pomme pluie noire ; vanité de chêne suspendue ; murs greige", "#CFC6B8"],
                 ["Gym", "béton poli, tapis de caoutchouc noir sous les appareils et les poids, murs anthracite, miroir, tapis roulant, vélo de route sur base d'entraînement", "#2A2A2A"],
                 ["Salle de lavage", "béton poli, laveuse à chargement par le dessus, comptoir de pliage en L en chêne avec bac inox encastré, armoires marine, séchoir suspendu", "#2E3B4E"],
-                ["Séjour", "divan en L en tissu gris chaud, projecteur 4K au plafond (support noir court), toile motorisée de 120 po centrée (boîtier noir au plafond, descend devant la fenêtre), meuble bas de chêne, table basse ronde en chêne, tapis de laine crème", "#9A5B32"],
-                ["Accents", "noir mat : cadres vitrés, robinetterie, luminaires ; laiton au bar", "#1E1E1E"]],
+                ["Séjour", "divan en L en tissu gris chaud, projecteur 4K au plafond (support noir court), toile motorisée de 120 po centrée (boîtier noir au plafond, descend devant la fenêtre), meuble bas de chêne, table basse ronde en chêne, tapis de laine crème ; au mur avant, galerie de six photos de famille (cadres identiques de métal noir mat, passe-partout blanc chaud, grille 3 × 2) éclairée par deux petits encastrés orientables", "#9A5B32"],
+                ["Accents", "noir mat : cadres de la galerie, cadres vitrés, robinetterie, luminaires ; laiton aux crochets du vestiaire et aux appliques", "#1E1E1E"]],
 }

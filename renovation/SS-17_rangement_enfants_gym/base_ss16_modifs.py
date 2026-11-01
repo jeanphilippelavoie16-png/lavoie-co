@@ -43,7 +43,7 @@ MURS = [  # id, x1, y1, x2, y2, rôle (« VERRE » = cloison vitrée, « LATTES 
     ("mur-SS-P11", 240, 230, 446, 230, "vestiaire / chambre 2"),
     ("mur-SS-P12", 38.25, 280, 38.25, 370, "garde-robe / chambre 1"),
     ("mur-SS-P13", 10, 280, 38.25, 280, "garde-robe / chambre 1"),
-    ("mur-SS-P14", 48.25, 199.75, 48.25, 250, "muret de la douche / niche du bain (plancher au plafond, carrelé)"),
+    ("mur-SS-P14", 48.25, 199.75, 48.25, 250, "muret de la douche / niche du bain (plancher au plafond : tuile blanche côté douche, pierre côté bain)"),
 ]
 
 PORTES = [  # id, mur, centre, largeur, ouvre_vers, rôle, opération, matériau, charnière (None = début du mur)
@@ -84,7 +84,7 @@ EQUIPEMENTS = [  # id, type, nom, libellé, x, y, rotation, (longueur, largeur)
     ("elem-SS-P-PLIAGE", "comptoir", "Comptoir de pliage en L avec rangement dessous (mur du gym)", None, 97.75, 72.5, 90, (75, 24)),
     ("elem-SS-P-PLIAGE2", "comptoir", "Comptoir de pliage en L (mur avant), paniers dessous", None, 90, 22.5, 0, (40, 25)),
     ("elem-SS-P-BAC", "bac-lavage", "Bac de lavage encastré dans le comptoir de pliage", None, 98, 80, 90, (22, 18)),
-    ("elem-SS-P-BAIN", "baignoire", "Bain autoportant sculptural (pierre de résine), centré sur le mur d'accent (zellige sur fourrure de 2½ po, niche)", None, 95.5, 225.25, 0, (66, 32)),
+    ("elem-SS-P-BAIN", "baignoire", "Bain autoportant sculptural (pierre de résine), centré sur le mur d'accent (travertin adouci en dalles de 24 × 48 po sur fourrure de 2½ po, niche)", None, 95.5, 225.25, 0, (66, 32)),
     ("elem-SS-P-DOUCHE", "autre", "Douche simple de 36 × 48 po, panneau et porte vitrés", "DOUCHE", 28, 223.75, 0, (36, 48)),
     ("elem-SS-P-WC", "toilette", "Toilette", None, 66, 173.25, 0, (20, 28)),
     ("elem-SS-P-VAN", "comptoir", "Vanité simple de 36 po", None, 106, 170.25, 0, (36, 22)),

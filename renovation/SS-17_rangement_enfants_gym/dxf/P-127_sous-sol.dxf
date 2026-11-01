@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-29B
+2D1
   9
 $SURFTAB1
  70
@@ -3373,7 +3373,7 @@ RELEVE
   0
 APPID
   5
-298
+2CE
 330
 3
 100
@@ -3387,7 +3387,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-299
+2CF
 330
 3
 100
@@ -8849,7 +8849,7 @@ AcDbText
  40
 6.299212598425196
   1
-1. Esquisse (le reste est l'existant, base R0) ;
+1. Esquisse par-dessus SS-16 (le reste est
   7
 RELEVE
  11
@@ -8887,7 +8887,7 @@ AcDbText
  40
 6.299212598425196
   1
-béton poli d'un seul tenant dans tout le sous-sol.
+l'existant, base R0) ; béton poli d'un seul tenant.
   7
 RELEVE
  11
@@ -8925,7 +8925,7 @@ AcDbText
  40
 6.299212598425196
   1
-2. Escalier de 14 c.m. à l'entrée avant (voir
+2. Chambres d'enfants : lits queen 60 × 80 et
   7
 RELEVE
  11
@@ -8963,7 +8963,7 @@ AcDbText
  40
 6.299212598425196
   1
-P-126) : trémie, giron et échappée à valider.
+rangement intégré de chêne ; fenêtres
   7
 RELEVE
  11
@@ -8995,19 +8995,19 @@ AcDbText
  10
 652.825
  20
-165.3447235296705
+167.2647235296705
  30
 0.0
  40
 6.299212598425196
   1
-3. Salle de bain : bain centré sur le mur d'accent,
+d'évacuation ouvrantes à vérifier.
   7
 RELEVE
  11
 652.825
  21
-165.3447235296705
+167.2647235296705
  31
 0.0
 100
@@ -9039,7 +9039,7 @@ AcDbText
  40
 6.299212598425196
   1
-douche 36 × 48 ; drains à déplacer.
+3. Walk-in (ancien caveau) : isolé, évents fermés,
   7
 RELEVE
  11
@@ -9071,19 +9071,19 @@ AcDbText
  10
 652.825
  20
-141.3774794351823
+143.2974794351823
  30
 0.0
  40
 6.299212598425196
   1
-4. Séjour : toile motorisée 120 po centrée,
+chauffé ; porte-bibliothèque pivotante depuis la
   7
 RELEVE
  11
 652.825
  21
-141.3774794351823
+143.2974794351823
  31
 0.0
 100
@@ -9109,19 +9109,19 @@ AcDbText
  10
 652.825
  20
-130.3538573879382
+132.27385738793822
  30
 0.0
  40
 6.299212598425196
   1
-projecteur au plafond (pointillé) ; dessous de
+chambre 2.
   7
 RELEVE
  11
 652.825
  21
-130.3538573879382
+132.27385738793822
  31
 0.0
 100
@@ -9153,7 +9153,7 @@ AcDbText
  40
 6.299212598425196
   1
-l'escalier dégagé.
+4. Escalier : banc-cabane bas (≤ 26 po) dessous
   7
 RELEVE
  11
@@ -9185,19 +9185,19 @@ AcDbText
  10
 652.825
  20
-106.38661329345001
+108.30661329345003
  30
 0.0
  40
 6.299212598425196
   1
-5. Walk-in (ancien caveau) : isolé, évents fermés,
+; vides entre les marches (5½ po) à valider avec
   7
 RELEVE
  11
 652.825
  21
-106.38661329345001
+108.30661329345003
  31
 0.0
 100
@@ -9223,19 +9223,19 @@ AcDbText
  10
 652.825
  20
-95.36299124620592
+97.28299124620594
  30
 0.0
  40
 6.299212598425196
   1
-chauffé.
+des enfants.
   7
 RELEVE
  11
 652.825
  21
-95.36299124620592
+97.28299124620594
  31
 0.0
 100
@@ -9261,19 +9261,19 @@ AcDbText
  10
 652.825
  20
-82.41936919896182
+84.33936919896183
  30
 0.0
  40
 6.299212598425196
   1
-6. Hauteur : 8 pi (propriétaire) ; sous les poutres
+5. Gym : cardio contre le mur avant, mur-miroir
   7
 RELEVE
  11
 652.825
  21
-82.41936919896182
+84.33936919896183
  31
 0.0
 100
@@ -9299,19 +9299,19 @@ AcDbText
  10
 652.825
  20
-71.39574715171773
+73.31574715171774
  30
 0.0
  40
 6.299212598425196
   1
-et coupe-feu à valider.
+sur le mur du lavage, porte vitrée coulissante.
   7
 RELEVE
  11
 652.825
  21
-71.39574715171773
+73.31574715171774
  31
 0.0
 100
@@ -10769,9 +10769,13 @@ AcDbEntity
 100
 AcDbPolyline
  90
-3
+4
  70
 0
+ 10
+109.75
+ 20
+10.02
  10
 109.75
  20
@@ -10805,17 +10809,49 @@ AcDbEntity
 100
 AcDbPolyline
  90
-2
+10
  70
 0
  10
-109.75
+152.0
  20
-10.02
+156.0
+ 10
+146.0
+ 20
+156.0
+ 10
+146.0
+ 20
+154.75
+ 10
+144.25
+ 20
+154.75
+ 10
+139.75
+ 20
+154.75
+ 10
+114.25
+ 20
+154.75
+ 10
+114.25
+ 20
+150.0
  10
 109.75
  20
-120.0
+150.0
+ 10
+109.75
+ 20
+154.75
+ 10
+10.02
+ 20
+154.75
 1001
 RELEVE
 1000
@@ -10837,7 +10873,7 @@ AcDbEntity
 100
 AcDbPolyline
  90
-20
+11
  70
 0
  10
@@ -10884,42 +10920,6 @@ AcDbPolyline
 152.0
  20
 156.0
- 10
-146.0
- 20
-156.0
- 10
-146.0
- 20
-154.75
- 10
-144.25
- 20
-154.75
- 10
-139.75
- 20
-154.75
- 10
-114.25
- 20
-154.75
- 10
-114.25
- 20
-150.0
- 10
-109.75
- 20
-150.0
- 10
-109.75
- 20
-154.75
- 10
-10.02
- 20
-154.75
 1001
 RELEVE
 1000
@@ -10941,57 +10941,9 @@ AcDbEntity
 100
 AcDbPolyline
  90
-19
+7
  70
 0
- 10
-46.0
- 20
-252.25
- 10
-50.5
- 20
-252.25
- 10
-139.75
- 20
-252.25
- 10
-144.25
- 20
-252.25
- 10
-144.25
- 20
-247.75
- 10
-144.25
- 20
-232.25
- 10
-201.0
- 20
-232.25
- 10
-201.0
- 20
-227.75
- 10
-144.25
- 20
-227.75
- 10
-144.25
- 20
-198.0
- 10
-139.75
- 20
-198.0
- 10
-139.75
- 20
-227.75
  10
 139.75
  20
@@ -11041,7 +10993,7 @@ AcDbEntity
 100
 AcDbPolyline
  90
-2
+14
  70
 0
  10
@@ -11052,6 +11004,54 @@ AcDbPolyline
 46.0
  20
 252.25
+ 10
+50.5
+ 20
+252.25
+ 10
+139.75
+ 20
+252.25
+ 10
+144.25
+ 20
+252.25
+ 10
+144.25
+ 20
+247.75
+ 10
+144.25
+ 20
+232.25
+ 10
+201.0
+ 20
+232.25
+ 10
+201.0
+ 20
+227.75
+ 10
+144.25
+ 20
+227.75
+ 10
+144.25
+ 20
+198.0
+ 10
+139.75
+ 20
+198.0
+ 10
+139.75
+ 20
+227.75
+ 10
+139.75
+ 20
+232.25
 1001
 RELEVE
 1000
@@ -11073,29 +11073,25 @@ AcDbEntity
 100
 AcDbPolyline
  90
-5
+4
  70
 0
  10
-40.5
+227.0
  20
-295.0
+158.0
  10
-40.5
+229.0
  20
-282.25
+158.0
  10
-40.5
+229.0
  20
-277.75
+156.0
  10
-36.0
+229.0
  20
-277.75
- 10
 10.02
- 20
-277.75
 1001
 RELEVE
 1000
@@ -11117,25 +11113,29 @@ AcDbEntity
 100
 AcDbPolyline
  90
-4
+5
  70
 0
  10
+227.0
+ 20
 10.02
- 20
-282.25
  10
-36.0
+227.0
  20
-282.25
+156.0
  10
-36.0
+184.0
  20
-295.0
+156.0
  10
-40.5
+184.0
  20
-295.0
+158.0
+ 10
+227.0
+ 20
+158.0
 1001
 RELEVE
 1000
@@ -11157,19 +11157,47 @@ AcDbEntity
 100
 AcDbPolyline
  90
-3
+10
  70
 0
  10
-40.5
+242.25
  20
-355.0
+369.98
  10
-36.0
+242.25
  20
-355.0
+232.25
  10
-36.0
+246.0
+ 20
+232.25
+ 10
+246.0
+ 20
+227.75
+ 10
+242.25
+ 20
+227.75
+ 10
+237.75
+ 20
+227.75
+ 10
+231.0
+ 20
+227.75
+ 10
+231.0
+ 20
+232.25
+ 10
+237.75
+ 20
+232.25
+ 10
+237.75
  20
 369.98
 1001
@@ -11193,214 +11221,6 @@ AcDbEntity
 100
 AcDbPolyline
  90
-2
- 70
-0
- 10
-40.5
- 20
-369.98
- 10
-40.5
- 20
-355.0
-1001
-RELEVE
-1000
-contour-murs-legers
-  0
-LWPOLYLINE
-  5
-115
-330
-17
-100
-AcDbEntity
-  8
-10-Murs
- 62
-7
-370
-50
-100
-AcDbPolyline
- 90
-4
- 70
-0
- 10
-227.0
- 20
-158.0
- 10
-229.0
- 20
-158.0
- 10
-229.0
- 20
-156.0
- 10
-229.0
- 20
-10.02
-1001
-RELEVE
-1000
-contour-murs-legers
-  0
-LWPOLYLINE
-  5
-116
-330
-17
-100
-AcDbEntity
-  8
-10-Murs
- 62
-7
-370
-50
-100
-AcDbPolyline
- 90
-5
- 70
-0
- 10
-227.0
- 20
-10.02
- 10
-227.0
- 20
-156.0
- 10
-184.0
- 20
-156.0
- 10
-184.0
- 20
-158.0
- 10
-227.0
- 20
-158.0
-1001
-RELEVE
-1000
-contour-murs-legers
-  0
-LWPOLYLINE
-  5
-117
-330
-17
-100
-AcDbEntity
-  8
-10-Murs
- 62
-7
-370
-50
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-237.75
- 20
-232.25
- 10
-237.75
- 20
-369.98
-1001
-RELEVE
-1000
-contour-murs-legers
-  0
-LWPOLYLINE
-  5
-118
-330
-17
-100
-AcDbEntity
-  8
-10-Murs
- 62
-7
-370
-50
-100
-AcDbPolyline
- 90
-9
- 70
-0
- 10
-242.25
- 20
-369.98
- 10
-242.25
- 20
-232.25
- 10
-246.0
- 20
-232.25
- 10
-246.0
- 20
-227.75
- 10
-242.25
- 20
-227.75
- 10
-237.75
- 20
-227.75
- 10
-231.0
- 20
-227.75
- 10
-231.0
- 20
-232.25
- 10
-237.75
- 20
-232.25
-1001
-RELEVE
-1000
-contour-murs-legers
-  0
-LWPOLYLINE
-  5
-119
-330
-17
-100
-AcDbEntity
-  8
-10-Murs
- 62
-7
-370
-50
-100
-AcDbPolyline
- 90
 3
  70
 0
@@ -11423,7 +11243,7 @@ contour-murs-legers
   0
 LWPOLYLINE
   5
-11A
+115
 330
 17
 100
@@ -11455,7 +11275,7 @@ contour-murs-legers
   0
 LWPOLYLINE
   5
-11B
+116
 330
 17
 100
@@ -11563,7 +11383,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-11C
+117
 330
 17
 100
@@ -11607,7 +11427,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-11D
+118
 330
 17
 100
@@ -11651,7 +11471,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-11E
+119
 330
 17
 100
@@ -11711,7 +11531,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-11F
+11A
 330
 17
 100
@@ -11755,7 +11575,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-120
+11B
 330
 17
 100
@@ -11895,7 +11715,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-121
+11C
 330
 17
 100
@@ -11955,7 +11775,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-122
+11D
 330
 17
 100
@@ -11999,7 +11819,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-123
+11E
 330
 17
 100
@@ -12043,7 +11863,7 @@ contour-murs-lourds
   0
 LWPOLYLINE
   5
-124
+11F
 330
 17
 100
@@ -12075,7 +11895,7 @@ ouv-SS-002
   0
 LWPOLYLINE
   5
-125
+120
 330
 17
 100
@@ -12107,7 +11927,7 @@ ouv-SS-002
   0
 LWPOLYLINE
   5
-126
+121
 330
 17
 100
@@ -12139,7 +11959,7 @@ ouv-SS-002
   0
 LWPOLYLINE
   5
-127
+122
 330
 17
 100
@@ -12171,7 +11991,7 @@ ouv-SS-002
   0
 LWPOLYLINE
   5
-128
+123
 330
 17
 100
@@ -12200,6 +12020,166 @@ AcDbPolyline
 RELEVE
 1000
 ouv-SS-002
+  0
+LWPOLYLINE
+  5
+124
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+456.0
+ 20
+268.0
+ 10
+456.0
+ 20
+348.0
+1001
+RELEVE
+1000
+ouv-SS-003
+  0
+LWPOLYLINE
+  5
+125
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+446.0
+ 20
+268.0
+ 10
+446.0
+ 20
+348.0
+1001
+RELEVE
+1000
+ouv-SS-003
+  0
+LWPOLYLINE
+  5
+126
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+451.0
+ 20
+268.0
+ 10
+451.0
+ 20
+348.0
+1001
+RELEVE
+1000
+ouv-SS-003
+  0
+LWPOLYLINE
+  5
+127
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+456.0
+ 20
+268.0
+ 10
+446.0
+ 20
+268.0
+1001
+RELEVE
+1000
+ouv-SS-003
+  0
+LWPOLYLINE
+  5
+128
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+456.0
+ 20
+348.0
+ 10
+446.0
+ 20
+348.0
+1001
+RELEVE
+1000
+ouv-SS-003
   0
 LWPOLYLINE
   5
@@ -12223,15 +12203,15 @@ AcDbPolyline
  10
 456.0
  20
-268.0
+57.0
  10
 456.0
  20
-348.0
+93.0
 1001
 RELEVE
 1000
-ouv-SS-003
+ouv-SS-004
   0
 LWPOLYLINE
   5
@@ -12255,15 +12235,15 @@ AcDbPolyline
  10
 446.0
  20
-268.0
+57.0
  10
 446.0
  20
-348.0
+93.0
 1001
 RELEVE
 1000
-ouv-SS-003
+ouv-SS-004
   0
 LWPOLYLINE
   5
@@ -12287,15 +12267,15 @@ AcDbPolyline
  10
 451.0
  20
-268.0
+57.0
  10
 451.0
  20
-348.0
+93.0
 1001
 RELEVE
 1000
-ouv-SS-003
+ouv-SS-004
   0
 LWPOLYLINE
   5
@@ -12319,15 +12299,15 @@ AcDbPolyline
  10
 456.0
  20
-268.0
+57.0
  10
 446.0
  20
-268.0
+57.0
 1001
 RELEVE
 1000
-ouv-SS-003
+ouv-SS-004
   0
 LWPOLYLINE
   5
@@ -12351,179 +12331,19 @@ AcDbPolyline
  10
 456.0
  20
-348.0
+93.0
  10
 446.0
  20
-348.0
+93.0
 1001
 RELEVE
 1000
-ouv-SS-003
+ouv-SS-004
   0
 LWPOLYLINE
   5
 12E
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-456.0
- 20
-57.0
- 10
-456.0
- 20
-93.0
-1001
-RELEVE
-1000
-ouv-SS-004
-  0
-LWPOLYLINE
-  5
-12F
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-446.0
- 20
-57.0
- 10
-446.0
- 20
-93.0
-1001
-RELEVE
-1000
-ouv-SS-004
-  0
-LWPOLYLINE
-  5
-130
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-18
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-451.0
- 20
-57.0
- 10
-451.0
- 20
-93.0
-1001
-RELEVE
-1000
-ouv-SS-004
-  0
-LWPOLYLINE
-  5
-131
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-456.0
- 20
-57.0
- 10
-446.0
- 20
-57.0
-1001
-RELEVE
-1000
-ouv-SS-004
-  0
-LWPOLYLINE
-  5
-132
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-456.0
- 20
-93.0
- 10
-446.0
- 20
-93.0
-1001
-RELEVE
-1000
-ouv-SS-004
-  0
-LWPOLYLINE
-  5
-133
 330
 17
 100
@@ -12555,7 +12375,7 @@ ouv-SS-005
   0
 ARC
   5
-134
+12F
 330
 17
 100
@@ -12589,7 +12409,7 @@ ouv-SS-005
   0
 LWPOLYLINE
   5
-135
+130
 330
 17
 100
@@ -12618,6 +12438,166 @@ AcDbPolyline
 RELEVE
 1000
 ouv-SS-006
+  0
+LWPOLYLINE
+  5
+131
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+10.0
+ 20
+198.0
+ 10
+10.0
+ 20
+162.0
+1001
+RELEVE
+1000
+ouv-SS-006
+  0
+LWPOLYLINE
+  5
+132
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+5.0
+ 20
+198.0
+ 10
+5.0
+ 20
+162.0
+1001
+RELEVE
+1000
+ouv-SS-006
+  0
+LWPOLYLINE
+  5
+133
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+0.0
+ 20
+198.0
+ 10
+10.0
+ 20
+198.0
+1001
+RELEVE
+1000
+ouv-SS-006
+  0
+LWPOLYLINE
+  5
+134
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+0.0
+ 20
+162.0
+ 10
+10.0
+ 20
+162.0
+1001
+RELEVE
+1000
+ouv-SS-006
+  0
+LWPOLYLINE
+  5
+135
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+0.0
+ 20
+66.0
+ 10
+0.0
+ 20
+30.0
+1001
+RELEVE
+1000
+ouv-SS-007
   0
 LWPOLYLINE
   5
@@ -12641,15 +12621,15 @@ AcDbPolyline
  10
 10.0
  20
-198.0
+66.0
  10
 10.0
  20
-162.0
+30.0
 1001
 RELEVE
 1000
-ouv-SS-006
+ouv-SS-007
   0
 LWPOLYLINE
   5
@@ -12673,15 +12653,15 @@ AcDbPolyline
  10
 5.0
  20
-198.0
+66.0
  10
 5.0
  20
-162.0
+30.0
 1001
 RELEVE
 1000
-ouv-SS-006
+ouv-SS-007
   0
 LWPOLYLINE
   5
@@ -12705,15 +12685,15 @@ AcDbPolyline
  10
 0.0
  20
-198.0
+66.0
  10
 10.0
  20
-198.0
+66.0
 1001
 RELEVE
 1000
-ouv-SS-006
+ouv-SS-007
   0
 LWPOLYLINE
   5
@@ -12737,179 +12717,19 @@ AcDbPolyline
  10
 0.0
  20
-162.0
+30.0
  10
 10.0
  20
-162.0
+30.0
 1001
 RELEVE
 1000
-ouv-SS-006
+ouv-SS-007
   0
 LWPOLYLINE
   5
 13A
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-0.0
- 20
-66.0
- 10
-0.0
- 20
-30.0
-1001
-RELEVE
-1000
-ouv-SS-007
-  0
-LWPOLYLINE
-  5
-13B
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-10.0
- 20
-66.0
- 10
-10.0
- 20
-30.0
-1001
-RELEVE
-1000
-ouv-SS-007
-  0
-LWPOLYLINE
-  5
-13C
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-18
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-5.0
- 20
-66.0
- 10
-5.0
- 20
-30.0
-1001
-RELEVE
-1000
-ouv-SS-007
-  0
-LWPOLYLINE
-  5
-13D
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-0.0
- 20
-66.0
- 10
-10.0
- 20
-66.0
-1001
-RELEVE
-1000
-ouv-SS-007
-  0
-LWPOLYLINE
-  5
-13E
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-0.0
- 20
-30.0
- 10
-10.0
- 20
-30.0
-1001
-RELEVE
-1000
-ouv-SS-007
-  0
-LWPOLYLINE
-  5
-13F
 330
 17
 100
@@ -12941,7 +12761,7 @@ ouv-SS-008
   0
 ARC
   5
-140
+13B
 330
 17
 100
@@ -12975,7 +12795,7 @@ ouv-SS-008
   0
 LWPOLYLINE
   5
-141
+13C
 330
 17
 100
@@ -13004,6 +12824,166 @@ AcDbPolyline
 RELEVE
 1000
 ouv-SS-009
+  0
+LWPOLYLINE
+  5
+13D
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+196.0
+ 20
+370.0
+ 10
+156.0
+ 20
+370.0
+1001
+RELEVE
+1000
+ouv-SS-009
+  0
+LWPOLYLINE
+  5
+13E
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+196.0
+ 20
+375.0
+ 10
+156.0
+ 20
+375.0
+1001
+RELEVE
+1000
+ouv-SS-009
+  0
+LWPOLYLINE
+  5
+13F
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+196.0
+ 20
+380.0
+ 10
+196.0
+ 20
+370.0
+1001
+RELEVE
+1000
+ouv-SS-009
+  0
+LWPOLYLINE
+  5
+140
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+156.0
+ 20
+380.0
+ 10
+156.0
+ 20
+370.0
+1001
+RELEVE
+1000
+ouv-SS-009
+  0
+LWPOLYLINE
+  5
+141
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+132.0
+ 20
+380.0
+ 10
+92.0
+ 20
+380.0
+1001
+RELEVE
+1000
+ouv-SS-010
   0
 LWPOLYLINE
   5
@@ -13025,17 +13005,17 @@ AcDbPolyline
  70
 0
  10
-196.0
+132.0
  20
 370.0
  10
-156.0
+92.0
  20
 370.0
 1001
 RELEVE
 1000
-ouv-SS-009
+ouv-SS-010
   0
 LWPOLYLINE
   5
@@ -13057,17 +13037,17 @@ AcDbPolyline
  70
 0
  10
-196.0
+132.0
  20
 375.0
  10
-156.0
+92.0
  20
 375.0
 1001
 RELEVE
 1000
-ouv-SS-009
+ouv-SS-010
   0
 LWPOLYLINE
   5
@@ -13089,17 +13069,17 @@ AcDbPolyline
  70
 0
  10
-196.0
+132.0
  20
 380.0
  10
-196.0
+132.0
  20
 370.0
 1001
 RELEVE
 1000
-ouv-SS-009
+ouv-SS-010
   0
 LWPOLYLINE
   5
@@ -13121,17 +13101,17 @@ AcDbPolyline
  70
 0
  10
-156.0
+92.0
  20
 380.0
  10
-156.0
+92.0
  20
 370.0
 1001
 RELEVE
 1000
-ouv-SS-009
+ouv-SS-010
   0
 LWPOLYLINE
   5
@@ -13149,21 +13129,29 @@ AcDbEntity
 100
 AcDbPolyline
  90
-2
+4
  70
-0
+1
  10
-132.0
+152.0
  20
-380.0
+156.95833333333334
  10
-92.0
+170.0
  20
-380.0
+156.95833333333334
+ 10
+170.0
+ 20
+157.70833333333334
+ 10
+152.0
+ 20
+157.70833333333334
 1001
 RELEVE
 1000
-ouv-SS-010
+ouv-SS-P01
   0
 LWPOLYLINE
   5
@@ -13181,21 +13169,29 @@ AcDbEntity
 100
 AcDbPolyline
  90
-2
+4
  70
-0
+1
  10
-132.0
+166.0
  20
-370.0
+156.29166666666666
  10
-92.0
+184.0
  20
-370.0
+156.29166666666666
+ 10
+184.0
+ 20
+157.04166666666666
+ 10
+166.0
+ 20
+157.04166666666666
 1001
 RELEVE
 1000
-ouv-SS-010
+ouv-SS-P01
   0
 LWPOLYLINE
   5
@@ -13217,17 +13213,17 @@ AcDbPolyline
  70
 0
  10
-132.0
+152.0
  20
-375.0
+156.0
  10
-92.0
+152.0
  20
-375.0
+158.0
 1001
 RELEVE
 1000
-ouv-SS-010
+ouv-SS-P01
   0
 LWPOLYLINE
   5
@@ -13241,7 +13237,7 @@ AcDbEntity
  62
 7
 370
-25
+18
 100
 AcDbPolyline
  90
@@ -13249,119 +13245,21 @@ AcDbPolyline
  70
 0
  10
-132.0
+184.0
  20
-380.0
+156.0
  10
-132.0
+184.0
  20
-370.0
+158.0
 1001
 RELEVE
 1000
-ouv-SS-010
+ouv-SS-P01
   0
 LWPOLYLINE
   5
 14A
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-92.0
- 20
-380.0
- 10
-92.0
- 20
-370.0
-1001
-RELEVE
-1000
-ouv-SS-010
-  0
-LWPOLYLINE
-  5
-14B
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-184.0
- 20
-156.0
- 10
-184.0
- 20
-124.0
-1001
-RELEVE
-1000
-ouv-SS-P01
-  0
-ARC
-  5
-14C
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-18
-100
-AcDbCircle
- 10
-184.0
- 20
-156.0
- 30
-0.0
- 40
-32.0
-100
-AcDbArc
- 50
-180.0
- 51
-270.0
-1001
-RELEVE
-1000
-ouv-SS-P01
-  0
-LWPOLYLINE
-  5
-14D
 330
 17
 100
@@ -13393,7 +13291,7 @@ ouv-SS-P02
   0
 ARC
   5
-14E
+14B
 330
 17
 100
@@ -13427,6 +13325,118 @@ ouv-SS-P02
   0
 LWPOLYLINE
   5
+14C
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+141.8125
+ 20
+168.0
+ 10
+141.8125
+ 20
+185.0
+ 10
+140.6875
+ 20
+185.0
+ 10
+140.6875
+ 20
+168.0
+1001
+RELEVE
+1000
+ouv-SS-P03
+  0
+LWPOLYLINE
+  5
+14D
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+143.3125
+ 20
+181.0
+ 10
+143.3125
+ 20
+198.0
+ 10
+142.1875
+ 20
+198.0
+ 10
+142.1875
+ 20
+181.0
+1001
+RELEVE
+1000
+ouv-SS-P03
+  0
+LWPOLYLINE
+  5
+14E
+330
+17
+100
+AcDbEntity
+  8
+20-Ouvertures
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+144.25
+ 20
+168.0
+ 10
+139.75
+ 20
+168.0
+1001
+RELEVE
+1000
+ouv-SS-P03
+  0
+LWPOLYLINE
+  5
 14F
 330
 17
@@ -13437,29 +13447,21 @@ AcDbEntity
  62
 7
 370
-25
+18
 100
 AcDbPolyline
  90
-4
+2
  70
-1
+0
  10
-141.8125
+144.25
  20
-168.0
+198.0
  10
-141.8125
+139.75
  20
-185.0
- 10
-140.6875
- 20
-185.0
- 10
-140.6875
- 20
-168.0
+198.0
 1001
 RELEVE
 1000
@@ -13468,110 +13470,6 @@ ouv-SS-P03
 LWPOLYLINE
   5
 150
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-4
- 70
-1
- 10
-143.3125
- 20
-181.0
- 10
-143.3125
- 20
-198.0
- 10
-142.1875
- 20
-198.0
- 10
-142.1875
- 20
-181.0
-1001
-RELEVE
-1000
-ouv-SS-P03
-  0
-LWPOLYLINE
-  5
-151
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-18
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-144.25
- 20
-168.0
- 10
-139.75
- 20
-168.0
-1001
-RELEVE
-1000
-ouv-SS-P03
-  0
-LWPOLYLINE
-  5
-152
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-18
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-144.25
- 20
-198.0
- 10
-139.75
- 20
-198.0
-1001
-RELEVE
-1000
-ouv-SS-P03
-  0
-LWPOLYLINE
-  5
-153
 330
 17
 100
@@ -13603,7 +13501,7 @@ ouv-SS-P05
   0
 ARC
   5
-154
+151
 330
 17
 100
@@ -13637,7 +13535,7 @@ ouv-SS-P05
   0
 LWPOLYLINE
   5
-155
+152
 330
 17
 100
@@ -13669,7 +13567,7 @@ ouv-SS-P06
   0
 ARC
   5
-156
+153
 330
 17
 100
@@ -13703,151 +13601,7 @@ ouv-SS-P06
   0
 LWPOLYLINE
   5
-157
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-4
- 70
-1
- 10
-38.0625
- 20
-295.0
- 10
-38.0625
- 20
-327.0
- 10
-36.9375
- 20
-327.0
- 10
-36.9375
- 20
-295.0
-1001
-RELEVE
-1000
-ouv-SS-P07
-  0
-LWPOLYLINE
-  5
-158
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-25
-100
-AcDbPolyline
- 90
-4
- 70
-1
- 10
-39.5625
- 20
-323.0
- 10
-39.5625
- 20
-355.0
- 10
-38.4375
- 20
-355.0
- 10
-38.4375
- 20
-323.0
-1001
-RELEVE
-1000
-ouv-SS-P07
-  0
-LWPOLYLINE
-  5
-159
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-18
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-40.5
- 20
-295.0
- 10
-36.0
- 20
-295.0
-1001
-RELEVE
-1000
-ouv-SS-P07
-  0
-LWPOLYLINE
-  5
-15A
-330
-17
-100
-AcDbEntity
-  8
-20-Ouvertures
- 62
-7
-370
-18
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-40.5
- 20
-355.0
- 10
-36.0
- 20
-355.0
-1001
-RELEVE
-1000
-ouv-SS-P07
-  0
-LWPOLYLINE
-  5
-15B
+154
 330
 17
 100
@@ -13887,7 +13641,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-15C
+155
 330
 17
 100
@@ -13919,7 +13673,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-15D
+156
 330
 17
 100
@@ -13951,7 +13705,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-15E
+157
 330
 17
 100
@@ -13983,7 +13737,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-15F
+158
 330
 17
 100
@@ -14015,7 +13769,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-160
+159
 330
 17
 100
@@ -14047,7 +13801,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-161
+15A
 330
 17
 100
@@ -14079,7 +13833,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-162
+15B
 330
 17
 100
@@ -14111,7 +13865,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-163
+15C
 330
 17
 100
@@ -14143,7 +13897,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-164
+15D
 330
 17
 100
@@ -14175,7 +13929,7 @@ elem-SS-CHEM
   0
 LWPOLYLINE
   5
-165
+15E
 330
 17
 100
@@ -14207,7 +13961,7 @@ elem-SS-CHEM
   0
 TEXT
   5
-166
+15F
 330
 17
 100
@@ -14247,7 +14001,7 @@ elem-SS-CHEM
   0
 CIRCLE
   5
-167
+160
 330
 17
 100
@@ -14275,7 +14029,7 @@ elem-SS-DR-BAIN
   0
 LWPOLYLINE
   5
-168
+161
 330
 17
 100
@@ -14307,7 +14061,7 @@ elem-SS-DR-BAIN
   0
 LWPOLYLINE
   5
-169
+162
 330
 17
 100
@@ -14339,7 +14093,7 @@ elem-SS-DR-BAIN
   0
 CIRCLE
   5
-16A
+163
 330
 17
 100
@@ -14367,7 +14121,7 @@ elem-SS-DR-LAV
   0
 LWPOLYLINE
   5
-16B
+164
 330
 17
 100
@@ -14399,7 +14153,7 @@ elem-SS-DR-LAV
   0
 LWPOLYLINE
   5
-16C
+165
 330
 17
 100
@@ -14431,7 +14185,7 @@ elem-SS-DR-LAV
   0
 CIRCLE
   5
-16D
+166
 330
 17
 100
@@ -14459,7 +14213,7 @@ elem-SS-DR-WC
   0
 LWPOLYLINE
   5
-16E
+167
 330
 17
 100
@@ -14491,7 +14245,7 @@ elem-SS-DR-WC
   0
 LWPOLYLINE
   5
-16F
+168
 330
 17
 100
@@ -14523,7 +14277,7 @@ elem-SS-DR-WC
   0
 LWPOLYLINE
   5
-170
+169
 330
 17
 100
@@ -14563,7 +14317,7 @@ elem-SS-EVENT
   0
 LWPOLYLINE
   5
-171
+16A
 330
 17
 100
@@ -14595,7 +14349,7 @@ elem-SS-EVENT
   0
 LWPOLYLINE
   5
-172
+16B
 330
 17
 100
@@ -14627,7 +14381,7 @@ elem-SS-EVENT
   0
 LWPOLYLINE
   5
-173
+16C
 330
 17
 100
@@ -14659,7 +14413,7 @@ elem-SS-EVENT
   0
 TEXT
   5
-174
+16D
 330
 17
 100
@@ -14699,7 +14453,7 @@ elem-SS-EVENT
   0
 LWPOLYLINE
   5
-175
+16E
 330
 17
 100
@@ -14739,7 +14493,7 @@ elem-SS-P-BAC
   0
 LWPOLYLINE
   5
-176
+16F
 330
 17
 100
@@ -14843,7 +14597,7 @@ elem-SS-P-BAC
   0
 LWPOLYLINE
   5
-177
+170
 330
 17
 100
@@ -14863,7 +14617,7 @@ AcDbPolyline
  10
 84.46456694101087
  20
-69.0
+61.572911479347205
  10
 89.0
  20
@@ -14875,7 +14629,7 @@ elem-SS-P-BAC
   0
 TEXT
   5
-178
+171
 330
 17
 100
@@ -14889,7 +14643,7 @@ AcDbText
  10
 75.41969
  20
-63.95746243073945
+54.88659643073945
  30
 0.0
  40
@@ -14903,7 +14657,7 @@ RELEVE
  11
 75.41969
  21
-63.95746243073945
+54.88659643073945
  31
 0.0
 100
@@ -14915,7 +14669,7 @@ elem-SS-P-BAC
   0
 LWPOLYLINE
   5
-179
+172
 330
 17
 100
@@ -14955,7 +14709,7 @@ elem-SS-P-BAIN
   0
 LWPOLYLINE
   5
-17A
+173
 330
 17
 100
@@ -15059,7 +14813,7 @@ elem-SS-P-BAIN
   0
 CIRCLE
   5
-17B
+174
 330
 17
 100
@@ -15087,7 +14841,7 @@ elem-SS-P-BAIN
   0
 LWPOLYLINE
   5
-17C
+175
 330
 17
 100
@@ -15127,7 +14881,7 @@ elem-SS-P-BANC
   0
 LWPOLYLINE
   5
-17D
+176
 330
 17
 100
@@ -15159,7 +14913,7 @@ elem-SS-P-BANC
   0
 LWPOLYLINE
   5
-17E
+177
 330
 17
 100
@@ -15189,9 +14943,761 @@ RELEVE
 1000
 elem-SS-P-BANC
   0
-CIRCLE
+LWPOLYLINE
+  5
+178
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+229.75
+ 20
+52.5
+ 10
+270.25
+ 20
+52.5
+ 10
+270.25
+ 20
+128.25
+ 10
+229.75
+ 20
+128.25
+1001
+RELEVE
+1000
+elem-SS-P-BANCCAB
+  0
+LWPOLYLINE
+  5
+179
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+237.75
+ 20
+369.5
+ 10
+93.0
+ 20
+369.5
+ 10
+93.0
+ 20
+352.0
+ 10
+237.75
+ 20
+352.0
+1001
+RELEVE
+1000
+elem-SS-P-C1-BANC
+  0
+TEXT
+  5
+17A
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+122.051602
+ 20
+343.93384043073945
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+BANQUETTE
+  7
+RELEVE
+ 72
+1
+ 11
+122.051602
+ 21
+343.93384043073945
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-P-C1-BANC
+  0
+LWPOLYLINE
+  5
+17B
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+156.0
+ 20
+369.5
+ 10
+132.0
+ 20
+369.5
+ 10
+132.0
+ 20
+358.0
+ 10
+156.0
+ 20
+358.0
+1001
+RELEVE
+1000
+elem-SS-P-C1-BIB1
+  0
+LWPOLYLINE
+  5
+17C
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+156.0
+ 20
+369.5
+ 10
+132.0
+ 20
+358.0
+1001
+RELEVE
+1000
+elem-SS-P-C1-BIB1
+  0
+LWPOLYLINE
+  5
+17D
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+156.0
+ 20
+358.0
+ 10
+132.0
+ 20
+369.5
+1001
+RELEVE
+1000
+elem-SS-P-C1-BIB1
+  0
+LWPOLYLINE
+  5
+17E
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+220.0
+ 20
+369.5
+ 10
+196.0
+ 20
+369.5
+ 10
+196.0
+ 20
+358.0
+ 10
+220.0
+ 20
+358.0
+1001
+RELEVE
+1000
+elem-SS-P-C1-BIB2
+  0
+LWPOLYLINE
   5
 17F
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+220.0
+ 20
+369.5
+ 10
+196.0
+ 20
+358.0
+1001
+RELEVE
+1000
+elem-SS-P-C1-BIB2
+  0
+LWPOLYLINE
+  5
+180
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+220.0
+ 20
+358.0
+ 10
+196.0
+ 20
+369.5
+1001
+RELEVE
+1000
+elem-SS-P-C1-BIB2
+  0
+LWPOLYLINE
+  5
+181
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+92.0
+ 20
+369.5
+ 10
+10.5
+ 20
+369.5
+ 10
+10.5
+ 20
+356.0
+ 10
+92.0
+ 20
+356.0
+1001
+RELEVE
+1000
+elem-SS-P-C1-CANOPEE
+  0
+LWPOLYLINE
+  5
+182
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+237.75
+ 20
+268.0
+ 10
+237.75
+ 20
+352.0
+ 10
+219.75
+ 20
+352.0
+ 10
+219.75
+ 20
+268.0
+1001
+RELEVE
+1000
+elem-SS-P-C1-GARE
+  0
+TEXT
+  5
+183
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+206.259251
+ 20
+262.95746243073944
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+BACS
+  7
+RELEVE
+ 72
+1
+ 11
+206.259251
+ 21
+262.95746243073944
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-P-C1-GARE
+  0
+LWPOLYLINE
+  5
+184
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+10.0
+ 20
+252.25
+ 10
+144.25
+ 20
+252.25
+ 10
+144.25
+ 20
+276.25
+ 10
+10.0
+ 20
+276.25
+1001
+RELEVE
+1000
+elem-SS-P-C1-GR
+  0
+LWPOLYLINE
+  5
+185
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+10.0
+ 20
+252.25
+ 10
+144.25
+ 20
+276.25
+1001
+RELEVE
+1000
+elem-SS-P-C1-GR
+  0
+LWPOLYLINE
+  5
+186
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+10.0
+ 20
+276.25
+ 10
+144.25
+ 20
+252.25
+1001
+RELEVE
+1000
+elem-SS-P-C1-GR
+  0
+TEXT
+  5
+187
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+155.209027
+ 20
+256.2783284307394
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+G.-R.
+  7
+RELEVE
+ 72
+1
+ 11
+155.209027
+ 21
+256.2783284307394
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-P-C1-GR
+  0
+LWPOLYLINE
+  5
+188
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+11.0
+ 20
+302.0
+ 10
+93.0
+ 20
+302.0
+ 10
+93.0
+ 20
+370.0
+ 10
+11.0
+ 20
+370.0
+1001
+RELEVE
+1000
+elem-SS-P-C1-LIT
+  0
+TEXT
+  5
+189
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+52.0
+ 20
+333.71257643073943
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+LIT QUEEN
+  7
+RELEVE
+ 72
+1
+ 11
+52.0
+ 21
+333.71257643073943
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-P-C1-LIT
+  0
+LWPOLYLINE
+  5
+18A
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+144.25
+ 20
+232.25
+ 10
+196.0
+ 20
+232.25
+ 10
+196.0
+ 20
+246.25
+ 10
+144.25
+ 20
+246.25
+1001
+RELEVE
+1000
+elem-SS-P-C1-VEST
+  0
+LWPOLYLINE
+  5
+18B
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+237.0
+ 20
+15.0
+ 10
+269.0
+ 20
+15.0
+ 10
+269.0
+ 20
+47.0
+ 10
+237.0
+ 20
+47.0
+1001
+RELEVE
+1000
+elem-SS-P-CABANE
+  0
+CIRCLE
+  5
+18C
 330
 17
 100
@@ -15219,7 +15725,7 @@ elem-SS-P-CE
   0
 TEXT
   5
-180
+18D
 330
 17
 100
@@ -15231,9 +15737,9 @@ AcDbEntity
 100
 AcDbText
  10
-52.240188
+28.051211
  20
-146.14643943073946
+118.93384043073947
  30
 0.0
  40
@@ -15245,9 +15751,9 @@ RELEVE
  72
 1
  11
-52.240188
+28.051211
  21
-146.14643943073946
+118.93384043073947
  31
 0.0
 100
@@ -15259,7 +15765,7 @@ elem-SS-P-CE
   0
 LWPOLYLINE
   5
-181
+18E
 330
 17
 100
@@ -15277,93 +15783,29 @@ AcDbPolyline
  70
 1
  10
-237.5
+242.25
  20
-280.0
+265.0
  10
-237.5
+254.25
  20
-340.0
+265.0
  10
-217.5
+254.25
  20
-340.0
+328.0
  10
-217.5
+242.25
  20
-280.0
+328.0
 1001
 RELEVE
 1000
-elem-SS-P-COMMODE1
+elem-SS-P-CH2-ACTIV
   0
 LWPOLYLINE
   5
-182
-330
-17
-100
-AcDbEntity
-  8
-30-Escaliers-Elements
- 62
-7
-370
-18
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-237.5
- 20
-280.0
- 10
-217.5
- 20
-340.0
-1001
-RELEVE
-1000
-elem-SS-P-COMMODE1
-  0
-LWPOLYLINE
-  5
-183
-330
-17
-100
-AcDbEntity
-  8
-30-Escaliers-Elements
- 62
-7
-370
-18
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 10
-217.5
- 20
-280.0
- 10
-237.5
- 20
-340.0
-1001
-RELEVE
-1000
-elem-SS-P-COMMODE1
-  0
-LWPOLYLINE
-  5
-184
+18F
 330
 17
 100
@@ -15381,29 +15823,389 @@ AcDbPolyline
  70
 1
  10
-300.0
+418.0
  20
-232.25
+262.0
  10
-360.0
+446.0
  20
-232.25
+262.0
  10
-360.0
+446.0
  20
-252.25
+370.0
  10
-300.0
+418.0
  20
-252.25
+370.0
 1001
 RELEVE
 1000
-elem-SS-P-COMMODE2
+elem-SS-P-CH2-BANC
   0
 LWPOLYLINE
   5
-185
+190
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+284.0
+ 20
+232.25
+ 10
+418.0
+ 20
+232.25
+ 10
+418.0
+ 20
+248.25
+ 10
+284.0
+ 20
+248.25
+1001
+RELEVE
+1000
+elem-SS-P-CH2-GARAGE
+  0
+LWPOLYLINE
+  5
+191
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+322.0
+ 20
+367.0
+ 10
+388.0
+ 20
+367.0
+ 10
+388.0
+ 20
+370.0
+ 10
+322.0
+ 20
+370.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-LATTES
+  0
+LWPOLYLINE
+  5
+192
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+322.0
+ 20
+283.0
+ 10
+388.0
+ 20
+283.0
+ 10
+388.0
+ 20
+367.0
+ 10
+322.0
+ 20
+367.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-LIT
+  0
+TEXT
+  5
+193
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+355.0
+ 20
+322.71257643073943
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+LIT QUEEN
+  7
+RELEVE
+ 72
+1
+ 11
+355.0
+ 21
+322.71257643073943
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-P-CH2-LIT
+  0
+LWPOLYLINE
+  5
+194
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+388.0
+ 20
+358.0
+ 10
+418.0
+ 20
+358.0
+ 10
+418.0
+ 20
+370.0
+ 10
+388.0
+ 20
+370.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-ND
+  0
+LWPOLYLINE
+  5
+195
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+302.0
+ 20
+358.0
+ 10
+322.0
+ 20
+358.0
+ 10
+322.0
+ 20
+370.0
+ 10
+302.0
+ 20
+370.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-NG
+  0
+LWPOLYLINE
+  5
+196
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+242.25
+ 20
+362.0
+ 10
+278.0
+ 20
+362.0
+ 10
+278.0
+ 20
+370.0
+ 10
+242.25
+ 20
+370.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-PB
+  0
+LWPOLYLINE
+  5
+197
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+302.0
+ 20
+358.0
+ 10
+446.0
+ 20
+358.0
+ 10
+446.0
+ 20
+370.0
+ 10
+302.0
+ 20
+370.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-PONT
+  0
+LWPOLYLINE
+  5
+198
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+278.0
+ 20
+358.0
+ 10
+302.0
+ 20
+358.0
+ 10
+302.0
+ 20
+370.0
+ 10
+278.0
+ 20
+370.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-TG
+  0
+LWPOLYLINE
+  5
+199
 330
 17
 100
@@ -15421,21 +16223,21 @@ AcDbPolyline
  70
 0
  10
-300.0
+278.0
  20
-232.25
+358.0
  10
-360.0
+302.0
  20
-252.25
+370.0
 1001
 RELEVE
 1000
-elem-SS-P-COMMODE2
+elem-SS-P-CH2-TG
   0
 LWPOLYLINE
   5
-186
+19A
 330
 17
 100
@@ -15453,21 +16255,125 @@ AcDbPolyline
  70
 0
  10
-300.0
+278.0
  20
-252.25
+370.0
  10
-360.0
+302.0
+ 20
+358.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-TG
+  0
+LWPOLYLINE
+  5
+19B
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+418.0
+ 20
+232.25
+ 10
+446.0
+ 20
+232.25
+ 10
+446.0
+ 20
+262.0
+ 10
+418.0
+ 20
+262.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-TOUR
+  0
+LWPOLYLINE
+  5
+19C
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+418.0
+ 20
+232.25
+ 10
+446.0
+ 20
+262.0
+1001
+RELEVE
+1000
+elem-SS-P-CH2-TOUR
+  0
+LWPOLYLINE
+  5
+19D
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+418.0
+ 20
+262.0
+ 10
+446.0
  20
 232.25
 1001
 RELEVE
 1000
-elem-SS-P-COMMODE2
+elem-SS-P-CH2-TOUR
   0
 LWPOLYLINE
   5
-187
+19E
 330
 17
 100
@@ -15507,7 +16413,7 @@ elem-SS-P-DIVAN
   0
 TEXT
   5
-188
+19F
 330
 17
 100
@@ -15547,7 +16453,7 @@ elem-SS-P-DIVAN
   0
 LWPOLYLINE
   5
-189
+1A0
 330
 17
 100
@@ -15587,7 +16493,7 @@ elem-SS-P-DIVAN2
   0
 LWPOLYLINE
   5
-18A
+1A1
 330
 17
 100
@@ -15627,7 +16533,7 @@ elem-SS-P-DOUCHE
   0
 TEXT
   5
-18B
+1A2
 330
 17
 100
@@ -15667,7 +16573,7 @@ elem-SS-P-DOUCHE
   0
 LWPOLYLINE
   5
-18C
+1A3
 330
 17
 100
@@ -15707,7 +16613,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-18D
+1A4
 330
 17
 100
@@ -15739,7 +16645,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-18E
+1A5
 330
 17
 100
@@ -15771,7 +16677,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-18F
+1A6
 330
 17
 100
@@ -15803,7 +16709,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-190
+1A7
 330
 17
 100
@@ -15835,7 +16741,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-191
+1A8
 330
 17
 100
@@ -15867,7 +16773,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-192
+1A9
 330
 17
 100
@@ -15899,7 +16805,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-193
+1AA
 330
 17
 100
@@ -15931,7 +16837,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-194
+1AB
 330
 17
 100
@@ -15963,7 +16869,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-195
+1AC
 330
 17
 100
@@ -15995,7 +16901,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-196
+1AD
 330
 17
 100
@@ -16027,7 +16933,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-197
+1AE
 330
 17
 100
@@ -16059,7 +16965,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-198
+1AF
 330
 17
 100
@@ -16091,7 +16997,7 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-199
+1B0
 330
 17
 100
@@ -16123,7 +17029,7 @@ elem-SS-P-ESC
   0
 CIRCLE
   5
-19A
+1B1
 330
 17
 100
@@ -16151,7 +17057,7 @@ elem-SS-P-ESC
   0
 HATCH
   5
-19B
+1B2
 330
 17
 100
@@ -16219,7 +17125,7 @@ elem-SS-P-ESC
   0
 TEXT
   5
-19C
+1B3
 330
 17
 100
@@ -16261,7 +17167,7 @@ elem-SS-P-ESC
   0
 TEXT
   5
-19D
+1B4
 330
 17
 100
@@ -16303,7 +17209,351 @@ elem-SS-P-ESC
   0
 LWPOLYLINE
   5
-19E
+1B5
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+226.0
+ 20
+92.0
+ 10
+226.0
+ 20
+151.5
+ 10
+210.0
+ 20
+151.5
+ 10
+210.0
+ 20
+92.0
+1001
+RELEVE
+1000
+elem-SS-P-GYM-BANC
+  0
+LWPOLYLINE
+  5
+1B6
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+226.0
+ 20
+92.0
+ 10
+210.0
+ 20
+151.5
+1001
+RELEVE
+1000
+elem-SS-P-GYM-BANC
+  0
+LWPOLYLINE
+  5
+1B7
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+210.0
+ 20
+92.0
+ 10
+226.0
+ 20
+151.5
+1001
+RELEVE
+1000
+elem-SS-P-GYM-BANC
+  0
+LWPOLYLINE
+  5
+1B8
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+115.25
+ 20
+12.0
+ 10
+115.25
+ 20
+117.0
+ 10
+114.25
+ 20
+117.0
+ 10
+114.25
+ 20
+12.0
+1001
+RELEVE
+1000
+elem-SS-P-GYM-MIROIR
+  0
+LWPOLYLINE
+  5
+1B9
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+114.25
+ 20
+84.0
+ 10
+186.25
+ 20
+84.0
+ 10
+186.25
+ 20
+156.0
+ 10
+114.25
+ 20
+156.0
+1001
+RELEVE
+1000
+elem-SS-P-GYM-SOL
+  0
+LWPOLYLINE
+  5
+1BA
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+207.0
+ 20
+12.0
+ 10
+207.0
+ 20
+87.0
+ 10
+171.0
+ 20
+87.0
+ 10
+171.0
+ 20
+12.0
+1001
+RELEVE
+1000
+elem-SS-P-GYM-TAPIS
+  0
+TEXT
+  5
+1BB
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+189.0
+ 20
+47.21257643073945
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+TAPIS
+  7
+RELEVE
+ 72
+1
+ 11
+189.0
+ 21
+47.21257643073945
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-P-GYM-TAPIS
+  0
+LWPOLYLINE
+  5
+1BC
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+149.0
+ 20
+12.0
+ 10
+149.0
+ 20
+82.0
+ 10
+119.0
+ 20
+82.0
+ 10
+119.0
+ 20
+12.0
+1001
+RELEVE
+1000
+elem-SS-P-GYM-VELO
+  0
+TEXT
+  5
+1BD
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+134.0
+ 20
+44.71257643073945
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+VÉLO
+  7
+RELEVE
+ 72
+1
+ 11
+134.0
+ 21
+44.71257643073945
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-P-GYM-VELO
+  0
+LWPOLYLINE
+  5
+1BE
 330
 17
 100
@@ -16343,7 +17593,7 @@ elem-SS-P-LAV
   0
 CIRCLE
   5
-19F
+1BF
 330
 17
 100
@@ -16371,7 +17621,7 @@ elem-SS-P-LAV
   0
 TEXT
   5
-1A0
+1C0
 330
 17
 100
@@ -16411,7 +17661,7 @@ elem-SS-P-LAV
   0
 LWPOLYLINE
   5
-1A1
+1C1
 330
 17
 100
@@ -16451,7 +17701,7 @@ elem-SS-P-LAVABO1
   0
 LWPOLYLINE
   5
-1A2
+1C2
 330
 17
 100
@@ -16619,7 +17869,47 @@ elem-SS-P-LAVABO1
   0
 LWPOLYLINE
   5
-1A3
+1C3
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+256.4
+ 20
+36.4
+ 10
+268.4
+ 20
+36.4
+ 10
+268.4
+ 20
+48.4
+ 10
+256.4
+ 20
+48.4
+1001
+RELEVE
+1000
+elem-SS-P-LUNE
+  0
+LWPOLYLINE
+  5
+1C4
 330
 17
 100
@@ -16659,7 +17949,7 @@ elem-SS-P-MANT
   0
 LWPOLYLINE
   5
-1A4
+1C5
 330
 17
 100
@@ -16691,7 +17981,7 @@ elem-SS-P-MANT
   0
 LWPOLYLINE
   5
-1A5
+1C6
 330
 17
 100
@@ -16723,7 +18013,7 @@ elem-SS-P-MANT
   0
 LWPOLYLINE
   5
-1A6
+1C7
 330
 17
 100
@@ -16763,7 +18053,7 @@ elem-SS-P-PLIAGE
   0
 LWPOLYLINE
   5
-1A7
+1C8
 330
 17
 100
@@ -16803,7 +18093,7 @@ elem-SS-P-PLIAGE2
   0
 LWPOLYLINE
   5
-1A8
+1C9
 330
 17
 100
@@ -16843,7 +18133,7 @@ elem-SS-P-PROJ
   0
 LWPOLYLINE
   5
-1A9
+1CA
 330
 17
 100
@@ -16875,7 +18165,7 @@ elem-SS-P-PROJ
   0
 TEXT
   5
-1AA
+1CB
 330
 17
 100
@@ -16915,7 +18205,87 @@ elem-SS-P-PROJ
   0
 LWPOLYLINE
   5
-1AB
+1CC
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+238.0
+ 20
+10.0
+ 10
+268.0
+ 20
+10.0
+ 10
+268.0
+ 20
+13.75
+ 10
+238.0
+ 20
+13.75
+1001
+RELEVE
+1000
+elem-SS-P-REBLIV
+  0
+LWPOLYLINE
+  5
+1CD
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+229.75
+ 20
+128.25
+ 10
+270.25
+ 20
+128.25
+ 10
+270.25
+ 20
+148.5
+ 10
+229.75
+ 20
+148.5
+1001
+RELEVE
+1000
+elem-SS-P-SABOT
+  0
+LWPOLYLINE
+  5
+1CE
 330
 17
 100
@@ -16955,7 +18325,7 @@ elem-SS-P-SEC
   0
 LWPOLYLINE
   5
-1AC
+1CF
 330
 17
 100
@@ -16987,7 +18357,7 @@ elem-SS-P-SEC
   0
 TEXT
   5
-1AD
+1D0
 330
 17
 100
@@ -17027,7 +18397,7 @@ elem-SS-P-SEC
   0
 LWPOLYLINE
   5
-1AE
+1D1
 330
 17
 100
@@ -17065,9 +18435,41 @@ RELEVE
 1000
 elem-SS-P-TOILE
   0
+LWPOLYLINE
+  5
+1D2
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+426.39370061808825
+ 20
+137.8
+ 10
+440.0
+ 20
+137.8
+1001
+RELEVE
+1000
+elem-SS-P-TOILE
+  0
 TEXT
   5
-1AF
+1D3
 330
 17
 100
@@ -17079,7 +18481,7 @@ AcDbEntity
 100
 AcDbText
  10
-383.641435
+371.546947
  20
 132.26004443073947
  30
@@ -17093,7 +18495,7 @@ RELEVE
  72
 1
  11
-383.641435
+371.546947
  21
 132.26004443073947
  31
@@ -17107,7 +18509,7 @@ elem-SS-P-TOILE
   0
 LWPOLYLINE
   5
-1B0
+1D4
 330
 17
 100
@@ -17147,7 +18549,7 @@ elem-SS-P-VAN
   0
 LWPOLYLINE
   5
-1B1
+1D5
 330
 17
 100
@@ -17187,7 +18589,7 @@ elem-SS-P-WC
   0
 LWPOLYLINE
   5
-1B2
+1D6
 330
 17
 100
@@ -17353,9 +18755,193 @@ RELEVE
 1000
 elem-SS-P-WC
   0
+LWPOLYLINE
+  5
+1D7
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+231.5
+ 20
+380.0
+ 10
+245.5
+ 20
+380.0
+ 10
+245.5
+ 20
+405.5
+ 10
+231.5
+ 20
+405.5
+1001
+RELEVE
+1000
+elem-SS-P-WI-BANC
+  0
+LWPOLYLINE
+  5
+1D8
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+231.5
+ 20
+405.5
+ 10
+314.5
+ 20
+405.5
+ 10
+314.5
+ 20
+427.5
+ 10
+231.5
+ 20
+427.5
+1001
+RELEVE
+1000
+elem-SS-P-WI-PENDERIE
+  0
+LWPOLYLINE
+  5
+1D9
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+296.5
+ 20
+380.0
+ 10
+314.5
+ 20
+380.0
+ 10
+314.5
+ 20
+405.5
+ 10
+296.5
+ 20
+405.5
+1001
+RELEVE
+1000
+elem-SS-P-WI-TOUR
+  0
+LWPOLYLINE
+  5
+1DA
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+296.5
+ 20
+380.0
+ 10
+314.5
+ 20
+405.5
+1001
+RELEVE
+1000
+elem-SS-P-WI-TOUR
+  0
+LWPOLYLINE
+  5
+1DB
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+296.5
+ 20
+405.5
+ 10
+314.5
+ 20
+380.0
+1001
+RELEVE
+1000
+elem-SS-P-WI-TOUR
+  0
 HATCH
   5
-1B3
+1DC
 330
 17
 100
@@ -17425,9 +19011,561 @@ RELEVE
 1000
 elem-SS-PANNEAU
   0
+LWPOLYLINE
+  5
+1DD
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+446.0
+ 20
+12.0
+ 10
+446.0
+ 20
+155.0
+ 10
+430.0
+ 20
+155.0
+ 10
+430.0
+ 20
+12.0
+1001
+RELEVE
+1000
+elem-SS-Q-BANCJOUETS
+  0
+LWPOLYLINE
+  5
+1DE
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+446.0
+ 20
+12.0
+ 10
+430.0
+ 20
+155.0
+1001
+RELEVE
+1000
+elem-SS-Q-BANCJOUETS
+  0
+LWPOLYLINE
+  5
+1DF
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+430.0
+ 20
+12.0
+ 10
+446.0
+ 20
+155.0
+1001
+RELEVE
+1000
+elem-SS-Q-BANCJOUETS
+  0
+LWPOLYLINE
+  5
+1E0
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+306.0
+ 20
+135.0
+ 10
+312.0
+ 20
+135.0
+ 10
+312.0
+ 20
+141.0
+ 10
+306.0
+ 20
+141.0
+1001
+RELEVE
+1000
+elem-SS-Q-BOITEPL
+  0
+LWPOLYLINE
+  5
+1E1
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+319.0
+ 20
+227.75
+ 10
+281.0
+ 20
+227.75
+ 10
+281.0
+ 20
+209.75
+ 10
+319.0
+ 20
+209.75
+1001
+RELEVE
+1000
+elem-SS-Q-CASIERS
+  0
+LWPOLYLINE
+  5
+1E2
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+319.0
+ 20
+227.75
+ 10
+281.0
+ 20
+209.75
+1001
+RELEVE
+1000
+elem-SS-Q-CASIERS
+  0
+LWPOLYLINE
+  5
+1E3
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+319.0
+ 20
+209.75
+ 10
+281.0
+ 20
+227.75
+1001
+RELEVE
+1000
+elem-SS-Q-CASIERS
+  0
+LWPOLYLINE
+  5
+1E4
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+64.0
+ 20
+128.0
+ 10
+64.0
+ 20
+148.0
+ 10
+50.0
+ 20
+148.0
+ 10
+50.0
+ 20
+128.0
+1001
+RELEVE
+1000
+elem-SS-Q-DESHUM
+  0
+LWPOLYLINE
+  5
+1E5
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+85.09671557964194
+ 20
+135.48022700941362
+ 10
+64.0
+ 20
+135.48022700941362
+1001
+RELEVE
+1000
+elem-SS-Q-DESHUM
+  0
+TEXT
+  5
+1E6
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+98.540484
+ 20
+137.32776143073946
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+DÉSH.
+  7
+RELEVE
+ 72
+1
+ 11
+98.540484
+ 21
+137.32776143073946
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-Q-DESHUM
+  0
+LWPOLYLINE
+  5
+1E7
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+398.0
+ 20
+162.0
+ 10
+446.0
+ 20
+162.0
+ 10
+446.0
+ 20
+198.0
+ 10
+398.0
+ 20
+198.0
+1001
+RELEVE
+1000
+elem-SS-Q-GRILLE
+  0
+TEXT
+  5
+1E8
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+380.840713
+ 20
+156.95746243073947
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+GRILLE
+  7
+RELEVE
+ 72
+1
+ 11
+380.840713
+ 21
+156.95746243073947
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-Q-GRILLE
+  0
+LWPOLYLINE
+  5
+1E9
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+25
+100
+AcDbPolyline
+ 90
+4
+ 70
+1
+ 10
+70.0
+ 20
+10.0
+ 10
+100.0
+ 20
+10.0
+ 10
+100.0
+ 20
+28.0
+ 10
+70.0
+ 20
+28.0
+1001
+RELEVE
+1000
+elem-SS-Q-VRC
+  0
+LWPOLYLINE
+  5
+1EA
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+70.0
+ 20
+39.39339300941363
+ 10
+70.0
+ 20
+28.0
+1001
+RELEVE
+1000
+elem-SS-Q-VRC
+  0
+TEXT
+  5
+1EB
+330
+17
+100
+AcDbEntity
+  8
+30-Escaliers-Elements
+ 62
+7
+100
+AcDbText
+ 10
+62.224239
+ 20
+41.240927430739454
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+VRC
+  7
+RELEVE
+ 72
+1
+ 11
+62.224239
+ 21
+41.240927430739454
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+elem-SS-Q-VRC
+  0
 CIRCLE
   5
-1B4
+1EC
 330
 17
 100
@@ -17455,7 +19593,7 @@ elem-SS-ROB1
   0
 LWPOLYLINE
   5
-1B5
+1ED
 330
 17
 100
@@ -17487,7 +19625,7 @@ elem-SS-ROB1
   0
 TEXT
   5
-1B6
+1EE
 330
 17
 100
@@ -17527,7 +19665,7 @@ elem-SS-ROB1
   0
 CIRCLE
   5
-1B7
+1EF
 330
 17
 100
@@ -17555,7 +19693,7 @@ elem-SS-ROB2
   0
 LWPOLYLINE
   5
-1B8
+1F0
 330
 17
 100
@@ -17587,7 +19725,7 @@ elem-SS-ROB2
   0
 TEXT
   5
-1B9
+1F1
 330
 17
 100
@@ -17627,7 +19765,7 @@ elem-SS-ROB2
   0
 LWPOLYLINE
   5
-1BA
+1F2
 330
 17
 100
@@ -17667,7 +19805,7 @@ str-SS-C01
   0
 LWPOLYLINE
   5
-1BB
+1F3
 330
 17
 100
@@ -17699,7 +19837,7 @@ str-SS-C01
   0
 LWPOLYLINE
   5
-1BC
+1F4
 330
 17
 100
@@ -17731,7 +19869,7 @@ str-SS-C01
   0
 LWPOLYLINE
   5
-1BD
+1F5
 330
 17
 100
@@ -17771,7 +19909,7 @@ str-SS-C02
   0
 LWPOLYLINE
   5
-1BE
+1F6
 330
 17
 100
@@ -17803,7 +19941,7 @@ str-SS-C02
   0
 LWPOLYLINE
   5
-1BF
+1F7
 330
 17
 100
@@ -17835,7 +19973,7 @@ str-SS-C02
   0
 LWPOLYLINE
   5
-1C0
+1F8
 330
 17
 100
@@ -17875,7 +20013,7 @@ str-SS-C03
   0
 LWPOLYLINE
   5
-1C1
+1F9
 330
 17
 100
@@ -17907,7 +20045,7 @@ str-SS-C03
   0
 LWPOLYLINE
   5
-1C2
+1FA
 330
 17
 100
@@ -17939,7 +20077,7 @@ str-SS-C03
   0
 LWPOLYLINE
   5
-1C3
+1FB
 330
 17
 100
@@ -17979,7 +20117,7 @@ str-SS-C04
   0
 LWPOLYLINE
   5
-1C4
+1FC
 330
 17
 100
@@ -18011,7 +20149,7 @@ str-SS-C04
   0
 LWPOLYLINE
   5
-1C5
+1FD
 330
 17
 100
@@ -18043,7 +20181,7 @@ str-SS-C04
   0
 LWPOLYLINE
   5
-1C6
+1FE
 330
 17
 100
@@ -18083,7 +20221,7 @@ str-SS-C05
   0
 LWPOLYLINE
   5
-1C7
+1FF
 330
 17
 100
@@ -18115,7 +20253,7 @@ str-SS-C05
   0
 LWPOLYLINE
   5
-1C8
+200
 330
 17
 100
@@ -18147,7 +20285,7 @@ str-SS-C05
   0
 LWPOLYLINE
   5
-1C9
+201
 330
 17
 100
@@ -18187,7 +20325,7 @@ str-SS-C06
   0
 LWPOLYLINE
   5
-1CA
+202
 330
 17
 100
@@ -18219,7 +20357,7 @@ str-SS-C06
   0
 LWPOLYLINE
   5
-1CB
+203
 330
 17
 100
@@ -18251,7 +20389,7 @@ str-SS-C06
   0
 LWPOLYLINE
   5
-1CC
+204
 330
 17
 100
@@ -18291,7 +20429,7 @@ str-SS-F01
   0
 LWPOLYLINE
   5
-1CD
+205
 330
 17
 100
@@ -18331,7 +20469,7 @@ str-SS-F02
   0
 LWPOLYLINE
   5
-1CE
+206
 330
 17
 100
@@ -18371,7 +20509,7 @@ str-SS-F03
   0
 LWPOLYLINE
   5
-1CF
+207
 330
 17
 100
@@ -18411,7 +20549,7 @@ str-SS-F04
   0
 LWPOLYLINE
   5
-1D0
+208
 330
 17
 100
@@ -18451,7 +20589,7 @@ str-SS-F05
   0
 LWPOLYLINE
   5
-1D1
+209
 330
 17
 100
@@ -18491,7 +20629,7 @@ str-SS-F06
   0
 LWPOLYLINE
   5
-1D2
+20A
 330
 17
 100
@@ -18531,7 +20669,7 @@ str-SS-F07
   0
 LWPOLYLINE
   5
-1D3
+20B
 330
 17
 100
@@ -18571,7 +20709,7 @@ str-SS-F08
   0
 LWPOLYLINE
   5
-1D4
+20C
 330
 17
 100
@@ -18611,7 +20749,7 @@ str-SS-F09
   0
 LWPOLYLINE
   5
-1D5
+20D
 330
 17
 100
@@ -18651,7 +20789,7 @@ str-SS-F10
   0
 LWPOLYLINE
   5
-1D6
+20E
 330
 17
 100
@@ -18683,7 +20821,7 @@ lc-SS-001
   0
 LWPOLYLINE
   5
-1D7
+20F
 330
 17
 100
@@ -18715,7 +20853,7 @@ lc-SS-001
   0
 LWPOLYLINE
   5
-1D8
+210
 330
 17
 100
@@ -18747,7 +20885,7 @@ lc-SS-001
   0
 LWPOLYLINE
   5
-1D9
+211
 330
 17
 100
@@ -18779,7 +20917,7 @@ lc-SS-001
   0
 LWPOLYLINE
   5
-1DA
+212
 330
 17
 100
@@ -18811,7 +20949,7 @@ lc-SS-001
   0
 TEXT
   5
-1DB
+213
 330
 17
 100
@@ -18851,7 +20989,7 @@ lc-SS-001
   0
 LWPOLYLINE
   5
-1DC
+214
 330
 17
 100
@@ -18883,7 +21021,7 @@ lc-SS-002
   0
 LWPOLYLINE
   5
-1DD
+215
 330
 17
 100
@@ -18915,7 +21053,7 @@ lc-SS-002
   0
 LWPOLYLINE
   5
-1DE
+216
 330
 17
 100
@@ -18947,7 +21085,7 @@ lc-SS-002
   0
 TEXT
   5
-1DF
+217
 330
 17
 100
@@ -18987,7 +21125,7 @@ lc-SS-002
   0
 LWPOLYLINE
   5
-1E0
+218
 330
 17
 100
@@ -19019,7 +21157,7 @@ lc-SS-003
   0
 LWPOLYLINE
   5
-1E1
+219
 330
 17
 100
@@ -19051,7 +21189,7 @@ lc-SS-003
   0
 LWPOLYLINE
   5
-1E2
+21A
 330
 17
 100
@@ -19083,7 +21221,7 @@ lc-SS-003
   0
 TEXT
   5
-1E3
+21B
 330
 17
 100
@@ -19123,7 +21261,7 @@ lc-SS-003
   0
 LWPOLYLINE
   5
-1E4
+21C
 330
 17
 100
@@ -19155,7 +21293,7 @@ lc-SS-004
   0
 LWPOLYLINE
   5
-1E5
+21D
 330
 17
 100
@@ -19187,7 +21325,7 @@ lc-SS-004
   0
 LWPOLYLINE
   5
-1E6
+21E
 330
 17
 100
@@ -19219,7 +21357,7 @@ lc-SS-004
   0
 LWPOLYLINE
   5
-1E7
+21F
 330
 17
 100
@@ -19251,7 +21389,7 @@ lc-SS-004
   0
 TEXT
   5
-1E8
+220
 330
 17
 100
@@ -19291,7 +21429,7 @@ lc-SS-004
   0
 LWPOLYLINE
   5
-1E9
+221
 330
 17
 100
@@ -19323,7 +21461,7 @@ lc-SS-005
   0
 LWPOLYLINE
   5
-1EA
+222
 330
 17
 100
@@ -19355,7 +21493,7 @@ lc-SS-005
   0
 LWPOLYLINE
   5
-1EB
+223
 330
 17
 100
@@ -19387,7 +21525,7 @@ lc-SS-005
   0
 TEXT
   5
-1EC
+224
 330
 17
 100
@@ -19427,7 +21565,7 @@ lc-SS-005
   0
 LWPOLYLINE
   5
-1ED
+225
 330
 17
 100
@@ -19459,7 +21597,7 @@ lc-SS-006
   0
 LWPOLYLINE
   5
-1EE
+226
 330
 17
 100
@@ -19491,7 +21629,7 @@ lc-SS-006
   0
 LWPOLYLINE
   5
-1EF
+227
 330
 17
 100
@@ -19523,7 +21661,7 @@ lc-SS-006
   0
 TEXT
   5
-1F0
+228
 330
 17
 100
@@ -19563,7 +21701,7 @@ lc-SS-006
   0
 LWPOLYLINE
   5
-1F1
+229
 330
 17
 100
@@ -19595,7 +21733,7 @@ lc-SS-007
   0
 LWPOLYLINE
   5
-1F2
+22A
 330
 17
 100
@@ -19627,7 +21765,7 @@ lc-SS-007
   0
 TEXT
   5
-1F3
+22B
 330
 17
 100
@@ -19667,7 +21805,7 @@ lc-SS-007
   0
 LWPOLYLINE
   5
-1F4
+22C
 330
 17
 100
@@ -19699,7 +21837,7 @@ lc-SS-008
   0
 LWPOLYLINE
   5
-1F5
+22D
 330
 17
 100
@@ -19731,7 +21869,7 @@ lc-SS-008
   0
 LWPOLYLINE
   5
-1F6
+22E
 330
 17
 100
@@ -19763,7 +21901,7 @@ lc-SS-008
   0
 TEXT
   5
-1F7
+22F
 330
 17
 100
@@ -19803,7 +21941,7 @@ lc-SS-008
   0
 LWPOLYLINE
   5
-1F8
+230
 330
 17
 100
@@ -19835,7 +21973,7 @@ lc-SS-009
   0
 LWPOLYLINE
   5
-1F9
+231
 330
 17
 100
@@ -19867,7 +22005,7 @@ lc-SS-009
   0
 LWPOLYLINE
   5
-1FA
+232
 330
 17
 100
@@ -19899,7 +22037,7 @@ lc-SS-009
   0
 LWPOLYLINE
   5
-1FB
+233
 330
 17
 100
@@ -19931,7 +22069,7 @@ lc-SS-009
   0
 LWPOLYLINE
   5
-1FC
+234
 330
 17
 100
@@ -19963,7 +22101,7 @@ lc-SS-009
   0
 TEXT
   5
-1FD
+235
 330
 17
 100
@@ -20003,7 +22141,7 @@ lc-SS-009
   0
 LWPOLYLINE
   5
-1FE
+236
 330
 17
 100
@@ -20035,7 +22173,7 @@ lc-SS-010
   0
 LWPOLYLINE
   5
-1FF
+237
 330
 17
 100
@@ -20067,7 +22205,7 @@ lc-SS-010
   0
 LWPOLYLINE
   5
-200
+238
 330
 17
 100
@@ -20099,7 +22237,7 @@ lc-SS-010
   0
 TEXT
   5
-201
+239
 330
 17
 100
@@ -20139,7 +22277,7 @@ lc-SS-010
   0
 LWPOLYLINE
   5
-202
+23A
 330
 17
 100
@@ -20171,7 +22309,7 @@ lc-SS-011
   0
 LWPOLYLINE
   5
-203
+23B
 330
 17
 100
@@ -20203,7 +22341,7 @@ lc-SS-011
   0
 LWPOLYLINE
   5
-204
+23C
 330
 17
 100
@@ -20235,7 +22373,7 @@ lc-SS-011
   0
 TEXT
   5
-205
+23D
 330
 17
 100
@@ -20275,7 +22413,7 @@ lc-SS-011
   0
 LWPOLYLINE
   5
-206
+23E
 330
 17
 100
@@ -20307,7 +22445,7 @@ lc-SS-012
   0
 LWPOLYLINE
   5
-207
+23F
 330
 17
 100
@@ -20339,7 +22477,7 @@ lc-SS-012
   0
 LWPOLYLINE
   5
-208
+240
 330
 17
 100
@@ -20371,7 +22509,7 @@ lc-SS-012
   0
 TEXT
   5
-209
+241
 330
 17
 100
@@ -20411,7 +22549,7 @@ lc-SS-012
   0
 LWPOLYLINE
   5
-20A
+242
 330
 17
 100
@@ -20443,7 +22581,7 @@ lc-SS-013
   0
 LWPOLYLINE
   5
-20B
+243
 330
 17
 100
@@ -20475,7 +22613,7 @@ lc-SS-013
   0
 LWPOLYLINE
   5
-20C
+244
 330
 17
 100
@@ -20507,7 +22645,7 @@ lc-SS-013
   0
 TEXT
   5
-20D
+245
 330
 17
 100
@@ -20547,7 +22685,7 @@ lc-SS-013
   0
 LWPOLYLINE
   5
-20E
+246
 330
 17
 100
@@ -20579,7 +22717,7 @@ lc-SS-014
   0
 LWPOLYLINE
   5
-20F
+247
 330
 17
 100
@@ -20611,7 +22749,7 @@ lc-SS-014
   0
 LWPOLYLINE
   5
-210
+248
 330
 17
 100
@@ -20643,7 +22781,7 @@ lc-SS-014
   0
 LWPOLYLINE
   5
-211
+249
 330
 17
 100
@@ -20675,7 +22813,7 @@ lc-SS-014
   0
 TEXT
   5
-212
+24A
 330
 17
 100
@@ -20715,7 +22853,7 @@ lc-SS-014
   0
 LWPOLYLINE
   5
-213
+24B
 330
 17
 100
@@ -20747,7 +22885,7 @@ lc-SS-015
   0
 LWPOLYLINE
   5
-214
+24C
 330
 17
 100
@@ -20779,7 +22917,7 @@ lc-SS-015
   0
 LWPOLYLINE
   5
-215
+24D
 330
 17
 100
@@ -20811,7 +22949,7 @@ lc-SS-015
   0
 TEXT
   5
-216
+24E
 330
 17
 100
@@ -20851,7 +22989,7 @@ lc-SS-015
   0
 LWPOLYLINE
   5
-217
+24F
 330
 17
 100
@@ -20883,7 +23021,7 @@ lc-SS-016
   0
 LWPOLYLINE
   5
-218
+250
 330
 17
 100
@@ -20915,7 +23053,7 @@ lc-SS-016
   0
 TEXT
   5
-219
+251
 330
 17
 100
@@ -20955,7 +23093,7 @@ lc-SS-016
   0
 LWPOLYLINE
   5
-21A
+252
 330
 17
 100
@@ -20987,7 +23125,7 @@ lc-SS-017
   0
 LWPOLYLINE
   5
-21B
+253
 330
 17
 100
@@ -21019,7 +23157,7 @@ lc-SS-017
   0
 LWPOLYLINE
   5
-21C
+254
 330
 17
 100
@@ -21051,7 +23189,7 @@ lc-SS-017
   0
 TEXT
   5
-21D
+255
 330
 17
 100
@@ -21091,7 +23229,7 @@ lc-SS-017
   0
 LWPOLYLINE
   5
-21E
+256
 330
 17
 100
@@ -21123,7 +23261,7 @@ lc-SS-018
   0
 LWPOLYLINE
   5
-21F
+257
 330
 17
 100
@@ -21155,7 +23293,7 @@ lc-SS-018
   0
 LWPOLYLINE
   5
-220
+258
 330
 17
 100
@@ -21187,7 +23325,7 @@ lc-SS-018
   0
 LWPOLYLINE
   5
-221
+259
 330
 17
 100
@@ -21219,7 +23357,7 @@ lc-SS-018
   0
 LWPOLYLINE
   5
-222
+25A
 330
 17
 100
@@ -21251,7 +23389,7 @@ lc-SS-018
   0
 TEXT
   5
-223
+25B
 330
 17
 100
@@ -21293,7 +23431,7 @@ lc-SS-018
   0
 LWPOLYLINE
   5
-224
+25C
 330
 17
 100
@@ -21325,7 +23463,7 @@ lc-SS-019
   0
 LWPOLYLINE
   5
-225
+25D
 330
 17
 100
@@ -21357,7 +23495,7 @@ lc-SS-019
   0
 LWPOLYLINE
   5
-226
+25E
 330
 17
 100
@@ -21389,7 +23527,7 @@ lc-SS-019
   0
 TEXT
   5
-227
+25F
 330
 17
 100
@@ -21429,7 +23567,7 @@ lc-SS-019
   0
 LWPOLYLINE
   5
-228
+260
 330
 17
 100
@@ -21461,7 +23599,7 @@ lc-SS-020
   0
 LWPOLYLINE
   5
-229
+261
 330
 17
 100
@@ -21493,7 +23631,7 @@ lc-SS-020
   0
 LWPOLYLINE
   5
-22A
+262
 330
 17
 100
@@ -21525,7 +23663,7 @@ lc-SS-020
   0
 TEXT
   5
-22B
+263
 330
 17
 100
@@ -21567,7 +23705,7 @@ lc-SS-020
   0
 LWPOLYLINE
   5
-22C
+264
 330
 17
 100
@@ -21599,7 +23737,7 @@ lc-SS-021
   0
 LWPOLYLINE
   5
-22D
+265
 330
 17
 100
@@ -21631,7 +23769,7 @@ lc-SS-021
   0
 LWPOLYLINE
   5
-22E
+266
 330
 17
 100
@@ -21663,7 +23801,7 @@ lc-SS-021
   0
 TEXT
   5
-22F
+267
 330
 17
 100
@@ -21703,7 +23841,7 @@ lc-SS-021
   0
 LWPOLYLINE
   5
-230
+268
 330
 17
 100
@@ -21735,7 +23873,7 @@ lc-SS-022
   0
 LWPOLYLINE
   5
-231
+269
 330
 17
 100
@@ -21767,7 +23905,7 @@ lc-SS-022
   0
 LWPOLYLINE
   5
-232
+26A
 330
 17
 100
@@ -21799,7 +23937,7 @@ lc-SS-022
   0
 TEXT
   5
-233
+26B
 330
 17
 100
@@ -21841,7 +23979,7 @@ lc-SS-022
   0
 LWPOLYLINE
   5
-234
+26C
 330
 17
 100
@@ -21873,7 +24011,7 @@ lc-SS-023
   0
 LWPOLYLINE
   5
-235
+26D
 330
 17
 100
@@ -21905,7 +24043,7 @@ lc-SS-023
   0
 LWPOLYLINE
   5
-236
+26E
 330
 17
 100
@@ -21937,7 +24075,7 @@ lc-SS-023
   0
 LWPOLYLINE
   5
-237
+26F
 330
 17
 100
@@ -21969,7 +24107,7 @@ lc-SS-023
   0
 TEXT
   5
-238
+270
 330
 17
 100
@@ -22011,7 +24149,7 @@ lc-SS-023
   0
 LWPOLYLINE
   5
-239
+271
 330
 17
 100
@@ -22043,7 +24181,7 @@ lc-SS-024
   0
 LWPOLYLINE
   5
-23A
+272
 330
 17
 100
@@ -22075,7 +24213,7 @@ lc-SS-024
   0
 LWPOLYLINE
   5
-23B
+273
 330
 17
 100
@@ -22107,7 +24245,7 @@ lc-SS-024
   0
 TEXT
   5
-23C
+274
 330
 17
 100
@@ -22149,7 +24287,7 @@ lc-SS-024
   0
 LWPOLYLINE
   5
-23D
+275
 330
 17
 100
@@ -22181,7 +24319,7 @@ lc-SS-025
   0
 LWPOLYLINE
   5
-23E
+276
 330
 17
 100
@@ -22213,7 +24351,7 @@ lc-SS-025
   0
 LWPOLYLINE
   5
-23F
+277
 330
 17
 100
@@ -22245,7 +24383,7 @@ lc-SS-025
   0
 TEXT
   5
-240
+278
 330
 17
 100
@@ -22287,7 +24425,7 @@ lc-SS-025
   0
 LWPOLYLINE
   5
-241
+279
 330
 17
 100
@@ -22319,7 +24457,7 @@ lc-SS-026
   0
 LWPOLYLINE
   5
-242
+27A
 330
 17
 100
@@ -22351,7 +24489,7 @@ lc-SS-026
   0
 TEXT
   5
-243
+27B
 330
 17
 100
@@ -22393,7 +24531,7 @@ lc-SS-026
   0
 LWPOLYLINE
   5
-244
+27C
 330
 17
 100
@@ -22425,7 +24563,7 @@ lc-SS-027
   0
 LWPOLYLINE
   5
-245
+27D
 330
 17
 100
@@ -22457,7 +24595,7 @@ lc-SS-027
   0
 LWPOLYLINE
   5
-246
+27E
 330
 17
 100
@@ -22489,7 +24627,7 @@ lc-SS-027
   0
 TEXT
   5
-247
+27F
 330
 17
 100
@@ -22531,7 +24669,7 @@ lc-SS-027
   0
 LWPOLYLINE
   5
-248
+280
 330
 17
 100
@@ -22563,7 +24701,7 @@ lc-SS-028
   0
 LWPOLYLINE
   5
-249
+281
 330
 17
 100
@@ -22595,7 +24733,7 @@ lc-SS-028
   0
 LWPOLYLINE
   5
-24A
+282
 330
 17
 100
@@ -22627,7 +24765,7 @@ lc-SS-028
   0
 LWPOLYLINE
   5
-24B
+283
 330
 17
 100
@@ -22659,7 +24797,7 @@ lc-SS-028
   0
 LWPOLYLINE
   5
-24C
+284
 330
 17
 100
@@ -22691,7 +24829,7 @@ lc-SS-028
   0
 TEXT
   5
-24D
+285
 330
 17
 100
@@ -22733,7 +24871,7 @@ lc-SS-028
   0
 LWPOLYLINE
   5
-24E
+286
 330
 17
 100
@@ -22765,7 +24903,7 @@ lc-SS-029
   0
 LWPOLYLINE
   5
-24F
+287
 330
 17
 100
@@ -22797,7 +24935,7 @@ lc-SS-029
   0
 LWPOLYLINE
   5
-250
+288
 330
 17
 100
@@ -22829,7 +24967,7 @@ lc-SS-029
   0
 TEXT
   5
-251
+289
 330
 17
 100
@@ -22869,7 +25007,7 @@ lc-SS-029
   0
 LWPOLYLINE
   5
-252
+28A
 330
 17
 100
@@ -22901,7 +25039,7 @@ lc-SS-030
   0
 LWPOLYLINE
   5
-253
+28B
 330
 17
 100
@@ -22933,7 +25071,7 @@ lc-SS-030
   0
 LWPOLYLINE
   5
-254
+28C
 330
 17
 100
@@ -22965,7 +25103,7 @@ lc-SS-030
   0
 TEXT
   5
-255
+28D
 330
 17
 100
@@ -23007,7 +25145,7 @@ lc-SS-030
   0
 LWPOLYLINE
   5
-256
+28E
 330
 17
 100
@@ -23039,7 +25177,7 @@ lc-SS-031
   0
 LWPOLYLINE
   5
-257
+28F
 330
 17
 100
@@ -23071,7 +25209,7 @@ lc-SS-031
   0
 LWPOLYLINE
   5
-258
+290
 330
 17
 100
@@ -23103,7 +25241,7 @@ lc-SS-031
   0
 TEXT
   5
-259
+291
 330
 17
 100
@@ -23143,7 +25281,7 @@ lc-SS-031
   0
 LWPOLYLINE
   5
-25A
+292
 330
 17
 100
@@ -23175,7 +25313,7 @@ lc-SS-032
   0
 LWPOLYLINE
   5
-25B
+293
 330
 17
 100
@@ -23207,7 +25345,7 @@ lc-SS-032
   0
 LWPOLYLINE
   5
-25C
+294
 330
 17
 100
@@ -23239,7 +25377,7 @@ lc-SS-032
   0
 TEXT
   5
-25D
+295
 330
 17
 100
@@ -23281,7 +25419,7 @@ lc-SS-032
   0
 LWPOLYLINE
   5
-25E
+296
 330
 17
 100
@@ -23313,7 +25451,7 @@ lc-SS-033
   0
 LWPOLYLINE
   5
-25F
+297
 330
 17
 100
@@ -23345,7 +25483,7 @@ lc-SS-033
   0
 LWPOLYLINE
   5
-260
+298
 330
 17
 100
@@ -23377,7 +25515,7 @@ lc-SS-033
   0
 TEXT
   5
-261
+299
 330
 17
 100
@@ -23419,7 +25557,7 @@ lc-SS-033
   0
 LWPOLYLINE
   5
-262
+29A
 330
 17
 100
@@ -23451,7 +25589,7 @@ lc-SS-034
   0
 LWPOLYLINE
   5
-263
+29B
 330
 17
 100
@@ -23483,7 +25621,7 @@ lc-SS-034
   0
 LWPOLYLINE
   5
-264
+29C
 330
 17
 100
@@ -23515,7 +25653,7 @@ lc-SS-034
   0
 TEXT
   5
-265
+29D
 330
 17
 100
@@ -23557,7 +25695,7 @@ lc-SS-034
   0
 LWPOLYLINE
   5
-266
+29E
 330
 17
 100
@@ -23589,7 +25727,7 @@ lc-SS-035
   0
 LWPOLYLINE
   5
-267
+29F
 330
 17
 100
@@ -23621,7 +25759,7 @@ lc-SS-035
   0
 LWPOLYLINE
   5
-268
+2A0
 330
 17
 100
@@ -23653,7 +25791,7 @@ lc-SS-035
   0
 LWPOLYLINE
   5
-269
+2A1
 330
 17
 100
@@ -23685,7 +25823,7 @@ lc-SS-035
   0
 TEXT
   5
-26A
+2A2
 330
 17
 100
@@ -23727,7 +25865,7 @@ lc-SS-035
   0
 LWPOLYLINE
   5
-26B
+2A3
 330
 17
 100
@@ -23759,7 +25897,7 @@ lc-SS-036
   0
 LWPOLYLINE
   5
-26C
+2A4
 330
 17
 100
@@ -23791,7 +25929,7 @@ lc-SS-036
   0
 LWPOLYLINE
   5
-26D
+2A5
 330
 17
 100
@@ -23823,7 +25961,7 @@ lc-SS-036
   0
 TEXT
   5
-26E
+2A6
 330
 17
 100
@@ -23865,7 +26003,7 @@ lc-SS-036
   0
 LWPOLYLINE
   5
-26F
+2A7
 330
 17
 100
@@ -23897,7 +26035,7 @@ lc-SS-037
   0
 LWPOLYLINE
   5
-270
+2A8
 330
 17
 100
@@ -23929,7 +26067,7 @@ lc-SS-037
   0
 LWPOLYLINE
   5
-271
+2A9
 330
 17
 100
@@ -23961,7 +26099,7 @@ lc-SS-037
   0
 TEXT
   5
-272
+2AA
 330
 17
 100
@@ -24003,7 +26141,7 @@ lc-SS-037
   0
 LWPOLYLINE
   5
-273
+2AB
 330
 17
 100
@@ -24035,7 +26173,7 @@ lc-SS-038
   0
 LWPOLYLINE
   5
-274
+2AC
 330
 17
 100
@@ -24067,7 +26205,7 @@ lc-SS-038
   0
 TEXT
   5
-275
+2AD
 330
 17
 100
@@ -24109,7 +26247,7 @@ lc-SS-038
   0
 LWPOLYLINE
   5
-276
+2AE
 330
 17
 100
@@ -24141,7 +26279,7 @@ lc-SS-039
   0
 LWPOLYLINE
   5
-277
+2AF
 330
 17
 100
@@ -24173,7 +26311,7 @@ lc-SS-039
   0
 LWPOLYLINE
   5
-278
+2B0
 330
 17
 100
@@ -24205,7 +26343,7 @@ lc-SS-039
   0
 TEXT
   5
-279
+2B1
 330
 17
 100
@@ -24247,7 +26385,7 @@ lc-SS-039
   0
 TEXT
   5
-27A
+2B2
 330
 17
 100
@@ -24287,7 +26425,7 @@ facade-avant
   0
 TEXT
   5
-27B
+2B3
 330
 17
 100
@@ -24299,129 +26437,9 @@ AcDbEntity
 100
 AcDbText
  10
-377.125
+175.02978515625
  20
-307.84650618044253
- 30
-0.0
- 40
-10.078740157480315
-  1
-CHAMBRE 2
-  7
-RELEVE_GRAS
- 72
-1
- 11
-377.125
- 21
-307.84650618044253
- 31
-0.0
-100
-AcDbText
-1001
-RELEVE
-1000
-piece-SS-CH2
-  0
-TEXT
-  5
-27C
-330
-17
-100
-AcDbEntity
-  8
-60-Etiquettes
- 62
-7
-100
-AcDbText
- 10
-377.125
- 20
-296.19824154313113
- 30
-0.0
- 40
-6.299212598425196
-  1
-16'-11¾" × 11'-5¾"
-  7
-RELEVE
- 72
-1
- 11
-377.125
- 21
-296.19824154313113
- 31
-0.0
-100
-AcDbText
-1001
-RELEVE
-1000
-piece-SS-CH2
-  0
-TEXT
-  5
-27D
-330
-17
-100
-AcDbEntity
-  8
-60-Etiquettes
- 62
-7
-100
-AcDbText
- 10
-377.125
- 20
-285.8168576518717
- 30
-0.0
- 40
-6.299212598425196
-  1
-194,9 pi² (18,1 m²)
-  7
-RELEVE
- 72
-1
- 11
-377.125
- 21
-285.8168576518717
- 31
-0.0
-100
-AcDbText
-1001
-RELEVE
-1000
-piece-SS-CH2
-  0
-TEXT
-  5
-27E
-330
-17
-100
-AcDbEntity
-  8
-60-Etiquettes
- 62
-7
-100
-AcDbText
- 10
-172.8301
- 20
-313.9831061804425
+313.62922102419253
  30
 0.0
  40
@@ -24433,9 +26451,9 @@ RELEVE_GRAS
  72
 1
  11
-172.8301
+175.02978515625
  21
-313.9831061804425
+313.62922102419253
  31
 0.0
 100
@@ -24447,7 +26465,7 @@ piece-SS-CH1
   0
 TEXT
   5
-27F
+2B4
 330
 17
 100
@@ -24459,9 +26477,9 @@ AcDbEntity
 100
 AcDbText
  10
-172.8301
+175.02978515625
  20
-302.3348415431311
+301.98095638688113
  30
 0.0
  40
@@ -24473,9 +26491,9 @@ RELEVE
  72
 1
  11
-172.8301
+175.02978515625
  21
-302.3348415431311
+301.98095638688113
  31
 0.0
 100
@@ -24487,7 +26505,7 @@ piece-SS-CH1
   0
 TEXT
   5
-280
+2B5
 330
 17
 100
@@ -24499,23 +26517,23 @@ AcDbEntity
 100
 AcDbText
  10
-172.8301
+175.02978515625
  20
-291.9534576518717
+291.5995724956217
  30
 0.0
  40
 6.299212598425196
   1
-179,7 pi² (16,7 m²)
+199,2 pi² (18,5 m²)
   7
 RELEVE
  72
 1
  11
-172.8301
+175.02978515625
  21
-291.9534576518717
+291.5995724956217
  31
 0.0
 100
@@ -24527,7 +26545,7 @@ piece-SS-CH1
   0
 TEXT
   5
-281
+2B6
 330
 17
 100
@@ -24567,7 +26585,7 @@ piece-SS-SALON
   0
 TEXT
   5
-282
+2B7
 330
 17
 100
@@ -24607,7 +26625,7 @@ piece-SS-SALON
   0
 TEXT
   5
-283
+2B8
 330
 17
 100
@@ -24647,7 +26665,7 @@ piece-SS-SALON
   0
 TEXT
   5
-284
+2B9
 330
 17
 100
@@ -24661,7 +26679,7 @@ AcDbText
  10
 271.9092
  20
-198.80120618044253
+196.97160618044254
  30
 0.0
  40
@@ -24675,7 +26693,7 @@ RELEVE_GRAS
  11
 271.9092
  21
-198.80120618044253
+196.97160618044254
  31
 0.0
 100
@@ -24687,7 +26705,7 @@ piece-SS-VEST
   0
 TEXT
   5
-285
+2BA
 330
 17
 100
@@ -24701,7 +26719,7 @@ AcDbText
  10
 271.9092
  20
-187.15294154313113
+185.32334154313114
  30
 0.0
  40
@@ -24715,7 +26733,7 @@ RELEVE
  11
 271.9092
  21
-187.15294154313113
+185.32334154313114
  31
 0.0
 100
@@ -24727,7 +26745,7 @@ piece-SS-VEST
   0
 TEXT
   5
-286
+2BB
 330
 17
 100
@@ -24741,7 +26759,7 @@ AcDbText
  10
 271.9092
  20
-176.77155765187175
+174.94195765187175
  30
 0.0
  40
@@ -24755,7 +26773,7 @@ RELEVE
  11
 271.9092
  21
-176.77155765187175
+174.94195765187175
  31
 0.0
 100
@@ -24767,7 +26785,7 @@ piece-SS-VEST
   0
 TEXT
   5
-287
+2BC
 330
 17
 100
@@ -24807,7 +26825,7 @@ piece-SS-HALL
   0
 TEXT
   5
-288
+2BD
 330
 17
 100
@@ -24847,7 +26865,7 @@ piece-SS-HALL
   0
 TEXT
   5
-289
+2BE
 330
 17
 100
@@ -24887,7 +26905,7 @@ piece-SS-HALL
   0
 TEXT
   5
-28A
+2BF
 330
 17
 100
@@ -24899,15 +26917,95 @@ AcDbEntity
 100
 AcDbText
  10
-196.76107059780935
+374.6087
  20
-82.6303
+270.4743142348128
  30
 0.0
  40
 10.078740157480315
   1
-SALLE
+CHAMBRE 2
+  7
+RELEVE_GRAS
+ 72
+1
+ 11
+374.6087
+ 21
+270.4743142348128
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+piece-SS-CH2
+  0
+TEXT
+  5
+2C0
+330
+17
+100
+AcDbEntity
+  8
+60-Etiquettes
+ 62
+7
+100
+AcDbText
+ 10
+374.6087
+ 20
+258.8260495975014
+ 30
+0.0
+ 40
+6.299212598425196
+  1
+194,9 pi² (18,1 m²)
+  7
+RELEVE
+ 72
+1
+ 11
+374.6087
+ 21
+258.8260495975014
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+piece-SS-CH2
+  0
+TEXT
+  5
+2C1
+330
+17
+100
+AcDbEntity
+  8
+60-Etiquettes
+ 62
+7
+100
+AcDbText
+ 10
+166.28787771081687
+ 20
+66.4409
+ 30
+0.0
+ 40
+10.078740157480315
+  1
+GYM
  50
 90.0
   7
@@ -24915,9 +27013,9 @@ RELEVE_GRAS
  72
 1
  11
-196.76107059780935
+166.28787771081687
  21
-82.6303
+66.4409
  31
 0.0
 100
@@ -24929,7 +27027,7 @@ piece-SS-GYM
   0
 TEXT
   5
-28B
+2C2
 330
 17
 100
@@ -24941,51 +27039,9 @@ AcDbEntity
 100
 AcDbText
  10
-213.3712848238244
+55.38897059780935
  20
-82.6303
- 30
-0.0
- 40
-10.078740157480315
-  1
-D'ENTRAÎNEMENT
- 50
-90.0
-  7
-RELEVE_GRAS
- 72
-1
- 11
-213.3712848238244
- 21
-82.6303
- 31
-0.0
-100
-AcDbText
-1001
-RELEVE
-1000
-piece-SS-GYM
-  0
-TEXT
-  5
-28C
-330
-17
-100
-AcDbEntity
-  8
-60-Etiquettes
- 62
-7
-100
-AcDbText
- 10
-57.00297059780935
- 20
-105.2264
+90.7003
  30
 0.0
  40
@@ -24999,9 +27055,9 @@ RELEVE_GRAS
  72
 1
  11
-57.00297059780935
+55.38897059780935
  21
-105.2264
+90.7003
  31
 0.0
 100
@@ -25013,7 +27069,7 @@ piece-SS-LAVAGE
   0
 TEXT
   5
-28D
+2C3
 330
 17
 100
@@ -25025,9 +27081,9 @@ AcDbEntity
 100
 AcDbText
  10
-73.6131848238244
+71.9991848238244
  20
-105.2264
+90.7003
  30
 0.0
  40
@@ -25041,9 +27097,9 @@ RELEVE_GRAS
  72
 1
  11
-73.6131848238244
+71.9991848238244
  21
-105.2264
+90.7003
  31
 0.0
 100
@@ -25053,131 +27109,9 @@ RELEVE
 1000
 piece-SS-LAVAGE
   0
-TEXT
-  5
-28E
-330
-17
-100
-AcDbEntity
-  8
-60-Etiquettes
- 62
-7
-100
-AcDbText
- 10
-279.0342
- 20
-408.85532940219065
- 30
-0.0
- 40
-10.078740157480315
-  1
-WALK-IN
-  7
-RELEVE_GRAS
- 72
-1
- 11
-279.0342
- 21
-408.85532940219065
- 31
-0.0
-100
-AcDbText
-1001
-RELEVE
-1000
-piece-SS-LEG
-  0
-TEXT
-  5
-28F
-330
-17
-100
-AcDbEntity
-  8
-60-Etiquettes
- 62
-7
-100
-AcDbText
- 10
-279.0342
- 20
-392.2451151761756
- 30
-0.0
- 40
-10.078740157480315
-  1
-ISOLÉ
-  7
-RELEVE_GRAS
- 72
-1
- 11
-279.0342
- 21
-392.2451151761756
- 31
-0.0
-100
-AcDbText
-1001
-RELEVE
-1000
-piece-SS-LEG
-  0
-TEXT
-  5
-290
-330
-17
-100
-AcDbEntity
-  8
-60-Etiquettes
- 62
-7
-100
-AcDbText
- 10
-27.770077710816874
- 20
-302.4075
- 30
-0.0
- 40
-10.078740157480315
-  1
-G.-R.
- 50
-90.0
-  7
-RELEVE_GRAS
- 72
-1
- 11
-27.770077710816874
- 21
-302.4075
- 31
-0.0
-100
-AcDbText
-1001
-RELEVE
-1000
-piece-SS-GR1
-  0
 LWPOLYLINE
   5
-291
+2C4
 330
 17
 100
@@ -25209,7 +27143,7 @@ piece-SS-PERRON
   0
 HATCH
   5
-292
+2C5
 330
 17
 100
@@ -25329,7 +27263,7 @@ piece-SS-PERRON
   0
 TEXT
   5
-293
+2C6
 330
 17
 100
@@ -25369,7 +27303,7 @@ piece-SS-PERRON
   0
 TEXT
   5
-294
+2C7
 330
 17
 100
@@ -25409,7 +27343,199 @@ piece-SS-PERRON
   0
 LWPOLYLINE
   5
-295
+2C8
+330
+17
+100
+AcDbEntity
+  8
+60-Etiquettes
+ 62
+7
+370
+18
+100
+AcDbPolyline
+ 90
+2
+ 70
+0
+ 10
+329.2637131579202
+ 20
+443.4707252150618
+ 10
+313.9763779527559
+ 20
+426.9763779527559
+1001
+RELEVE
+1000
+piece-SS-LEG
+  0
+HATCH
+  5
+2C9
+330
+17
+100
+AcDbEntity
+  8
+60-Etiquettes
+ 62
+7
+420
+0
+100
+AcDbHatch
+ 10
+0.0
+ 20
+0.0
+ 30
+0.0
+210
+0.0
+220
+0.0
+230
+1.0
+  2
+SOLID
+ 70
+1
+ 71
+0
+ 91
+1
+ 92
+3
+ 72
+0
+ 73
+1
+ 93
+16
+ 10
+315.23622047244095
+ 20
+426.9763779527559
+ 10
+315.1403206708804
+ 20
+427.45849881242845
+ 10
+314.86722114165235
+ 20
+427.86722114165235
+ 10
+314.45849881242845
+ 20
+428.1403206708804
+ 10
+313.9763779527559
+ 20
+428.23622047244095
+ 10
+313.4942570930834
+ 20
+428.1403206708804
+ 10
+313.08553476385947
+ 20
+427.86722114165235
+ 10
+312.81243523463144
+ 20
+427.45849881242845
+ 10
+312.7165354330709
+ 20
+426.9763779527559
+ 10
+312.81243523463144
+ 20
+426.4942570930834
+ 10
+313.08553476385947
+ 20
+426.08553476385947
+ 10
+313.4942570930834
+ 20
+425.81243523463144
+ 10
+313.9763779527559
+ 20
+425.7165354330709
+ 10
+314.45849881242845
+ 20
+425.81243523463144
+ 10
+314.86722114165235
+ 20
+426.08553476385947
+ 10
+315.1403206708804
+ 20
+426.4942570930834
+ 97
+0
+ 75
+1
+ 76
+1
+ 98
+0
+1001
+RELEVE
+1000
+piece-SS-LEG
+  0
+TEXT
+  5
+2CA
+330
+17
+100
+AcDbEntity
+  8
+60-Etiquettes
+ 62
+7
+100
+AcDbText
+ 10
+382.438943
+ 20
+446.4267802891831
+ 30
+0.0
+ 40
+10.078740157480315
+  1
+WALK-IN ISOLÉ
+  7
+RELEVE_GRAS
+ 72
+1
+ 11
+382.438943
+ 21
+446.4267802891831
+ 31
+0.0
+100
+AcDbText
+1001
+RELEVE
+1000
+piece-SS-LEG
+  0
+LWPOLYLINE
+  5
+2CB
 330
 17
 100
@@ -25441,7 +27567,7 @@ piece-SS-SDB
   0
 HATCH
   5
-296
+2CC
 330
 17
 100
@@ -25561,7 +27687,7 @@ piece-SS-SDB
   0
 TEXT
   5
-297
+2CD
 330
 17
 100
@@ -26691,7 +28817,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-29A
+2D0
   0
 DICTIONARYVAR
   5
@@ -27407,7 +29533,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-29A
+2D0
 330
 2D
 100

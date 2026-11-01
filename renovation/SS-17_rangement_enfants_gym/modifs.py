@@ -45,4 +45,14 @@ def appliquer(maison):
     for z in zs:
         if hasattr(z, "apres_modifs"):
             z.apres_modifs(maison, base)
+    # notes de la feuille P-127 (le cartouche en tient 6) : le détail de chaque zone est dans DESIGN.md
+    notes = [
+        "Esquisse par-dessus SS-16 (le reste est l'existant, base R0) ; béton poli d'un seul tenant.",
+        "Chambres d'enfants : lits queen 60 × 80 et rangement intégré de chêne ; fenêtres d'évacuation ouvrantes à vérifier.",
+        "Walk-in (ancien caveau) : isolé, évents fermés, chauffé ; porte-bibliothèque pivotante depuis la chambre 2.",
+        "Escalier : banc-cabane bas (≤ 26 po) dessous ; vides entre les marches (5½ po) à valider avec des enfants.",
+        "Gym : cardio contre le mur avant, mur-miroir sur le mur du lavage, porte vitrée coulissante.",
+        "Insonorisation, VRC et déshumidificateur ; hauteur 8 pi (propriétaire) ; à valider avec la Ville et un professionnel.",
+    ]
+    ss["notes"] = [{"id": f"note-SS-P{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t} for i, t in enumerate(notes)]
     return maison

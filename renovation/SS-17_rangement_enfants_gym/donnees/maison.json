@@ -775,44 +775,6 @@
      "note": "Cloison projetée — vestiaire / chambre 2 (proposition SS-17 (esquisse))."
     },
     {
-     "id": "mur-SS-P12",
-     "type": "int",
-     "etat": "nouveau",
-     "porteur": "non",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "PRÉSUMÉ",
-      "photo": null,
-      "note": "cloison projetée 2x4 + gypse"
-     },
-     "x1": 38.25,
-     "y1": 280,
-     "x2": 38.25,
-     "y2": 370,
-     "source_position": "PRÉSUMÉ",
-     "note": "Cloison projetée — garde-robe / chambre 1 (proposition SS-17 (esquisse))."
-    },
-    {
-     "id": "mur-SS-P13",
-     "type": "int",
-     "etat": "nouveau",
-     "porteur": "non",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "PRÉSUMÉ",
-      "photo": null,
-      "note": "cloison projetée 2x4 + gypse"
-     },
-     "x1": 10,
-     "y1": 280,
-     "x2": 38.25,
-     "y2": 280,
-     "source_position": "PRÉSUMÉ",
-     "note": "Cloison projetée — garde-robe / chambre 1 (proposition SS-17 (esquisse))."
-    },
-    {
      "id": "mur-SS-P14",
      "type": "int",
      "etat": "nouveau",
@@ -829,7 +791,7 @@
      "x2": 48.25,
      "y2": 250,
      "source_position": "PRÉSUMÉ",
-     "note": "Cloison projetée — muret de la douche / niche du bain (plancher au plafond, carrelé) (proposition SS-17 (esquisse))."
+     "note": "Cloison projetée — muret de la douche / niche du bain (plancher au plafond : tuile blanche côté douche, pierre côté bain) (proposition SS-17 (esquisse))."
     }
    ],
    "ouvertures": [
@@ -1063,14 +1025,15 @@
       "note": "non écrite"
      },
      "texte_original": "PORTE 2'-6\"",
-     "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus — voir ecart-029",
+     "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus — voir ecart-029 SS-17 : la porte devient une porte-bibliothèque pivotante (32 × 82, 8 po hors tout) posée devant la baie, côté chambre 2.",
      "repere": "ecart-029",
      "sens": {
       "charniere": "fin",
       "ouvre_vers": "gauche",
-      "note": "porte du walk-in, pentures du côté ouest (le battant se range le long du mur des chambres) — proposition SS-17 (esquisse)"
+      "note": "porte-bibliothèque secrète pivotante (pentures/pivots côté ouest, ouvre vers la chambre), miroir au dos ; s'ouvre en poussant depuis le walk-in, aucun verrou — proposition SS-17 (esquisse)"
      },
-     "interieure": true
+     "interieure": true,
+     "fermee": true
     },
     {
      "id": "ouv-SS-009",
@@ -1101,7 +1064,7 @@
       "photo": null,
       "note": "non écrite"
      },
-     "note": "moitié droite, restée à l'emplacement d'origine de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29))"
+     "note": "moitié droite, restée à l'emplacement d'origine de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) SS-17 : fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à mesurer ; à valider avec la Ville et un professionnel."
     },
     {
      "id": "ouv-SS-010",
@@ -1132,12 +1095,12 @@
       "photo": null,
       "note": "non écrite"
      },
-     "note": "moitié gauche, déplacée de 2'-0\" vers la gauche de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29))"
+     "note": "moitié gauche, déplacée de 2'-0\" vers la gauche de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) SS-17 : fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à mesurer ; à valider avec la Ville et un professionnel."
     },
     {
      "id": "ouv-SS-P01",
      "type": "porte",
-     "operation": "battante",
+     "operation": "coulissante",
      "mur_id": "mur-SS-P10",
      "etat": "nouveau",
      "position": {
@@ -1161,10 +1124,10 @@
       "photo": null
      },
      "sens": {
-      "charniere": "fin",
+      "charniere": "debut",
       "ouvre_vers": "droite"
      },
-     "note": "porte vitrée de la salle d'entraînement (proposition SS-17 (esquisse))",
+     "note": "porte vitrée coulissante de la salle d'entraînement (rail apparent noir côté hall, se range vers l'est) (proposition SS-17 (esquisse))",
      "materiau": "verre"
     },
     {
@@ -1197,7 +1160,8 @@
       "charniere": "fin",
       "ouvre_vers": "gauche"
      },
-     "note": "porte de la salle de lavage (proposition SS-17 (esquisse))"
+     "note": "porte de la salle de lavage (proposition SS-17 (esquisse)) Face gym revêtue de miroir (mur-miroir du gym, SS-17) ; porte pleine, 3 pentures ; ouvre côté lavage.",
+     "fermee": true
     },
     {
      "id": "ouv-SS-P03",
@@ -1294,38 +1258,6 @@
       "ouvre_vers": "gauche"
      },
      "note": "porte de la chambre 2 (depuis le pied de l'escalier) (proposition SS-17 (esquisse))"
-    },
-    {
-     "id": "ouv-SS-P07",
-     "type": "porte",
-     "operation": "coulissante",
-     "mur_id": "mur-SS-P12",
-     "etat": "nouveau",
-     "position": {
-      "valeur": 45.0,
-      "source": "PRÉSUMÉ",
-      "photo": null
-     },
-     "largeur": {
-      "valeur": 60,
-      "source": "PRÉSUMÉ",
-      "photo": null
-     },
-     "hauteur": {
-      "valeur": 80,
-      "source": "PRÉSUMÉ",
-      "photo": null
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null
-     },
-     "sens": {
-      "charniere": "debut",
-      "ouvre_vers": "droite"
-     },
-     "note": "portes coulissantes de la garde-robe (chambre 1) (proposition SS-17 (esquisse))"
     }
    ],
    "pieces": [
@@ -1380,10 +1312,10 @@
     },
     {
      "id": "piece-SS-GYM",
-     "nom": "Salle d'entraînement",
+     "nom": "Gym",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Salle d'entraînement — proposition SS-17 (esquisse)",
+     "description": "Gym — proposition SS-17 (esquisse)",
      "polygone": [
       [
        114.25,
@@ -1440,7 +1372,7 @@
      "nom": "Escalier",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Escalier — proposition SS-17 (esquisse)",
+     "description": "Escalier flottant ; dessous : banc-cabane cinéma bas et ajouré (rien de plein au-dessus de 26 po), coin-cabane sous les marches tournantes — proposition SS-17 (esquisse)",
      "polygone": [
       [
        272.25,
@@ -1726,23 +1658,11 @@
      "nom": "Chambre 1",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Chambre 1 — proposition SS-17 (esquisse)",
+     "description": "Chambre 1 (enfant de 4 ans) : lit queen-plateforme en coin, banquette sous les fenêtres, gare à jouets, garde-robe intégrée sur le mur de la salle de bain (l'ancienne garde-robe est fusionnée) — proposition SS-17 (esquisse)",
      "polygone": [
       [
-       237.75,
-       370.0
-      ],
-      [
-       40.5,
-       370.0
-      ],
-      [
-       40.5,
-       277.75
-      ],
-      [
        10.0,
-       277.75
+       370.0
       ],
       [
        10.0,
@@ -1759,10 +1679,14 @@
       [
        237.75,
        232.25
+      ],
+      [
+       237.75,
+       370.0
       ]
      ],
      "superficie": {
-      "valeur": 179.7,
+      "valeur": 199.2,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu des cloisons projetées"
@@ -1781,55 +1705,6 @@
       },
       "y": {
        "valeur": 137.75,
-       "source": "DÉDUIT",
-       "photo": null
-      }
-     }
-    },
-    {
-     "id": "piece-SS-GR1",
-     "nom": "G.-R.",
-     "nom_original": null,
-     "etat": "nouveau",
-     "description": "G.-R. — proposition SS-17 (esquisse)",
-     "polygone": [
-      [
-       10.0,
-       370.0
-      ],
-      [
-       10.0,
-       282.25
-      ],
-      [
-       36.0,
-       282.25
-      ],
-      [
-       36.0,
-       370.0
-      ]
-     ],
-     "superficie": {
-      "valeur": 15.8,
-      "source": "DÉDUIT",
-      "photo": null,
-      "note": "aire du polygone au nu des cloisons projetées"
-     },
-     "hauteur_plafond": {
-      "valeur": 96,
-      "source": "MESURÉ",
-      "photo": null,
-      "note": "8 pi, plancher du sous-sol au plafond, donné par le propriétaire (2026-10-29) ; sous les poutres : moins"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 26.0,
-       "source": "DÉDUIT",
-       "photo": null
-      },
-      "y": {
-       "valeur": 87.75,
        "source": "DÉDUIT",
        "photo": null
       }
@@ -1888,7 +1763,7 @@
      "id": "piece-SS-LEG",
      "nom": "Walk-in isolé",
      "nom_original": "LEGUMES",
-     "description": "Ancien caveau à légumes transformé en garde-robe walk-in de la chambre 2 (tringles, tablettes) ; évent fermé et scellé, plafond (dalle au-dessus) et murs isolés, chauffé et déshumidifié — proposition SS-17 (esquisse)",
+     "description": "Ancien caveau à légumes isolé (2 po rigide + gypse, fini 83 × 47½, plafond supposé à 84 : À MESURER) : walk-in de la chambre 2 — penderie double sur crémaillères (tringles z 34 et 70), banc à souliers, tour de tiroirs, miroir au dos de la porte-bibliothèque, panneau rayonnant au plafond — proposition SS-17 (esquisse)",
      "polygone": [
       [
        317.0,
@@ -2122,7 +1997,7 @@
     {
      "id": "elem-SS-P-BAIN",
      "type": "baignoire",
-     "nom": "Bain autoportant sculptural (pierre de résine), centré sur le mur d'accent (zellige sur fourrure de 2½ po, niche)",
+     "nom": "Bain autoportant sculptural (pierre de résine), centré sur le mur d'accent (travertin adouci en dalles de 24 × 48 po sur fourrure de 2½ po, niche)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
@@ -2148,7 +2023,7 @@
     {
      "id": "elem-SS-P-BANC",
      "type": "armoires",
-     "nom": "Vestiaire ouvert : banc, cases à souliers, crochets, tablette",
+     "nom": "Vestiaire ouvert (gardé) : banc, bacs d'égouttement, crochets, tablette, poste de recharge",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
@@ -2170,6 +2045,276 @@
       }
      },
      "note": "proposition SS-17 (esquisse)"
+    },
+    {
+     "id": "elem-SS-P-BANCCAB",
+     "type": "autre",
+     "nom": "Banc-cabane cinéma sous l'escalier : chêne ajouré sur socle d'acier en retrait (DEL), 6 cases (livres + 10 bacs de feutre), assise cuir cognac à 18½ po, présentoir à livres, plateau-télécommandes USB-C ; rien de plein au-dessus de 26 po",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 250.0,
+      "y": 90.375,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 40.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 75.75,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-C1-BANC",
+     "type": "autre",
+     "nom": "Banquette des fenêtres (assise 16–18 po), 6 tiroirs-images ; marche d'évacuation",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 165.375,
+      "y": 360.75,
+      "rotation_deg": 180,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 144.75,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 17.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "BANQUETTE"
+    },
+    {
+     "id": "elem-SS-P-C1-BIB1",
+     "type": "armoires",
+     "nom": "Bibliothèque entre les fenêtres (livres face avant), ancrée",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 144.0,
+      "y": 363.75,
+      "rotation_deg": 180,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 11.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-C1-BIB2",
+     "type": "armoires",
+     "nom": "Bibliothèque au coin des fenêtres, ancrée",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 208.0,
+      "y": 363.75,
+      "rotation_deg": 180,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 11.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-C1-CANOPEE",
+     "type": "trappe",
+     "nom": "Canopée de rangement au-dessus du lit (dessous à 72 po), portes à loquet",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 51.25,
+      "y": 362.75,
+      "rotation_deg": 180,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 81.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 13.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-C1-GARE",
+     "type": "comptoir",
+     "nom": "Gare à jouets : 3 modules bas de bacs (dessus à 24 po), crémaillères au mur",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 228.75,
+      "y": 310.0,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 84,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 18,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "BACS"
+    },
+    {
+     "id": "elem-SS-P-C1-GR",
+     "type": "armoires",
+     "nom": "Garde-robe intégrée 134 po (penderie évolutive, tour de tiroirs, niche-cachette, tiroirs de plinthe)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 77.125,
+      "y": 264.25,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 134.25,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "G.-R."
+    },
+    {
+     "id": "elem-SS-P-C1-LIT",
+     "type": "autre",
+     "nom": "Lit-plateforme queen « cabane » (matelas 60 × 80 à 22 po), 3 bacs roulants dessous, dosseret à niches éclairées",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 52.0,
+      "y": 336.0,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 82,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 68,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "LIT QUEEN"
+    },
+    {
+     "id": "elem-SS-P-C1-VEST",
+     "type": "autre",
+     "nom": "Station du matin : banc à cases, crochets, miroir incassable, tablette",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 170.125,
+      "y": 239.25,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 51.75,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 14,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-CABANE",
+     "type": "autre",
+     "nom": "Coin-cabane : matelas de laine 32 × 32 × 4 po sous les marches tournantes, coussins",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 253.0,
+      "y": 31.0,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 32,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 32,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
     },
     {
      "id": "elem-SS-P-CE",
@@ -2198,25 +2343,160 @@
      "note": "proposition SS-17 (esquisse)"
     },
     {
-     "id": "elem-SS-P-COMMODE1",
-     "type": "armoires",
-     "nom": "Commode",
+     "id": "elem-SS-P-CH2-ACTIV",
+     "type": "comptoir",
+     "nom": "Mur d'activité (12 po) : crochets, cases basses, bureau à rabat sur rail, panneau perforé, armoires hautes",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 227.5,
-      "y": 310,
-      "rotation_deg": 90,
+      "x": 248.25,
+      "y": 296.5,
+      "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 60,
+       "valeur": 12,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 20,
+       "valeur": 63,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-CH2-BANC",
+     "type": "comptoir",
+     "nom": "Banc-cabane sous la fenêtre (assise 18, 3 tiroirs, trappe d'accès au drain, coussin = lit d'appoint) ; rail-rideau au plafond",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 432,
+      "y": 316,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 28,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 108,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-CH2-GARAGE",
+     "type": "comptoir",
+     "nom": "Garage à jouets : banc bas de 16 po, 4 bacs-wagons ; rebords à livres et rail de galerie au-dessus",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 351,
+      "y": 240.25,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 134,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 16,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-CH2-LATTES",
+     "type": "autre",
+     "nom": "Panneau de tête en lattes de chêne sur feutre (alcôve du lit), 2 liseuses DEL",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 355,
+      "y": 368.5,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 66,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 3,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-CH2-LIT",
+     "type": "autre",
+     "nom": "Lit-plateforme queen intégré : socle de chêne à tiroirs, 2 bacs-wagons au pied, matelas 60 × 80 (dessus à 22 po), tête dans l'alcôve de lattes",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 355,
+      "y": 325,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 66,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 84,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "LIT QUEEN"
+    },
+    {
+     "id": "elem-SS-P-CH2-ND",
+     "type": "comptoir",
+     "nom": "Chevet-niche droit intégré (tiroir, niche éclairée, USB-C)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 403,
+      "y": 364,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 30,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 12,
        "source": "PRÉSUMÉ",
        "photo": null
       }
@@ -2224,25 +2504,131 @@
      "note": "proposition SS-17 (esquisse)"
     },
     {
-     "id": "elem-SS-P-COMMODE2",
-     "type": "armoires",
-     "nom": "Commode",
+     "id": "elem-SS-P-CH2-NG",
+     "type": "comptoir",
+     "nom": "Chevet-niche gauche intégré (tiroir, niche éclairée, USB-C)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 330,
-      "y": 242.25,
+      "x": 312,
+      "y": 364,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 60,
+       "valeur": 20,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 20,
+       "valeur": 12,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)"
+    },
+    {
+     "id": "elem-SS-P-CH2-PB",
+     "type": "autre",
+     "nom": "Porte-bibliothèque secrète (pivots, livre-levier, miroir au dos) devant la baie du walk-in ; imposte-bibliothèque fixe au-dessus",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 260.125,
+      "y": 366,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 35.75,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 8,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-CH2-PONT",
+     "type": "trappe",
+     "nom": "Pont d'armoires hautes (z 66-96) au-dessus des niches, du lit et du bout du banc ; DEL dessous",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 374,
+      "y": 364,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 144,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 12,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-CH2-TG",
+     "type": "armoires",
+     "nom": "Tour gauche du mur de tête (bacs, niches éclairées, armoire haute), ancrée",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 290,
+      "y": 364,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 12,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)"
+    },
+    {
+     "id": "elem-SS-P-CH2-TOUR",
+     "type": "armoires",
+     "nom": "Tour d'angle à trésors (bacs à jouets, vitrine LEGO, armoire haute), ancrée",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 432,
+      "y": 247.125,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 28,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 29.75,
        "source": "PRÉSUMÉ",
        "photo": null
       }
@@ -2382,6 +2768,141 @@
      "note": "Escalier à l'entrée avant (option 2 de l'étude 3, choisie par le propriétaire le 2026-10-30) : 14 contremarches, 3 tournantes en haut, sortie à l'ouest dans le vestibule d'entrée. Hauteur d'étage ≈ 105 po (8 pi au sous-sol, propriétaire) ; giron, échappée et trémie à valider — proposition SS-17 (esquisse)"
     },
     {
+     "id": "elem-SS-P-GYM-BANC",
+     "type": "armoires",
+     "nom": "Banc-coffre bas 16 × 60 × 18 po contre le verre de l'escalier : tiroirs verrouillés (poids), case ouverte",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 218,
+      "y": 121.75,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 59.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 16,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-GYM-MIROIR",
+     "type": "autre",
+     "nom": "Mur-miroir 105 × 74 po sur la face gym du mur du lavage ; la porte du lavage est revêtue de miroir côté gym",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 114.75,
+      "y": 64.5,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 105,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 1.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-GYM-SOL",
+     "type": "trappe",
+     "nom": "Zone au sol 6 × 6 pi en dalles de caoutchouc 10 mm (aussi le passage vers la salle de lavage)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 150.25,
+      "y": 120,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 72,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 72,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-GYM-TAPIS",
+     "type": "autre",
+     "nom": "Tapis roulant (existant), console vers le mur avant ; 20 po de chaque côté, 69 po derrière",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 189,
+      "y": 49.5,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 75,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 36,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "TAPIS"
+    },
+    {
+     "id": "elem-SS-P-GYM-VELO",
+     "type": "autre",
+     "nom": "Vélo de route sur base d'entraînement (existant), roue avant vers le mur avant",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 134,
+      "y": 47,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 70,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "VÉLO"
+    },
+    {
      "id": "elem-SS-P-LAV",
      "type": "laveuse",
      "nom": "Laveuse à chargement par le dessus (neuve)",
@@ -2432,6 +2953,33 @@
       }
      },
      "note": "proposition SS-17 (esquisse)"
+    },
+    {
+     "id": "elem-SS-P-LUNE",
+     "type": "trappe",
+     "nom": "« Lune » lumineuse Ø 12 po vissée sous la marche tournante T1 (DEL 24 V gradable)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 262.4,
+      "y": 42.4,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 12,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 12,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
     },
     {
      "id": "elem-SS-P-MANT",
@@ -2539,6 +3087,60 @@
      "libelle": "PROJ. (PLAFOND)"
     },
     {
+     "id": "elem-SS-P-REBLIV",
+     "type": "comptoir",
+     "nom": "Deux rebords à livres bas de chêne (z 5-8 et 20-23) sur le mur avant",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 253.0,
+      "y": 11.875,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 30,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 3.75,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-SABOT",
+     "type": "comptoir",
+     "nom": "Sabot technique (24 V, USB, détecteur de veilleuse) et chasse du pied de l'escalier (chêne, ≤ 11 po)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 250.0,
+      "y": 138.375,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 40.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 20.25,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
      "id": "elem-SS-P-SEC",
      "type": "secheuse",
      "nom": "Sécheuse",
@@ -2644,6 +3246,85 @@
      "note": "proposition SS-17 (esquisse)"
     },
     {
+     "id": "elem-SS-P-WI-BANC",
+     "type": "comptoir",
+     "nom": "Walk-in : banc à souliers et crochets",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 238.5,
+      "y": 392.75,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 14,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 25.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)"
+    },
+    {
+     "id": "elem-SS-P-WI-PENDERIE",
+     "type": "autre",
+     "nom": "Walk-in : penderie double sur crémaillères (tringles z 34 et 70, tablette et bacs z 74)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 273,
+      "y": 416.5,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 83,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 22,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-WI-TOUR",
+     "type": "armoires",
+     "nom": "Walk-in : tour de tiroirs, panier à linge et valet (ancrée)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 305.5,
+      "y": 392.75,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 18,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 25.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)"
+    },
+    {
      "id": "elem-SS-PANNEAU",
      "type": "panneau-electrique",
      "nom": "Panneau électrique",
@@ -2658,6 +3339,166 @@
      },
      "dimensions": null,
      "note": "ajouté par le propriétaire (annotateur en ligne, 2e série (2026-10-29))"
+    },
+    {
+     "id": "elem-SS-Q-BANCJOUETS",
+     "type": "armoires",
+     "nom": "Banc-rangement à jouets de chêne 143 × 16 po sous la toile (dessus à 16 po), 6 tiroirs, niche ventilée, barre de son dessus",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 438,
+      "y": 83.5,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 143,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 16,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)"
+    },
+    {
+     "id": "elem-SS-Q-BOITEPL",
+     "type": "autre",
+     "nom": "Boîte de plancher (2 prises + 2 USB-C) au bout du divan, sous le guéridon",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 309,
+      "y": 138,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 6,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 6,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-Q-CASIERS",
+     "type": "armoires",
+     "nom": "Casiers d'hiver des garçons (2 baies de 17⅞ po, séchoirs à bottes et mitaines, portes hautes vert forêt)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 300,
+      "y": 218.75,
+      "rotation_deg": 180,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 38,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 18,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)"
+    },
+    {
+     "id": "elem-SS-Q-DESHUM",
+     "type": "autre",
+     "nom": "Déshumidificateur à drain permanent (hygrostat)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 57,
+      "y": 138,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 20,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 14,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "DÉSH."
+    },
+    {
+     "id": "elem-SS-Q-GRILLE",
+     "type": "trappe",
+     "nom": "Tapis-grille encastré au niveau du béton (48 × 36 po), devant la porte de côté",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 422,
+      "y": 180,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 48,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 36,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "GRILLE"
+    },
+    {
+     "id": "elem-SS-Q-VRC",
+     "type": "trappe",
+     "nom": "Échangeur d'air récupérateur de chaleur (VRC), suspendu au mur avant à 74–94 po",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 85,
+      "y": 19,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 30,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 18,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "VRC"
     },
     {
      "id": "elem-SS-ROB1",
@@ -4192,37 +5033,37 @@
      "id": "note-SS-P01",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Esquisse (le reste est l'existant, base R0) ; béton poli d'un seul tenant dans tout le sous-sol."
+     "interpretation": "Esquisse par-dessus SS-16 (le reste est l'existant, base R0) ; béton poli d'un seul tenant."
     },
     {
      "id": "note-SS-P02",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Escalier de 14 c.m. à l'entrée avant (voir P-126) : trémie, giron et échappée à valider."
+     "interpretation": "Chambres d'enfants : lits queen 60 × 80 et rangement intégré de chêne ; fenêtres d'évacuation ouvrantes à vérifier."
     },
     {
      "id": "note-SS-P03",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Salle de bain : bain centré sur le mur d'accent, douche 36 × 48 ; drains à déplacer."
+     "interpretation": "Walk-in (ancien caveau) : isolé, évents fermés, chauffé ; porte-bibliothèque pivotante depuis la chambre 2."
     },
     {
      "id": "note-SS-P04",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Séjour : toile motorisée 120 po centrée, projecteur au plafond (pointillé) ; dessous de l'escalier dégagé."
+     "interpretation": "Escalier : banc-cabane bas (≤ 26 po) dessous ; vides entre les marches (5½ po) à valider avec des enfants."
     },
     {
      "id": "note-SS-P05",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Walk-in (ancien caveau) : isolé, évents fermés, chauffé."
+     "interpretation": "Gym : cardio contre le mur avant, mur-miroir sur le mur du lavage, porte vitrée coulissante."
     },
     {
      "id": "note-SS-P06",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Hauteur : 8 pi (propriétaire) ; sous les poutres et coupe-feu à valider."
+     "interpretation": "Insonorisation, VRC et déshumidificateur ; hauteur 8 pi (propriétaire) ; à valider avec la Ville et un professionnel."
     }
    ],
    "lignes_cote": [
