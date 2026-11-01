@@ -69,7 +69,7 @@ def _dans_zone(o):
 
 
 def _banc(h):
-    B, A, C, CY = h.B, h.A, h.C, h.CY
+    B, A, CY = h.B, h.A, h.CY
     out = []
     # socle d'acier noir mat en retrait de 3 po (ombre au sol), pattes réglables, 4 équerres cachées dans la dalle
     out += [A(232.75, 55.5, 267.25, 125.25, 0, 3.5, "metal", r=0.4, b=0.2)]

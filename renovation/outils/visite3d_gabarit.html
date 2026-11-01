@@ -1,4 +1,4 @@
-<title>Visite 3D du sous-sol</title>
+<title>__TITRE__</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
@@ -346,6 +346,8 @@ for (const [nom, v] of Object.entries(S.peintures || {})) {
   if (v[2]) MAT[v[2]] = MAT["peinture:" + nom];          // alias utilisable par le mobilier (armoires peintes, etc.)
 }
 for (const [n, m] of Object.entries(MAT)) m.name = n;
+// faces non peintes (gypse, fondation) en retrait de profondeur : la peinture et les tablettes de fenêtre gagnent aux arêtes
+for (const k of ["gypse", "fondation"]) if (MAT[k]) Object.assign(MAT[k], { polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
 
 // boîte avec coordonnées de texture en mètres (les matériaux gardent la même échelle partout)
 const FACE = { "+x": 0, "-x": 1, "+y": 5, "-y": 4 };   // repère maison → ordre des faces de BoxGeometry

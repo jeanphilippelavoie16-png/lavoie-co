@@ -163,9 +163,10 @@ def _mobilier(h):
     M += [B(CX0 + 1.5, CY0 + 1, CX1 - 1.5, CY0 + 2, 71.75, 72, "spot")]                         # DEL chaude = veilleuse
 
     # ================================================================ C1-RIDEAU : rail en L au plafond, rideau sable ouvert
+    #   (le pan du long côté se range contre le mur ouest, celui du pied contre la banquette : le coin du pied reste libre)
     M += [B(XW, 299.6, 94.4, 300.4, 95.3, 96, "metal"), B(93.6, 299.6, 94.4, 352, 95.3, 96, "metal")]
     M += [C(11.4 + 1.7 * k, 300 + (0.45 if k % 2 else -0.45), 1.05, 1.5, 95.3, "art-sable", pans=12) for k in range(6)]
-    M += [C(94 + (0.45 if k % 2 else -0.45), 301.6 + 1.7 * k, 1.05, 1.5, 95.3, "art-sable", pans=12) for k in range(5)]
+    M += [C(94 + (0.45 if k % 2 else -0.45), 350.4 - 1.7 * k, 1.05, 1.5, 95.3, "art-sable", pans=12) for k in range(5)]
 
     # ================================================================ C1-BANC : banquette-évacuation, 6 tiroirs-images
     BX0, BX1, BY0 = 93.0, XE, 352.0
@@ -257,7 +258,6 @@ def _mobilier(h):
     M += [CX(PX0 - 2.2, PX0, yy, zz, 0.3, "placage", pans=12) for yy, zz in ((285, 57), (301, 45), (321, 57), (333, 41))]  # chevilles
     M += [A(PX0 - 4.5, 290, PX0, 312, 48.6, 49.3, "placage", r=0.3, b=0.15),                    # petite tablette
           C(PX0 - 2.2, 295, 1.3, 49.3, 53.3, "art-argile", pans=20), C(PX0 - 2.2, 300, 1.3, 49.3, 52.8, "laque-marine", pans=20)]
-    M += [T([(PX0 - 2.0, 336, 41), (PX0 - 2.0, 336, 34)], 0.12, "metal"), A(PX0 - 2.5, 333, PX0 - 1.5, 339, 26, 34, "art-sable", r=0.5, b=0.3)]
     M += [CY(XE - 0.8, 270, 350, 78, 0.12, "metal")]                                            # câble à dessins
     DESSINS = ["blanc", "art-sable", "blanc", "blanc", "art-sable", "blanc"]
     M += [B(XE - 0.95, 277 + 11.5 * k, XE - 0.85, 286 + 11.5 * k, 67.5 + (k % 2), 77.5, DESSINS[k]) for k in range(6)]
@@ -276,7 +276,7 @@ def _mobilier(h):
         out = [A(x0 + 0.1, GF, x1 - 0.1, GY1, z0 + 0.1, z1 - 0.1, "placage", r=0.3, b=0.2)]
         xp = x1 - 1.6 if poignee == "d" else x0 + 0.6
         zp = min(max(z0 + 2, 40), z1 - 14)
-        out.append(B(xp, GY1 - 0.02, xp + 1.0, GY1 + 0.06, zp, zp + 12, "carbone"))             # poignée encastrée (gorge)
+        out.append(B(xp + 0.2, GY1 - 0.02, xp + 0.8, GY1 + 0.06, zp, zp + 9, "carbone"))         # poignée encastrée (gorge)
         return out
 
     # C1-GR-A : penderie évolutive, 2 portes de 21 po
@@ -339,10 +339,11 @@ def _mobilier(h):
 
 VISITES = [
     {"nom": "Chambre 1 — le socle de chêne", "x": 225, "y": 262, "cap": 160},
-    {"nom": "Chambre 1 — lit-cabane", "x": 136, "y": 300, "cap": 162},
+    {"nom": "Chambre 1 — lit-cabane", "x": 150, "y": 296, "cap": 162},
     {"nom": "Chambre 1 — banquette des fenêtres", "x": 166, "y": 290, "cap": 98},
     {"nom": "Chambre 1 — gare à jouets", "x": 150, "y": 306, "cap": 8},
-    {"nom": "Chambre 1 — garde-robe et cachette", "x": 128, "y": 330, "cap": 240},
+    {"nom": "Chambre 1 — garde-robe et cachette", "x": 140, "y": 332, "cap": 238},
+    {"nom": "Chambre 1 — station du matin", "x": 205, "y": 290, "cap": 236},
 ]
 
 

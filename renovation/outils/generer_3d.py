@@ -293,7 +293,7 @@ def reculer_bouts_de_murs(boites):
                         if abs(o[ok] - v) < 0.02 and ((ok.endswith("0") and s_ < 0) or (ok.endswith("1") and s_ > 0)):
                             chev = min(b[autre + "1"], o[autre + "1"]) - max(b[autre + "0"], o[autre + "0"])
                             if chev > 0.3 and (b[autre + "1"] - b[autre + "0"]) < (o[autre + "1"] - o[autre + "0"]):
-                                b[kk] = v - s_ * 0.05
+                                b[kk] = v - s_ * (o[k + "1"] - o[k + "0"]) / 2   # le bout de cloison s'arrête au milieu du mur traversé (plus de ligne aux jonctions en T)
 
 
 def finitions(niv, par_mur, H, sill, head, S):
@@ -627,7 +627,7 @@ def main(dossier):
     gab = open(os.path.join(ICI, "visite3d_gabarit.html"), encoding="utf-8").read()
     html = (gab.replace("/*__SCENE__*/null", json.dumps(scene, ensure_ascii=False).replace("</", "<\\/"))
                .replace("/*__TEXTURES__*/null", json.dumps(textures))
-               .replace("__TITRE__", scene["titre"]))
+               .replace("__TITRE__", scene["titre"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")))
     os.makedirs(os.path.join(dossier, "3d"), exist_ok=True)
     out = os.path.join(dossier, "3d", "visite.html")
     open(out, "w", encoding="utf-8").write(html)

@@ -116,7 +116,7 @@ CATALOGUE = {
         "usage": 'vasque à poser carrée',
         "page": 'https://sketchfab.com/3d-models/9ae7b722a6834c729896e441fa88a1fa',
         "attribution": '"Washbasin" by businessyuen (https://sketchfab.com/businessyuen), CC BY 4.0, https://sketchfab.com/3d-models/9ae7b722a6834c729896e441fa88a1fa — modified'},
-    'robinet_vasque_noir': {"fichier": "robinet_vasque_noir.glb", "avant": "-z", "licence": 'CC BY 4.0',
+    'robinet_vasque_noir': {"fichier": "robinet_vasque_noir.glb", "avant": "+z", "licence": 'CC BY 4.0',
         "usage": 'mitigeur haut noir mat',
         "page": 'https://sketchfab.com/3d-models/61ee6efa02b64aceaa70f1bc233d9ee2',
         "attribution": '"Faucet Volle (water mixer)" by Nick Kotik (https://sketchfab.com/Nathanson), CC BY 4.0, https://sketchfab.com/3d-models/61ee6efa02b64aceaa70f1bc233d9ee2 — modified'},

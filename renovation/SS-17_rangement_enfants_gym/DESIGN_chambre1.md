@@ -30,6 +30,7 @@ Le centre reste un grand coin jeu au sol, d'environ 127 × 76 po, avec un tapis 
 - **C1-CANOPEE** : armoires hautes de 81½ × 14 × 24 po au-dessus du lit, avec 3 portes à loquet positif (pas de « pousser-ouvrir » au-dessus d'un lit).
   Le dessous est à **72 po**, ce qui laisse 50 po libres au-dessus du matelas. Un ruban DEL chaud dessous sert de veilleuse de la cabane.
 - **C1-RIDEAU** : rail en L encastré au plafond (y = 300, puis x = 94) et rideau de lin couleur sable, sans cordon ni boucle.
+  Ouvert, le pan du long côté se range contre le mur ouest et celui du pied contre la banquette : le coin du pied reste libre.
 - **C1-BANC, banquette des fenêtres** : x 93–237¾, y 352–370, dessus à 16 po, plus un coussin de 2 po. **6 tiroirs-images** à fermeture douce,
   façades en laque argile. Elle sert de **marche fixe** sous les fenêtres d'évacuation ; rien de fixe sur l'assise devant les fenêtres.
 - **C1-BIB1 et C1-BIB2** : 2 bibliothèques de 24 × 12 po ancrées, posées sur la banquette.
@@ -67,7 +68,8 @@ Le centre reste un grand coin jeu au sol, d'environ 127 × 76 po, avec un tapis 
   - retiré tout le mobilier de SS-16 dans la chambre : lit, chevets, lampes, tapis, porte de garde-robe, bureau, chaise, écran, commode et ses objets, miroir rond ;
   - ajouté tout ce qui précède ;
   - 3 encastrés : coin jeu, passage lit et garde-robe, recoin ;
-  - 5 arrêts de visite, « Chambre 1 — … » : le socle de chêne, le lit-cabane, la banquette des fenêtres, la gare à jouets, la garde-robe et la cachette.
+  - 6 arrêts de visite, « Chambre 1 — … » : le socle de chêne, le lit-cabane, la banquette des fenêtres, la gare à jouets,
+    la garde-robe et la cachette, la station du matin.
 - **Matériaux** :
   - placage de chêne ;
   - laque argile (alias art-argile, la même teinte que le mur arrière) sur tout ce que l'enfant ouvre ;
