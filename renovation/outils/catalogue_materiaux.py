@@ -25,9 +25,9 @@ CATALOGUE = {
     "beton": {"source": "ambientcg", "id": "Concrete034", "taille_m": 2.0, "usage": "dalle du caveau"},
     # --- rez-de-chaussée actuel (RDC-01, relevé photo du 2026-11-01)
     "brique_rouge": {"source": "polyhaven", "id": "red_brick_03", "taille_m": 0.87, "ajustement": {"luminosite": 1.12}, "usage": "placage de brique rouge à joints pâles (cuisine du RDC)"},
-    "ardoise_noire": {"source": "ambientcg", "id": "Tiles138", "taille_m": 7.32, "usage": "tuile d'ardoise noire 24 × 24 po (cuisine, entrée du RDC)"},
-    "erable": {"source": "ambientcg", "id": "WoodFloor047", "taille_m": 1.5, "ajustement": {"luminosite": 1.12, "saturation": 0.55}, "usage": "plancher d'érable naturel clair, lames étroites (RDC)"},
-    "bois_grange": {"source": "polyhaven", "id": "weathered_brown_planks", "taille_m": 1.2, "usage": "bois de grange multicolore (comptoirs et îlot du RDC)"},
+    "ardoise_noire": {"source": "ambientcg", "id": "Tiles138", "taille_m": 7.32, "ajustement": {"luminosite": 0.55, "saturation": 0.6}, "usage": "tuile d'ardoise noire 24 × 24 po (cuisine, entrée du RDC)"},
+    "erable": {"source": "ambientcg", "id": "WoodFloor047", "taille_m": 1.5, "ajustement": {"luminosite": 1.0, "saturation": 0.72}, "usage": "plancher d'érable naturel clair, lames étroites (RDC)"},
+    "bois_grange": {"source": "polyhaven", "id": "weathered_brown_planks", "taille_m": 1.2, "ajustement": {"luminosite": 0.72, "saturation": 1.15}, "usage": "bois de grange multicolore (comptoirs et îlot du RDC)"},
     "bois_brut": {"source": "ambientcg", "id": "Wood060", "taille_m": 0.8, "usage": "bois brut teint brun-roux (poutres et poteaux du RDC)"},
     "pin_teint": {"source": "polyhaven", "id": "coated_pine_02", "taille_m": 0.9, "ajustement": {"luminosite": 0.8, "saturation": 0.85}, "rugosite": 0.55, "usage": "pin noueux teint (portes, cadrages et plinthes du RDC)"},
     "papier_planches": {"source": "polyhaven", "id": "wood_planks_grey", "taille_m": 1.4, "ajustement": {"luminosite": 1.7, "saturation": 0.5}, "usage": "papier peint imitation planches grises (chambre du RDC)"},
@@ -35,6 +35,9 @@ CATALOGUE = {
     "bois_recupere": {"source": "polyhaven", "id": "wood_cabinet_worn_long", "taille_m": 1.0, "usage": "bois de récupération foncé (table de la salle à manger du RDC)"},
     "inox": {"source": "ambientcg", "id": "Metal009", "taille_m": 0.6, "metal": 1.0, "usage": "frigo, éviers, électros"},
     "laiton": {"source": "ambientcg", "id": "Metal048A", "taille_m": 0.4, "metal": 1.0, "usage": "robinet du bar, poignées"},
+    "beton_poli": {"source": "ambientcg", "id": "Concrete016", "taille_m": 2.4, "ajustement": {"luminosite": 1.24, "saturation": 0.1},
+                   "rugosite": 0.34, "vernis": 0.45, "vernis_rugosite": 0.22,
+                   "usage": "béton poli gris pâle, léger marbrage (dalle meulée et densifiée ou chape polie) — tout le sous-sol de SS-16"},
     "platre": {"source": "ambientcg", "id": "Plaster001", "taille_m": 1.5, "relief_seul": True,
                "usage": "relief des murs peints (la couleur vient de la peinture)"},
 }

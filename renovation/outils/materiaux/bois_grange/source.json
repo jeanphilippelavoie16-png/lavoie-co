@@ -4,5 +4,8 @@
  "licence": "CC0 1.0 (domaine public)",
  "url": "https://polyhaven.com/a/weathered_brown_planks",
  "fichier": "weathered_brown_planks_*_1k.jpg",
- "ajustement": null
+ "ajustement": {
+  "luminosite": 0.72,
+  "saturation": 1.15
+ }
 }

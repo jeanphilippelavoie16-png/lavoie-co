@@ -179,7 +179,7 @@ M += [MOD("plante_sansevieria", 186, 354, z=32, H=22), C(186, 325, 3.5, 32, 37, 
 M += [A(148.4, 207, 170, 248, 28.5, 30, "bois_recupere", r=0.4, b=0.3), B(148.4, 210, 150, 212, 22, 28.5, "metal"), B(148.4, 243, 150, 245, 22, 28.5, "metal"),
       A(150.5, 212, 152, 243, 33, 47, "ecran", r=0.6, b=0.3), B(152, 226, 155, 229, 30, 33.5, "metal"), B(152, 222, 160, 233, 30, 30.5, "metal"),
       B(148.4, 215, 149.6, 240, 54, 69, "ecran", r=0.3), B(158, 222, 166, 236, 30, 30.6, "carbone")]
-M += [MOD("chaise_bureau", 170, 228, face="-x")]
+M += [MOD("chaise_bureau", 170, 228, face="-x", mat="carbone")]
 
 # =============================================================================================== salon
 # sectionnel gris pâle en L à inclinables (dos au mur du hall, retour face à la fenêtre), tableau générique au mur
@@ -218,9 +218,10 @@ CADRES = [(70, 72, 8, 10, "metal"), (82, 80, 10, 8, "blanc"), (96, 74, 10, 12, "
           (92, 56, 9, 12, "metal"), (140, 62, 12, 9, "laiton"), (150, 52, 8, 10, "blanc"), (72, 46, 8, 10, "metal"),
           (86, 42, 10, 8, "blanc"), (138, 48, 12, 10, "metal"), (116, 90, 8, 6, "blanc"), (96, 90, 9, 7, "metal")]
 for yc, zc, w, h, mat in CADRES:
-    M += cadre_mur_x(177.25, yc - w / 2, yc + w / 2, zc - h / 2, zc + h / 2, "draps" if mat == "blanc" else "jete", sens=1, cadre=mat, ep=0.9, bord=1.0)
+    M += cadre_mur_x(177.25, yc - w / 2, yc + w / 2, zc - h / 2, zc + h / 2, "comptoir", sens=1, cadre=mat, ep=0.9, bord=1.0)
+    M += [B(178.35, yc - w / 2 + 2.2, 178.5, yc + w / 2 - 2.2, zc - h / 2 + 2.2, zc + h / 2 - 2.2, "carbone" if (yc + zc) % 3 else "gris")]
 M += [A(177.6, 104, 180.2, 132, 0.5, 80, "blanc", r=0.3, b=0.2)]
-M += [B(180.2, y0, 180.5, y1, z0, z1, "draps") for y0, y1, z0, z1 in ((107, 129, 50, 77), (107, 129, 22, 46), (107, 129, 4, 18))]
+M += [B(180.2, y0, 180.5, y1, z0, z1, "comptoir") for y0, y1, z0, z1 in ((107, 129, 50, 77), (107, 129, 22, 46), (107, 129, 4, 18))]
 M += [T([(180.6, 110, 66), (182.5, 110, 66)], 0.35, "metal"), T([(180.6, 126, 66), (182.5, 126, 66)], 0.35, "metal")]
 M += [A(180.4, 102, 195, 134, 15.5, 17.5, "blanc", r=0.4, b=0.3), B(181, 103, 183, 105, 0, 15.5, "blanc"), B(181, 131, 183, 133, 0, 15.5, "blanc"),
       B(192.5, 103, 194.5, 105, 0, 15.5, "blanc"), B(192.5, 131, 194.5, 133, 0, 15.5, "blanc"), B(181.5, 104, 194, 132, 5, 6, "blanc")]
@@ -298,7 +299,6 @@ M += [MOD("lit_queen", 52, 85, face="+x"), MOD("table_chevet", 19, 39, face="+x"
       A(14, 11, 50, 29, 0.5, 34, "blanc", r=0.4, b=0.3)]
 
 # =============================================================================================== entrée arrière
-M += [B(232, 426, 290, 429.5, 60, 64, "pin_teint")] + [T([(240 + 12 * k, 429.5, 62), (240 + 12 * k, 426.5, 63)], 0.3, "metal") for k in range(4)]
 M += [A(296, 383, 318, 400, 0, 0.4, "tapis", r=2, b=0.2)]
 
 # bande d'ardoise devant la baie de l'entrée arrière, prolongement du plancher de la cuisine (photo 07), et barres de seuil
@@ -334,9 +334,9 @@ SCENE = {
                  {"x": 77, "y": 296, "z": 82, "i": 5}, {"x": 77, "y": 75, "z": 92, "i": 5},
                  {"x": 300, "y": 80, "z": 92, "i": 4}, {"x": 390, "y": 80, "z": 92, "i": 4}, {"x": 273, "y": 405}],
     "visites": [{"nom": "Entrée avant", "x": 198, "y": 34, "cap": 90},
-                {"nom": "Hall (mur de cadres)", "x": 210, "y": 118, "cap": 182},
-                {"nom": "Salon", "x": 420, "y": 146, "cap": 215},
-                {"nom": "Salon vers le hall", "x": 340, "y": 176, "cap": 200},
+                {"nom": "Hall (mur de cadres)", "x": 292, "y": 128, "cap": 182},
+                {"nom": "Salon", "x": 346, "y": 212, "cap": 266},
+                {"nom": "Salon vers le hall", "x": 362, "y": 196, "cap": 198},
                 {"nom": "Cuisine", "x": 262, "y": 232, "cap": 32},
                 {"nom": "Îlot et cuisinière", "x": 318, "y": 318, "cap": 350},
                 {"nom": "Cuisine vers le salon", "x": 336, "y": 206, "cap": 262},
@@ -344,10 +344,10 @@ SCENE = {
                 {"nom": "Coin bureau", "x": 296, "y": 268, "cap": 192},
                 {"nom": "Corridor", "x": 150, "y": 186, "cap": 180},
                 {"nom": "Salle de bain", "x": 118, "y": 188, "cap": 180},
-                {"nom": "Vanité", "x": 98, "y": 184, "cap": 150},
+                {"nom": "Vanité", "x": 102, "y": 178, "cap": 140},
                 {"nom": "Chambre arrière", "x": 127, "y": 220, "cap": 100},
                 {"nom": "Chambre arrière, tête de lit", "x": 112, "y": 336, "cap": 222},
-                {"nom": "Chambre avant (présumée)", "x": 127, "y": 150, "cap": 225},
+                {"nom": "Chambre avant (présumée)", "x": 126, "y": 126, "cap": 212},
                 {"nom": "Entrée arrière", "x": 295, "y": 352, "cap": 90}],
     "depart": {"x": 198, "y": 34, "cap": 90},
     "palette": [["Plancher", "érable naturel clair, lames étroites (salon, salle à manger, chambres, corridor)", "#D8C29A"],

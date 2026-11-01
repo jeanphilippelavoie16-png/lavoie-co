@@ -4,5 +4,8 @@
  "licence": "CC0 1.0 (domaine public)",
  "url": "https://ambientcg.com/view?id=Tiles138",
  "fichier": "Tiles138_1K-JPG.zip",
- "ajustement": null
+ "ajustement": {
+  "luminosite": 0.55,
+  "saturation": 0.6
+ }
 }

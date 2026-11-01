@@ -75,6 +75,10 @@ def appliquer(maison):
             o["position"] = dim(188 - 142, "centre à y ≈ 188 : la laveuse-sécheuse est juste à gauche en entrant (photo 13) — À MESURER",
                                 "ESTIMÉ", "rdc_actuel/13")
             o["source_position"] = "PHOTO"
+    # portes fermées sur les photos (garde-robes, lingerie) : dessinées fermées dans la maquette 3D
+    for o in rdc["ouvertures"]:
+        if o["id"] in ("ouv-RDC-018", "ouv-RDC-020", "ouv-RDC-021", "ouv-RDC-022"):
+            o["fermee"] = True
     rdc["murs"].append({"id": "mur-RDC-R01", "type": "int", "porteur": "inconnu", "indices_porteur": [],
                         "epaisseur": dict(m12["epaisseur"]), "x1": 5, "y1": 142, "x2": 108, "y2": 142,
                         "source_position": "PHOTO",

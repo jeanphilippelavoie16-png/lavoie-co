@@ -151,7 +151,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: !(window.WebGL2RenderingCo
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.0;
+renderer.toneMappingExposure = 0.9;
 renderer.physicallyCorrectLights = true;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;           // filtrage élargi par shadow.radius : ombres douces
@@ -165,8 +165,8 @@ const camera = new THREE.PerspectiveCamera(68, 1, 0.05, 200);
 
 // ---------- qualité du rendu : Haute (ombres, occlusion ambiante, halo, vernis et lustre) ou Normale (plus légère)
 const QUALITES = {
-  haute: { nom: "Haute", pr: 1.5, ao: true, halo: true, fentes: tactile ? 4 : 6, carte: 1024, fini: true },
-  normale: { nom: "Normale", pr: 1.25, ao: false, halo: false, fentes: 0, carte: 512, fini: false },
+  haute: { nom: "Haute", pr: 1.5, ao: true, halo: true, feux: 10, fentes: 4, jour: 3, carte: 1024, fini: true },
+  normale: { nom: "Normale", pr: 1.25, ao: false, halo: false, feux: 8, fentes: 0, jour: 2, carte: 512, fini: false },
 };
 let qualite = "haute", qualiteManuelle = false;
 try { const q = localStorage.getItem("visite3d-qualite"); if (QUALITES[q]) { qualite = q; qualiteManuelle = true; } } catch (_) {}
@@ -251,6 +251,7 @@ taches.encoding = THREE.LinearEncoding;
 function M(nom, opt, ech) {
   ECHELLE[nom] = ech || 1;
   const m = new THREE.MeshPhysicalMaterial(opt);
+  if (opt.envMapIntensity == null && (opt.metalness || 0) < .5) m.envMapIntensity = .75;   // lumière renvoyée : sans aplatir les volumes
   const f = FINIS[nom] || (/poli|cir[ée]/.test(nom) ? { clearcoat: .7, clearcoatRoughness: .1 } : null);
   if (f) {
     m.userData.fini = { clearcoat: f.clearcoat || 0, sheen: f.sheen || 0 };
@@ -289,9 +290,9 @@ const MAT = {
   "zellige-vert": M("zellige-vert", { map: zellige("#3f5d4f"), roughness: .12, normalMap: platre, normalScale: new THREE.Vector2(.4, .4) }, .81),
   gypse: M("gypse", { color: "#f1eee8", roughness: .93, normalMap: platre, normalScale: new THREE.Vector2(.25, .25) }, 1.2),
   fondation: M("fondation", { color: "#f1eee8", roughness: .93, normalMap: platre, normalScale: new THREE.Vector2(.25, .25) }, 1.2),
-  plafond: M("plafond", { color: "#f6f4ef", roughness: .95, emissive: "#f6f4ef", emissiveIntensity: .08 }),
+  plafond: M("plafond", { color: "#f6f4ef", roughness: .95, emissive: "#f6f4ef", emissiveIntensity: .04 }),
   verre: M("verre", { color: "#d8ecee", transparent: true, opacity: .16, roughness: .05, metalness: .1, depthWrite: false }),
-  vitre: M("vitre", { color: "#eaf4fb", transparent: true, opacity: .14, roughness: .03, depthWrite: false, envMapIntensity: 1.6 }),
+  vitre: M("vitre", { color: "#eaf4fb", transparent: true, opacity: .14, roughness: .03, depthWrite: false, envMapIntensity: 1 }),
   "verre-cadre": M("verre-cadre", { color: "#1a1a1a", roughness: .5, metalness: .15 }),
   "verre-bouteille": M("verre-bouteille", { color: "#36523f", transparent: true, opacity: .75, roughness: .1 }),
   "verre-clair": M("verre-clair", { color: "#e9f1f2", transparent: true, opacity: .4, roughness: .05, depthWrite: false }),
@@ -447,7 +448,7 @@ function modele(o, groupe) {
   const f = VECT[(S.modeles_info[o.cle] || {}).avant || "+z"], v = FACE3[o.face || "-y"];
   pivot.scale.setScalar(s); pivot.rotation.y = Math.atan2(v[0], v[1]) - Math.atan2(f[0], f[1]) + (o.rot || 0) * Math.PI / 180;
   pivot.position.copy(P(o.x, o.y, o.z || 0));
-  m.traverse((n) => { if (n.isMesh) { n.material.envMapIntensity = 1; if (o.mat && MAT[o.mat]) n.material = MAT[o.mat]; } });
+  m.traverse((n) => { if (n.isMesh) { n.material.envMapIntensity = (n.material.metalness || 0) > .5 ? 1 : .8; if (o.mat && MAT[o.mat]) n.material = MAT[o.mat]; } });
   groupe.add(pivot);
   pivot.updateMatrixWorld(true);
   const w = new THREE.Box3().setFromObject(pivot, true);
@@ -558,60 +559,99 @@ if (S.sol_exterieur != null) {
 // Ambiance : environnement capturé dans la maison (reflets et lumière renvoyée) + un ciel faible ;
 // encastrés blanc chaud 3000 K, lampes 2700 K, lumière du jour bleutée par les fenêtres.
 const COUL_ENCASTRE = "#ffdcb8", COUL_LAMPE = "#ffcf9e", COUL_JOUR = "#cddcff";
-const ambiance = new THREE.HemisphereLight("#eef3fa", "#e8dccb", 0.5); scene.add(ambiance);
+const ambiance = new THREE.HemisphereLight("#eef3fa", "#e8dccb", 0.25); scene.add(ambiance);
+// brume au loin : le terrain se fond dans l'horizon (sans effet à l'intérieur, à moins de 10 m)
+scene.fog = new THREE.Fog("#e4ebef", 10, 70);
+// soleil de maquette (éteint en visite) : modèle bien lisible, murs coupés ombrés d'un côté
+const soleil = new THREE.DirectionalLight("#fff6ea", 0);
+soleil.position.set(((bx0 + bx1) / 2 - 300) * K, 12, -((by0 + by1) / 2 - 500) * K); soleil.target.position.set((bx0 + bx1) / 2 * K, 0, -(by0 + by1) / 2 * K);
+scene.add(soleil, soleil.target);
 const garniture = new THREE.MeshStandardMaterial({ color: "#f4f2ee", roughness: .4 });
-const ENCASTRES = [];
+// Les encastrés et les fenêtres sont des « sources » ; un nombre fixe de vraies lumières (un « bassin ») est attribué
+// aux sources les plus proches du visiteur, avec un fondu. Le nombre de lumières ne change pas en se promenant
+// (pas de recompilation), chaque pixel calcule moins de lumières, et les pièces voisines ne « fuient » plus à travers les murs.
+const ENCASTRES = [], FENETRES = [];
 for (const l of S.lumieres) {
-  let p;
-  if (l.z) { p = new THREE.PointLight(COUL_LAMPE, (l.i || 9) * 1.1, 0, 2); p.position.copy(P(l.x, l.y, l.z - 8)); }
-  else {    // encastré de 4 po : projecteur vers le bas, collé au plafond (pas de halo sur le plafond)
-    p = new THREE.SpotLight(COUL_ENCASTRE, (l.i || 9) * 3.2, 0, 1.2, 0.85, 2); p.position.copy(P(l.x, l.y, S.H - 0.6));
-    p.target.position.copy(P(l.x, l.y, 0)); scene.add(p.target);
-    const anneau = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .008, 32), garniture); anneau.position.copy(P(l.x, l.y, S.H - 0.15)); gPlafond.add(anneau);
-    const disque = new THREE.Mesh(new THREE.CylinderGeometry(.052, .052, .01, 32), MAT.spot); disque.position.copy(P(l.x, l.y, S.H - 0.2)); gPlafond.add(disque);
-    ENCASTRES.push({ x: l.x, y: l.y, p, i: p.intensity });
+  if (l.z) {
+    const p = new THREE.PointLight(COUL_LAMPE, (l.i || 9) * 1.1, 0, 2); p.position.copy(P(l.x, l.y, l.z - 8)); scene.add(p);
+    continue;
   }
-  scene.add(p);
+  // encastré de 4 po : garniture et disque lumineux au plafond ; la lumière (projecteur vers le bas) vient du bassin.
+  // Sous une retombée (poutre, soffite), il descend sous la retombée au lieu d'y être enfoui.
+  let zp = S.H;
+  for (const q of S.boites) if (!q.pts && q.z1 >= S.H - 0.01 && q.z0 > 60 && q.z0 < zp && l.x > q.x0 && l.x < q.x1 && l.y > q.y0 && l.y < q.y1) zp = q.z0;
+  const anneau = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .008, 32), garniture); anneau.position.copy(P(l.x, l.y, zp - 0.15)); gPlafond.add(anneau);
+  const disque = new THREE.Mesh(new THREE.CylinderGeometry(.052, .052, .01, 32), MAT.spot); disque.position.copy(P(l.x, l.y, zp - 0.2)); gPlafond.add(disque);
+  ENCASTRES.push({ x: l.x, y: l.y, pos: P(l.x, l.y, zp - 0.6), cible: P(l.x, l.y, 0), i: (l.i || 9) * 3.6 });
 }
-// lumière du jour : un projecteur large et doux derrière chaque fenêtre, orienté vers l'intérieur et vers le plancher
-{
+{ // lumière du jour : un projecteur large et doux derrière chaque fenêtre, vers l'intérieur et le plancher
   const cx = (bx0 + bx1) / 2, cy = (by0 + by1) / 2;
-  const fen = S.boites.filter((b) => b.mat === "vitre").map((b) => {
-    const enX = b.x1 - b.x0 < b.y1 - b.y0, x = (b.x0 + b.x1) / 2, y = (b.y0 + b.y1) / 2;
+  for (const b of S.boites) {
+    if (b.mat !== "vitre") continue;
+    const enX = b.x1 - b.x0 < b.y1 - b.y0, x = (b.x0 + b.x1) / 2, y = (b.y0 + b.y1) / 2, z = (b.z0 + b.z1) / 2;
     const n = enX ? [Math.sign(x - cx) || 1, 0] : [0, Math.sign(y - cy) || 1];   // vers l'extérieur
-    return { x, y, n, z: (b.z0 + b.z1) / 2, aire: Math.max(b.x1 - b.x0, b.y1 - b.y0) * (b.z1 - b.z0) };
-  }).sort((a, b) => b.aire - a.aire).slice(0, 10);
-  for (const f of fen) {
-    const j = new THREE.SpotLight(COUL_JOUR, 4 + f.aire / 300, 0, 0.95, 1, 2);
-    j.position.copy(P(f.x + f.n[0] * 30, f.y + f.n[1] * 30, f.z + 14));
-    j.target.position.copy(P(f.x - f.n[0] * 90, f.y - f.n[1] * 90, 0));
-    scene.add(j, j.target);
+    const aire = Math.max(b.x1 - b.x0, b.y1 - b.y0) * (b.z1 - b.z0);
+    FENETRES.push({ x, y, pos: P(x + n[0] * 30, y + n[1] * 30, z + 14), cible: P(x - n[0] * 90, y - n[1] * 90, 0), i: 4 + aire / 300 });
   }
 }
-// ombres : quelques projecteurs « porteurs d'ombre » prennent la place des encastrés les plus proches du visiteur
-// (le nombre de lumières reste fixe : pas de recompilation des matériaux en se promenant)
-const fentes = [];
-let cleFentes = "", compteFentes = 0;
-function preparerFentes(n, taille) {
-  for (const f of fentes) { scene.remove(f, f.target); if (f.shadow.map) f.shadow.map.dispose(); f.dispose(); }
-  fentes.length = 0; cleFentes = "";
-  for (const e of ENCASTRES) e.p.intensity = e.i;
-  for (let k = 0; k < Math.min(n, ENCASTRES.length); k++) {
-    const f = new THREE.SpotLight(COUL_ENCASTRE, 0, 0, 1.2, 0.85, 2);
-    f.castShadow = true; f.shadow.mapSize.set(taille, taille); f.shadow.radius = taille > 600 ? 3 : 2;
-    f.shadow.bias = -0.0006; f.shadow.normalBias = 0.02; f.shadow.camera.near = 0.08; f.shadow.camera.far = 7;
-    scene.add(f, f.target); fentes.push(f);
+// ordre « bien réparti » des encastrés (maquette : on allume des sources partout plutôt qu'au centre)
+const REPARTIS = (() => {
+  const o = [], reste = ENCASTRES.map((_, k) => k);
+  let d = reste.map((k) => (ENCASTRES[k].x - (bx0 + bx1) / 2) ** 2 + (ENCASTRES[k].y - (by0 + by1) / 2) ** 2);
+  while (reste.length) {
+    let m = 0; for (let k = 1; k < reste.length; k++) if (d[k] > d[m]) m = k;
+    const c = ENCASTRES[reste[m]]; o.push(reste[m]); reste.splice(m, 1); d.splice(m, 1);
+    d = d.map((v, k) => Math.min(v, (ENCASTRES[reste[k]].x - c.x) ** 2 + (ENCASTRES[reste[k]].y - c.y) ** 2));
   }
+  return o;
+})();
+const BASSINS = { ombre: null, simple: null, jour: null };
+function creerBassin(sources, n, couleur, angle, ombre, taille) {
+  const b = { sources, places: [] };
+  for (let k = 0; k < Math.min(n, sources.length); k++) {
+    const l = new THREE.SpotLight(couleur, 0, 0, angle, couleur === COUL_JOUR ? 1 : 0.7, 2);
+    if (ombre) {
+      l.castShadow = true; l.shadow.mapSize.set(taille, taille); l.shadow.radius = taille > 600 ? 3 : 2;
+      l.shadow.bias = -0.0006; l.shadow.normalBias = 0.02; l.shadow.camera.near = 0.08; l.shadow.camera.far = 7;
+    }
+    scene.add(l, l.target); b.places.push({ l, k: -1, veut: -1, f: 0 });
+  }
+  return b;
 }
-function majFentes(force) {
-  if (!fentes.length || (!force && ++compteFentes % 8)) return;
-  const cx = mode === "visite" ? joueur.x + Math.cos(joueur.cap) * 40 : orbite.cx, cy = mode === "visite" ? joueur.y + Math.sin(joueur.cap) * 40 : orbite.cy;
-  const choix = ENCASTRES.map((e, k) => [(e.x - cx) ** 2 + (e.y - cy) ** 2, k]).sort((a, b) => a[0] - b[0]).slice(0, fentes.length).map((a) => a[1]).sort((a, b) => a - b);
-  const cle = choix.join(","); if (cle === cleFentes && !force) return; cleFentes = cle;
-  for (const e of ENCASTRES) e.p.intensity = e.i;
-  choix.forEach((k, j) => { const e = ENCASTRES[k], f = fentes[j];
-    f.position.copy(e.p.position); f.target.position.copy(e.p.target.position); f.target.updateMatrixWorld(); f.intensity = e.i; e.p.intensity = 0; });
-  renderer.shadowMap.needsUpdate = true;
+function preparerBassins(Q) {
+  for (const b of Object.values(BASSINS)) if (b) for (const p of b.places) { scene.remove(p.l, p.l.target); if (p.l.shadow.map) p.l.shadow.map.dispose(); p.l.dispose(); }
+  BASSINS.ombre = creerBassin(ENCASTRES, Q.fentes, COUL_ENCASTRE, 0.9, true, Q.carte);
+  BASSINS.simple = creerBassin(ENCASTRES, Q.feux - Q.fentes, COUL_ENCASTRE, 0.9, false);
+  BASSINS.jour = creerBassin(FENETRES, Q.jour, COUL_JOUR, 0.95, false);
+}
+function viser(b, choix) {                // choix : indices de sources voulues (au plus une par place)
+  const libres = [];
+  for (const p of b.places) if (!choix.includes(p.veut)) libres.push(p);
+  for (const k of choix) if (!b.places.some((p) => p.veut === k)) { const p = libres.shift(); if (p) p.veut = k; }
+  for (const p of libres) p.veut = -1;
+}
+let tLum = 0;
+function majLumieres(x, y, maquette, instant) {
+  const proches = (src, n) => src.map((s, k) => [(s.x - x) ** 2 + (s.y - y) ** 2, k]).sort((a, b) => a[0] - b[0]).slice(0, n).map((a) => a[1]);
+  const no = BASSINS.ombre.places.length, ns = BASSINS.simple.places.length;
+  const enc = maquette ? REPARTIS.slice(0, no + ns) : proches(ENCASTRES, no + ns);
+  viser(BASSINS.ombre, enc.slice(0, no)); viser(BASSINS.simple, enc.slice(no));
+  viser(BASSINS.jour, maquette ? [] : proches(FENETRES, BASSINS.jour.places.length));
+  // fondu en temps réel (même si l'image est lente) : ¼ s pour éteindre une place, ¼ s pour la rallumer ailleurs
+  const t = performance.now(), dt = instant ? 2 : Math.min(2, (t - tLum) / 250); tLum = t;
+  for (const b of Object.values(BASSINS)) for (const p of b.places) {
+    if (p.k !== p.veut) {
+      const reste = dt - p.f; p.f = Math.max(0, p.f - dt);
+      if (p.f === 0) {
+        p.k = p.veut;
+        if (p.k >= 0) { const s = b.sources[p.k]; p.l.position.copy(s.pos); p.l.target.position.copy(s.cible); p.l.target.updateMatrixWorld(); p.l.updateMatrixWorld();
+          if (p.l.castShadow) renderer.shadowMap.needsUpdate = true; }
+        p.f = instant ? 1 : p.k >= 0 ? Math.min(1, Math.max(0, reste)) : 0;     // le temps qui reste sert à rallumer
+      }
+    } else if (p.k >= 0) p.f = Math.min(1, p.f + dt);
+    p.l.intensity = p.k >= 0 ? b.sources[p.k].i * p.f : 0;
+  }
+  ambiance.intensity = maquette ? 1.0 : 0.25; soleil.intensity = maquette ? 1.6 : 0;
 }
 function ombresPortees() {               // qui projette et reçoit des ombres (le verre et les voiles ne projettent pas)
   for (const g of [gMurs, gMob, gPlafond, gSols, gCoupe]) g.traverse((o) => {
@@ -622,6 +662,8 @@ function ombresPortees() {               // qui projette et reçoit des ombres (
   });
 }
 ombresPortees();
+preparerBassins(QUALITES[qualite]);
+majLumieres(S.depart.x, S.depart.y, false, true);
 
 // ---------- reflets : une image à 360° de la pièce sert d'environnement (miroirs, métal, verre)
 {
@@ -660,38 +702,44 @@ const POST = (() => {
   const ao1 = cible(2, 2), ao2 = cible(2, 2), h1 = cible(2, 2), h2 = cible(2, 2);
   const VS = "varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }";
   const prof = `#include <packing>
-    uniform sampler2D tProf; uniform float pres, loin; uniform vec2 proj;
+    uniform sampler2D tProf; uniform float pres, loin; uniform vec2 proj, texel;
     float vz(vec2 uv) { return perspectiveDepthToViewZ(texture2D(tProf, uv).x, pres, loin); }
-    vec3 vpos(vec2 uv) { float z = vz(uv); return vec3((uv * 2.0 - 1.0) / proj * -z, z); }`;
-  const U = () => ({ tProf: { value: rt.depthTexture }, pres: { value: camera.near }, loin: { value: camera.far }, proj: { value: new THREE.Vector2(1, 1) } });
+    // position (repère caméra) au centre exact du texel lu : sinon une surface vue de biais paraît bosselée
+    vec3 vpos(vec2 uv) { uv = (floor(uv / texel) + 0.5) * texel; float z = vz(uv); return vec3((uv * 2.0 - 1.0) / proj * -z, z); }
+    float vzc(vec2 uv) { return vz((floor(uv / texel + 0.25) + 0.5) * texel); }`;
+  const texel = new THREE.Vector2(1, 1);
+  const U = () => ({ tProf: { value: rt.depthTexture }, pres: { value: camera.near }, loin: { value: camera.far }, proj: { value: new THREE.Vector2(1, 1) }, texel: { value: texel } });
   const passe = (fs, u) => new THREE.ShaderMaterial({ vertexShader: VS, fragmentShader: fs, uniforms: u, depthTest: false, depthWrite: false, toneMapped: false });
   const mAO = passe(prof + `
-    uniform vec2 texel; uniform float rayon, force; varying vec2 vUv;
+    uniform float rayon, force; varying vec2 vUv;
     void main() {
-      if (texture2D(tProf, vUv).x >= 1.0) { gl_FragColor = vec4(1.0); return; }
-      vec3 p = vpos(vUv);
-      vec3 a1 = vpos(vUv + vec2(texel.x, 0.0)) - p, a0 = p - vpos(vUv - vec2(texel.x, 0.0));
-      vec3 b1 = vpos(vUv + vec2(0.0, texel.y)) - p, b0 = p - vpos(vUv - vec2(0.0, texel.y));
+      vec2 c = (floor(vUv / texel + 0.25) + 0.5) * texel;     // un texel plein, sans ambiguïté
+      if (texture2D(tProf, c).x >= 1.0) { gl_FragColor = vec4(1.0); return; }
+      vec3 p = vpos(c);
+      vec3 a1 = vpos(c + vec2(texel.x, 0.0)) - p, a0 = p - vpos(c - vec2(texel.x, 0.0));
+      vec3 b1 = vpos(c + vec2(0.0, texel.y)) - p, b0 = p - vpos(c - vec2(0.0, texel.y));
       vec3 n = normalize(cross(abs(a1.z) < abs(a0.z) ? a1 : a0, abs(b1.z) < abs(b0.z) ? b1 : b0));
       float h = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
       vec2 r = rayon * proj * 0.5 / -p.z; r *= min(1.0, 0.12 / r.y);
       float occ = 0.0;
       for (int i = 0; i < 12; i++) {
         float t = (float(i) + h) / 12.0, a = h * 6.2832 + float(i) * 2.39996;
-        vec3 v = vpos(vUv + vec2(cos(a), sin(a)) * r * t * t) - p;
+        vec3 v = vpos(c + vec2(cos(a), sin(a)) * r * t * t) - p;
         float vv = dot(v, v), f = max(0.0, 1.0 - vv / (rayon * rayon));
         occ += f * max(0.0, dot(v, n) * inversesqrt(vv + 1e-6) - 0.12);
       }
       float ao = clamp(1.0 - force * occ / 12.0, 0.0, 1.0);
       gl_FragColor = vec4(vec3(ao * ao), 1.0);
-    }`, { ...U(), texel: { value: new THREE.Vector2() }, rayon: { value: 0.45 }, force: { value: 1.6 } });
+    }`, { ...U(), rayon: { value: 0.5 }, force: { value: 2.4 } });
   const mFlou = passe(prof + `
     uniform sampler2D tAO; uniform vec2 dir; varying vec2 vUv;
     void main() {
-      float z0 = -vz(vUv), s = 0.0, w = 0.0;
+      // poids selon l'écart au plan local (pente de profondeur) : le flou suit aussi les surfaces vues de biais
+      float z0 = -vzc(vUv), pente = 0.5 * (-vzc(vUv + dir) + vzc(vUv - dir)), s = 0.0, w = 0.0;
+      if (abs(pente) > 0.1 * z0) pente = 0.0;
       for (int i = -4; i <= 4; i++) {
-        vec2 uv = vUv + dir * float(i); float z = -vz(uv);
-        float k = exp(-float(i * i) / 10.0) * max(0.0, 1.0 - abs(z - z0) / (0.04 * z0 + 0.02));
+        vec2 uv = vUv + dir * float(i); float z = -vzc(uv);
+        float k = exp(-float(i * i) / 10.0) * max(0.0, 1.0 - abs(z - z0 - pente * float(i)) / (0.015 * z0 + 0.01));
         s += texture2D(tAO, uv).r * k; w += k;
       }
       gl_FragColor = vec4(vec3(w > 1e-4 ? s / w : 1.0), 1.0);
@@ -702,7 +750,7 @@ const POST = (() => {
               + texture2D(tCouleur, vUv + texel * vec2(-1.0, 1.0)).rgb + texture2D(tCouleur, vUv + texel).rgb) * 0.25;
       float l = max(c.r, max(c.g, c.b));
       gl_FragColor = vec4(c * smoothstep(seuil, 1.0, l), 1.0);
-    }`, { tCouleur: { value: rt.texture }, texel: { value: new THREE.Vector2() }, seuil: { value: 0.8 } });
+    }`, { tCouleur: { value: rt.texture }, texel: { value: new THREE.Vector2() }, seuil: { value: 0.9 } });
   const mGauss = passe(`uniform sampler2D tSrc; uniform vec2 dir; varying vec2 vUv;
     void main() {
       vec3 s = texture2D(tSrc, vUv).rgb * 0.2270;
@@ -712,17 +760,18 @@ const POST = (() => {
       s += (texture2D(tSrc, vUv + dir * 4.0).rgb + texture2D(tSrc, vUv - dir * 4.0).rgb) * 0.0162;
       gl_FragColor = vec4(s, 1.0);
     }`, { tSrc: { value: null }, dir: { value: new THREE.Vector2() } });
-  const mFinal = passe(`uniform sampler2D tCouleur, tAO, tHalo; uniform float aoForce, haloForce, vignette; varying vec2 vUv;
+  const mFinal = passe(`uniform sampler2D tCouleur, tAO, tHalo; uniform float aoForce, haloForce, vignette, voirAO; varying vec2 vUv;
     void main() {
-      vec3 c = texture2D(tCouleur, vUv).rgb;
+      vec3 c = mix(texture2D(tCouleur, vUv).rgb, vec3(1.0), voirAO);
       c *= mix(1.0, texture2D(tAO, vUv).r, aoForce);
       c += texture2D(tHalo, vUv).rgb * haloForce;
       vec2 d = vUv - 0.5; c *= 1.0 - vignette * dot(d, d) * 1.6;
       gl_FragColor = vec4(c, 1.0);
       #include <encodings_fragment>
+      gl_FragColor.rgb = mix(gl_FragColor.rgb, smoothstep(0.0, 1.0, gl_FragColor.rgb), 0.15);   // un peu de contraste
       gl_FragColor.rgb += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
     }`, { tCouleur: { value: rt.texture }, tAO: { value: ao1.texture }, tHalo: { value: h1.texture },
-          aoForce: { value: 1 }, haloForce: { value: 0.35 }, vignette: { value: 0.22 } });
+          aoForce: { value: 1 }, haloForce: { value: 0.35 }, vignette: { value: 0.22 }, voirAO: { value: 0 } });
   const ecran = new THREE.Mesh(new THREE.PlaneGeometry(2, 2)), sc = new THREE.Scene(), cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   ecran.frustumCulled = false; sc.add(ecran);
   const tirer = (m, cib) => { ecran.material = m; renderer.setRenderTarget(cib); renderer.render(sc, cam); };
@@ -732,7 +781,7 @@ const POST = (() => {
       W = w; Hh = h; rt.setSize(w, h);
       const lD = Math.max(1, w >> 1), hD = Math.max(1, h >> 1), lQ = Math.max(1, w >> 2), hQ = Math.max(1, h >> 2);
       ao1.setSize(lD, hD); ao2.setSize(lD, hD); h1.setSize(lQ, hQ); h2.setSize(lQ, hQ);
-      mAO.uniforms.texel.value.set(1 / w, 1 / h); mSeuil.uniforms.texel.value.set(1.5 / w, 1.5 / h);
+      texel.set(1 / w, 1 / h); mSeuil.uniforms.texel.value.set(1.5 / w, 1.5 / h);
     },
     rendre(Q) {
       renderer.setRenderTarget(rt); renderer.render(scene, camera);
@@ -748,10 +797,10 @@ const POST = (() => {
         mGauss.uniforms.tSrc.value = h1.texture; mGauss.uniforms.dir.value.set(1.5 * 4 / W, 0); tirer(mGauss, h2);
         mGauss.uniforms.tSrc.value = h2.texture; mGauss.uniforms.dir.value.set(0, 1.5 * 4 / Hh); tirer(mGauss, h1);
       }
-      mFinal.uniforms.aoForce.value = Q.ao ? 1 : 0; mFinal.uniforms.haloForce.value = Q.halo ? 0.35 : 0;
+      mFinal.uniforms.aoForce.value = Q.ao ? 1 : 0; mFinal.uniforms.haloForce.value = Q.halo ? 0.3 : 0;
       tirer(mFinal, null);
     },
-    mAO, mFinal, rt,
+    mAO, mFlou, mFinal, rt,
   };
 })();
 function choisirQualite(q, manuel) {
@@ -759,7 +808,8 @@ function choisirQualite(q, manuel) {
   qualite = q; const Q = QUALITES[q];
   if (manuel) { qualiteManuelle = true; try { localStorage.setItem("visite3d-qualite", q); } catch (_) {} }
   appliquerFinis(Q.fini);
-  preparerFentes(Q.fentes, Q.carte); majFentes(true); renderer.shadowMap.needsUpdate = true;
+  preparerBassins(Q); majLumieres(mode === "visite" ? joueur.x : orbite.cx, mode === "visite" ? joueur.y : orbite.cy, mode !== "visite", true);
+  renderer.shadowMap.needsUpdate = true;
   renderer.setPixelRatio(Math.min(devicePixelRatio, Q.pr));
   const b = $("t-qual"); b.textContent = Q.nom; b.setAttribute("aria-label", "Qualité du rendu : " + Q.nom.toLowerCase());
   if (typeof taille === "function" && camera.aspect) taille();
@@ -1030,7 +1080,8 @@ plan.addEventListener("pointerdown", (e) => {
 function choisirMode(m) {
   mode = m; gPlafond.visible = m === "visite"; gMurs.visible = m === "visite"; gCoupe.visible = m !== "visite";
   gExterieur.visible = m === "visite"; scene.background = m === "visite" ? ciel : FOND_MAQUETTE;
-  majFentes(true); renderer.shadowMap.needsUpdate = true;
+  scene.fog.near = m === "visite" ? 10 : 1e4; scene.fog.far = m === "visite" ? 70 : 2e4;
+  renderer.shadowMap.needsUpdate = true;
   stop(); vol = null; voile.style.opacity = "0";
   $("m-visite").setAttribute("aria-pressed", String(m === "visite"));
   $("m-maquette").setAttribute("aria-pressed", String(m === "maquette"));
@@ -1177,7 +1228,9 @@ function boucle(t) {
     if (av || lat) { stop(); vol = null; voile.style.opacity = "0"; marcher(av, lat, dt); }
     avancerTrajets(dt);
   }
-  placerCamera(); majFentes(); renderer.info.reset();
+  placerCamera(); renderer.info.reset();
+  if (mode === "visite") majLumieres(joueur.x + Math.cos(joueur.cap) * 40, joueur.y + Math.sin(joueur.cap) * 40, false);
+  else majLumieres(orbite.cx, orbite.cy, true);
   if (POST) POST.rendre(QUALITES[qualite]); else renderer.render(scene, camera);
   dessinerPlan(); majIci(); majEtiquettes(); surveillerCadence(t);
   requestAnimationFrame(boucle);
@@ -1185,7 +1238,7 @@ function boucle(t) {
 requestAnimationFrame(boucle);
 window.VISITE_PRETE = true;
 // accès pour les tests automatiques (Playwright)
-Object.assign(window, { joueur, orbite, choisirMode, choisirQualite, masquerAstuce, solSous, allerA, vx, vy, plan, scene, camera, renderer, MAT, POST });
+Object.assign(window, { joueur, orbite, choisirMode, choisirQualite, masquerAstuce, solSous, allerA, vx, vy, plan, scene, camera, renderer, MAT, POST, QUALITES });
 Object.defineProperty(window, "qualite", { get: () => qualite });
 Object.defineProperty(window, "trajet", { get: () => trajet });
 Object.defineProperty(window, "mode", { get: () => mode });

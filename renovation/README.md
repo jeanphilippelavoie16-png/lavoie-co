@@ -31,6 +31,7 @@
 | SS-13 | Copie de SS-12 : salle de bain refaite (porte depuis le hall, vanité simple, douche de 7 pi, bain sur pied), salle de lavage revue (laveuse à chargement par le dessus, bac dégagé, comptoir de pliage), coin lecture et travail ouvert ; feuilles P-119 et P-120 | esquisse |
 | SS-14 | Copie de SS-13 : coin lecture avec pouf et petite bibliothèque basse, bac de la salle de lavage encastré dans le comptoir de pliage en L ; feuilles P-121 et P-122 | esquisse |
 | SS-15 | Copie de SS-14 : plus de coin commun, les deux chambres agrandies, le caveau devient le walk-in de la chambre 2 ; rampe de métal côté séjour (verre gardé côté gym), rangement sous l'escalier, divan en L avec projecteur et toile ; feuilles P-123 et P-124 | esquisse |
+| SS-16 | Copie de SS-15 : salle de bain refaite autour du bain (bain sculptural centré dans une alcôve de zellige vert, niche éclairée, suspension), douche simple 36 × 48, béton poli dans tout le sous-sol ; feuilles P-125 et P-126 | esquisse |
 
 ## Études
 - `etudes/escalier/` : six emplacements possibles pour l'escalier, en haut et en bas (étude 3).
