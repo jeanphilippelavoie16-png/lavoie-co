@@ -450,7 +450,7 @@ SCENE = {
                 {"nom": "Vanité", "x": 106, "y": 204, "cap": 270},
                 {"nom": "Chambre 1", "x": 222, "y": 246, "cap": 132},
                 {"nom": "Chambre 2", "x": 262, "y": 250, "cap": 40},
-                {"nom": "Walk-in (caveau)", "x": 270, "y": 330, "cap": 100},
+                {"nom": "Walk-in (caveau isolé)", "x": 270, "y": 330, "cap": 100},
                 {"nom": "Escalier vu du séjour", "x": 330, "y": 112, "cap": 185}],
     "depart": {"x": 430, "y": 178, "cap": 168},
     # toile motorisée : on la monte et la descend dans la visite (bouton, ou toucher la toile) ; départ : enroulée
