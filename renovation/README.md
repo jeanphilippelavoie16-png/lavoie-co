@@ -53,6 +53,14 @@ et céramiques et duvet (sheen) des tissus ; ciel et terrain vus par les fenêtr
 en pouces ; par défaut 8 po sous l'allège au sous-sol, -30 ailleurs). Un matériau du catalogue peut donner son fini :
 `vernis`, `vernis_rugosite`, `duvet`. Normale coupe les ombres, l'occlusion, le halo et les finis.
 
+Commandes interactives (facultatif : toile motorisée, stores, porte de garage...) : `SCENE["commandes"]` =
+`[{"id": "toile", "nom", "libelle_bas", "libelle_haut", "pivot_z", "fraction_min": 0.03, "depart": "haut", "duree": 3.0}]`
+(`pivot_z` = z du haut de la partie mobile, c.-à-d. le bas du boîtier). Les objets du mobilier liés portent
+`"commande": "toile"` et `"anim": "etirer"` (défaut : se déroule depuis `pivot_z`) ou `"suivre"` (barre de lestage qui
+suit le bas sans se déformer) ; ils sont décrits à l'état « bas ». Un arrêt de visite peut porter
+`"commandes": {"toile": "bas"}`. Dans la visite : un bouton ▼ / ▲ au-dessus de la visite guidée, ou toucher l'objet
+(visite et maquette). Sans `commandes`, rien ne change. Pour les tests : `commander(id, "bas" | "haut" | "basculer", immediat)`.
+
 ## Matériaux
 `renovation/outils/materiaux/` : bibliothèque de matériaux réels (ambientCG, Poly Haven, CC0, ou fichiers de
 fournisseurs), décrite dans `renovation/outils/catalogue_materiaux.py` ; voir `renovation/outils/materiaux/README.md`.

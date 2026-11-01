@@ -1369,5 +1369,7 @@ Object.defineProperty(window, "qualite", { get: () => qualite });
 Object.defineProperty(window, "trajet", { get: () => trajet });
 Object.defineProperty(window, "mode", { get: () => mode });
 // commandes : commander(id, "bas" | "haut" | "basculer", immediat) ; etatsCommandes = {id: état visé}
-Object.assign(window, { commander, etatsCommandes, commandeSous, fractionCommande: (id) => CMD[id] && CMD[id].f });
+Object.assign(window, { commander, etatsCommandes, commandeSous, animerCommandes, commandes: CMD,
+  fractionCommande: (id) => CMD[id] && CMD[id].f,
+  fixerFractionCommande: (id, f) => { const cm = CMD[id]; if (!cm) return; cm.anim = null; cm.f = f; poserCommande(cm); renderer.shadowMap.needsUpdate = true; majCommandes(); } });
 </script>
