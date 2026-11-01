@@ -45,6 +45,14 @@ plafond (un doigt tourne, deux doigts zooment). Les escaliers projetés (`etat: 
 `peinture` / `accents` dans `scene_3d.py` colorent les murs pièce par pièce. Les visites déjà publiées de SS-02 et SS-03
 gardent l'ancienne visionneuse tant qu'on ne les régénère pas.
 
+Rendu (bouton **Haute / Normale** en haut ; Haute par défaut, une tablette lente passe seule en Normale) : image rendue
+dans une cible multi-échantillonnée puis finie par passes (occlusion ambiante, halo des sources claires, vignette) ;
+encastrés 3000 K et lumière du jour bleutée par les fenêtres, attribués aux sources les plus proches du visiteur (nombre
+de lumières fixe, avec fondu) ; ombres douces des encastrés les plus proches ; vernis (clearcoat) des planchers, comptoirs
+et céramiques et duvet (sheen) des tissus ; ciel et terrain vus par les fenêtres (`sol_exterieur` dans `scene_3d.py`,
+en pouces ; par défaut 8 po sous l'allège au sous-sol, -30 ailleurs). Un matériau du catalogue peut donner son fini :
+`vernis`, `vernis_rugosite`, `duvet`. Normale coupe les ombres, l'occlusion, le halo et les finis.
+
 ## Matériaux
 `renovation/outils/materiaux/` : bibliothèque de matériaux réels (ambientCG, Poly Haven, CC0, ou fichiers de
 fournisseurs), décrite dans `renovation/outils/catalogue_materiaux.py` ; voir `renovation/outils/materiaux/README.md`.

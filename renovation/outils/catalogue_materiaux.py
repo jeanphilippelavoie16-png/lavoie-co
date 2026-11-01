@@ -35,7 +35,7 @@ CATALOGUE = {
     "bois_recupere": {"source": "polyhaven", "id": "wood_cabinet_worn_long", "taille_m": 1.0, "usage": "bois de récupération foncé (table de la salle à manger du RDC)"},
     "inox": {"source": "ambientcg", "id": "Metal009", "taille_m": 0.6, "metal": 1.0, "usage": "frigo, éviers, électros"},
     "laiton": {"source": "ambientcg", "id": "Metal048A", "taille_m": 0.4, "metal": 1.0, "usage": "robinet du bar, poignées"},
-    "beton_poli": {"source": "ambientcg", "id": "Concrete016", "taille_m": 2.4, "ajustement": {"luminosite": 1.24, "saturation": 0.1},
+    "beton_poli": {"source": "ambientcg", "id": "Concrete016", "taille_m": 2.4, "ajustement": {"luminosite": 1.06, "saturation": 0.1},
                    "rugosite": 0.34, "vernis": 0.45, "vernis_rugosite": 0.22,
                    "usage": "béton poli gris pâle, léger marbrage (dalle meulée et densifiée ou chape polie) — tout le sous-sol de SS-16"},
     "platre": {"source": "ambientcg", "id": "Plaster001", "taille_m": 1.5, "relief_seul": True,

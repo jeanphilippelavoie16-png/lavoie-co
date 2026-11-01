@@ -106,3 +106,5 @@ autre teinte, alignées sur les cloisons).
 `3d/visite.html` — arrêts refaits : Salle de bain (entrée), Le bain (alcôve de zellige), Douche simple, Vanité. Béton
 poli partout (matériau `beton_poli`, ambientCG Concrete016, CC0). Nouveaux modèles : bain sculptural (modèle procédural
 du projet), suspension globe, plante en pot, panier d'osier (Poly Haven, CC0).
+Au-dessus du divan, le grand cadre montre une œuvre abstraite générique (champs argile, sable et sauge) : aucune photo
+personnelle n'est intégrée à la maquette.

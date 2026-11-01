@@ -194,12 +194,14 @@ M += [B(438.5, 64, 443.5, 156, 91.5, 96, "carbone"), B(440.8, 68, 441.2, 152, 41
       B(440.8, 68, 441.2, 152, 86.5, 91.5, "carbone"), B(440.4, 67.5, 441.6, 152.5, 40, 41, "carbone")]
 M += [A(428, 82, 446, 138, 4, 17, "placage", r=1, b=0.4), A(434, 92, 443, 128, 17, 20, "carbone", r=1, b=0.6),
       MOD("plante_sansevieria", 438, 72)]
-# grand cadre photo sur le mur avant, au-dessus du dossier du divan : cadre noir, passe-partout blanc, lampe laiton
+# grand cadre sur le mur avant, au-dessus du dossier du divan : cadre noir, passe-partout blanc ; œuvre abstraite générique
+# (champs de couleur argile, sable et sauge) — aucune photo personnelle dans la maquette
 Z = 10
 M += [B(288.5, 10, 325.5, 10.8, 21.5 + Z, 80.25 + Z, "blanc"),
       B(287, 10, 288.5, 11.5, 20 + Z, 81.75 + Z, "metal"), B(325.5, 10, 327, 11.5, 20 + Z, 81.75 + Z, "metal"),
       B(287, 10, 327, 11.5, 20 + Z, 21.5 + Z, "metal"), B(287, 10, 327, 11.5, 80.25 + Z, 81.75 + Z, "metal"),
-      {"forme": "image", "cle": "photo_salon", "x": 307, "y": 10.85, "z0": 25.5 + Z, "z1": 76.25 + Z, "larg": 29, "face": "+y"}]
+      B(292.5, 10.8, 321.5, 11.0, 25.5 + Z, 76.25 + Z, "art-sable"), B(294.5, 11.0, 319.5, 11.15, 52 + Z, 73.5 + Z, "art-argile"),
+      B(294.5, 11.0, 319.5, 11.15, 29 + Z, 49 + Z, "art-sauge"), B(294.5, 11.0, 319.5, 11.2, 49.6 + Z, 50.6 + Z, "laque-marine")]
 # --- escalier : rampe de métal simple côté séjour (barreaux carrés de ¾ po à 4½ po, main courante noire)
 XR = 271
 zl = lambda y: 0.75 * (150 - y) + 7.5                       # ligne des nez de marche le long du côté séjour
@@ -395,15 +397,14 @@ SCENE = {
         "Bleu-gris": ["#8FA1A8", "murs de la salle de lavage (≈ Benjamin Moore Boothbay Gray HC-165)"],
         "Marine": ["#2E3B4E", "armoires de la salle de lavage (≈ Benjamin Moore Hale Navy HC-154)", "laque-marine"],
         "Anthracite": ["#3E4042", "murs pleins de la salle d'entraînement (≈ Benjamin Moore Wrought Iron 2124-10)"],
-        "Sauge": ["#A6AF9A", "chambre 2 (≈ Benjamin Moore October Mist 1495)"],
-        "Argile": ["#C39A82", "mur de tête de lit de la chambre 1 (terracotta adouci, à choisir sur nuancier)"],
-        "Greige": ["#D9D2C8", "murs de la salle de bain hors céramique"],
+        "Sauge": ["#A6AF9A", "chambre 2 (≈ Benjamin Moore October Mist 1495)", "art-sauge"],
+        "Argile": ["#C39A82", "mur de tête de lit de la chambre 1 (terracotta adouci, à choisir sur nuancier)", "art-argile"],
+        "Greige": ["#D9D2C8", "murs de la salle de bain hors céramique", "art-sable"],
     },
     "peinture": {"piece-SS-LAVAGE": "Bleu-gris", "piece-SS-GYM": "Anthracite", "piece-SS-CH2": "Sauge",
                  "piece-SS-GR2": "Sauge", "piece-SS-SDB": "Greige"},
     "accents": [{"piece": "piece-SS-VEST", "mur": "mur-SS-P11", "peinture": "Vert forêt"},
                 {"piece": "piece-SS-CH1", "mur": "mur-SS-003", "peinture": "Argile"}],
-    "images": {"photo_salon": "../prive/photo_salon.jpg"},    # photo personnelle : hors du dépôt (renovation/prive/)
     "mobilier": M,
     "revetements": [],
     "lumieres": [{"x": 300, "y": 80}, {"x": 404, "y": 90}, {"x": 368, "y": 196}, {"x": 424, "y": 190}, {"x": 400, "y": 126}, {"x": 190, "y": 182},
