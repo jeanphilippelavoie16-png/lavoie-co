@@ -464,8 +464,8 @@ def main(dossier):
                         cadres = [(f["y0"], f["y0"] + c, 0.5, 80), (f["y1"] - c, f["y1"], 0.5, 80), (f["y0"], f["y1"], 0.5, 2), (f["y0"], f["y1"], 78.5, 80)]
                         portes += [{"x0": f["x0"] - 0.2, "x1": f["x1"] + 0.2, "y0": a0, "y1": a1, "z0": z0, "z1": z1, "mat": "metal"} for a0, a1, z0, z1 in cadres]
                     portes.append({**f, "z0": 38, "z1": 40, "mat": "metal", **({"x0": f["x1"] - 4, "x1": f["x1"] - 3} if long_x else {"y0": f["y1"] - 4, "y1": f["y1"] - 3})})
-                elif m["type"] != "int":
-                    portes += porte_fermee(m, o, t)
+                elif m["type"] != "int" and not o.get("interieure"):
+                    portes += porte_fermee(m, o, t)    # porte extérieure (sauf si elle donne sur une pièce intérieure)
                 else:
                     f.update({"z0": 0.5, "z1": 80, "mat": "porte"})
                     portes.append(f)
