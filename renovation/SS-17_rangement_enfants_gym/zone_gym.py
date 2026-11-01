@@ -103,8 +103,8 @@ def appliquer_scene(S, h):
     M += [B(XM, 12, XM + 0.5, 117.25, 10, 84, "miroir"), B(XM, 12, XM + 0.75, 117.25, 9.5, 10, "metal")]
     M += [B(XM + 0.5, y - 0.06, XM + 0.53, y + 0.06, 10, 84, "carbone") for y in (38.3, 64.6, 90.9)]
     # porte du lavage (fermée dans la 3D) : miroir collé sur sa face gym, presque à fleur du mur-miroir ; cadre noir
-    # (chambranle recouvert) ; poignée noire côté libre (pentures du côté du hall)
-    M += [B(112.9, 120.55, 114.1, 149.45, 0.5, 80, "porte"), B(114.1, 120.9, 114.2, 149.1, 6, 78, "miroir")]
+    # (chambranle et chant de la porte en noir) ; poignée noire côté libre (pentures du côté du hall)
+    M += [B(112.9, 120.55, 114.1, 149.45, 0.5, 80, "metal"), B(114.1, 120.75, 114.2, 149.25, 1.5, 79.5, "miroir")]
     M += [B(XM, 117.35, XM + 0.75, 120.15, 0, 82.65, "metal"), B(XM, 149.85, XM + 0.75, 152.65, 0, 82.65, "metal"),
           B(XM, 117.35, XM + 0.75, 152.65, 79.9, 82.65, "metal")]
     M += [T([(114.2, 124, 38), (116.4, 124, 38), (116.4, 129, 38)], 0.35, "metal", bouts=True),
@@ -131,7 +131,7 @@ def appliquer_scene(S, h):
     M += [B(210.5, YA, 223.5, 10.6, z - 0.5, z + 0.5, "metal") for z in (62, 68, 74)]
     for x, z in ((213, 74), (220, 74), (213, 68), (217, 68), (220, 68), (216.5, 62), (220.5, 62)):
         M.append(T([(x, 10.6, z), (x, 12.6, z), (x, 13.2, z + 1.2)], 0.22, "metal", bouts=True))
-    M += [C(213, 13.2, 2.6, 49, 73, "tissu"), C(220, 13.2, 2.6, 49, 73, "art-sable"),               # tapis de yoga roulés
+    M += [C(213, 13.2, 2.6, 49, 73, "cuir"), C(220, 13.2, 2.6, 49, 73, "carbone"),               # tapis de yoga roulés
           T([(213, 12.6, 73.8), (213, 13.2, 75.6)], 0.3, "carbone"), T([(220, 12.6, 73.8), (220, 13.2, 75.6)], 0.3, "carbone")]
     M += [TOR(217, 12.7, 64.6, 2.8, 0.28, "cuir"), TOR(217, 12.9, 64.2, 2.4, 0.28, "carbone"),       # élastiques
           TOR(220, 12.8, 64.4, 2.2, 0.35, "pneu")]                                                    # corde à sauter enroulée
@@ -182,7 +182,7 @@ def appliquer_scene(S, h):
     # --- visite ---------------------------------------------------------------------------------------------------
     S["visites"][:] = [v for v in S["visites"] if v["nom"] not in SS16_VISITES_GYM]
     i = next((k + 1 for k, v in enumerate(S["visites"]) if v["nom"].startswith("Gym (porte")), len(S["visites"]))
-    S["visites"][i:i] = [{"nom": "Gym — mur-miroir et zone au sol", "x": 200, "y": 150, "cap": 200},
+    S["visites"][i:i] = [{"nom": "Gym — mur-miroir et zone au sol", "x": 204, "y": 130, "cap": 203},
                          {"nom": "Gym — cardio", "x": 150, "y": 150, "cap": 285}]
 
     # --- palette --------------------------------------------------------------------------------------------------

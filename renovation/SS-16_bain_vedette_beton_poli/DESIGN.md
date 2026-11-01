@@ -84,9 +84,8 @@ mur est fourré de 2½ po comme avant ; il couvre le mur d'accent (≈ 88½ × 9
 | **B. Lattes de bois** | **Lattes verticales de chêne** (1½ × ¾ po, pas de 2¼ po, fond noir mat) ou **bois de grange** (rappel du rez-de-chaussée), **scellées** (huile-cire dure ou vernis marin mat), au-dessus d'une **base imperméable sans joints** (enduit type tadelakt blanc chaud ou béton ciré) jusqu'à l'appui de la niche (≈ 33½ po), niche doublée d'enduit | Très chaleureux, lien direct avec le chêne du sous-sol et le bois du haut ; acoustique plus douce | Bois près d'un bain : ventilation obligatoire, éclaboussures sur la base seulement, entretien du fini ; poussière entre les lattes. La base n'est **pas** en céramique (le client n'en veut pas) |
 | **C. Enduit à la chaux / béton ciré** | **Enduit à la chaux imperméable de type tadelakt** (poli à la pierre, savon noir) ou **béton ciré** (microciment + vernis), **grège** ou blanc chaud, **sans aucun joint**, du plancher au plafond et dans la niche | Répond directement au **béton poli** du plancher : un seul geste minéral, doux et nuagé ; aucun joint à entretenir | Main-d'œuvre spécialisée (peu d'artisans du tadelakt) ; fissures fines possibles si le support bouge ; savon doux seulement ; retouches difficiles à rendre invisibles |
 
-Captures (même point de vue que l'arrêt « Le bain (alcôve de pierre) ») : option A dans la visite ; options B et C
-dans des copies de travail (pas dans le projet) :
-`/tmp/claude-0/-home-user-lavoie-co/a2f554a7-a4f7-5946-bdd4-2eb9d5a22192/scratchpad/ss16_fix/v1_optB_0.png` et `/tmp/claude-0/-home-user-lavoie-co/a2f554a7-a4f7-5946-bdd4-2eb9d5a22192/scratchpad/ss16_fix/v1_optC_0.png`.
+Captures (même point de vue que l'arrêt « Le bain (alcôve de pierre) ») : l'option A est dans la visite ; les options
+B et C ont été rendues dans des copies de travail, hors du projet, pour la comparaison avec le client.
 
 ## Le coin cinéma (P-125, séjour)
 ```
@@ -308,3 +307,6 @@ grandeur par `outils/materiaux/pierre_travertin/calepinage.py`). Au-dessus du di
 famille** fournies par le client : les fichiers sont dans `renovation/prive/famille/` (hors de git) et `generer_3d.py`
 les intègre à `3d/visite.html` (le client accepte que la visite soit publiée ; `SANS_PRIVE=1` produit une version sans
 les photos, cadres vides).
+Corrections de la maquette (audit) : robinet de la vasque reculé du mur (bec dans le bon sens), toilette suspendue posée
+à la bonne hauteur contre le mur (plaque de chasse au-dessus), serviettes hors de la vasque, panneaux du bas des murs de
+la douche épaissis (⅝ po), arrêt « Douche simple » placé devant la porte de la douche.

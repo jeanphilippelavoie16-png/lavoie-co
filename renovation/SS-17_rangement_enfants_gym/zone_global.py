@@ -115,7 +115,8 @@ def _vestiaire(h):
     baies = [(290.69, "laque-vert", "laque-vert", "cuir", "carbone"),        # baie A : 6 ans (vert)
              (309.31, "laque-marine", "laque-marine", "tissu", "pneu")]      # baie B : 4 ans (marine)
     for xc, plaque, habit, sac, botte in baies:
-        out += [B(xc - 3.5, Y0 - 0.1, xc + 3.5, Y0 + 0.15, 66.5, 69.25, plaque)]                       # plaquette au prénom
+        out += [B(xc - 3.5, Y1 - 0.75, xc + 3.5, Y1 - 0.5, 56.5, 60.5, "placage"),                   # plaquette au prénom
+                B(xc - 3.5, Y1 - 0.85, xc + 3.5, Y1 - 0.75, 56.5, 57.5, plaque)]                        # (à sa couleur)
         out += [A(xc - 8.3, Y0 + 0.6, xc + 8.3, Y1 - 1, 3.25, 4.75, "caoutchouc-noir", r=1, b=0.4)]       # bac d'égouttement
         # séchoir à bottes et mitaines (air tiède, minuterie) : socle noir, 2 tiges à bottes, 2 tiges à mitaines
         out += [A(xc - 7, 212, xc + 7, 219.5, 4.75, 8.5, "carbone", r=1.2, b=0.6),
@@ -156,7 +157,7 @@ def _vestiaire(h):
             B(398, 162, 398.75, 198, 0, 0.1, "metal")]
     x = 400.25
     while x < 445.5:
-        out.append(B(x - 0.25, 162.75, x + 0.25, 197.25, 0, 0.09, "gris"))
+        out.append(B(x - 0.25, 162.75, x + 0.25, 197.25, 0, 0.09, "metal"))
         x += 1.5
     # grille d'évacuation du VRC au plafond, devant les casiers
     out += [B(295, 186, 303, 194, 95.7, 96, "metal"), B(296, 187, 302, 193, 95.6, 95.7, "pneu")]
@@ -287,11 +288,11 @@ def appliquer_scene(S, h):
         if v["nom"] == "Vanité":
             v["nom"] = "Vanité (marchepied, crochets des garçons)"
     noms = {v["nom"] for v in V}
-    for v in [{"nom": "Casiers d'hiver des garçons", "x": 300, "y": 172, "cap": 88},
+    for v in [{"nom": "Casiers d'hiver des garçons", "x": 262, "y": 176, "cap": 48},
               {"nom": "Seuil à neige (porte de côté)", "x": 352, "y": 176, "cap": 8},
-              {"nom": "Trajet de nuit vers la salle de bain", "x": 272, "y": 214, "cap": 186},
+              {"nom": "Trajet de nuit vers la salle de bain", "x": 238, "y": 188, "cap": 178},
               {"nom": "Banc à jouets sous la toile", "x": 384, "y": 146, "cap": 322, "commandes": {"toile": "haut"}},
-              {"nom": "Paniers de linge des garçons", "x": 44, "y": 84, "cap": 340}]:
+              {"nom": "Paniers de linge des garçons", "x": 36, "y": 58, "cap": 5}]:
         if v["nom"] not in noms:
             V.append(v)
     for ligne in S["palette"]:

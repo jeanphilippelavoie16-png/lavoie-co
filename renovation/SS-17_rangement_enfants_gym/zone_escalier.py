@@ -169,7 +169,7 @@ def appliquer_scene(S, h):
     # visite : le banc vu du passage rampe ↔ divan ; le coin-cabane et sa lune
     # (depuis le séjour, entre la rampe et le divan : sous y ≈ 70, les barreaux commencent au-dessus des yeux)
     S["visites"] += [{"nom": "Banc-cabane cinéma (sous l'escalier)", "x": 304, "y": 34, "cap": 136},
-                     {"nom": "Coin-cabane et sa lune", "x": 310, "y": 30, "cap": 183}]
+                     {"nom": "Coin-cabane et sa lune", "x": 340, "y": 28, "cap": 178}]
     for p in S["palette"]:
         if p[0] == "Escalier flottant":
             p[1] = p[1].replace("dessous dégagé (béton poli continu)", "dessous : banc-cabane bas (voir ci-dessous), la vue reste ouverte au-dessus de 26 po")

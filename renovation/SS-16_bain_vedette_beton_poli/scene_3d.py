@@ -357,8 +357,8 @@ M += [MOD("suspension_globe", XC, YC, z=96 - 30, H=30)]
 # plante au bout du bain (côté hall) et petite serviette sur le muret
 M += [MOD("plante_sansevieria", XB1 - 7, YF - 9)]
 # douche simple 36 × 48 : tuile blanche, verre clair (panneau fixe + porte), profilés noirs, pomme pluie au plafond
-M += [B(10, 199.75, 10.5, YB, 0, 96, "tuile_blanche"), B(10, YB - 0.5, 46, YB, 0, 96, "tuile_blanche"),
-      B(45.5, 199.75, 46, YB, 0, 96, "tuile_blanche")]
+M += [B(10, 199.75, 10.625, YB, 0, 96, "tuile_blanche"), B(10, YB - 0.625, 46, YB, 0, 96, "tuile_blanche"),
+      B(45.375, 199.75, 46, YB, 0, 96, "tuile_blanche")]
 M += [B(10.5, 199.5, 45.5, 200.0, 0.4, 78, "verre"),                                                   # verre clair
       B(10.5, 199.3, 11.3, 200.2, 0.4, 78, "metal"), B(44.7, 199.3, 45.5, 200.2, 0.4, 78, "metal"),        # profilés muraux
       B(21.8, 199.3, 22.2, 200.2, 0.4, 78, "metal"), B(10.5, 199.3, 45.5, 200.2, 77.6, 78.4, "metal"),    # joint porte, traverse
@@ -371,15 +371,15 @@ M += [B(40.5, 214, 45.5, 238, 40, 41, "quartz"), C(43, 220, 1.3, 41, 48, "blanc"
 # vanité simple de chêne suspendue (36 po), quartz, vasque, mitigeur noir, miroir rond, deux appliques
 M += [A(88, 159.25, 124, 181.25, 12, 32, "placage", r=0.5, b=0.4), A(87.5, 159.25, 124.5, 181.75, 32, 33.5, "quartz", r=0.6, b=0.4),
       B(105.8, 181.25, 106.2, 181.45, 13, 31, "carbone"),
-      MOD("vasque_carree", 106, 171.5, face="+y", z=33.5), MOD("robinet_vasque_noir", 106, 162, face="+y", z=33.5),
+      MOD("vasque_carree", 106, 171.5, face="+y", z=33.5), MOD("robinet_vasque_noir", 106, 165, face="+y", z=33.5),
       CY(106, 159.3, 159.8, 60, 13, "miroir"), TOR(106, 159.6, 60, 13, 0.45, "metal"),
-      MOD("distributeurs_marbre", 119, 165, z=33.5), MOD("serviettes_pliees", 93, 172, z=33.5),
+      MOD("distributeurs_marbre", 119, 165, z=33.5), MOD("serviettes_pliees", 92.6, 172, z=33.5, L=9.5),
       MOD("panier_osier", 106, 170, z=1)]
 for xa in (88.5, 123.5):
     M += [CY(xa, 159.25, 159.7, 64, 2.2, "laiton", pans=32), CY(xa, 159.7, 163.5, 64, 0.35, "laiton"),
           SPH(xa, 165, 64, 3, "abat-jour")]
 # toilette suspendue (muret technique), plaque noire
-M += [MOD("toilette_suspendue", 66, 166, face="+y", z=15), MOD("plaque_chasse", 66, 159.6, face="+y", z=40)]
+M += [MOD("toilette_suspendue", 66, 169.7, face="+y", z=2), MOD("plaque_chasse", 66, 159.6, face="+y", z=40)]
 # plante sous la fenêtre, tapis de bain devant le bain
 M += [MOD("plante_syngonium", 20, 171, H=24)]
 M += [A(XC - 16, 190, XC + 16, 205, 0, 0.45, "draps", r=2, b=0.3)]
@@ -485,7 +485,7 @@ SCENE = {
                 {"nom": "Salle de lavage", "x": 70, "y": 128, "cap": 262},
                 {"nom": "Salle de bain (entrée)", "x": 134, "y": 184, "cap": 168},
                 {"nom": "Le bain (alcôve de pierre)", "x": 130, "y": 176, "cap": 134},
-                {"nom": "Douche simple", "x": 70, "y": 176, "cap": 132},
+                {"nom": "Douche simple", "x": 34, "y": 186, "cap": 90},
                 {"nom": "Vanité", "x": 106, "y": 204, "cap": 270},
                 {"nom": "Chambre 1", "x": 222, "y": 246, "cap": 132},
                 {"nom": "Chambre 2", "x": 262, "y": 250, "cap": 40},
