@@ -450,6 +450,86 @@ function image(o, groupe) {
   m.rotation.y = { "-y": 0, "+y": Math.PI, "+x": Math.PI / 2, "-x": -Math.PI / 2 }[o.face || "+y"];
   m.position.copy(P(o.x, o.y, (o.z0 + o.z1) / 2)); groupe.add(m); return m;
 }
+// Écrans (opt-in, forme « ecran ») : une émission factice animée, dessinée par le code (aucune œuvre ni vidéo réelle),
+// partagée par tous les écrans de la scène. o = { forme: "ecran", x, y, z0, z1, larg, face } comme une image. Sur un objet
+// de commande (la toile), l'image n'apparaît qu'une fois la toile descendue.
+const EMISSION = { ctx: null, tex: null, ecrans: [], t: -1e9 };
+function dessinerEmission(ms) {
+  const c = EMISSION.ctx, W = 512, H = 288, s = ms / 1000;
+  const cycle = 24, ph = (s % cycle) / cycle, nuit = ph > .5;              // 12 s de jour sur le lac, 12 s d'aurores boréales
+  let g = c.createLinearGradient(0, 0, 0, 178);
+  if (nuit) { g.addColorStop(0, "#050B1E"); g.addColorStop(1, "#16324A"); }
+  else { g.addColorStop(0, `hsl(${204 + 8 * Math.sin(s * .2)},65%,62%)`); g.addColorStop(1, `hsl(${30 + 6 * Math.sin(s * .17)},88%,80%)`); }
+  c.fillStyle = g; c.fillRect(0, 0, W, H);
+  if (nuit) {
+    c.fillStyle = "#fff";
+    for (let i = 0; i < 70; i++) { const x = (i * 97.3) % W, y = (i * 41.7) % 150; c.globalAlpha = .4 + .6 * Math.abs(Math.sin(s * 1.7 + i)); c.fillRect(x, y, 1.6, 1.6); }
+    c.globalAlpha = 1;
+    for (let k = 0; k < 3; k++) {                                          // rideaux d'aurore qui ondulent
+      const gr = c.createLinearGradient(0, 20, 0, 150);
+      gr.addColorStop(0, "rgba(140,90,255,0)"); gr.addColorStop(.45, k === 1 ? "rgba(150,110,255,.45)" : "rgba(80,255,170,.55)"); gr.addColorStop(1, "rgba(80,255,170,0)");
+      c.fillStyle = gr; c.beginPath(); c.moveTo(0, 150);
+      for (let x = 0; x <= W; x += 8) c.lineTo(x, 60 + 26 * Math.sin(x * .012 + s * (.6 + k * .25) + k * 2) + 14 * Math.sin(x * .031 - s * .9));
+      c.lineTo(W, 150); c.closePath(); c.fill();
+    }
+  } else {
+    c.fillStyle = "#FFE9A8"; c.beginPath(); c.arc(388, 118 + 5 * Math.sin(s * .3), 28, 0, 7); c.fill();
+    c.strokeStyle = "#2B2B2B"; c.lineWidth = 2;                         // oiseaux
+    for (let i = 0; i < 4; i++) {
+      const x = (s * (24 + i * 7) + i * 130) % (W + 40) - 20, y = 52 + i * 15 + 6 * Math.sin(s * 2.5 + i), a = 5 * Math.sin(s * 9 + i);
+      c.beginPath(); c.moveTo(x - 8, y - a); c.quadraticCurveTo(x - 3, y - 5, x, y); c.quadraticCurveTo(x + 3, y - 5, x + 8, y - a); c.stroke();
+    }
+  }
+  const mont = (couleur, base, amp, fr, dec) => { c.fillStyle = couleur; c.beginPath(); c.moveTo(0, 182);
+    for (let x = 0; x <= W; x += 8) c.lineTo(x, base - amp * Math.sin(x * fr + dec) - amp * .4 * Math.sin(x * fr * 3.1 + dec)); c.lineTo(W, 182); c.fill(); };
+  mont(nuit ? "#16242E" : "#5E7F6C", 150, 26, .011, 1); mont(nuit ? "#0C161C" : "#33503F", 168, 16, .019, 4);
+  g = c.createLinearGradient(0, 178, 0, H);                               // lac et reflets
+  g.addColorStop(0, nuit ? "#123049" : "#3D80A8"); g.addColorStop(1, nuit ? "#071521" : "#1B4C69");
+  c.fillStyle = g; c.fillRect(0, 178, W, H - 178);
+  c.strokeStyle = nuit ? "rgba(120,255,190,.25)" : "rgba(255,255,255,.35)"; c.lineWidth = 2;
+  for (let i = 0; i < 14; i++) {
+    const y = 186 + i * 7, o = (s * 16 * (1 + i * .12) + i * 37) % 80;
+    c.beginPath(); for (let x = -80 + o; x < W; x += 80) { c.moveTo(x, y); c.lineTo(x + 26 + i, y); } c.stroke();
+  }
+  if (!nuit) {                                                             // voilier qui traverse le lac
+    const bx = (s * 20) % (W + 120) - 60, by = 206 + 2 * Math.sin(s * 2);
+    c.fillStyle = "#6E3B22"; c.beginPath(); c.moveTo(bx - 22, by); c.lineTo(bx + 22, by); c.lineTo(bx + 15, by + 8); c.lineTo(bx - 15, by + 8); c.fill();
+    c.fillStyle = "#F4F1EA"; c.beginPath(); c.moveTo(bx, by - 42); c.lineTo(bx, by - 2); c.lineTo(bx + 21, by - 2); c.fill();
+    c.fillStyle = "#C8553D"; c.beginPath(); c.moveTo(bx - 2, by - 40); c.lineTo(bx - 2, by - 4); c.lineTo(bx - 15, by - 4); c.fill();
+  }
+  c.fillStyle = "rgba(0,0,0,.55)"; c.fillRect(22, H - 52, 268, 32);       // bandeau de l'émission et logo de la chaîne
+  c.fillStyle = "#fff"; c.font = "bold 16px sans-serif"; c.fillText("LE PETIT LAC", 32, H - 31);
+  c.font = "12px sans-serif"; c.fillText(nuit ? "· les aurores de la Côte-Nord" : "· épisode 3", 148, H - 31);
+  c.globalAlpha = .8; c.font = "bold 14px sans-serif"; c.fillText("TV 86", W - 60, 26); c.globalAlpha = 1;
+  const f = Math.min(1, Math.min(ph, 1 - ph, Math.abs(ph - .5)) * cycle / .6); // fondu au noir entre le jour et la nuit
+  if (f < 1) { c.fillStyle = `rgba(0,0,0,${1 - f})`; c.fillRect(0, 0, W, H); }
+  EMISSION.tex.needsUpdate = true;
+}
+function ecran(o, groupe) {
+  if (!EMISSION.ctx) {
+    const cv = document.createElement("canvas"); cv.width = 512; cv.height = 288;
+    EMISSION.ctx = cv.getContext("2d"); EMISSION.tex = new THREE.CanvasTexture(cv); EMISSION.tex.encoding = THREE.sRGBEncoding;
+    dessinerEmission(0);
+  }
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(o.larg * K, (o.z1 - o.z0) * K),
+    new THREE.MeshBasicMaterial({ map: EMISSION.tex, toneMapped: false, transparent: !!o.commande }));
+  m.rotation.y = { "-y": 0, "+y": Math.PI, "+x": Math.PI / 2, "-x": -Math.PI / 2 }[o.face || "+y"];
+  m.position.copy(P(o.x, o.y, (o.z0 + o.z1) / 2)); groupe.add(m);
+  EMISSION.ecrans.push({ m, cmd: o.commande });
+  return m;
+}
+function animerEcrans(ms) {
+  if (!EMISSION.ecrans.length) return;
+  let actif = false;
+  for (const e of EMISSION.ecrans) {
+    if (e.cmd && CMD[e.cmd]) {                           // toile : l'image apparaît quand la toile est presque entièrement descendue
+      const v = Math.max(0, Math.min(1, (CMD[e.cmd].f - .9) / .1));
+      e.m.material.opacity = v; e.m.visible = v > .01;
+    }
+    if (e.m.visible) actif = true;
+  }
+  if (actif && ms - EMISSION.t > 66) { EMISSION.t = ms; dessinerEmission(ms); }   // ~15 images/s suffisent
+}
 function modele(o, groupe) {
   // GLB à l'échelle réelle (ou forcé : o.L en plan, o.H en hauteur), posé au sol (o.z), centré en (x, y),
   // tourné pour que son devant (« avant » du catalogue) regarde vers o.face ; o.rot ajoute des degrés
@@ -513,7 +593,7 @@ const GLB = {}, ECHECS = [];
     ld.parseAsync(octets(uri), "").then((g) => { GLB[cle] = g.scene; }).catch((e) => { ECHECS.push(cle); console.warn("modèle", cle, e); })));
   try { window.createImageBitmap = cib; } catch (_) {}
 }
-const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele, image };
+const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele, image, ecran };
 // Commandes interactives (opt-in, SCENE["commandes"]) : les objets liés à une commande sont construits dans leurs propres
 // groupes (jamais fusionnés ni copiés dans un lot fixe), décrits à l'état « bas ». Fraction f : 1 = bas, fraction_min = haut.
 //  « etirer » : échelle verticale autour de pivot_z (groupe extérieur posé à pivot_z, intérieur décalé de -pivot_z) ;
@@ -1355,6 +1435,7 @@ function boucle(t) {
     avancerTrajets(dt);
   }
   animerCommandes(performance.now());
+  animerEcrans(performance.now());
   placerCamera(); renderer.info.reset();
   if (mode === "visite") majLumieres(joueur.x + Math.cos(joueur.cap) * 40, joueur.y + Math.sin(joueur.cap) * 40, false);
   else majLumieres(orbite.cx, orbite.cy, true);

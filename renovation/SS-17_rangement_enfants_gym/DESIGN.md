@@ -652,3 +652,10 @@ nuit vers la salle de bain », « Banc à jouets sous la toile », « Paniers de
 - **Eau chaude** : température maximale aux appareils et type de mélangeur — plombier.
 - Tous ces points de code et de sécurité : **à valider avec la Ville de Baie-Comeau et un professionnel** ; aucune
   conformité n'est affirmée ici.
+
+## Mise à jour (2026-11-01, suite)
+- **Rideaux retirés** : le rideau-cabane au plafond autour du lit de la chambre 1 et le rail-rideau du banc-cabane de la
+  chambre 2 sont enlevés (demande du client). Les lignes « C1-RIDEAU » et « rail-rideau » plus haut ne s'appliquent plus ;
+  la canopée de rangement au-dessus du lit reste.
+- **Douche** : même travertin que le bain (repris de SS-16).
+- **Écrans** : la télé du gym et la toile du séjour (descendue) jouent une émission factice animée dessinée par le moteur.

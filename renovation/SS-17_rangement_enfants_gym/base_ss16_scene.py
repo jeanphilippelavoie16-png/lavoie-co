@@ -210,6 +210,8 @@ M += [TOILE(B(XS - 0.1, TY0, XS + 0.1, TY1, ZB, ZB + IH, "plafond")),           
       TOILE(B(XS - 0.12, TY0, XS + 0.12, TY1, ZB - 1.5, ZB, "pneu")),
       TOILE(B(XS - 0.12, TY0, XS + 0.12, TY1, ZB + IH, ZP, "pneu")),                          # retombée noire du haut
       TOILE(A(XS - 0.6, TY0 - 2.5, XS + 0.6, TY1 + 2.5, ZB - 2.7, ZB - 1.5, "metal", r=0.5, b=0.4), "suivre")]  # barre de lestage
+# image projetée : une émission factice animée (dessinée par le moteur), visible quand la toile est descendue
+M += [TOILE({"forme": "ecran", "x": XS - 0.16, "y": YT, "z0": ZB, "z1": ZB + IH, "larg": IW, "face": "-x"})]
 # meuble bas suspendu centré sous la toile (dessus à 15 po, barre de son à 18 po : sous l'image en position basse)
 M += [A(430, YT - 36, 446, YT + 36, 3, 15, "placage", r=0.6, b=0.4), B(430.6, YT - 35.5, 430.8, YT + 35.5, 4, 14, "carbone"),
       A(431.5, YT - 18, 437, YT + 18, 15, 18.2, "carbone", r=1, b=0.6), MOD("plante_sansevieria", 432, 21)]
@@ -356,9 +358,10 @@ M += [C(XR_, YR_, 2.6, 0, 0.4, "metal", pans=40), T([(XR_, YR_, 0.4), (XR_, YR_,
 M += [MOD("suspension_globe", XC, YC, z=96 - 30, H=30)]
 # plante au bout du bain (côté hall) et petite serviette sur le muret
 M += [MOD("plante_sansevieria", XB1 - 7, YF - 9)]
-# douche simple 36 × 48 : tuile blanche, verre clair (panneau fixe + porte), profilés noirs, pomme pluie au plafond
-M += [B(10, 199.75, 10.625, YB, 0, 96, "tuile_blanche"), B(10, YB - 0.625, 46, YB, 0, 96, "tuile_blanche"),
-      B(45.375, 199.75, 46, YB, 0, 96, "tuile_blanche")]
+# douche simple 36 × 48 : même travertin que l'alcôve du bain (demande du client), verre clair (panneau fixe + porte),
+# profilés noirs, pomme pluie au plafond
+M += [B(10, 199.75, 10.625, YB, 0, 96, "pierre_travertin"), B(10, YB - 0.625, 46, YB, 0, 96, "pierre_travertin"),
+      B(45.375, 199.75, 46, YB, 0, 96, "pierre_travertin")]
 M += [B(10.5, 199.5, 45.5, 200.0, 0.4, 78, "verre"),                                                   # verre clair
       B(10.5, 199.3, 11.3, 200.2, 0.4, 78, "metal"), B(44.7, 199.3, 45.5, 200.2, 0.4, 78, "metal"),        # profilés muraux
       B(21.8, 199.3, 22.2, 200.2, 0.4, 78, "metal"), B(10.5, 199.3, 45.5, 200.2, 77.6, 78.4, "metal"),    # joint porte, traverse
@@ -499,7 +502,7 @@ SCENE = {
                                 ["Vestiaire", "banc et cases en chêne, crochets laiton, armoire à manteaux et armoires du haut vert forêt", "#34473B"],
                 ["Escalier flottant", "limon central en acier noir, marches de chêne de 2 po ; verre côté gym, rampe à barreaux d'acier noir côté séjour ; dessous dégagé (béton poli continu)", "#1E1E1E"],
                 ["Chambres", "chambre 1 : lit entre les deux fenêtres, bureau, commode de chêne ; chambre 2 (sauge) : bureau sous la fenêtre, walk-in dans l'ancien caveau (isolé, évents fermés, chauffé)", "#A6AF9A"],
-                ["Salle de bain", "bain sculptural en pierre de résine dans une alcôve de travertin beige-gris pâle adouci (dalles verticales 24 × 48 po, joints fins, plancher au plafond ; à la place du zellige vert, à la demande du client), niche éclairée, suspension globe, robinet sur pied noir mat, plateau de chêne ; douche simple 36 × 48 vitrée, une pomme pluie noire ; vanité de chêne suspendue ; murs greige", "#CFC6B8"],
+                ["Salle de bain", "bain sculptural en pierre de résine dans une alcôve de travertin beige-gris pâle adouci (dalles verticales 24 × 48 po, joints fins, plancher au plafond ; à la place du zellige vert, à la demande du client), niche éclairée, suspension globe, robinet sur pied noir mat, plateau de chêne ; douche simple 36 × 48 vitrée en travertin (comme le bain), une pomme pluie noire ; vanité de chêne suspendue ; murs greige", "#CFC6B8"],
                 ["Gym", "béton poli, tapis de caoutchouc noir sous les appareils et les poids, murs anthracite, miroir, tapis roulant, vélo de route sur base d'entraînement", "#2A2A2A"],
                 ["Salle de lavage", "béton poli, laveuse à chargement par le dessus, comptoir de pliage en L en chêne avec bac inox encastré, armoires marine, séchoir suspendu", "#2E3B4E"],
                 ["Séjour", "divan en L en tissu gris chaud, projecteur 4K au plafond (support noir court), toile motorisée de 120 po centrée (boîtier noir au plafond, descend devant la fenêtre), meuble bas de chêne, table basse ronde en chêne, tapis de laine crème ; au mur avant, galerie de six photos de famille (cadres identiques de métal noir mat, passe-partout blanc chaud, grille 3 × 2) éclairée par deux petits encastrés orientables", "#9A5B32"],

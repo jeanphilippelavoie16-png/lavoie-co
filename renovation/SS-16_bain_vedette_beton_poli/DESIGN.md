@@ -310,3 +310,8 @@ les photos, cadres vides).
 Corrections de la maquette (audit) : robinet de la vasque reculé du mur (bec dans le bon sens), toilette suspendue posée
 à la bonne hauteur contre le mur (plaque de chasse au-dessus), serviettes hors de la vasque, panneaux du bas des murs de
 la douche épaissis (⅝ po), arrêt « Douche simple » placé devant la porte de la douche.
+
+## Mise à jour (2026-11-01, suite)
+- **Douche** : le même travertin que l'alcôve du bain sur les trois faces (demande du client) ; plus de tuile blanche.
+- **Toile** : quand on la descend dans la visite, elle montre une émission factice animée (« Le petit lac », dessinée par le
+  moteur, aucune vraie vidéo) pour juger de la taille de l'image depuis le divan.

@@ -126,6 +126,8 @@ def appliquer_scene(S, h):
     # télé 40 po sur bras articulé (repliée) entre les deux appareils, câbles dans le mur
     M += [B(156, YA, 164, 10.6, 58, 70, "metal"), T([(160, 10.6, 64), (160, 12.8, 64)], 0.7, "metal"),
           B(142.5, 12.8, 177.5, 14, 54, 74, "carbone"), B(143, 14, 177, 14.1, 54.5, 73.5, "ecran")]
+    # la télé joue une émission factice animée (dessinée par le moteur, même émission que sur la toile du séjour)
+    M += [{"forme": "ecran", "x": 160, "y": 14.16, "z0": 54.5, "z1": 73.5, "larg": 34, "face": "+y"}]
     # colonne de crochets d'acier noir (62, 68, 74 po) : élastiques, corde à sauter, sangle, 2 tapis de yoga ; clé du tapis à 66 po
     M += [B(210.5, YA, 211.5, 10.6, 56, 77, "metal"), B(222.5, YA, 223.5, 10.6, 56, 77, "metal")]
     M += [B(210.5, YA, 223.5, 10.6, z - 0.5, z + 0.5, "metal") for z in (62, 68, 74)]

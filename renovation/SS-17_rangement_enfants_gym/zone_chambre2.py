@@ -274,10 +274,7 @@ def appliquer_scene(S, h):
         M += [B(445.2, yl - 1.4, 446, yl + 1.4, 40.5, 46.5, "metal"), CX(441.6, 445.2, yl, 44.5, 0.3, "metal"),
               C(441.2, yl, 1.7, 41.8, 44.8, "metal", pans=24), C(441.2, yl, 1.3, 41.6, 41.8, "spot", pans=24),
               B(445.6, yl - 0.6, 445.9, yl + 0.6, 41, 42.2, "blanc")]
-    # rail-rideau « cabane » au plafond (x = 416) et rideau de lin occultant replié aux deux bouts
-    M += [B(415.4, 262, 416.6, 358, 94.6, 96, "metal")]
-    M += [C(416 + (0.9 if k % 2 else -0.9), y, 1.25, 2.5, 94.6, "tapis") for k, y in enumerate((263.3, 265.5, 267.7, 269.9))]
-    M += [C(416 + (0.9 if k % 2 else -0.9), y, 1.25, 2.5, 94.6, "tapis") for k, y in enumerate((356.7, 354.5, 352.3, 350.1))]
+    # (rail-rideau au plafond retiré à la demande du client, 2026-11-01)
 
     # ------------------------------------------------------------------ tour d'angle à trésors NE (x 418-446, y 232¼-262)
     M += [B(418, 232.25, 446, 233, 0, 66, "placage"), B(418, 261.25, 446, 262, 0, 66, "placage"),

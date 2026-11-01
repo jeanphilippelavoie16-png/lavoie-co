@@ -162,11 +162,7 @@ def _mobilier(h):
     M += [B(CX0 + larg * (k + 0.5) - 2, CY0 - 0.4, CX0 + larg * (k + 0.5) + 2, CY0, 73.4, 74.2, "metal") for k in range(3)]  # loquets
     M += [B(CX0 + 1.5, CY0 + 1, CX1 - 1.5, CY0 + 2, 71.75, 72, "spot")]                         # DEL chaude = veilleuse
 
-    # ================================================================ C1-RIDEAU : rail en L au plafond, rideau sable ouvert
-    #   (le pan du long côté se range contre le mur ouest, celui du pied contre la banquette : le coin du pied reste libre)
-    M += [B(XW, 299.6, 94.4, 300.4, 95.3, 96, "metal"), B(93.6, 299.6, 94.4, 352, 95.3, 96, "metal")]
-    M += [C(11.4 + 1.7 * k, 300 + (0.45 if k % 2 else -0.45), 1.05, 1.5, 95.3, "art-sable", pans=12) for k in range(6)]
-    M += [C(94 + (0.45 if k % 2 else -0.45), 350.4 - 1.7 * k, 1.05, 1.5, 95.3, "art-sable", pans=12) for k in range(5)]
+    # (rideau-cabane au plafond retiré à la demande du client, 2026-11-01)
 
     # ================================================================ C1-BANC : banquette-évacuation, 6 tiroirs-images
     BX0, BX1, BY0 = 93.0, XE, 352.0
