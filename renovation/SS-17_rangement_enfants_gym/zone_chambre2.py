@@ -424,17 +424,25 @@ def appliquer_scene(S, h):
         M += [A(x0, 413, x0 + 12.5, 427, 75, 82.5, ["osier", "tapis", "art-sable", "osier", "tapis", "art-sable"][k], r=1, b=0.5),
               B(x0 + 4, 412.8, x0 + 8.5, 413, 78, 80.5, "blanc"), B(x0 + 4.6, 412.7, x0 + 7.9, 412.8, 78.5, 80, COUL_VET[k])]
     rng = random.Random(3)
+
+    def vetement(x, ep, zb, zt, larg, mat):
+        """Vêtement d'enfant sur cintre de bois (crochet noir sur la tringle à zt + 1.6)."""
+        xc, y0, y1 = x + ep / 2, 416.5 - larg / 2, 416.5 + larg / 2
+        return [A(x, y0, x + ep, y1, zb, zt - 0.6, mat, r=0.3, b=0.25),
+                A(x, y0 + 1.2, x + ep, y1 - 1.2, zt - 0.6, zt, mat, r=0.3, b=0.25),          # épaules
+                B(xc - 0.2, y0 + 0.8, xc + 0.2, y1 - 0.8, zt, zt + 0.5, "placage"),             # cintre
+                T([(xc, 416.5, zt + 0.5), (xc, 416.5, zt + 1.3), (xc, 417.1, zt + 2.0)], 0.1, "metal")]
     x, k = 233.5, 0
     while x < 294:                                                                                      # SES vêtements (bas)
-        ep = rng.uniform(1.6, 2.6)
-        M.append(A(x, 409.5, x + ep, 423.5, rng.uniform(15, 21), 33.4, COUL_VET[k % len(COUL_VET)], r=0.6, b=0.4))
-        x += ep + rng.uniform(0.3, 0.9)
+        ep = rng.uniform(0.9, 1.6)
+        M += vetement(x, ep, rng.uniform(16, 22), 32, rng.uniform(12, 14), COUL_VET[k % len(COUL_VET)])
+        x += ep + rng.uniform(0.5, 1.4)
         k += 1
     x = 236
     while x < 286:                                                                                      # grandeur suivante (haut)
-        ep = rng.uniform(1.8, 2.8)
-        M.append(A(x, 408.5, x + ep, 424.5, rng.uniform(42, 50), 69.4, COUL_VET[(k * 3) % len(COUL_VET)], r=0.6, b=0.4))
-        x += ep + rng.uniform(1.5, 4)
+        ep = rng.uniform(1.0, 1.8)
+        M += vetement(x, ep, rng.uniform(44, 52), 68, rng.uniform(14, 16), COUL_VET[(k * 3) % len(COUL_VET)])
+        x += ep + rng.uniform(2, 4.5)
         k += 1
     # banc à souliers (x 231½-245½, y 380-405½, assise 17) et crochets ronds sur le mur x = 231½
     M += [B(231.5, 380, 245.5, 380.75, 0, 15, "placage"), B(231.5, 404.75, 245.5, 405.5, 0, 15, "placage"),
@@ -483,8 +491,7 @@ def appliquer_scene(S, h):
                 {"nom": "Chambre 2 — lit queen et mur de tête", "x": 355, "y": 258, "cap": 90},
                 {"nom": "Chambre 2 — banc-cabane et tour à trésors", "x": 300, "y": 300, "cap": 5},
                 {"nom": "Chambre 2 — mur d'activité (bureau à rabat)", "x": 330, "y": 268, "cap": 160},
-                {"nom": "Walk-in — penderie qui grandit", "x": 261, "y": 378, "cap": 90},
-                {"nom": "Walk-in — banc, tiroirs et miroir", "x": 272, "y": 402, "cap": 270}]
+                {"nom": "Walk-in — penderie qui grandit", "x": 261, "y": 378, "cap": 90}]
     for p in S.get("palette", []):
         if p[0] == "Chambres" and "chambre 2" in p[1]:
             p[1] = p[1].split("; chambre 2")[0].rstrip(" ;")
