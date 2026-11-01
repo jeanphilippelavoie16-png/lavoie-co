@@ -136,10 +136,12 @@
 <text x="872.96" y="373.493" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">le sous-sol (dalle meulée ou chape polie).</text>
 <text x="872.96" y="386.437" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Salle de bain : bain centré sur le mur d'accent,</text>
 <text x="872.96" y="397.46" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">douche simple 36 × 48 ; drains à déplacer.</text>
-<text x="872.96" y="410.404" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">5. Walk-in dans la chambre 2 ; séjour : divan en</text>
-<text x="872.96" y="421.427" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">L, projecteur à côté du divan, toile.</text>
-<text x="872.96" y="434.371" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">6. Hauteur du sous-sol : 8 pi (propriétaire) ;</text>
-<text x="872.96" y="445.395" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">hauteur sous poutres et coupe-feu à valider.</text>
+<text x="872.96" y="410.404" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">5. Séjour : toile motorisée 120 po centrée</text>
+<text x="872.96" y="421.427" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">(descend devant la fenêtre), projecteur au</text>
+<text x="872.96" y="432.451" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">plafond (pointillé).</text>
+<text x="872.96" y="445.395" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">6. Dessous de l'escalier dégagé (plus de</text>
+<text x="872.96" y="456.418" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">rangement) ; rampe de métal côté séjour, verre</text>
+<text x="872.96" y="467.442" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">côté gym.</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="10-Murs" id="10-Murs">
@@ -376,8 +378,8 @@
 <polygon class="elem" points="449.135,148.329 449.135,135.829 439.135,135.829 439.135,148.329"/>
 <polyline class="elem-fin" points="449.135,148.329 439.135,135.829"/>
 <polyline class="elem-fin" points="439.135,148.329 449.135,135.829"/>
-<polyline class="rappel" points="413.434,148.329 439.135,148.329"/>
-<text x="398.768" y="151.096" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">ÉVENT</text>
+<polyline class="rappel" points="449.135,92.471 449.135,135.829"/>
+<text x="472.938" y="90.624" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">ÉVENT FERMÉ</text>
 </g>
 <g id="elem-SS-P-BAC">
 <polygon class="elem" points="327.135,471.979 327.135,449.979 309.135,449.979 309.135,471.979"/>
@@ -462,14 +464,19 @@
 <g id="elem-SS-P-PLIAGE2">
 <polygon class="elem" points="290.135,530.979 330.135,530.979 330.135,505.979 290.135,505.979"/>
 </g>
+<g id="elem-SS-P-PROJ">
+<polygon class="elem-tir" points="502.135,464.979 518.135,464.979 518.135,449.979 502.135,449.979"/>
+<polyline class="rappel" points="502.135,502.643 502.135,464.979"/>
+<text x="529.26" y="509.329" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">PROJ. (PLAFOND)</text>
+</g>
 <g id="elem-SS-P-SEC">
 <polygon class="elem" points="261.135,530.979 288.135,530.979 288.135,503.979 261.135,503.979"/>
 <polyline class="elem-fin" points="261.135,526.979 288.135,526.979"/>
 <text x="274.635" y="519.767" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">S</text>
 </g>
 <g id="elem-SS-P-TOILE">
-<polygon class="elem" points="662.635,472.979 662.635,388.979 659.635,388.979 659.635,472.979"/>
-<text x="645.491" y="478.022" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">TOILE</text>
+<polygon class="elem" points="661.135,511.779 661.135,403.179 660.135,403.179 660.135,511.779"/>
+<text x="603.776" y="408.719" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">TOILE MOTORISÉE 120 po</text>
 </g>
 <g id="elem-SS-P-VAN">
 <polygon class="elem" points="308.135,381.729 344.135,381.729 344.135,359.729 308.135,359.729"/>
@@ -483,8 +490,8 @@
 </g>
 <g id="elem-SS-ROB1">
 <circle class="elem" cx="603.335" cy="160.979" r="2"/>
-<polyline class="rappel" points="602.847,151.728 603.322,158.98"/>
-<text x="594.292" y="149.88" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">R.E.</text>
+<polyline class="rappel" points="679.469,157.775 605.335,160.979"/>
+<text x="688.024" y="155.927" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">R.E.</text>
 </g>
 <g id="elem-SS-ROB2">
 <circle class="elem" cx="543.935" cy="540.979" r="2"/>
@@ -842,11 +849,6 @@
 <text x="277.138" y="435.753" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 277.138 435.753)">SALLE DE</text>
 <text x="293.748" y="435.753" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 293.748 435.753)">LAVAGE</text>
 </g>
-<g id="piece-SS-LEG">
-<path class="invisible" fill-rule="evenodd" d="M 537.135 110.979 L 449.135 110.979 L 449.135 160.979 L 537.135 160.979 Z"/>
-<text x="495.941" y="132.124" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">WALK-IN</text>
-<text x="495.941" y="148.734" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">(CAVEAU)</text>
-</g>
 <g id="piece-SS-GR1">
 <path class="invisible" fill-rule="evenodd" d="M 230.135 170.979 L 230.135 258.729 L 256.135 258.729 L 256.135 170.979 Z"/>
 <text x="247.905" y="238.572" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 247.905 238.572)">G.-R.</text>
@@ -857,6 +859,13 @@
 <circle class="elem-plein" cx="391.159" cy="579.956" r="1.26"/>
 <text x="316.7" y="578.348" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">EXCROISSANCE</text>
 <text x="316.7" y="594.958" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">SOUS PERRON</text>
+</g>
+<g id="piece-SS-LEG">
+<path class="invisible" fill-rule="evenodd" d="M 537.135 110.979 L 449.135 110.979 L 449.135 160.979 L 537.135 160.979 Z"/>
+<polyline class="rappel" points="554.429,153.237 534.111,153.237"/>
+<circle class="elem-plein" cx="534.111" cy="153.237" r="1.26"/>
+<text x="611.388" y="133.671" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">WALK-IN</text>
+<text x="611.388" y="150.281" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">(CAVEAU ISOLÉ)</text>
 </g>
 <g id="piece-SS-SDB">
 <path class="invisible" fill-rule="evenodd" d="M 230.135 293.229 L 230.135 381.729 L 359.885 381.729 L 359.885 293.229 L 270.635 293.229 L 270.635 343.479 L 266.135 343.479 L 266.135 293.229 Z"/>

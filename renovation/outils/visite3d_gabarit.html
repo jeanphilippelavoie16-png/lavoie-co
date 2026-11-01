@@ -48,6 +48,13 @@ body.sans-joy #rail { bottom: var(--sb); }
 #ici { min-width: 190px; text-align: center; padding: 0 6px; }
 #ici b { display: block; font-size: 1rem; }
 #ici small { color: var(--muted); font-size: .75rem; }
+/* juste au-dessus : commandes interactives (toile motorisée, stores...), seulement si la scène en déclare */
+#commandes { position: fixed; bottom: calc(var(--sb) + 64px); left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 4px; max-width: calc(100vw - 24px); flex-wrap: wrap; justify-content: center; }
+#commandes button { display: flex; align-items: center; gap: 9px; font-size: .92rem; white-space: nowrap; padding: 6px 14px 6px 8px; }
+#commandes .ic { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; background: var(--accent); color: var(--accent-ink); }
+#commandes button.bouge .ic { animation: cmd-pulse 1s ease-in-out infinite; }
+@keyframes cmd-pulse { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { #commandes button.bouge .ic { animation: none; } }
 
 /* bas droite : plan miniature */
 .mini { position: fixed; right: var(--sr); bottom: var(--sb); padding: 6px; }
@@ -104,6 +111,7 @@ body.sans-joy #rail { bottom: var(--sb); }
   <div id="ici"><b id="ici-nom">—</b><small id="ici-n"></small></div>
   <button id="suiv" aria-label="Arrêt suivant">▶</button>
 </div>
+<div class="carte" id="commandes" role="group" aria-label="Commandes de la maison" hidden></div>
 <div class="carte mini"><canvas id="plan" width="420" height="420" aria-label="Plan : touchez pour y aller"></canvas></div>
 <div class="carte palette" id="palette" hidden><h2>Matériaux proposés</h2><ul id="pal"></ul><h2>Peinture</h2><ul id="pei"></ul>
   <h2>Crédits (modèles 3D et textures)</h2><ol id="cred" style="margin:0;padding-left:18px;font-size:.72rem;color:var(--muted);display:grid;gap:4px"></ol></div>
@@ -119,6 +127,7 @@ body.sans-joy #rail { bottom: var(--sb); }
     <li><b>Joystick</b> (en bas à gauche) pour marcher librement. Au clavier : W A S D ou les flèches.</li>
     <li><b>Maquette</b> : vue de dessus sans plafond ; un doigt tourne, deux doigts zooment et déplacent ; touchez une pièce pour y entrer.</li>
     <li><b>Haute / Normale</b> (en haut) : qualité de l'image (ombres, reflets, lumière). Normale est plus fluide sur une tablette lente.</li>
+    <li id="aide-cmd" hidden></li>
   </ul>
   <button id="aide-ok" aria-pressed="true">Compris</button>
 </div></div>
@@ -503,13 +512,43 @@ const GLB = {}, ECHECS = [];
   try { window.createImageBitmap = cib; } catch (_) {}
 }
 const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele, image };
-for (const o of S.mobilier) (FORMES[o.forme] || boite)(o, gMob);
+// Commandes interactives (opt-in, SCENE["commandes"]) : les objets liés à une commande sont construits dans leurs propres
+// groupes (jamais fusionnés ni copiés dans un lot fixe), décrits à l'état « bas ». Fraction f : 1 = bas, fraction_min = haut.
+//  « etirer » : échelle verticale autour de pivot_z (groupe extérieur posé à pivot_z, intérieur décalé de -pivot_z) ;
+//  « suivre » : translation de (pivot_z - z1)·(1 - f), z1 = haut de l'objet à l'état bas (barre de lestage).
+const CMD = {}, etatsCommandes = {};
+for (const c of S.commandes || []) {
+  const ext = new THREE.Group(), int = new THREE.Group();
+  ext.position.y = c.pivot_z * K; int.position.y = -c.pivot_z * K; ext.add(int); gMob.add(ext);
+  ext.userData.commande = c.id;
+  const f = c.depart === "bas" ? 1 : c.fraction_min;
+  CMD[c.id] = { c, f, etat: c.depart, anim: null, etirer: ext, interieur: int, suivre: [] };
+  etatsCommandes[c.id] = c.depart;
+}
+for (const o of S.mobilier) {
+  const cm = o.commande && CMD[o.commande];
+  if (!cm) { (FORMES[o.forme] || boite)(o, gMob); continue; }
+  const n0 = OMBRES.length;                     // pas d'ombre de contact fixe sous un objet qui bouge
+  if (o.anim === "suivre") {
+    const g = new THREE.Group(); g.userData.commande = cm.c.id; gMob.add(g);
+    (FORMES[o.forme] || boite)(o, g);
+    g.updateMatrixWorld(true); const bb = new THREE.Box3().setFromObject(g, true);
+    cm.suivre.push({ g, z1: bb.isEmpty() ? cm.c.pivot_z : bb.max.y / K });
+  } else (FORMES[o.forme] || boite)(o, cm.interieur);
+  OMBRES.length = n0;
+}
+function poserCommande(cm) {
+  cm.etirer.scale.y = cm.f;
+  for (const s of cm.suivre) s.g.position.y = (cm.c.pivot_z - s.z1) * (1 - cm.f) * K;
+}
+for (const cm of Object.values(CMD)) poserCommande(cm);
 { // ombres de contact sous les meubles : empreintes au sol unies puis floues, un seul plan transparent
   const mx = 12, W = Math.ceil(bx1 - bx0 + 2 * mx), Hh = Math.ceil(by1 - by0 + 2 * mx);
   const c = document.createElement("canvas"); c.width = W; c.height = Hh; const g = c.getContext("2d");
   const X = (x) => x - bx0 + mx, Y = (y) => by1 + mx - y;
   g.fillStyle = "#000"; g.fillRect(0, 0, W, Hh); g.filter = "blur(5px)"; g.fillStyle = "#fff";
   for (const o of S.mobilier) {
+    if (o.commande && CMD[o.commande]) continue;
     if (o.forme === "modele" || o.axe || o.pts || o.z0 > 14 || o.z1 - o.z0 < 8) continue;
     if (o.forme === "cylindre" || o.forme === "sphere") { g.beginPath(); g.arc(X(o.x), Y(o.y), o.r + 1, 0, 6.3); g.fill(); }
     else if (o.x1 - o.x0 > 1.2 && o.y1 - o.y0 > 1.2) g.fillRect(X(o.x0) - 1, Y(o.y1) - 1, o.x1 - o.x0 + 2, o.y1 - o.y0 + 2);
@@ -667,29 +706,34 @@ preparerBassins(QUALITES[qualite]);
 majLumieres(S.depart.x, S.depart.y, false, true);
 
 // ---------- reflets : une image à 360° de la pièce sert d'environnement (miroirs, métal, verre)
+let recapturerReflets = () => {};      // refait l'environnement (après le mouvement d'une commande)
 {
   const rt = new THREE.WebGLCubeRenderTarget(256, { type: THREE.HalfFloatType });
   const cc = new THREE.CubeCamera(0.05, 60, rt);
   cc.position.copy(P(S.depart.x - 120, S.depart.y - 40, 55)); scene.add(cc);
+  let envRT = null;
   const capturer = () => {
     cc.update(renderer, scene);
-    const pm = new THREE.PMREMGenerator(renderer);
-    scene.environment = pm.fromCubemap(rt.texture).texture;
+    const pm = new THREE.PMREMGenerator(renderer), nouv = pm.fromCubemap(rt.texture); pm.dispose();
+    scene.environment = nouv.texture; if (envRT) envRT.dispose(); envRT = nouv;
     MAT.miroir.envMap = rt.texture; MAT.miroir.needsUpdate = true;
     // chaque miroir reçoit sa propre image, prise devant lui à hauteur d'œil (rendue une seule fois)
     const miroirs = []; gMob.traverse((o) => { if (o.isMesh && (o.material === MAT.miroir || o.material.name === "miroir")) miroirs.push(o); });
     for (const o of miroirs) {
       const b = new THREE.Box3().setFromObject(o), c = b.getCenter(new THREE.Vector3()), t = b.getSize(new THREE.Vector3());
       const n = t.x < t.z ? new THREE.Vector3(Math.sign(228 * K - c.x) || 1, 0, 0) : new THREE.Vector3(0, 0, Math.sign(-190 * K - c.z) || 1);
-      const r2 = new THREE.WebGLCubeRenderTarget(256), c2 = new THREE.CubeCamera(0.05, 40, r2);
+      const r2 = o.userData.rtMiroir || new THREE.WebGLCubeRenderTarget(256), c2 = new THREE.CubeCamera(0.05, 40, r2);
+      o.userData.rtMiroir = r2;               // une recapture réutilise la cible du miroir (pas de fuite de mémoire)
       c2.position.copy(c).addScaledVector(n, 0.6); c2.position.y = 63 * K;
       o.visible = false; c2.update(renderer, scene); o.visible = true;
-      o.material = MAT.miroir.clone(); o.material.name = "miroir"; o.material.envMap = r2.texture; o.material.needsUpdate = true;
+      if (!o.userData.rtPropre) { o.material = MAT.miroir.clone(); o.material.name = "miroir"; o.userData.rtPropre = true; }
+      o.material.envMap = r2.texture; o.material.needsUpdate = true;
     }
   };
   scene.background = ciel; renderer.shadowMap.needsUpdate = true;
   capturer();
-  THREE.DefaultLoadingManager.onLoad = () => { const f = scene.background; scene.background = ciel; capturer(); scene.background = f; };
+  recapturerReflets = () => { const f = scene.background; scene.background = ciel; capturer(); scene.background = f; };
+  THREE.DefaultLoadingManager.onLoad = recapturerReflets;
 }
 
 // ---------- chaîne de rendu : scène → cible multi-échantillonnée (couleur sRGB + profondeur) → passes plein écran
@@ -954,6 +998,22 @@ function solSous(cx, cy) {
   if (!h || !gSols.children.includes(h.object)) return null;
   return { x: h.point.x / K, y: -h.point.z / K, piece: h.object.userData.piece };
 }
+// objet d'une commande sous le doigt : premier objet visible et opaque touché (un mur ou un meuble devant le cache)
+function commandeSous(cx, cy) {
+  if (!Object.keys(CMD).length) return null;
+  const r = cnv.getBoundingClientRect();
+  ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  for (const h of ray.intersectObjects(mode === "visite" ? [gMurs, gPlafond, gMob] : [gCoupe, gMob], true)) {
+    let o = h.object, vu = true, id = null;
+    for (let q = o; q; q = q.parent) { if (!q.visible) vu = false; if (id == null && q.userData.commande) id = q.userData.commande; }
+    if (!vu) continue;
+    const m = Array.isArray(o.material) ? o.material[h.face ? h.face.materialIndex : 0] : o.material;
+    if (m && (m.transparent && m.opacity < 0.5 || m.isMeshBasicMaterial)) continue;   // verre, vitres, ombres de contact
+    return id;
+  }
+  return null;
+}
 cnv.addEventListener("pointerdown", (e) => {
   cnv.setPointerCapture(e.pointerId);
   doigts.set(e.pointerId, { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now(), bouton: e.button });
@@ -984,12 +1044,20 @@ function finDoigt(e) {
   if (!f || doigts.size) return;
   const tap = Math.hypot(e.clientX - f.x0, e.clientY - f.y0) < 10 && performance.now() - f.t0 < 800;
   if (!tap) return;
+  const id = commandeSous(e.clientX, e.clientY);       // toucher un objet mobile (toile...) : il monte ou descend
+  if (id) { commander(id, "basculer"); return; }
   const s = solSous(e.clientX, e.clientY);
   if (!s) return;
   if (mode === "visite") allerA(s.x, s.y);
   else entrerDans(s.x, s.y);
 }
 cnv.addEventListener("pointerup", finDoigt);
+let survol = 0;                                         // souris : main au-dessus d'un objet mobile
+cnv.addEventListener("pointermove", (e) => {
+  if (e.pointerType !== "mouse" || doigts.size || !Object.keys(CMD).length) return;
+  const t = performance.now(); if (t - survol < 120) return; survol = t;
+  cnv.style.cursor = commandeSous(e.clientX, e.clientY) ? "pointer" : "";
+});
 cnv.addEventListener("pointercancel", (e) => { doigts.delete(e.pointerId); geste = null; });
 cnv.addEventListener("contextmenu", (e) => e.preventDefault());
 cnv.addEventListener("wheel", (e) => {
@@ -1089,16 +1157,19 @@ function choisirMode(m) {
   joy.hidden = !(tactile && m === "visite");
   document.body.classList.toggle("sans-joy", joy.hidden);
   for (const el of etiquettes) el.div.hidden = m !== "maquette";
+  if (m === "visite" && refletsEnRetard) { refletsEnRetard = false; recapturerReflets(); }
 }
 $("m-visite").onclick = () => choisirMode("visite");
 $("m-maquette").onclick = () => choisirMode("maquette");
 const rail = $("rail"), boutons = [];
 let arret = -1;
 function allerArret(i) {
-  arret = (i + S.visites.length) % S.visites.length;
+  arret = i = (i + S.visites.length) % S.visites.length;
   const v = S.visites[arret];
   if (mode !== "visite") { choisirMode("visite"); joueur.x = v.x; joueur.y = v.y; joueur.cap = v.cap * Math.PI / 180; joueur.tangage = -0.08; }
   else volerA(v);
+  // arrêt avec "commandes" : la toile (ou autre) s'anime vers l'état demandé, une fois arrivé
+  for (const [id, etat] of Object.entries(v.commandes || {})) setTimeout(() => { if (arret === i) commander(id, etat); }, 700);
   boutons.forEach((b, k) => b.setAttribute("aria-pressed", String(k === arret)));
   $("ici-n").textContent = `Arrêt ${arret + 1} de ${S.visites.length}`;
 }
@@ -1113,6 +1184,58 @@ $("t-qual").onclick = () => choisirQualite(qualite === "haute" ? "normale" : "ha
 $("t-pal").onclick = (e) => { const p = $("palette"); p.hidden = !p.hidden; e.currentTarget.setAttribute("aria-pressed", String(!p.hidden)); };
 $("t-aide").onclick = () => ($("aide").hidden = false);
 $("aide-ok").onclick = () => ($("aide").hidden = true);
+// ---------- commandes interactives (toile motorisée, stores, porte de garage...) : bouton, toucher l'objet, arrêts de visite
+const ADOUCIR = (u) => (u < .5 ? 4 * u ** 3 : 1 - (-2 * u + 2) ** 3 / 2);     // départ et arrivée en douceur
+let refletsEnRetard = false;
+function commander(id, etat, immediat) {
+  const cm = CMD[id]; if (!cm) return false;
+  if (etat === "basculer") etat = cm.etat === "bas" ? "haut" : "bas";
+  if (etat !== "bas" && etat !== "haut") return false;
+  const a = etat === "bas" ? 1 : cm.c.fraction_min;
+  cm.etat = etat; etatsCommandes[id] = etat;
+  if (immediat || !(cm.c.duree > 0)) { cm.anim = null; cm.f = a; poserCommande(cm); finCommande(); }
+  else if (cm.f !== a) {    // repart d'où il est (un appui pendant le mouvement l'inverse) ; durée selon le chemin qui reste
+    cm.anim = { de: cm.f, a, t0: performance.now(), d: 1000 * cm.c.duree * Math.abs(a - cm.f) / (1 - cm.c.fraction_min) };
+  } else cm.anim = null;
+  majCommandes(); masquerAstuce();
+  return true;
+}
+function animerCommandes(t) {
+  let bouge = false;
+  for (const cm of Object.values(CMD)) {
+    if (!cm.anim) continue;
+    const u = cm.anim.d > 0 ? Math.min(1, Math.max(0, (t - cm.anim.t0) / cm.anim.d)) : 1;
+    cm.f = cm.anim.de + (cm.anim.a - cm.anim.de) * ADOUCIR(u); poserCommande(cm); bouge = true;
+    if (u >= 1) { cm.f = cm.anim.a; poserCommande(cm); cm.anim = null; majCommandes(); finCommande(); }
+  }
+  if (bouge) renderer.shadowMap.needsUpdate = true;     // ombres figées (autoUpdate = false) : refaites pendant le mouvement
+}
+function finCommande() {
+  renderer.shadowMap.needsUpdate = true;
+  // reflets (image à 360° prise une fois) : refaits à l'arrêt, en visite seulement (la maquette cache murs et plafond)
+  if (mode === "visite") { refletsEnRetard = false; recapturerReflets(); } else refletsEnRetard = true;
+}
+function majCommandes() {
+  for (const cm of Object.values(CMD)) {
+    const b = cm.bouton; if (!b) continue;
+    const monter = cm.etat === "bas";                   // le bouton propose l'action possible
+    b.querySelector(".ic").textContent = monter ? "▲" : "▼";
+    b.querySelector(".lib").textContent = monter ? cm.c.libelle_haut : cm.c.libelle_bas;
+    b.classList.toggle("bouge", !!cm.anim);
+  }
+}
+if (Object.keys(CMD).length) {
+  for (const cm of Object.values(CMD)) {
+    const b = document.createElement("button"), ic = document.createElement("span"), lib = document.createElement("span");
+    ic.className = "ic"; ic.setAttribute("aria-hidden", "true"); lib.className = "lib"; b.append(ic, lib); b.title = cm.c.nom;
+    b.onclick = () => commander(cm.c.id, "basculer");
+    $("commandes").append(b); cm.bouton = b;
+  }
+  $("commandes").hidden = false; majCommandes();
+  const li = $("aide-cmd"); li.hidden = false;
+  li.append(Object.assign(document.createElement("b"), { textContent: Object.values(CMD).map((cm) => cm.c.nom).join(", ") }),
+    " : bouton ▼ ▲ au-dessus de la visite guidée, ou touchez l'objet directement dans la vue pour le monter ou le descendre.");
+}
 const pleinOK = document.fullscreenEnabled || document.webkitFullscreenEnabled;
 $("t-plein").hidden = !pleinOK;
 $("t-plein").onclick = () => {
@@ -1229,6 +1352,7 @@ function boucle(t) {
     if (av || lat) { stop(); vol = null; voile.style.opacity = "0"; marcher(av, lat, dt); }
     avancerTrajets(dt);
   }
+  animerCommandes(performance.now());
   placerCamera(); renderer.info.reset();
   if (mode === "visite") majLumieres(joueur.x + Math.cos(joueur.cap) * 40, joueur.y + Math.sin(joueur.cap) * 40, false);
   else majLumieres(orbite.cx, orbite.cy, true);
@@ -1238,9 +1362,12 @@ function boucle(t) {
 }
 requestAnimationFrame(boucle);
 window.VISITE_PRETE = true;
+$("erreur").hidden = true;      // chargement lent (plus de 30 s) : le message d'erreur provisoire disparaît
 // accès pour les tests automatiques (Playwright)
 Object.assign(window, { joueur, orbite, choisirMode, choisirQualite, masquerAstuce, solSous, allerA, vx, vy, plan, scene, camera, renderer, MAT, POST, QUALITES });
 Object.defineProperty(window, "qualite", { get: () => qualite });
 Object.defineProperty(window, "trajet", { get: () => trajet });
 Object.defineProperty(window, "mode", { get: () => mode });
+// commandes : commander(id, "bas" | "haut" | "basculer", immediat) ; etatsCommandes = {id: état visé}
+Object.assign(window, { commander, etatsCommandes, commandeSous, fractionCommande: (id) => CMD[id] && CMD[id].f });
 </script>

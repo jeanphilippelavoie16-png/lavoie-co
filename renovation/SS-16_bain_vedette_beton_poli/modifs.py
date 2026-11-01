@@ -4,7 +4,9 @@ designer-interieur).
 Demandes du propriétaire (2026-11-01) :
 - salle de bain du sous-sol : une douche plus petite, simple ; beaucoup plus d'emphase sur le beau bain autoportant ;
 - plancher : tout le sous-sol en dalle de béton avec une belle finition (béton poli), d'un seul tenant ;
-- walk-in : reste dans la chambre 2 (réponse « 2 ») ; le projecteur reste à côté du divan.
+- walk-in : reste dans la chambre 2 (réponse « 2 »).
+Demandes suivantes (2026-11-01, après SS-15) : plus de rangement sous l'escalier (dessous dégagé) ; projecteur au plafond ;
+toile grosse et centrée (120 po, motorisée, qu'on monte et descend dans la visite) ; caveau isolé, évents fermés.
 Salle de bain refaite : douche de 36 × 48 po dans le coin arrière gauche (muret carrelé + verre), bain sculptural centré
 sur un mur d'accent (le mur de la chambre 1) entre ce muret et le mur du hall, toilette et vanité le long du mur de la
 salle de lavage ; porte coulissante gardée au même endroit (la colonne de l'axe arrière est juste derrière). La retombée de
@@ -91,7 +93,13 @@ EQUIPEMENTS = [  # id, type, nom, libellé, x, y, rotation, (longueur, largeur)
     ("elem-SS-P-MANT", "armoires", "Armoire à manteaux", None, 424, 215.75, 180, (40, 24)),
     ("elem-SS-P-DIVAN", "autre", "Divan en L", "DIVAN", 321, 84, 0, (38, 88)),
     ("elem-SS-P-DIVAN2", "autre", "Divan en L (méridienne)", "", 355, 58, 0, (30, 36)),
-    ("elem-SS-P-TOILE", "autre", "Toile de projection motorisée (au plafond)", "TOILE", 441, 110, 90, (84, 3)),
+    # toile motorisée 16:9 de 120 po (image 104,6 × 58,8 po), centrée sur le mur du séjour (y 10 → 157), dessinée en
+    # position basse (trait mince) ; boîtier au plafond. Projecteur au plafond (pointillé), dans l'axe de la toile :
+    # rapport de projection 1,35 → objectif à 141 po (11'-9") de la toile.
+    ("elem-SS-P-TOILE", "autre", "Toile de projection motorisée 120 po 16:9 (boîtier au plafond), dessinée en position basse",
+     "TOILE MOTORISÉE 120 po", 440.5, 83.5, 90, (108.6, 1.0)),
+    ("elem-SS-P-PROJ", "trappe", "Projecteur 4K au plafond (support noir court), dans l'axe de la toile, objectif à 141 po de la toile",
+     "PROJ. (PLAFOND)", 290, 83.5, 0, (16, 15)),
     ("elem-SS-P-COMMODE1", "armoires", "Commode", None, 227.5, 310, 90, (60, 20)),
     ("elem-SS-P-COMMODE2", "armoires", "Commode", None, 330, 242.25, 0, (60, 20)),
 ]
@@ -147,9 +155,18 @@ def appliquer(maison):
     autres = [x for x in ss["pieces"] if x["id"] != "piece-SS-PRINC"]
     for x in autres:
         if x["id"] == "piece-SS-LEG":
-            x["nom"] = "Walk-in (caveau)"
+            x["nom"] = "Walk-in (caveau isolé)"
             x["description"] = ("Ancien caveau à légumes transformé en garde-robe walk-in de la chambre 2 (tringles, tablettes) ; "
-                                "isoler, chauffer et ventiler — " + SOURCE)
+                                "évent fermé et scellé, plafond (dalle au-dessus) et murs isolés, chauffé et déshumidifié — " + SOURCE)
+    # caveau isolé : l'évent grillagé du mur gauche (seule ventilation du caveau dans la base) est fermé et isolé
+    for e in ss["elements"]:
+        if e["id"] == "elem-SS-EVENT":
+            e.update({"nom": "Évent fermé et isolé (caveau)", "libelle": "ÉVENT FERMÉ", "etat": "modifie",
+                      "note": "Dans le mur gauche du caveau (mur-SS-005). Fermé : bouchon de maçonnerie ou grille condamnée "
+                              "à l'extérieur, isolant rigide et scellant à l'intérieur — PROPOSITION SS-16 (esquisse)"})
+    for m in ss["murs"]:
+        if m["id"] == "mur-SS-005":
+            m["note"] = m["note"] + " Évent fermé et isolé (PROPOSITION SS-16)."
     zone = Polygon(princ["polygone"])
     emprises = unary_union([LineString([(m["x1"], m["y1"]), (m["x2"], m["y2"])]).buffer(m["epaisseur"]["valeur"] / 2, cap_style=3)
                             for m in murs])
@@ -255,7 +272,9 @@ def appliquer(maison):
         "Escalier de 14 c.m. à l'entrée avant (voir P-126) : trémie, giron et échappée à valider.",
         "Plancher : béton poli d'un seul tenant dans tout le sous-sol (dalle meulée ou chape polie).",
         "Salle de bain : bain centré sur le mur d'accent, douche simple 36 × 48 ; drains à déplacer.",
-        "Walk-in dans la chambre 2 ; séjour : divan en L, projecteur à côté du divan, toile.",
+        "Séjour : toile motorisée 120 po centrée (descend devant la fenêtre), projecteur au plafond (pointillé).",
+        "Dessous de l'escalier dégagé (plus de rangement) ; rampe de métal côté séjour, verre côté gym.",
+        "Walk-in de la chambre 2 dans le caveau : isolé, évents fermés, chauffé (voir DESIGN.md).",
         "Hauteur du sous-sol : 8 pi (propriétaire) ; hauteur sous poutres et coupe-feu à valider.",
     ]
     ss["notes"] = [{"id": f"note-SS-P{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t} for i, t in enumerate(notes)]

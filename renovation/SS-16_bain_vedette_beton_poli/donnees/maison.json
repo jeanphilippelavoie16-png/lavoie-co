@@ -494,7 +494,7 @@
      "y1": 375,
      "x2": 224,
      "y2": 435,
-     "note": "Caveau à légumes — mur gauche (évent grillagé) ; nu ext. x = 18'-3\" (cote-SS-002).",
+     "note": "Caveau à légumes — mur gauche (évent grillagé) ; nu ext. x = 18'-3\" (cote-SS-002). Évent fermé et isolé (PROPOSITION SS-16).",
      "source_position": "DÉDUIT"
     },
     {
@@ -1886,9 +1886,9 @@
     },
     {
      "id": "piece-SS-LEG",
-     "nom": "Walk-in (caveau)",
+     "nom": "Walk-in (caveau isolé)",
      "nom_original": "LEGUMES",
-     "description": "Ancien caveau à légumes transformé en garde-robe walk-in de la chambre 2 (tringles, tablettes) ; isoler, chauffer et ventiler — proposition SS-16 (esquisse)",
+     "description": "Ancien caveau à légumes transformé en garde-robe walk-in de la chambre 2 (tringles, tablettes) ; évent fermé et scellé, plafond (dalle au-dessus) et murs isolés, chauffé et déshumidifié — proposition SS-16 (esquisse)",
      "polygone": [
       [
        317.0,
@@ -2065,7 +2065,7 @@
     {
      "id": "elem-SS-EVENT",
      "type": "event",
-     "nom": "Évent grillagé (caveau)",
+     "nom": "Évent fermé et isolé (caveau)",
      "nom_original": "EVENT GRILLAGÉ",
      "position": {
       "x": 224,
@@ -2088,8 +2088,10 @@
       }
      },
      "texte_original": "EVENT GRILLAGÉ",
-     "note": "Dans le mur gauche du caveau (mur-SS-005).",
-     "mur_id": "mur-SS-005"
+     "note": "Dans le mur gauche du caveau (mur-SS-005). Fermé : bouchon de maçonnerie ou grille condamnée à l'extérieur, isolant rigide et scellant à l'intérieur — PROPOSITION SS-16 (esquisse)",
+     "mur_id": "mur-SS-005",
+     "libelle": "ÉVENT FERMÉ",
+     "etat": "modifie"
     },
     {
      "id": "elem-SS-P-BAC",
@@ -2510,6 +2512,33 @@
      "note": "proposition SS-16 (esquisse)"
     },
     {
+     "id": "elem-SS-P-PROJ",
+     "type": "trappe",
+     "nom": "Projecteur 4K au plafond (support noir court), dans l'axe de la toile, objectif à 141 po de la toile",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 290,
+      "y": 83.5,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 16,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 15,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-16 (esquisse)",
+     "libelle": "PROJ. (PLAFOND)"
+    },
+    {
      "id": "elem-SS-P-SEC",
      "type": "secheuse",
      "nom": "Sécheuse",
@@ -2538,29 +2567,29 @@
     {
      "id": "elem-SS-P-TOILE",
      "type": "autre",
-     "nom": "Toile de projection motorisée (au plafond)",
+     "nom": "Toile de projection motorisée 120 po 16:9 (boîtier au plafond), dessinée en position basse",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 441,
-      "y": 110,
+      "x": 440.5,
+      "y": 83.5,
       "rotation_deg": 90,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 84,
+       "valeur": 108.6,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 3,
+       "valeur": 1.0,
        "source": "PRÉSUMÉ",
        "photo": null
       }
      },
      "note": "proposition SS-16 (esquisse)",
-     "libelle": "TOILE"
+     "libelle": "TOILE MOTORISÉE 120 po"
     },
     {
      "id": "elem-SS-P-VAN",
@@ -4187,10 +4216,22 @@
      "id": "note-SS-P05",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Walk-in dans la chambre 2 ; séjour : divan en L, projecteur à côté du divan, toile."
+     "interpretation": "Séjour : toile motorisée 120 po centrée (descend devant la fenêtre), projecteur au plafond (pointillé)."
     },
     {
      "id": "note-SS-P06",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Dessous de l'escalier dégagé (plus de rangement) ; rampe de métal côté séjour, verre côté gym."
+    },
+    {
+     "id": "note-SS-P07",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Walk-in de la chambre 2 dans le caveau : isolé, évents fermés, chauffé (voir DESIGN.md)."
+    },
+    {
+     "id": "note-SS-P08",
      "texte_original": null,
      "photo": null,
      "interpretation": "Hauteur du sous-sol : 8 pi (propriétaire) ; hauteur sous poutres et coupe-feu à valider."

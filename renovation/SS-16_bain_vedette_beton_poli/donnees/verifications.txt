@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : A    Date : 2026-11-01
-Données  : maison.json, sha256 7a1b70771d52ae79a723f0d5a9c5093ec871f98dac0197fb6126f37505f62797
+Données  : maison.json, sha256 77d1ae3d89518f5fd43e5f95e9329f71a1dd8ac04ba7c1ff1754e93dc0a85372
 Feuilles : P-125 Sous-sol proposé (3/16" = 1'-0") ; P-126 RDC proposé (3/16" = 1'-0")
 
 SOMMAIRE
@@ -19,7 +19,7 @@ SOMMAIRE
 
 1. IDENTIFIANTS
 ------------------------------------------------------------------------
-  [OK] 447 identifiants, aucun doublon
+  [OK] 450 identifiants, aucun doublon
 
 2. MURS
 ------------------------------------------------------------------------
@@ -67,7 +67,7 @@ SOMMAIRE
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
-  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (135 textes vérifiés)
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (138 textes vérifiés)
   [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (87 textes vérifiés)
 
 9. MISE EN PAGE
@@ -83,7 +83,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF P-125_sous-sol.dxf : sha256 4fe2f20190acaa4d… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF P-125_sous-sol.dxf : sha256 f152508e24d7c847… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
   [OK] [RDC] DXF P-126_rdc.dxf : sha256 22cf7fcf98863db5… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

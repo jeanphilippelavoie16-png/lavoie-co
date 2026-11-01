@@ -421,6 +421,63 @@ def feuille_porte(m, o, t):
     return {"x0": hx - e, "x1": hx + e, "y0": min(hy, fy), "y1": max(hy, fy)}
 
 
+def commandes(S):
+    """Commandes interactives (opt-in) : SCENE["commandes"] = [{"id", "nom", "libelle_bas", "libelle_haut", "pivot_z",
+    "fraction_min", "depart", "duree"}]. Un objet du mobilier porte "commande": id et "anim": "etirer" (défaut, mise à
+    l'échelle verticale autour de pivot_z) ou "suivre" (translation, suit le bas de la partie étirée) ; un arrêt de visite
+    peut porter "commandes": {id: "haut" | "bas"}. Les données décrivent l'état « bas » (ex. toile déroulée).
+    Retourne la liste complétée (valeurs par défaut) ; erreur explicite si les données ne respectent pas ce contrat."""
+    def err(msg):
+        raise SystemExit("scene_3d.py, commandes : " + msg)
+    liste = S.get("commandes") or []
+    if not isinstance(liste, list):
+        err('SCENE["commandes"] doit être une liste d\'objets {"id": ..., "pivot_z": ...}')
+    out, ids = [], set()
+    for i, c in enumerate(liste):
+        if not isinstance(c, dict) or not c.get("id") or not isinstance(c["id"], str):
+            err(f'commande n° {i + 1} sans "id" (texte)')
+        cid = c["id"]
+        if cid in ids:
+            err(f'id "{cid}" en double')
+        if not isinstance(c.get("pivot_z"), (int, float)):
+            err(f'commande "{cid}" : "pivot_z" manquant ou non numérique (z en pouces du haut de la partie mobile, '
+                f'c.-à-d. le bas du boîtier)')
+        fmin = c.get("fraction_min", 0.03)
+        if not isinstance(fmin, (int, float)) or not 0 < fmin < 1:
+            err(f'commande "{cid}" : "fraction_min" doit être entre 0 et 1 (exclus), reçu {fmin!r}')
+        if c.get("depart", "haut") not in ("haut", "bas"):
+            err(f'commande "{cid}" : "depart" doit valoir "haut" ou "bas", reçu {c.get("depart")!r}')
+        duree = c.get("duree", 3.0)
+        if not isinstance(duree, (int, float)) or duree < 0:
+            err(f'commande "{cid}" : "duree" doit être un nombre de secondes >= 0, reçu {duree!r}')
+        ids.add(cid)
+        out.append(dict(c, nom=c.get("nom") or cid, libelle_bas=c.get("libelle_bas") or "Descendre",
+                        libelle_haut=c.get("libelle_haut") or "Monter", pivot_z=float(c["pivot_z"]),
+                        fraction_min=float(fmin), depart=c.get("depart", "haut"), duree=float(duree)))
+    lies = {}
+    for o in S.get("mobilier", []):
+        if "commande" not in o:
+            if "anim" in o:
+                err(f'objet {o.get("forme", "boite")} avec "anim" sans "commande" : {o}')
+            continue
+        if o["commande"] not in ids:
+            err(f'objet {o.get("forme", "boite")} lié à la commande inconnue "{o["commande"]}" '
+                f'(déclarées : {", ".join(sorted(ids)) or "aucune"})')
+        if o.get("anim", "etirer") not in ("etirer", "suivre"):
+            err(f'objet de la commande "{o["commande"]}" : "anim" doit valoir "etirer" ou "suivre", reçu {o.get("anim")!r}')
+        lies[o["commande"]] = lies.get(o["commande"], 0) + 1
+    for v in S.get("visites", []):
+        for cid, etat in (v.get("commandes") or {}).items():
+            if cid not in ids:
+                err(f'arrêt de visite « {v.get("nom")} » : commande inconnue "{cid}"')
+            if etat not in ("haut", "bas"):
+                err(f'arrêt de visite « {v.get("nom")} » : état "{etat}" pour "{cid}" (attendu "haut" ou "bas")')
+    for c in out:
+        if not lies.get(c["id"]):
+            print(f'  commande {c["id"]} : aucun objet du mobilier n\'y est lié ("commande": "{c["id"]}")')
+    return out
+
+
 def main(dossier):
     dossier = os.path.abspath(dossier)
     M = json.load(open(os.path.join(dossier, "donnees", "maison.json"), encoding="utf-8"))
@@ -544,6 +601,10 @@ def main(dossier):
              "bornes": [min(xs), min(ys), max(xs), max(ys)], "titre": S.get("titre", M["projet"].get("proposition", "")),
              "projet": M["projet"]["nom"], "palette": S.get("palette", []),
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
+    # commandes interactives (toile motorisée, stores...) : clé ajoutée seulement si la scène en déclare (opt-in)
+    cmd = commandes(S)
+    if cmd:
+        scene["commandes"] = cmd
     # terrain extérieur vu par les fenêtres (pouces, repère du plancher) : un peu sous l'allège au sous-sol
     scene["sol_exterieur"] = S.get("sol_exterieur", sill - 8 if niv["id"] == "SS" else -30)
     scene["materiaux"] = bibliotheque(scene, S)
