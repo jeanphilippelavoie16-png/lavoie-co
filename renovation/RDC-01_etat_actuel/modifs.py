@@ -56,7 +56,7 @@ def appliquer(maison):
     maison["ecarts"] = []
     ss["feuille"], ss["nom"] = "R-100", "Sous-sol (inchangé)"
     rdc["feuille"], rdc["nom"] = "R-101", "Rez-de-chaussée actuel"
-    rdc["photos_sources"] = [f"rdc_actuel/{i:02d}" for i in range(1, 16)]
+    rdc["photos_sources"] = ["photos 01 à 15 du 2026-11-01"]
     murs = {m["id"]: m for m in rdc["murs"]}
 
     # 1) salle de bain plus profonde que la base : laveuse-sécheuse (≈ 28 po), douche (≈ 34 po), passage (≈ 22 po) et

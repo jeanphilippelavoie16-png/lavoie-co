@@ -730,8 +730,8 @@ const POST = (() => {
   return {
     taille(w, h) {
       W = w; Hh = h; rt.setSize(w, h);
-      const w2 = Math.max(1, w >> 1), h2 = Math.max(1, h >> 1), w4 = Math.max(1, w >> 2), h4 = Math.max(1, h >> 2);
-      ao1.setSize(w2, h2); ao2.setSize(w2, h2); h1.setSize(w4, h4); h2.setSize(w4, h4);
+      const lD = Math.max(1, w >> 1), hD = Math.max(1, h >> 1), lQ = Math.max(1, w >> 2), hQ = Math.max(1, h >> 2);
+      ao1.setSize(lD, hD); ao2.setSize(lD, hD); h1.setSize(lQ, hQ); h2.setSize(lQ, hQ);
       mAO.uniforms.texel.value.set(1 / w, 1 / h); mSeuil.uniforms.texel.value.set(1.5 / w, 1.5 / h);
     },
     rendre(Q) {

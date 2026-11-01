@@ -73,7 +73,7 @@
 <text x="1020.16" y="635.52" font-family="Arial, Helvetica, sans-serif" font-size="10.557" text-anchor="start" fill="#000000">A</text>
 <polyline class="cart-l" points="867.2,584.32 1072,584.32"/>
 <text x="872.96" y="593.819" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">PHOTOS SOURCES</text>
-<text x="872.96" y="604.8" font-family="Arial, Helvetica, sans-serif" font-size="10.557" text-anchor="start" fill="#000000">rdc_actuel/01, rdc_actuel/02, rdc_actuel/03, rdc_actuel/04, rdc_actuel/05, rdc_actuel/06, rdc_actuel/07, rdc_actuel/08, rdc_actuel/09, rdc_actuel/10, rdc_actuel/11, rdc_actuel/12, rdc_actuel/13, rdc_actuel/14, rdc_actuel/15</text>
+<text x="872.96" y="604.8" font-family="Arial, Helvetica, sans-serif" font-size="10.557" text-anchor="start" fill="#000000">photos 01 à 15 du 2026-11-01</text>
 <polyline class="cart-l" points="867.2,544.64 1072,544.64"/>
 <text x="872.96" y="554.139" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">ÉCHELLE GRAPHIQUE (pi)</text>
 <path class="cart-noir" fill-rule="evenodd" d="M 876.16 567.04 L 924.16 567.04 L 924.16 571.071 L 876.16 571.071 Z"/>
