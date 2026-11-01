@@ -222,6 +222,9 @@ def bibliotheque(scene, S):
             continue
         uri = lambda f: "data:image/jpeg;base64," + base64.b64encode(open(os.path.join(d, f), "rb").read()).decode()
         m = {"taille_m": e["taille_m"], "relief": uri("relief.jpg"), "metal": e.get("metal", 0)}
+        for k in ("vernis", "vernis_rugosite", "duvet"):      # fini de rendu (clearcoat, sheen), optionnel
+            if k in e:
+                m[k] = e[k]
         if e.get("relief_seul"):
             m["relief_seul"] = True
         else:
@@ -498,7 +501,7 @@ def main(dossier):
             e = 5
             boites.append({"x0": min(g["x1"], g["x2"]) - (0 if horiz else e), "x1": max(g["x1"], g["x2"]) + (0 if horiz else e),
                            "y0": min(g["y1"], g["y2"]) - (e if horiz else 0), "y1": max(g["y1"], g["y2"]) + (e if horiz else 0),
-                           "z0": H - 10.03, "z1": H, "mat": "gypse"})
+                           "z0": H - 10.03, "z1": H, "mat": S.get("mat_poutre", "gypse")})
     # escaliers projetés : marches, trémie dans le plafond, cage au-dessus, obstacle pour la visite
     rects, obstacles = [], []
     for e in niv["elements"]:
@@ -515,6 +518,10 @@ def main(dossier):
     boites = couper_aux_cloisons(boites, niv)
     reculer_bouts_de_murs(boites)
     finis = finitions(niv, par_mur, H, sill, head, S)
+    # SCENE["mats_finitions"] = {matériau de base: matériau du catalogue} : portes, chambranles, plinthes et cadres de
+    # fenêtres d'une autre essence (ex. pin teint au rez-de-chaussée) ; absent = rendu inchangé
+    for b in finis + portes:
+        b["mat"] = (S.get("mats_finitions") or {}).get(b["mat"], b["mat"])
     peindre(boites, niv["pieces"], S)
     mats = S.get("sols", {})
     sols = []
@@ -526,6 +533,8 @@ def main(dossier):
     for m in niv["murs"]:
         if m["type"] == "fondation":
             empreinte += [[m["x1"], m["y1"]], [m["x2"], m["y2"]]]
+    if not empreinte:                                     # rez-de-chaussée : murs extérieurs (« ext ») au lieu de la fondation
+        empreinte = [q for m in niv["murs"] if m["type"] == "ext" for q in ([m["x1"], m["y1"]], [m["x2"], m["y2"]])]
     xs = [q[0] for q in empreinte]; ys = [q[1] for q in empreinte]
     scene = {"H": H, "boites": boites + finis, "portes": portes, "sols": sols, "mobilier": S.get("mobilier", []),
              "revetements": S.get("revetements", []), "lumieres": S.get("lumieres", []),
@@ -533,6 +542,8 @@ def main(dossier):
              "bornes": [min(xs), min(ys), max(xs), max(ys)], "titre": S.get("titre", M["projet"].get("proposition", "")),
              "projet": M["projet"]["nom"], "palette": S.get("palette", []),
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
+    # terrain extérieur vu par les fenêtres (pouces, repère du plancher) : un peu sous l'allège au sous-sol
+    scene["sol_exterieur"] = S.get("sol_exterieur", sill - 8 if niv["id"] == "SS" else -30)
     scene["materiaux"] = bibliotheque(scene, S)
     scene["modeles_glb"], scene["modeles_info"], scene["credits"] = modeles(scene)
     # photos et cadres : SCENE["images"] = {clé: chemin relatif au projet}. Un fichier absent (ex. dossier renovation/prive/,

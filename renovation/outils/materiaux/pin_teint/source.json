@@ -1,0 +1,11 @@
+{
+ "source": "Poly Haven",
+ "id": "coated_pine_02",
+ "licence": "CC0 1.0 (domaine public)",
+ "url": "https://polyhaven.com/a/coated_pine_02",
+ "fichier": "coated_pine_02_*_1k.jpg",
+ "ajustement": {
+  "luminosite": 0.8,
+  "saturation": 0.85
+ }
+}
