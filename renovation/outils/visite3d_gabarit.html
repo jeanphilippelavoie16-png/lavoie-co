@@ -152,7 +152,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: !(window.WebGL2RenderingCo
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.9;
+renderer.toneMappingExposure = 1.0;
 renderer.physicallyCorrectLights = true;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;           // filtrage élargi par shadow.radius : ombres douces
@@ -559,7 +559,7 @@ if (S.sol_exterieur != null) {
 // ---------- éclairage
 // Ambiance : environnement capturé dans la maison (reflets et lumière renvoyée) + un ciel faible ;
 // encastrés blanc chaud 3000 K, lampes 2700 K, lumière du jour bleutée par les fenêtres.
-const COUL_ENCASTRE = "#ffdcb8", COUL_LAMPE = "#ffcf9e", COUL_JOUR = "#cddcff";
+const COUL_ENCASTRE = "#ffe2c4", COUL_LAMPE = "#ffcf9e", COUL_JOUR = "#cddcff";
 const ambiance = new THREE.HemisphereLight("#eef3fa", "#e8dccb", 0.25); scene.add(ambiance);
 // brume au loin : le terrain se fond dans l'horizon (sans effet à l'intérieur, à moins de 10 m)
 scene.fog = new THREE.Fog("#e4ebef", 10, 70);
