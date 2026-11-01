@@ -127,21 +127,19 @@
 <text x="906.24" y="275.303" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">superficie dans tableau_pieces.csv</text>
 <polyline class="cart-l" points="867.2,282.663 1072,282.663"/>
 <text x="872.96" y="292.803" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DE LA PROPOSITION</text>
-<text x="872.96" y="303.511" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Esquisse : cloisons, portes, escalier, bar et</text>
-<text x="872.96" y="314.535" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">appareils projetés ; le reste est l'existant (base</text>
-<text x="872.96" y="325.558" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">R0).</text>
-<text x="872.96" y="338.502" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Escalier de 14 c.m. à l'entrée avant (voir</text>
-<text x="872.96" y="349.526" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">P-126) : trémie, giron et échappée à valider.</text>
-<text x="872.96" y="362.469" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Plancher : béton poli d'un seul tenant dans tout</text>
-<text x="872.96" y="373.493" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">le sous-sol (dalle meulée ou chape polie).</text>
-<text x="872.96" y="386.437" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Salle de bain : bain centré sur le mur d'accent,</text>
-<text x="872.96" y="397.46" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">douche simple 36 × 48 ; drains à déplacer.</text>
-<text x="872.96" y="410.404" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">5. Séjour : toile motorisée 120 po centrée</text>
-<text x="872.96" y="421.427" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">(descend devant la fenêtre), projecteur au</text>
-<text x="872.96" y="432.451" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">plafond (pointillé).</text>
-<text x="872.96" y="445.395" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">6. Dessous de l'escalier dégagé (plus de</text>
-<text x="872.96" y="456.418" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">rangement) ; rampe de métal côté séjour, verre</text>
-<text x="872.96" y="467.442" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">côté gym.</text>
+<text x="872.96" y="303.511" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Esquisse (le reste est l'existant, base R0) ;</text>
+<text x="872.96" y="314.535" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">béton poli d'un seul tenant dans tout le sous-sol.</text>
+<text x="872.96" y="327.478" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Escalier de 14 c.m. à l'entrée avant (voir</text>
+<text x="872.96" y="338.502" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">P-126) : trémie, giron et échappée à valider.</text>
+<text x="872.96" y="351.446" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Salle de bain : bain centré sur le mur d'accent,</text>
+<text x="872.96" y="362.469" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">douche 36 × 48 ; drains à déplacer.</text>
+<text x="872.96" y="375.413" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Séjour : toile motorisée 120 po centrée,</text>
+<text x="872.96" y="386.437" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">projecteur au plafond (pointillé) ; dessous de</text>
+<text x="872.96" y="397.46" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">l'escalier dégagé.</text>
+<text x="872.96" y="410.404" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">5. Walk-in (ancien caveau) : isolé, évents fermés,</text>
+<text x="872.96" y="421.427" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">chauffé.</text>
+<text x="872.96" y="434.371" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">6. Hauteur : 8 pi (propriétaire) ; sous les poutres</text>
+<text x="872.96" y="445.395" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">et coupe-feu à valider.</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="10-Murs" id="10-Murs">
@@ -490,8 +488,8 @@
 </g>
 <g id="elem-SS-ROB1">
 <circle class="elem" cx="603.335" cy="160.979" r="2"/>
-<polyline class="rappel" points="679.469,157.775 605.335,160.979"/>
-<text x="688.024" y="155.927" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">R.E.</text>
+<polyline class="rappel" points="602.847,151.728 603.322,158.98"/>
+<text x="594.292" y="149.88" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">R.E.</text>
 </g>
 <g id="elem-SS-ROB2">
 <circle class="elem" cx="543.935" cy="540.979" r="2"/>
@@ -849,6 +847,11 @@
 <text x="277.138" y="435.753" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 277.138 435.753)">SALLE DE</text>
 <text x="293.748" y="435.753" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 293.748 435.753)">LAVAGE</text>
 </g>
+<g id="piece-SS-LEG">
+<path class="invisible" fill-rule="evenodd" d="M 537.135 110.979 L 449.135 110.979 L 449.135 160.979 L 537.135 160.979 Z"/>
+<text x="499.169" y="132.124" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">WALK-IN</text>
+<text x="499.169" y="148.734" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">ISOLÉ</text>
+</g>
 <g id="piece-SS-GR1">
 <path class="invisible" fill-rule="evenodd" d="M 230.135 170.979 L 230.135 258.729 L 256.135 258.729 L 256.135 170.979 Z"/>
 <text x="247.905" y="238.572" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 247.905 238.572)">G.-R.</text>
@@ -859,13 +862,6 @@
 <circle class="elem-plein" cx="391.159" cy="579.956" r="1.26"/>
 <text x="316.7" y="578.348" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">EXCROISSANCE</text>
 <text x="316.7" y="594.958" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">SOUS PERRON</text>
-</g>
-<g id="piece-SS-LEG">
-<path class="invisible" fill-rule="evenodd" d="M 537.135 110.979 L 449.135 110.979 L 449.135 160.979 L 537.135 160.979 Z"/>
-<polyline class="rappel" points="554.429,153.237 534.111,153.237"/>
-<circle class="elem-plein" cx="534.111" cy="153.237" r="1.26"/>
-<text x="611.388" y="133.671" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">WALK-IN</text>
-<text x="611.388" y="150.281" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">(CAVEAU ISOLÉ)</text>
 </g>
 <g id="piece-SS-SDB">
 <path class="invisible" fill-rule="evenodd" d="M 230.135 293.229 L 230.135 381.729 L 359.885 381.729 L 359.885 293.229 L 270.635 293.229 L 270.635 343.479 L 266.135 343.479 L 266.135 293.229 Z"/>

@@ -1886,7 +1886,7 @@
     },
     {
      "id": "piece-SS-LEG",
-     "nom": "Walk-in (caveau isolé)",
+     "nom": "Walk-in isolé",
      "nom_original": "LEGUMES",
      "description": "Ancien caveau à légumes transformé en garde-robe walk-in de la chambre 2 (tringles, tablettes) ; évent fermé et scellé, plafond (dalle au-dessus) et murs isolés, chauffé et déshumidifié — proposition SS-16 (esquisse)",
      "polygone": [
@@ -4192,7 +4192,7 @@
      "id": "note-SS-P01",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Esquisse : cloisons, portes, escalier, bar et appareils projetés ; le reste est l'existant (base R0)."
+     "interpretation": "Esquisse (le reste est l'existant, base R0) ; béton poli d'un seul tenant dans tout le sous-sol."
     },
     {
      "id": "note-SS-P02",
@@ -4204,37 +4204,25 @@
      "id": "note-SS-P03",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Plancher : béton poli d'un seul tenant dans tout le sous-sol (dalle meulée ou chape polie)."
+     "interpretation": "Salle de bain : bain centré sur le mur d'accent, douche 36 × 48 ; drains à déplacer."
     },
     {
      "id": "note-SS-P04",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Salle de bain : bain centré sur le mur d'accent, douche simple 36 × 48 ; drains à déplacer."
+     "interpretation": "Séjour : toile motorisée 120 po centrée, projecteur au plafond (pointillé) ; dessous de l'escalier dégagé."
     },
     {
      "id": "note-SS-P05",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Séjour : toile motorisée 120 po centrée (descend devant la fenêtre), projecteur au plafond (pointillé)."
+     "interpretation": "Walk-in (ancien caveau) : isolé, évents fermés, chauffé."
     },
     {
      "id": "note-SS-P06",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Dessous de l'escalier dégagé (plus de rangement) ; rampe de métal côté séjour, verre côté gym."
-    },
-    {
-     "id": "note-SS-P07",
-     "texte_original": null,
-     "photo": null,
-     "interpretation": "Walk-in de la chambre 2 dans le caveau : isolé, évents fermés, chauffé (voir DESIGN.md)."
-    },
-    {
-     "id": "note-SS-P08",
-     "texte_original": null,
-     "photo": null,
-     "interpretation": "Hauteur du sous-sol : 8 pi (propriétaire) ; hauteur sous poutres et coupe-feu à valider."
+     "interpretation": "Hauteur : 8 pi (propriétaire) ; sous les poutres et coupe-feu à valider."
     }
    ],
    "lignes_cote": [

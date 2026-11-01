@@ -155,7 +155,7 @@ def appliquer(maison):
     autres = [x for x in ss["pieces"] if x["id"] != "piece-SS-PRINC"]
     for x in autres:
         if x["id"] == "piece-SS-LEG":
-            x["nom"] = "Walk-in (caveau isolé)"
+            x["nom"] = "Walk-in isolé"
             x["description"] = ("Ancien caveau à légumes transformé en garde-robe walk-in de la chambre 2 (tringles, tablettes) ; "
                                 "évent fermé et scellé, plafond (dalle au-dessus) et murs isolés, chauffé et déshumidifié — " + SOURCE)
     # caveau isolé : l'évent grillagé du mur gauche (seule ventilation du caveau dans la base) est fermé et isolé
@@ -268,14 +268,12 @@ def appliquer(maison):
                              note="porte du walk-in, pentures du côté ouest (le battant se range le long du mur des chambres) — " + SOURCE)
     ss["elements"].sort(key=lambda e: e["id"])
     notes = [
-        "Esquisse : cloisons, portes, escalier, bar et appareils projetés ; le reste est l'existant (base R0).",
+        "Esquisse (le reste est l'existant, base R0) ; béton poli d'un seul tenant dans tout le sous-sol.",
         "Escalier de 14 c.m. à l'entrée avant (voir P-126) : trémie, giron et échappée à valider.",
-        "Plancher : béton poli d'un seul tenant dans tout le sous-sol (dalle meulée ou chape polie).",
-        "Salle de bain : bain centré sur le mur d'accent, douche simple 36 × 48 ; drains à déplacer.",
-        "Séjour : toile motorisée 120 po centrée (descend devant la fenêtre), projecteur au plafond (pointillé).",
-        "Dessous de l'escalier dégagé (plus de rangement) ; rampe de métal côté séjour, verre côté gym.",
-        "Walk-in de la chambre 2 dans le caveau : isolé, évents fermés, chauffé (voir DESIGN.md).",
-        "Hauteur du sous-sol : 8 pi (propriétaire) ; hauteur sous poutres et coupe-feu à valider.",
+        "Salle de bain : bain centré sur le mur d'accent, douche 36 × 48 ; drains à déplacer.",
+        "Séjour : toile motorisée 120 po centrée, projecteur au plafond (pointillé) ; dessous de l'escalier dégagé.",
+        "Walk-in (ancien caveau) : isolé, évents fermés, chauffé.",
+        "Hauteur : 8 pi (propriétaire) ; sous les poutres et coupe-feu à valider.",
     ]
     ss["notes"] = [{"id": f"note-SS-P{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t} for i, t in enumerate(notes)]
     ss["lignes_cote"] = [l for l in ss["lignes_cote"] if l.get("facade") != "int"]
