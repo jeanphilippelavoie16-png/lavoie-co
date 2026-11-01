@@ -1,0 +1,13 @@
+{
+ "source": "ambientCG",
+ "id": "Travertine009",
+ "licence": "CC0 1.0 (domaine public)",
+ "url": "https://ambientcg.com/view?id=Travertine009",
+ "fichier": "Travertine009_1K-JPG.zip",
+ "echantillon_m": 1.2,
+ "calepinage": "dalles verticales 24 × 48 po, joints 1/16 po ; répétition 96 × 96 po (2,4384 m) ; calepinage.py",
+ "ajustement": {
+  "saturation": 0.45,
+  "luminosite": 0.97
+ }
+}

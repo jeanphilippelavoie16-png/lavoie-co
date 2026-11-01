@@ -829,7 +829,7 @@
      "x2": 48.25,
      "y2": 250,
      "source_position": "PRÉSUMÉ",
-     "note": "Cloison projetée — muret de la douche / niche du bain (plancher au plafond, carrelé) (proposition SS-16 (esquisse))."
+     "note": "Cloison projetée — muret de la douche / niche du bain (plancher au plafond : tuile blanche côté douche, pierre côté bain) (proposition SS-16 (esquisse))."
     }
    ],
    "ouvertures": [
@@ -2122,7 +2122,7 @@
     {
      "id": "elem-SS-P-BAIN",
      "type": "baignoire",
-     "nom": "Bain autoportant sculptural (pierre de résine), centré sur le mur d'accent (zellige sur fourrure de 2½ po, niche)",
+     "nom": "Bain autoportant sculptural (pierre de résine), centré sur le mur d'accent (travertin adouci en dalles de 24 × 48 po sur fourrure de 2½ po, niche)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {

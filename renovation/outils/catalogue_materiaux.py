@@ -38,6 +38,10 @@ CATALOGUE = {
     "beton_poli": {"source": "ambientcg", "id": "Concrete016", "taille_m": 2.4, "ajustement": {"luminosite": 1.06, "saturation": 0.1},
                    "rugosite": 0.34, "vernis": 0.45, "vernis_rugosite": 0.22,
                    "usage": "béton poli gris pâle, léger marbrage (dalle meulée et densifiée ou chape polie) — tout le sous-sol de SS-16"},
+    "pierre_travertin": {"source": "calepinage", "id": "Travertine009", "taille_m": 2.4384, "rugosite": 0.55,
+                         "usage": "travertin beige-gris pâle adouci (mat), dalles verticales 24 × 48 po à joints fins — mur du bain de SS-16 ; "
+                                  "cartes composées par materiaux/pierre_travertin/calepinage.py (ambientCG Travertine009, CC0 ; "
+                                  "répétition 96 × 96 po = 4 × 2 dalles, ne pas retélécharger telle quelle)"},
     "platre": {"source": "ambientcg", "id": "Plaster001", "taille_m": 1.5, "relief_seul": True,
                "usage": "relief des murs peints (la couleur vient de la peinture)"},
 }
