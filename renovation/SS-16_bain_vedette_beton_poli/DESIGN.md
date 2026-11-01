@@ -1,4 +1,4 @@
-# SS-16 — Le bain en vedette, douche simple, béton poli partout
+# SS-16 — Le bain en vedette, douche simple, béton poli partout, toile de 120 po, caveau isolé
 
 Copie de SS-15. Les versions précédentes et les plans de base restent intacts. Feuilles **P-125** (sous-sol) et
 **P-126** (rez-de-chaussée, inchangé depuis SS-15).
@@ -6,7 +6,21 @@ Copie de SS-15. Les versions précédentes et les plans de base restent intacts.
 ## Demandes du propriétaire (2026-11-01)
 - Salle de bain du bas : une **douche plus petite, simple**, et **beaucoup plus d'emphase sur le beau bain**.
 - Plancher : **tout le sous-sol en dalle de béton** avec une belle finition (le **béton poli**), d'un seul tenant, partout.
-- Réponse « 2 » : le **walk-in reste dans la chambre 2** ; le **projecteur reste à côté du divan**. Aucun changement là.
+- Réponse « 2 » : le **walk-in reste dans la chambre 2**.
+
+### Suite (2026-11-01, après avoir vu SS-15)
+> « En dessous de l'escalier, là, on va enlever le rangement. Finalement, c'était pas ça que je voulais. Mais c'est pas
+> grave. Le projecteur, là, je veux qu'il soit comme au plafond. Puis la toile, qu'elle soit grosse puis centrée. Là.
+> Qu'on soit capable de la monter à descendre dans le plan aussi, comme interactif. Le caveau, c'était correct. Là. On va
+> l'isoler. On va fermer les vents. »
+
+| Demande | Ce qui change par rapport à SS-15 | Pourquoi |
+|---|---|---|
+| Plus de rangement sous l'escalier | Les trois caissons de chêne (portes, joints, poignées) sont **enlevés**. Le dessous de l'escalier flottant est **dégagé** : béton poli continu jusqu'au verre du gym. Rampe de métal gardée côté séjour, verre côté gym | On voit à travers les marches et le verre jusqu'au gym : l'escalier redevient une sculpture légère. Rien de neuf qui ressemble à du rangement |
+| Projecteur au plafond | Le guéridon et le projecteur posés au bout du divan sont **enlevés**. **Projecteur 4K suspendu au plafond** par un support noir court (tige de 5 po), derrière le divan, **dans l'axe du centre de la toile** | Plus rien sur le plancher, plus de fil qui traîne ; l'image est droite (pas de correction trapézoïdale) |
+| Toile grosse et centrée | Toile motorisée **16:9 de 120 po** (au lieu de 96 po), **centrée** sur le mur du séjour ; boîtier noir au plafond | Voir « Le coin cinéma » |
+| Monter et descendre dans la visite | La toile est **interactive** dans la maquette 3D : bouton « Descendre la toile » / « Monter la toile » | Voir « Monter et descendre la toile dans la visite » |
+| Caveau isolé, évents fermés | Le walk-in de la chambre 2 reste tel quel ; l'**évent grillagé est fermé et isolé**, le plafond et les murs du caveau sont isolés et finis, le walk-in est chauffé | Voir « Caveau isolé » |
 
 ## La salle de bain (P-125)
 La pièce fait 10'-9¾" × 7'-4½" (≈ 78 pi²). La porte coulissante reste dans le mur du hall (y ≈ 15'-3"). On ne peut
@@ -46,6 +60,110 @@ la toilette ni la plante ; la porte de la pièce glisse sans rien frapper.
 (≈ 6 pi) ; un nouveau drain de douche (linéaire) dans le coin arrière gauche ; le drain de la toilette passe devant le mur
 de la salle de lavage (comme en SS-13 à SS-15) ; l'alimentation du robinet sur pied arrive par le plancher.
 Option économique : bain de 60 po, drain au bout côté douche (tranchée plus courte).
+
+## Le coin cinéma (P-125, séjour)
+```
+ mur avant (y = 10)                                                     mur de droite (x = 446)
+   ┌──────────────────────────────────────────────────────────────────────┐
+   │        rampe │            ┌─────────── méridienne ──┐             ┊▐ │ ← boîtier au plafond
+   │  dessous de  │  ┌ ─ ─ ┐   │ DIVAN EN L              │  table      ┊▐ │   (marge 15½ po)
+   │  l'escalier  │    PROJ.   │ (yeux ≈ 10'-2" de la    │  basse      ┊▐ │
+   │  (dégagé)    │  └ ─ ─ ┘ ──┼── faisceau ──────────────┼────────────→┊▐ │ ← TOILE 120 po (axe y = 83½)
+   │              │  plafond   │  toile)                 │             ┊▐ │   fenêtre derrière la toile
+   │              │            └─────────────────────────┘             ┊▐ │
+   │              │                                                    ┊▐ │ ← boîtier (marge 15½ po)
+   └──────────────┴── pied de l'escalier ─── limite du vestiaire (y = 157) ┘
+```
+- **Toile** : motorisée, format 16:9, **120 po de diagonale**, image de **104⅝ × 58¾ po** (8'-8⅝" × 4'-10¾"), bordures
+  noires de 2 po, retombée noire en haut. Boîtier noir de ≈ 116 po fixé au plafond, **centré** sur le mur du séjour
+  (entre le mur avant, y = 10, et la limite du vestiaire sous la poutre avant, y = 157) : **15½ po de marge de chaque
+  côté**. Le centre de la toile tombe aussi sur le centre du divan (y ≈ 84). En position basse, le **bas de l'image est
+  à 28 po du sol** (haut de l'image à ≈ 87 po).
+- **La fenêtre** (36 po, centrée à y = 75 sur ce mur, allège ≈ 56 po, tête ≈ 86 po) est entièrement **derrière la
+  toile** quand elle descend : c'est un avantage, l'image est sur fond **noir complet**, même le jour, sans rideau. La
+  toile pend à 5½ po du mur ; le boîtier (bas à 91½ po) passe 2 po au-dessus du cadrage de la fenêtre. **Pas de tringle
+  ni de rideau** sur cette fenêtre : si on veut un store pour le jour, un store à enrouleur posé **dans l'embrasure** (mur
+  de fondation de 10 po), qui ne touche pas la toile.
+- **Projecteur** : au plafond, dans l'axe de la toile, à **x ≈ 290** (derrière le dossier du divan). Rapport de
+  projection retenu **1,35** (projecteur 4K de cinéma maison à zoom ; plage courante 1,3 à 1,5) : **distance objectif →
+  toile = 1,35 × 104,6 ≈ 141 po (11'-9")**. Bas du projecteur à 84½ po du sol. Selon le modèle choisi, le support se
+  déplace de quelques pouces (vérifier la plage de zoom et le décalage vertical de l'objectif du modèle).
+- **Faisceau vérifié** : il part vers la toile (vers +x), donc il ne croise **ni la trémie ni la rampe** (à x ≤ 272,
+  derrière le projecteur) ; il reste entre y ≈ 29 et 138, **entre les poutres** (y = 157 et 204) ; les encastrés du
+  plafond sont au-dessus du rayon le plus haut (≈ 87 po). Personne debout derrière le divan n'est dans le faisceau
+  (il commence à l'objectif, x ≈ 300) ; au-dessus du dossier, le rayon le plus bas est à ≈ 86 po, et encore à ≈ 75 po
+  devant le siège (x ≈ 330) : une personne de 6 pi debout devant le divan passe dessous.
+- **Distance de visionnement** : les yeux, assis au fond du divan, sont à ≈ 122 po (10'-2") de la toile, soit
+  **1,0 × la diagonale** (champ de vision ≈ 46°). C'est **très immersif**, comme dans les premières rangées du milieu
+  d'un cinéma. Repères courants : 1,2 × (≈ 40°, THX) à 1,6 × (≈ 30°, SMPTE) la diagonale. Deux façons de s'en
+  approcher : **reculer le divan de 12 po** (il reste 30 po derrière lui, un cul-de-sac contre la rampe ; on garderait
+  18 po) → ≈ 134 po, **1,1 ×** ; ou une toile de **110 po** sans bouger le divan → **1,1 ×**. À essayer sur place avant
+  d'acheter (ruban adhésif au mur à la taille de l'image).
+- **Meuble bas** de chêne suspendu (72 po, dessus à 15 po), centré sous la toile ; **barre de son** dessus (haut à
+  ≈ 18 po), sous l'image en position basse (barre de lestage à ≈ 25 po). La plante passe dans le coin avant.
+- **Électricité à prévoir** : prise au plafond pour le projecteur et pour le moteur de la toile (ou toile câblée),
+  câble HDMI (fibre optique) dans le plafond jusqu'au meuble, commande murale ou déclencheur 12 V (la toile descend
+  quand on allume le projecteur). À valider avec un électricien.
+- **Ordre de grandeur** : pas de prix canadien fiable trouvé pour une toile motorisée de 120 po 16:9 (les fiches de
+  revendeurs américains consultées ne se lisaient pas) : demander des prix pour la toile (blanc mat d'entrée de gamme ou toile
+  grise anti-lumière ambiante), le projecteur 4K, le support et l'électricité.
+
+### Monter et descendre la toile dans la visite
+Dans `3d/visite.html`, la toile est **enroulée au départ** (le mur reste dégagé). Pour la descendre : le bouton
+**« Descendre la toile »** en bas de l'écran, ou **toucher la toile** (enroulée : sa barre noire, sous le
+boîtier) ; même chose pour la monter
+(« Monter la toile »). L'arrêt **« Coin cinéma (toile) »** de la visite guidée la descend tout seul et la montre en
+entier ; l'arrêt **« Séjour »** la remonte.
+
+## Le dessous de l'escalier
+Dégagé : plus de caissons. Le béton poli continue sous les marches flottantes jusqu'à la cloison vitrée du gym ; on voit
+le gym à travers les marches. Rien de neuf n'y est ajouté (au besoin, plus tard, une grande plante ou une pièce
+sculpturale, mais pas de rangement). La rampe à barreaux noirs reste côté séjour (garde), le verre côté gym.
+
+## Caveau isolé (walk-in de la chambre 2)
+Le walk-in reste tel quel (tringle et tablette au fond, tablettes de côté, porte depuis la chambre 2). On ferme
+l'**évent grillagé** du mur gauche du caveau (le seul évent ou ouverture de ventilation du caveau dans le relevé) et on
+isole le caveau comme une pièce de la maison.
+
+**Pourquoi un caveau à légumes est froid et humide.** Il est construit *hors* du carré de la maison, sous une dalle de
+béton (l'entrée ou le perron arrière, au-dessus : à confirmer sur place), avec des murs de fondation enterrés et un évent
+qui laisse entrer l'air extérieur : il a été conçu pour rester **froid** (conserver les légumes). La dalle du dessus est
+la surface la plus froide (exposée à l'air extérieur, l'hiver à Baie-Comeau). Si on chauffe la pièce sans l'isoler,
+l'air chaud et humide de la maison se **condense** sur cette dalle et sur les murs : gouttes, taches, **moisissure** dans
+les vêtements. Bien fait, c'est une pièce sèche ; mal fait, c'est le pire endroit pour ranger du linge.
+
+**Comment bien le faire (dans l'ordre) :**
+1. **D'abord l'eau** : vérifier qu'il n'y a pas d'infiltration par la dalle du perron (fissures, membrane absente,
+   joint avec le mur de la maison, pente vers la maison). Réparer **dehors** en premier (membrane d'étanchéité sur la
+   dalle ou sous le revêtement, pente, solin au mur). Vérifier l'état de la dalle (armature rouillée, éclatements) : si
+   elle est en mauvais état, la refaire avant d'isoler dessous.
+2. **Fermer et sceller les évents** : à l'extérieur, **bouchon de maçonnerie** (ou grille condamnée par une plaque
+   étanche) ; à l'intérieur, **isolant rigide** taillé serré dans l'ouverture et **scellant** (mousse ou mastic) tout
+   autour, puis l'isolant du mur passe par-dessus.
+3. **Isoler le plafond** (la dalle du perron) : **uréthane giclé** à cellules fermées (isole et sert de pare-vapeur
+   d'un seul coup, suit les irrégularités) ou **isolant rigide** (polystyrène extrudé ou polyisocyanurate) collé et
+   fixé mécaniquement ; puis **gypse** : le code exige qu'une mousse plastique soit protégée par une barrière thermique
+   (ex. gypse de ½ po). Prolonger l'isolant **sur le haut des murs et sur le bord de la dalle** pour couper le **pont
+   thermique** à la jonction dalle-murs (là où la condensation apparaît en premier).
+4. **Isoler les murs** comme le reste du sous-sol : isolant rigide ou uréthane contre le béton, ossature, laine au
+   besoin, **pare-vapeur** côté chaud (ou uréthane continu), gypse peint (la maquette montre les murs finis couleur
+   sauge, comme la chambre 2).
+5. **Plancher** : la dalle reste en béton (béton poli comme le reste, voir plus haut) ; si on fait la chape de
+   l'option B, un panneau isolant dessous aide aussi ici.
+6. **Chauffer et assécher** : une petite **plinthe électrique** basse (dessinée sur le mur avant, à côté de la porte,
+   hors des vêtements) ou le plancher radiant de la chape ; **porte détalonnée** (ou grille de transfert) vers la
+   chambre 2 pour que l'air circule ; **déshumidificateur** ou ventilation de la maison (VRC) les premiers mois ;
+   viser **moins de 50 % d'humidité relative**.
+
+**Ordre de grandeur** (à confirmer par soumissions) : pour isoler un sous-sol de 1 000 pi² (murs et solive de rive),
+≈ 3 600 $ au polystyrène et ≈ 4 000 $ au polyuréthane ([Soumission Rénovation, *L'isolation de sous-sol*, modifié le
+8 novembre 2023](https://soumissionrenovation.ca/fr/blogue/isolation-sous-sol)). Le caveau ne fait que ≈ 30 pi² de
+plancher (≈ 30 pi² de plafond et ≈ 185 pi² de murs) : l'isolant seul est petit, mais le déplacement d'un gicleur
+d'uréthane, le gypse, le scellement des évents, la plinthe et la réparation éventuelle de la membrane du perron font
+le gros du prix. **Estimation du designer, non sourcée : quelques milliers de dollars**, beaucoup plus si la dalle du
+perron est à refaire.
+
+À valider avec la Ville de Baie-Comeau et un professionnel (code, barrière thermique, état de la dalle du perron).
 
 ## Le plancher : du béton poli partout
 Un seul matériau, d'un mur à l'autre, de la salle de lavage aux chambres, dans la douche et au pied de l'escalier : la
@@ -92,6 +210,11 @@ autre teinte, alignées sur les cloisons).
 3. **Bain** : 66 po (dessiné) ou 60 po (tranchée plus courte, plus d'air aux bouts) ; pierre de résine ou acrylique.
 4. **Douche** : porte battante (dessinée) ou porte coulissante ; sol de béton antidérapant ou petit zellige.
 5. **Lustre du béton** : satiné (dessiné, recommandé) ou brillant.
+6. **Toile : 120 po (dessinée, très immersive à 1,0 × la diagonale)** en reculant ou non le divan de 12 po, **ou 110 po**.
+7. **Projecteur** : modèle à choisir (plage de zoom qui couvre ≈ 1,35 à 141 po) ; couleur du boîtier et du projecteur
+   (noir, dessiné, ou blanc pour se fondre au plafond).
+8. **Dessous de l'escalier** : laissé vide (dessiné) ou une grande plante / pièce sculpturale.
+9. **Caveau** : uréthane giclé ou isolant rigide au plafond ; chauffage par plinthe ou plancher radiant.
 
 ## À vérifier sur place
 - Hauteur sous la retombée de la poutre arrière au-dessus du bain et de la douche ; hauteur libre après une chape (option B).
@@ -99,11 +222,17 @@ autre teinte, alignées sur les cloisons).
 - Pente et membrane de la douche ; ventilation (ventilateur de salle de bain vers l'extérieur).
 - Luminaires au-dessus du bain et dans la douche homologués pour endroit humide ; DDFT.
 - Structure de la porte coulissante (rail apparent) et dégagement de la colonne.
+- Séjour : solives du plafond pour fixer le boîtier de la toile et le support du projecteur ; cadrage réel de la
+  fenêtre (saillie) sous le boîtier ; prises au plafond ; essai de taille d'image au mur (ruban) depuis le divan.
+- Caveau : infiltrations par la dalle du perron (membrane), état de la dalle (armature, éclatements), nombre réel
+  d'évents (un seul au relevé), humidité des murs ; ce qu'il y a au-dessus (entrée ou perron arrière).
 
 À valider avec la Ville de Baie-Comeau et un professionnel.
 
 ## Maquette 3D
-`3d/visite.html` — arrêts refaits : Salle de bain (entrée), Le bain (alcôve de zellige), Douche simple, Vanité. Béton
+`3d/visite.html` — arrêts refaits : Salle de bain (entrée), Le bain (alcôve de zellige), Douche simple, Vanité ;
+Coin cinéma (toile) (descend la toile et la montre en entier), Séjour (remonte la toile) ; plus d'arrêt « Rangement sous
+l'escalier » ; Walk-in (caveau isolé). Bouton « Descendre la toile » / « Monter la toile », ou toucher la toile. Béton
 poli partout (matériau `beton_poli`, ambientCG Concrete016, CC0). Nouveaux modèles : bain sculptural (modèle procédural
 du projet), suspension globe, plante en pot, panier d'osier (Poly Haven, CC0).
 Au-dessus du divan, le grand cadre montre une œuvre abstraite générique (champs argile, sable et sauge) : aucune photo
