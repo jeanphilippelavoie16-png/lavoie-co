@@ -132,15 +132,15 @@
 <text x="872.96" y="327.7" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Fenêtres selon la vidéo DAG (allège ≈ 44, tête</text>
 <text x="872.96" y="338.724" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">≈ 80 po ; chambre 1 : allège ≈ 40) ; congélateur</text>
 <text x="872.96" y="349.747" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">au lavage.</text>
-<text x="872.96" y="362.691" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Hall : mur épais sous la poutre arrière</text>
-<text x="872.96" y="373.715" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">(colonnes cachées) ; chambre 1 et salle de bain</text>
-<text x="872.96" y="384.738" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">agrandies ; fenêtres d'évacuation à vérifier.</text>
-<text x="872.96" y="397.682" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Walk-in (ancien caveau) : isolé, évents fermés,</text>
-<text x="872.96" y="408.706" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">chauffé ; porte dérobée dans le mur de chêne de</text>
-<text x="872.96" y="419.729" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">la chambre 2.</text>
-<text x="872.96" y="432.673" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Escalier : banc-cabane bas (≤ 26 po) dessous</text>
-<text x="872.96" y="443.696" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">; vides entre les marches (5½ po) à valider avec</text>
-<text x="872.96" y="454.72" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">des enfants.</text>
+<text x="872.96" y="362.691" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Chute à linge (salle de bain du haut → plafond</text>
+<text x="872.96" y="373.715" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">du lavage) : déflecteur inox, chariot ; cloison,</text>
+<text x="872.96" y="384.738" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">solives et coupe-feu à valider.</text>
+<text x="872.96" y="397.682" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Hall : mur épais sous la poutre arrière</text>
+<text x="872.96" y="408.706" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">(colonnes cachées) ; chambre 1 et salle de bain</text>
+<text x="872.96" y="419.729" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">agrandies ; fenêtres d'évacuation à vérifier.</text>
+<text x="872.96" y="432.673" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Walk-in (ancien caveau) : isolé, évents fermés,</text>
+<text x="872.96" y="443.696" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">chauffé ; porte dérobée dans le mur de chêne de</text>
+<text x="872.96" y="454.72" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">la chambre 2.</text>
 <text x="872.96" y="467.664" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">… autres notes : voir maison.json</text>
 </g>
 </g>
@@ -415,7 +415,7 @@
 </g>
 <g id="elem-SS-P-CE">
 <circle class="elem" cx="254.135" cy="402.979" r="11"/>
-<text x="272.375" y="394.833" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">C.E.</text>
+<text x="248.186" y="422.046" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">C.E.</text>
 </g>
 <g id="elem-SS-P-CH2-BUREAU">
 <polygon class="elem" points="611.135,308.229 665.135,308.229 665.135,284.229 611.135,284.229"/>
@@ -580,8 +580,8 @@
 <g id="elem-SS-Q-CONG">
 <polygon class="elem" points="327.735,453.979 327.735,421.979 297.735,421.979 297.735,453.979"/>
 <polyline class="elem-fin" points="299.735,453.979 299.735,421.979"/>
-<polyline class="rappel" points="327.735,400.397 327.735,421.979"/>
-<text x="318.088" y="398.549" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">CONG.</text>
+<polyline class="rappel" points="349.023,358.066 327.735,421.979"/>
+<text x="363.442" y="356.219" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">CONG.</text>
 </g>
 <g id="elem-SS-Q-DESHUM">
 <polygon class="elem" points="245.135,494.979 245.135,474.979 231.135,474.979 231.135,494.979"/>
@@ -605,6 +605,11 @@
 <circle class="elem" cx="543.935" cy="540.979" r="2"/>
 <polyline class="rappel" points="543.447,550.406 543.934,542.979"/>
 <text x="534.892" y="557.093" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">R.E.</text>
+</g>
+<g id="elem-SS-S-CHUTE">
+<polygon class="elem-tir" points="270.134,401.979 310.764,401.979 310.764,387.979 270.134,387.979"/>
+<polyline class="rappel" points="280.717,475.926 280.717,401.979"/>
+<text x="265.565" y="482.612" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">CHUTE</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="40-Structure" id="40-Structure">
@@ -954,8 +959,8 @@
 </g>
 <g id="piece-SS-LAVAGE">
 <path class="invisible" fill-rule="evenodd" d="M 230.135 530.979 L 329.885 530.979 L 329.885 386.229 L 230.135 386.229 Z"/>
-<text x="277.138" y="435.753" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 277.138 435.753)">SALLE DE</text>
-<text x="293.748" y="435.753" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 293.748 435.753)">LAVAGE</text>
+<text x="277.138" y="438.981" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 277.138 438.981)">SALLE DE</text>
+<text x="293.748" y="438.981" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 293.748 438.981)">LAVAGE</text>
 </g>
 <g id="piece-SS-PERRON">
 <path class="invisible" fill-rule="evenodd" d="M 448.135 582.979 L 448.135 540.979 L 388.135 540.979 L 388.135 582.979 Z"/>

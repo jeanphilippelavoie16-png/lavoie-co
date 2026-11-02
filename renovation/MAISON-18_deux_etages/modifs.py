@@ -12,7 +12,7 @@ import importlib.util
 import os
 
 ICI = os.path.dirname(os.path.abspath(__file__))
-RDC_ZONES = ["rdc_corrections", "rdc_entree", "rdc_chambre_arriere", "rdc_bureau", "rdc_cuisine", "rdc_cafe_sdb"]
+RDC_ZONES = ["rdc_corrections", "rdc_entree", "rdc_chambre_arriere", "rdc_bureau", "rdc_cuisine", "rdc_cafe_sdb", "chute_linge", "rdc_robot"]
 
 
 def _charger(nom, fichier):

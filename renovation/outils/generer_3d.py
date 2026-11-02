@@ -4,6 +4,10 @@
 Lit <projet>/donnees/maison.json (produit par construire_projet.py) et, s'il existe, <projet>/scene_3d.py
 (mobilier, matériaux par pièce, hauteur de plafond). Les textures (Poly Haven, CC0) sont intégrées au fichier.
 Facultatif : SCENE["commandes"] (toile motorisée, stores...) rend des objets du mobilier mobiles dans la visite (voir commandes()).
+Facultatif : SCENE["animes"] d'un étage (objets qui se promènent en boucle : aspirateur robot ; voir animes()) et
+SCENE["sequences"] de la scène principale (séquence déclenchée, d'un étage à l'autre : chute à linge ; voir sequences()).
+Facultatif : SCENE["scenarios"] de la scène principale (personnage articulé qui marche, cogne, parle, fait des sons et ouvre
+les portes : visiteur qui cogne à la porte ; voir scenarios()).
 
 Portes : chaque porte battante ou coulissante devient un objet qu'on ouvre et ferme en le touchant (voir battant()) ; état de
 départ = celui dessiné (« fermee » ou ouverte à 90°). Un objet du mobilier qui porte "porte": id d'ouverture pivote avec elle
@@ -945,6 +949,436 @@ def commandes(S):
     return out
 
 
+FORMES_OBJETS = {"boite", "arrondi", "cylindre", "tube", "sphere", "tore", "modele", "image", "ecran"}
+
+
+def _num(v):
+    return isinstance(v, (int, float)) and not isinstance(v, bool)
+
+
+def _pt(v, n):
+    return isinstance(v, (list, tuple)) and len(v) == n and all(_num(q) for q in v)
+
+
+def _objets_mobiles(liste, ou, err):
+    """Objets d'un groupe animé (robot, trappe, ballot) : décrits comme le mobilier (mêmes formes et clés), plus
+    "tourne" (°/s autour d'un axe vertical passant par "centre" [x, y], défaut : centre de l'objet) et "clignote"
+    (période en s d'un voyant ; "couleur" #rrggbb facultative). Retourne des copies complétées."""
+    if not isinstance(liste, list) or not liste:
+        err(f'{ou} : "objets" doit être une liste non vide d\'objets du mobilier')
+    out = []
+    for k, o in enumerate(liste):
+        if not isinstance(o, dict):
+            err(f'{ou}, objet n° {k + 1} : dictionnaire attendu, reçu {o!r}')
+        f = o.get("forme", "boite")
+        if f not in FORMES_OBJETS:
+            err(f'{ou}, objet n° {k + 1} : forme "{f}" inconnue ({", ".join(sorted(FORMES_OBJETS))})')
+        for cle in ("commande", "porte", "fixe", "anim"):
+            if cle in o:
+                err(f'{ou}, objet n° {k + 1} : clé "{cle}" interdite dans un groupe animé')
+        o = dict(o)
+        if "tourne" in o:
+            if not _num(o["tourne"]):
+                err(f'{ou}, objet n° {k + 1} : "tourne" doit être une vitesse en degrés par seconde, reçu {o["tourne"]!r}')
+            if "centre" not in o:
+                if _num(o.get("x")) and _num(o.get("y")):
+                    o["centre"] = [o["x"], o["y"]]
+                elif all(_num(o.get(c)) for c in ("x0", "x1", "y0", "y1")):
+                    o["centre"] = [(o["x0"] + o["x1"]) / 2, (o["y0"] + o["y1"]) / 2]
+                else:
+                    o["centre"] = [0, 0]
+            if not _pt(o["centre"], 2):
+                err(f'{ou}, objet n° {k + 1} : "centre" doit valoir [x, y], reçu {o["centre"]!r}')
+        if "clignote" in o and (not _num(o["clignote"]) or o["clignote"] <= 0):
+            err(f'{ou}, objet n° {k + 1} : "clignote" doit être une période en secondes (> 0), reçu {o["clignote"]!r}')
+        if "couleur" in o and not (isinstance(o["couleur"], str) and o["couleur"].startswith("#")):
+            err(f'{ou}, objet n° {k + 1} : "couleur" doit être une couleur "#rrggbb", reçu {o["couleur"]!r}')
+        out.append(o)
+    return out
+
+
+def animes(S, bornes=None):
+    """Objets animés en boucle (opt-in, aspirateur robot...) : SCENE["animes"] d'une scène d'ÉTAGE (repère de son plancher) =
+    [{"id", "nom", "objets", "trajet", "vitesse", "rotation", "z", "pauses", "depart", "ombre", "bouton"}].
+    - "objets" : comme le mobilier, dans un repère LOCAL (origine au centre de l'objet, au sol ; +x = l'avant) ;
+    - "trajet" : [[x, y], ...] (pouces, repère du plancher), parcouru en boucle (du dernier point on revient au premier) ;
+      l'objet avance en ligne droite à "vitesse" (po/s), tourne sur place à chaque point à "rotation" (°/s, défaut 90)
+      pour faire face au segment suivant ; "pauses" : [{"point": indice dans trajet, "duree": s}] (ex. base de recharge) ;
+    - "z" : hauteur du dessous de l'objet au-dessus du plancher (défaut 0) ; "depart" : s déjà écoulées au chargement ;
+    - "ombre" (défaut True) : ombre de contact ronde qui suit l'objet ; "bouton" (défaut True) : bouton pause / reprendre
+      sur son étage, ou {"libelle_pause", "libelle_reprendre"}, ou False.
+    Retourne la liste complétée ; erreur explicite si les données ne respectent pas ce contrat. Sans "animes" : []."""
+    liste = S.get("animes") or []
+
+    def err(msg):
+        raise SystemExit("scene_3d.py, animes : " + msg)
+    if not isinstance(liste, list):
+        err('SCENE["animes"] doit être une liste d\'objets {"id", "objets", "trajet", "vitesse"}')
+    out, ids = [], set()
+    for i, a in enumerate(liste):
+        if not isinstance(a, dict) or not isinstance(a.get("id"), str) or not a["id"]:
+            err(f'objet animé n° {i + 1} sans "id" (texte)')
+        aid = a["id"]
+        if aid in ids:
+            err(f'id "{aid}" en double')
+        ids.add(aid)
+        inconnues = set(a) - {"id", "nom", "objets", "trajet", "vitesse", "rotation", "z", "pauses", "depart", "ombre", "bouton", "note"}
+        if inconnues:
+            err(f'"{aid}" : clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
+        objets = _objets_mobiles(a.get("objets"), f'"{aid}"', err)
+        tr = a.get("trajet")
+        if not isinstance(tr, list) or len(tr) < 2 or not all(_pt(p, 2) for p in tr):
+            err(f'"{aid}" : "trajet" doit être une liste d\'au moins 2 points [x, y] (pouces), reçu {tr!r}')
+        for k in range(len(tr)):
+            p, q = tr[k], tr[(k + 1) % len(tr)]
+            if math.hypot(q[0] - p[0], q[1] - p[1]) < 0.5:
+                err(f'"{aid}" : points {k} et {(k + 1) % len(tr)} du trajet confondus (le trajet est une boucle : le dernier '
+                    f'point ne répète pas le premier)')
+        if bornes:
+            for k, p in enumerate(tr):
+                if not (bornes[0] <= p[0] <= bornes[2] and bornes[1] <= p[1] <= bornes[3]):
+                    print(f'  objet animé {aid} : point {k} du trajet {p} hors de l\'étage {bornes}')
+        v, rot, z, dep = a.get("vitesse"), a.get("rotation", 90), a.get("z", 0), a.get("depart", 0)
+        if not _num(v) or v <= 0:
+            err(f'"{aid}" : "vitesse" doit être un nombre de pouces par seconde > 0, reçu {v!r}')
+        if not _num(rot) or rot <= 0:
+            err(f'"{aid}" : "rotation" doit être un nombre de degrés par seconde > 0, reçu {rot!r}')
+        if not _num(z) or not _num(dep) or dep < 0:
+            err(f'"{aid}" : "z" (pouces) et "depart" (secondes >= 0) doivent être des nombres')
+        pauses = a.get("pauses", [])
+        if not isinstance(pauses, list) or not all(isinstance(p, dict) and isinstance(p.get("point"), int) and not isinstance(p.get("point"), bool)
+                                                    and 0 <= p["point"] < len(tr) and _num(p.get("duree")) and p["duree"] > 0 for p in pauses):
+            err(f'"{aid}" : "pauses" doit être une liste de {{"point": indice du trajet (0..{len(tr) - 1}), "duree": s > 0}}, reçu {pauses!r}')
+        bt = a.get("bouton", True)
+        if not isinstance(bt, (bool, dict)):
+            err(f'"{aid}" : "bouton" doit valoir True, False ou {{"libelle_pause", "libelle_reprendre"}}')
+        nom = a.get("nom") or aid
+        if bt is not False:
+            bt = bt if isinstance(bt, dict) else {}
+            bt = {"libelle_pause": bt.get("libelle_pause") or "Mettre en pause", "libelle_reprendre": bt.get("libelle_reprendre") or "Repartir"}
+        out.append({"id": aid, "nom": nom, "objets": objets, "trajet": [[float(p[0]), float(p[1])] for p in tr], "vitesse": float(v),
+                    "rotation": float(rot), "z": float(z), "pauses": [{"point": p["point"], "duree": float(p["duree"])} for p in pauses],
+                    "depart": float(dep), "ombre": a.get("ombre", True) is not False, "bouton": bt})
+    return out
+
+
+def sequences(S, etages=None):
+    """Séquences interactives (opt-in, chute à linge...) : SCENE["sequences"] de la scène PRINCIPALE (celle qui porte
+    "etages" ; un projet à un étage : sa SCENE) ; tout en pouces, z ABSOLU de la maison (plancher du sous-sol = 0, RDC = sa
+    hauteur d'étage). Un déclencheur (toucher la trappe ou le bouton "libelle" sur l'étage de la trappe ET sur celui du
+    panier) joue : la trappe pivote de "angle" degrés autour de sa "charniere" [[x, y, z], [x, y, z]] (règle de la main
+    droite autour de l'axe point 1 → point 2) en "duree" s ; le ballot apparaît au point 1 du "chemin", attend la trappe
+    ouverte, puis suit le chemin (pente : glissade avec "frottement" ; verticale : chute libre, g = 386 po/s² ; à plat :
+    "vitesse_depart" po/s) jusqu'au dernier point, où il se pose dans le panier (décalé de "pile"[k] pour le k-ième ballot ;
+    pile pleine : on vide au lancer suivant) ; la trappe se referme "ferme_apres" s après que le ballot a passé le point 2.
+    Depuis l'étage de la trappe, le bouton "libelle_voir" amène à "vue_arrivee" et rejoue l'arrivée. Contrat complet :
+    renovation/README.md. etages : [(id, z, H)] des étages (maquette à plusieurs étages), sinon None.
+    Retourne la liste complétée ; erreur explicite si les données ne respectent pas ce contrat. Sans "sequences" : []."""
+    liste = S.get("sequences") or []
+
+    def err(msg):
+        raise SystemExit("scene_3d.py, sequences : " + msg)
+    if not isinstance(liste, list):
+        err('SCENE["sequences"] doit être une liste d\'objets {"id", "trappe", "ballot", ...}')
+    ids_etages = {e[0] for e in etages} if etages else None
+
+    def etage_de(z):
+        if not etages:
+            return None
+        f = etages[0][0]
+        for eid, ez, _ in etages:
+            if ez <= z + 0.5:
+                f = eid
+        return f
+
+    def vue(v, cle, sid):
+        if v is None:
+            return None
+        if not isinstance(v, dict) or not all(_num(v.get(k)) for k in ("x", "y", "cap")):
+            err(f'"{sid}" : "{cle}" doit valoir {{"x", "y", "cap", "etage"}} (pouces, degrés), reçu {v!r}')
+        if ids_etages and v.get("etage") not in ids_etages:
+            err(f'"{sid}" : "{cle}" : "etage" doit être l\'un de {", ".join(sorted(ids_etages))}, reçu {v.get("etage")!r}')
+        if "tangage" in v and not _num(v["tangage"]):
+            err(f'"{sid}" : "{cle}" : "tangage" (degrés, négatif = vers le bas) doit être un nombre')
+        return {k: v[k] for k in ("x", "y", "cap", "etage", "tangage") if k in v}
+    out, ids = [], set()
+    for i, q in enumerate(liste):
+        if not isinstance(q, dict) or not isinstance(q.get("id"), str) or not q["id"]:
+            err(f'séquence n° {i + 1} sans "id" (texte)')
+        sid = q["id"]
+        if sid in ids:
+            err(f'id "{sid}" en double')
+        ids.add(sid)
+        inconnues = set(q) - {"id", "nom", "libelle", "libelle_voir", "trappe", "ballot", "panier", "vue_depart", "vue_arrivee",
+                              "attente_voir", "note"}
+        if inconnues:
+            err(f'"{sid}" : clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
+        t = q.get("trappe")
+        if not isinstance(t, dict):
+            err(f'"{sid}" : "trappe" manquante ({{"objets", "charniere", "angle", "duree"}})')
+        for cle, d, ok in (("trappe", t, {"objets", "charniere", "angle", "duree", "ferme_apres"}),
+                           ("ballot", q.get("ballot"), {"objets", "chemin", "vitesse_depart", "frottement", "culbute"}),
+                           ("panier", q.get("panier"), {"pile"})):
+            if isinstance(d, dict) and set(d) - ok:
+                err(f'"{sid}" : {cle}, clé(s) inconnue(s) {", ".join(sorted(set(d) - ok))}')
+        tob = _objets_mobiles(t.get("objets"), f'"{sid}", trappe', err)
+        ch = t.get("charniere")
+        if not isinstance(ch, list) or len(ch) != 2 or not all(_pt(p, 3) for p in ch) or math.dist(ch[0], ch[1]) < 0.5:
+            err(f'"{sid}" : trappe, "charniere" doit valoir [[x, y, z], [x, y, z]] (deux points distincts, z absolu), reçu {ch!r}')
+        ang, dt_, fa = t.get("angle"), t.get("duree", 0.6), t.get("ferme_apres", 0.3)
+        if not _num(ang) or ang == 0 or abs(ang) > 180:
+            err(f'"{sid}" : trappe, "angle" doit être un nombre de degrés non nul (-180 à 180), reçu {ang!r}')
+        if not _num(dt_) or dt_ <= 0 or not _num(fa) or fa < 0:
+            err(f'"{sid}" : trappe, "duree" (s > 0) et "ferme_apres" (s >= 0) doivent être des nombres')
+        b = q.get("ballot")
+        if not isinstance(b, dict):
+            err(f'"{sid}" : "ballot" manquant ({{"objets", "chemin"}})')
+        bob = _objets_mobiles(b.get("objets"), f'"{sid}", ballot', err)
+        chemin = b.get("chemin")
+        if not isinstance(chemin, list) or len(chemin) < 2 or not all(_pt(p, 3) for p in chemin):
+            err(f'"{sid}" : ballot, "chemin" doit être une liste d\'au moins 2 points [x, y, z] (z absolu), reçu {chemin!r}')
+        for k in range(len(chemin) - 1):
+            if math.dist(chemin[k], chemin[k + 1]) < 0.5:
+                err(f'"{sid}" : ballot, points {k} et {k + 1} du chemin confondus')
+        v0, fr, cu = b.get("vitesse_depart", 30), b.get("frottement", 0.3), b.get("culbute", 0)
+        if not _num(v0) or v0 <= 0 or not _num(fr) or not 0 <= fr < 1 or not _num(cu):
+            err(f'"{sid}" : ballot, "vitesse_depart" (po/s > 0), "frottement" (0 à 1) et "culbute" (degrés) doivent être des nombres')
+        pile = (q.get("panier") or {}).get("pile", [[0, 0, 0], [2, -1.5, 5], [-1.5, 1.5, 10]])
+        if not isinstance(pile, list) or not pile or not all(_pt(p, 3) for p in pile):
+            err(f'"{sid}" : panier, "pile" doit être une liste de décalages [dx, dy, dz] (un par ballot), reçu {pile!r}')
+        ft, fp = etage_de(min(ch[0][2], ch[1][2])), etage_de(chemin[-1][2])
+        va, vd = vue(q.get("vue_arrivee"), "vue_arrivee", sid), vue(q.get("vue_depart"), "vue_depart", sid)
+        if etages and ft != fp and not va:
+            err(f'"{sid}" : "vue_arrivee" est obligatoire quand la trappe ({ft}) et le panier ({fp}) sont sur deux étages')
+        att = q.get("attente_voir", 12)
+        if not _num(att) or att < 0:
+            err(f'"{sid}" : "attente_voir" doit être un nombre de secondes >= 0')
+        nom = q.get("nom") or sid
+        r = {"id": sid, "nom": nom, "libelle": q.get("libelle") or nom, "libelle_voir": q.get("libelle_voir") or "Voir l'arrivée",
+             "trappe": {"objets": tob, "charniere": [[float(c) for c in p] for p in ch], "angle": float(ang), "duree": float(dt_),
+                        "ferme_apres": float(fa)},
+             "ballot": {"objets": bob, "chemin": [[float(c) for c in p] for p in chemin], "vitesse_depart": float(v0),
+                        "frottement": float(fr), "culbute": float(cu)},
+             "panier": {"pile": [[float(c) for c in p] for p in pile]}, "attente_voir": float(att)}
+        if va:
+            r["vue_arrivee"] = va
+        if vd:
+            r["vue_depart"] = vd
+        if etages:
+            r["etage_trappe"], r["etage_panier"] = ft, fp
+        out.append(r)
+    return out
+
+
+def objets_animes(scene):
+    """Tous les objets des groupes animés et des séquences d'une scène (pour embarquer leurs matériaux et modèles)."""
+    out = [o for a in scene.get("animes") or [] for o in a["objets"]]
+    for E in scene.get("etages") or []:
+        out += [o for a in E.get("animes") or [] for o in a["objets"]]
+    for q in scene.get("sequences") or []:
+        out += q["trappe"]["objets"] + q["ballot"]["objets"]
+    # --- lointain : objets animés de l'extérieur et objets du lointain (leurs "mat" éventuels)
+    X = scene.get("exterieur") or {}
+    out += [o for a in X.get("animes") or [] for o in a["objets"] if o.get("forme") not in ("toit", "texte")]
+    out += [o for o in (X.get("lointain") or {}).get("objets") or [] if "mat" in o and o.get("forme") not in ("toit", "texte")]
+    # --- fin lointain
+    return out
+
+
+# --- scénarios (personnage qui joue une suite d'étapes : visiteur qui cogne...) ------------------------------------------
+ACTIONS_SCENARIO = ("marcher", "tourner", "cogner", "dire", "son", "ouvrir", "fermer", "attendre")
+SONS_SCENARIO = {"pet", "coup"}
+STYLES_BULLE = {"parole", "cri", "son", "nuage"}
+
+
+def scenarios(S, etages=None, portes=None, visites=None):
+    """Scénarios (opt-in, visiteur qui cogne à la porte...) : SCENE["scenarios"] de la scène PRINCIPALE ; pouces, secondes,
+    degrés ; x et y du repère de la maison, z ABSOLU (plancher du sous-sol = 0). Un personnage fait de parties articulées joue
+    une suite d'étapes : marcher (chemin trouvé dans la visite, par les portes extérieures, z lu au sol), tourner, cogner,
+    dire (bulle + voix du navigateur), son (synthétisé), ouvrir / fermer une porte, attendre. Contrat complet :
+    renovation/README.md (section « Scénario »). etages : [(id, z, H)] ; portes : ids des portes de la maquette ;
+    visites : arrêts de visite (clé "scenario" vérifiée). Retourne la liste complétée ; erreur explicite sinon. Sans
+    "scenarios" : []."""
+    liste = S.get("scenarios") or []
+
+    def err(msg):
+        raise SystemExit("scene_3d.py, scenarios : " + msg)
+    if not isinstance(liste, list):
+        err('SCENE["scenarios"] doit être une liste de {"id", "personnage", "etapes", "depart", ...}')
+    ids_etages = [e[0] for e in etages] if etages else None
+    zones = (ids_etages or []) + ["EXT"]
+
+    def etage_de(z):
+        f = etages[0][0]
+        for eid, ez, _ in etages:
+            if ez <= z + 0.5:
+                f = eid
+        return f
+
+    def vue(v, cle, sid):
+        if not isinstance(v, dict) or not all(_num(v.get(k)) for k in ("x", "y", "cap")):
+            err(f'"{sid}" : "{cle}" doit valoir {{"x", "y", "cap", "etage", "tangage", "z"}} (pouces, degrés), reçu {v!r}')
+        if ids_etages and v.get("etage") not in zones:
+            err(f'"{sid}" : "{cle}" : "etage" doit être l\'un de {", ".join(zones)}, reçu {v.get("etage")!r}')
+        for k in ("tangage", "z"):
+            if k in v and not _num(v[k]):
+                err(f'"{sid}" : "{cle}" : "{k}" doit être un nombre')
+        return {k: v[k] for k in ("x", "y", "cap", "etage", "tangage", "z") if k in v}
+
+    def angles(v, ou):
+        v = [v] if _num(v) else v
+        if not isinstance(v, list) or not 1 <= len(v) <= 3 or not all(_num(a) for a in v):
+            err(f'{ou} : pose [balancement, écart, lacet] (degrés, 1 à 3 nombres) attendue, reçu {v!r}')
+        return [float(a) for a in v] + [0.0] * (3 - len(v))
+    out, ids = [], set()
+    for i, q in enumerate(liste):
+        if not isinstance(q, dict) or not isinstance(q.get("id"), str) or not q["id"]:
+            err(f'scénario n° {i + 1} sans "id" (texte)')
+        sid = q["id"]
+        if sid in ids:
+            err(f'id "{sid}" en double')
+        ids.add(sid)
+        inconnues = set(q) - {"id", "nom", "libelle", "libelle_arret", "libelle_son", "personnage", "etapes", "depart",
+                              "depart_bouton", "declencheur", "vue", "volume", "note"}
+        if inconnues:
+            err(f'"{sid}" : clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
+        # personnage : objets du corps (fixes) et parties articulées (pivot, parent déclaré avant, poses)
+        p = q.get("personnage")
+        if not isinstance(p, dict):
+            err(f'"{sid}" : "personnage" manquant ({{"objets", "parties", "couleurs"}})')
+        if set(p) - {"objets", "parties", "couleurs", "hauteur", "foulee", "rebond", "vitesse", "rayon", "ombre"}:
+            err(f'"{sid}" : personnage, clé(s) inconnue(s) {", ".join(sorted(set(p) - {"objets", "parties", "couleurs", "hauteur", "foulee", "rebond", "vitesse", "rayon", "ombre"}))}')
+        couleurs = {}
+        for nom, c in (p.get("couleurs") or {}).items():
+            c = {"couleur": c} if isinstance(c, str) else c
+            if not isinstance(c, dict) or not (isinstance(c.get("couleur"), str) and c["couleur"].startswith("#")) \
+                    or set(c) - {"couleur", "rugosite", "metal", "duvet"} or not all(_num(c[k]) for k in c if k != "couleur"):
+                err(f'"{sid}" : couleur « {nom} » : "#rrggbb" ou {{"couleur", "rugosite", "metal", "duvet"}} attendu, reçu {c!r}')
+            couleurs[nom] = c
+
+        def objets(liste_o, ou):
+            if not liste_o:
+                return []
+            o2 = _objets_mobiles(liste_o, ou, err)
+            for k, o in enumerate(o2):
+                if "echelle" in o and (not _pt(o["echelle"], 3) or min(o["echelle"]) <= 0
+                                       or o.get("forme", "boite") not in ("sphere", "cylindre", "tore", "boite") or o.get("pts")):
+                    err(f'{ou}, objet n° {k + 1} : "echelle" [ex, ey, ez] (> 0) seulement sur une sphère, un cylindre, un tore ou une boîte')
+            return o2
+        corps = objets(p.get("objets"), f'"{sid}", personnage')
+        parties, pids = [], set()
+        for k, d in enumerate(p.get("parties") or []):
+            if not isinstance(d, dict) or not isinstance(d.get("id"), str):
+                err(f'"{sid}" : partie n° {k + 1} sans "id"')
+            if set(d) - {"id", "pivot", "parent", "objets", "balance", "phase", "frappe", "poses"}:
+                err(f'"{sid}" : partie "{d["id"]}", clé(s) inconnue(s) {", ".join(sorted(set(d) - {"id", "pivot", "parent", "objets", "balance", "phase", "frappe", "poses"}))}')
+            if d["id"] in pids:
+                err(f'"{sid}" : partie "{d["id"]}" en double')
+            if not _pt(d.get("pivot"), 3):
+                err(f'"{sid}" : partie "{d["id"]}" : "pivot" [x, y, z] (repère du personnage) attendu')
+            if d.get("parent") is not None and d["parent"] not in pids:
+                err(f'"{sid}" : partie "{d["id"]}" : parent "{d["parent"]}" inconnu (déclarer le parent avant)')
+            for cle in ("balance", "phase", "frappe"):
+                if cle in d and not _num(d[cle]):
+                    err(f'"{sid}" : partie "{d["id"]}" : "{cle}" (degrés) doit être un nombre')
+            poses = d.get("poses") or {}
+            if not isinstance(poses, dict):
+                err(f'"{sid}" : partie "{d["id"]}" : "poses" doit valoir {{nom: [balancement, écart, lacet]}}')
+            pids.add(d["id"])
+            parties.append({"id": d["id"], "pivot": [float(v) for v in d["pivot"]], "parent": d.get("parent"),
+                            "objets": objets(d.get("objets"), f'"{sid}", partie "{d["id"]}"'),
+                            "balance": float(d.get("balance", 0)), "phase": float(d.get("phase", 0)),
+                            "frappe": float(d.get("frappe", 0)),
+                            "poses": {n: angles(a, f'"{sid}", partie "{d["id"]}", pose « {n} »') for n, a in poses.items()}})
+        if not corps and not parties:
+            err(f'"{sid}" : personnage sans objets ni parties')
+        perso = {"objets": corps, "parties": parties, "couleurs": couleurs}
+        for cle, defaut in (("hauteur", None), ("foulee", 46), ("rebond", 0.8), ("vitesse", 40), ("rayon", 11)):
+            v = p.get(cle, defaut)
+            if v is not None and (not _num(v) or v < 0):
+                err(f'"{sid}" : personnage, "{cle}" doit être un nombre >= 0')
+            if v is not None:
+                perso[cle] = float(v)
+        perso["ombre"] = p.get("ombre", True) is not False
+        # départ, étapes
+        dep = q.get("depart")
+        if not isinstance(dep, dict) or not all(_num(dep.get(k)) for k in ("x", "y", "cap")):
+            err(f'"{sid}" : "depart" {{"x", "y", "cap", "etage"}} attendu (où il apparaît), reçu {dep!r}')
+        if ids_etages and dep.get("etage") not in zones:
+            err(f'"{sid}" : depart, "etage" doit être l\'un de {", ".join(zones)}')
+        etapes = q.get("etapes")
+        if not isinstance(etapes, list) or not etapes:
+            err(f'"{sid}" : "etapes" doit être une liste non vide')
+        et_out = []
+        for k, e in enumerate(etapes):
+            ou = f'"{sid}", étape n° {k + 1}'
+            act = [a for a in ACTIONS_SCENARIO if isinstance(e, dict) and a in e]
+            if len(act) != 1:
+                err(f'{ou} : une seule action parmi {", ".join(ACTIONS_SCENARIO)} attendue, reçu {e!r}')
+            a = act[0]
+            if set(e) - set(ACTIONS_SCENARIO) - {"vitesse", "intervalle", "bulle", "bulle_style", "voix", "duree", "pose", "vibre", "nuage", "note"}:
+                err(f'{ou} : clé(s) inconnue(s) {", ".join(sorted(set(e) - set(ACTIONS_SCENARIO) - {"vitesse", "intervalle", "bulle", "bulle_style", "voix", "duree", "pose", "vibre", "nuage", "note"}))}')
+            v = e[a]
+            if a == "marcher" and (not isinstance(v, list) or not v or not all(_pt(pt, 2) for pt in v)):
+                err(f'{ou} : "marcher" = [[x, y], ...] (points de passage, pouces) attendu')
+            if a == "tourner" and not (_num(v) or _pt(v, 2)):
+                err(f'{ou} : "tourner" = cap en degrés ou point [x, y] à regarder')
+            if a == "cogner" and (not isinstance(v, int) or isinstance(v, bool) or not 1 <= v <= 12):
+                err(f'{ou} : "cogner" = nombre de coups (1 à 12)')
+            if a == "dire" and (not isinstance(v, str) or not v):
+                err(f'{ou} : "dire" = texte de la bulle')
+            if a == "son" and v not in SONS_SCENARIO:
+                err(f'{ou} : son « {v} » inconnu ({", ".join(sorted(SONS_SCENARIO))})')
+            if a in ("ouvrir", "fermer") and portes is not None and v not in portes:
+                err(f'{ou} : porte "{v}" inconnue (ids d\'ouverture de la maquette : ouv-...)')
+            if a == "attendre" and (not _num(v) or v < 0):
+                err(f'{ou} : "attendre" = secondes (>= 0)')
+            for cle in ("vitesse", "intervalle", "duree", "vibre"):
+                if cle in e and (not _num(e[cle]) or e[cle] < 0 or (cle in ("vitesse", "intervalle") and e[cle] == 0)):
+                    err(f'{ou} : "{cle}" doit être un nombre positif')
+            if "bulle_style" in e and e["bulle_style"] not in STYLES_BULLE:
+                err(f'{ou} : "bulle_style" parmi {", ".join(sorted(STYLES_BULLE))}')
+            for cle in ("bulle", "voix", "pose"):
+                if cle in e and not isinstance(e[cle], str):
+                    err(f'{ou} : "{cle}" doit être un texte')
+            et_out.append({c: e[c] for c in e if c != "note"})
+        db = q.get("depart_bouton", 0)
+        if not isinstance(db, int) or isinstance(db, bool) or not 0 <= db < len(etapes):
+            err(f'"{sid}" : "depart_bouton" = indice de l\'étape où le bouton fait commencer (0 à {len(etapes) - 1})')
+        r = {"id": sid, "nom": q.get("nom") or sid, "libelle": q.get("libelle") or q.get("nom") or sid,
+             "libelle_arret": q.get("libelle_arret") or "Arrêter", "libelle_son": q.get("libelle_son") or "Son",
+             "personnage": perso, "etapes": et_out, "depart": {k: dep[k] for k in ("x", "y", "cap", "etage") if k in dep},
+             "depart_bouton": db}
+        dc = q.get("declencheur")
+        if dc is not None:
+            if not isinstance(dc, dict) or not all(_num(dc.get(k)) for k in ("x", "y", "z")) or set(dc) - {"x", "y", "z", "rayon", "attente", "auto", "hauteur"}:
+                err(f'"{sid}" : "declencheur" {{"x", "y", "z", "rayon", "attente", "auto", "hauteur"}} attendu (z absolu)')
+            dc = {"x": float(dc["x"]), "y": float(dc["y"]), "z": float(dc["z"]), "rayon": float(dc.get("rayon", 150)),
+                  "attente": float(dc.get("attente", 120)), "auto": dc.get("auto", True) is not False, "hauteur": float(dc.get("hauteur", 60))}
+            if dc["attente"] < 120 and dc["auto"]:
+                print(f'  scénario {sid} : "attente" de {dc["attente"]:.0f} s (moins de 2 min entre deux passages automatiques)')
+            r["declencheur"] = dc
+            if etages:
+                r["etage"] = etage_de(dc["z"])
+        if q.get("vue") is not None:
+            r["vue"] = vue(q["vue"], "vue", sid)
+        vol = q.get("volume", 0.5)
+        if not _num(vol) or not 0 <= vol <= 1:
+            err(f'"{sid}" : "volume" entre 0 et 1')
+        r["volume"] = float(vol)
+        out.append(r)
+    for v in visites or []:
+        if v.get("scenario") is not None and v["scenario"] not in ids:
+            err(f'arrêt de visite « {v.get("nom")} » : scénario inconnu "{v["scenario"]}"')
+    return out
+
+
+def objets_scenarios(scene):
+    """Objets des personnages (pour embarquer les matériaux du catalogue qu'ils emploient)."""
+    return [o for q in scene.get("scenarios") or [] for o in q["personnage"]["objets"] + [o for d in q["personnage"]["parties"] for o in d["objets"]]]
+# --- fin scénarios
+
+
 NOMS_ETAGES = {"SS": "Sous-sol", "RDC": "Rez-de-chaussée", "ETAGE": "Étage", "COMBLES": "Combles"}
 
 
@@ -1108,6 +1542,9 @@ def construire(M, S, ctx=None):
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
     if battants:
         scene["battants"] = battants
+    an = animes(S, scene["bornes"])                     # objets animés en boucle (opt-in : aspirateur robot...)
+    if an:
+        scene["animes"] = an
     if multi or trous:
         scene["trous"] = [[list(q) for q in p] for p in trous]
     if multi:
@@ -1201,7 +1638,8 @@ def preparer_exterieur(X, M, etages, scene):
     if not isinstance(X, dict):
         err('SCENE["exterieur"] doit être un dictionnaire (voir le contrat dans exterieur.py)')
     inconnues = set(X) - {"sol", "terrain", "objets", "planchers", "obstacles", "trous", "visites", "lumieres", "peintures", "palette",
-                          "relief", "revetements"}
+                          "relief", "revetements",
+                          "animes", "lointain"}     # --- lointain : objets animés de l'extérieur, fleuve et basse-ville (voir plus bas)
     if inconnues:
         err(f'clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
     sol = X.get("sol")
@@ -1288,7 +1726,184 @@ def preparer_exterieur(X, M, etages, scene):
         out["relief"] = relief
     if revetements:
         out["revetements"] = revetements
+    # --- lointain : objets animés de l'extérieur (z absolu) et lointain (fleuve, basse-ville), opt-in
+    if X.get("animes"):
+        out["animes"] = exterieur_animes(X["animes"], etages)
+    if X.get("lointain"):
+        out["lointain"] = exterieur_lointain(X["lointain"])
+    # --- fin lointain
     return out
+
+
+# --- lointain : objets animés de l'extérieur et lointain (fleuve, basse-ville, traversier...) ----------------------------
+FORMES_LOINTAIN = {"boite", "cylindre", "sphere", "toit", "texte"}
+COTES_LOINTAIN = {"-x", "+x", "-y", "+y"}
+LOINTAIN_MAX = 393700.0          # 10 km (pouces) : au-delà, seule l'eau est dessinée (le plan lointain s'arrête là)
+
+
+def _couleur(v):
+    return isinstance(v, str) and len(v) == 7 and v[0] == "#" and all(c in "0123456789abcdefABCDEF" for c in v[1:])
+
+
+def _objets_lointains(liste, ou, err, local=False):
+    """Objets du lointain (ou d'un objet animé "lointain") : formes simples, une couleur chacun (pas de texture).
+    - "boite" : x0, x1, y0, y1, z0, z1 (ou "pts" [[x, y], ...] : prisme vertical de z0 à z1) ;
+    - "cylindre" : x, y, r, z0, z1, "r2" (rayon du haut : 0 = cône, une épinette), "pans" (défaut 10) ;
+    - "sphere" : x, y, z, r, "ecrase" (aplatie en hauteur, 0..1) ;
+    - "toit" : toit à deux versants sur x0, x1, y0, y1, de z0 (sablière) à z1 (faîte), "faitage" "x" (défaut) ou "y" ;
+    - "texte" : inscription peinte (le nom d'un navire) : "texte", x, y (milieu), z0, z1 (hauteur des lettres), "larg",
+      "face" ("+y", "-y", "+x" ou "-x" : vers où elle se lit), lettres de "couleur" sur fond transparent.
+    "couleur" "#rrggbb" (ou "mat" : couleur du matériau ou de l'alias de peinture) ; dans un objet animé : "tourne" et
+    "clignote" comme dans animes(). local : repère de l'objet animé (sinon z ABSOLU)."""
+    if not isinstance(liste, list):
+        err(f'{ou} : "objets" doit être une liste')
+    out = []
+    for k, o in enumerate(liste):
+        q = f'{ou}, objet n° {k + 1}'
+        if not isinstance(o, dict):
+            err(f'{q} : dictionnaire attendu')
+        f = o.get("forme", "boite")
+        if f not in FORMES_LOINTAIN:
+            err(f'{q} : forme "{f}" inconnue au loin ({", ".join(sorted(FORMES_LOINTAIN))})')
+        besoin = {"boite": ("z0", "z1") + (() if o.get("pts") else ("x0", "x1", "y0", "y1")), "cylindre": ("x", "y", "r", "z0", "z1"),
+                  "sphere": ("x", "y", "z", "r"), "toit": ("x0", "x1", "y0", "y1", "z0", "z1"),
+                  "texte": ("x", "y", "z0", "z1", "larg")}[f]
+        manque = [c for c in besoin if not _num(o.get(c))]
+        if manque:
+            err(f'{q} ({f}) : {", ".join(manque)} manquant(s) ou non numérique(s)')
+        if f == "boite" and o.get("pts") is not None and (not isinstance(o["pts"], list) or len(o["pts"]) < 3 or not all(_pt(p, 2) for p in o["pts"])):
+            err(f'{q} : "pts" doit être un polygone [[x, y], ...] (au moins 3 points)')
+        if f in ("boite", "toit", "cylindre") and o["z1"] <= o["z0"]:
+            err(f'{q} : z1 doit être plus grand que z0')
+        if f == "toit" and o.get("faitage", "x") not in ("x", "y"):
+            err(f'{q} : "faitage" vaut "x" ou "y"')
+        if f == "texte" and (not isinstance(o.get("texte"), str) or not o["texte"] or o.get("face", "+y") not in COTES_LOINTAIN):
+            err(f'{q} : "texte" (non vide) et "face" ("+y", "-y", "+x", "-x") attendus')
+        if "couleur" in o and not _couleur(o["couleur"]):
+            err(f'{q} : "couleur" doit valoir "#rrggbb", reçu {o["couleur"]!r}')
+        if "couleur" not in o and not isinstance(o.get("mat"), str):
+            err(f'{q} : "couleur" ("#rrggbb") ou "mat" attendu')
+        if not local and f != "texte":
+            for c in ("x", "x0", "x1", "y", "y0", "y1"):
+                if _num(o.get(c)) and abs(o[c]) > LOINTAIN_MAX:
+                    err(f'{q} : {c} = {o[c]} au-delà de 10 km (le lointain s\'arrête là)')
+        o = dict(o, forme=f)
+        if "tourne" in o:
+            if not local or not _num(o["tourne"]):
+                err(f'{q} : "tourne" (degrés par seconde) seulement dans un objet animé')
+            o.setdefault("centre", [o["x"], o["y"]] if _num(o.get("x")) else [(o.get("x0", 0) + o.get("x1", 0)) / 2, (o.get("y0", 0) + o.get("y1", 0)) / 2])
+        if "clignote" in o and (not local or not _num(o["clignote"]) or o["clignote"] <= 0):
+            err(f'{q} : "clignote" (période en s > 0) seulement dans un objet animé')
+        out.append(o)
+    return out
+
+
+def exterieur_animes(liste, etages=()):
+    """Objets animés de l'extérieur (opt-in) : SCENE["exterieur"]["animes"], même contrat que les "animes" d'un étage (voir
+    animes() et renovation/README.md) mais en z ABSOLU (repère du plancher du sous-sol) ; "id" unique dans toute la maquette.
+    En plus :
+    - "lointain" (défaut False) : objet au loin, au-delà du lot (navire sur le fleuve...), jusqu'à 10 km : dessiné dans le
+      plan lointain (voir exterieur_lointain), éclairé par le soleil, voilé par la brume du lointain plutôt que par celle du
+      lot ; ses "objets" sont alors des formes du lointain (voir _objets_lointains : boite, cylindre, sphere, toit, texte,
+      avec "couleur") ; pas d'ombre de contact ;
+    - "cadence" (défaut 30) : images par seconde au plus pendant qu'il roule et se voit (1 à 30 ; un navire à 2 km : 10).
+    Rendu continu seulement s'il se voit : dehors, dans le champ de vision ; dedans, par une fenêtre ou une porte ouverte de
+    l'étage (aucun mur entre l'œil et lui) ; jamais quand la page est cachée."""
+    def err(msg):
+        raise SystemExit("scene_3d.py, exterieur, animes : " + msg)
+    if not isinstance(liste, list):
+        err('SCENE["exterieur"]["animes"] doit être une liste (même contrat que les "animes" d\'un étage, z absolu)')
+    propres, extra = [], []
+    for i, a in enumerate(liste):
+        if not isinstance(a, dict):
+            err(f'objet animé n° {i + 1} : dictionnaire attendu')
+        loin = a.get("lointain", False)
+        if not isinstance(loin, bool):
+            err(f'"{a.get("id")}" : "lointain" vaut True ou False')
+        cad = a.get("cadence", 30)
+        if not _num(cad) or not 1 <= cad <= 30:
+            err(f'"{a.get("id")}" : "cadence" (images par seconde) entre 1 et 30, reçu {cad!r}')
+        p = {k: v for k, v in a.items() if k not in ("lointain", "cadence")}
+        if loin:                                 # formes du lointain : vérifiées à part (animes() ne connaît pas toit / texte)
+            p["objets"] = [{"forme": "boite", "x0": 0, "x1": 1, "y0": 0, "y1": 1, "z0": 0, "z1": 1, "mat": "blanc"}]
+            p["ombre"] = False
+        propres.append(p)
+        extra.append((loin, float(cad), a.get("objets")))
+    try:
+        out = animes({"animes": propres})
+    except SystemExit as e:
+        raise SystemExit(str(e).replace("scene_3d.py, animes :", "scene_3d.py, exterieur, animes :"))
+    deja = {b["id"] for E in etages or [] for b in E.get("animes") or []}
+    for a, (loin, cad, objets) in zip(out, extra):
+        if a["id"] in deja:
+            err(f'id "{a["id"]}" déjà employé par un objet animé d\'un étage')
+        a["lointain"], a["cadence"] = loin, cad
+        if loin:
+            a["objets"] = _objets_lointains(objets, f'"{a["id"]}"', err, local=True)
+            for k, p in enumerate(a["trajet"]):
+                if max(abs(p[0]), abs(p[1])) > LOINTAIN_MAX:
+                    err(f'"{a["id"]}" : point {k} du trajet {p} au-delà de 10 km')
+    return out
+
+
+def exterieur_lointain(L):
+    """Le lointain de l'extérieur (opt-in) : ce qu'on voit au-delà du lot jusqu'à l'horizon (fleuve, basse-ville). Dessiné
+    dans un plan à part, derrière tout le reste (le lot, la maison et leurs objets le cachent toujours), sans la brume du lot
+    (40 à 180 m) mais avec sa propre brume de distance ; pouces, z ABSOLU. SCENE["exterieur"]["lointain"] = {
+      "ouvert": ["-y"]   côtés du relief du lot qui ne sont PAS prolongés jusqu'à l'horizon (défaut ["-y"] : devant, vers la
+                         rue et le fleuve) : au-delà du bord du relief, on voit le lointain. Sans "relief", sans effet ;
+      "eau": {"nom", "z", "pts", "couleur", "couleur_loin", "reflet"}   plan d'eau : z absolu de la surface, polygone [[x, y],
+                         ...] (peut aller à 150 km : l'horizon), couleur de l'eau proche et au loin, part du reflet du ciel
+                         (0..1, défaut 0,35 : le reflet grandit en rasant l'eau) ; l'eau ne cache jamais la terre ni les objets ;
+      "terre": {"xs", "ys", "z", "couleurs"}   relief du lointain (basse-ville jusqu'à la rive) : grille comme "relief"
+                         (z absolu, xs et ys croissants, à 10 km au plus) ; "couleurs" (facultatif) : [[ "#rrggbb" par x ] par y],
+                         une couleur par sommet (rue, gazon, boisés, roches de la rive...). Son bord vers le lot reprend le
+                         bord du relief (pas de marche) ; elle s'arrête à la rive, au niveau de l'eau (jamais sous l'eau) ;
+      "objets": [...]    maisons, arbres... (voir _objets_lointains : boite, cylindre, sphere, toit, texte ; "couleur"), z absolu ;
+      "brume": po        distance où la brume du lointain voile 63 % (défaut 1 200 000 po, environ 30 km) ;
+      "couleur_brume": "#rrggbb" (défaut "#dbe4eb") }.
+    Coût : un maillage pour l'eau, un pour la terre et tous les objets (couleurs par sommet), un programme simple."""
+    def err(msg):
+        raise SystemExit("scene_3d.py, exterieur, lointain : " + msg)
+    if not isinstance(L, dict):
+        err('dictionnaire attendu ({"ouvert", "eau", "terre", "objets", "brume", "couleur_brume"})')
+    inconnues = set(L) - {"ouvert", "eau", "terre", "objets", "brume", "couleur_brume", "note"}
+    if inconnues:
+        err(f'clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
+    ouvert = L.get("ouvert", ["-y"])
+    if not isinstance(ouvert, list) or not set(ouvert) <= COTES_LOINTAIN:
+        err(f'"ouvert" : liste de côtés parmi {sorted(COTES_LOINTAIN)}, reçu {ouvert!r}')
+    out = {"ouvert": list(ouvert), "brume": float(L.get("brume", 1200000)), "couleur_brume": L.get("couleur_brume", "#dbe4eb")}
+    if not _num(L.get("brume", 1)) or out["brume"] <= 0 or not _couleur(out["couleur_brume"]):
+        err('"brume" (pouces > 0) et "couleur_brume" ("#rrggbb")')
+    e = L.get("eau")
+    if e is not None:
+        if not isinstance(e, dict) or not _num(e.get("z")) or not isinstance(e.get("pts"), list) or len(e["pts"]) < 3 or not all(_pt(p, 2) for p in e["pts"]):
+            err('"eau" : {"z": z absolu de la surface, "pts": [[x, y], ...] (au moins 3 points), "couleur", "couleur_loin", "reflet"}')
+        for c, d in (("couleur", "#1d3a57"), ("couleur_loin", "#3d5f7a")):
+            if not _couleur(e.get(c, d)):
+                err(f'"eau" : "{c}" doit valoir "#rrggbb"')
+        r = e.get("reflet", 0.35)
+        if not _num(r) or not 0 <= r <= 1:
+            err('"eau" : "reflet" entre 0 et 1')
+        out["eau"] = {"nom": str(e.get("nom") or "Eau"), "z": float(e["z"]), "pts": [[round(float(p[0]), 1), round(float(p[1]), 1)] for p in e["pts"]],
+                      "couleur": e.get("couleur", "#1d3a57"), "couleur_loin": e.get("couleur_loin", "#3d5f7a"), "reflet": float(r)}
+    t = L.get("terre")
+    if t is not None:
+        if not isinstance(t, dict) or set(t) - {"xs", "ys", "z", "couleurs", "note"}:
+            err('"terre" : {"xs", "ys", "z", "couleurs"} attendu')
+        R = valider_relief({k: t[k] for k in ("xs", "ys", "z") if k in t})
+        if max(abs(R["xs"][0]), abs(R["xs"][-1]), abs(R["ys"][0]), abs(R["ys"][-1])) > LOINTAIN_MAX:
+            err('"terre" : la grille va au-delà de 10 km')
+        cs = t.get("couleurs")
+        if cs is not None:
+            if not isinstance(cs, list) or len(cs) != len(R["ys"]) or not all(isinstance(r, list) and len(r) == len(R["xs"]) and all(_couleur(c) for c in r) for r in cs):
+                err(f'"terre" : "couleurs" = {len(R["ys"])} rangées de {len(R["xs"])} couleurs "#rrggbb"')
+            R["couleurs"] = cs
+        out["terre"] = R
+    out["objets"] = _objets_lointains(L.get("objets") or [], "lointain", err)
+    return out
+# --- fin lointain
 
 
 def fusionner(M, S, dossier):
@@ -1331,13 +1946,22 @@ def fusionner(M, S, dossier):
                 return o
             Se["mobilier"] = [remat(o) for o in Se.get("mobilier", [])]
             Se["revetements"] = [remat(o) for o in Se.get("revetements", [])]
+            if Se.get("animes"):
+                Se["animes"] = [dict(a, objets=[remat(o) for o in a.get("objets") or []]) if isinstance(a, dict) else a
+                                for a in Se["animes"]]
         if relief:                                     # extérieur avec relief : les margelles lisent le sol devant chaque fenêtre
             def sol_relief(x, y, dz=z):
                 q = relief(x, y)
                 return None if q is None else q - dz
             sol_relief.defaut = S["exterieur"].get("sol", 48) - z
             ctx = dict(ctx, sol_relief=sol_relief)
+        if Se.get("sequences"):
+            raise SystemExit(f'scene_3d.py, etages : "sequences" va dans la scène principale (SCENE["sequences"], z absolu), '
+                             f'pas dans celle de l\'étage {nid}')
         sc = construire(M, Se, ctx)
+        for a in sc.get("animes", []):
+            if any(a["id"] == b["id"] for E in out_etages for b in E.get("animes", [])):
+                raise SystemExit(f'scene_3d.py, etages : objet animé "{a["id"]}" déclaré dans deux étages')
         for k, v in sc["peintures"].items():
             peintures.setdefault(k, v)
         palettes.append({"titre": nom, "items": sc["palette"]})
@@ -1355,6 +1979,8 @@ def fusionner(M, S, dossier):
                   "obstacles", "escaliers"):
             e_out[k] = sc.get(k, [])
         e_out["sol_exterieur"] = sc["sol_exterieur"]
+        if sc.get("animes"):
+            e_out["animes"] = sc["animes"]
         if sc.get("terrain_trou"):
             e_out["terrain_trou"] = sc["terrain_trou"]
         out_etages.append(e_out)
@@ -1379,9 +2005,20 @@ def fusionner(M, S, dossier):
         scene["terrain_trou"] = out_etages[0].pop("terrain_trou")
     for E in out_etages:
         E.pop("terrain_trou", None)
+    if S.get("animes"):
+        raise SystemExit('scene_3d.py : "animes" va dans la scène d\'un étage (SCENE["etages"][i]["animes"], repère de son plancher)')
+    sq = sequences(S, [(E["id"], E["z"], E["H"]) for E in out_etages])      # séquences sur deux étages (opt-in : chute à linge...)
+    if sq:
+        scene["sequences"] = sq
     # extérieur (opt-in) : terrain, cour, enveloppe de la maison ; on y marche (voir preparer_exterieur)
     if S.get("exterieur"):
         scene["exterieur"] = preparer_exterieur(S["exterieur"], M, out_etages, scene)
+    # --- scénarios (opt-in : visiteur qui cogne...) : après l'extérieur (ses arrêts peuvent lancer un scénario)
+    scn = scenarios(S, [(E["id"], E["z"], E["H"]) for E in out_etages], {bt["id"] for E in out_etages for bt in E["battants"]},
+                    scene["visites"])
+    if scn:
+        scene["scenarios"] = scn
+    # --- fin scénarios
     # matériaux, modèles, commandes et images : une seule fois chacun, pour tous les étages
     tous = {"boites": [], "portes": [], "mobilier": [], "sols": [], "revetements": [], "materiaux": None}
     for E in out_etages:
@@ -1390,6 +2027,8 @@ def fusionner(M, S, dossier):
         tous["portes"] += [q for bt in E["battants"] for q in bt["boites"]]
     if scene.get("exterieur"):
         tous["mobilier"] += scene["exterieur"]["objets"] + [{"mat": r["mat"]} for r in scene["exterieur"].get("revetements", [])]
+    tous["mobilier"] += objets_animes(scene)            # matériaux et modèles des objets animés et des séquences
+    tous["mobilier"] += objets_scenarios(scene)         # --- scénarios : matériaux du catalogue des personnages
     Sf = {"commandes": cmds, "mobilier": tous["mobilier"], "visites": visites, "images": images,
           "mat_colonne": etages[0].get("mat_colonne", "placage")}
     cmd = commandes(Sf)
@@ -1456,8 +2095,16 @@ def main(dossier, sortie=None):
         if cmd:
             scene["commandes"] = cmd
         scene["sol_exterieur"] = sol_ext
-        scene["materiaux"] = bibliotheque(scene, S)
-        scene["modeles_glb"], scene["modeles_info"], scene["credits"] = modeles(scene)
+        sq = sequences(S)                                # séquences (opt-in) : z du plancher de l'étage
+        if sq:
+            scene["sequences"] = sq
+        scn = scenarios(S, None, {bt["id"] for bt in scene.get("battants", [])}, scene.get("visites"))   # --- scénarios (opt-in)
+        if scn:
+            scene["scenarios"] = scn
+        avec = dict(scene, mobilier=scene["mobilier"] + objets_animes(scene) + objets_scenarios(scene))   # matériaux et modèles des objets animés aussi
+        scene["materiaux"] = bibliotheque(avec, S)
+        avec["materiaux"] = scene["materiaux"]
+        scene["modeles_glb"], scene["modeles_info"], scene["credits"] = modeles(avec)
         completer_images(scene, S.get("images"), dossier)
     textures = {}
     for f in sorted(os.listdir(TEX)):

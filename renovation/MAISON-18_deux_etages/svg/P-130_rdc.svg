@@ -397,11 +397,21 @@
 <polyline class="elem-fin" points="400.46,314.474 371.46,356.724"/>
 <text x="413.378" y="361.767" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">G.-M.</text>
 </g>
+<g id="elem-RDC-P-BUR-BUR1">
+<polygon class="elem" points="252.71,551.479 307.71,551.479 307.71,521.479 252.71,521.479"/>
+<text x="280.21" y="533.576" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">ASSIS-</text>
+<text x="280.21" y="543.957" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">DEBOUT</text>
+</g>
+<g id="elem-RDC-P-BUR-BUR2">
+<polygon class="elem" points="310.21,551.479 365.21,551.479 365.21,521.479 310.21,521.479"/>
+<text x="337.71" y="533.576" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">ASSIS-</text>
+<text x="337.71" y="543.957" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">DEBOUT</text>
+</g>
 <g id="elem-RDC-P-BUR-CH1">
-<polygon class="elem" points="296.21,494.479 270.21,494.479 270.21,520.479 296.21,520.479"/>
+<polygon class="elem" points="293.21,490.979 267.21,490.979 267.21,516.979 293.21,516.979"/>
 </g>
 <g id="elem-RDC-P-BUR-CH2">
-<polygon class="elem" points="350.21,494.479 324.21,494.479 324.21,520.479 350.21,520.479"/>
+<polygon class="elem" points="350.71,490.979 324.71,490.979 324.71,516.979 350.71,516.979"/>
 </g>
 <g id="elem-RDC-P-BUR-CRED">
 <polygon class="elem" points="331.21,425.229 283.21,425.229 283.21,443.229 331.21,443.229"/>
@@ -414,9 +424,8 @@
 <g id="elem-RDC-P-BUR-LATTES">
 <polygon class="elem" points="234.41,554.974 234.41,425.224 233.21,425.224 233.21,554.974"/>
 </g>
-<g id="elem-RDC-P-BUR-PLAN">
-<polygon class="elem" points="234.46,554.979 366.46,554.979 366.46,524.979 234.46,524.979"/>
-<text x="300.46" y="542.267" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">2 POSTES</text>
+<g id="elem-RDC-P-BUR-TABL">
+<polygon class="elem" points="366.96,518.979 366.96,488.979 358.96,488.979 358.96,518.979"/>
 </g>
 <g id="elem-RDC-P-ESC">
 <polygon class="elem" points="493.21,550.979 493.21,414.979 457.21,414.979 457.21,550.979"/>
@@ -502,6 +511,13 @@
 <polygon class="elem" points="299.41,420.729 328.96,420.729 328.96,396.729 299.41,396.729"/>
 <polyline class="elem-fin" points="299.41,420.729 328.96,396.729"/>
 <polyline class="elem-fin" points="299.41,396.729 328.96,420.729"/>
+</g>
+<g id="elem-RDC-S-CHUTE">
+<polygon class="elem" points="300.587,420.729 313.087,420.729 313.087,406.229 300.587,406.229"/>
+<polyline class="elem-fin" points="300.587,420.729 313.087,406.229"/>
+<polyline class="elem-fin" points="300.587,406.229 313.087,420.729"/>
+<polyline class="rappel" points="313.087,394.36 313.087,406.229"/>
+<text x="311.136" y="392.512" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">CHUTE</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="40-Structure" id="40-Structure">
@@ -752,9 +768,9 @@
 </g>
 <g id="piece-RDC-CH2">
 <path class="invisible" fill-rule="evenodd" d="M 366.96 410.229 L 333.46 410.229 L 333.46 425.229 L 233.21 425.229 L 233.21 554.979 L 366.96 554.979 Z"/>
-<text x="306.392" y="469.587" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">BUREAU</text>
-<text x="306.392" y="481.235" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">11'-1¾&quot; × 12'-0¾&quot;</text>
-<text x="306.392" y="491.617" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">124,0 pi² (11,5 m²)</text>
+<text x="306.392" y="465.928" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">BUREAU</text>
+<text x="306.392" y="477.576" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">11'-1¾&quot; × 12'-0¾&quot;</text>
+<text x="306.392" y="487.958" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">124,0 pi² (11,5 m²)</text>
 </g>
 <g id="piece-RDC-UTI">
 <path class="invisible" fill-rule="evenodd" d="M 371.46 360.979 L 487.21 360.979 L 487.21 194.979 L 400.46 194.979 L 400.46 314.229 L 371.46 314.229 Z"/>

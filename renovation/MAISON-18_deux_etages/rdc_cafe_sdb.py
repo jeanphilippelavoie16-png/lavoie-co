@@ -19,10 +19,14 @@ Ce module (appelé par modifs.py et scene_3d.py, après rdc_cuisine) :
      restent vides.
    - Pas d'évier : l'évier de la cuisine est à ≈ 3,5 m et les trois murs de la pièce sont extérieurs (gel) ; voir DESIGN.
 2. SALLE DE BAIN : laveuse et sécheuse empilées (elem-RDC-R-LAV) enlevées → « colonne d'apothicaire » dans leur niche
-   (x 76,2..105,75, y 144,25..168,25, 29½ × 24 po, pleine hauteur) : 2 paniers à linge basculants (pâle / foncé) en bas,
-   6 tiroirs d'apothicaire en bois de grange (porte-étiquettes noirs : un tiroir par membre de la famille), niche éclairée
-   où les serviettes roulées sont cordées comme du bois de chauffage, armoire du haut (réserves) ; noir mat comme la vanité.
-   La chute à linge vers la salle de lavage du sous-sol a été étudiée (option B, conditionnelle) : voir DESIGN_cafe_sdb.md.
+   (x 76,2..105,75, y 144,25..168,25, 29½ × 24 po, pleine hauteur), noir mat comme la vanité. Depuis le 2026-11-02 (client :
+   « c'est-tu possible de faire une drop pour envoyer du linge dans la salle de lavage? »), elle est organisée autour de la
+   CHUTE À LINGE (chute_linge.py, DESIGN_chute_linge.md) : à gauche, trappe basculante noir mat « LINGE » de 33 à 52⅓ po
+   (bouche de 12 × 12 po, seuil à 40 po, loquet enfant), gaine derrière, porte basse à loquet dessous ; à droite, panier
+   basculant (délicats) en bas puis 3 tiroirs de bois de grange ; 4e tiroir au-dessus de la trappe (un tiroir par membre de
+   la famille, porte-étiquettes noirs) ; niche éclairée des serviettes roulées cordées comme du bois de chauffage ; armoire du
+   haut : pharmacie (hors de portée des enfants) et réserves. La trappe est dessinée ici, fixe (étage seul) ; dans la
+   maquette à deux étages, chute_linge.py la retire et l'anime (SCENE["sequences"]).
 3. PORTE DE LA SALLE DE LAVAGE (sous-sol, « pas capable d'ouvrir ») : corrigée dans zone_gym.py (le miroir de sa face gym
    était un décor fixe devant la porte ; il est maintenant lié à la porte). Rien à faire ici ; voir DESIGN_cafe_sdb.md.
 Pouces, repère de la maison (x le long de la façade, y vers l'arrière, z depuis le plancher du RDC).
@@ -58,10 +62,18 @@ NICHE = (76.2, 144.25, 105.75, 172.0)
 NICHE_3D = (76.2, 144.25, 105.75, 173.5)          # + hublots et boutons des appareils (jusqu'à y = 172,9)
 COL = (76.2, 144.25, 105.75, 168.25)           # colonne d'apothicaire, 29,55 × 24 po
 YF = COL[3] - 0.75                             # dos des façades (167,5) ; façades de ¾ po
-Z_PANIERS = (4.0, 30.0)
-Z_APOTH = (30.0, 62.0)                         # 3 rangées de tiroirs
+Z_PANIERS = (4.0, 33.0)                        # rangée du bas : porte basse à loquet (gauche), panier basculant (droite)
+Z_APOTH = (33.0, 62.0)                         # 3 tiroirs à droite ; trappe de la chute + 1 tiroir à gauche
 Z_NICHE = (62.0, 84.0)                         # niche ouverte éclairée (serviettes roulées)
 Z_HAUT = (84.0, 96.0)
+# chute à linge (chute_linge.py) : module de gauche de la colonne. Trappe basculante (charnière en bas, devant) de 33 à
+# 52⅓ po ; bouche de 12 × 12 po dans le caisson, seuil à 40 po (36 po ou plus) ; gaine de tôle galvanisée de 12 × 14 po
+# (intérieur) au fond du module, du plancher jusqu'à la trappe
+X_GAUCHE = (COL[0] + 0.2, (COL[0] + COL[2]) / 2 - 0.12)                 # façades du module de gauche (76,4 → 90,855)
+XC_CHUTE = (X_GAUCHE[0] + X_GAUCHE[1]) / 2                              # axe de la chute (83,63)
+Z_TRAPPE = (Z_APOTH[0], Z_APOTH[0] + 2 * (Z_APOTH[1] - Z_APOTH[0]) / 3)  # 33 → 52,33 : deux tiroirs de droite de haut
+BOUCHE = (XC_CHUTE - 6.0, XC_CHUTE + 6.0, 40.0, 52.0)                    # x0, x1, z0, z1 : 12 × 12 po
+GAINE = (XC_CHUTE - 6.0, XC_CHUTE + 6.0, COL[1] + 0.25, COL[1] + 14.25)  # x0, x1, y0, y1 (intérieur 12 × 14 po)
 
 RETIRES = {"elem-RDC-R-LAV": "laveuse et sécheuse enlevées (client, 2026-11-02) : colonne d'apothicaire à leur place ; "
                              "entrées d'eau, renvoi et prise de la sécheuse condamnés dans le mur, sortie de la sécheuse "
@@ -112,9 +124,11 @@ def appliquer_modifs_rdc(maison, ctx):
                  "Petit frigo de 24 po sous le comptoir (lait), porte vitrée noire, ventilation par l'avant, pentures côté mur avant",
                  "FR.", XB + P_CAISSON / 2, (FRIGO[0] + FRIGO[1]) / 2, 270, FRIGO[1] - FRIGO[0], P_CAISSON),
         _element("elem-RDC-S-APOTH", "armoires",
-                 "Colonne d'apothicaire pleine hauteur (29½ × 24 po) à la place de la laveuse-sécheuse : 2 paniers à linge "
-                 "basculants (pâle / foncé), 6 tiroirs de bois de grange à porte-étiquettes noirs (un par membre de la famille), "
-                 "niche éclairée de serviettes roulées, armoire du haut ; caisson noir mat comme la vanité",
+                 "Colonne d'apothicaire pleine hauteur (29½ × 24 po) à la place de la laveuse-sécheuse, organisée autour de la "
+                 "chute à linge : trappe basculante noir mat « LINGE » (bouche de 12 × 12 po à 40 po, loquet enfant) et gaine "
+                 "à gauche, porte basse à loquet dessous ; panier basculant (délicats) et 3 tiroirs de bois de grange à droite, "
+                 "4e tiroir au-dessus de la trappe (un par membre de la famille) ; niche éclairée de serviettes roulées, "
+                 "pharmacie en haut ; caisson noir mat comme la vanité",
                  None, (COL[0] + COL[2]) / 2, (COL[1] + COL[3]) / 2, 0, COL[2] - COL[0], COL[3] - COL[1]),
     ]
     ids = {e["id"] for e in els}
@@ -242,34 +256,97 @@ def _coin_cafe(h):
     return out
 
 
+def _b(x0, y0, x1, y1, z0, z1, mat):
+    return {"forme": "boite", "x0": x0, "y0": y0, "x1": x1, "y1": y1, "z0": z0, "z1": z1, "mat": mat}
+
+
+def _lettres(texte, xc, y, z0, H, mat, ep=0.1):
+    """Lettres capitales en baguettes de laiton (L, I, N, G, E) appliquées sur une façade qui regarde +y : hauteur H,
+    centrées sur xc, pied à z0, saillie ep à partir de y. Vue de face (on regarde vers -y), les x croissent vers la
+    gauche : les lettres sont tracées de gauche à droite, puis retournées autour de xc pour se lire à l'endroit."""
+    W, s, esp = 0.62 * H, 0.13 * H, 0.24 * H
+    larg = {"I": s}
+    tot = sum(larg.get(c, W) for c in texte) + esp * (len(texte) - 1)
+    x, out = xc - tot / 2, []
+    for c in texte:
+        w = larg.get(c, W)
+        a, b, zh, zm = x, x + w, z0 + H, z0 + H / 2
+        bx = lambda x0, x1, z_0, z_1: _b(round(x0, 3), y, round(x1, 3), y + ep, round(z_0, 3), round(z_1, 3), mat)
+        if c == "L":
+            out += [bx(a, a + s, z0, zh), bx(a + s, b, z0, z0 + s)]
+        elif c == "I":
+            out += [bx(a, a + s, z0, zh)]
+        elif c == "N":
+            out += [bx(a, a + s, z0, zh), bx(b - s, b, z0, zh),
+                    {"forme": "tube", "pts": [[round(a + s * 0.6, 3), y + ep / 2, round(zh - s * 0.6, 3)],
+                                              [round(b - s * 0.6, 3), y + ep / 2, round(z0 + s * 0.6, 3)]], "r": round(s * 0.5, 3), "mat": mat}]
+        elif c == "G":
+            out += [bx(a, a + s, z0, zh), bx(a + s, b, zh - s, zh), bx(a + s, b, z0, z0 + s), bx(b - s, b, z0 + s, zm),
+                    bx(a + w * 0.5, b - s, zm - s, zm)]
+        elif c == "E":
+            out += [bx(a, a + s, z0, zh), bx(a + s, b, zh - s, zh), bx(a + s, b - w * 0.15, zm - s / 2, zm + s / 2), bx(a + s, b, z0, z0 + s)]
+        x = b + esp
+
+    def miroir(o):
+        if "pts" in o:
+            return dict(o, pts=[[round(2 * xc - p[0], 3), p[1], p[2]] for p in o["pts"]])
+        return dict(o, x0=round(2 * xc - o["x1"], 3), x1=round(2 * xc - o["x0"], 3))
+    return [miroir(o) for o in out]
+
+
+def trappe_chute(noir="noir-mat"):
+    """Trappe de la chute à linge, FERMÉE, z depuis le plancher du RDC : façade basculante noir mat (charnière en bas,
+    devant, à y = COL[3], z = Z_TRAPPE[0]), lettres « LINGE » en laiton, poignée-coquille noire, loquet de sécurité pour
+    enfants (double action) en haut. Dessinée fixe dans la colonne ; chute_linge.py retire ces objets (mêmes dictionnaires)
+    du mobilier du RDC et les anime (trappe de SCENE["sequences"], z absolu)."""
+    a, b = X_GAUCHE
+    y1 = COL[3]
+    za, zb = Z_TRAPPE[0] + 0.25, Z_TRAPPE[1] - 0.12
+    out = [{"forme": "arrondi", "x0": a, "y0": YF, "x1": b, "y1": y1, "z0": za, "z1": zb, "mat": noir, "r": 0.15, "b": 0.1}]
+    out += _lettres("LINGE", XC_CHUTE, y1, zb - 6.2, 1.9, "laiton")
+    # poignée-coquille noire (comme les tiroirs) au haut de la façade et loquet enfant à double action (pousser et glisser)
+    out += [_b(XC_CHUTE - 2.0, y1, XC_CHUTE + 2.0, y1 + 0.75, zb - 2.3, zb - 1.4, "metal"),
+            _b(XC_CHUTE - 2.0, y1, XC_CHUTE - 1.7, y1 + 0.75, zb - 2.3, zb - 0.9, "metal"),
+            _b(XC_CHUTE + 1.7, y1, XC_CHUTE + 2.0, y1 + 0.75, zb - 2.3, zb - 0.9, "metal"),
+            _b(b - 2.6, y1, b - 1.2, y1 + 0.35, zb - 1.3, zb - 0.35, "metal"),
+            _b(b - 2.3, y1 + 0.35, b - 1.5, y1 + 0.55, zb - 1.05, zb - 0.6, "laiton")]
+    return out
+
+
 def _colonne_apothicaire(h):
     B, A, C, T, CY = h.B, h.A, h.C, h.T, h.CY
     NOIR = getattr(h, "NOIR", "noir-mat")
     x0, y0, x1, y1 = COL
     xm = (x0 + x1) / 2
-    cols = [(x0 + 0.2, xm - 0.12), (xm + 0.12, x1 - 0.2)]
+    cols = [X_GAUCHE, (xm + 0.12, x1 - 0.2)]
     out = [B(x0 + 0.1, y0 + 0.1, x1 - 0.1, y1 - 2.5, 0, Z_PANIERS[0], "carbone"),                  # socle en retrait
            B(x0 + 0.1, y0 + 0.05, x1 - 0.1, YF, Z_PANIERS[0], Z_APOTH[1], NOIR),                     # caisson bas
            B(x0 + 0.1, y0 + 0.05, x1 - 0.1, YF, Z_HAUT[0], Z_HAUT[1], NOIR)]                         # caisson haut
-    # paniers à linge basculants (pâle / foncé) : façades noir mat, tirette noire
+    # rangée du bas, noir mat : à gauche, porte à loquet enfant (produits ménagers sur une tablette de 8 po devant la gaine,
+    # accès à la gaine pour la nettoyer) ; à droite, panier basculant (délicats, ce qui ne va pas dans la chute). Tirettes noires
     for a, b in cols:
         out += [A(a, YF, b, y1, Z_PANIERS[0] + 0.3, Z_PANIERS[1] - 0.25, NOIR, r=0.15, b=0.1),
-                T([(a + 3.4, y1 + 0.7, 27.0), (b - 3.4, y1 + 0.7, 27.0)], 0.28, "metal", bouts=True),
-                B(a + 3.2, y1, a + 3.8, y1 + 0.7, 26.75, 27.25, "metal"), B(b - 3.8, y1, b - 3.2, y1 + 0.7, 26.75, 27.25, "metal")]
-    # tiroirs d'apothicaire : 3 rangées × 2, façades de bois de grange, poignée-coquille et porte-étiquette noirs
+                T([(a + 3.4, y1 + 0.7, 30.0), (b - 3.4, y1 + 0.7, 30.0)], 0.28, "metal", bouts=True),
+                B(a + 3.2, y1, a + 3.8, y1 + 0.7, 29.75, 30.25, "metal"), B(b - 3.8, y1, b - 3.2, y1 + 0.7, 29.75, 30.25, "metal")]
+
+    def tiroir(a, b, r0, r1):
+        """Tiroir d'apothicaire : façade de bois de grange, poignée-coquille et porte-étiquette noirs."""
+        zc, xc = (r0 + r1) / 2, (a + b) / 2
+        return [A(a, YF, b, y1, r0 + 0.12, r1 - 0.12, "bois_grange", r=0.15, b=0.1),
+                B(xc - 2.0, y1, xc + 2.0, y1 + 0.75, zc - 1.3, zc - 0.4, "metal"),
+                B(xc - 2.0, y1, xc - 1.7, y1 + 0.75, zc - 1.3, zc + 0.1, "metal"),
+                B(xc + 1.7, y1, xc + 2.0, y1 + 0.75, zc - 1.3, zc + 0.1, "metal"),
+                B(xc - 1.4, y1, xc + 1.4, y1 + 0.15, zc + 0.7, zc + 2.4, "metal"),
+                B(xc - 1.15, y1 + 0.15, xc + 1.15, y1 + 0.2, zc + 0.9, zc + 2.2, "blanc")]
+    # un tiroir par membre de la famille : 3 à droite (les deux du bas pour les garçons), 1 au-dessus de la trappe
     za, zb = Z_APOTH
     pas = (zb - za) / 3
     for i in range(3):
-        r0, r1 = za + i * pas, za + (i + 1) * pas
-        zcen = (r0 + r1) / 2
-        for a, b in cols:
-            xc = (a + b) / 2
-            out += [A(a, YF, b, y1, r0 + 0.12, r1 - 0.12, "bois_grange", r=0.15, b=0.1),
-                    B(xc - 2.0, y1, xc + 2.0, y1 + 0.75, zcen - 1.3, zcen - 0.4, "metal"),
-                    B(xc - 2.0, y1, xc - 1.7, y1 + 0.75, zcen - 1.3, zcen + 0.1, "metal"),
-                    B(xc + 1.7, y1, xc + 2.0, y1 + 0.75, zcen - 1.3, zcen + 0.1, "metal"),
-                    B(xc - 1.4, y1, xc + 1.4, y1 + 0.15, zcen + 0.7, zcen + 2.4, "metal"),
-                    B(xc - 1.15, y1 + 0.15, xc + 1.15, y1 + 0.2, zcen + 0.9, zcen + 2.2, "blanc")]
+        out += tiroir(*cols[1], za + i * pas, za + (i + 1) * pas)
+    out += tiroir(*cols[0], Z_TRAPPE[1], zb)
+    # chute à linge : bouche noire de 12 × 12 po derrière la trappe (on la voit quand la trappe bascule), trappe fermée
+    bx0, bx1, bz0, bz1 = BOUCHE
+    out += [B(bx0, YF, bx1, YF + 0.1, bz0, bz1, "pneu")] + trappe_chute(NOIR)
     # niche ouverte : fond de bois de grange, côtés et tablettes noirs, DEL en haut ; serviettes roulées cordées
     n0, n1 = Z_NICHE
     xi0, xi1 = x0 + 0.85, x1 - 0.85
@@ -286,7 +363,7 @@ def _colonne_apothicaire(h):
         zr = n0 + 0.75 + r + j * 2 * r * 0.866
         for xr, mat in zip(rang, coul):
             out += [CY(xr, y0 + 3.0, y1 - 2.2, zr, r, mat, pans=20), CY(xr, y1 - 2.2, y1 - 2.12, zr, r * 0.45, "gris", pans=16)]
-    # armoire du haut (réserves) : 2 portes noir mat à ouverture par poussée
+    # armoire du haut (pharmacie hors de portée des enfants, réserves) : 2 portes noir mat à ouverture par poussée
     for a, b in cols:
         out += [A(a, YF, b, y1, Z_HAUT[0] + 0.3, Z_HAUT[1] - 0.3, NOIR, r=0.15, b=0.1)]
     return out

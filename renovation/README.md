@@ -64,6 +64,127 @@ suit le bas sans se déformer) ; ils sont décrits à l'état « bas ». Un arr�
 (visite et maquette). Sans `commandes`, rien ne change. Pour les tests : `commander(id, "bas" | "haut" | "basculer", immediat)`.
 Plusieurs étages : un bouton de commande n'apparaît que sur l'étage où se trouve l'objet.
 
+### Objets animés en boucle (facultatif : aspirateur robot...)
+`SCENE["animes"]` d'une scène d'**étage** (repère de son plancher ; MAISON-18 : `appliquer_scene_rdc(S, h)` fait
+`S.setdefault("animes", []).append({...})`). Pouces, secondes, degrés.
+
+| Clé | Sens |
+|---|---|
+| `id`, `nom` | texte ; `id` unique dans la maquette, `nom` = titre du bouton et de l'aide |
+| `objets` | comme le mobilier (`boite`, `cylindre`, `arrondi`, `tube`, `sphere`, `tore`, `modele`...), dans un repère **local** : origine au centre de l'objet, au sol (z = 0 = son dessous), **+x = l'avant** (le sens de marche), +y = sa gauche. Interdits : `commande`, `porte`, `fixe`, `anim` |
+| … `"tourne": 540` | sous-objet qui tourne sur lui-même (°/s, positif = antihoraire vu de dessus) autour d'un axe vertical en `"centre": [x, y]` (local ; défaut : `x, y` de l'objet ou centre de sa boîte) ; arrêté pendant les pauses |
+| … `"clignote": 2.0` | voyant : période en s ; `"couleur": "#3fd18b"` (couleur et émission ; sinon celle du matériau) ; matériau conseillé `"spot"` |
+| `trajet` | `[[x, y], ...]` (repère du plancher), au moins 2 points, **boucle fermée** (ne pas répéter le point 0 à la fin) ; au chargement l'objet est au point 0, tourné vers le point 1 |
+| `vitesse` | po/s en ligne droite (30 cm/s = 11,8) |
+| `rotation` | °/s (défaut 90) : à chaque point, il **tourne sur place** vers le segment suivant (par le plus court) |
+| `pauses` | `[{"point": i, "duree": s}]` : arrêt en arrivant au point i, avant de tourner (base de recharge) |
+| `z`, `depart`, `ombre`, `bouton` | dessous au-dessus du plancher (défaut 0) ; s déjà écoulées au chargement (défaut 0) ; ombre de contact ronde (défaut `True`) ; bouton pause / reprendre sur son étage : `True` (« Mettre en pause » / « Repartir »), `{"libelle_pause", "libelle_reprendre"}` ou `False` |
+
+Un tour = pour chaque segment : avancer (longueur / vitesse), pause éventuelle au point d'arrivée, tourner. Ces objets ne sont
+jamais fusionnés, ne projettent pas d'ombre, ne bloquent pas le visiteur ; on les touche pour les arrêter ou les faire repartir.
+Rendu continu (30 images/s au plus ; 8 pour un voyant seul à l'arrêt) seulement si l'objet est visible : étage et mobilier
+montrés, dans le champ de vision, aucun mur entre l'œil et lui, page visible.
+
+    S.setdefault("animes", []).append({"id": "robot", "nom": "Aspirateur robot",
+        "objets": [{"forme": "cylindre", "x": 0, "y": 0, "z0": 0.4, "z1": 3.3, "r": 6.9, "mat": "metal"},
+                   {"forme": "cylindre", "x": -1.2, "y": 0, "z0": 3.3, "z1": 4.2, "r": 1.7, "mat": "gris"},
+                   {"forme": "cylindre", "x": 3.2, "y": 0, "z0": 3.3, "z1": 3.42, "r": 0.45, "mat": "spot", "clignote": 2.0, "couleur": "#3fd18b"},
+                   {"forme": "tube", "pts": [[4.6, 4.6, 0.35], [7.6, 5.7, 0.25]], "r": 0.13, "mat": "gris", "tourne": 540, "centre": [4.6, 4.6]}],
+        "trajet": [[124, 185], [405, 172], [404, 330], [400, 196]], "vitesse": 12, "rotation": 90,
+        "pauses": [{"point": 0, "duree": 8}], "bouton": {"libelle_pause": "Arrêter le robot", "libelle_reprendre": "Repartir le robot"}})
+
+### Séquence sur deux étages (facultatif : chute à linge...)
+`SCENE["sequences"]` de la scène **principale** (celle qui porte `"etages"` ; MAISON-18 : `appliquer_scene_deux(SCENE)` ;
+un projet à un étage : sa SCENE). Pouces, x et y du repère de la maison, **z ABSOLU** (plancher du sous-sol = 0, RDC = 105).
+Les objets fixes (bouche noire, panier, gaine) vont dans le mobilier de chaque étage : `SCENE["etages"][0]` (SS) et `[1]` (RDC),
+z de leur plancher.
+
+| Clé | Sens |
+|---|---|
+| `id`, `nom`, `libelle`, `libelle_voir`, `attente_voir` | `libelle` : bouton qui déclenche (défaut `nom`), montré sur l'étage de la trappe **et** sur celui du panier ; `libelle_voir` : bouton montré sur l'étage de la trappe après l'envoi, pendant la séquence + `attente_voir` s (défaut 12) |
+| `trappe.objets` | mobilier en z absolu, décrit **fermé** ; le toucher déclenche la séquence |
+| `trappe.charniere` | `[[x, y, z], [x, y, z]]` : axe de rotation (deux points distincts) |
+| `trappe.angle` | degrés, règle de la main droite autour de l'axe point 1 → point 2 (voir plus bas) |
+| `trappe.duree`, `trappe.ferme_apres` | s pour s'ouvrir (et se refermer), défaut 0,6 ; elle se referme `ferme_apres` s (défaut 0,3) après que le ballot a passé le point 1 du chemin |
+| `ballot.objets` | mobilier en repère **local** : origine au centre du **dessous** du ballot |
+| `ballot.chemin` | `[[x, y, z], ...]` (z absolu) suivi par l'origine du ballot : point 0 = où il apparaît (devant ou sur la trappe ouverte) ; point 1 = dans l'ouverture ; ... ; dernier = posé au fond du panier |
+| `ballot.vitesse_depart`, `ballot.frottement`, `ballot.culbute` | po/s de la poussée (défaut 30 : jamais plus lent) ; frottement des pentes (0 à 1, défaut 0,3) ; degrés de roulade pendant la descente (défaut 0 ; il revient droit à l'arrivée) |
+| `panier.pile` | `[[dx, dy, dz], ...]` : décalage du dernier point pour le 1er, 2e, 3e... ballot (défaut `[[0,0,0],[2,-1.5,5],[-1.5,1.5,10]]`) ; pile pleine : le lancer suivant vide le panier |
+| `vue_depart` | facultatif, `{"x", "y", "cap", "etage", "tangage"}` (tangage en degrés, négatif = vers le bas) : le bouton de l'étage de la trappe y amène d'abord si l'on est à plus de 30 po ou tourné de plus de 30° |
+| `vue_arrivee` | **obligatoire** si trappe et panier sont sur deux étages : point de vue qui voit la sortie au plafond **et** le panier ; « Voir arriver » y amène, et le bouton de l'étage du panier aussi |
+
+Déroulement : t = 0, la trappe s'ouvre et le ballot apparaît au point 0 ; à t = `duree`, il part à `vitesse_depart` et suit
+le chemin : sur chaque segment, accélération g·(sin − frottement·cos) avec g = 386 po/s² (verticale = chute libre ; à plat ou
+trop peu en pente pour glisser : vitesse gardée) ; il passe d'un étage à l'autre quand son origine descend sous le plancher ;
+il se pose au dernier point + `pile[k]` (petit tassement) et y reste. « Voir arriver » : on vole jusqu'à `vue_arrivee` ; si
+le ballot était déjà passé, il repart d'un peu avant sa sortie du plafond (on le voit arriver). Depuis le sous-sol, le
+bouton déclenche et on voit le ballot sortir du plafond. Rendu continu seulement pendant la séquence.
+
+Sens de `angle` (trappe à charnière en bas, sur une face verticale) : face qui regarde +y (on se tient du côté des y plus
+grands), axe de x petit à x grand → `angle` **négatif** (le haut vient vers +y) ; face qui regarde −y : positif ; face qui
+regarde +x, axe de y petit à y grand : positif ; face qui regarde −x : négatif. Elle s'ouvre du mauvais côté : changer le signe.
+
+Pour que ce soit crédible : une **bouche noire** fixe (mobilier, mat `"pneu"`, 0,2 po d'épaisseur juste derrière la trappe)
+fait un trou noir quand la trappe s'ouvre, et le ballot y disparaît ; au plafond du sous-sol, une **plaque de sortie** noire
+(z0 = plafond − 0,7, z1 = plafond − 0,1) : le plafond cache tout ce qui est au-dessus, le ballot apparaît en la traversant ;
+**panier creux** (forme `"arrondi"` avec `"trou"` = épaisseur de paroi), sinon le ballot disparaît dans un volume plein.
+
+    SCENE["sequences"] = [{"id": "chute", "nom": "Chute à linge", "libelle": "Envoyer du linge",
+        "libelle_voir": "Voir arriver au lavage",
+        "trappe": {"objets": [{"x0": 79, "x1": 93, "y0": 168.5, "y1": 169.25, "z0": 141, "z1": 153, "mat": "metal"}],
+                   "charniere": [[79, 169.25, 141], [93, 169.25, 141]], "angle": -65, "duree": 0.6, "ferme_apres": 0.3},
+        "ballot": {"objets": [{"forme": "sphere", "x": 0, "y": 0, "z": 3.9, "r": 5.6, "ecrase": 0.7, "mat": "draps"}],
+                   "chemin": [[86, 178, 145.2], [86, 166, 141.5], [86, 156, 132], [86, 150, 108], [86, 146, 95], [86, 140, 1]],
+                   "vitesse_depart": 30, "frottement": 0.3, "culbute": 120},
+        "panier": {"pile": [[0, 0, 0], [1.5, -1, 6], [-1.5, 1.2, 12]]},
+        "vue_depart": {"x": 93, "y": 198, "cap": 266, "etage": "RDC", "tangage": -14},
+        "vue_arrivee": {"x": 40, "y": 76, "cap": 55, "etage": "SS", "tangage": -4}}]
+
+Pour les tests (Playwright) : `figerAnimations(true)` (horloges arrêtées : une image par changement), `poserHorloge(id, s)`,
+`basculerAnime(id[, pause])`, `declencherSequence(id[, "bouton" | "objet"])`, `voirArrivee(id)`, `fixerSequence(id, s)` (pose
+la séquence à s secondes du déclenchement, la lance au besoin ; s ≥ fin : ballot posé), `etatSequence(id)` (temps, trappe,
+pile, position du ballot, `sortiePlafond`). `generer_3d.py` vérifie le contrat (`animes()`, `sequences()`) et dit quoi corriger.
+
+<!-- --- scénarios -->
+### Scénario : un personnage qui joue une suite d'étapes (facultatif : visiteur qui cogne à la porte...)
+`SCENE["scenarios"]` de la scène **principale** (MAISON-18 : `appliquer_scene_finale(SCENE)` d'un module de la liste
+`FINALE`, après l'extérieur). Pouces, secondes, degrés ; x et y du repère de la maison, z **absolu**. Exemple complet :
+`MAISON-18_deux_etages/visiteur.py`.
+
+| Clé | Sens |
+|---|---|
+| `id`, `nom`, `libelle`, `libelle_arret`, `libelle_son` | bouton qui le fait venir (« Quelqu'un cogne »), son texte pendant qu'il joue (« Arrêter le visiteur » : il disparaît, les portes reviennent comme avant), bouton qui coupe ou remet ses sons |
+| `personnage.objets` | objets fixes du corps (comme le mobilier), repère **du personnage** : origine au sol entre ses pieds, **+x devant lui**, +y à sa gauche, z vers le haut |
+| `personnage.parties` | `[{"id", "pivot": [x, y, z], "parent", "objets", "balance", "phase", "frappe", "poses"}]` : parties articulées (jambes, haut du corps, tête, bras, avant-bras), objets décrits dans le repère du personnage, pivot = articulation ; `parent` déclaré avant (l'avant-bras suit le bras) ; `balance` : ° de balancement à la marche, `phase` : 0 ou 180 (jambe gauche 0, droite 180, bras à l'inverse) ; `frappe` : ° du coup (l'avant-bras qui cogne) |
+| … `"poses": {"repos": [b, e, l], "cogner": ..., "dire": ..., "pet": ...}` | angles de la partie selon l'étape (fondu de 0,3 s) : `b` balancement (positif : le bas de la partie vers l'avant ; tête : elle lève le menton), `e` écart (positif : vers l'extérieur), `l` lacet (positif : vers sa gauche). Pose de l'étape : `pose` de l'étape, sinon `marche`/`repos`, `cogner`, `dire`, le nom du son |
+| … `"echelle": [ex, ey, ez]` | sur une sphère, un cylindre, un tore ou une boîte : ellipsoïdes (tête, bedaine), torse elliptique |
+| `personnage.couleurs` | `{"v-polo": "#1F57D6" ou {"couleur", "rugosite", "metal", "duvet"}}` : matériaux du personnage (sans relief), employés par `"mat"` |
+| `personnage.hauteur`, `foulee`, `rebond`, `vitesse`, `rayon`, `ombre` | haut de la tête (la bulle va au-dessus), po par cycle de deux pas (46), rebond du corps (0,8), po/s (40), rayon (ombre ronde, champ de vision), ombre ronde au sol (`True`) |
+| `depart` | `{"x", "y", "cap", "etage"}` : où il apparaît (`"EXT"` dehors) |
+| `etapes` | une action par étape (voir plus bas) ; `depart_bouton` : indice de l'étape où le bouton et l'arrêt le font commencer (défaut 0) |
+| `declencheur` | `{"x", "y", "z", "rayon", "hauteur", "attente", "auto"}` : il vient tout seul (après un premier geste sur la page) quand le visiteur est à moins de `rayon` po de (x, y) et à moins de `hauteur` po de z (dedans ou dehors), au plus une fois par `attente` s (défaut 120 : jamais moins de 2 min entre deux passages ; arrêté = attente aussi) |
+| `vue` | `{"x", "y", "cap", "etage", "tangage", "z"}` : le bouton y amène d'abord si l'on est hors du rayon |
+| `volume` | 0 à 1 (défaut 0,5) |
+
+Étapes : `{"marcher": [[x, y], ...], "vitesse"}` (chemin trouvé sur la grille de la visite, autour des obstacles, par les
+marches de 8 po au plus et par la porte extérieure la plus commode d'une zone à l'autre ; z lu au sol à l'exécution : perron,
+marches, balcon, terrain, plancher ; il regarde où il va, jambes et bras balancent) ; `{"tourner": cap ou [x, y]}` ;
+`{"cogner": n, "intervalle": 0.45}` (le bras qui a `frappe` cogne, un coup synthétisé par contact) ; `{"dire": "JULIEEEEE !",
+"voix": "Juliiiiiie !", "duree"}` (bulle au-dessus de la tête ; voix du navigateur : fr-CA si l'appareil en a une, sinon
+française, grave et lente ; aucune voix : la bulle seule) ; `{"son": "pet" | "coup", "duree", "vibre", "nuage"}` (Web Audio,
+aucun fichier) ; `{"ouvrir": id}` / `{"fermer": id}` (porte de la maquette, `duree` d'attente, défaut 0,9) ; `{"attendre": s}`.
+Toute étape : `"bulle"` (texte), `"bulle_style"` (`parole`, `cri`, `son`, `nuage`), `"pose"`, `"duree"`. Un arrêt de visite
+peut porter `"scenario": id` (il le fait venir à l'arrivée).
+
+Dans la visite : le personnage va dans le mobilier de l'étage où il marche (ou dans l'extérieur, éclairé par le ciel), jamais
+fusionné, sans ombre portée ni collision, et ne se touche pas. Rendu continu (30 images/s au plus) seulement pendant qu'il joue
+et qu'il est dans le champ de vision. La bulle suit sa tête (rabattue au bord de l'écran s'il est hors champ). Rien ne sonne
+avant le premier geste de l'utilisateur sur la page (règle des navigateurs). Sans `scenarios`, rien ne change.
+Pour les tests : `fixerScenario(id, s)` (horloge figée, personnage, bulle et portes à s secondes du plan), `etatScenario(id)`
+(`debuts` des étapes, position, zone, bulle), `lancerScenario(id[, "bouton" | "auto" | "arret"])`, `arreterScenario(id)`.
+`generer_3d.py` vérifie le contrat (`scenarios()`).
+<!-- --- fin scénarios -->
+
 Extérieur (facultatif, maquette à plusieurs étages) : `SCENE["exterieur"]` (terrain, cour, maison vue de dehors ; contrat
 dans le docstring de `MAISON-18_deux_etages/exterieur.py`). La visite dessine le terrain jusqu'à l'horizon, la cour et
 l'enveloppe de la maison sous le soleil du jour ; on marche dehors (marches de 8 po au plus montées seules, obstacles, murs,
@@ -75,6 +196,55 @@ diagonale (xs[i], ys[j]) → (xs[i+1], ys[j+1]), sautée si son centre tombe dan
 plus de 50 % ; les margelles lisent le sol devant chaque fenêtre) et `"revetements"` (`[{"nom", "pts", "mat"}]` drapés sur
 le relief, découpés case par case ; on y marche comme sur le terrain). Sans relief, terrain plat à `"sol"`. Sortie
 ailleurs que dans le projet (essais) : `python3 renovation/outils/generer_3d.py renovation/<projet> /chemin/visite.html`.
+
+<!-- --- lointain -->
+### Le lointain et les objets animés de l'extérieur (facultatif : fleuve, traversier...)
+Dans `SCENE["exterieur"]` (MAISON-18 : `fleuve.py`, module de la liste `FINALE` de `scene_3d.py`, `appliquer_scene_finale(S)`).
+Pouces, secondes, degrés, **z ABSOLU** (plancher du sous-sol = 0). Contrat : `generer_3d.exterieur_animes()`,
+`exterieur_lointain()` et `_objets_lointains()`, qui disent quoi corriger.
+
+**`"animes"`** : objets animés en boucle dehors, **même contrat que `SCENE["animes"]` d'un étage** (objets en repère local,
+`trajet`, `vitesse`, `rotation`, `pauses`, `depart`, `ombre`, `bouton`, sous-objets `tourne`, voyants `clignote`), mais `z` absolu
+(dessous de l'objet) et `id` unique dans toute la maquette. En plus :
+
+| Clé | Sens |
+|---|---|
+| `lointain` | `True` : objet au loin (navire sur le fleuve...), au-delà du lot, à 10 km au plus. Dessiné dans le plan lointain (voir plus bas) ; ses `objets` sont des formes du lointain (`boite`, `cylindre`, `sphere`, `toit`, `texte`, une `couleur` chacune) ; pas d'ombre de contact |
+| `cadence` | images par seconde au plus pendant qu'il roule et se voit (1 à 30, défaut 30 ; un navire à 2 km : 10 suffisent) |
+
+Rendu continu seulement s'il se voit : dehors, dans le champ de vision ; dedans, par une fenêtre ou une porte ouverte de
+l'étage (aucun mur entre l'œil et lui) ; rien quand la page est cachée. Bouton pause / reprendre (si `bouton`) montré dehors
+seulement ; on le touche pour l'arrêter. Tests : `poserHorloge(id, s)`, `basculerAnime(id)`, `figerAnimations(true)`.
+
+**`"lointain"`** : ce qu'on voit au-delà du lot jusqu'à l'horizon. Le lot est dessiné dans les 200 m de la caméra, sous une
+brume de 40 à 180 m ; le lointain est dessiné **derrière tout le reste** (le terrain du lot, la maison et leurs objets passent
+toujours devant), avec sa propre brume de distance, un éclairage simple (soleil du jour, ciel) et des couleurs par sommet :
+un maillage pour l'eau, un pour la terre et tous les objets fixes. Dedans, on ne le voit que par les fenêtres.
+
+| Clé | Sens |
+|---|---|
+| `ouvert` | côtés du relief du lot **non prolongés** jusqu'à l'horizon (défaut `["-y"]`, vers la rue) : au-delà du bord du relief, on voit le lointain. Il faut un `"relief"` |
+| `eau` | `{"nom", "z", "pts", "couleur", "couleur_loin", "reflet"}` : surface (z absolu), polygone `[[x, y], ...]` (jusqu'à 150 km : l'horizon ; commencer à 50 m de la maison au moins), couleur proche et au loin, part du reflet du ciel (0 à 1, défaut 0,35 ; il grandit en rasant l'eau). L'eau ne cache jamais la terre ni les objets |
+| `terre` | `{"xs", "ys", "z", "couleurs"}` : relief du lointain (grille comme `"relief"`, même diagonale, 10 km au plus), une couleur `"#rrggbb"` par sommet (facultatif). Son premier rang reprend le bord du relief du lot (pas de marche) ; elle s'arrête à la rive, **au niveau de l'eau, jamais dessous** |
+| `objets` | formes du lointain, z absolu, `"couleur"` (ou `"mat"`) : `boite` (x0..z1, ou `pts` : prisme), `cylindre` (x, y, r, z0, z1 ; `r2` = rayon du haut, 0 = cône), `sphere` (x, y, z, r, `ecrase`), `toit` (deux versants sur x0..y1, de z0 à z1, `faitage` `"x"` ou `"y"`), `texte` (`texte`, x, y, z0, z1, `larg`, `face`) |
+| `brume`, `couleur_brume` | distance (po) où la brume du lointain voile 63 % (défaut 1 200 000, environ 30 km) ; sa couleur |
+
+Au loin, la profondeur est grossière : décoller de 6 po au moins ce qui est peint sur une surface (fenêtres, nom d'un navire),
+12 po sur un navire à plus de 1 km.
+
+    X = SCENE["exterieur"]
+    X["lointain"] = {"ouvert": ["-y"], "brume": 2400000,
+        "eau": {"nom": "Fleuve Saint-Laurent", "z": -1772, "pts": [[-5.9e6, -17677], [5.9e6, -17677], [5.9e6, -5.9e6], [-5.9e6, -5.9e6]],
+                "couleur": "#143350", "couleur_loin": "#21476b", "reflet": 0.18},
+        "terre": {"xs": [...], "ys": [...], "z": [[...]], "couleurs": [[...]]},
+        "objets": [{"forme": "toit", "x0": -40, "x1": 460, "y0": -1662, "y1": -1338, "z0": -9, "z1": 64, "couleur": "#3f4245"}]}
+    X.setdefault("animes", []).append({"id": "traversier", "nom": "Le traversier F.-A.-Gauthier", "lointain": True,
+        "cadence": 10, "bouton": False, "z": -1772, "vitesse": 911.5, "rotation": 2, "depart": 78,
+        "trajet": [[-118110, -78740], [118110, -78740], [118110, -106299], [-118110, -106299]],
+        "objets": [{"forme": "boite", "pts": [[-2622, -394], ...], "z0": 0, "z1": 276, "couleur": "#1f4896"},
+                   {"forme": "texte", "texte": "F.-A.-GAUTHIER", "x": -1732, "y": 455, "z0": 134, "z1": 189, "larg": 591,
+                    "face": "+y", "couleur": "#ffffff"}]})
+<!-- --- fin lointain -->
 
 ## Matériaux
 `renovation/outils/materiaux/` : bibliothèque de matériaux réels (ambientCG, Poly Haven, CC0, ou fichiers de

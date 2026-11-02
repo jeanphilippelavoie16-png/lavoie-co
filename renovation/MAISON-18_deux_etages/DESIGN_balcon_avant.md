@@ -5,101 +5,189 @@ devant la façade (la porte d'entrée sort dessus) ; « 24 [pi] jusqu'à la rue 
 droite de la porte d'entrée quand tu regardes d'en avant) » ; le coin des enfants est devant, vers la rue ; « Il est comme
 surélevé. Le filet noir sur le balcon c'est un filet katamaran pour lire. »
 
-C'est un balcon qui **existe** : on le reproduit tel quel, on n'en fait pas un nouveau design. Sources : 15 photos du client
-(`renovation/prive/balcon_avant/`, privées, jamais copiées dans le dépôt) : 10 photos d'été du balcon et du coin des enfants,
-3 photos d'automne de l'escalier avant neuf et de la façade. Code : `balcon_avant.py` (appelé par `scene_3d.py`) et l'avant de
-`exterieur.py` (relief creusé à l'escalier).
+Correction du client sur la première version (2026-11-02), mot pour mot :
+- sur son croquis : « ça ressemble plus à ça, le setup » (un grand rectangle « balcon », le « Filet » dans un coin du balcon, le
+  « jeu » en dehors du rectangle, avec un coin coupé en biais) ;
+- « Les marches sont à 6 pieds du mur de la maison » ;
+- « Yé où ton four à pizza ?? » (nouvelles photos 17 à 20 : cuisine d'extérieur sous la pergola) ;
+- photo 16 (hiver, de l'allée) : l'escalier part d'un petit palier près de la porte, parallèle à la façade ; jardinière de cèdre
+  et boîte aux lettres entre l'escalier et le mur ; la fondation réelle est foncée, mais on garde le crépi blanc de la
+  proposition DAG (confirmé par le client).
+
+Correction du client sur la 2e version (2026-11-02), en rouge sur notre croquis du dessus, et mot pour mot : « le filet est plus
+cette grosseur-là et les poutres en bois vont presque jusqu'à la maison, le patio doit avoir 20 de large finalement et les
+poutres en bois font 16 à partir de gauche et arrêtent à 4 pieds de la maison, avec celui du milieu dans le milieu ». Lu ainsi
+(même orientation que son croquis, la rue à gauche) :
+- **balcon de 20'-0"** de la façade jusqu'au bord avant (et non 24'-0") ; la largeur le long de la façade ne change pas ;
+- **pergola : poutres de 16'-0"** à partir du bord avant (« à partir de gauche »), qui **arrêtent à 4'-0" de la maison** ;
+  trois rangées de poteaux : au bord avant, **au milieu** (« celui du milieu dans le milieu ») et à 4 pi de la maison ;
+- **filet de la grosseur du rectangle rouge** : mesuré sur l'annotation avec la cote « 60 » du croquis (= 60 po), environ
+  **9'-5" vers la maison sur 10'-0" le long de la façade**, toujours au coin avant côté allée.
+
+C'est un balcon qui **existe** : on le reproduit tel quel, on n'en fait pas un nouveau design. Sources : 20 photos du client
+(`renovation/prive/balcon_avant/`, privées, jamais copiées dans le dépôt) et son croquis. Code : `balcon_avant.py` (appelé par
+`scene_3d.py`) et l'avant de `exterieur.py` (relief creusé à l'escalier, asphalte élargi).
+
+## Lecture du croquis du client
+
+Le croquis est tourné d'un quart de tour par rapport à nos plans : **la maison est le côté droit du rectangle, la rue le côté
+gauche ; le haut du croquis est le côté du voisin (écran d'intimité), le bas le côté de l'allée (escalier)**. C'est la seule
+lecture qui colle aux photos 03, 06, 10 et 12 (de la terrasse vers le fleuve : filet devant à gauche contre le garde-corps
+au-dessus de l'allée ; maisonnette « 86 » droit devant, au-delà du garde-corps avant ; pergola et écran à droite, du côté du
+voisin). Donc :
+- le balcon est **tout le rectangle** : de la façade jusqu'à 20 pi vers la rue (client, 3e version), sur toute sa largeur ;
+- le filet est dans le coin avant côté allée, contre le garde-corps avant et le garde-corps de droite (le banc de planche entre
+  les deux) ;
+- le coin des enfants est **devant** le balcon, le long de la moitié côté voisin du bord avant, plus bas (paillis), fermé de
+  clôtures ; son coin avant côté allée est coupé en biais, qui revient vers le bord avant du balcon à peu près vis-à-vis du filet.
+
+Le croquis n'est pas à l'échelle : les tailles viennent des photos (tableau plus bas), sauf celles que le client a données. Sur
+son premier croquis le filet paraissait plus grand que sur les photos ; on avait gardé la taille des photos (84 × 60 po). Le
+client a confirmé en rouge que le filet est bien plus gros : ≈ 9'-5" × 10'-0" (3e version).
 
 ## Ce qu'on a compris des photos
 
 - Le balcon couvre l'avant de la maison, de l'écran d'intimité du voisin de gauche (au-delà du coin de la maison) jusqu'à un peu
-  à droite de la porte. Il est sur poteaux et poutres teints foncés, à la hauteur du seuil : « surélevé » de 4 à 5 pi au-dessus
-  du terrain, de 9 pi au-dessus de l'allée.
-- Côté gauche, contre l'écran du voisin : la pergola de bois teint (poteaux 6 × 6 et poutres, étriers et plaques en T noirs),
-  dessous le BBQ et la banquette en L à coussins gris foncé.
-- Côté droit, devant : le filet catamaran tendu dans une ouverture du plancher, encadré de bandes teintes foncées, une planche
-  (banc) le long du garde-corps droit, trois coussins noirs au bout (photos 03 à 05).
-- Le plancher : planches de pin naturel de 5½ po en panneaux de sens alternés, séparés par des bandes teintes foncées (autour
-  du filet, sous l'alignement des poteaux de la pergola, de part et d'autre de la porte).
+  à droite de la porte, sur 20 pi de profond (client). Il est sur poteaux et poutres teints foncés, à la hauteur du seuil : « surélevé »
+  de 4 à 5 pi au-dessus du terrain, de 9 pi au-dessus de l'allée.
+- Côté voisin, contre l'écran : la pergola de bois teint (poteaux 6 × 6, poutres, étriers et plaques en T noirs). Son poteau avant
+  est au bord avant du balcon, là où commence le garde-corps au-dessus du coin des enfants (photos 03, 04, 06, 07, 10, 12) ; ses
+  poutres de 16 pi vont presque jusqu'à la maison (client).
+- **Cuisine d'extérieur** (photos 17 à 20), le long de l'écran sous la pergola : comptoir de béton gris lissé (microciment) aux
+  bouts en cascade, façades à lattes horizontales de bois teint foncé, frigo à boissons à porte vitrée noire, bacs à condiments
+  d'inox encastrés dans le dessus, four à pizza (dôme crème sur socle noir) au bout côté rue ; puis, côté maison, un comptoir plus
+  bas avec le BBQ encastré (3 brûleurs, inox et noir) et la plaque de cuisson noire, sa tablette dépassant le comptoir.
+  Au-dessus : toit de tôle ondulée translucide (polycarbonate) sur chevrons, guirlandes d'ampoules qui pendent des poutres.
+  Mobilier de détente (photo 17) : sofa 3 places gris pâle à cadre d'aluminium noir, table basse à dessus de bois, 2 fauteuils à
+  cadre noir et coussins gris, 2 poufs blancs. Cette installation **remplace** le BBQ sur roues et la banquette en L des photos
+  plus anciennes. Écran : planches horizontales teintes à jours, montants et lisse haute d'acier noir, jusque sous les poutres.
+- Côté allée, devant : le filet catamaran tendu dans une ouverture du plancher, encadré de bandes teintes foncées, une planche
+  (banc) le long du garde-corps droit, trois coussins noirs au bout côté voisin (photos 03 à 05, 10, 12).
+- Le plancher : planches de pin naturel de 5½ po en panneaux de sens alternés, séparés par des bandes teintes foncées (rives,
+  alignement des poteaux de la pergola, rangée du milieu, cadre du filet et bande vers la porte).
 - Garde-corps : poteaux et main courante de bois naturel, barreaux noirs ; un panneau de verre teinté dans le garde-corps droit
   (photos 04, 10, 12).
-- Devant à gauche, plus bas : une plateforme (une marche), trois marches et une glissade bleue mènent au coin des enfants,
-  fermé par des clôtures à planches horizontales sur poteaux d'acier noir : paillis de cèdre, carré de sable au coin coupé, mur
-  d'escalade sur la clôture gauche, maisonnette « 86 » (affiche « Bureau », cadres noirs, toit en appentis) dans le coin avant.
-- L'escalier avant neuf (photos 13 à 15) **part du côté droit du balcon** et descend vers l'allée, parallèle à la façade : une
-  quinzaine de marches de bois neuf, contremarches fermées, main courante et barreaux noirs du côté de la rue seulement, lampes
-  solaires sur les poteaux ; il arrive sur l'asphalte (dalle de béton au pied). Boîte aux lettres noire sur poteau à droite du
-  pied. L'ancien escalier de béton est dessous.
+- Devant le bord avant, entre le poteau avant de la pergola et la boîte d'écran au bout du garde-corps du filet : une
+  plateforme une marche plus bas ; de là, trois marches (vers le voisin) et une glissade bleue (le long du biais) mènent au
+  coin des enfants (photos 01, 02, 06, 07, 08). Le coin des enfants : paillis de cèdre, carré de sable au coin coupé dans le coin
+  du balcon et du voisin, mur d'escalade sur la clôture du voisin, maisonnette « 86 » (affiche « Bureau », cadres noirs, toit en
+  appentis) dos à la clôture côté rue ; clôtures à planches horizontales sur poteaux d'acier noir ; la rue juste derrière.
+- L'escalier avant neuf (photos 13 à 16) **part du côté droit du balcon**, près de la porte, et descend vers l'allée,
+  parallèle à la façade : 15 contremarches de bois neuf, contremarches fermées, main courante et barreaux noirs du côté de la
+  rue seulement, lampes solaires sur les poteaux ; il arrive sur l'asphalte (dalle au pied). **Entre l'escalier et le mur**,
+  devant la fenêtre du sous-sol : une jardinière de cèdre à planches horizontales en gradins qui suivent l'escalier, posée sur
+  l'asphalte, la boîte aux lettres noire sur un court poteau sur son dernier gradin (photo 16).
 
-## Relevé estimé (pouces ; repère de exterieur.py : x vers la droite vu de la rue, y vers l'arrière, z depuis le sous-sol)
+## Relevé (pouces ; repère de exterieur.py : x vers la droite vu de la rue, y vers l'arrière, z depuis le sous-sol)
 
-| Élément | Retenu | Comment |
+| Élément | Retenu | Source |
 |---|---|---|
-| Profondeur du balcon | 24'-0" (y 0 à -288) | **client** |
+| Profondeur du balcon | **20'-0"** sur toute la largeur (y 0 à -240) | **client** (3e version ; 24'-0" avant) |
 | Bout droit | x 232 (21 po à droite du cadre de la porte, x 177-211) | client (« un peu à droite de la porte ») ; photo 15 |
-| Bout gauche (écran du voisin) | x -90 : 7'-6" à gauche du coin de la maison, ≈ 8 po en deçà de la ligne de lot | supposé (photos 04, 15 : le balcon dépasse le coin de la maison jusqu'à l'écran) |
+| Bout gauche (écran du voisin) | x -90 : 7'-6" à gauche du coin de la maison, de 8 po (près de la maison) à 2 pi (devant) en deçà de la ligne de lot | estimé (photos 04, 15) |
 | Largeur totale | 26'-10" | déduit |
-| Dessus du plancher | 103½ (1½ po sous le seuil 105) | photo 15b (le plancher arrive au seuil) ; supposé |
-| Grand plancher | 26'-10" × 15'-0" (y 0 à -180) | supposé : bord du coin des enfants à 15 pi (photos 06, 07) |
-| Partie avant droite (filet) | 10'-0" × 9'-0" (x 112 à 232, y -180 à -288) | supposé, photos 04, 05, 10 |
-| Ouverture du filet | 83 × 54 po (x 130-213, y -278 à -224), flèche ≈ 4 po | compté : ≈ 15 planches le long, 3 coussins au bout ; supposé |
-| Banc du filet | planche 2 × 12 le long du garde-corps droit | photos 04, 05 |
-| Pergola | 11'-4" × 12'-3" : poteaux x 49 (y -177, -104, -31) et dans l'écran (x -87), poutres 5½ × 7½ à 7'-4" | photos 03-05, 09-12 (3 poteaux en ligne, poutres vers l'écran) ; dimensions supposées |
-| Écran d'intimité | 6 pi au-dessus du balcon, planches de 5½ po, jours de ¾ po, montants d'acier noir | photos 04, 09 |
-| BBQ | contre l'écran, y -160 à -110 | photos d'été (sur les photos d'automne il est près de la porte) |
-| Banquette en L | 7'-6" le long de l'écran + 8'-0" le long de la maison, assise à 15 po | photos 04, 09 ; supposé |
+| Dessus du plancher | 103½ (1½ po sous le seuil 105) | estimé (photo 15b) |
+| Pergola : longueur | **poutres de 16'-0"** du bord avant (y -240) jusqu'à **4'-0" de la maison** (y -48) ; **3 rangées de poteaux : au bord avant (y -237¼), au milieu (y -144), à 4 pi de la maison (y -50¾)**, soit 8'-0" + 8'-0" | **client** (3e version) |
+| Pergola : largeur | 11'-10" : poteaux x 49 et dans l'écran (x -87) ; dessous des poutres à 7'-4" | estimé (photos 03, 07, 12, 18) |
+| Toit de polycarbonate | de l'écran à x -26 (≈ 5'-4"), sur 4 chevrons, toute la longueur de la pergola (16 pi) | estimé (photos 17 à 20) |
+| Cuisine d'extérieur | le long de l'écran, à 9 po du bord avant (y -231 à -60 avec la tablette), 28 po de profond ; comptoir haut 8'-0" à 36 po (four à pizza, frigo de 23 po, 8 bacs) ; comptoir bas 5'-2" à 26 po (BBQ 25 po, plaque 30 po + tablette 15 po) | estimé (photos 19, 20 : frigo et BBQ comme étalons) |
+| Mobilier | entre la cuisine et le passage, sous la pergola : sofa 78 × 31 le long du garde-corps avant (y -236), table 44 × 24, fauteuils 28 × 29, poufs 18 × 19 ; mêmes dégagements qu'avant | estimé (photo 17) |
+| Écran d'intimité | 7'-2" au-dessus du balcon (jusque sous les poutres), planches de 5½ po, jours de 1 po, sur les 20 pi | photos 19, 20 |
+| Filet catamaran | **≈ 9'-5" vers la maison × 10'-0" le long de la façade** : ouverture 113 × 120 po (x 93½-213½, y -230 à -117), à 10 po du bord avant ; flèche ≈ 4 po | **client** (rectangle rouge, mesuré avec sa cote « 60 ») ; position : son croquis |
+| Banc du filet | planche 2 × 12 le long du garde-corps droit, jusqu'au haut de l'escalier (y -121) | photos 04, 05 |
+| Passage entre la pergola et le filet | 2'-11½" (des poteaux de la pergola au cadre du filet) ; ouverture du garde-corps avant vers la plateforme : 5'-0" (x 52 à 112) | déduit |
 | Garde-corps | 36 po, barreaux ¾ po à 4 po c/c, main courante 2 × 6 à plat | photos ; hauteur réglementaire supposée |
-| Verre teinté | garde-corps droit, y -192 à -144 (juste devant l'escalier) | photos d'été 10 et 12 ; **pas vu sur les photos d'automne** |
-| Plateforme basse | 5'-0" × 9'-0" (x 52-112), à 96 (une marche de 7½) | photos 01, 02, 07 ; supposé |
-| Marches vers le coin des enfants | 3 marches de 7½ po, girons de 10 po, 6'-10" de large | photo 02 (3 marches) |
-| Coin des enfants | 11'-10" × 9'-0" (x -90 à 52, y -288 à -180), paillis à 66 (37½ po sous le balcon) | photos 01, 02, 06-08 ; supposé |
-| Clôtures du coin des enfants | 6'-6" au-dessus du paillis (dessus à 144), jusqu'au terrain | photos 01, 06 ; supposé |
-| Maisonnette « 86 » | 5'-0" × 3'-4", 5'-4" devant, 4'-6" derrière (appentis vers la rue) | photos 02, 07, 08 ; supposé |
-| Carré de sable | 4'-3" × 4'-6", coin coupé, bordure 2 × 8 | photos 06, 08 ; supposé |
-| Glissade | 4'-4" de long, de la plateforme (96) au paillis | photos 01, 02 |
-| Escalier avant | 4'-0" de large (y -144 à -96, à 8 pi de la façade), 15 contremarches de 7,55 po, 14 girons de 11 po, 12'-10" à l'horizontale | photos 13-15 : marches comptées, largeur mesurée sur une contremarche ; position estimée entre la photo 15 (≈ 6 à 10 pi) et les photos 13-14 (≈ 10 à 14 pi) |
-| Pied de l'escalier | dalle de béton sur l'asphalte à ≈ -10 (x 386-412) | photos 13, 14 |
+| Verre teinté | garde-corps droit, juste devant l'escalier (y -168 à -120) | photos d'été 10 et 12 ; pas vu sur les photos d'automne |
+| Coin des enfants | devant le balcon, il suit le nouveau bord avant : 16'-10" le long du bord avant (x -90 à 112), 10'-0" de profond (y -240 à -360) ; clôture côté rue 6'-4" ; biais de (-14, -360) à (112, -276), puis retour de 3 pi le long de la plateforme ; dans le lot : 10'-0" de la ligne avant du lot, clôture du voisin à x -90 (ligne de lot à x -114 / -121) | croquis du client (disposition) ; profondeur estimée sur les photos 06, 08 (carré de sable 4'-6", 2 pi de paillis, maisonnette 3'-4") |
+| Paillis | 66 (37½ po sous le balcon, 2 à 2½ pi au-dessus du terrain) | estimé (3 marches, photo 02) |
+| Clôtures du coin des enfants | dessus à 144 (6'-6" au-dessus du paillis), jusqu'au terrain | estimé (photos 01, 06, 07) |
+| Plateforme basse | 4'-11" × 3'-0" (x 52-111, y -276 à -240), à 96 (une marche de 7½) | estimé (photos 01, 07) |
+| Marches vers le coin des enfants | 3 marches de 7½ po, girons de 10 po, 2'-10" de large, vers le voisin | photos 01, 02 |
+| Glissade | 4'-4" de long, du bord avant de la plateforme au paillis, le long du biais | photos 01, 02, 06 |
+| Maisonnette « 86 » | 5'-0" × 3'-4", 5'-10" devant, 5'-0" derrière, dos à la clôture côté rue | estimé (photos 02, 07, 08) |
+| Carré de sable | 4'-3" × 4'-6", coin coupé, bordure 2 × 8 | estimé (photos 06, 08) |
+| Escalier avant | 4'-0" de large, **côté maison à 6'-0" du mur (y -120 à -72)**, 15 contremarches de 7,53 po, 14 girons de 11 po, 12'-10" à l'horizontale | **client** (6 pi) ; marches comptées et largeur sur les photos 13 à 16 |
+| Pied de l'escalier | dalle de béton sur l'asphalte à ≈ -7 (x 386-412) | photos 13, 14, 16 |
+| Jardinière de cèdre | entre l'escalier et le mur (y -68 à -1), x 234 à 444, 4 gradins (dessus à 84, 64, 46, 34 ; le dernier 10 po sous l'allège de la fenêtre du sous-sol) | estimé (photo 16) |
+| Boîte aux lettres | noire, sur un court poteau, sur le dernier gradin de la jardinière | photo 16 |
 
-## Ce qui a changé dans la maquette
+## Ce qui a changé dans la maquette (3e version : 20 pi, pergola de 16 pi, gros filet)
 
-- **Nouveau `balcon_avant.py`** (`appliquer_exterieur(EXT)`, appelé par `scene_3d.py` après la création de l'extérieur) :
-  - retire le perron de béton du relevé : ses objets (dalle, 4 marches, garde-corps noirs), les planchers « Perron avant » et
-    « Marches du perron », les obstacles « Garde-corps du perron » et le trou du perron plein. L'excroissance de fondation du
-    sous-sol (chambre froide sous l'ancien perron) reste, coiffée de sa dalle, cachée sous le balcon ;
-  - ajoute le balcon (planches, bandes, rives, solives, poutres et poteaux teints foncés), les garde-corps, l'écran, la
-    pergola, le BBQ, la banquette, le filet, la plateforme, les marches, le coin des enfants et l'escalier avant ;
-  - planchers où l'on marche : balcon (103½), filet (100½), plateforme (96), 3 marches, paillis (66), 14 girons de l'escalier,
-    dalle du pied ; on sort par la porte d'entrée directement sur le balcon (1½ po plus bas), on descend l'escalier jusqu'à
-    l'asphalte, on va au coin des enfants par la plateforme et les marches (toutes les marches font 8 po ou moins) ;
-  - obstacles : garde-corps, écran, clôtures, poteaux de la pergola, BBQ, banquette, maisonnette, carré de sable, glissade,
-    main courante de l'escalier, boîte aux lettres ;
-  - le petit arbre ornemental de `exterieur.py` (x -60, y -250) tombait dans le coin des enfants : il est remplacé par le
-    feuillu des photos, entre la clôture du coin des enfants et la rue (x -45, y -360), ses branches au-dessus du coin ;
-  - couleurs : 18 peintures « bal-… » et 8 lignes dans la légende « Extérieur » ;
-  - arrêts de visite (section Extérieur) : « Balcon avant — vue sur le fleuve », « Filet catamaran », « Coin des enfants »,
-    « Escalier avant (de la rue) ».
-- **Filet catamaran** : on peut marcher et s'étendre dessus. C'est un plancher à 3 po sous le balcon (la flèche moyenne), qu'on
-  descend seul ; la maille est dessinée en cordes noires aux 2½ po avec une flèche de 4 po : on voit le sol à travers. C'est ce
-  qui est le plus crédible dans le moteur (un filet catamaran se marche ; le moteur n'a pas de surface molle).
-- **`exterieur.py`, avant seulement** : le relief de la vidéo DAG est **creusé** (jamais remonté) par `_creux_avant` : sous
-  l'escalier, le terrain reste à 7 à 11 po sous les girons (talus raide comme sur les photos) ; l'asphalte de l'allée s'élargit
-  devant la partie droite de la façade (x 380 à 456, de la rue jusqu'à 6'-8" de la façade) pour que l'escalier arrive sur
-  l'asphalte ; talus de 32° autour. Nouvelles constantes `Z_BALCON`, `ESC_AV`, `ESC_AV_N`, `AIRE_AV`, `CREUX_PENTE`,
-  `LIGNES_AVANT` ; `_sol_avant` devient le minimum de l'ancien relief (`_sol_avant_dag`, inchangé) et du creux ; 5 lignes de
-  grille de plus devant (`_relief`) ; revêtement « Asphalte devant l'escalier avant ». Le palier bas de la vidéo DAG reste près
-  de la maison (la fenêtre du sous-sol n'a pas de margelle). Rien n'est touché derrière la maison.
-- **Fondation** : sur les photos elle est peinte foncée ; on garde la proposition DAG (crépi blanc). Les fenêtres et la porte
-  restent celles de notre proposition.
+- **`balcon_avant.py`** seulement (`exterieur.py` n'a pas changé : l'escalier reste à 6 pi du mur, y -120 à -72) :
+  - **balcon de 20'-0"** : bord avant à y -240 (`YAV`) ; planches, bandes, rives, solives, 3 poutres (y -234, -156, -78) et
+    18 poteaux refaits sur la nouvelle profondeur ; garde-corps droit de 10'-0" jusqu'à l'escalier, verre teinté sur ses 4 derniers
+    pieds (toujours juste devant l'escalier) ; écran du voisin sur les 20 pi ;
+  - **pergola** : poutres de 16'-0" du bord avant jusqu'à 4'-0" de la maison (y -240 à -48) ; poteaux au bord avant, **au
+    milieu (y -144)** et à 4 pi de la maison (2 travées de 8'-0") ; largeur inchangée (11'-10") ; toit de polycarbonate
+    au-dessus de la cuisine sur les 16 pi ; guirlandes sur les 3 poutres, le long de la rangée intérieure et en X dans la
+    travée avant ; les 2 vraies lampes au milieu de chaque travée ;
+  - **cuisine d'extérieur** déplacée sous la nouvelle pergola, le long de l'écran, à 9 po du bord avant comme avant (four à
+    pizza côté rue ; BBQ et plaque côté maison ; la tablette arrête à 1 pi des poteaux du fond) ; **salon** (sofa, table,
+    fauteuils, poufs) entre la cuisine et le passage, mêmes dégagements qu'avant par rapport au garde-corps avant ;
+  - **filet ≈ 9'-5" × 10'-0"** (113 × 120 po) au coin avant côté allée, contre le garde-corps avant (10 po : rive et cadre) et le
+    banc du garde-corps droit ; 3 coussins au milieu du bout côté voisin ; le banc arrête au haut de l'escalier ;
+  - passages gardés : vers l'escalier, le filet et son cadre finissent vis-à-vis du côté rue du haut de l'escalier (y -117 et
+    -111½ ; l'escalier y -120 à -72) : on y va de la porte par les 9'-3" de planches entre le filet et le mur ; vers la
+    plateforme du coin des enfants, un passage de 2'-11½" entre les poteaux de la pergola et le cadre du filet, puis
+    l'ouverture de 5'-0" du garde-corps avant (le bout du filet côté voisin arrive au-dessus de la plateforme) ;
+  - **coin des enfants** : suit le nouveau bord avant (y -240 à -360), même forme (coin coupé en biais), même profondeur
+    (10'-0") et même contenu (plateforme, 3 marches, glissade, carré de sable, mur d'escalade, maisonnette « 86 ») ; il reste dans
+    le lot (10'-0" de la ligne avant, 2 à 2½ pi de la ligne du voisin) ; le terrain y est de 38 à 49, sous le paillis (66) ;
+  - planchers, obstacles (sofa, table, fauteuils, poufs : mêmes constantes que le dessin) et **arrêts de visite** :
+    « Balcon avant — vue sur le fleuve » (en sortant de la porte), « Filet catamaran » (derrière le filet), « Cuisine
+    d'extérieur (four à pizza) » (sous la pergola, côté maison), « Coin des enfants » (sur la plateforme), « Escalier avant
+    (de la rue) » (inchangé).
+
+## Ce qui a changé dans la maquette (2e version)
+
+(Historique : les profondeurs de 24 pi et le filet de 84 × 60 po ci-dessous sont remplacés par la 3e version.)
+
+- **`balcon_avant.py`** (`appliquer_exterieur(EXT)`, appelé par `scene_3d.py` après la création de l'extérieur) :
+  - balcon sur tout le rectangle (24 pi de profond partout) : planches, bandes, rives, solives, 3 poutres et 18 poteaux ;
+  - pergola déplacée jusqu'au bord avant (poteau avant au garde-corps du coin des enfants), toit de polycarbonate ondulé
+    translucide sur chevrons au-dessus de la cuisine, guirlandes d'ampoules (6 fils, petites ampoules chaudes ; deux vraies lampes
+    seulement, `lumieres` : le moteur n'a qu'un bassin de 4 lampes) ;
+  - **nouveau** : cuisine d'extérieur (comptoirs, four à pizza, frigo, bacs, BBQ encastré, plaque de cuisson, pelles et bacs à
+    fleurs sur l'écran) et mobilier de détente ; le BBQ sur roues et la banquette en L sont retirés ;
+  - écran du voisin sur toute la profondeur, 7'-2", jours de 1 po, lisse haute d'acier noir ;
+  - filet 84 × 60 au coin avant côté allée ; garde-corps avant en deux parties (au-dessus du coin des enfants ; devant le filet),
+    ouverture vers la plateforme entre les deux ;
+  - coin des enfants **devant** le balcon, contour en biais (clôture oblique dessinée en prismes), plateforme, marches,
+    glissade parallèle au biais, carré de sable, mur d'escalade, maisonnette ;
+  - escalier à 6'-0" du mur ; jardinière de cèdre en gradins et boîte aux lettres posée dessus (l'ancien poteau de boîte aux
+    lettres dans le gazon est retiré) ;
+  - le feuillu des photos est replacé entre la clôture côté rue du coin des enfants et la rue (x 30, y -446) ;
+  - planchers : balcon (103½, en 4 morceaux autour du filet), filet (100½), plateforme (96), 3 marches, paillis (66), 14 girons
+    de l'escalier, dalle du pied ; obstacles : garde-corps, écran, 4 clôtures du coin des enfants, poteaux de la pergola,
+    cuisine, sofa, table, fauteuils, poufs, maisonnette, carré de sable, glissade, main courante, jardinière ;
+  - couleurs : 26 peintures « bal-… » (nouvelles : microciment, lattes, crème du four, coussins gris pâle, poufs, bois de table,
+    cèdre et terre de la jardinière) et 11 lignes dans la légende « Extérieur » ;
+  - arrêts de visite : « Balcon avant — vue sur le fleuve », « Filet catamaran », « Cuisine d'extérieur (four à pizza) »
+    (nouveau), « Coin des enfants » (sur la plateforme), « Escalier avant (de la rue) » (de l'allée, comme la photo 16).
+- Déplacements : on sort par la porte directement sur le balcon (1½ po plus bas) ; on longe le garde-corps droit jusqu'à
+  l'escalier et l'asphalte ; on va au coin des enfants par le passage entre la pergola et le filet, la plateforme (7½ po), les
+  3 marches et le paillis (7½ po chacune). Toutes les marches font 8 po ou moins.
+- **Filet catamaran** : on peut marcher et s'étendre dessus (plancher 3 po sous le balcon, la flèche moyenne) ; la maille est
+  dessinée en cordes noires aux 2½ po avec une flèche de 4 po : on voit le sol à travers.
+- **`exterieur.py`, avant seulement** : `ESC_AV` passe à y -120 à -72 (6'-0" du mur) ; `AIRE_AV` (asphalte élargi) monte
+  jusqu'au mur (y -2) : la jardinière est posée sur l'asphalte et l'asphalte longe son bout côté allée (photo 16). Le relief est
+  toujours **creusé** (jamais remonté) par `_creux_avant`, qui suit ces deux constantes. Rien n'est touché derrière la maison.
+- **Fondation** : sur les photos elle est peinte foncée ; on garde la proposition DAG (crépi blanc), confirmé par le client.
 
 ## Questions pour le client (mesures à prendre)
 
-1. **Escalier avant** : du mur de la maison (sous la porte) jusqu'au poteau de l'escalier le plus proche de la maison, et la
-   largeur entre les deux poteaux du haut de l'escalier. (On a mis 8'-0" et 4'-0".) Le panneau de verre teinté est-il encore
-   dans le garde-corps (on l'a mis juste devant l'escalier, comme sur les photos d'été) ?
-2. **Largeur du balcon** : de l'écran du voisin (gauche) jusqu'au bout droit du balcon, et du bout droit au cadre de la porte.
-   (On a mis 26'-10" et 21 po.)
-3. **Coin des enfants** : du mur de la maison jusqu'au garde-corps qui le borde (on a mis 15'-0"), et sa largeur de l'écran du
-   voisin jusqu'à la plateforme (on a mis 11'-10").
-4. **Filet catamaran** : longueur et largeur de l'ouverture (on a mis 83 × 54 po).
-5. **Hauteurs** : combien de marches à l'escalier avant (on en a compté 15 contremarches), et la marche entre le plancher du
-   balcon et le seuil de la porte (on a mis 1½ po).
+1. **Coin des enfants** : sa profondeur, du bord avant du balcon jusqu'à la clôture côté rue (on a mis 10'-0"), la longueur de
+   la clôture côté rue (6'-4") et le point où le biais rejoint le balcon (on l'a fait arriver à la boîte d'écran, au bout du
+   garde-corps du filet, par un petit retour de 3 pi le long de la plateforme). Le biais touche-t-il directement le balcon ?
+2. **Pergola** : la longueur (16 pi) et les poteaux du milieu sont à toi ; reste la largeur de l'écran à la rangée intérieure
+   (on a mis 11'-7" entre les poteaux, 11'-10" hors tout) et jusqu'où va le toit de polycarbonate vers l'allée (≈ 5'-4" à
+   partir de l'écran).
+3. **Filet catamaran** : on l'a mesuré sur ton rectangle rouge (≈ 9'-5" vers la maison × 10'-0" le long de la façade). Ça le
+   fait finir vis-à-vis du haut de l'escalier et laisse 2'-11½" de passage entre la pergola et le filet vers la plateforme :
+   est-ce bien ça ? Les mesures exactes de l'ouverture ?
+4. **Cuisine d'extérieur** : la longueur du comptoir haut et du comptoir bas (on a mis 8'-0" et 5'-2") et leur hauteur (36 et
+   26 po).
+5. **Escalier avant** : la largeur entre les deux poteaux du haut (on a mis 4'-0") ; le panneau de verre teinté est-il encore
+   dans le garde-corps (on l'a mis juste devant l'escalier) ?
+6. **Largeur du balcon** : de l'écran du voisin jusqu'au bout droit du balcon (on a mis 26'-10").
+7. **Jardinière** : jusqu'où elle va vers l'allée (on l'a arrêtée à 1 pi du coin de la maison) et la hauteur de ses gradins.

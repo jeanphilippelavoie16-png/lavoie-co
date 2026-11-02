@@ -53,8 +53,22 @@ body.sans-joy #rail { bottom: var(--sb); }
 #commandes button { display: flex; align-items: center; gap: 9px; font-size: .92rem; white-space: nowrap; padding: 6px 14px 6px 8px; }
 #commandes .ic { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; background: var(--accent); color: var(--accent-ink); }
 #commandes button.bouge .ic { animation: cmd-pulse 1s ease-in-out infinite; }
+#commandes button.appel { background: var(--accent); color: var(--accent-ink); }
+#commandes button.appel .ic { background: var(--accent-ink); color: var(--accent); }
 @keyframes cmd-pulse { 50% { opacity: .45; } }
 @media (prefers-reduced-motion: reduce) { #commandes button.bouge .ic { animation: none; } }
+/* --- scénarios : bulle au-dessus de la tête du personnage (rabattue au bord de l'écran, sans pointe, s'il est hors champ) */
+.bulle-scen { position: fixed; left: 0; top: 0; pointer-events: none; padding: 7px 16px; border-radius: 18px; background: #fff; color: #1d1f22;
+  border: 2.5px solid #1d1f22; font-weight: 700; font-size: 1.3rem; letter-spacing: .02em; white-space: nowrap; box-shadow: 0 3px 12px rgba(0,0,0,.25); }
+.bulle-scen::before, .bulle-scen::after { content: ""; position: absolute; left: 50%; border-style: solid; border-color: transparent; }
+.bulle-scen::after { bottom: -15px; margin-left: -11px; border-width: 15px 11px 0; border-top-color: #1d1f22; }
+.bulle-scen::before { bottom: -10px; margin-left: -8px; border-width: 11px 8px 0; border-top-color: #fff; z-index: 1; }
+.bulle-scen.cri { font-size: 1.7rem; font-weight: 800; color: #b3261e; border-width: 3.5px; border-radius: 12px; letter-spacing: .05em; }
+.bulle-scen.son { font-style: italic; border-style: dashed; }
+.bulle-scen.nuage { background: #eef5d6; color: #55621f; border-color: #6f7f2e; border-radius: 40px; font-size: 1.6rem; font-weight: 800; }
+.bulle-scen.nuage::after { border-top-color: #6f7f2e; } .bulle-scen.nuage::before { border-top-color: #eef5d6; }
+.bulle-scen.bord::before, .bulle-scen.bord::after { display: none; }
+/* --- fin scénarios */
 
 /* bas droite : plan miniature (et, au-dessus, les étages : Monter / Descendre, ou le choix de la maquette) */
 .mini { position: fixed; right: var(--sr); bottom: var(--sb); padding: 6px; }
@@ -144,6 +158,7 @@ body.multi .palette { max-height: calc(100vh - 420px); }
     <li id="aide-etages" hidden><b>▲ Monter / ▼ Descendre</b> (au-dessus du petit plan) : on marche jusqu'à l'escalier et on le monte (ou le descend) en douceur. On peut aussi marcher dans l'escalier, ou toucher une marche. En maquette : Sous-sol, Rez-de-chaussée ou Les deux.</li>
     <li id="aide-ext" hidden><b>Dehors</b> : passez par une porte extérieure (touchez-la pour l'ouvrir), ou choisissez un arrêt de la section « Extérieur ». Dehors, touchez le gazon, une terrasse ou une marche pour y aller ; on monte et on descend les marches tout seul. En maquette : vue Extérieur (la maison avec son toit, au milieu de son lot).</li>
     <li id="aide-cmd" hidden></li>
+    <li id="aide-anim" hidden></li>
   </ul>
   <button id="aide-ok" aria-pressed="true">Compris</button>
 </div></div>
@@ -843,6 +858,183 @@ function poserCommande(cm) {
   for (const s of cm.suivre) s.g.position.y = (cm.c.pivot_z - s.z1) * (1 - cm.f) * K;
 }
 for (const cm of Object.values(CMD)) poserCommande(cm);
+// ---------- objets animés en boucle (opt-in, « animes » d'un étage : aspirateur robot...) et séquences d'un étage à l'autre
+// (opt-in, S.sequences : chute à linge...). Contrat : generer_3d.animes() / sequences() et renovation/README.md.
+// Leurs objets ont leurs propres groupes (userData.garder : jamais fusionnés), ne projettent pas d'ombre (rien à refaire quand
+// ils bougent ; une ombre de contact ronde suit le robot) et ne bloquent pas le visiteur. Rendu continu (30 images/s au plus)
+// seulement pendant une séquence, ou quand un objet animé qui roule est visible (étage montré, dans le champ de vision, aucun
+// mur entre lui et le visiteur, page visible) ; à l'arrêt avec un voyant qui clignote : 8 images/s ; en pause : aucune.
+const ANIM = { fige: false, liste: [], seqs: [], tPrec: 0, tImage: 0, tVu: 0, boutons: [] };
+const ANIMES = {}, SEQ = {};
+const ecartAngle = (a) => Math.atan2(Math.sin(a), Math.cos(a));
+const douceur = (u) => (u < .5 ? 4 * u ** 3 : 1 - (-2 * u + 2) ** 3 / 2);
+const etageDeZ = (z) => { let f = 0; for (const E of ETAGES) if (E.z <= z + 0.5) f = E.i; return f; };   // z absolu → étage
+let texOmbreRonde = null;
+// objets (mobilier) dans « groupe » : sous-objets qui tournent (pivot vertical en o.centre) et voyants qui clignotent
+function construireMobiles(liste, groupe, A) {
+  for (const o of liste) {
+    let g = groupe;
+    if (o.tourne) {
+      const piv = new THREE.Group(), int = new THREE.Group();
+      piv.position.copy(P(o.centre[0], o.centre[1], 0)); int.position.copy(P(-o.centre[0], -o.centre[1], 0));
+      piv.add(int); groupe.add(piv); g = int; A.tournants.push({ g: piv, v: o.tourne * Math.PI / 180, a: 0 });
+    }
+    const k0 = g.children.length, n0 = OMBRES.length;
+    (FORMES[o.forme] || boite)(o, g);
+    OMBRES.length = n0;
+    if (o.clignote) {
+      const mats = [], c = o.couleur ? new THREE.Color(o.couleur) : null;
+      for (const q of g.children.slice(k0)) q.traverse((m) => {
+        if (!m.isMesh || !m.material || !m.material.emissive) return;
+        m.material = m.material.clone();
+        if (c) { m.material.color.copy(c); m.material.emissive.copy(c); }
+        else if (m.material.emissive.getHex() === 0) m.material.emissive.copy(m.material.color);
+        mats.push(m.material);
+      });
+      A.voyants.push({ mats, T: o.clignote });
+    }
+  }
+  groupe.traverse((m) => { if (m.isMesh) { m.userData.sansOmbre = true; m.castShadow = false; m.receiveShadow = true; } });
+}
+// --- lointain : objets animés de l'extérieur (S.exterieur.animes, z absolu) : mêmes objets que ceux des étages, dans
+// gAnimesExt (ajouté à l'extérieur après le relevé des portails : ils bougent) ; « lointain » : construits plus bas, dans le
+// plan lointain (formes simples en couleurs, brume du lointain). LOIN : S.exterieur.lointain (fleuve, basse-ville).
+const LOIN = XT && XT.lointain ? XT.lointain : null, OUVERT_LOIN = new Set(LOIN && RL ? LOIN.ouvert || ["-y"] : []);
+const gAnimesExt = new THREE.Group(); gAnimesExt.userData.garder = true;
+const ANIMES_EXT = XT ? (XT.animes || []).map((d) => [EXT, d]) : [];
+// --- fin lointain
+for (const [E, d] of [...ETAGES.flatMap((E) => (E.d.animes || []).map((d) => [E, d])), ...ANIMES_EXT]) {   // --- lointain : + extérieur
+  const ext = new THREE.Group(); ext.userData.garder = true; ext.userData.anime = d.id;
+  const A = { d, E, ext, h: 0, pause: false, tournants: [], voyants: [], vu: false, phase: null, x: d.trajet[0][0], y: d.trajet[0][1] };
+  if (!d.lointain) construireMobiles(d.objets, ext, A);     // --- lointain : construit plus bas (« --- lointain »)
+  const bb = new THREE.Box3().setFromObject(ext, true), t = bb.getSize(new THREE.Vector3());
+  A.rayon = bb.isEmpty() ? 8 : Math.max(t.x, t.z) / 2 / K; A.haut = bb.isEmpty() ? 4 : bb.max.y / K;
+  if (d.ombre && !bb.isEmpty()) {                       // ombre de contact ronde, sous l'objet, qui le suit
+    texOmbreRonde = texOmbreRonde || toile(64, (g, n) => {
+      g.fillStyle = "#000"; g.fillRect(0, 0, n, n);
+      const r = g.createRadialGradient(n / 2, n / 2, 0, n / 2, n / 2, n / 2); r.addColorStop(0, "#fff"); r.addColorStop(.55, "#c8c8c8"); r.addColorStop(1, "#000");
+      g.fillStyle = r; g.fillRect(0, 0, n, n);
+    });
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(t.x + 4 * K, t.z + 4 * K), new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: texOmbreRonde,
+      transparent: true, opacity: .55, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 }));
+    m.rotation.x = -Math.PI / 2; m.position.set((bb.min.x + bb.max.x) / 2, (E === EXT ? 0.5 : 0.5 - d.z) * K, (bb.min.z + bb.max.z) / 2); m.renderOrder = 2;   // --- lointain : dehors, sous l'objet
+    m.userData.sansOmbre = true; ext.add(m);
+  }
+  // un tour du trajet : avancer (ligne droite), pause éventuelle au point d'arrivée, tourner sur place vers le segment suivant
+  const pts = d.trajet, n = pts.length, cap = (i) => { const a = pts[i], b = pts[(i + 1) % n]; return Math.atan2(b[1] - a[1], b[0] - a[0]); };
+  const pz = {}; for (const p of d.pauses) pz[p.point] = (pz[p.point] || 0) + p.duree;
+  A.phases = []; let tc = 0, c = cap(0);
+  const phase = (dur, a, b, c0, c1, roule) => { A.phases.push({ t0: tc, t1: tc + dur, x0: a[0], y0: a[1], x1: b[0], y1: b[1], c0, c1, roule }); tc += dur; };
+  for (let i = 0; i < n; i++) {
+    const a = pts[i], b = pts[(i + 1) % n], j = (i + 1) % n;
+    phase(Math.hypot(b[0] - a[0], b[1] - a[1]) / d.vitesse, a, b, c, c, true);
+    if (pz[j]) phase(pz[j], b, b, c, c, false);
+    const c2 = c + ecartAngle(cap(j) - c), dur = Math.abs(c2 - c) / (d.rotation * Math.PI / 180);
+    if (dur > 1e-3) phase(dur, b, b, c, c2, true);
+    c = c2;
+  }
+  A.T = tc; (E === EXT ? gAnimesExt : E.g.mob).add(ext); ANIM.liste.push(A); ANIMES[d.id] = A; poserAnime(A, 0);   // --- lointain : dehors, gAnimesExt
+}
+function poserAnime(A, dt) {               // position et cap à l'horloge A.h ; brosses et voyant
+  const T = A.T, tau = ((A.h + A.d.depart) % T + T) % T, ph = A.phases;
+  let lo = 0, hi = ph.length - 1;
+  while (lo < hi) { const m = (lo + hi + 1) >> 1; if (ph[m].t0 <= tau) lo = m; else hi = m - 1; }
+  const p = ph[lo], u = p.t1 > p.t0 ? Math.min(1, (tau - p.t0) / (p.t1 - p.t0)) : 1;
+  A.phase = p; A.x = p.x0 + (p.x1 - p.x0) * u; A.y = p.y0 + (p.y1 - p.y0) * u;
+  A.ext.position.copy(P(A.x, A.y, A.d.z)); A.ext.rotation.y = p.c0 + (p.c1 - p.c0) * u;
+  for (const s of A.tournants) { if (!A.pause && p.roule) s.a = (s.a + s.v * dt) % (2 * Math.PI); s.g.rotation.y = s.a; }
+  for (const v of A.voyants) {
+    const k = A.pause ? 0.45 : 0.5 + 0.5 * Math.cos(2 * Math.PI * A.h / v.T);
+    for (const m of v.mats) m.emissiveIntensity = 0.06 + 2.2 * k * k;
+  }
+}
+// Séquences (S.sequences, z ABSOLU) : trappe qui pivote (groupe dans le mobilier de son étage), ballot qui suit le chemin et
+// change d'étage en traversant les planchers, ballots posés dans le panier (pile) ; t = temps depuis le déclenchement (null :
+// au repos ; négatif : départ retardé le temps d'aller voir).
+for (const d of S.sequences || []) {
+  const [a, b] = d.trappe.charniere, Et = ETAGES[etageDeZ(Math.min(a[2], b[2]))], ch = d.ballot.chemin;
+  const ext = new THREE.Group(), int = new THREE.Group();
+  ext.userData.garder = true; ext.userData.sequence = d.id;
+  ext.position.copy(P(a[0], a[1], a[2] - Et.z)); int.position.copy(P(-a[0], -a[1], -a[2])); ext.add(int); Et.g.mob.add(ext);
+  const Q = { d, Et, Ep: ETAGES[etageDeZ(ch[ch.length - 1][2])], trappe: ext, axe: P(b[0] - a[0], b[1] - a[1], b[2] - a[2]).normalize(),
+    tournants: [], voyants: [], t: null, f: 0, pile: [], bal: null, rejeu: false, attente: null, voirJusqua: 0 };
+  construireMobiles(d.trappe.objets, int, Q);
+  // ballot : origine au centre de son dessous ; pivot au milieu de sa hauteur (culbute) ; copié à chaque lancer
+  const mod = new THREE.Group(), piv = new THREE.Group(), bi = new THREE.Group();
+  construireMobiles(d.ballot.objets, bi, { tournants: [], voyants: [] });
+  const bb = new THREE.Box3().setFromObject(bi, true), hc = bb.isEmpty() ? 0 : (bb.min.y + bb.max.y) / 2;
+  piv.position.y = hc; bi.position.y = -hc; piv.add(bi); mod.add(piv);
+  mod.userData.garder = true; mod.userData.ballot = d.id; Q.modele = mod;
+  ANIM.seqs.push(Q); SEQ[d.id] = Q; cheminBallot(Q, 0);
+}
+// segments du ballot n° k (arrivée décalée de pile[k]) : il part à vitesse_depart (poussé à la main) ; pente = glissade qui
+// accélère (g·(sin − frottement·cos)), verticale = chute libre, à plat (ou trop peu en pente pour glisser) : vitesse gardée ; temps de la séquence (Q.Tm) et moment où le ballot sort du
+// plafond de l'étage du panier (Q.tVisible, depuis le départ du ballot)
+function cheminBallot(Q, k) {
+  const d = Q.d, g = 386.1, ch = d.ballot.chemin.map((p) => p.slice()), off = d.panier.pile[k] || [0, 0, 0], fin = ch[ch.length - 1];
+  for (let i = 0; i < 3; i++) fin[i] += off[i];
+  const segs = []; let v = d.ballot.vitesse_depart, t = 0, s = 0;      // poussé à la main : jamais moins que vitesse_depart
+  for (let i = 0; i + 1 < ch.length; i++) {
+    const A = ch[i], B = ch[i + 1], L = Math.hypot(B[0] - A[0], B[1] - A[1], B[2] - A[2]);
+    if (L < 1e-3) continue;
+    const sin = (A[2] - B[2]) / L, cos = Math.sqrt(Math.max(0, 1 - sin * sin));
+    let acc = g * (sin - d.ballot.frottement * cos), dur;
+    if (acc <= 1e-6) { acc = 0; v = Math.max(v, d.ballot.vitesse_depart); dur = L / v; }
+    else dur = (Math.sqrt(v * v + 2 * acc * L) - v) / acc;
+    segs.push({ A, B, L, t0: t, t1: t + dur, v0: v, acc, s0: s });
+    v += acc * dur; t += dur; s += L;
+  }
+  Q.ch = { segs, T: t, L: s };
+  const ouv = d.trappe.duree, fd = ouv + (segs.length ? segs[0].t1 : 0) + d.trappe.ferme_apres;
+  Q.Tm = { ouv, depart: ouv, fermeDeb: fd, fermeFin: fd + ouv, arrivee: ouv + t, fin: Math.max(fd + ouv, ouv + t + 0.35) };
+  const plafond = Q.Ep.z + Q.Ep.H;
+  Q.tVisible = 0;
+  if (Q.Ep !== Q.Et) for (let u = 0; u <= t; u += 0.01) if (pointBallot(Q, u)[2] < plafond) { Q.tVisible = u; break; }
+  return Q.ch;
+}
+function pointBallot(Q, tau) {             // [x, y, z absolu, distance parcourue] au temps tau depuis le départ du ballot
+  const segs = Q.ch.segs;
+  if (!segs.length) { const p = Q.d.ballot.chemin[0]; return [p[0], p[1], p[2], 0]; }
+  if (tau <= 0) return [...segs[0].A, 0];
+  let s = segs[segs.length - 1];
+  if (tau >= Q.ch.T) return [...s.B, Q.ch.L];
+  for (const q of segs) if (tau < q.t1) { s = q; break; }
+  const u = tau - s.t0, l = Math.min(s.L, s.v0 * u + s.acc * u * u / 2), f = l / s.L;
+  return [s.A[0] + (s.B[0] - s.A[0]) * f, s.A[1] + (s.B[1] - s.A[1]) * f, s.A[2] + (s.B[2] - s.A[2]) * f, s.s0 + l];
+}
+function poserSequence(Q) {
+  const t = Q.t, d = Q.d, Tm = Q.Tm;
+  let f = 0;                                  // trappe : 0 fermée, 1 ouverte
+  if (t != null && t > 0 && !Q.rejeu) f = t < Tm.ouv ? douceur(t / Tm.ouv) : t < Tm.fermeDeb ? 1 : t < Tm.fermeFin ? 1 - douceur((t - Tm.fermeDeb) / d.trappe.duree) : 0;
+  if (f !== Q.f) { Q.f = f; Q.trappe.quaternion.setFromAxisAngle(Q.axe, d.trappe.angle * Math.PI / 180 * f); }
+  const B = Q.bal; if (!B || t == null) return;
+  if (t < 0) { B.visible = false; return; }
+  B.visible = true;
+  let p, ech = 1, ecr = 1, cul = 0;
+  if (t < Tm.depart) { p = pointBallot(Q, 0); ech = 0.6 + 0.4 * Math.min(1, t / 0.25); }    // il apparaît devant la trappe
+  else {
+    const tau = t - Tm.depart; p = pointBallot(Q, tau);
+    if (tau >= Q.ch.T) { const u = (tau - Q.ch.T) / 0.3; if (u < 1) ecr = 1 - 0.18 * Math.sin(Math.PI * u); }   // il se tasse en se posant
+    else cul = d.ballot.culbute * Math.PI / 180 * Math.sin(Math.PI * p[3] / Math.max(1, Q.ch.L));
+  }
+  const E = ETAGES[etageDeZ(p[2])];          // il change d'étage en traversant le plancher
+  if (B.parent !== E.g.mob) E.g.mob.add(B);
+  B.position.copy(P(p[0], p[1], p[2] - E.z));
+  const sx = ech * (1 + (1 - ecr) * 0.6); B.scale.set(sx, ech * ecr, sx); B.children[0].rotation.x = cul;
+}
+function lancerSequence(Q, delai) {
+  if (Q.pile.length >= Q.d.panier.pile.length) { for (const b of Q.pile) if (b.parent) b.parent.remove(b); Q.pile = []; }   // panier plein : on le vide
+  const B = Q.modele.clone(true); B.visible = false; Q.Et.g.mob.add(B); Q.pile.push(B); Q.bal = B;
+  cheminBallot(Q, Q.pile.length - 1);
+  Q.t = -delai; Q.rejeu = false; Q.attente = null; ANIM.tImage = 0; poserSequence(Q);
+}
+// l'arrivée au panier, rejouée pour qu'on la voie : le ballot repart d'un peu avant sa sortie du plafond (trappe fermée)
+function rejouerArrivee(Q) {
+  const tv = Q.Tm.depart + Math.max(0, Q.tVisible - 0.6);
+  if (Q.t == null) { if (!Q.bal) return; Q.t = tv; Q.rejeu = true; }
+  else if (Q.t > tv) { Q.t = tv; Q.rejeu = true; }
+  ANIM.tImage = 0; poserSequence(Q);
+}
 // maquette : murs coupés à 4 pi avec le dessus foncé (poché), comme un plan en relief
 {
   const poche = new THREE.MeshStandardMaterial({ color: "#2b2d30", roughness: .8 });
@@ -963,6 +1155,8 @@ if (XT) {
     }
     for (let j = 0; j < Y - 1; j++) for (let i = 0; i < X - 1; i++) {
       if (i >= 1 && j >= 1 && i <= nx0 && j <= ny0 && RL.saute[(j - 1) * nx0 + (i - 1)]) continue;
+      // --- lointain : côté « ouvert » (S.exterieur.lointain.ouvert) : pas de prolongement, on voit le lointain au-delà
+      if ((j === 0 && OUVERT_LOIN.has("-y")) || (j === Y - 2 && OUVERT_LOIN.has("+y")) || (i === 0 && OUVERT_LOIN.has("-x")) || (i === X - 2 && OUVERT_LOIN.has("+x"))) continue;
       const a = j * X + i, b = a + 1, c = a + X + 1, d = a + X;
       idx.push(a, b, c, a, c, d);
     }
@@ -1067,6 +1261,690 @@ if (XT) {
 // lot : l'extérieur pèse peu en triangles, ce sont les appels de dessin qui coûtent, par les fenêtres comme dehors), sans
 // mettre à part les petits objets (l'ombre du soleil est figée : ils peuvent la porter)
 fusionnerGroupe(gExterieur, XT ? 40 : CASE, !XT);
+
+// --- scénarios (opt-in, S.scenarios : un personnage articulé joue une suite d'étapes ; visiteur qui cogne à la porte...)
+// Contrat : generer_3d.scenarios() et renovation/README.md (section « Scénario »). Étapes : marcher (chemin trouvé sur la
+// grille de la zone, par les portes extérieures, marches de 8 po au plus ; z lu au sol à l'exécution), tourner, cogner (coups
+// synthétisés), dire (bulle au-dessus de la tête + voix du navigateur), son (Web Audio, aucun fichier), ouvrir / fermer une
+// porte, attendre. Déclenché quand le visiteur s'approche (rayon ; au plus une fois par « attente » s), par son bouton ou par
+// un arrêt de visite ("scenario": id). Le personnage a ses propres groupes (jamais fusionnés), ne porte pas d'ombre, ne bloque
+// rien et ne se touche pas ; il est dans le mobilier de l'étage où il marche, ou dans l'extérieur. Rendu continu (30 images/s
+// au plus) seulement pendant qu'il joue et qu'il est dans le champ de vision. Rien ne sonne avant le premier geste sur la page.
+const SCEN = { liste: [], boutons: [], geste: false, muet: false, audio: null, fige: false, tPrec: 0, tImage: 0, voix: null, bulles: null };
+const SCENS = {};
+const PAS_SCEN = 2;                                   // pas d'échantillonnage du chemin (po)
+const posesNulles = [0, 0, 0];
+const lisse = (u) => (u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u));
+function matScen(nom, c) {                            // couleur d'un personnage : matériau simple (sans relief), copie pour dehors
+  const m = M(nom, { color: c.couleur, roughness: c.rugosite ?? .7, metalness: c.metal ?? 0 });
+  if (c.duvet) { m.sheen = c.duvet; m.sheenRoughness = .7; m.sheenColor.set(c.couleur); }
+  m.name = nom; MAT[nom] = m;
+  if (XT) { const x = m.clone(); x.name = nom; MATX.set(m, x); }
+  return m;
+}
+function construirePersonnage(Q) {
+  const p = Q.d.personnage, racine = new THREE.Group(), corps = new THREE.Group();
+  racine.add(corps); racine.visible = false; racine.userData.garder = true; racine.userData.scenario = Q.d.id;
+  Q.racine = racine; Q.corps = corps; Q.parties = []; Q.meshes = []; Q.ext = false;
+  for (const [nom, c] of Object.entries(p.couleurs || {})) if (!MAT[nom]) matScen(nom, c);
+  // objets décrits dans le repère du personnage (origine au sol entre les pieds, +x devant, +y à sa gauche), bâtis puis
+  // fusionnés par matériau dans le repère du pivot de leur partie (peu d'appels de dessin)
+  const bati = (objets, groupe, pivot) => {
+    const tmp = new THREE.Group(), n0 = OMBRES.length;
+    for (const o of objets) {
+      const k0 = tmp.children.length;
+      (FORMES[o.forme] || boite)(o, tmp);
+      if (o.echelle) for (const m of tmp.children.slice(k0)) m.scale.set(o.echelle[0], o.echelle[2], o.echelle[1]);
+    }
+    OMBRES.length = n0;
+    tmp.updateMatrixWorld(true);
+    const dec = new THREE.Matrix4().makeTranslation(-pivot[0] * K, -pivot[2] * K, pivot[1] * K), parMat = new Map(), seuls = [];
+    tmp.traverse((m) => {
+      if (!m.isMesh) return;
+      const mm = new THREE.Matrix4().multiplyMatrices(dec, m.matrixWorld);
+      if (Array.isArray(m.material) || mm.determinant() < 0) { seuls.push([m, mm]); return; }
+      let g = m.geometry.index ? m.geometry.toNonIndexed() : m.geometry.clone();
+      for (const a of Object.keys(g.attributes)) if (!["position", "normal", "uv"].includes(a)) g.deleteAttribute(a);
+      if (!g.attributes.normal) g.computeVertexNormals();
+      if (!g.attributes.uv) g.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(g.attributes.position.count * 2), 2));
+      g.applyMatrix4(mm);
+      if (!parMat.has(m.material)) parMat.set(m.material, []);
+      parMat.get(m.material).push(g);
+    });
+    const ajouter = (m) => {
+      m.userData.matInt = m.material; m.userData.matExt = Array.isArray(m.material) ? m.material : (MATX.get(m.material) || m.material);
+      m.castShadow = false; m.receiveShadow = true; m.userData.sansOmbre = true; m.raycast = () => {};
+      groupe.add(m); Q.meshes.push(m);
+    };
+    for (const [mat, geos] of parMat) ajouter(new THREE.Mesh(geos.length > 1 ? mergeBufferGeometries(geos, false) : geos[0], mat));
+    for (const [m, mm] of seuls) { const c = new THREE.Mesh(m.geometry, m.material); c.applyMatrix4(mm); ajouter(c); }
+  };
+  bati(p.objets || [], corps, [0, 0, 0]);
+  const ids = {};
+  for (const d of p.parties || []) {
+    const par = d.parent ? ids[d.parent] : null, b = par ? par.d.pivot : [0, 0, 0], g = new THREE.Group();
+    g.position.copy(P(d.pivot[0] - b[0], d.pivot[1] - b[1], d.pivot[2] - b[2])); g.rotation.order = "YXZ";
+    (par ? par.g : corps).add(g); bati(d.objets, g, d.pivot);
+    const A = { d, g, cote: d.pivot[1] < -0.01 ? -1 : 1 }; ids[d.id] = A; Q.parties.push(A);
+  }
+  const bb = new THREE.Box3().setFromObject(racine, true);
+  Q.haut = p.hauteur || (bb.isEmpty() ? 68 : bb.max.y / K);
+  Q.rayon = p.rayon || 11;
+  if (p.ombre) {                                       // ombre de contact ronde, au sol sous lui
+    const tex = toile(64, (g, n) => {
+      g.fillStyle = "#000"; g.fillRect(0, 0, n, n);
+      const r = g.createRadialGradient(n / 2, n / 2, 0, n / 2, n / 2, n / 2); r.addColorStop(0, "#fff"); r.addColorStop(.5, "#bbb"); r.addColorStop(1, "#000");
+      g.fillStyle = r; g.fillRect(0, 0, n, n);
+    });
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(2.2 * Q.rayon * K, 2.2 * Q.rayon * K), new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: tex,
+      transparent: true, opacity: .42, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 }));
+    m.rotation.x = -Math.PI / 2; m.position.set(1.5 * K, 0.35 * K, 0); m.renderOrder = 2; m.userData.sansOmbre = true; m.raycast = () => {};
+    racine.add(m);
+  }
+  // petit nuage (étape "nuage") : boules vert pâle qui s'échappent derrière lui et se dissipent
+  Q.nuage = [];
+  for (let i = 0; i < 7; i++) {
+    const m = new THREE.Mesh(new THREE.SphereGeometry(K, 12, 8), new THREE.MeshBasicMaterial({ color: i % 2 ? "#c9d98f" : "#b5c97a", transparent: true, opacity: 0, depthWrite: false }));
+    m.visible = false; m.raycast = () => {}; m.userData.sansOmbre = true; racine.add(m); Q.nuage.push(m);
+  }
+}
+// ---------- plan d'un scénario (calculé au lancement : le sol et les chemins sont lus dans la visite telle qu'elle est)
+const zSolZone = (zone, x, y, zp) => (EXT && zone === IEXT ? (hauteurExt(x, y) ?? zp) : ETAGES[zone].z);
+function zoneDuPoint(x, y, zRef, zonePrec) {           // étage dont l'emprise contient le point (le plus proche en hauteur) ou dehors
+  if (!XT) return zonePrec;
+  let f = -1;
+  for (const E of ETAGES) if (dansEmpreinte(E, x, y) && (f < 0 || Math.abs(E.z - zRef) < Math.abs(ETAGES[f].z - zRef))) f = E.i;
+  if (f < 0) return IEXT;
+  // un perron (ou un balcon) sur une excroissance du sous-sol : dans l'emprise du sous-sol, mais on marche dessus, dehors
+  const h = hauteurExt(x, y);
+  return h != null && Math.abs(h - zRef) < Math.abs(ETAGES[f].z - zRef) ? IEXT : f;
+}
+function routeScen(xa, ya, za, zRef, cibles) {        // points [x, y, zone] du chemin qui passe par les cibles
+  const pts = [[xa, ya, za]];
+  for (const [xb, yb] of cibles) {
+    const [x0, y0, z0] = pts[pts.length - 1], zr = z0 === IEXT ? (hauteurExt(x0, y0) ?? zRef) : ETAGES[z0].z;
+    const zb = zoneDuPoint(xb, yb, zr, z0), droit = (z) => [[x0, y0, z], [xb, yb, z]];
+    let seg = null;
+    if (zb === z0) seg = cheminE(zoneDe(z0), x0, y0, xb, yb) || droit(z0);
+    else {                                              // d'une zone à l'autre : par la porte extérieure la plus commode
+      let best = null;
+      for (const pt of Object.values(PORTES)) {
+        if (!pt.p.dehors || !pt.p.dedans) continue;
+        const ie = z0 === IEXT ? zb : z0;
+        if (pt.E.i !== ie || (z0 !== IEXT && zb !== IEXT)) continue;
+        const [a, b] = z0 === IEXT ? [pt.p.dehors, pt.p.dedans] : [pt.p.dedans, pt.p.dehors];
+        const L = Math.hypot(a[0] - x0, a[1] - y0) + Math.hypot(xb - b[0], yb - b[1]);
+        if (!best || L < best.L) best = { L, a, b };
+      }
+      if (best) {
+        const c1 = cheminE(zoneDe(z0), x0, y0, best.a[0], best.a[1]) || [[x0, y0, z0], [best.a[0], best.a[1], z0]];
+        const c2 = cheminE(zoneDe(zb), best.b[0], best.b[1], xb, yb) || [[best.b[0], best.b[1], zb], [xb, yb, zb]];
+        seg = [...c1, ...c2];
+      } else seg = droit(zb);
+    }
+    for (const q of seg.slice(1)) if (Math.hypot(q[0] - pts[pts.length - 1][0], q[1] - pts[pts.length - 1][1]) > 0.5) pts.push([q[0], q[1], q[2] < 0 ? zb : q[2]]);
+    const der = pts[pts.length - 1];                    // on finit exactement sur la cible (devant la porte, par exemple)
+    if (pts.length > 1 && Math.hypot(der[0] - xb, der[1] - yb) <= 0.5) pts[pts.length - 1] = [xb, yb, zb]; else pts.push([xb, yb, zb]);
+  }
+  // échantillons tous les 2 po : position, zone (l'emprise tranche au seuil d'une porte), sol lissé, cap (regard 12 po devant)
+  const X = [], Y = [], Z = [], ZN = [];
+  let zp = zRef;
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0, z0] = pts[i - 1], [x1, y1, z1] = pts[i], L = Math.hypot(x1 - x0, y1 - y0), n = Math.max(1, Math.round(L / PAS_SCEN));
+    for (let k = i === 1 ? 0 : 1; k <= n; k++) {
+      const x = x0 + (x1 - x0) * k / n, y = y0 + (y1 - y0) * k / n;
+      let zone = z1;
+      if (z0 !== z1) { const ie = z0 === IEXT ? z1 : z0; zone = dansEmpreinte(ETAGES[ie], x, y) ? ie : IEXT; }
+      zp = zSolZone(zone, x, y, zp); X.push(x); Y.push(y); Z.push(zp); ZN.push(zone);
+    }
+  }
+  const n = X.length, Zl = Z.map((_, i) => { let s = 0, w = 0; for (let j = Math.max(0, i - 3); j <= Math.min(n - 1, i + 3); j++) { s += Z[j]; w++; } return s / w; });
+  const C = new Array(n);
+  for (let i = 0; i < n; i++) {
+    const j = Math.min(n - 1, i + 6), k = j > i ? i : Math.max(0, i - 6);
+    const c = j > i ? Math.atan2(Y[j] - Y[i], X[j] - X[i]) : (k < i ? Math.atan2(Y[i] - Y[k], X[i] - X[k]) : 0);
+    C[i] = i ? C[i - 1] + angle(c - C[i - 1]) : c;
+  }
+  // longueur réelle (le dernier pas peut être plus court)
+  const S0 = [0]; for (let i = 1; i < n; i++) S0.push(S0[i - 1] + Math.hypot(X[i] - X[i - 1], Y[i] - Y[i - 1]));
+  return { X, Y, Z: Zl, ZN, C, S: S0, L: S0[n - 1] || 0, n };
+}
+function planScenario(Q) {
+  const d = Q.d, p = d.personnage, ph = [], ev = [], bulles = [], debuts = [];
+  const dep = d.depart, z0 = MULTI ? idEtage(dep.etage ?? ETAGES[0].id) : 0;
+  const etat = { x: dep.x, y: dep.y, cap: dep.cap * Math.PI / 180, zone: z0, z: zSolZone(z0, dep.x, dep.y, EXT && z0 === IEXT ? XT.sol : ETAGES[Math.min(z0, ETAGES.length - 1)].z) };
+  let t = 0, poseP = "repos";
+  const fixe = (type, duree, pose, extra) => {
+    ph.push(Object.assign({ type, t0: t, t1: t + duree, x: etat.x, y: etat.y, z: etat.z, zone: etat.zone, cap: etat.cap, pose, poseP }, extra));
+    t += duree; poseP = pose;
+  };
+  const tourner = (c1, pose) => {
+    const c0 = etat.cap, c = c0 + angle(c1 - c0), dur = Math.abs(c - c0) / (200 * Math.PI / 180);
+    if (dur < 0.06) { etat.cap = c; return; }
+    fixe("tourne", dur + 0.1, pose, { c0, c1: c }); etat.cap = c;
+  };
+  for (const e of d.etapes) {
+    debuts.push(t);
+    if (e.marcher) {
+      const r = routeScen(etat.x, etat.y, etat.zone, etat.z, e.marcher);
+      if (r.n < 2 || r.L < 1) continue;
+      tourner(r.C[0], "repos");
+      const v = e.vitesse || p.vitesse || 40;
+      ph.push({ type: "marche", t0: t, t1: t + r.L / v, r, v, pose: e.pose || "marche", poseP }); t += r.L / v; poseP = e.pose || "marche";
+      Object.assign(etat, { x: r.X[r.n - 1], y: r.Y[r.n - 1], z: r.Z[r.n - 1], zone: r.ZN[r.n - 1], cap: r.C[r.n - 1] });
+    } else if (e.tourner != null) {
+      const c1 = Array.isArray(e.tourner) ? Math.atan2(e.tourner[1] - etat.y, e.tourner[0] - etat.x) : e.tourner * Math.PI / 180;
+      tourner(c1, e.pose || "repos");
+    } else if (e.cogner) {
+      const n = e.cogner, iv = e.intervalle || 0.45, monte = 0.4, dur = e.duree || monte + (n - 1) * iv + 0.45;
+      for (let k = 0; k < n; k++) ev.push({ t: t + monte + k * iv, son: "coup", k });
+      if (e.bulle) bulles.push({ t0: t + monte - 0.05, t1: t + dur + 0.35, texte: e.bulle, style: e.bulle_style || "son" });
+      fixe("cogner", dur, e.pose || "cogner", { n, iv, monte });
+    } else if (e.dire) {
+      const dur = e.duree || Math.max(2.2, 1.2 + 0.09 * e.dire.length);
+      bulles.push({ t0: t, t1: t + dur, texte: e.dire, style: e.bulle_style || "parole" });
+      ev.push({ t: t + 0.05, voix: e.voix || e.dire });
+      fixe("dire", dur, e.pose || "dire", {});
+    } else if (e.son) {
+      const dur = e.duree || 2.0;
+      if (e.bulle) bulles.push({ t0: t + 0.1, t1: t + dur, texte: e.bulle, style: e.bulle_style || "nuage" });
+      ev.push({ t: t + 0.05, son: e.son, duree: Math.max(0.6, dur - 0.5) });
+      fixe("son", dur, e.pose || e.son, { vibre: e.vibre || 0, nuage: !!e.nuage });
+    } else if (e.ouvrir || e.fermer) {
+      ev.push({ t, porte: e.ouvrir || e.fermer, etat: e.ouvrir ? "ouverte" : "fermee" });
+      fixe("attente", e.duree ?? 0.9, e.pose || poseP, {});
+    } else if (e.attendre != null) fixe("attente", e.attendre, e.pose || "repos", {});
+  }
+  fixe("attente", 0.01, poseP, {});
+  Q.plan = { ph, ev, bulles, debuts, T: t };
+  return Q.plan;
+}
+// ---------- état à l'instant t (fonction pure : la même image pour le même t)
+function phaseScen(Q, t) {
+  const ph = Q.plan.ph; let lo = 0, hi = ph.length - 1;
+  while (lo < hi) { const m = (lo + hi + 1) >> 1; if (ph[m].t0 <= t) lo = m; else hi = m - 1; }
+  return ph[lo];
+}
+function poseDe(A, nom) { const p = A.d.poses; return p[nom] || (nom === "marche" ? p.repos : null) || p.repos || posesNulles; }
+function poserScenario(Q, t) {
+  const f = phaseScen(Q, t), u = t - f.t0, p = Q.d.personnage;
+  let x = f.x, y = f.y, z = f.z, cap = f.cap, zone = f.zone, s = 0, marche = 0;
+  if (f.type === "marche") {
+    const r = f.r, sd = Math.min(r.L, Math.max(0, u * f.v));
+    let i = 0, hi = r.n - 1; while (i < hi) { const m = (i + hi + 1) >> 1; if (r.S[m] <= sd) i = m; else hi = m - 1; }
+    const j = Math.min(r.n - 1, i + 1), w = r.S[j] > r.S[i] ? (sd - r.S[i]) / (r.S[j] - r.S[i]) : 0;
+    x = r.X[i] + (r.X[j] - r.X[i]) * w; y = r.Y[i] + (r.Y[j] - r.Y[i]) * w; z = r.Z[i] + (r.Z[j] - r.Z[i]) * w;
+    cap = r.C[i] + (r.C[j] - r.C[i]) * w; zone = r.ZN[w < .5 ? i : j];
+    s = sd; marche = Math.max(0, Math.min(1, u / 0.25, (f.t1 - t) / 0.25));
+  } else if (f.type === "tourne") {
+    const v = lisse(u / (f.t1 - f.t0)); cap = f.c0 + (f.c1 - f.c0) * v; s = u * 20; marche = 0.3 * Math.sin(Math.PI * Math.min(1, u / (f.t1 - f.t0)));
+  }
+  // parent : mobilier de l'étage où il marche, ou l'extérieur ; dehors, ses matériaux prennent la lumière du ciel
+  const E = EXT && zone === IEXT ? null : ETAGES[zone], parent = E ? E.g.mob : gExterieur;
+  if (Q.racine.parent !== parent) parent.add(Q.racine);
+  if (Q.ext !== !E) { Q.ext = !E; for (const m of Q.meshes) m.material = Q.ext ? m.userData.matExt : m.userData.matInt; }
+  Q.racine.position.copy(P(x, y, z - (E ? E.z : 0))); Q.racine.rotation.y = cap;
+  Q.x = x; Q.y = y; Q.z = z; Q.zone = zone; Q.cap = cap;
+  // corps : rebond de la marche, petite vibration (son)
+  const fou = p.foulee || 46, ph2 = 2 * Math.PI * s / fou;
+  let bx = 0, by = 0, bz = (p.rebond || 0) * marche * (Math.cos(2 * ph2) - 1) / 2;
+  if (f.vibre) { const k = Math.max(0, Math.min(1, u / 0.15, (f.t1 - 0.4 - t) / 0.2)); bx = f.vibre * k * Math.sin(2 * Math.PI * 17 * u); by = f.vibre * 0.6 * k * Math.sin(2 * Math.PI * 13 * u + 1); }
+  Q.corps.position.copy(P(bx, by, bz));
+  // parties : pose de l'étape (fondu de 0,3 s depuis la précédente), balancement de la marche, coups
+  const fondu = lisse(u / 0.3);
+  for (const A of Q.parties) {
+    const a = poseDe(A, f.poseP), b = poseDe(A, f.pose), d = A.d;
+    let sw = a[0] + (b[0] - a[0]) * fondu, ec = a[1] + (b[1] - a[1]) * fondu, la = a[2] + (b[2] - a[2]) * fondu;
+    if (marche && d.balance) sw += marche * d.balance * Math.sin(ph2 + d.phase * Math.PI / 180);
+    if (f.type === "cogner" && d.frappe) {               // coup : le poing recule puis frappe ; contact à monte + k·intervalle
+      const v = u - f.monte;
+      if (v >= 0 && v <= (f.n - 1) * f.iv) sw -= d.frappe * (1 - Math.cos(2 * Math.PI * (v / f.iv))) / 2;
+      else if (v < 0) sw -= d.frappe * lisse((u - 0.1) / (f.monte - 0.1)) * (1 - lisse((u - f.monte + 0.12) / 0.12));
+    }
+    A.g.rotation.set(ec * A.cote * Math.PI / 180, la * Math.PI / 180, sw * Math.PI / 180);
+  }
+  // nuage
+  for (let i = 0; i < Q.nuage.length; i++) {
+    const m = Q.nuage[i], age = f.nuage ? u - 0.12 - i * 0.11 : -1, vie = 2.3;
+    m.visible = age > 0 && age < vie;
+    if (!m.visible) continue;
+    // il sort derrière lui puis s'étale de part et d'autre (visible de face comme de dos) en montant un peu
+    const r = 2.4 + age * 4.2 + i * 0.35, cote = i % 2 ? 1 : -1;
+    m.scale.setScalar(r); m.position.copy(P(-6 - age * 3 - (i % 3), cote * (3 + age * (6 + i)), 32 + age * 6 + (i % 3) * 1.5));
+    m.material.opacity = 0.55 * (1 - age / vie) * Math.min(1, age / 0.15);
+  }
+  // bulle
+  Q.bulle = null;
+  for (const b of Q.plan.bulles) if (t >= b.t0 && t < b.t1) Q.bulle = b;
+}
+// ---------- sons : Web Audio (rien avant le premier geste ; bouton pour couper) et voix du navigateur
+function audioScen() {
+  if (!SCEN.geste || SCEN.muet) return null;
+  if (!SCEN.audio) {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
+    try { const ctx = new AC(); SCEN.audio = { ctx, sortie: null, bruit: null }; } catch (_) { return null; }
+  }
+  const A = SCEN.audio;
+  if (A.ctx.state === "suspended") A.ctx.resume().catch(() => {});
+  if (!A.sortie) { A.sortie = A.ctx.createGain(); A.sortie.gain.value = 1; A.sortie.connect(A.ctx.destination); }
+  if (!A.bruit) {                                    // 2 s de bruit blanc (graine fixe)
+    const n = A.ctx.sampleRate * 2, b = A.ctx.createBuffer(1, n, A.ctx.sampleRate), c = b.getChannelData(0);
+    let g = 12345; for (let i = 0; i < n; i++) { g = (g * 16807) % 2147483647; c[i] = g / 1073741823.5 - 1; }
+    A.bruit = b;
+  }
+  return A;
+}
+function couperSonsScen() {                          // arrêt net : sons en cours et voix
+  const A = SCEN.audio;
+  if (A && A.sortie) { try { A.sortie.gain.setValueAtTime(0, A.ctx.currentTime); A.sortie.disconnect(); } catch (_) {} A.sortie = null; }
+  try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (_) {}
+}
+function sonCoup(A, t, vol) {                         // un coup de jointure sur une porte de bois : bruit sourd + claquement
+  const c = A.ctx, s = c.createGain(); s.gain.value = vol; s.connect(A.sortie);
+  const o = c.createOscillator(), g = c.createGain(); o.type = "sine";
+  o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(68, t + 0.09);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.9, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+  o.connect(g).connect(s); o.start(t); o.stop(t + 0.22);
+  const o2 = c.createOscillator(), g2 = c.createGain(); o2.type = "triangle"; o2.frequency.setValueAtTime(240, t);
+  g2.gain.setValueAtTime(0.0001, t); g2.gain.exponentialRampToValueAtTime(0.35, t + 0.003); g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+  o2.connect(g2).connect(s); o2.start(t); o2.stop(t + 0.1);
+  const n = c.createBufferSource(), bp = c.createBiquadFilter(), gn = c.createGain(); n.buffer = A.bruit;
+  bp.type = "bandpass"; bp.frequency.value = 1100; bp.Q.value = 1.1;
+  gn.gain.setValueAtTime(0.0001, t); gn.gain.exponentialRampToValueAtTime(0.8, t + 0.002); gn.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+  n.connect(bp).connect(gn).connect(s); n.start(t, Math.random() * 1.5); n.stop(t + 0.07);
+}
+function sonPet(A, t, T, vol) {                       // un gros pet : dents de scie grave qui tremble, battement des « lèvres »,
+  const c = A.ctx, s = c.createGain(); s.gain.value = vol; s.connect(A.sortie);     // filtre résonant, crachotements, « prrt » final
+  let g = 777; const r = () => ((g = (g * 16807) % 2147483647) / 2147483647);
+  const N = Math.max(8, Math.round(T / 0.025)), fq = new Float32Array(N), bat = new Float32Array(N);
+  for (let i = 0; i < N; i++) {
+    const u = i / (N - 1), base = u < 0.72 ? 88 - 26 * u + 10 * Math.sin(u * 9) : 66 + (u - 0.72) / 0.28 * 95;
+    fq[i] = base * (1 + 0.16 * (r() - 0.5)); bat[i] = (u < 0.72 ? 24 : 36) * (1 + 0.3 * (r() - 0.5));
+  }
+  const o = c.createOscillator(); o.type = "sawtooth"; o.frequency.setValueCurveAtTime(fq, t, T);
+  const am = c.createGain(); am.gain.value = 0.55;
+  const lfo = c.createOscillator(); lfo.type = "square"; lfo.frequency.setValueCurveAtTime(bat, t, T);
+  const prof = c.createGain(); prof.gain.value = 0.45; lfo.connect(prof).connect(am.gain);
+  const pb = c.createBiquadFilter(); pb.type = "lowpass"; pb.Q.value = 7;
+  pb.frequency.setValueAtTime(330, t); pb.frequency.linearRampToValueAtTime(520, t + 0.7 * T); pb.frequency.linearRampToValueAtTime(900, t + T);
+  const ph = c.createBiquadFilter(); ph.type = "highpass"; ph.frequency.value = 40;
+  const env = c.createGain(), e = env.gain;
+  e.setValueAtTime(0.0001, t); e.exponentialRampToValueAtTime(0.85, t + 0.04);
+  for (const [a, b] of [[0.33, 0.06], [0.52, 0.05], [0.64, 0.04]]) {   // crachotements
+    e.setValueAtTime(0.8, t + a * T); e.linearRampToValueAtTime(0.06, t + a * T + 0.015); e.setValueAtTime(0.06, t + a * T + b); e.linearRampToValueAtTime(0.85, t + a * T + b + 0.02);
+  }
+  e.setValueAtTime(0.75, t + 0.74 * T); e.linearRampToValueAtTime(1.0, t + 0.86 * T); e.setValueAtTime(1.0, t + 0.93 * T); e.exponentialRampToValueAtTime(0.0001, t + T);
+  o.connect(am).connect(pb).connect(ph).connect(env).connect(s);
+  const n = c.createBufferSource(), bp = c.createBiquadFilter(), gn = c.createGain(); n.buffer = A.bruit; n.loop = true;
+  bp.type = "bandpass"; bp.frequency.value = 650; bp.Q.value = 0.9;
+  gn.gain.setValueAtTime(0.0001, t); gn.gain.exponentialRampToValueAtTime(0.06, t + 0.05); gn.gain.setValueAtTime(0.06, t + 0.8 * T);
+  gn.gain.linearRampToValueAtTime(0.22, t + 0.95 * T); gn.gain.exponentialRampToValueAtTime(0.0001, t + T + 0.25);    // « pfff » de la fin
+  n.connect(bp).connect(gn).connect(s);
+  o.start(t); lfo.start(t); n.start(t); o.stop(t + T + 0.05); lfo.stop(t + T + 0.05); n.stop(t + T + 0.3);
+}
+function jouerSonScen(Q, nom, duree) {
+  const A = audioScen(); if (!A) return;
+  const t = A.ctx.currentTime + 0.02, vol = Q.d.volume;
+  try { if (nom === "coup") sonCoup(A, t, vol * 0.9); else if (nom === "pet") sonPet(A, t, duree || 1.6, vol * 0.8); } catch (e) { console.warn("son", nom, e); }
+}
+function choisirVoixScen() {                          // fr-CA (voix d'homme si possible), sinon français, sinon la voix par défaut
+  const vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
+  if (!vs.length) return null;
+  const homme = /thomas|f[ée]lix|jean|nicolas|daniel|antoine|paul|henri|louis|mathieu|gabriel|guillaume|male|homme|man\b/i;
+  const ca = vs.filter((v) => /^fr[-_]CA/i.test(v.lang)), fr = vs.filter((v) => /^fr/i.test(v.lang));
+  return ca.find((v) => homme.test(v.name)) || ca[0] || fr.find((v) => homme.test(v.name)) || fr[0] || vs.find((v) => v.default) || vs[0];
+}
+function voixScen(texte) {
+  if (!SCEN.geste || SCEN.muet || !window.speechSynthesis || !texte) return;
+  try {
+    const v = SCEN.voix || (SCEN.voix = choisirVoixScen()); if (!v) return;      // aucune voix : la bulle seule
+    const u = new SpeechSynthesisUtterance(texte); u.voice = v; u.lang = v.lang; u.pitch = 0.45; u.rate = 0.72; u.volume = 0.85;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  } catch (_) {}
+}
+// ---------- lancer, arrêter, avancer
+function lancerScenario(id, depuis = "bouton") {
+  const Q = SCENS[id]; if (!Q || Q.t != null) return false;
+  if (!Q.racine.parent) gExterieur.add(Q.racine);
+  planScenario(Q);
+  Q.portesAvant = {};
+  for (const e of Q.plan.ev) if (e.porte && PORTES[e.porte] && !(e.porte in Q.portesAvant)) Q.portesAvant[e.porte] = PORTES[e.porte].etat;
+  Q.depuis = depuis; Q.t = depuis === "auto" ? 0 : Q.plan.debuts[Q.d.depart_bouton] || 0; Q.retard = 0;
+  // bouton loin de l'action : on va d'abord voir (vol avec fondu), il commence à l'arrivée
+  if (depuis === "bouton" && Q.d.vue && mode === "visite") {
+    const v = Q.d.vue, dc = Q.d.declencheur, f = idEtage(v.etage ?? zoneDe(joueur.etage).id);
+    const pres = dc ? Math.hypot(joueur.x - dc.x, joueur.y - dc.y) < dc.rayon && Math.abs(joueur.z - dc.z) < dc.hauteur : f === joueur.etage;
+    if (!pres) { volerA(v); Q.retard = vol && vol.change ? 1.4 : 1.0; }
+  }
+  Q.racine.visible = true; poserScenario(Q, Q.t); Q.tPrec = Q.t;
+  SCEN.tImage = 0; sale = true; majCommandes(); masquerAstuce();
+  return true;
+}
+function arreterScenario(id, fini) {
+  const Q = SCENS[id]; if (!Q || Q.t == null) return false;
+  Q.t = null; Q.racine.visible = false; Q.bulle = null;
+  if (!fini) {                                         // arrêté en cours : sons coupés, portes remises comme avant
+    couperSonsScen();
+    for (const [pid, etat] of Object.entries(Q.portesAvant || {})) if (PORTES[pid] && PORTES[pid].etat !== etat) basculerPorte(pid, etat);
+  }
+  const dc = Q.d.declencheur; Q.prochainAuto = performance.now() + (dc ? dc.attente : 120) * 1000;
+  majBullesScen(); sale = true; majCommandes();
+  return true;
+}
+function portesScen(Q, t) {                           // portes à l'état qu'elles ont à l'instant t (images de test)
+  const etats = {};
+  for (const e of Q.plan.ev) if (e.porte && e.t <= t) etats[e.porte] = e.etat;
+  for (const [pid, avant] of Object.entries(Q.portesAvant || {})) {
+    const pt = PORTES[pid]; if (!pt) continue;
+    const etat = etats[pid] || avant; pt.anim = null; pt.etat = etat; pt.f = etat === "ouverte" ? 1 : 0; poserPorte(pt);
+  }
+}
+const frScen = new THREE.Frustum(), mScen = new THREE.Matrix4(), sphScen = new THREE.Sphere(), vScen = new THREE.Vector3();
+function majScenarios(tms) {                          // vrai : une image est à refaire (30 par seconde au plus)
+  const dt = SCEN.fige || !SCEN.tPrec ? 0 : Math.min(0.1, (tms - SCEN.tPrec) / 1000); SCEN.tPrec = tms;
+  let besoin = false;
+  mScen.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); frScen.setFromProjectionMatrix(mScen);
+  for (const Q of SCEN.liste) {
+    const dc = Q.d.declencheur;
+    if (Q.t == null) {                                // déclenchement automatique : le visiteur s'approche de l'entrée (après un
+      // premier geste sur la page : on l'entend ; jamais pendant un test automatique sans geste)
+      if (dc && dc.auto && SCEN.geste && !SCEN.fige && mode === "visite" && !vol && !document.hidden && tms >= (Q.prochainAuto || 0)
+          && Math.hypot(joueur.x - dc.x, joueur.y - dc.y) < dc.rayon && Math.abs(joueur.z - dc.z) < dc.hauteur) lancerScenario(Q.d.id, "auto");
+      continue;
+    }
+    if (Q.retard > 0) { Q.retard -= dt; if (Q.retard > 0) continue; }
+    const t0 = Q.t; Q.t += dt;
+    if (dt > 0) for (const e of Q.plan.ev) if (e.t > t0 && e.t <= Q.t) {                  // événements franchis
+      if (e.son) jouerSonScen(Q, e.son, e.duree);
+      else if (e.voix) voixScen(e.voix);
+      else if (e.porte && PORTES[e.porte]) { basculerPorte(e.porte, e.etat); sale = true; }
+    }
+    if (Q.t >= Q.plan.T) { arreterScenario(Q.d.id, true); continue; }
+    poserScenario(Q, Q.t);
+    Q.racine.getWorldPosition(sphScen.center); sphScen.center.y += Q.haut / 2 * K; sphScen.radius = (Q.haut / 2 + 30) * K;
+    const vu = estVu(Q.racine) && frScen.intersectsSphere(sphScen);
+    if (dt > 0 && (vu || Q.vuPrec)) besoin = true;     // une image de plus quand il sort du champ (pas d'image figée au bord)
+    Q.vuPrec = vu;
+  }
+  majBullesScen();
+  if (!besoin || tms - SCEN.tImage < 1000 / 30 - 4) return false;
+  SCEN.tImage = tms; return true;
+}
+// ---------- bulles : au-dessus de la tête, rabattues au bord de l'écran si la tête est hors champ
+function majBullesScen() {
+  if (!SCEN.bulles) return;
+  for (const Q of SCEN.liste) {
+    const el = Q.el, b = Q.t != null ? Q.bulle : null;
+    if (!b || mode !== "visite" && !estVu(Q.racine)) { if (!el.hidden) el.hidden = true; continue; }
+    if (el.dataset.texte !== b.texte) { el.dataset.texte = b.texte; el.querySelector("span").textContent = b.texte; }
+    if (el.dataset.style !== b.style) { el.dataset.style = b.style; el.className = "bulle-scen " + b.style; }
+    Q.racine.updateWorldMatrix(true, false);
+    vScen.copy(P(0, 0, Q.haut + 3)); Q.racine.localToWorld(vScen); vScen.project(camera);
+    const W = innerWidth, H = innerHeight;
+    let x = (vScen.x + 1) / 2 * W, y = (1 - vScen.y) / 2 * H, dedans = vScen.z < 1 && x > 40 && x < W - 40 && y > 70 && y < H - 40;
+    if (vScen.z >= 1) { x = W - x; y = H - y; }
+    const mx = Math.min(W / 2 - 10, 140);
+    x = Math.max(mx, Math.min(W - mx, x)); y = Math.max(90, Math.min(H - 150, y));
+    el.classList.toggle("bord", !dedans);
+    el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, calc(-100% - 14px))`;
+    if (el.hidden) el.hidden = false;
+  }
+}
+// ---------- construction, boutons, aide
+for (const d of S.scenarios || []) {
+  const Q = { d, t: null, plan: null, bulle: null, prochainAuto: 0, retard: 0 };
+  construirePersonnage(Q); SCEN.liste.push(Q); SCENS[d.id] = Q;
+}
+if (SCEN.liste.length) {
+  SCEN.bulles = document.createElement("div"); SCEN.bulles.className = "bulles-scen"; $("etiquettes").append(SCEN.bulles);
+  for (const Q of SCEN.liste) {
+    Q.el = document.createElement("div"); Q.el.className = "bulle-scen"; Q.el.hidden = true; Q.el.setAttribute("aria-live", "polite");
+    Q.el.append(document.createElement("span")); SCEN.bulles.append(Q.el);
+    const b = document.createElement("button"), ic = document.createElement("span"), lib = document.createElement("span");
+    ic.className = "ic"; ic.setAttribute("aria-hidden", "true"); lib.className = "lib"; b.append(ic, lib); b.hidden = true;
+    b.onclick = () => (Q.t != null ? arreterScenario(Q.d.id) : lancerScenario(Q.d.id, "bouton"));
+    $("commandes").append(b); Q.bouton = b; SCEN.boutons.push(b);
+  }
+  // son coupé / remis (tous les scénarios) ; la voix et les sons attendent le premier geste sur la page
+  const b = document.createElement("button"), ic = document.createElement("span"), lib = document.createElement("span");
+  ic.className = "ic"; ic.setAttribute("aria-hidden", "true"); lib.className = "lib"; b.append(ic, lib); b.hidden = true;
+  b.onclick = () => { SCEN.muet = !SCEN.muet; if (SCEN.muet) couperSonsScen(); majCommandes(); };
+  $("commandes").append(b); SCEN.boutonSon = b; SCEN.boutons.push(b);
+  const geste = () => {
+    SCEN.geste = true; audioScen();
+    if (!SCEN.voixPrete && window.speechSynthesis) {   // iOS : la première parole doit venir d'un geste
+      SCEN.voixPrete = true; try { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch (_) {}
+    }
+    if (SCEN.audio && SCEN.audio.ctx.state === "running") for (const k of ["pointerup", "touchend", "keydown", "click"]) removeEventListener(k, geste, true);
+  };
+  for (const k of ["pointerup", "touchend", "keydown", "click"]) addEventListener(k, geste, true);
+  if (window.speechSynthesis) { try { speechSynthesis.addEventListener("voiceschanged", () => { SCEN.voix = null; }); } catch (_) {} }
+  const li = document.createElement("li"), ul = $("aide-ok").previousElementSibling;
+  for (const Q of SCEN.liste) li.append(Object.assign(document.createElement("b"), { textContent: Q.d.nom }),
+    ` : il arrive tout seul quand vous approchez` + (Q.d.declencheur ? ` (au plus une fois aux ${Math.round(Q.d.declencheur.attente / 60)} minutes)` : "")
+    + `, ou avec le bouton « ${Q.d.libelle} » ; « ${Q.d.libelle_arret} » le renvoie. `);
+  li.append(`« ${SCEN.liste[0].d.libelle_son} » coupe ou remet ses sons. Le son ne joue qu'après un premier geste sur la page ; la voix est celle de l'appareil (elle change d'un appareil à l'autre).`);
+  if (ul) ul.append(li);
+}
+const texteBoutonScen = (b, ic, lib) => { b.querySelector(".ic").textContent = ic; b.querySelector(".lib").textContent = lib; };
+function majBoutonsScenarios() {                      // nombre de boutons montrés (seulement près de l'action : son étage ou dehors)
+  let n = 0, joue = false;
+  for (const Q of SCEN.liste) {
+    const Ei = Q.d.etage != null ? idEtage(Q.d.etage) : 0;
+    const ici = Q.t != null || !MULTI || (mode === "visite" ? dehors() || joueur.etage === Ei : vueMaquette === "deux" || vueMaquette === "ext" || vueMaquette === Ei);
+    Q.bouton.hidden = !ici; if (ici) n++;
+    if (Q.t != null) joue = true;
+    texteBoutonScen(Q.bouton, Q.t != null ? "■" : "▶", Q.t != null ? Q.d.libelle_arret : Q.d.libelle);
+    Q.bouton.classList.toggle("bouge", Q.t != null); Q.bouton.title = Q.d.nom;
+  }
+  if (SCEN.boutonSon) {
+    const ici = SCEN.liste.some((Q) => !Q.bouton.hidden); SCEN.boutonSon.hidden = !ici; if (ici) n++;
+    texteBoutonScen(SCEN.boutonSon, SCEN.muet ? "✕" : "♪", SCEN.liste[0].d.libelle_son + (SCEN.muet ? " : coupé" : ""));
+    SCEN.boutonSon.setAttribute("aria-pressed", String(!SCEN.muet)); SCEN.boutonSon.title = SCEN.muet ? "Remettre le son" : "Couper le son";
+  }
+  return n;
+}
+// --- fin scénarios
+
+// --- lointain (opt-in : S.exterieur.lointain et objets animés « lointain » de l'extérieur : fleuve, basse-ville, traversier)
+// Contrat : generer_3d.exterieur_lointain() / exterieur_animes() et renovation/README.md. Le lot est dessiné dans les 200 m
+// de la caméra, sous une brume de 40 à 180 m ; le lointain va jusqu'à l'horizon. Ses sommets sont ramenés vers l'œil dans le
+// nuanceur (homothétie de rapport LOIN_K centrée sur la caméra : la même image, des profondeurs ×LOIN_K), il est dessiné en
+// premier (juste après le ciel), puis une « borne » efface la profondeur : le terrain du lot, la maison et leurs objets
+// passent toujours devant, dans la même image (une seule passe, rien à changer dans la chaîne de rendu). L'eau, sans
+// profondeur, est dessinée avant la terre et les objets, qui la cachent. Un programme simple (soleil du jour, ciel, brume du
+// lointain selon la vraie distance), couleurs par sommet : un maillage pour la terre et tous les objets fixes, un pour l'eau,
+// un ou deux par objet animé. Dedans, on ne le voit que par les fenêtres (portails, comme le reste de l'extérieur).
+const LOIN_K = 0.02, LOIN_K_EAU = 0.001;                 // 10 km → 200 m (plan lointain de la caméra) ; l'eau : 150 km → 150 m
+const LOIN_EXT = ANIMES_EXT.some(([, d]) => d.lointain);
+const gLoin = new THREE.Group(); gLoin.renderOrder = -1000; gLoin.userData.garder = true;
+const U_LOIN = { uSoleil: { value: DIR_SOLEIL }, uBrume: { value: new THREE.Color(LOIN ? LOIN.couleur_brume : "#dbe4eb") },
+  uBrumeL: { value: (LOIN ? LOIN.brume : 1200000) * K }, uCiel: { value: new THREE.Color("#c3d3e6") }, uSol: { value: new THREE.Color("#7b786b") } };
+const VS_LOIN = `uniform float uEch; varying vec3 vW; varying vec3 vN; varying vec3 vC; varying vec2 vUv;
+  void main() {
+    vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal); vUv = uv;
+    #ifdef USE_COLOR
+      vC = color;
+    #else
+      vC = vec3(1.0);
+    #endif
+    gl_Position = projectionMatrix * viewMatrix * vec4(cameraPosition + uEch * (w.xyz - cameraPosition), 1.0);
+  }`;
+const FS_LOIN = `uniform vec3 uCouleur, uSoleil, uBrume, uCiel, uSol; uniform float uBrumeL, uEmis;
+  #ifdef CARTE
+    uniform sampler2D uCarte;
+  #endif
+  varying vec3 vW; varying vec3 vN; varying vec3 vC; varying vec2 vUv;
+  void main() {
+    vec3 c = vC * uCouleur;
+    #ifdef CARTE
+      vec4 t = texture2D(uCarte, vUv); if (t.a < 0.5) discard; c *= t.rgb;
+    #endif
+    vec3 n = normalize(vN); if (!gl_FrontFacing) n = -n;
+    float s = max(dot(n, uSoleil), 0.0);
+    vec3 col = c * (mix(uSol, uCiel, 0.5 + 0.5 * n.y) * 0.8 + vec3(1.0, 0.96, 0.9) * s * 0.9) + c * uEmis;
+    col = mix(col, uBrume, 0.92 * (1.0 - exp(-distance(vW, cameraPosition) / uBrumeL)));
+    gl_FragColor = vec4(col, 1.0);
+    #include <tonemapping_fragment>
+    #include <encodings_fragment>
+  }`;
+function matLoin(opt = {}) {
+  const m = new THREE.ShaderMaterial({ vertexShader: VS_LOIN, fragmentShader: FS_LOIN, vertexColors: !opt.carte, side: opt.carte ? THREE.FrontSide : THREE.DoubleSide,
+    defines: opt.carte ? { CARTE: "" } : {}, uniforms: { ...U_LOIN, uEch: { value: LOIN_K }, uCouleur: { value: new THREE.Color(opt.couleur || "#ffffff") },
+      uEmis: { value: 0 }, ...(opt.carte ? { uCarte: { value: opt.carte } } : {}) } });
+  // voyant (« clignote ») : poserAnime règle emissiveIntensity comme pour un matériau ordinaire
+  Object.defineProperty(m, "emissiveIntensity", { get() { return this.uniforms.uEmis.value; }, set(v) { this.uniforms.uEmis.value = v; } });
+  return m;
+}
+const couleurLoin = (o) => (o.couleur ? new THREE.Color(o.couleur) : MAT[o.mat] && MAT[o.mat].color ? MAT[o.mat].color.clone() : new THREE.Color("#9a9a96"));
+function teinterLoin(g, c) {               // géométrie sans index, une couleur par sommet ; seulement position, normale, couleur
+  if (g.index) g = g.toNonIndexed();
+  for (const k of Object.keys(g.attributes)) if (k !== "position" && k !== "normal") g.deleteAttribute(k);
+  const n = g.attributes.position.count, a = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) { a[3 * i] = c.r; a[3 * i + 1] = c.g; a[3 * i + 2] = c.b; }
+  g.setAttribute("color", new THREE.BufferAttribute(a, 3)); return g;
+}
+function geoLoin(o) {                      // géométrie d'un objet du lointain (repère three, mètres) ; null : forme inconnue
+  let g = null;
+  const f = o.forme || "boite", vers = (p) => [p.x, p.y, p.z];
+  if (f === "boite" && o.pts) {
+    g = new THREE.ExtrudeGeometry(new THREE.Shape(o.pts.map(([x, y]) => new THREE.Vector2(x * K, y * K))), { depth: (o.z1 - o.z0) * K, bevelEnabled: false });
+    g.rotateX(-Math.PI / 2); g.translate(0, o.z0 * K, 0);
+  } else if (f === "boite") {
+    g = new THREE.BoxGeometry((o.x1 - o.x0) * K, (o.z1 - o.z0) * K, (o.y1 - o.y0) * K); g.translate(...vers(P((o.x0 + o.x1) / 2, (o.y0 + o.y1) / 2, (o.z0 + o.z1) / 2)));
+  } else if (f === "cylindre") {
+    g = new THREE.CylinderGeometry((o.r2 ?? o.r) * K, o.r * K, (o.z1 - o.z0) * K, o.pans || 10); g.translate(...vers(P(o.x, o.y, (o.z0 + o.z1) / 2)));
+  } else if (f === "sphere") {
+    g = new THREE.SphereGeometry(o.r * K, 10, 7); if (o.ecrase) g.scale(1, o.ecrase, 1); g.translate(...vers(P(o.x, o.y, o.z)));
+  } else if (f === "toit") {               // deux versants : profil triangulaire extrudé le long du faîtage
+    const enX = (o.faitage || "x") === "x", L = (enX ? o.x1 - o.x0 : o.y1 - o.y0) * K, W = (enX ? o.y1 - o.y0 : o.x1 - o.x0) * K;
+    g = new THREE.ExtrudeGeometry(new THREE.Shape([new THREE.Vector2(-W / 2, 0), new THREE.Vector2(W / 2, 0), new THREE.Vector2(0, (o.z1 - o.z0) * K)]), { depth: L, bevelEnabled: false });
+    g.translate(0, 0, -L / 2); if (enX) g.rotateY(Math.PI / 2);
+    g.translate(...vers(P((o.x0 + o.x1) / 2, (o.y0 + o.y1) / 2, o.z0)));
+  }
+  return g ? teinterLoin(g, couleurLoin(o)) : null;
+}
+function texteLoin(o) {                    // inscription peinte (nom d'un navire) : lettres sur fond transparent
+  const cv = document.createElement("canvas"), W = 1024, H = Math.max(16, Math.min(1024, Math.round(W * (o.z1 - o.z0) / o.larg)));
+  cv.width = W; cv.height = H;
+  const g = cv.getContext("2d"), fs = Math.round(H * 0.84);
+  g.font = `bold ${fs}px Arial, Helvetica, sans-serif`;
+  const tw = g.measureText(o.texte).width, sx = Math.min(1, W * 0.98 / Math.max(1, tw));
+  g.setTransform(sx, 0, 0, 1, W / 2, H / 2); g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = o.couleur || "#ffffff";
+  g.fillText(o.texte, 0, H * 0.04);
+  const t = new THREE.CanvasTexture(cv); t.encoding = THREE.sRGBEncoding; t.anisotropy = 4;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(o.larg * K, (o.z1 - o.z0) * K), matLoin({ carte: t }));
+  m.rotation.y = { "-y": 0, "+y": Math.PI, "+x": Math.PI / 2, "-x": -Math.PI / 2 }[o.face || "+y"];
+  m.position.copy(P(o.x, o.y, (o.z0 + o.z1) / 2)); return m;
+}
+const MAT_LOIN = (LOIN || LOIN_EXT) ? matLoin() : null;
+const loinMaillage = (m) => { m.traverse((q) => { q.renderOrder = -1000; q.userData.sansOmbre = true; q.userData.garder = true; q.castShadow = false; if (q.isMesh) q.frustumCulled = false; }); return m; };
+if (LOIN) {
+  // eau : avant tout le reste (ni profondeur lue ni écrite), plan horizontal à « z », couleur selon la distance, reflet du ciel
+  // (Fresnel : plus fort en rasant l'eau), longues ondulations (300 m : rien qui scintille), soleil reflété s'il est dans l'axe
+  if (LOIN.eau) {
+    const e = LOIN.eau, g = new THREE.ShapeGeometry(new THREE.Shape(e.pts.map(([x, y]) => new THREE.Vector2(x * K, y * K))));
+    g.rotateX(-Math.PI / 2); g.translate(0, e.z * K, 0);
+    const m = new THREE.Mesh(g, new THREE.ShaderMaterial({ depthTest: false, depthWrite: false, side: THREE.DoubleSide,
+      uniforms: { uSoleil: U_LOIN.uSoleil, uBrume: U_LOIN.uBrume, uBrumeL: U_LOIN.uBrumeL, uEch: { value: LOIN_K_EAU }, uReflet: { value: e.reflet },
+        uProche: { value: new THREE.Color(e.couleur) }, uLoin: { value: new THREE.Color(e.couleur_loin) },
+        uCielH: { value: new THREE.Color("#dfe9f1") }, uCielZ: { value: new THREE.Color("#8fb2dc") } },
+      vertexShader: `uniform float uEch; varying vec3 vW;
+        void main() { vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz;
+          gl_Position = projectionMatrix * viewMatrix * vec4(cameraPosition + uEch * (w.xyz - cameraPosition), 1.0); }`,
+      fragmentShader: `uniform vec3 uProche, uLoin, uCielH, uCielZ, uBrume, uSoleil; uniform float uReflet, uBrumeL; varying vec3 vW;
+        void main() {
+          vec3 v = normalize(cameraPosition - vW); vec2 q = vW.xz; float d = length(q - cameraPosition.xz);
+          vec3 n = normalize(vec3(0.010 * sin(q.x * 0.021 + q.y * 0.013) + 0.006 * sin(q.y * 0.047 - q.x * 0.011), 1.0,
+                                  0.010 * cos(q.y * 0.019 - q.x * 0.007) + 0.006 * cos(q.x * 0.033 + q.y * 0.029)));
+          float F = 0.02 + 0.98 * pow(1.0 - clamp(dot(n, v), 0.0, 1.0), 5.0);
+          vec3 r = reflect(-v, n);
+          vec3 col = mix(uProche, uLoin, 1.0 - exp(-d / 9000.0));
+          col = mix(col, mix(uCielH, uCielZ, smoothstep(0.0, 0.45, r.y)), F * uReflet);
+          col += vec3(1.0, 0.95, 0.85) * pow(max(dot(r, uSoleil), 0.0), 300.0) * 2.0;
+          col = mix(col, uBrume, 0.92 * (1.0 - exp(-d / uBrumeL)));
+          gl_FragColor = vec4(col, 1.0);
+          #include <tonemapping_fragment>
+          #include <encodings_fragment>
+        }` }));
+    m.userData.eau = true; loinMaillage(m).renderOrder = -1001; gLoin.add(m);
+  }
+  // terre (même découpe que le relief : diagonale (xs[i], ys[j]) → (xs[i+1], ys[j+1])) et objets fixes : un seul maillage
+  const geos = [];
+  if (LOIN.terre) {
+    const T = LOIN.terre, X = T.xs.length, Y = T.ys.length, pos = new Float32Array(X * Y * 3), col = new Float32Array(X * Y * 3), idx = [], c = new THREE.Color("#5f7048");
+    for (let j = 0; j < Y; j++) for (let i = 0; i < X; i++) {
+      const k = j * X + i; pos[3 * k] = T.xs[i] * K; pos[3 * k + 1] = T.z[j][i] * K; pos[3 * k + 2] = -T.ys[j] * K;
+      if (T.couleurs) c.set(T.couleurs[j][i]); col[3 * k] = c.r; col[3 * k + 1] = c.g; col[3 * k + 2] = c.b;
+    }
+    for (let j = 0; j < Y - 1; j++) for (let i = 0; i < X - 1; i++) { const a = j * X + i; idx.push(a, a + 1, a + X + 1, a, a + X + 1, a + X); }
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(pos, 3)); g.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    g.setIndex(idx); g.computeVertexNormals(); geos.push(g.toNonIndexed());
+  }
+  for (const o of LOIN.objets || []) {
+    if (o.forme === "texte") { gLoin.add(loinMaillage(texteLoin(o))); continue; }
+    const g = geoLoin(o); if (g) geos.push(g);
+  }
+  if (geos.length) gLoin.add(loinMaillage(new THREE.Mesh(mergeBufferGeometries(geos, false), MAT_LOIN)));
+}
+// objets animés « lointain » (traversier...) : les formes simples de leur repère, fusionnées (une fois par partie qui tourne),
+// voyants à part ; même horloge, mêmes trajets et mêmes boutons que les autres (poserAnime)
+for (const A of ANIM.liste) if (A.E === EXT && A.d.lointain) {
+  const parts = new Map();
+  for (const o of A.d.objets) {
+    if (o.forme === "texte") { A.ext.add(texteLoin(o)); continue; }
+    const g = geoLoin(o); if (!g) continue;
+    if (o.clignote) { const m = matLoin(); A.ext.add(new THREE.Mesh(g, m)); A.voyants.push({ mats: [m], T: o.clignote }); continue; }   // couleur : par sommet
+    const cle = o.tourne ? `${o.tourne}|${o.centre[0]}|${o.centre[1]}` : "";
+    if (!parts.has(cle)) parts.set(cle, { o, geos: [] });
+    parts.get(cle).geos.push(g);
+  }
+  for (const [cle, q] of parts) {
+    const m = new THREE.Mesh(mergeBufferGeometries(q.geos, false), MAT_LOIN);
+    if (!cle) { A.ext.add(m); continue; }
+    const piv = new THREE.Group(), int = new THREE.Group();
+    piv.position.copy(P(q.o.centre[0], q.o.centre[1], 0)); int.position.copy(P(-q.o.centre[0], -q.o.centre[1], 0));
+    piv.add(int); int.add(m); A.ext.add(piv); A.tournants.push({ g: piv, v: q.o.tourne * Math.PI / 180, a: 0 });
+  }
+  loinMaillage(A.ext);
+  const p0 = A.ext.position.clone(), r0 = A.ext.rotation.y; A.ext.position.set(0, 0, 0); A.ext.rotation.y = 0; A.ext.updateMatrixWorld(true);
+  const bb = new THREE.Box3().setFromObject(A.ext, true), t = bb.getSize(new THREE.Vector3());
+  A.rayon = bb.isEmpty() ? 8 : Math.max(t.x, t.z) / 2 / K; A.haut = bb.isEmpty() ? 4 : bb.max.y / K;
+  A.ext.position.copy(p0); A.ext.rotation.y = r0; poserAnime(A, 0);
+}
+// objets animés de l'extérieur (pas au loin) : matériaux copiés éclairés par le ciel, comme les autres objets de dehors
+for (const A of ANIM.liste) if (A.E === EXT && !A.d.lointain) {
+  const voy = new Set(A.voyants.flatMap((v) => v.mats));
+  A.ext.traverse((m) => {
+    if (!m.isMesh || !m.material || Array.isArray(m.material) || voy.has(m.material) || m.material.isMeshBasicMaterial) return;
+    if (!MATX.has(m.material)) { const c = m.material.clone(); c.name = m.material.name; MATX.set(m.material, c); }
+    m.material = MATX.get(m.material);
+  });
+}
+if (LOIN) gExterieur.add(gLoin);
+// borne : dessinée juste après le lointain (ordre -500, avant tout le reste), elle efface la profondeur
+if (LOIN || LOIN_EXT) {
+  const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(9), 3));
+  const borne = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ colorWrite: false, depthTest: false }));
+  borne.frustumCulled = false; borne.renderOrder = -500; borne.userData.garder = true; borne.userData.sansOmbre = true;
+  borne.onAfterRender = (r) => { r.state.buffers.depth.setMask(true); r.clearDepth(); };
+  scene.add(borne);
+}
+// visible (rendu continu) : dehors, dans le champ de vision (lointain : sa sphère ramenée vers l'œil comme ses sommets) ;
+// dedans, vu par une fenêtre ou une porte ouverte de l'étage (aucun mur entre l'œil et lui : le mur est à moins de 900 po)
+function vuAnimeExt(A) {
+  if (!estVu(A.ext)) return false;
+  A.ext.getWorldPosition(sphAnim.center); sphAnim.radius = (A.rayon + 24) * K;
+  if (A.d.lointain) { sphAnim.center.sub(camera.position).multiplyScalar(LOIN_K).add(camera.position); sphAnim.radius *= LOIN_K; }
+  if (!frAnim.intersectsSphere(sphAnim)) return false;
+  if (mode !== "visite" || dehors()) return true;
+  const E = ETAGES[joueur.etage]; if (!E) return true;
+  const zo = joueur.zVue - E.z + OEIL, o = [joueur.x, joueur.y, zo], dx = A.x - joueur.x, dy = A.y - joueur.y, L = Math.hypot(dx, dy) || 1;
+  const k = Math.min(1, 900 / L), zc = A.d.z + A.haut * 0.6 - E.z, nx = -dy / L * A.rayon, ny = dx / L * A.rayon;
+  return [[A.x, A.y], [A.x + nx, A.y + ny], [A.x - nx, A.y - ny]].some(([x, y]) =>
+    segmentLibre(mursAnim[E.i], o, [joueur.x + (x - joueur.x) * k, joueur.y + (y - joueur.y) * k, zo + (zc - zo) * k]));
+}
+// --- fin lointain
 
 // ---------- éclairage
 // Ambiance : environnement capturé dans la maison (reflets et lumière renvoyée) + un ciel faible ;
@@ -1807,7 +2685,7 @@ function volerA(v) {
   trajet = null;
   const f = v.etage == null ? joueur.etage : idEtage(v.etage), za = zArret(v, f);
   vol = { t: 0, debut: performance.now(), de: { ...joueur }, etage: f, change: f !== joueur.etage || joueur.z !== za,
-          a: { x: v.x, y: v.y, cap: joueur.cap + angle(v.cap * Math.PI / 180 - joueur.cap), tangage: -0.08, z: za } };
+          a: { x: v.x, y: v.y, cap: joueur.cap + angle(v.cap * Math.PI / 180 - joueur.cap), tangage: v.tangage != null ? v.tangage * Math.PI / 180 : -0.08, z: za } };
 }
 // monter ou descendre : on marche jusqu'à l'escalier, on le parcourt en douceur et on s'arrête un peu après l'arrivée
 function allerEtage(f) {
@@ -1929,13 +2807,17 @@ if (XT) {
   for (const E of ETAGES) for (const k of ["murs", "mob", "plafond", "sols"]) E.g[k].traverse((o) => {
     if (!o.isMesh) return;
     let bouge = false, bord = false;
-    for (let q = o; q && q !== E.g[k]; q = q.parent) { if (q.userData.porte || q.userData.commande) bouge = true; if (q.userData.porte && PORTES[q.userData.porte].p.dehors) bord = true; }
+    for (let q = o; q && q !== E.g[k]; q = q.parent) { if (q.userData.anime || q.userData.sequence || q.userData.ballot) return; if (q.userData.porte || q.userData.commande) bouge = true; if (q.userData.porte && PORTES[q.userData.porte].p.dehors) bord = true; }
     if (bord) return;                      // porte extérieure : dans le mur même, toujours dessinée (et toujours touchable)
     const b = boite3.setFromObject(o).clone(); if (bouge) b.expandByScalar(1);
     CULL.int.push({ o, b, mob: k === "mob", E: E.i });
   });
   CULL.extSet = new Set(CULL.ext.map((c) => c.o)); CULL.intSet = new Set(CULL.int.map((c) => c.o));
 }
+// --- lointain : objets animés de l'extérieur, ajoutés après le relevé des portails (ils bougent : jamais cachés par eux ;
+// dedans, les murs les cachent et ils ne demandent des images que vus par une fenêtre, voir vuAnimeExt)
+if (XT) gExterieur.add(gAnimesExt);
+// --- fin lointain
 const vP = new THREE.Vector3(), plansP = [0, 1, 2, 3, 4, 5].map(() => new THREE.Plane()), coinsP = [0, 1, 2, 3].map(() => new THREE.Vector3());
 const boiteP = new THREE.Box3(), milieuP = new THREE.Vector3(), auDela = new THREE.Vector3();
 function majPortails() {
@@ -2063,17 +2945,20 @@ function solSous(cx, cy) {
 // objet mobile sous le doigt (commande : toile... ; porte) : premier objet visible et opaque touché (un mur ou un meuble
 // devant le cache) ; le verre d'une porte vitrée compte
 function objetSous(cx, cy) {
-  if (!Object.keys(CMD).length && !Object.keys(PORTES).length) return null;
+  if (!Object.keys(CMD).length && !Object.keys(PORTES).length && !ANIM.liste.length && !ANIM.seqs.length) return null;
   viser3D(cx, cy);
   const cibles = mode === "visite" ? [gMurs, gPlafond, gMob] : vueMaquette === "ext" ? [gMurs] : [gCoupe, gMob];
   if (XT && gExterieur.visible) cibles.push(gExterieur);     // dehors : un mur de brique cache la porte qui est derrière
   for (const h of ray.intersectObjects(cibles, true)) {
-    let o = h.object, vu = true, id = null, porte = null;
-    for (let q = o; q; q = q.parent) { if (!q.visible) vu = false; if (id == null && q.userData.commande) id = q.userData.commande; if (porte == null && q.userData.porte) porte = q.userData.porte; }
+    let o = h.object, vu = true, id = null, porte = null, seq = null, an = null;
+    for (let q = o; q; q = q.parent) { if (!q.visible) vu = false; if (id == null && q.userData.commande) id = q.userData.commande; if (porte == null && q.userData.porte) porte = q.userData.porte;
+      if (seq == null && q.userData.sequence) seq = q.userData.sequence; if (an == null && q.userData.anime) an = q.userData.anime; }
     if (!vu) continue;
     const m = Array.isArray(o.material) ? o.material[h.face ? h.face.materialIndex : 0] : o.material;
     if (porte) return { porte };
     if (m && (m.transparent && m.opacity < 0.5 || m.isMeshBasicMaterial)) continue;   // verre, vitres, ombres de contact
+    if (seq) return { sequence: seq };                   // trappe d'une séquence (chute à linge)
+    if (an) return { anime: an };                        // objet animé (robot) : pause / reprendre
     return id ? { commande: id } : null;
   }
   return null;
@@ -2113,6 +2998,8 @@ function finDoigt(e) {
   const o = objetSous(e.clientX, e.clientY);          // toucher un objet mobile : la toile monte ou descend, la porte s'ouvre ou se ferme
   if (o && o.commande) { commander(o.commande, "basculer"); return; }
   if (o && o.porte) { basculerPorte(o.porte); return; }
+  if (o && o.sequence) { declencherSequence(o.sequence, "objet"); return; }
+  if (o && o.anime) { basculerAnime(o.anime); return; }
   const s = solSous(e.clientX, e.clientY);
   if (!s) return;
   if (s.esc != null) {                                // une marche : on monte (ou on descend) l'escalier
@@ -2125,7 +3012,7 @@ function finDoigt(e) {
 cnv.addEventListener("pointerup", finDoigt);
 let survol = 0;                                         // souris : main au-dessus d'un objet mobile
 cnv.addEventListener("pointermove", (e) => {
-  if (e.pointerType !== "mouse" || doigts.size || (!Object.keys(CMD).length && !Object.keys(PORTES).length)) return;
+  if (e.pointerType !== "mouse" || doigts.size || (!Object.keys(CMD).length && !Object.keys(PORTES).length && !ANIM.liste.length && !ANIM.seqs.length)) return;
   const t = performance.now(); if (t - survol < 120) return; survol = t;
   cnv.style.cursor = objetSous(e.clientX, e.clientY) ? "pointer" : "";
 });
@@ -2292,6 +3179,7 @@ function allerArret(i) {
   } else volerA({ ...v, etage: f });
   // arrêt avec "commandes" : la toile (ou autre) s'anime vers l'état demandé, une fois arrivé
   for (const [id, etat] of Object.entries(v.commandes || {})) setTimeout(() => { if (arret === i) commander(id, etat); }, 700);
+  if (v.scenario) setTimeout(() => { if (arret === i) lancerScenario(v.scenario, "arret"); }, 900);   // --- scénarios : arrêt qui le fait venir
   boutons.forEach((b, k) => b.setAttribute("aria-pressed", String(k === arret)));
   $("ici-n").textContent = `Arrêt ${arret + 1} de ${S.visites.length}`;
 }
@@ -2383,7 +3271,9 @@ function majCommandes() {
     const ici = !MULTI || !cm.E || (mode === "visite" ? cm.E.i === joueur.etage : vueMaquette === "deux" || vueMaquette === cm.E.i);
     b.hidden = !ici; if (ici) n++;
   }
-  if (Object.values(CMD).some((cm) => cm.bouton)) $("commandes").hidden = !n;
+  n += majBoutonsAnimes();
+  if (SCEN.boutons.length) n += majBoutonsScenarios();         // --- scénarios
+  if (Object.values(CMD).some((cm) => cm.bouton) || ANIM.boutons.length || SCEN.boutons.length) $("commandes").hidden = !n;
 }
 if (Object.keys(CMD).length) {
   for (const cm of Object.values(CMD)) {
@@ -2396,6 +3286,131 @@ if (Object.keys(CMD).length) {
   const li = $("aide-cmd"); li.hidden = false;
   li.append(Object.assign(document.createElement("b"), { textContent: Object.values(CMD).map((cm) => cm.c.nom).join(", ") }),
     " : bouton ▼ ▲ au-dessus de la visite guidée, ou touchez l'objet directement dans la vue pour le monter ou le descendre.");
+}
+// ---------- objets animés et séquences : boutons (seulement sur leur étage), toucher, mise à jour à chaque image
+function boutonAnim(titre, action) {
+  const b = document.createElement("button"), ic = document.createElement("span"), lib = document.createElement("span");
+  ic.className = "ic"; ic.setAttribute("aria-hidden", "true"); lib.className = "lib"; b.append(ic, lib); b.title = titre;
+  b.onclick = action; b.hidden = true; $("commandes").append(b); ANIM.boutons.push(b); return b;
+}
+const texteBouton = (b, ic, lib) => { b.querySelector(".ic").textContent = ic; b.querySelector(".lib").textContent = lib; };
+for (const A of ANIM.liste) if (A.d.bouton) A.bouton = boutonAnim(A.d.nom, () => basculerAnime(A.d.id));
+for (const Q of ANIM.seqs) {
+  Q.bouton = boutonAnim(Q.d.nom, () => declencherSequence(Q.d.id, "bouton")); texteBouton(Q.bouton, "▼", Q.d.libelle);
+  if (Q.d.vue_arrivee && Q.Ep !== Q.Et) {
+    Q.boutonVoir = boutonAnim(Q.d.libelle_voir, () => voirArrivee(Q.d.id)); Q.boutonVoir.classList.add("appel"); texteBouton(Q.boutonVoir, "▶", Q.d.libelle_voir);
+  }
+}
+function majBoutonsAnimes() {             // nombre de boutons montrés
+  let n = 0;
+  const montre = (E) => (EXT && E === EXT ? (mode === "visite" ? dehors() : vueMaquette === "ext") :      // --- lointain : dehors
+    !MULTI || (mode === "visite" ? !dehors() && E.i === joueur.etage : vueMaquette === "deux" || vueMaquette === E.i));
+  for (const A of ANIM.liste) if (A.bouton) {
+    const ici = montre(A.E); A.bouton.hidden = !ici; if (ici) n++;
+    texteBouton(A.bouton, A.pause ? "▶" : "❚❚", A.pause ? A.d.bouton.libelle_reprendre : A.d.bouton.libelle_pause);
+  }
+  for (const Q of ANIM.seqs) {
+    if (!Q.bouton) continue;
+    const ici = montre(Q.Et) || montre(Q.Ep); Q.bouton.hidden = !ici; if (ici) n++;
+    Q.bouton.classList.toggle("bouge", Q.t != null);
+    if (Q.boutonVoir) {
+      const v = mode === "visite" && !dehors() && joueur.etage === Q.Et.i && performance.now() < Q.voirJusqua;
+      Q.boutonVoir.hidden = !v; if (v) n++;
+    }
+  }
+  return n;
+}
+function basculerAnime(id, pause) {
+  const A = ANIMES[id]; if (!A) return null;
+  A.pause = pause == null ? !A.pause : !!pause; ANIM.tImage = 0; poserAnime(A, 0); sale = true;
+  majCommandes(); masquerAstuce(); return A.pause;
+}
+// déclencher : depuis le bouton, si l'on est loin du point de vue de son étage (vue_depart en haut, vue_arrivee en bas), on y
+// va d'abord et la séquence part à l'arrivée ; depuis l'étage de la trappe, « Voir arriver » est proposé un moment
+function declencherSequence(id, depuis = "bouton") {
+  const Q = SEQ[id]; if (!Q || Q.t != null) return false;
+  let delai = 0;
+  const ici = mode === "visite" && !dehors() ? joueur.etage : -1;
+  if (depuis === "bouton" && ici >= 0) {
+    const v = ici === Q.Et.i ? Q.d.vue_depart : ici === Q.Ep.i ? Q.d.vue_arrivee : null;
+    if (v && (idEtage(v.etage ?? ETAGES[ici].id) !== ici || Math.hypot(v.x - joueur.x, v.y - joueur.y) > 30 || Math.abs(ecartAngle(v.cap * Math.PI / 180 - joueur.cap)) > 0.5)) {
+      volerA(v); delai = vol && vol.change ? 1.4 : 1.0;
+    }
+  }
+  lancerSequence(Q, delai);
+  if (Q.boutonVoir && ici === Q.Et.i) Q.voirJusqua = performance.now() + (delai + Q.Tm.fin + Q.d.attente_voir) * 1000;
+  majCommandes(); masquerAstuce(); return true;
+}
+function voirArrivee(id) {
+  const Q = SEQ[id]; if (!Q || !Q.d.vue_arrivee || !Q.bal) return false;
+  Q.voirJusqua = 0;
+  if (mode !== "visite") choisirMode("visite");
+  volerA(Q.d.vue_arrivee); Q.attente = "rejouer"; ANIM.tImage = 0;
+  majCommandes(); return true;
+}
+// visible : étage et mobilier montrés, dans le champ de vision ; sur l'étage du visiteur, aucun mur entre son œil et l'objet
+const frAnim = new THREE.Frustum(), mAnim = new THREE.Matrix4(), sphAnim = new THREE.Sphere();
+const mursAnim = ETAGES.map((E) => E.d.boites.filter((b) => b.mur && !b.pts && !["vitre", "verre", "porte-verre"].includes(b.mat) && b.z1 - b.z0 > 20));
+function segmentLibre(murs, a, b) {      // segment 3D (pouces, repère de l'étage) qui ne traverse aucune boîte
+  for (const q of murs) {
+    let t0 = 0, t1 = 1;
+    for (const [k, lo, hi] of [[0, q.x0, q.x1], [1, q.y0, q.y1], [2, q.z0, q.z1]]) {
+      const d = b[k] - a[k];
+      if (Math.abs(d) < 1e-9) { if (a[k] <= lo || a[k] >= hi) { t0 = 2; break; } continue; }
+      let u0 = (lo - a[k]) / d, u1 = (hi - a[k]) / d; if (u0 > u1) [u0, u1] = [u1, u0];
+      t0 = Math.max(t0, u0); t1 = Math.min(t1, u1); if (t0 > t1) break;
+    }
+    if (t0 < t1 && t0 <= 1) return false;
+  }
+  return true;
+}
+function majVuAnimes() {
+  mAnim.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); frAnim.setFromProjectionMatrix(mAnim);
+  for (const A of ANIM.liste) {
+    A.vu = false;
+    if (EXT && A.E === EXT) { A.vu = vuAnimeExt(A); continue; }     // --- lointain : objet animé de l'extérieur (plus bas)
+    if (!estVu(A.ext)) continue;                            // étage caché, mobilier masqué
+    A.ext.getWorldPosition(sphAnim.center); sphAnim.radius = (A.rayon + 24) * K;
+    if (!frAnim.intersectsSphere(sphAnim)) continue;
+    if (mode !== "visite" || dehors() || A.E.i !== joueur.etage) { A.vu = true; continue; }
+    const z = joueur.zVue - A.E.z + OEIL, o = [joueur.x, joueur.y, z], L = Math.hypot(A.x - joueur.x, A.y - joueur.y) || 1;
+    const nx = -(A.y - joueur.y) / L * A.rayon, ny = (A.x - joueur.x) / L * A.rayon, zc = A.d.z + A.haut * 0.6;
+    A.vu = [[A.x, A.y], [A.x + nx, A.y + ny], [A.x - nx, A.y - ny]].some(([x, y]) => segmentLibre(mursAnim[A.E.i], o, [x, y, zc]));
+  }
+}
+function majAnimations(t) {                // pose les objets animés ; vrai : une image est à refaire (30 par seconde au plus)
+  const dt = ANIM.fige || !ANIM.tPrec ? 0 : Math.min(0.1, (t - ANIM.tPrec) / 1000); ANIM.tPrec = t;
+  const page = !document.hidden;
+  if (page && ANIM.liste.length && t - ANIM.tVu > 200) { ANIM.tVu = t; majVuAnimes(); }
+  let besoin = 0;                          // 2 : mouvement (30 images/s) ; 1 : voyant seul (8 images/s)
+  for (const A of ANIM.liste) {
+    if (!A.pause) A.h += dt;
+    poserAnime(A, dt);
+    if (A.vu && !A.pause) besoin = Math.max(besoin, A.phase.roule ? 2 : A.voyants.length ? 1 : 0);
+  }
+  for (const Q of ANIM.seqs) {
+    if (Q.attente === "rejouer" && !vol) { Q.attente = null; rejouerArrivee(Q); }
+    if (Q.voirJusqua && t > Q.voirJusqua) { Q.voirJusqua = 0; majCommandes(); }
+    if (Q.t == null) continue;
+    Q.t += dt; besoin = 2;
+    if (Q.t >= Q.Tm.fin) { Q.t = Q.Tm.fin; poserSequence(Q); Q.t = null; Q.rejeu = false; majCommandes(); }
+    else poserSequence(Q);
+  }
+  // --- lointain : en mouvement, la plus grande « cadence » des objets qui roulent et se voient (défaut 30 ; traversier : 10)
+  let cad = besoin === 2 ? 0 : 8;
+  if (besoin === 2) { for (const A of ANIM.liste) if (A.vu && !A.pause && A.phase.roule) cad = Math.max(cad, A.d.cadence || 30);
+    if (!cad || ANIM.seqs.some((Q) => Q.t != null)) cad = 30; }
+  // --- fin lointain
+  if (ANIM.fige || !page || !besoin || t - ANIM.tImage < 1000 / cad - 4) return false;   // figé (tests) : une image par changement
+  ANIM.tImage = t; return true;
+}
+if (ANIM.boutons.length) { $("commandes").hidden = false; majCommandes(); }
+if (ANIM.liste.length || ANIM.seqs.length) {
+  const li = $("aide-anim"); li.hidden = false;
+  for (const Q of ANIM.seqs) li.append(Object.assign(document.createElement("b"), { textContent: Q.d.nom }),
+    ` : touchez la trappe, ou le bouton « ${Q.d.libelle} »` + (Q.boutonVoir ? ` (en haut comme en bas ; après l'envoi, « ${Q.d.libelle_voir} » vous amène à l'arrivée). ` : ". "));
+  for (const A of ANIM.liste) li.append(Object.assign(document.createElement("b"), { textContent: A.d.nom }),
+    " : il fait sa tournée tout seul ; touchez-le" + (A.bouton ? " (ou son bouton)" : "") + " pour l'arrêter ou le faire repartir. ");
 }
 if (Object.keys(PORTES).length) $("aide-portes").hidden = false;
 if (MULTI) { $("aide-etages").hidden = false; document.body.classList.add("multi"); $("plan-nom").hidden = false; }
@@ -2552,6 +3567,7 @@ function taille() {
 }
 addEventListener("resize", taille); taille();
 let t0 = performance.now(), escPrec = -1, nImages = 0, lumEnFondu = true, nBoucle = 0;
+const ANIM_ACTIF = ANIM.liste.length > 0 || ANIM.seqs.length > 0;
 const camPrec = new THREE.Matrix4(), projPrec = new THREE.Matrix4();
 function boucle(t) {
   requestAnimationFrame(boucle);
@@ -2577,6 +3593,9 @@ function boucle(t) {
   placerCamera(); camera.updateMatrixWorld();
   let bouge = false;
   if (!camPrec.equals(camera.matrixWorld) || !projPrec.equals(camera.projectionMatrix)) { camPrec.copy(camera.matrixWorld); projPrec.copy(camera.projectionMatrix); sale = bouge = true; }
+  // objets animés et séquences : posés à chaque tour ; image à refaire 30 fois par seconde au plus, et seulement s'ils se voient
+  const imageAnim = ANIM_ACTIF && majAnimations(tt);
+  if (SCEN.liste.length && majScenarios(tt)) sale = true;      // --- scénarios (personnage qui joue : 30 images/s au plus s'il se voit)
   if (animerEcrans(tt)) sale = true;
   if (sale || lumEnFondu) {
     majVisibiliteEtages(); majPortails();
@@ -2588,7 +3607,7 @@ function boucle(t) {
   if (mode === "visite" && (!bouge || nBoucle % 3 === 0) && (REFLETS.travaux.length || miroirAFaire())) { travaillerReflets(1); sale = true; }
   // nouvel étage : l'image des reflets est refaite là où l'on s'arrête
   if (refletsEtage && mode === "visite" && !trajet && !vol && performance.now() - refletsEtage > 400) { refletsEtage = 0; recapturerReflets(true); }
-  if (!sale && !renderer.shadowMap.needsUpdate) return;
+  if (!sale && !imageAnim && !renderer.shadowMap.needsUpdate) return;
   sale = false; nImages++;
   renderer.info.reset();
   if (POST) POST.rendre(QUALITES[qualite]); else renderer.render(scene, camera);
@@ -2638,6 +3657,38 @@ Object.assign(window, { commander, etatsCommandes, commandeSous, animerCommandes
 Object.assign(window, { changerEtage, allerEtage, choisirVueMaquette, poserJoueur, basculerPorte, porteSous, objetSous, portes: PORTES,
   ETAGES, ESCALIERS, solA });
 Object.defineProperty(window, "etage", { get: () => zoneDe(joueur.etage).id });
+// objets animés et séquences : figerAnimations(vrai) arrête les horloges (images de test) ; poserHorloge(id, s) place un objet
+// animé à son horloge ; basculerAnime(id[, pause]) ; declencherSequence(id[, "bouton" | "objet"]) ; voirArrivee(id) ;
+// fixerSequence(id, s) pose une séquence à s secondes de son déclenchement (lancée au besoin) ; etatSequence(id)
+Object.assign(window, { ANIM, figerAnimations: (v = true) => { ANIM.fige = !!v; },
+  poserHorloge: (id, h) => { const A = ANIMES[id]; if (!A) return null; A.h = h; poserAnime(A, 0); ANIM.tImage = 0; sale = true;
+    return { x: A.x, y: A.y, cap: A.ext.rotation.y * 180 / Math.PI, periode: A.T }; },
+  basculerAnime, declencherSequence, voirArrivee,
+  fixerSequence: (id, t) => { const Q = SEQ[id]; if (!Q) return null; if (Q.t == null) lancerSequence(Q, 0); Q.rejeu = false;
+    if (t >= Q.Tm.fin) { Q.t = Q.Tm.fin; poserSequence(Q); Q.t = null; } else { Q.t = t; poserSequence(Q); }
+    sale = true; majCommandes(); return etatSequence(Q.d.id); },
+  etatSequence });
+// --- scénarios (tests) : lancerScenario(id[, "bouton" | "auto" | "arret"]), arreterScenario(id), fixerScenario(id, s) (horloge
+// figée, personnage, bulle et portes posés à s secondes du début du plan ; lancé au besoin), etatScenario(id)
+Object.assign(window, { SCEN, lancerScenario, arreterScenario,
+  fixerScenario: (id, t) => { const Q = SCENS[id]; if (!Q) return null; SCEN.fige = true; if (Q.t == null) lancerScenario(id, "test");
+    Q.retard = 0; Q.t = Math.max(0, Math.min(t, Q.plan.T - 0.02)); portesScen(Q, Q.t); poserScenario(Q, Q.t); majBullesScen(); refaireOmbres(); sale = true;
+    return etatScenario(id); },
+  etatScenario: (id) => etatScenario(id) });
+function etatScenario(id) {
+  const Q = SCENS[id]; if (!Q) return null;
+  const f = Q.plan && Q.t != null ? phaseScen(Q, Q.t) : null;
+  return { t: Q.t, T: Q.plan ? Q.plan.T : null, debuts: Q.plan ? Q.plan.debuts : null, phase: f && f.type, x: Q.x, y: Q.y, z: Q.z,
+    cap: Q.cap != null ? Q.cap * 180 / Math.PI : null, zone: Q.zone != null ? zoneDe(Q.zone).id : null, bulle: Q.bulle ? Q.bulle.texte : null,
+    visible: Q.racine.visible, muet: SCEN.muet };
+}
+// --- fin scénarios (tests)
+function etatSequence(id) {
+  const Q = SEQ[id]; if (!Q) return null;
+  let p = null; if (Q.bal && Q.bal.parent) { const E = ETAGES[Q.bal.parent.userData.etage ?? 0]; p = [Q.bal.position.x / K, -Q.bal.position.z / K, E.z + Q.bal.position.y / K]; }
+  return { t: Q.t, trappe: Q.f, pile: Q.pile.length, ballot: p, visible: !!(Q.bal && Q.bal.visible), voir: !!(Q.boutonVoir && !Q.boutonVoir.hidden),
+    temps: Q.Tm, sortiePlafond: Q.tVisible, etageTrappe: Q.Et.id, etagePanier: Q.Ep.id };
+}
 // extérieur : EXT (zone, grille du lot), hauteurExt(x, y), libreExt(x, y), trajetVers(x, y, zone), CULL (découpe par les
 // ouvertures : nombre de champs, maillages vus), PRECOMP (programmes préparés au chargement), soleil
 Object.assign(window, { EXT, IEXT, hauteurExt, libreExt, libreE, trajetVers, zoneDe, CULL, PRECOMP, soleil, majPortails, allerArret, visites: S.visites,

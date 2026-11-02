@@ -311,14 +311,17 @@ def _cote_droit(x, za):                    # au-delà de l'asphalte (x > 552) : 
 
 
 # --- avant : escalier du balcon avant (photos du client, 2026-11-02 ; balcon_avant.py dessine le balcon et l'escalier). Le balcon
-# remplace le perron ; son escalier part du côté droit du balcon (x 232, à 8 à 12 pi de la façade) et descend vers l'allée en 15
-# contremarches jusqu'à l'asphalte (photos 13 à 15). Le relief de la vidéo DAG est creusé (jamais remonté) : talus raide qui suit
-# l'escalier, puis asphalte élargi devant la partie droite de la façade, du pied de l'escalier jusqu'à l'allée et à la rue. Le
-# reste de l'avant (plateau sous le balcon, talus en S, palier bas près de la maison) reste celui de la vidéo DAG.
+# remplace le perron ; son escalier part du côté droit du balcon (x 232) et descend vers l'allée, parallèle à la façade, en 15
+# contremarches jusqu'à l'asphalte (photos 13 à 16). Le client : « Les marches sont à 6 pieds du mur de la maison » : le côté de
+# l'escalier le plus proche de la façade est à 6'-0" (y -72). Entre l'escalier et le mur, devant la fenêtre du sous-sol : la
+# jardinière de cèdre en gradins (photo 16), posée sur l'asphalte. Le relief de la vidéo DAG est creusé (jamais remonté) : talus
+# raide qui suit l'escalier, puis asphalte élargi devant la partie droite de la façade, de la rue jusqu'au mur (sous la
+# jardinière et le long de son bout côté allée, photo 16). Le reste de l'avant (plateau sous le balcon et le coin des enfants,
+# talus en S) reste celui de la vidéo DAG.
 Z_BALCON = 103.5                           # dessus du balcon avant : 1½ po sous le seuil de la porte avant (105)
-ESC_AV = (232.0, -144.0, 386.0, -96.0)     # escalier avant : x du haut (rive du balcon), y côté rue, x du pied, y côté maison
+ESC_AV = (232.0, -120.0, 386.0, -72.0)     # escalier avant : x du haut (rive du balcon), y côté rue, x du pied, y côté maison
 ESC_AV_N = 15                              # contremarches (14 girons de 11 po), dernière marche sur une dalle au pied
-AIRE_AV = (380.0, -480.0, 456.0, -80.0)    # asphalte élargi devant la partie droite de la façade (rejoint l'allée à x = 456)
+AIRE_AV = (380.0, -480.0, 456.0, -2.0)     # asphalte élargi devant la partie droite de la façade (rejoint l'allée à x = 456)
 CREUX_PENTE = 0.62                         # pente des talus autour du creux (≈ 32°, talus raide des photos)
 LIGNES_AVANT = ([ESC_AV[0], AIRE_AV[0], ESC_AV[2]], [AIRE_AV[3], ESC_AV[1] - 8, ESC_AV[1], ESC_AV[3], ESC_AV[3] + 8])
 

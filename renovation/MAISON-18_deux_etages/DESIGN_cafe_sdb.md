@@ -72,6 +72,8 @@ les dégagements demandés. Le coin café irait alors dans la salle à manger, c
 
 ### 2. Salle de bain : laveuse-sécheuse enlevées, « colonne d'apothicaire »
 
+> **Mise à jour (2026-11-02)** : la chute à linge (option B) est maintenant le parti pris dessiné, et la colonne est réorganisée autour de sa trappe : voir `DESIGN_chute_linge.md` (le tableau de la colonne ci-dessous décrit la version d'avant).
+
 #### Étude de la chute à linge (demandée en premier)
 On a superposé les deux plans :
 - la niche de la laveuse-sécheuse (RDC) : x 76¼ → 105¾, y 144¼ → 172 ; la salle de lavage (SS) : x 10 → 109¾, y 10 → 154¾ ;

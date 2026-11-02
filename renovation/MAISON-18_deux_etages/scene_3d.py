@@ -11,7 +11,9 @@ import importlib.util
 import os
 
 ICI = os.path.dirname(os.path.abspath(__file__))
-RDC_ZONES = ["rdc_corrections", "rdc_entree", "rdc_chambre_arriere", "rdc_bureau", "rdc_cuisine", "rdc_cafe_sdb"]
+RDC_ZONES = ["rdc_corrections", "rdc_entree", "rdc_chambre_arriere", "rdc_bureau", "rdc_cuisine", "rdc_cafe_sdb", "rdc_robot"]
+# modules qui touchent les deux étages à la fois (ex. chute à linge du RDC au SS) : appliquer_scene_deux(SCENE), SCENE à deux étages
+DEUX_ETAGES = ["chute_linge"]
 TITRE = "MAISON-18 — Les deux étages"
 
 
@@ -48,6 +50,11 @@ elif _E == "RDC":
 else:
     _ss = scene_ss()
     SCENE = {"titre": TITRE, "etages": [_ss, scene_rdc()], "depart": dict(_ss["depart"], etage="SS")}
+    for _z in DEUX_ETAGES:
+        if os.path.isfile(os.path.join(ICI, _z + ".py")):
+            _mz = _charger("m18_scene_" + _z, _z + ".py")
+            if hasattr(_mz, "appliquer_scene_deux"):
+                _mz.appliquer_scene_deux(SCENE)
 
 # --- Extérieur : exterieur.py fournit EXTERIEUR (terrain, enveloppe de la maison, cour arrière du plan DAG ; contrat dans son
 # docstring), objets en z ABSOLU dans le repère du plancher du sous-sol. Maquette à deux étages : SCENE["exterieur"], que le
@@ -58,3 +65,13 @@ if os.path.isfile(os.path.join(ICI, "exterieur.py")) and "etages" in SCENE:
     # balcon avant (photos du client, 2026-11-02) : balcon_avant.py complète ou remplace des éléments de l'extérieur
     if os.path.isfile(os.path.join(ICI, "balcon_avant.py")):
         _charger("m18_balcon_avant", "balcon_avant.py").appliquer_exterieur(SCENE["exterieur"])
+
+# modules qui s'appliquent à la maquette complète, extérieur compris (fleuve et traversier, visiteur) :
+# appliquer_scene_finale(SCENE), SCENE à deux étages avec SCENE["exterieur"]
+FINALE = ["fleuve", "visiteur"]
+if "etages" in SCENE:
+    for _z in FINALE:
+        if os.path.isfile(os.path.join(ICI, _z + ".py")):
+            _mz = _charger("m18_scene_" + _z, _z + ".py")
+            if hasattr(_mz, "appliquer_scene_finale"):
+                _mz.appliquer_scene_finale(SCENE)

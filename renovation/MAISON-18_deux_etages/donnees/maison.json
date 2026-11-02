@@ -1285,7 +1285,7 @@
      "nom": "Salle de lavage",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Salle de lavage — proposition SS-17 (esquisse)",
+     "description": "Salle de lavage — proposition SS-17 (esquisse) ; arrivée de la chute à linge et chariot — proposition MAISON-18 (esquisse) — chute à linge (client, 2026-11-02)",
      "polygone": [
       [
        10.0,
@@ -3484,6 +3484,33 @@
      "texte_original": "ROBINET",
      "note": "Symbole sur le nu ext. du mur avant, à droite du perron ; x ESTIMÉ (323.8).",
      "mur_id": "mur-SS-001"
+    },
+    {
+     "id": "elem-SS-S-CHUTE",
+     "type": "trappe",
+     "nom": "Arrivée de la chute à linge au plafond (12 × 14 po, devant la poutre maîtresse) et coude-déflecteur d'inox Ø 14 po apparent, au-dessus de l'arc de la porte (dessous à 83 po), bec au-dessus du chariot à linge roulant (20 × 14 × 33 po, entre le chauffe-eau et l'arc de la porte)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "libelle": "CHUTE",
+     "position": {
+      "x": 70.314,
+      "y": 146.0,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 40.63,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 14.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — chute à linge (client, 2026-11-02)"
     }
    ],
    "structure": [
@@ -4987,6 +5014,12 @@
      "texte_original": null,
      "photo": null,
      "interpretation": "Fenêtres selon la vidéo DAG (allège ≈ 44, tête ≈ 80 po ; chambre 1 : allège ≈ 40) ; congélateur au lavage."
+    },
+    {
+     "id": "note-SS-CHUTE",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Chute à linge (salle de bain du haut → plafond du lavage) : déflecteur inox, chariot ; cloison, solives et coupe-feu à valider."
     },
     {
      "id": "note-SS-P02",
@@ -7096,7 +7129,7 @@
      "id": "piece-RDC-SDB",
      "nom": "Salle de bain",
      "nom_original": "S. DE BAIN",
-     "description": "Salle de bain ; laveuse-sécheuse remplacées par une colonne d'apothicaire pleine hauteur — proposition MAISON-18 (esquisse) — coin café et salle de bain (client, 2026-11-02)",
+     "description": "Salle de bain ; laveuse-sécheuse remplacées par une colonne d'apothicaire pleine hauteur — proposition MAISON-18 (esquisse) — coin café et salle de bain (client, 2026-11-02) ; chute à linge vers la salle de lavage — proposition MAISON-18 (esquisse) — chute à linge (client, 2026-11-02)",
      "polygone": [
       [
        105.75,
@@ -7144,7 +7177,7 @@
      "id": "piece-RDC-CH2",
      "nom": "Bureau",
      "nom_original": "CHAMBRE",
-     "description": "Bureau de travail et de gaming (ancienne chambre avant) : deux postes assis face à la fenêtre de façade (vue vers le fleuve), coin détente ; la garde-robe est conservée.",
+     "description": "Bureau de travail et de gaming (ancienne chambre avant) : deux bureaux assis-debout électriques face à la fenêtre de façade (vue vers le fleuve), coin détente.",
      "polygone": [
       [
        143.75,
@@ -8019,7 +8052,7 @@
     {
      "id": "elem-RDC-K-GM",
      "type": "armoires",
-     "nom": "Garde-manger encastré pleine hauteur (remplace le coin ordi) : caisson et portes noir mat, 5 tiroirs coulissants intérieurs, 2 portes hautes, cadre et joue de bois de grange — 42¼ × 29 po, face au nu du mur des G.R.",
+     "nom": "Garde-manger encastré pleine hauteur (remplace le coin ordi) : caisson et portes noir mat, 5 tiroirs coulissants intérieurs, 2 portes hautes, cadre et joue de bois de grange — 42¼ × 29 po, face au nu du mur des G.R. ; garage d'aspirateur robot dans le socle (ouverture 17 × 4½ po, base au fond)",
      "nom_original": null,
      "etat": "nouveau",
      "libelle": "G.-M.",
@@ -8043,7 +8076,61 @@
        "note": "profondeur du renfoncement (photos 05, 06) : à mesurer"
       }
      },
-     "note": "Coin ordi de RDC-01 (bureau flottant, écrans, chaise) enlevé ; thermostat à déplacer sur le mur voisin (électricien) — proposition MAISON-18, cuisine et salle à manger (esquisse)"
+     "note": "Coin ordi de RDC-01 (bureau flottant, écrans, chaise) enlevé ; thermostat à déplacer sur le mur voisin (électricien) — proposition MAISON-18, cuisine et salle à manger (esquisse) ; prise 15 A dans le caisson du bas du garde-manger (base de recharge au fond du garage du socle) — proposition MAISON-18 (esquisse) — aspirateur robot"
+    },
+    {
+     "id": "elem-RDC-P-BUR-BUR1",
+     "type": "comptoir",
+     "nom": "Bureau assis-debout électrique 55 × 30 po, poste 1 (gauche) : plateau de chêne blanc massif huilé, piètement noir mat à 2 colonnes télescopiques, dessus de 29 po (assis) à 45 po (debout) ; écrans sur bras, tour suspendue, goulotte et chaîne de câbles qui montent avec le plateau ; une prise double derrière",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 57.0,
+      "y": 28.5,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 55.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
+     "libelle": "ASSIS- DEBOUT"
+    },
+    {
+     "id": "elem-RDC-P-BUR-BUR2",
+     "type": "comptoir",
+     "nom": "Bureau assis-debout électrique 55 × 30 po, poste 2 (droite) : plateau de chêne blanc massif huilé, piètement noir mat à 2 colonnes télescopiques, dessus de 29 po (assis) à 45 po (debout) ; écrans sur bras, tour suspendue, goulotte et chaîne de câbles qui montent avec le plateau ; une prise double derrière",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 114.5,
+      "y": 28.5,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 55.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
+     "libelle": "ASSIS- DEBOUT"
     },
     {
      "id": "elem-RDC-P-BUR-CH1",
@@ -8052,8 +8139,8 @@
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 60.0,
-      "y": 57.5,
+      "x": 57.0,
+      "y": 61.0,
       "rotation_deg": 180,
       "source": "PROPOSÉ"
      },
@@ -8079,8 +8166,8 @@
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 114.0,
-      "y": 57.5,
+      "x": 114.5,
+      "y": 61.0,
       "rotation_deg": 180,
       "source": "PROPOSÉ"
      },
@@ -8102,7 +8189,7 @@
     {
      "id": "elem-RDC-P-BUR-CRED",
      "type": "armoires",
-     "nom": "Crédence flottante de chêne 48 × 18 po (consoles, manettes, casques, jeux), DEL dessous",
+     "nom": "Crédence flottante de chêne 48 × 18 po (consoles, manettes, casques, jeux), DEL dessous ; panneau acoustique imprimé au-dessus",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
@@ -8181,31 +8268,31 @@
      "libelle": ""
     },
     {
-     "id": "elem-RDC-P-BUR-PLAN",
-     "type": "comptoir",
-     "nom": "Plan de travail continu en chêne 132 × 30 po (dessus à 29,5 po), deux postes de 54 po face à la fenêtre ; ordinateurs suspendus dessous aux deux bouts, caisson à 3 tiroirs au centre, goulotte à câbles, ruban DEL blanc chaud",
+     "id": "elem-RDC-P-BUR-TABL",
+     "type": "autre",
+     "nom": "Deux tablettes flottantes de chêne 30 × 8 po au mur de droite (dessus à 50 et 64 po), ruban DEL sous la tablette du bas",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 77.25,
-      "y": 25.0,
-      "rotation_deg": 0,
+      "x": 139.75,
+      "y": 61.0,
+      "rotation_deg": 90,
       "source": "PROPOSÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 132.0,
+       "valeur": 30.0,
        "source": "PROPOSÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 30.0,
+       "valeur": 8.0,
        "source": "PROPOSÉ",
        "photo": null
       }
      },
      "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
-     "libelle": "2 POSTES"
+     "libelle": ""
     },
     {
      "id": "elem-RDC-P-ESC",
@@ -8648,7 +8735,7 @@
     {
      "id": "elem-RDC-S-APOTH",
      "type": "armoires",
-     "nom": "Colonne d'apothicaire pleine hauteur (29½ × 24 po) à la place de la laveuse-sécheuse : 2 paniers à linge basculants (pâle / foncé), 6 tiroirs de bois de grange à porte-étiquettes noirs (un par membre de la famille), niche éclairée de serviettes roulées, armoire du haut ; caisson noir mat comme la vanité",
+     "nom": "Colonne d'apothicaire pleine hauteur (29½ × 24 po) à la place de la laveuse-sécheuse, organisée autour de la chute à linge : trappe basculante noir mat « LINGE » (bouche de 12 × 12 po à 40 po, loquet enfant) et gaine à gauche, porte basse à loquet dessous ; panier basculant (délicats) et 3 tiroirs de bois de grange à droite, 4e tiroir au-dessus de la trappe (un par membre de la famille) ; niche éclairée de serviettes roulées, pharmacie en haut ; caisson noir mat comme la vanité",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
@@ -8670,6 +8757,33 @@
       }
      },
      "note": "proposition MAISON-18 (esquisse) — coin café et salle de bain (client, 2026-11-02)"
+    },
+    {
+     "id": "elem-RDC-S-CHUTE",
+     "type": "event",
+     "nom": "Chute à linge : gaine de tôle galvanisée de 12 × 14 po (intérieur) encoffrée dans la colonne d'apothicaire, trappe basculante noir mat « LINGE » à fermeture automatique et loquet enfant (bouche de 12 × 12 po, seuil à 40 po) ; descend entre deux solives jusqu'au plafond de la salle de lavage",
+     "nom_original": null,
+     "etat": "nouveau",
+     "libelle": "CHUTE",
+     "position": {
+      "x": 83.627,
+      "y": 151.5,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 12.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 14.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — chute à linge (client, 2026-11-02) — à valider : position de la cloison du fond (y ≈ 142), sens des solives, baie libre"
     }
    ],
    "structure": [
