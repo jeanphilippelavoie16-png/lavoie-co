@@ -33,7 +33,7 @@
 | SS-15 | Copie de SS-14 : plus de coin commun, les deux chambres agrandies, le caveau devient le walk-in de la chambre 2 ; rampe de métal côté séjour (verre gardé côté gym), rangement sous l'escalier, divan en L avec projecteur et toile ; feuilles P-123 et P-124 | esquisse |
 | SS-16 | Copie de SS-15 : salle de bain refaite autour du bain (bain sculptural centré dans une alcôve de travertin chaud, niche éclairée, suspension), douche simple 36 × 48, béton poli dans tout le sous-sol ; dessous de l'escalier dégagé (plus de rangement), projecteur au plafond, toile motorisée de 120 po centrée qu'on monte et descend dans la visite, walk-in du caveau isolé (évents fermés), galerie de 6 photos de famille au séjour, robinetterie corrigée ; feuilles P-125 et P-126 | esquisse |
 | SS-17 | Par-dessus SS-16 (un module par zone) : chambres des garçons de 4 et 6 ans avec lits queen et rangement intégré (« Le socle de chêne », « La bibliothèque secrète » avec porte pivotante vers le walk-in), banc-cabane cinéma sous l'escalier, gym refait (cardio contre le mur, mur-miroir, banc-coffre), casiers d'hiver au vestiaire, banc à jouets sous la toile, trajet de nuit ; feuilles P-127 et P-128 | esquisse |
-| MAISON-18 | Les deux étages réunis en une maquette où l'on monte et descend : sous-sol de SS-17 allégé (chambres moins meublées) ; rez-de-chaussée réaménagé sur le relevé RDC-01 : grande entrée vitrée avec l'escalier et du rangement, chambre des parents avec lit king, bureau-gaming à 2 postes face à la fenêtre avant, bugs corrigés ; portes interactives ; feuilles P-129 et P-130 | esquisse |
+| MAISON-18 | Les deux étages réunis en une maquette où l'on monte et descend : sous-sol de SS-17 allégé (chambres moins meublées) ; rez-de-chaussée réaménagé sur le relevé RDC-01 : grande entrée vitrée avec l'escalier et du rangement, chambre des parents avec lit king, bureau-gaming à 2 postes face à la fenêtre avant, bugs corrigés ; portes interactives ; extérieur (maison vue de dehors, cour arrière du plan DAG) où l'on marche et entre par les portes ; feuilles P-129 et P-130 | esquisse |
 
 ## Études
 - `etudes/escalier/` : six emplacements possibles pour l'escalier, en haut et en bas (étude 3).
@@ -62,6 +62,15 @@ Commandes interactives (facultatif : toile motorisée, stores, porte de garage..
 suit le bas sans se déformer) ; ils sont décrits à l'état « bas ». Un arrêt de visite peut porter
 `"commandes": {"toile": "bas"}`. Dans la visite : un bouton ▼ / ▲ au-dessus de la visite guidée, ou toucher l'objet
 (visite et maquette). Sans `commandes`, rien ne change. Pour les tests : `commander(id, "bas" | "haut" | "basculer", immediat)`.
+Plusieurs étages : un bouton de commande n'apparaît que sur l'étage où se trouve l'objet.
+
+Extérieur (facultatif, maquette à plusieurs étages) : `SCENE["exterieur"]` (terrain, cour, maison vue de dehors ; contrat
+dans le docstring de `MAISON-18_deux_etages/exterieur.py`). La visite dessine le terrain jusqu'à l'horizon, la cour et
+l'enveloppe de la maison sous le soleil du jour ; on marche dehors (marches de 8 po au plus montées seules, obstacles, murs,
+lignes de lot) et on entre ou sort par les portes extérieures ouvertes (une porte dont un côté est hors de l'emprise de son
+étage). Arrêts dehors dans la section « Extérieur » ; petit plan du lot dehors ; maquette : vue « Extérieur » (maison avec
+son toit). Dedans, l'extérieur n'est dessiné qu'à travers les fenêtres et les portes ouvertes (et l'inverse dehors). Sortie
+ailleurs que dans le projet (essais) : `python3 renovation/outils/generer_3d.py renovation/<projet> /chemin/visite.html`.
 
 ## Matériaux
 `renovation/outils/materiaux/` : bibliothèque de matériaux réels (ambientCG, Poly Haven, CC0, ou fichiers de

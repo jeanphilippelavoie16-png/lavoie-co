@@ -22,7 +22,11 @@ une margelle et le terrain est troué au ras de la maison (voir reglages_fenetre
 Poids et mémoire : images de couleur des matériaux à 512 px au plus (TEX_COULEUR=1024 pour les garder plus fines), cartes de
 relief à 512 px (TEX_RELIEF), de rugosité à 256 px (TEX_RUGOSITE), photos à 720 px (PHOTO_MAX). La scène est passée à JSON.parse (chaîne JSON).
 
-Usage : python3 renovation/outils/generer_3d.py renovation/SS-02_aire_ouverte_gym_vitre
+Extérieur (opt-in, plusieurs étages) : SCENE["exterieur"] (terrain, cour, enveloppe de la maison ; voir preparer_exterieur) :
+on marche dehors et on entre par les portes extérieures ; la maquette gagne une vue « Extérieur ».
+
+Usage : python3 renovation/outils/generer_3d.py renovation/SS-02_aire_ouverte_gym_vitre [sortie.html]
+(sortie facultative : par défaut <projet>/3d/visite.html)
 """
 import base64, copy, importlib.util, io, json, math, os, sys
 
@@ -138,17 +142,28 @@ def margelles(niv, par_mur, fen, sol_ext, centre):
     return boites, rects
 
 
-def terrain_trou(niv, rects):
-    """Contour(s) du trou du terrain : emprise de la maison (faces extérieures des murs) plus les margelles."""
+def empreinte(niv):
+    """Emprise d'un niveau (géométrie shapely) : intérieur et murs extérieurs jusqu'à leur face extérieure (murs de fondation,
+    sinon murs « ext »). Sert à trouer le terrain et, dehors, à savoir si un point est dans la maison."""
     from shapely.geometry import LineString, Polygon
     from shapely.ops import unary_union
     murs = [m for m in niv["murs"] if m["type"] == "fondation"] or [m for m in niv["murs"] if m["type"] == "ext"]
     U = unary_union([LineString([(m["x1"], m["y1"]), (m["x2"], m["y2"])]).buffer(
         ((m.get("epaisseur") or {}).get("valeur") or 4.5) / 2, cap_style=3, join_style=2) for m in murs])
-    pleins = [Polygon(p.exterior) for p in (U.geoms if hasattr(U, "geoms") else [U])]
-    T = unary_union(pleins + [Polygon(r) for r in rects])
+    return unary_union([Polygon(p.exterior) for p in (U.geoms if hasattr(U, "geoms") else [U])])
+
+
+def contours(G, mini=1):
+    """Contours extérieurs (listes de [x, y] arrondis) des polygones d'une géométrie shapely."""
     return [[[round(x, 2), round(y, 2)] for x, y in list(p.exterior.coords)[:-1]]
-            for p in (T.geoms if hasattr(T, "geoms") else [T]) if p.area > 1]
+            for p in (G.geoms if hasattr(G, "geoms") else [G]) if p.geom_type == "Polygon" and p.area > mini]
+
+
+def terrain_trou(niv, rects):
+    """Contour(s) du trou du terrain : emprise de la maison (faces extérieures des murs) plus les margelles."""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    return contours(unary_union([empreinte(niv)] + [Polygon(r) for r in rects]))
 
 
 def boites_mur(m, ouvs, H, sill, head, fen=None):
@@ -1082,6 +1097,109 @@ def _trouer_sol(s, trous):
     return out
 
 
+def preparer_exterieur(X, M, etages, scene):
+    """Extérieur (opt-in, maquette à plusieurs étages) : SCENE["exterieur"] = {"sol", "terrain", "objets", "planchers",
+    "obstacles", "trous", "visites", "lumieres", "peintures"} (contrat détaillé dans le docstring d'exterieur.py de MAISON-18),
+    pouces, z ABSOLU (repère du plancher de l'étage le plus bas). Clé facultative : "palette" ([nom, description, couleur]).
+    Prépare pour la visionneuse :
+    - l'emprise de chaque étage (E["empreinte"] : dedans / dehors) et les portes extérieures (une porte dont un côté est dans
+      l'emprise de son étage et l'autre dehors reçoit "dedans" et "dehors" : points de passage de part et d'autre du mur) ;
+    - les trous du terrain : emprise de la maison, margelles et EXTERIEUR["trous"] réunis ;
+    - les vitres minces des objets (fenêtres vues de dehors) : "forme": "vitre_ext" et "face" (côté dehors), une seule face ;
+    - les arrêts de visite dehors (étage "EXT") et les peintures « ext-… » ajoutés à ceux de la scène.
+    Erreur explicite si les données ne respectent pas le contrat."""
+    from shapely.geometry import Point, Polygon
+    from shapely.ops import unary_union
+
+    def err(msg):
+        raise SystemExit("scene_3d.py, exterieur : " + msg)
+    num = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool)
+
+    def poly(p, quoi):
+        if not isinstance(p, list) or len(p) < 3 or not all(isinstance(q, (list, tuple)) and len(q) >= 2 and num(q[0]) and num(q[1]) for q in p):
+            err(f"{quoi} : polygone attendu ([[x, y], ...], au moins 3 points), reçu {str(p)[:80]}")
+        return [[round(float(q[0]), 2), round(float(q[1]), 2)] for q in p]
+    if not isinstance(X, dict):
+        err('SCENE["exterieur"] doit être un dictionnaire (voir le contrat dans exterieur.py)')
+    inconnues = set(X) - {"sol", "terrain", "objets", "planchers", "obstacles", "trous", "visites", "lumieres", "peintures", "palette"}
+    if inconnues:
+        err(f'clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
+    sol = X.get("sol")
+    if not num(sol):
+        err('"sol" (z du terrain, pouces) manquant ou non numérique')
+    terrain = poly(X.get("terrain"), '"terrain"')
+    planchers = []
+    for i, p in enumerate(X.get("planchers") or []):
+        if not isinstance(p, dict) or not num(p.get("z")):
+            err(f'plancher n° {i + 1} : {{"nom", "pts", "z"}} attendu, "z" numérique')
+        planchers.append({"nom": str(p.get("nom") or f"plancher {i + 1}"), "pts": poly(p.get("pts"), f'plancher « {p.get("nom")} »'), "z": float(p["z"])})
+    obstacles = [{"nom": str(o.get("nom") or f"obstacle {i + 1}"), "pts": poly(o.get("pts"), f'obstacle « {o.get("nom")} »')}
+                 for i, o in enumerate(X.get("obstacles") or []) if isinstance(o, dict) or err(f"obstacle n° {i + 1} : dictionnaire attendu")]
+    trous = [poly(t, f"trou n° {i + 1}") for i, t in enumerate(X.get("trous") or [])]
+    # emprise de chaque étage ; la maison au sol = leur réunion
+    nivs = {n["id"]: n for n in M["niveaux"]}
+    emp = {}
+    for E in etages:
+        g = empreinte(nivs[E["id"]])
+        E["empreinte"] = contours(g)
+        emp[E["id"]] = g
+    maison = unary_union(list(emp.values()))
+    # portes extérieures : un côté du mur dans l'emprise de l'étage, l'autre dehors (la porte-bibliothèque du walk-in, sous
+    # l'entrée arrière, a ses deux côtés dans l'emprise du sous-sol : elle reste une porte intérieure)
+    for E in etages:
+        for bt in E.get("battants", []):
+            x0, y0, x1, y1 = bt["zone"]
+            cx, cy, enX = (x0 + x1) / 2, (y0 + y1) / 2, (x1 - x0) < (y1 - y0)
+            d = min(x1 - x0, y1 - y0) / 2 + 12                  # 12 po au-delà de chaque face du mur
+            pts = [(cx + d, cy), (cx - d, cy)] if enX else [(cx, cy + d), (cx, cy - d)]
+            dans = [emp[E["id"]].contains(Point(p)) for p in pts]
+            if dans[0] != dans[1]:
+                k = 0 if dans[0] else 1
+                bt["dedans"] = [round(v, 2) for v in pts[k]]
+                bt["dehors"] = [round(v, 2) for v in pts[1 - k]]
+    # objets : vitres minces des fenêtres (vues de dehors) en une seule face tournée vers l'extérieur
+    bloque = [maison] + [Polygon(o["pts"]) for o in obstacles]
+    objets = []
+    for i, o in enumerate(X.get("objets") or []):
+        if not isinstance(o, dict) or not isinstance(o.get("mat"), str):
+            err(f'objet n° {i + 1} : dictionnaire avec "mat" (matériau du catalogue ou alias de "peintures") attendu')
+        o = dict(o)
+        if o["mat"] == "vitre" and o.get("forme", "boite") == "boite" and not o.get("pts") and all(num(o.get(k)) for k in ("x0", "x1", "y0", "y1", "z0", "z1")):
+            ex, ey = o["x1"] - o["x0"], o["y1"] - o["y0"]
+            if min(ex, ey) < 1.5:
+                enX = ex < ey
+                cx, cy = (o["x0"] + o["x1"]) / 2, (o["y0"] + o["y1"]) / 2
+                ip, im = [any(g.contains(Point(p)) for g in bloque) for p in (((cx + 8, cy), (cx - 8, cy)) if enX else ((cx, cy + 8), (cx, cy - 8)))]
+                if ip != im:
+                    o["forme"], o["face"] = "vitre_ext", ("-" if ip else "+") + ("x" if enX else "y")
+        objets.append(o)
+    # terrain : troué à la maison, aux margelles (terrain_trou du sous-sol) et aux trous du contrat
+    tt = [Polygon(t) for t in scene.get("terrain_trou") or []] + [Polygon(t) for t in trous]
+    trous_terrain = contours(unary_union([maison] + tt).buffer(0))
+    for v in X.get("visites") or []:
+        if not isinstance(v, dict) or not all(num(v.get(k)) for k in ("x", "y", "cap", "z")):
+            err(f'arrêt de visite « {v.get("nom") if isinstance(v, dict) else v} » : "x", "y", "cap" et "z" numériques attendus')
+        scene["visites"].append(dict(v, etage="EXT"))
+    lumieres = []
+    for l in X.get("lumieres") or []:
+        if not isinstance(l, dict) or not all(num(l.get(k)) for k in ("x", "y", "z")):
+            err(f'lumière {l!r} : "x", "y", "z" numériques attendus')
+        lumieres.append(l)
+    # peintures « ext-… » : ajoutées à celles des étages (un nom déjà pris d'une autre couleur est préfixé)
+    alias = {v[2]: str(v[0]).lower() for v in scene["peintures"].values() if len(v) > 2 and v[2]}
+    for nom, v in (X.get("peintures") or {}).items():
+        if not isinstance(v, (list, tuple)) or not v or not isinstance(v[0], str):
+            err(f'peinture « {nom} » : [couleur, description, alias] attendu')
+        if len(v) > 2 and v[2] in alias and alias[v[2]] != str(v[0]).lower():
+            err(f'peinture « {nom} » : l\'alias « {v[2]} » est déjà employé par un étage avec une autre couleur')
+        n2 = nom if nom not in scene["peintures"] or str(scene["peintures"][nom][0]).lower() == str(v[0]).lower() else "Extérieur · " + nom
+        scene["peintures"][n2] = list(v)
+    if X.get("palette"):
+        scene["palettes"].append({"titre": "Extérieur", "items": X["palette"]})
+    return {"sol": float(sol), "terrain": terrain, "trous_terrain": trous_terrain, "objets": objets, "planchers": planchers,
+            "obstacles": obstacles, "lumieres": lumieres}
+
+
 def fusionner(M, S, dossier):
     """Plusieurs étages (SCENE["etages"]) : chaque étage est construit dans le repère de son plancher, posé à la somme
     des hauteurs d'étage des niveaux du dessous, puis fusionné en une scène (voir le gabarit : S.etages)."""
@@ -1163,12 +1281,17 @@ def fusionner(M, S, dossier):
         scene["terrain_trou"] = out_etages[0].pop("terrain_trou")
     for E in out_etages:
         E.pop("terrain_trou", None)
+    # extérieur (opt-in) : terrain, cour, enveloppe de la maison ; on y marche (voir preparer_exterieur)
+    if S.get("exterieur"):
+        scene["exterieur"] = preparer_exterieur(S["exterieur"], M, out_etages, scene)
     # matériaux, modèles, commandes et images : une seule fois chacun, pour tous les étages
     tous = {"boites": [], "portes": [], "mobilier": [], "sols": [], "revetements": [], "materiaux": None}
     for E in out_etages:
         for k in ("boites", "portes", "mobilier", "sols", "revetements"):
             tous[k] += E[k]
         tous["portes"] += [q for bt in E["battants"] for q in bt["boites"]]
+    if scene.get("exterieur"):
+        tous["mobilier"] += scene["exterieur"]["objets"]
     Sf = {"commandes": cmds, "mobilier": tous["mobilier"], "visites": visites, "images": images,
           "mat_colonne": etages[0].get("mat_colonne", "placage")}
     cmd = commandes(Sf)
@@ -1222,7 +1345,7 @@ def alleger(scene, html_len):
     return True
 
 
-def main(dossier):
+def main(dossier, sortie=None):
     dossier = os.path.abspath(dossier)
     M = json.load(open(os.path.join(dossier, "donnees", "maison.json"), encoding="utf-8"))
     S = charger_scene(dossier)
@@ -1255,11 +1378,11 @@ def main(dossier):
         html = page()
     if len(html.encode("utf-8")) > 14 * 1024 * 1024:
         print("  ATTENTION : page de plus de 14 Mo (trop lourde pour être publiée) : moins de matériaux ou de modèles")
-    os.makedirs(os.path.join(dossier, "3d"), exist_ok=True)
-    out = os.path.join(dossier, "3d", "visite.html")
+    out = os.path.abspath(sortie) if sortie else os.path.join(dossier, "3d", "visite.html")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w", encoding="utf-8").write(html)
     print("maquette 3D :", out, f"({len(html) // 1024} Ko)")
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)

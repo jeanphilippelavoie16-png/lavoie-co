@@ -819,13 +819,13 @@
       "note": "hauteur non écrite"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 40,
+      "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po (HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"
      },
      "texte_original": "6'-3\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis"
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), margelle ; appui, allège de béton et margelle à valider avec un professionnel."
     },
     {
      "id": "ouv-SS-003",
@@ -851,13 +851,13 @@
       "note": "hauteur non écrite"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 40,
+      "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po (HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"
      },
      "texte_original": "6'-8\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis ; dessin ≈ 72 po (ESTIMÉ) — voir écart"
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis ; dessin ≈ 72 po (ESTIMÉ) — voir écart — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), margelle ; appui, allège de béton et margelle à valider avec un professionnel."
     },
     {
      "id": "ouv-SS-004",
@@ -884,13 +884,13 @@
       "note": "hauteur non écrite"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 40,
+      "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po (HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"
      },
      "texte_original": "3'-0\"",
-     "note": "fenêtre déplacée à la place de l'ancienne porte (réponses du propriétaire (2026-10-29)) ; largeur 3'-0\" du plan 1957 PRÉSUMÉE conservée"
+     "note": "fenêtre déplacée à la place de l'ancienne porte (réponses du propriétaire (2026-10-29)) ; largeur 3'-0\" du plan 1957 PRÉSUMÉE conservée — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), margelle ; appui, allège de béton et margelle à valider avec un professionnel."
     },
     {
      "id": "ouv-SS-005",
@@ -1025,12 +1025,12 @@
       "note": "non écrite"
      },
      "texte_original": "PORTE 2'-6\"",
-     "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus — voir ecart-029 SS-17 : la porte devient une porte-bibliothèque pivotante (32 × 82, 8 po hors tout) posée devant la baie, côté chambre 2.",
+     "note": "porte du caveau à légumes (rectangle barré d'un X) ; aucun arc : battant et sens inconnus — voir ecart-029 MAISON-18 : la porte devient une porte dérobée de chêne (33 × 81 po) intégrée au mur de tête, côté chambre 2.",
      "repere": "ecart-029",
      "sens": {
       "charniere": "fin",
       "ouvre_vers": "gauche",
-      "note": "porte-bibliothèque secrète pivotante (pentures/pivots côté ouest, ouvre vers la chambre), miroir au dos ; s'ouvre en poussant depuis le walk-in, aucun verrou — proposition SS-17 (esquisse)"
+      "note": "porte dérobée affleurante dans le mur de chêne (pivots invisibles côté ouest, loquet poussoir), ouvre vers la chambre ; s'ouvre en poussant depuis le walk-in, aucun verrou ; miroir au dos — proposition MAISON-18 (esquisse)"
      },
      "interieure": true,
      "fermee": true
@@ -1059,12 +1059,12 @@
       "note": "hauteur non écrite"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 40,
+      "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po (HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"
      },
-     "note": "moitié droite, restée à l'emplacement d'origine de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) Fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à mesurer ; à valider avec la Ville et un professionnel."
+     "note": "moitié droite, restée à l'emplacement d'origine de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) Fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; plancher libre devant (aucun meuble), rideaux repliés entre les deux fenêtres ; allège abaissée (≈ 40 po) et puits à vérifier ; à valider avec la Ville et un professionnel. — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), margelle ; appui, allège de béton et margelle à valider avec un professionnel."
     },
     {
      "id": "ouv-SS-010",
@@ -1090,12 +1090,12 @@
       "note": "hauteur non écrite"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 40,
+      "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po (HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"
      },
-     "note": "moitié gauche, déplacée de 2'-0\" vers la gauche de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) Fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à mesurer ; à valider avec la Ville et un professionnel."
+     "note": "moitié gauche, déplacée de 2'-0\" vers la gauche de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) Fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; plancher libre devant (aucun meuble), rideaux repliés entre les deux fenêtres ; allège abaissée (≈ 40 po) et puits à vérifier ; à valider avec la Ville et un professionnel. — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), margelle ; appui, allège de béton et margelle à valider avec un professionnel."
     },
     {
      "id": "ouv-SS-P01",
@@ -1658,7 +1658,7 @@
      "nom": "Chambre 1",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Chambre 1 (enfant de 4 ans), allégée : lit queen sur plateforme à bacs en coin, banquette sous les fenêtres, garde-robe intégrée sur le mur de la salle de bain (l'ancienne garde-robe est fusionnée), coin jeu au sol au centre — proposition MAISON-18 (esquisse)",
+     "description": "Chambre 1 (enfant de 4 ans), « la niche bleue » : mur de rangement intégré pleine hauteur sur le mur ouest (façades peintes affleurantes, sans quincaillerie) avec la niche du lit queen doublée de chêne, bureau dans le recoin d'entrée, coin lecture à la fenêtre est, grand tapis et lanterne centrale — proposition MAISON-18 (esquisse)",
      "polygone": [
       [
        10.0,
@@ -1715,7 +1715,7 @@
      "nom": "Chambre 2",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Chambre 2 (enfant de 6 ans), allégée : porte-bibliothèque secrète vers le walk-in, lit queen sur plateforme à tiroirs devant un panneau de lattes, banc de fenêtre, pupitre à rabat, coin jeu au sol — proposition MAISON-18 (esquisse)",
+     "description": "Chambre 2 (garçon de 6 ans, jusqu'à l'adolescence) « le mur de chêne » : mur de tête pleine largeur en chêne avec la porte dérobée du walk-in, lit queen sur plateforme à tiroirs, tête rembourrée marine, bureau réglable, coin lecture à la fenêtre, grand tapis, lanterne de papier — proposition MAISON-18 (esquisse)",
      "polygone": [
       [
        446.0,
@@ -1763,7 +1763,7 @@
      "id": "piece-SS-LEG",
      "nom": "Walk-in isolé",
      "nom_original": "LEGUMES",
-     "description": "Ancien caveau à légumes isolé (2 po rigide + gypse, fini 83 × 47½, plafond supposé à 84 : À MESURER) : walk-in de la chambre 2 — penderie double sur crémaillères (tringles z 34 et 70), banc à souliers, tour de tiroirs, miroir au dos de la porte-bibliothèque, panneau rayonnant au plafond — proposition SS-17 (esquisse)",
+     "description": "Ancien caveau à légumes isolé (2 po rigide + gypse, fini 83 × 47½, plafond supposé à 84 : À MESURER) : walk-in de la chambre 2, peint marine — penderie à deux hauteurs (tringles à 40 et 78 po), colonne de chêne à tiroirs et tablettes éclairées, banc à souliers, miroir au dos de la porte dérobée, DEL linéaire, panneau rayonnant — proposition MAISON-18 (esquisse)",
      "polygone": [
       [
        317.0,
@@ -1976,7 +1976,7 @@
      "etat": "nouveau",
      "position": {
       "x": 98,
-      "y": 80,
+      "y": 73,
       "rotation_deg": 90,
       "source": "PRÉSUMÉ"
      },
@@ -2074,85 +2074,139 @@
      "libelle": ""
     },
     {
-     "id": "elem-SS-P-C1-BANC",
-     "type": "autre",
-     "nom": "Banquette des fenêtres (assise 16 po), 4 grands tiroirs ; marche d'évacuation",
+     "id": "elem-SS-P-C1-BUREAU",
+     "type": "comptoir",
+     "nom": "Bureau du recoin : plateau de chêne de 52½ × 20 po sur crémaillères noires (22 po aujourd'hui, jusqu'à 29 po), un tiroir ; chaise d'enfant de chêne",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 165.375,
-      "y": 360.75,
-      "rotation_deg": 180,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 144.75,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 17.5,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": "BANQUETTE"
-    },
-    {
-     "id": "elem-SS-P-C1-GR",
-     "type": "armoires",
-     "nom": "Garde-robe intégrée 134 po à portes pleines de chêne (penderie évolutive, 4 tiroirs, rotation des jouets ; le haut aux parents)",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 77.125,
-      "y": 264.25,
+      "x": 170.75,
+      "y": 242.25,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 134.25,
+       "valeur": 52.5,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 24,
+       "valeur": 20.0,
        "source": "PRÉSUMÉ",
        "photo": null
       }
      },
      "note": "proposition SS-17 (esquisse)",
-     "libelle": "G.-R."
+     "libelle": "BUREAU"
+    },
+    {
+     "id": "elem-SS-P-C1-LECTURE",
+     "type": "autre",
+     "nom": "Coin lecture : fauteuil de cuir cognac et liseuse sur pied, à côté de la fenêtre est (pas devant)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 216.8,
+      "y": 347.0,
+      "rotation_deg": 335,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 26,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 31.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
     },
     {
      "id": "elem-SS-P-C1-LIT",
      "type": "autre",
-     "nom": "Lit-plateforme queen (matelas 60 × 80 à 22 po), 3 bacs-wagons roulants dessous, tête en lattes de chêne, tablette-dosseret",
+     "nom": "Lit queen dans la niche du mur de rangement (matelas 60 × 80, dessus à 22 po) : socle de chêne à 4 tiroirs sans poignée, tête rembourrée en lin et tablette, 2 liseuses ; pont de rangement au-dessus (74 → 96 po, les parents)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 52.0,
-      "y": 336.0,
+      "x": 52.875,
+      "y": 311.125,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 82,
+       "valeur": 84.75,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 68,
+       "valeur": 63.75,
        "source": "PRÉSUMÉ",
        "photo": null
       }
      },
      "note": "proposition SS-17 (esquisse)",
      "libelle": "LIT QUEEN"
+    },
+    {
+     "id": "elem-SS-P-C1-RGN",
+     "type": "armoires",
+     "nom": "Mur de rangement intégré, colonne nord (27 × 24 po, pleine hauteur) : tablettes réglables, bacs de jouets en rotation et livres à sa hauteur ; façades peintes affleurantes, ouverture par pression",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 22.5,
+      "y": 356.5,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 27.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-C1-RGS",
+     "type": "armoires",
+     "nom": "Mur de rangement intégré, colonne sud (27 × 24 po, pleine hauteur) : penderie évolutive (2 tringles à sa hauteur, puis une à 66 po) et tiroirs intérieurs ; façades peintes affleurantes, ouverture par pression",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 22.5,
+      "y": 265.75,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 27.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
     },
     {
      "id": "elem-SS-P-CABANE",
@@ -2208,52 +2262,52 @@
      "note": "proposition SS-17 (esquisse)"
     },
     {
-     "id": "elem-SS-P-CH2-BANC",
-     "type": "comptoir",
-     "nom": "Banc de fenêtre (assise 18 po, 3 tiroirs ; celui du centre s'enlève : trappe d'accès au drain) ; marche d'évacuation",
+     "id": "elem-SS-P-CH2-BUREAU",
+     "type": "autre",
+     "nom": "Bureau à hauteur réglable 54 × 24 po (plateau de chêne, piètement électrique noir, 22 à 30 po), tablette de chêne au-dessus",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 434,
-      "y": 316,
+      "x": 418.0,
+      "y": 244.75,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 24,
+       "valeur": 54,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 108,
+       "valeur": 24,
        "source": "PRÉSUMÉ",
        "photo": null
       }
      },
      "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
+     "libelle": "BUREAU"
     },
     {
-     "id": "elem-SS-P-CH2-LATTES",
+     "id": "elem-SS-P-CH2-FAUTEUIL",
      "type": "autre",
-     "nom": "Tête de lit : panneau de lattes de chêne sur feutre (106 × 60 po), 2 liseuses DEL",
+     "nom": "Coin lecture : fauteuil bas marine 30 × 30 po et liseuse sur pied noire",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 355,
-      "y": 368.75,
+      "x": 419.0,
+      "y": 351.0,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 106,
+       "valeur": 30,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 2.5,
+       "valeur": 30,
        "source": "PRÉSUMÉ",
        "photo": null
       }
@@ -2264,18 +2318,18 @@
     {
      "id": "elem-SS-P-CH2-LIT",
      "type": "autre",
-     "nom": "Lit-plateforme queen : socle de chêne à 4 tiroirs, matelas 60 × 80 (dessus à 22 po)",
+     "nom": "Lit-plateforme queen de chêne à 4 tiroirs (matelas 60 × 80, dessus à 22½ po), tête rembourrée marine 66 × 30 po, 2 liseuses murales noires",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 355,
-      "y": 325,
+      "x": 343.5,
+      "y": 323.0,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 66,
+       "valeur": 64,
        "source": "PRÉSUMÉ",
        "photo": null
       },
@@ -2289,25 +2343,52 @@
      "libelle": "LIT QUEEN"
     },
     {
-     "id": "elem-SS-P-CH2-ND",
-     "type": "comptoir",
-     "nom": "Chevet flottant droit à tiroir (dessus à 24 po)",
+     "id": "elem-SS-P-CH2-MUR",
+     "type": "autre",
+     "nom": "Mur de tête pleine largeur : planches de chêne blanc de 16½ po à joints creux noirs, plancher au plafond ; la porte dérobée du walk-in en fait partie (à l'ouest)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 398,
-      "y": 362,
+      "x": 361.75,
+      "y": 368.75,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 16,
+       "valeur": 168.5,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 12,
+       "valeur": 2.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-SS-P-CH2-ND",
+     "type": "autre",
+     "nom": "Chevet : bloc de travertin adouci 18 × 15 po, dessus à 21 po",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 389.0,
+      "y": 359.5,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 18,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 15,
        "source": "PRÉSUMÉ",
        "photo": null
       }
@@ -2317,78 +2398,24 @@
     },
     {
      "id": "elem-SS-P-CH2-NG",
-     "type": "comptoir",
-     "nom": "Chevet flottant gauche à tiroir (dessus à 24 po)",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 312,
-      "y": 362,
-      "rotation_deg": 0,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 16,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 12,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
-    },
-    {
-     "id": "elem-SS-P-CH2-PB",
      "type": "autre",
-     "nom": "Porte-bibliothèque secrète (pivots, livre-levier, miroir au dos) devant la baie du walk-in ; imposte-bibliothèque fixe au-dessus",
+     "nom": "Chevet : bloc de travertin adouci 18 × 15 po, dessus à 21 po",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 260.125,
-      "y": 366,
+      "x": 298.0,
+      "y": 359.5,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 35.75,
+       "valeur": 18,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 8,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
-    },
-    {
-     "id": "elem-SS-P-CH2-PUPITRE",
-     "type": "armoires",
-     "nom": "Pupitre à rabat mural (36 po, rabat à 23 po, 9 po fermé) et tabouret",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 300,
-      "y": 236.75,
-      "rotation_deg": 0,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 36,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 9,
+       "valeur": 15,
        "source": "PRÉSUMÉ",
        "photo": null
       }
@@ -2771,18 +2798,18 @@
     {
      "id": "elem-SS-P-PLIAGE",
      "type": "comptoir",
-     "nom": "Comptoir de pliage en L avec rangement dessous (mur du gym)",
+     "nom": "Comptoir de pliage en L avec rangement dessous (mur du gym), raccourci : niche du congélateur au bout",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
       "x": 97.75,
-      "y": 72.5,
+      "y": 60.75,
       "rotation_deg": 90,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 75,
+       "valeur": 51.5,
        "source": "PRÉSUMÉ",
        "photo": null
       },
@@ -3009,12 +3036,12 @@
     {
      "id": "elem-SS-P-WI-BANC",
      "type": "comptoir",
-     "nom": "Walk-in : banc à souliers et crochets",
+     "nom": "Walk-in : banc à souliers (assise à 16 po) et crochets noirs",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 238.5,
-      "y": 392.75,
+      "x": 307.5,
+      "y": 393.0,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
@@ -3025,7 +3052,7 @@
        "photo": null
       },
       "largeur": {
-       "valeur": 25.5,
+       "valeur": 24,
        "source": "PRÉSUMÉ",
        "photo": null
       }
@@ -3035,18 +3062,18 @@
     {
      "id": "elem-SS-P-WI-PENDERIE",
      "type": "autre",
-     "nom": "Walk-in : penderie double sur crémaillères (tringles z 34 et 70, tablette et bacs z 74)",
+     "nom": "Walk-in : penderie à deux hauteurs (tringles noires à 40 et 78 po), DEL linéaire au plafond",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 273,
+      "x": 258.75,
       "y": 416.5,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 83,
+       "valeur": 54.5,
        "source": "PRÉSUMÉ",
        "photo": null
       },
@@ -3062,23 +3089,23 @@
     {
      "id": "elem-SS-P-WI-TOUR",
      "type": "armoires",
-     "nom": "Walk-in : tour de tiroirs, panier à linge et valet (ancrée)",
+     "nom": "Walk-in : colonne de chêne, 4 tiroirs (dessus-valet à 36¾ po) et 3 tablettes éclairées",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 305.5,
-      "y": 392.75,
+      "x": 300.75,
+      "y": 416.5,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 18,
+       "valeur": 27.5,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 25.5,
+       "valeur": 22,
        "source": "PRÉSUMÉ",
        "photo": null
       }
@@ -3181,14 +3208,41 @@
      "note": "proposition SS-17 (esquisse)"
     },
     {
-     "id": "elem-SS-Q-DESHUM",
-     "type": "autre",
-     "nom": "Déshumidificateur à drain permanent (hygrostat)",
+     "id": "elem-SS-Q-CONG",
+     "type": "refrigerateur",
+     "nom": "Congélateur vertical ≈ 20 pi³ (≈ 32 × 30 × 70 po, blanc), niche de 33 po au bout du comptoir de pliage, porte à droite ; prise simple dédiée au-dessus (circuit séparé)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 57,
-      "y": 138,
+      "x": 92.6,
+      "y": 103,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 32,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": "CONG."
+    },
+    {
+     "id": "elem-SS-Q-DESHUM",
+     "type": "autre",
+     "nom": "Déshumidificateur à drain permanent (hygrostat), sous la fenêtre à côté de la laveuse (dégagement de 36 po devant le chauffe-eau)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 18,
+      "y": 56,
       "rotation_deg": 90,
       "source": "PRÉSUMÉ"
      },
@@ -4794,7 +4848,7 @@
      "id": "note-SS-P01",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Esquisse par-dessus SS-16 (le reste est l'existant, base R0) ; béton poli d'un seul tenant."
+     "interpretation": "Fenêtres agrandies par le bas (allège ≈ 40 po, sauf bain et lavage) ; congélateur au lavage."
     },
     {
      "id": "note-SS-P02",
@@ -4806,7 +4860,7 @@
      "id": "note-SS-P03",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Walk-in (ancien caveau) : isolé, évents fermés, chauffé ; porte-bibliothèque pivotante depuis la chambre 2."
+     "interpretation": "Walk-in (ancien caveau) : isolé, évents fermés, chauffé ; porte dérobée dans le mur de chêne de la chambre 2."
     },
     {
      "id": "note-SS-P04",
@@ -6289,10 +6343,10 @@
       "note": "hauteur non écrite"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 20,
+      "source": "PRÉSUMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (client, 2026-11-02 : « plus grande vers le bas ») : allège abaissée d'environ 34 à 20 po (HYPOTHÈSE), tête et linteau 2-2×10 inchangés ; à mesurer et à valider"
      },
      "texte_original": "9'-0\" ; LINTEAU 2-2\"x10\"",
      "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; salon, 3 sections",
@@ -10666,7 +10720,7 @@
      "id": "note-RDC-P01",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes estimées sur photos, à mesurer)."
+     "interpretation": "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes à mesurer) ; fenêtre du salon descendue (allège ≈ 20 po)."
     },
     {
      "id": "note-RDC-P02",

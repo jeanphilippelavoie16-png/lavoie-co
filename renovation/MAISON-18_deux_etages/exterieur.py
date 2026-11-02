@@ -1,7 +1,8 @@
 """MAISON-18 — l'extérieur : terrain, enveloppe de la maison et cour arrière (plan DAG du 17-12-2025).
 
-Données seulement (le moteur ne marche pas encore dehors). Pouces, repère de la maison : x le long de la façade (0 à 456 au
-nu extérieur), y vers l'arrière (façade 0, mur arrière 380), z vers le haut DEPUIS LE PLANCHER DU SOUS-SOL (le RDC est à 105).
+Données (le moteur les lit : generer_3d.preparer_exterieur ; on y marche dans la visite). Pouces, repère de la maison : x le
+long de la façade (0 à 456 au nu extérieur), y vers l'arrière (façade 0, mur arrière 380), z vers le haut DEPUIS LE PLANCHER
+DU SOUS-SOL (le RDC est à 105).
 
 Sources
 - Plan « PLAN D'AMÉNAGEMENT — COUR ARRIÈRE », Design Action Gestion (DAG), 17-12-2025, 3/16" = 1'-0" (PNG 2550 × 1650 px à 150 ppp :
@@ -17,19 +18,22 @@ Sources
 - donnees/maison.json (murs extérieurs, ouvertures, cheminée, perron, entrée arrière), lu à l'import : les fenêtres et portes
   suivent les changements des autres modules (repli : les valeurs du relevé si le fichier manque).
 
-CONTRAT (pour le moteur, qui l'ajoutera ensuite) — EXTERIEUR = {
-  "sol": 48,                 terrain naturel (z, repère du plancher du sous-sol) : le plan de gazon actuel du moteur ;
-  "terrain": [[x, y], ...],  lignes de lot (polygone, sens horaire vu de dessus) : ce qu'on montre comme terrain ;
+CONTRAT (lu par le moteur) — EXTERIEUR = {
+  "sol": 48,                 terrain naturel (z, repère du plancher du sous-sol) : le moteur y dessine le gazon (texturé,
+                             jusqu'à l'horizon), troué à la maison, aux margelles et aux "trous" ;
+  "terrain": [[x, y], ...],  lignes de lot (polygone, sens horaire vu de dessus) : limites où l'on marche, lot du mini-plan ;
   "objets": [...],           objets du mobilier (formes du moteur : boite, arrondi, cylindre, tube, sphere, tore ; "pts" =
                              prisme vertical) en z ABSOLU ; matériaux du catalogue ou alias de EXTERIEUR["peintures"] ;
   "planchers": [{"nom", "pts", "z"}],   surfaces où l'on marche au-dessus du terrain (palier, marches, patio, deck, dalles…) ;
                              z = dessus ; une marche = un plancher ; la descente de la porte de côté est SOUS le terrain (z < 48) ;
   "obstacles": [{"nom", "pts"}],        emprises où l'on ne passe pas (piscine, cabanon, muret, garde-corps, haies, troncs…) ;
+                             les murs de la maison bloquent d'office (sauf aux portes extérieures ouvertes), une marche de
+                             plus de 8 po aussi (on ne tombe pas d'une terrasse) ;
   "trous": [[[x, y], ...]],  où couper le plan du terrain (descente extérieure de la porte de côté du sous-sol) ;
   "visites": [{"nom", "x", "y", "cap", "z"}],  arrêts dehors (z = dessus du sol sous les pieds) ;
   "lumieres": [{"x", "y", "z", "i"}],   appliques et lanterne (même format que les lumières d'étage, z absolu) ;
-  "peintures": {nom: [couleur, description, alias]}  couleurs des alias employés par les objets ("ext-blanc"…) }.
-Aperçu dans le moteur actuel : EXT_APERCU=1 (voir scene_3d.py) pose ces objets dans le mobilier du sous-sol.
+  "peintures": {nom: [couleur, description, alias]}  couleurs des alias employés par les objets ("ext-blanc"…) ;
+  "palette": [[nom, description, couleur]]           (facultatif) matériaux de l'extérieur, section « Extérieur » de la liste }.
 """
 import json
 import math
@@ -381,6 +385,7 @@ DALLES = [[(486.5, 598.4), (495.4, 575.5), (461.2, 562.2), (452.3, 585.2)],     
 APPAREILS = [(33.8, 780.0), (0.4, 790.7), (25.2, 857.4), (59.4, 847.5)]          # dalle des appareils de la piscine (3' × 6')
 ALLEE = (462, -480, 556, 40)               # allée d'asphalte le long du côté droit (hors plan DAG : supposée)
 DESCENTE = (456, 100, 504, 212)            # descente de la porte de côté du sous-sol (hors plan : supposée)
+DESC_OUVERT = 15                           # haut de la descente ouvert côté allée (y 100 à 115 : terrain, puis 1re marche)
 # lignes de lot : arrière et côtés mesurés sur le plan DAG ; devant prolongé avec le plan d'implantation de 1957 (marge avant
 # de 40', ligne droite ⟂ à la rue, façade du lot 57,23')
 TERRAIN = [[560, -480], [560, 871], [-43, 903], [-128, -480]]
@@ -526,26 +531,19 @@ def mobilier_patio():
 
 # ------------------------------------------------------------------------------------------------- terrain, allée, végétation
 def terrain_et_vegetation():
-    from shapely.geometry import Polygon, box
-    from shapely.ops import unary_union
-    out = []
-    lot = Polygon(TERRAIN)
-    maison = unary_union([box(*CORPS), box(*ENTREE_ARR), box(*PERRON), box(*CHEMINEE), box(*DESCENTE)] + [box(*r) for r in MARGELLES])
-    gazon = lot.difference(maison)
-    for zone in (box(-500, -600, 700, 0), box(-500, 380, 700, 1000), box(-500, 0, 0, 380), box(456, 0, 700, 380)):
-        g = gazon.intersection(zone)
-        for q in (g.geoms if hasattr(g, "geoms") else [g]):
-            if q.geom_type == "Polygon" and q.area > 10:
-                out.append(P(list(q.exterior.coords)[:-1], SOL - 1, SOL + 0.25, "ext-gazon"))
-    out.append(B(*ALLEE, SOL - 0.5, SOL + 0.6, "ext-asphalte"))
+    # le gazon est dessiné par le moteur au niveau EXTERIEUR["sol"] (troué à la maison, aux margelles et aux "trous")
+    out = [B(*ALLEE, SOL - 0.5, SOL + 0.6, "ext-asphalte")]
     # descente extérieure de la porte de côté (sous le terrain : visible quand le moteur coupera le gazon, EXTERIEUR["trous"])
+    # Le haut de la descente touche la margelle de la fenêtre voisine (ouv-SS-004, jusqu'à y = 100,5) : on y entre par le côté
+    # de l'allée, ouvert sur DESC_OUVERT po (muret au ras du sol, sans garde-corps), sinon on serait coincé entre la margelle et
+    # le muret.
     x0, y0, x1, y1 = DESCENTE
     r = SOL / 7
-    out += [B(x1 - 6, y0, x1, y1, -6, SOL + 4, "beton"), B(x0, y1 - 6, x1, y1, -6, SOL + 4, "beton"),
-            B(x0, y0 + 60, x1 - 6, y1 - 6, -6, 0, "beton")]
+    out += [B(x1 - 6, y0, x1, y0 + DESC_OUVERT, -6, SOL, "beton"), B(x1 - 6, y0 + DESC_OUVERT, x1, y1, -6, SOL + 4, "beton"),
+            B(x0, y1 - 6, x1, y1, -6, SOL + 4, "beton"), B(x0, y0 + 60, x1 - 6, y1 - 6, -6, 0, "beton")]
     for i in range(1, 7):
         out.append(B(x0, y0 + 6 + 9 * (i - 1), x1 - 6, y0 + 60, -6, SOL - r * i, "beton"))
-    out += garde_corps((x1 - 3, y0), (x1 - 3, y1), SOL + 4, 36) + garde_corps((x0 + 1, y1 - 3), (x1, y1 - 3), SOL + 4, 36)
+    out += garde_corps((x1 - 3, y0 + DESC_OUVERT), (x1 - 3, y1), SOL + 4, 36) + garde_corps((x0 + 1, y1 - 3), (x1, y1 - 3), SOL + 4, 36)
     # haie de cèdres le long de la ligne de lot oblique (cour arrière), 6 pi
     ys = [380 + 20 * i for i in range(26)] + [895]
     gauche = [(_ligne_gauche(y) + 6, y) for y in ys]
@@ -598,7 +596,18 @@ def _obstacles():
             {"nom": "Appareils de la piscine", "pts": [list(p) for p in APPAREILS]},
             {"nom": "Haie de cèdres", "pts": [[round(_ligne_gauche(380) + 6, 1), 380], [round(_ligne_gauche(380) + 32, 1), 380],
                                                [round(_ligne_gauche(895) + 32, 1), 895], [round(_ligne_gauche(895) + 6, 1), 895]]},
-            {"nom": "Table du patio", "pts": rect(236, 487, 308, 523)}, {"nom": "BBQ", "pts": rect(360, 494, 382, 558)}]
+            {"nom": "Table du patio", "pts": rect(236, 487, 308, 523)}, {"nom": "BBQ", "pts": rect(360, 494, 382, 558)},
+            # ajoutés pour la marche dehors (le moteur s'en sert) : cheminée, garde-corps du perron, murets de la descente de la
+            # porte de côté, garde-corps gauche du deck, bacs à plantes, tronc de l'arbre du devant
+            {"nom": "Cheminée", "pts": rect(*CHEMINEE)},
+            {"nom": "Garde-corps du perron (gauche)", "pts": rect(162, -114, 165, 0)},
+            {"nom": "Garde-corps du perron (droite)", "pts": rect(231, -114, 234, 0)},
+            {"nom": "Muret de la descente (côté allée)", "pts": rect(DESCENTE[2] - 6, DESCENTE[1] + DESC_OUVERT, DESCENTE[2], DESCENTE[3])},
+            {"nom": "Muret de la descente (fond)", "pts": rect(DESCENTE[0], DESCENTE[3] - 6, DESCENTE[2], DESCENTE[3])},
+            {"nom": "Garde-corps du deck (gauche)", "pts": rect(159, 560, 161.5, round(cy - math.sqrt(R ** 2 - (cx - 159) ** 2), 1))},
+            {"nom": "Bac à plantes (bas)", "pts": [[round(x, 1), round(y, 1)] for x, y in cercle(172, 547, 10, 12)]},
+            {"nom": "Bac à plantes (haut)", "pts": [[round(x, 1), round(y, 1)] for x, y in cercle(172, 453, 10, 12)]},
+            {"nom": "Érable du devant (tronc)", "pts": [[round(x, 1), round(y, 1)] for x, y in cercle(60, -250, 7, 12)]}]
 
 
 EXTERIEUR = {
@@ -620,6 +629,14 @@ EXTERIEUR = {
     "lumieres": [{"x": 328.5, "y": 432, "z": 178, "i": 2}, {"x": 240, "y": -1.5, "z": 170, "i": 2},
                  {"x": 451, "y": 674, "z": 150, "i": 1.5}],
     "peintures": PEINTURES,
+    "palette": [["Brique rouge", "parement du rez-de-chaussée (existant)", "#8E3B2E"],
+                ["Fondation crépie blanche", "fondation apparente (existant)", "#ECEAE4"],
+                ["Bardeau d'asphalte gris foncé", "toit en croupe 5/12 et toit du cabanon", "#3F4245"],
+                ["Platelage composite beige", "palier, patio et deck (teinte de la vidéo DAG, à choisir)", "#C9A877"],
+                ["Garde-corps d'aluminium noir", "barreaux 36 et 48 po, verre pur entre le patio et le deck, portillon", "#1A1A1A"],
+                ["Jupe en déclin blanc", "sous les terrasses", "#F1F0EB"],
+                ["Piscine hors-terre 21 pi", "paroi grise, toile bleue", "#8C939A"],
+                ["Cabanon 10' × 12'", "planches verticales blanches, portes de grange noires", "#F1F0EB"]],
 }
 # appliques des portes (les lumières ci-dessus y sont placées)
 EXTERIEUR["objets"] += [B(327.5, 429, 333, 435, 172, 184, "metal"), B(328.5, 430, 332, 434, 174, 182, "abat-jour"),

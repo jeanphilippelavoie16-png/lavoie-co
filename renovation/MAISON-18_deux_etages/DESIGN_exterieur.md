@@ -3,9 +3,9 @@
 **Demande du client** : « Je veux aussi que tu fasses l'extérieur. »
 
 On n'a pas redessiné la cour : on a **mis en 3D le projet de Design Action Gestion (DAG)**, tel quel, et on a ajouté autour la
-maison vue de dehors, le devant du terrain et les côtés. Pour l'instant, ce sont **des données seulement**
-(`exterieur.py`, dictionnaire `EXTERIEUR`). La visite ne marche pas encore dehors : le moteur l'ajoutera en suivant le contrat
-décrit dans le docstring de `exterieur.py`. On peut déjà voir le résultat dans la maquette actuelle avec un aperçu (voir plus bas).
+maison vue de dehors, le devant du terrain et les côtés. Les données sont dans `exterieur.py` (dictionnaire `EXTERIEUR`,
+contrat dans son docstring) ; **la visite les dessine et on y marche** : on fait le tour de la maison, on va dans la cour,
+on entre et on sort par les portes (voir « Dans la visite », plus bas).
 
 ### Sources
 
@@ -65,7 +65,8 @@ Repère de la maison, en pouces ; z est compté depuis le plancher du sous-sol. 
 
 - **Lignes de lot** : arrière et côtés relevés au plan DAG. Devant, on a prolongé avec le plan de 1957 : marge avant de 40 pi
   (rue à y = -480), ligne droite perpendiculaire à la rue, façade du lot de 57,23 pi, ligne gauche oblique.
-- **Gazon** sur tout le lot.
+- **Gazon** sur tout le lot (dessiné par le moteur au niveau du terrain, jusqu'à l'horizon ; troué à la maison, aux margelles
+  et à la descente de la porte de côté).
 - **Allée** d'asphalte le long du côté droit (x 462-556, de la rue jusqu'à y = 60). Elle est *supposée* : la vidéo montre une
   allée de ce côté, et le plan de 1957 écrit « ALLÉE » près de la ligne droite.
 - **Haie de cèdres** de 6 pi le long de la ligne oblique, dans la cour arrière.
@@ -95,7 +96,7 @@ pas japonais, la piscine vue de la cour, la façade avant, l'allée.
    (environ 60 po) : à faire vérifier par DAG.
 5. **Toit** : en croupe partout, 5/12, débord de 16 po. Sur la vignette de la vidéo prise de face, le salon semble avoir un
    **pignon** au-dessus de la grande fenêtre avant : à confirmer. La hauteur de la cheminée est estimée.
-6. **Fenêtres** : allège et tête lues dans les scènes d'étage (sous-sol 56-86, RDC 34-82 au-dessus du plancher), sauf les fenêtres agrandies vers le bas : leur allège propre est lue dans `maison.json` (sous-sol à 40, salon à 20). Les 5 fenêtres du sous-sol plus basses que le terrain ont une margelle (dessinée par le moteur) ; le gazon d'`EXTERIEUR` y est troué. Fenêtres noires d'après la vidéo.
+6. **Fenêtres** : allège et tête lues dans les scènes d'étage (sous-sol 56-86, RDC 34-82 au-dessus du plancher), sauf les fenêtres agrandies vers le bas : leur allège propre est lue dans `maison.json` (sous-sol à 40, salon à 20). Les 5 fenêtres du sous-sol plus basses que le terrain ont une margelle (dessinée par le moteur) ; le gazon y est troué. Fenêtres noires d'après la vidéo.
 7. **Perron avant** : on ne connaît ni le nombre de marches ni leur direction. Elles sont dessinées droit vers la rue.
 
 ### Code et réglementation (à valider avec la Ville et un professionnel)
@@ -132,27 +133,20 @@ C'est le projet de DAG : leur soumission fait foi. Ordres de grandeur pour se re
 5. Le **perron avant** : nombre de marches, direction, garde-corps.
 6. Le **certificat de localisation** : lignes de lot exactes.
 
-### Voir l'aperçu
+### Dans la visite
 
-```
-EXT_APERCU=1 python3 renovation/outils/generer_3d.py renovation/MAISON-18_deux_etages
-```
+`python3 renovation/outils/generer_3d.py renovation/MAISON-18_deux_etages` : la visite dessine le terrain, la cour et la maison
+vue de dehors (brique, fondation, fenêtres en verre sombre, toit), sous le soleil du jour (une seule ombre, celle du soleil).
 
-Les objets de l'extérieur sont alors posés dans le mobilier du sous-sol, à leur hauteur réelle. En maquette, on voit la maison
-avec son toit, au milieu de son lot. En visite, on peut se poser dehors avec `poserJoueur(x, y, cap, z)`, z = sol sous les
-pieds. Sur une terrasse, donner z ≈ 92 : sinon le visiteur est ramené au plancher du RDC et l'étage du sous-sol, qui porte
-l'extérieur, disparaît.
+- **Marcher dehors** : on monte et on descend seul les marches (8 po au plus) ; terrasses, garde-corps, piscine, cabanon,
+  murs de la maison et lignes de lot bloquent. On entre et on sort par la **porte avant** (perron), la **porte arrière**
+  (palier du deck) et la **porte de côté du sous-sol** (descente) quand elles sont ouvertes ; en touchant un point (ou un
+  arrêt), le trajet passe par la bonne porte et l'ouvre.
+- **Arrêts** : section « Extérieur » de la liste. Le petit plan montre le lot quand on est dehors.
+- **Maquette** : vue « Extérieur » (la maison avec son toit au milieu de son lot), à côté de Sous-sol / Rez-de-chaussée / Les
+  deux (ces vues-là restent sans toit).
 
-Sans cette variable, rien ne change pour l'instant : `SCENE["exterieur"] = EXTERIEUR` (maquette à deux étages), et le moteur
-l'ignore.
-
-**Pour l'agent moteur** (constaté dans l'aperçu) :
-
-- Le plafond de chaque étage (plan à hauteur H) dépasse de la maison de 60 po devant, 80 po derrière et 10 po sur les côtés.
-  Dehors, ça fait des auvents blancs, à 96 po (sous-sol) et à 201 po (RDC). Il faut le couper à l'emprise quand l'extérieur
-  est actif.
-- Le gazon du moteur est troué au rectangle des bornes du sous-sol, qui va jusqu'à y = -47 à cause du perron. Le gazon
-  d'`EXTERIEUR` bouche ce trou dans l'aperçu.
-- En visite, seul l'étage courant est dessiné. Dehors, il faudra dessiner les deux étages et `EXTERIEUR`.
-- `EXTERIEUR["planchers"]`, `["obstacles"]`, `["trous"]`, `["lumieres"]` et `["visites"]` (avec z) sont prêts pour marcher
-  dehors.
+Corrections faites aux données pour la marche (novembre 2026) : obstacles ajoutés (cheminée, garde-corps du perron et du côté
+gauche du deck, murets de la descente, bacs à plantes, tronc de l'érable) ; le **haut de la descente** de la porte de côté
+touchait la margelle de la fenêtre voisine (on y restait coincé) : il est maintenant ouvert côté allée sur 15 po (muret au ras
+du sol, garde-corps à partir de la 2e marche) ; les prismes de gazon sont remplacés par le terrain du moteur.

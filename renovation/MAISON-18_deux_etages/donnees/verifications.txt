@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : A    Date : 2026-11-01
-Données  : maison.json, sha256 74b7b2520d5bba84b8149b2e0c10d1435c9109882f2b1faf7f91bdc3336c26f4
+Données  : maison.json, sha256 2c2a68cfddc71df73db6ce290f5df15746e9b748cc8a1e4d28d796aef3770135
 Feuilles : P-129 Sous-sol proposé (3/16" = 1'-0") ; P-130 Rez-de-chaussée proposé (3/16" = 1'-0")
 
 SOMMAIRE
@@ -19,7 +19,7 @@ SOMMAIRE
 
 1. IDENTIFIANTS
 ------------------------------------------------------------------------
-  [OK] 499 identifiants, aucun doublon
+  [OK] 501 identifiants, aucun doublon
 
 2. MURS
 ------------------------------------------------------------------------
@@ -68,7 +68,7 @@ SOMMAIRE
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
-  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (144 textes vérifiés)
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (145 textes vérifiés)
   [AVERT] [RDC] texte/texte : cartouche « REZ-DE-CHAUSSÉE » × cartouche « PROPOSÉ » (x≈700.488, y≈-97.127 po)
 
 9. MISE EN PAGE
@@ -84,7 +84,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF P-129_sous-sol.dxf : sha256 941b8dbc950827e3… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
-  [OK] [RDC] DXF P-130_rdc.dxf : sha256 bc71f693f353c4d3… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF P-129_sous-sol.dxf : sha256 b307f7665138014e… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF P-130_rdc.dxf : sha256 2afe27b6f779a972… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.
