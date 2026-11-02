@@ -1649,7 +1649,8 @@ function majBoutonsEtage() {
     if (s === k || es.bas === joueur.etage) dirs.push(["▲", "Monter", es.haut]);
     if (s === k || es.haut === joueur.etage) dirs.push(["▼", "Descendre", es.bas]);
   });
-  for (const [ic, lib, f] of dirs) ajouter(ic, lib, (f > joueur.etage ? "au " : "au ") + ETAGES[f].nom.toLowerCase(), null, () => allerEtage(f));
+  const vers = (nom) => (/^[aeéiouh]/i.test(nom) ? "à l'" : "au ") + nom.toLowerCase();     // au sous-sol, à l'étage
+  for (const [ic, lib, f] of dirs) ajouter(ic, lib, vers(ETAGES[f].nom), null, () => allerEtage(f));
   c.hidden = !dirs.length;
 }
 // ---------- commandes interactives (toile motorisée, stores, porte de garage...) : bouton, toucher l'objet, arrêts de visite
