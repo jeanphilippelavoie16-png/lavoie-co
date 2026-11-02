@@ -19,6 +19,9 @@ Fenêtres (opt-in) : SCENE["fenetres"] = {id d'ouverture: {"allege": z, "tete": 
 et sa propre tête (sinon SCENE["allege_fenetre"] / "tete_fenetre" de l'étage) ; une fenêtre descendue sous le terrain reçoit
 une margelle et le terrain est troué au ras de la maison (voir reglages_fenetres). Sans "fenetres", rien ne change.
 
+Poids et mémoire : images de couleur des matériaux à 512 px au plus (TEX_COULEUR=1024 pour les garder plus fines), cartes de
+relief à 512 px (TEX_RELIEF), de rugosité à 256 px (TEX_RUGOSITE), photos à 720 px (PHOTO_MAX). La scène est passée à JSON.parse (chaîne JSON).
+
 Usage : python3 renovation/outils/generer_3d.py renovation/SS-02_aire_ouverte_gym_vitre
 """
 import base64, copy, importlib.util, io, json, math, os, sys
@@ -338,6 +341,26 @@ def cage_tremie(rects, H, etage, multi=False):
     return polys, boites
 
 
+TEX_COULEUR = int(os.environ.get("TEX_COULEUR", 512))     # côté max. des images de couleur des matériaux (px)
+TEX_RELIEF = int(os.environ.get("TEX_RELIEF", 512))       # côté max. des cartes de relief (px)
+TEX_RUGOSITE = int(os.environ.get("TEX_RUGOSITE", 256))   # côté max. des cartes de rugosité (variations douces : 256 px suffisent)
+PHOTO_MAX = int(os.environ.get("PHOTO_MAX", 720))         # côté max. des photos accrochées aux murs (px)
+
+
+def reduire(octets, max_px, qualite=84):
+    """Image ramenée à max_px de côté au plus (JPEG). Déjà assez petite : octets inchangés."""
+    from PIL import Image
+    im = Image.open(io.BytesIO(octets))
+    if max(im.size) <= max_px:
+        return octets
+    if im.mode in ("RGBA", "LA", "P") and "A" in im.getbands():
+        return octets                                          # transparence : on n'y touche pas
+    f = max_px / max(im.size)
+    im = im.convert("RGB").resize((max(1, round(im.size[0] * f)), max(1, round(im.size[1] * f))), Image.LANCZOS)
+    buf = io.BytesIO(); im.save(buf, "JPEG", quality=qualite, optimize=True)
+    return buf.getvalue() if len(buf.getvalue()) < len(octets) else octets
+
+
 def bibliotheque(scene, S):
     """Matériaux du catalogue (catalogue_materiaux.py) employés par la scène, intégrés au fichier en data URI."""
     sys.path.insert(0, ICI)
@@ -351,7 +374,9 @@ def bibliotheque(scene, S):
         if not os.path.isfile(os.path.join(d, "relief.jpg")):
             print(f"  matériau {cle} absent : python3 renovation/outils/materiaux.py telecharger {cle}")
             continue
-        uri = lambda f: "data:image/jpeg;base64," + base64.b64encode(open(os.path.join(d, f), "rb").read()).decode()
+        # couleur : TEX_COULEUR px au plus (512 par défaut : 4 fois moins de mémoire graphique, page plus légère) ;
+        # relief : 512 px au plus ; rugosité : 256 px
+        uri = lambda f, mx=TEX_RELIEF: "data:image/jpeg;base64," + base64.b64encode(reduire(open(os.path.join(d, f), "rb").read(), mx)).decode()
         m = {"taille_m": e["taille_m"], "relief": uri("relief.jpg"), "metal": e.get("metal", 0)}
         for k in ("vernis", "vernis_rugosite", "duvet"):      # fini de rendu (clearcoat, sheen), optionnel
             if k in e:
@@ -359,11 +384,11 @@ def bibliotheque(scene, S):
         if e.get("relief_seul"):
             m["relief_seul"] = True
         else:
-            m["couleur"] = uri("couleur.jpg")
+            m["couleur"] = uri("couleur.jpg", TEX_COULEUR)
         if "rugosite" in e:
             m["rugosite"] = e["rugosite"]
         elif os.path.isfile(os.path.join(d, "rugosite.jpg")):
-            m["carte_rugosite"] = uri("rugosite.jpg")
+            m["carte_rugosite"] = uri("rugosite.jpg", TEX_RUGOSITE)
         out[cle] = m
     return out
 
@@ -1163,8 +1188,9 @@ def completer_images(scene, images, dossier):
     for cle, rel in (images or {}).items():
         f = os.path.normpath(os.path.join(dossier, rel))
         if os.path.isfile(f) and not os.environ.get("SANS_PRIVE"):
-            mime = "image/png" if f.lower().endswith(".png") else "image/jpeg"
-            scene["images"][cle] = f"data:{mime};base64," + base64.b64encode(open(f, "rb").read()).decode()
+            brut = open(f, "rb").read(); octets = reduire(brut, PHOTO_MAX)
+            mime = "image/png" if octets is brut and f.lower().endswith(".png") else "image/jpeg"
+            scene["images"][cle] = f"data:{mime};base64," + base64.b64encode(octets).decode()
         else:
             print(f"  image {cle} omise ({rel})")
 
@@ -1219,8 +1245,10 @@ def main(dossier):
     gab = open(os.path.join(ICI, "visite3d_gabarit.html"), encoding="utf-8").read()
 
     def page():
-        return (gab.replace("/*__SCENE__*/null", json.dumps(scene, ensure_ascii=False).replace("</", "<\\/"))
-                   .replace("/*__TEXTURES__*/null", json.dumps(textures))
+        # scène et textures en chaînes passées à JSON.parse : analysées bien plus vite qu'un littéral JavaScript de 10 Mo
+        lit = lambda o: json.dumps(json.dumps(o, ensure_ascii=False), ensure_ascii=False).replace("</", "<\\/")
+        return (gab.replace('/*__SCENE__*/"null"', lit(scene))
+                   .replace('/*__TEXTURES__*/"null"', lit(textures))
                    .replace("__TITRE__", scene["titre"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")))
     html = page()
     if alleger(scene, len(html.encode("utf-8"))):

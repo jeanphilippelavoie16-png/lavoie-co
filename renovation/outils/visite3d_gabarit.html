@@ -94,6 +94,8 @@ body.multi .palette { max-height: calc(100vh - 420px); }
 .etiq { position: fixed; left: 0; top: 0; transform: translate(-50%, -50%); padding: 3px 8px; border-radius: 6px; font-size: .78rem; font-weight: 700;
   background: rgba(255,255,255,.88); color: #1d1f22; pointer-events: none; white-space: nowrap; box-shadow: 0 1px 6px rgba(0,0,0,.18); }
 #erreur { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; }
+#perdu { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 16px 20px; max-width: min(460px, calc(100vw - 32px)); text-align: center; font-size: .95rem; line-height: 1.4; }
+#perdu button { margin-top: 10px; background: var(--accent); color: var(--accent-ink); }
 @media (max-height: 820px) { #rail button { min-height: 40px; padding: 7px 10px; font-size: .86rem; } #rail { top: calc(var(--st) + 66px); } }
 @media (max-height: 560px) { #plan { width: 160px; height: 160px; } #rail { width: 150px; } #rail button { min-height: 38px; padding: 6px 10px; font-size: .84rem; } #etages { bottom: calc(var(--sb) + 202px); } }
 @media (max-width: 760px) { .titre { display: none; } #rail { width: 140px; } #ici { min-width: 120px; } #plan { width: 150px; height: 150px; } .palette { top: auto; bottom: 240px; } #etages { bottom: calc(var(--sb) + 192px); } }
@@ -137,7 +139,7 @@ body.multi .palette { max-height: calc(100vh - 420px); }
     <li><b>◀ ▶</b> en bas : visite guidée, pièce par pièce. La liste à gauche va directement à une pièce.</li>
     <li><b>Joystick</b> (en bas à gauche) pour marcher librement. Au clavier : W A S D ou les flèches.</li>
     <li><b>Maquette</b> : vue de dessus sans plafond ; un doigt tourne, deux doigts zooment et déplacent ; touchez une pièce pour y entrer.</li>
-    <li><b>Haute / Normale</b> (en haut) : qualité de l'image (ombres, reflets, lumière). Normale est plus fluide sur une tablette lente.</li>
+    <li><b>Haute / Normale</b> (en haut) : qualité de l'image (définition, ombres, finition). Normale, choisie d'office sur tablette, est plus fluide ; Haute est plus fine.</li>
     <li id="aide-portes" hidden><b>Portes</b> : touchez une porte pour l'ouvrir ou la fermer (en visite comme en maquette). Une porte fermée bloque le passage ; en marchant au toucher, elle s'ouvre toute seule.</li>
     <li id="aide-etages" hidden><b>▲ Monter / ▼ Descendre</b> (au-dessus du petit plan) : on marche jusqu'à l'escalier et on le monte (ou le descend) en douceur. On peut aussi marcher dans l'escalier, ou toucher une marche. En maquette : Sous-sol, Rez-de-chaussée ou Les deux.</li>
     <li id="aide-cmd" hidden></li>
@@ -145,6 +147,7 @@ body.multi .palette { max-height: calc(100vh - 420px); }
   <button id="aide-ok" aria-pressed="true">Compris</button>
 </div></div>
 <div id="erreur" hidden></div>
+<div class="carte" id="perdu" role="alert" hidden><div id="perdu-txt"></div><button id="perdu-rec" hidden>Recharger</button></div>
 
 <script>
 // si la bibliothèque 3D ne se charge pas (réseau), on le dit au lieu d'afficher un écran vide
@@ -157,8 +160,10 @@ setTimeout(() => { if (!window.VISITE_PRETE) { const e = document.getElementById
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
-const S = /*__SCENE__*/null;
-const TX = /*__TEXTURES__*/null;
+import { mergeBufferGeometries } from "three/addons/utils/BufferGeometryUtils.js";   // r149 (mergeGeometries dès r151)
+// scène et textures : chaînes JSON (JSON.parse est bien plus rapide qu'un littéral JavaScript de plusieurs Mo)
+const S = JSON.parse(/*__SCENE__*/"null");
+const TX = JSON.parse(/*__TEXTURES__*/"null");
 const K = 0.0254;                       // pouces → mètres
 const P = (x, y, z) => new THREE.Vector3(x * K, z * K, -y * K);
 const tactile = matchMedia("(pointer: coarse)").matches;
@@ -171,7 +176,7 @@ THREE.ColorManagement.legacyMode = false;
 // L'image est rendue dans une cible multi-échantillonnée (anticrénelage) puis finie par des passes plein écran
 // (occlusion ambiante, halo des lumières, vignette) : le canevas lui-même n'a donc pas besoin d'anticrénelage.
 const renderer = new THREE.WebGLRenderer({ antialias: !(window.WebGL2RenderingContext), powerPreference: "high-performance" });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+renderer.setPixelRatio(1);
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0;
@@ -181,26 +186,50 @@ renderer.shadowMap.type = THREE.PCFShadowMap;           // filtrage élargi par 
 renderer.shadowMap.autoUpdate = false;                  // scène fixe : les cartes d'ombre se refont seulement au besoin
 renderer.info.autoReset = false;
 $("vue").appendChild(renderer.domElement);
+const perteContexte = { perdu: false, t: 0 };
+let sale = true;                         // l'image est à refaire (rendu à la demande : voir la boucle)     // contexte WebGL perdu (iPad qui manque de mémoire graphique...) : voir plus bas
 const scene = new THREE.Scene();
 const FOND_MAQUETTE = new THREE.Color("#dfe6ec");
 scene.background = FOND_MAQUETTE;
 const camera = new THREE.PerspectiveCamera(68, 1, 0.05, 200);
 
-// ---------- qualité du rendu : Haute (ombres, occlusion ambiante, halo, vernis et lustre) ou Normale (plus légère)
+// ---------- qualité du rendu : Haute (définition 1,5, anticrénelage 4×, occlusion ambiante, halo, 4 ombres de 1024 px) ou
+// Normale (définition 1, anticrénelage 2×, sans passes, 2 ombres de 512 px). Les deux qualités ont exactement les mêmes
+// lumières (bassins de taille fixe, places en trop éteintes) et les mêmes matériaux (vernis et lustre gardés) : changer de
+// qualité ne recompile aucun programme. Tablette ou écran tactile : Normale d'office (sauf choix mémorisé du visiteur),
+// sans bascule automatique en cours de visite.
 const QUALITES = {
-  haute: { nom: "Haute", pr: 1.5, ao: true, halo: true, feux: 10, fentes: 4, jour: 3, carte: 1024, fini: true },
-  normale: { nom: "Normale", pr: 1.25, ao: false, halo: false, feux: 8, fentes: 0, jour: 2, carte: 512, fini: false },
+  haute: { nom: "Haute", pr: 1.5, msaa: 4, ao: true, halo: true, ombres: 4, simples: 6, jour: 3, carte: 1024, miroir: 256 },
+  normale: { nom: "Normale", pr: 1, msaa: 2, ao: false, halo: false, ombres: 2, simples: 6, jour: 2, carte: 512, miroir: 128 },
 };
-let qualite = "haute", qualiteManuelle = false;
-try { const q = localStorage.getItem("visite3d-qualite"); if (QUALITES[q]) { qualite = q; qualiteManuelle = true; } } catch (_) {}
+const PLACES = { ombre: 4, simple: 6, jour: 3, lampe: 4 };      // vraies lumières (nombre fixe quelle que soit la qualité)
+let qualite = tactile ? "normale" : "haute";
+try { const q = localStorage.getItem("visite3d-qualite"); if (QUALITES[q]) qualite = q; } catch (_) {}
 
 // ---------- matériaux
-const loader = new THREE.TextureLoader();
-function tex(nom, couleur) {
-  const t = loader.load(TX[nom]); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
-  if (couleur) t.encoding = THREE.sRGBEncoding;
-  return t;
+// Images (data: URI) : une seule texture par image ; une fois envoyée au processeur graphique, l'image décodée est libérée
+// (mémoire de la tablette) et sera redécodée seulement si le contexte WebGL est perdu puis rendu.
+const loader = new THREE.TextureLoader(), TEXTURES = new Map();
+// chargement en cours (images des matériaux et des modèles) : la première image attend la fin pour ne pas tout refaire après
+const CHARGE = { n: 0, fini: [] };
+{
+  const mg = THREE.DefaultLoadingManager, deb = mg.itemStart.bind(mg), fin = mg.itemEnd.bind(mg);
+  mg.itemStart = (u) => { CHARGE.n++; deb(u); };
+  mg.itemEnd = (u) => { fin(u); if (--CHARGE.n <= 0) { CHARGE.n = 0; CHARGE.fini.splice(0).forEach((f) => f()); } };
 }
+function libererImage(t) {
+  if (!t.userData.src || !t.image || perteContexte.perdu) return;
+  t.userData.libre = true; t.image = null;
+}
+function charger(uri, couleur, repete = true) {
+  const cle = (couleur ? "c" : "l") + (repete ? "r" : "") + uri;
+  if (TEXTURES.has(cle)) return TEXTURES.get(cle);
+  const t = loader.load(uri); t.anisotropy = 8; if (repete) t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  if (couleur) t.encoding = THREE.sRGBEncoding;
+  t.userData.src = uri; t.onUpdate = libererImage;
+  TEXTURES.set(cle, t); return t;
+}
+const tex = (nom, couleur) => charger(TX[nom], couleur);
 function toile(taille, dessin) {        // texture procédurale dessinée sur un canvas
   const c = document.createElement("canvas"); c.width = c.height = taille; const g = c.getContext("2d");
   dessin(g, taille);
@@ -276,41 +305,33 @@ function M(nom, opt, ech) {
   const m = new THREE.MeshPhysicalMaterial(opt);
   if (opt.envMapIntensity == null && (opt.metalness || 0) < .5) m.envMapIntensity = .75;   // lumière renvoyée : sans aplatir les volumes
   const f = FINIS[nom] || (/poli|cir[ée]/.test(nom) ? { clearcoat: .7, clearcoatRoughness: .1 } : null);
-  if (f) {
-    m.userData.fini = { clearcoat: f.clearcoat || 0, sheen: f.sheen || 0 };
+  if (f) {                               // fini constant (les deux qualités) : aucun programme à recompiler
+    m.clearcoat = f.clearcoat || 0; m.sheen = f.sheen || 0;
     m.clearcoatRoughness = f.clearcoatRoughness ?? .1; m.sheenRoughness = f.sheenRoughness ?? .6;
     if (f.sheenColor) m.sheenColor.set(f.sheenColor);
   }
   if (!m.roughnessMap && !m.transparent && (m.metalness || 0) < .5 && m.roughness < .65) m.roughnessMap = taches;
   return m;
 }
-function appliquerFinis(oui) {
-  for (const m of new Set(Object.values(MAT))) {
-    const f = m.userData.fini; if (!f) continue;
-    m.clearcoat = oui ? f.clearcoat : 0; m.sheen = oui ? f.sheen : 0;
-  }
-}
 // bibliothèque de matériaux (ambientCG / Poly Haven, CC0, ou fichiers de fournisseurs) : remplace les matériaux de base
 const LIB = S.materiaux || {};
-function carte(uri, couleur) {
-  const t = loader.load(uri); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
-  if (couleur) t.encoding = THREE.sRGBEncoding;
-  return t;
-}
+const carte = (uri, couleur) => charger(uri, couleur);
+// matériau de base remplacé par celui de la bibliothèque : on ne décode pas ses images (ni ne dessine ses toiles) pour rien
+const base = (k, f) => (LIB[k] && !LIB[k].relief_seul ? null : f());
 const platre = LIB.platre ? carte(LIB.platre.relief) : tex("platre_relief");
 const MAT = {
-  chene: M("chene", { map: tex("chene_couleur", 1), normalMap: tex("chene_relief"), roughness: .55 }, 1.5),
-  placage: M("placage", { map: tex("placage_couleur", 1), normalMap: tex("placage_relief"), roughness: .5 }, .9),
-  caoutchouc: M("caoutchouc", { map: tex("caoutchouc_couleur", 1), normalMap: tex("caoutchouc_relief"), roughness: .9 }, 1.0),
-  tissu: M("tissu", { map: tex("tissu_couleur", 1), normalMap: tex("tissu_relief"), color: "#a9aeb3", roughness: .95 }, .45),
-  tapis: M("tapis", { map: tex("tissu_couleur", 1), normalMap: tex("tissu_relief"), color: "#d8d1c4", roughness: 1 }, .6),
-  tuile_blanche: M("tuile_blanche", { map: tex("tuile_blanche_couleur", 1), normalMap: tex("tuile_blanche_relief"), roughness: .2 }, .6),
-  beton: M("beton", { map: tex("beton_couleur", 1), normalMap: tex("beton_relief"), roughness: .65 }, 2),
-  porcelaine: M("porcelaine", { map: porcelaine(), roughness: .3 }, 1.22),
-  terrazzo: M("terrazzo", { map: terrazzo(), roughness: .35 }, .9),
-  quartz: M("quartz", { map: quartz(), roughness: .18 }, 1.4),
-  zellige: M("zellige", { map: zellige("#efe9dc"), roughness: .12, normalMap: platre, normalScale: new THREE.Vector2(.4, .4) }, .81),
-  "zellige-vert": M("zellige-vert", { map: zellige("#3f5d4f"), roughness: .12, normalMap: platre, normalScale: new THREE.Vector2(.4, .4) }, .81),
+  chene: base("chene", () => M("chene", { map: tex("chene_couleur", 1), normalMap: tex("chene_relief"), roughness: .55 }, 1.5)),
+  placage: base("placage", () => M("placage", { map: tex("placage_couleur", 1), normalMap: tex("placage_relief"), roughness: .5 }, .9)),
+  caoutchouc: base("caoutchouc", () => M("caoutchouc", { map: tex("caoutchouc_couleur", 1), normalMap: tex("caoutchouc_relief"), roughness: .9 }, 1.0)),
+  tissu: base("tissu", () => M("tissu", { map: tex("tissu_couleur", 1), normalMap: tex("tissu_relief"), color: "#a9aeb3", roughness: .95 }, .45)),
+  tapis: base("tapis", () => M("tapis", { map: tex("tissu_couleur", 1), normalMap: tex("tissu_relief"), color: "#d8d1c4", roughness: 1 }, .6)),
+  tuile_blanche: base("tuile_blanche", () => M("tuile_blanche", { map: tex("tuile_blanche_couleur", 1), normalMap: tex("tuile_blanche_relief"), roughness: .2 }, .6)),
+  beton: base("beton", () => M("beton", { map: tex("beton_couleur", 1), normalMap: tex("beton_relief"), roughness: .65 }, 2)),
+  porcelaine: base("porcelaine", () => M("porcelaine", { map: porcelaine(), roughness: .3 }, 1.22)),
+  terrazzo: base("terrazzo", () => M("terrazzo", { map: terrazzo(), roughness: .35 }, .9)),
+  quartz: base("quartz", () => M("quartz", { map: quartz(), roughness: .18 }, 1.4)),
+  zellige: base("zellige", () => M("zellige", { map: zellige("#efe9dc"), roughness: .12, normalMap: platre, normalScale: new THREE.Vector2(.4, .4) }, .81)),
+  "zellige-vert": base("zellige-vert", () => M("zellige-vert", { map: zellige("#3f5d4f"), roughness: .12, normalMap: platre, normalScale: new THREE.Vector2(.4, .4) }, .81)),
   gypse: M("gypse", { color: "#f1eee8", roughness: .93, normalMap: platre, normalScale: new THREE.Vector2(.25, .25) }, 1.2),
   fondation: M("fondation", { color: "#f1eee8", roughness: .93, normalMap: platre, normalScale: new THREE.Vector2(.25, .25) }, 1.2),
   plafond: M("plafond", { color: "#f6f4ef", roughness: .95, emissive: "#f6f4ef", emissiveIntensity: .04 }),
@@ -331,7 +352,7 @@ const MAT = {
   comptoir: M("comptoir", { color: "#efeeea", roughness: .3 }),
   draps: M("draps", { color: "#f3f1ec", roughness: .95 }),
   jete: M("jete", { color: "#8f9c8c", roughness: .95 }),
-  osier: M("osier", { map: tex("tissu_couleur", 1), normalMap: tex("tissu_relief"), color: "#c7a77a", roughness: 1 }, .25),
+  osier: base("osier", () => M("osier", { map: tex("tissu_couleur", 1), normalMap: tex("tissu_relief"), color: "#c7a77a", roughness: 1 }, .25)),
   gris: M("gris", { color: "#8d8f93", roughness: .5, metalness: .4 }),
   inox: M("inox", { color: "#c9cbcc", roughness: .3, metalness: .9 }),
   "caoutchouc-noir": M("caoutchouc-noir", { color: "#202020", roughness: .9 }),
@@ -349,7 +370,7 @@ for (const [k, m] of Object.entries(LIB)) {
   if (m.carte_rugosite && m.rugosite == null) o.roughnessMap = carte(m.carte_rugosite);
   MAT[k] = M(k, o, m.taille_m);
   if (m.vernis || m.duvet) {               // fini donné par le catalogue (vernis = clearcoat, duvet = sheen)
-    MAT[k].userData.fini = { clearcoat: m.vernis || 0, sheen: m.duvet || 0 };
+    MAT[k].clearcoat = m.vernis || 0; MAT[k].sheen = m.duvet || 0;
     if (m.vernis_rugosite != null) MAT[k].clearcoatRoughness = m.vernis_rugosite;
   }
 }
@@ -369,7 +390,7 @@ function boite(b, groupe) {
   const w = (b.x1 - b.x0) * K, h = (b.z1 - b.z0) * K, d = (b.y1 - b.y0) * K;
   if (w <= 0 || h <= 0 || d <= 0) return;
   // r : arêtes arrondies (meubles, coussins, appareils) au lieu d'arêtes vives
-  const g = b.r ? new RoundedBoxGeometry(w, h, d, 3, Math.min(b.r * K, w / 2, h / 2, d / 2) * 0.999) : new THREE.BoxGeometry(w, h, d);
+  const g = b.r ? new RoundedBoxGeometry(w, h, d, 2, Math.min(b.r * K, w / 2, h / 2, d / 2) * 0.999) : new THREE.BoxGeometry(w, h, d);
   const mat = MAT[b.mat] || MAT.gypse, e = ECHELLE[b.mat] || 1;
   const pos = g.attributes.position, nor = g.attributes.normal, uv = g.attributes.uv;
   const cx = (b.x0 + b.x1) / 2 * K, cy = (b.z0 + b.z1) / 2 * K, cz = -(b.y0 + b.y1) / 2 * K;
@@ -421,8 +442,9 @@ function arrondi(o, groupe) {
   const b = o.b ?? 0.5, r = o.r ?? 3;
   const sh = rectArrondi(o.x0 + b, o.y0 + b, o.x1 - b, o.y1 - b, r);
   if (o.trou) { const t = o.trou; sh.holes.push(rectArrondi(o.x0 + t, o.y0 + t, o.x1 - t, o.y1 - t, Math.max(0.5, r - t + b))); }
+  // segments selon la taille : coins de moins de 1/2 po en 3 pas, sinon 6 ; biseau en 1 pas (2 au-delà de 1,2 po : coussins)
   const g = new THREE.ExtrudeGeometry(sh, { depth: Math.max(0.01, (o.z1 - o.z0 - 2 * b) * K), bevelEnabled: b > 0,
-    bevelThickness: b * K, bevelSize: b * K, bevelSegments: 3, curveSegments: 16 });
+    bevelThickness: b * K, bevelSize: b * K, bevelSegments: b >= 1.2 ? 2 : 1, curveSegments: r <= 0.5 ? 3 : 6 });
   g.rotateX(-Math.PI / 2); g.translate(0, (o.z0 + b) * K, 0); g.computeVertexNormals(); uvMonde(g, o.mat);
   return placer(g, o, groupe);
 }
@@ -435,13 +457,13 @@ function prisme(o, groupe) {             // polygone en plan extrudé de z0 à z
 function tube(o, groupe) {
   const pts = o.pts.map(([x, y, z]) => P(x, y, z));
   const c = pts.length === 2 ? new THREE.LineCurve3(pts[0], pts[1]) : new THREE.CatmullRomCurve3(pts, false, "centripetal");
-  const g = new THREE.TubeGeometry(c, pts.length === 2 ? 1 : 48, o.r * K, o.pans || 12, false);
+  const g = new THREE.TubeGeometry(c, pts.length === 2 ? 1 : 24, o.r * K, o.pans || 12, false);
   const m = placer(g, o, groupe);
-  if (o.bouts) for (const q of [pts[0], pts[pts.length - 1]]) { const s = new THREE.Mesh(new THREE.SphereGeometry(o.r * K, 12, 8), m.material); s.position.copy(q); groupe.add(s); }
+  if (o.bouts) for (const q of [pts[0], pts[pts.length - 1]]) { const s = new THREE.Mesh(new THREE.SphereGeometry(o.r * K, 10, 6), m.material); s.position.copy(q); groupe.add(s); }
   return m;
 }
 function sphere(o, groupe) {
-  const g = new THREE.SphereGeometry(o.r * K, 24, 16);
+  const g = new THREE.SphereGeometry(o.r * K, 16, 12);
   if (o.ecrase) g.scale(1, o.ecrase, 1);
   const m = placer(g, o, groupe); m.position.copy(P(o.x, o.y, o.z)); return m;
 }
@@ -458,7 +480,7 @@ function image(o, groupe) {
   // photo plane contre un mur : o.face = vers où elle regarde (repère maison), centrée en (x, y), de z0 à z1, largeur o.larg
   const uri = (S.images || {})[o.cle]; if (!uri) return;
   const g = new THREE.PlaneGeometry(o.larg * K, (o.z1 - o.z0) * K);
-  const t = loader.load(uri); t.encoding = THREE.sRGBEncoding; t.anisotropy = 8;
+  const t = charger(uri, true, false);
   const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: t, roughness: .55 }));
   m.rotation.y = { "-y": 0, "+y": Math.PI, "+x": Math.PI / 2, "-x": -Math.PI / 2 }[o.face || "+y"];
   m.position.copy(P(o.x, o.y, (o.z0 + o.z1) / 2)); groupe.add(m); return m;
@@ -528,20 +550,36 @@ function ecran(o, groupe) {
     new THREE.MeshBasicMaterial({ map: EMISSION.tex, toneMapped: false, transparent: !!o.commande }));
   m.rotation.y = { "-y": 0, "+y": Math.PI, "+x": Math.PI / 2, "-x": -Math.PI / 2 }[o.face || "+y"];
   m.position.copy(P(o.x, o.y, (o.z0 + o.z1) / 2)); groupe.add(m);
-  EMISSION.ecrans.push({ m, cmd: o.commande });
+  const n = { "+x": [1, 0], "-x": [-1, 0], "+y": [0, 1], "-y": [0, -1] }[o.face || "+y"];
+  EMISSION.ecrans.push({ m, cmd: o.commande, devant: [o.x + n[0] * 14, o.y + n[1] * 14] });
   return m;
 }
-function animerEcrans(ms) {
-  if (!EMISSION.ecrans.length) return;
-  let actif = false;
+const frEcrans = new THREE.Frustum(), mEcrans = new THREE.Matrix4();
+function animerEcrans(ms) {              // vrai : l'émission a avancé (un écran visible) ; ~15 images/s, seulement en visite
+  if (!EMISSION.ecrans.length) return false;
   for (const e of EMISSION.ecrans) {
     if (e.cmd && CMD[e.cmd]) {                           // toile : l'image apparaît quand la toile est presque entièrement descendue
       const v = Math.max(0, Math.min(1, (CMD[e.cmd].f - .9) / .1));
       e.m.material.opacity = v; e.m.visible = v > .01;
     }
-    if (e.m.visible) actif = true;
   }
-  if (actif && ms - EMISSION.t > 66) { EMISSION.t = ms; dessinerEmission(ms); }   // ~15 images/s suffisent
+  if (mode !== "visite" || ms - EMISSION.t < 66) return false;
+  mEcrans.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); frEcrans.setFromProjectionMatrix(mEcrans);
+  // visible : dans le champ de vision, sur l'étage courant, et rien de plein (mur) entre le visiteur et le devant de l'écran
+  const vuIci = (e) => {
+    if (!estVu(e.m) || !frEcrans.intersectsObject(e.m)) return false;
+    let f = joueur.etage; for (let q = e.m; q; q = q.parent) if (q.userData.etage != null) { f = q.userData.etage; break; }
+    const [x, y] = e.devant;
+    if (f !== joueur.etage) return false;
+    const E = ETAGES[f], L = Math.hypot(x - joueur.x, y - joueur.y), n = Math.ceil(L / 2);    // grille de marche : les murs bloquent
+    for (let k = 1; k <= n; k++) {
+      if (L * (1 - k / n) < 36) return true;            // près de l'écran, un meuble (console, banc) ne le cache pas
+      const [i, j] = cellule(joueur.x + (x - joueur.x) * k / n, joueur.y + (y - joueur.y) * k / n); if (!E.grille[j * NX + i]) return false;
+    }
+    return true;
+  };
+  if (!EMISSION.ecrans.some(vuIci)) return false;
+  EMISSION.t = ms; dessinerEmission(ms); return true;
 }
 function modele(o, groupe) {
   // GLB à l'échelle réelle (ou forcé : o.L en plan, o.H en hauteur), posé au sol (o.z), centré en (x, y),
@@ -565,7 +603,7 @@ function modele(o, groupe) {
 // étage dans le repère de son plancher (z), posé à sa hauteur dans la visite (en maquette : seul, ou les deux décalés)
 const MULTI = Array.isArray(S.etages) && S.etages.length > 0;
 const ETAGES = (MULTI ? S.etages : [S]).map((d, i) => ({ d, i, id: d.id || S.niveau || "SS", nom: d.nom || "", z: d.z || 0, H: d.H,
-  decal: new THREE.Vector3(0, (d.z || 0) * K, 0), g: {}, obstacles: [], portes: [], trous: d.trous || [], vu: true }));
+  decal: new THREE.Vector3(0, (d.z || 0) * K, 0), g: {}, obstacles: [], portes: [], trous: d.trous || [], vu: 2 }));
 const ESCALIERS = S.escaliers || [];
 // visiteur : position (pouces), étage courant, hauteur des pieds z (absolue : plancher de l'étage, ou une marche)
 let mode = "visite";
@@ -619,8 +657,11 @@ for (const E of ETAGES) {
       sol.rotation.x = -Math.PI / 2; sol.position.set((ex0 + ex1) / 2 * K, -0.002, -(ey0 + ey1) / 2 * K);
     }
     E.g.sols.add(sol);
-    const m = 10;
-    const g = new THREE.ShapeGeometry(ouvertures([[ex0 - m, ey0 - 60], [ex1 + m, ey0 - 60], [ex1 + m, ey1 + 80], [ex0 - m, ey1 + 80]], D.tremies));
+    // plafond à l'empreinte des murs de l'étage (sans dépasser dehors), percé aux trémies
+    let [px0, py0, px1, py1] = [ex0 - 6, ey0 - 6, ex1 + 6, ey1 + 6];
+    const murs = D.boites.filter((q) => q.mur && !q.pts);
+    if (murs.length) { px0 = Math.min(...murs.map((q) => q.x0)); py0 = Math.min(...murs.map((q) => q.y0)); px1 = Math.max(...murs.map((q) => q.x1)); py1 = Math.max(...murs.map((q) => q.y1)); }
+    const g = new THREE.ShapeGeometry(ouvertures([[px0, py0], [px1, py0], [px1, py1], [px0, py1]], D.tremies));
     g.rotateX(-Math.PI / 2);
     const pl = new THREE.Mesh(g, MAT.plafond); pl.material.side = THREE.DoubleSide; pl.position.y = D.H * K; E.g.plafond.add(pl);
   }
@@ -736,6 +777,62 @@ for (const cm of Object.values(CMD)) poserCommande(cm);
   }
 }
 
+// ---------- fusion des objets fixes : beaucoup moins d'appels de dessin
+// Dans chaque groupe (étage × murs, mobilier, plafond, coupe ; et l'extérieur), les objets fixes qui partagent un matériau et
+// se trouvent dans la même case de 3 m deviennent un seul maillage (la case garde le tri par champ de vision efficace).
+// Restent à part : portes (et objets portés), commandes (toile...), écrans animés, marches (toucher = monter), planchers
+// (toucher = marcher), miroirs (reflet propre), objets transparents (tri par objet), modèles très détaillés (géométrie
+// partagée entre copies), et tout objet marqué userData.garder. Les petits objets (< 25 cm) ne projettent pas d'ombre.
+const CASE = 3, PETIT = 0.25;
+function sousGeo(g, gr) {                  // un groupe (une face de boîte peinte, le dessus poché...) en géométrie à part
+  const s = new THREE.BufferGeometry();
+  if (g.index) {
+    for (const [n, a] of Object.entries(g.attributes)) s.setAttribute(n, a.clone());
+    s.setIndex(new THREE.BufferAttribute(g.index.array.slice(gr.start, Math.min(g.index.count, gr.start + gr.count)), 1));
+  } else for (const [n, a] of Object.entries(g.attributes))
+    s.setAttribute(n, new THREE.BufferAttribute(a.array.slice(gr.start * a.itemSize, Math.min(a.count, gr.start + gr.count) * a.itemSize), a.itemSize, a.normalized));
+  return s;
+}
+const FUSION = { avant: 0, apres: 0, ms: 0 };
+function fusionnerGroupe(racine) {
+  const t0 = performance.now(), seaux = new Map(), retirer = [], exclus = new Set(EMISSION.ecrans.map((e) => e.m));
+  racine.updateMatrixWorld(true);
+  const inv = racine.matrixWorld.clone().invert(), bb = new THREE.Box3(), c = new THREE.Vector3(), t = new THREE.Vector3();
+  racine.traverse((o) => {
+    if (!o.isMesh || exclus.has(o) || o.userData.esc != null || o.userData.piece || o.userData.garder) return;
+    for (let q = o; q && q !== racine; q = q.parent) if (q.userData.porte || q.userData.commande || q.userData.garder || !q.visible) return;
+    const mats = Array.isArray(o.material) ? o.material : [o.material], g = o.geometry;
+    if (mats.some((m) => !m || m.transparent || m.name === "miroir" || m.envMap || !m.isMeshStandardMaterial)) return;
+    if (Object.keys(g.morphAttributes).length || Object.values(g.attributes).some((a) => a.isInterleavedBufferAttribute)) return;
+    if (!g.attributes.position || g.attributes.position.count > 6000) return;
+    const m4 = new THREE.Matrix4().multiplyMatrices(inv, o.matrixWorld);
+    if (m4.determinant() <= 0) return;      // miroir de géométrie : l'ordre des sommets changerait de sens
+    if (!g.boundingBox) g.computeBoundingBox();
+    bb.copy(g.boundingBox).applyMatrix4(m4); bb.getCenter(c); bb.getSize(t);
+    const petit = Math.max(t.x, t.y, t.z) < PETIT, zone = Math.floor(c.x / CASE) + "," + Math.floor(c.z / CASE);
+    const sig = Object.entries(g.attributes).map(([n, a]) => n + a.itemSize + a.array.constructor.name + a.normalized).sort().join(",") + (g.index ? "|i" : "|n");
+    const morceaux = Array.isArray(o.material) ? g.groups.map((gr) => [mats[gr.materialIndex], sousGeo(g, gr)]) : [[o.material, g.clone()]];
+    for (const [m, sg] of morceaux) {
+      if (!m) continue;
+      sg.applyMatrix4(m4); sg.clearGroups();
+      const cle = m.uuid + "|" + sig + "|" + zone + (petit ? "|p" : "");
+      if (!seaux.has(cle)) seaux.set(cle, { m, gs: [], petit });
+      seaux.get(cle).gs.push(sg);
+    }
+    retirer.push(o);
+  });
+  for (const o of retirer) o.parent.remove(o);
+  let n = 0;
+  for (const { m, gs, petit } of seaux.values()) {
+    const g = gs.length === 1 ? gs[0] : mergeBufferGeometries(gs, false);
+    for (const x of g ? [g] : gs) {
+      const mm = new THREE.Mesh(x, m); mm.userData.fusion = true; mm.userData.petit = petit; racine.add(mm); n++;
+    }
+  }
+  FUSION.avant += retirer.length; FUSION.apres += n; FUSION.ms += Math.round(performance.now() - t0);
+}
+for (const E of ETAGES) for (const k of ["murs", "mob", "plafond", "coupe"]) fusionnerGroupe(E.g[k]);
+
 // ---------- extérieur : ciel clair et terrain vus par les fenêtres (au lieu d'un vide), cachés en maquette
 const ciel = toile(512, (g, n) => {          // image équirectangulaire : zénith bleu, horizon pâle, sol
   const gr = g.createLinearGradient(0, 0, 0, n);
@@ -760,6 +857,7 @@ if (S.sol_exterieur != null) {
   const t = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ map: herbe, color: "#b9c2a6" }));
   t.position.y = S.sol_exterieur * K; gExterieur.add(t);
 }
+fusionnerGroupe(gExterieur);             // objets fixes de l'extérieur (s'il y en a) : fusionnés eux aussi, par case de 3 m
 
 // ---------- éclairage
 // Ambiance : environnement capturé dans la maison (reflets et lumière renvoyée) + un ciel faible ;
@@ -782,17 +880,16 @@ const ENCASTRES = [], FENETRES = [], LAMPES = [];
 for (const E of ETAGES) {
   const D = E.d;
   for (const l of D.lumieres) {
-    if (l.z) {
-      const p = new THREE.PointLight(COUL_LAMPE, (l.i || 9) * 1.1, 0, 2); p.position.copy(P(l.x, l.y, l.z - 8)); E.g.lum.add(p);
-      LAMPES.push({ l: p, E, i: (l.i || 9) * 1.1 });
+    if (l.z) {                              // lampe (sur pied, suspension...) : sa lumière vient du bassin des lampes
+      LAMPES.push({ x: l.x, y: l.y, E, pos: P(l.x, l.y, l.z - 8), i: (l.i || 9) * 1.1 });
       continue;
     }
     // encastré de 4 po : garniture et disque lumineux au plafond ; la lumière (projecteur vers le bas) vient du bassin.
     // Sous une retombée (poutre, soffite), il descend sous la retombée au lieu d'y être enfoui.
     let zp = D.H;
     for (const q of D.boites) if (!q.pts && q.z1 >= D.H - 0.01 && q.z0 > 60 && q.z0 < zp && l.x > q.x0 && l.x < q.x1 && l.y > q.y0 && l.y < q.y1) zp = q.z0;
-    const anneau = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .008, 32), garniture); anneau.position.copy(P(l.x, l.y, zp - 0.15)); E.g.plafond.add(anneau);
-    const disque = new THREE.Mesh(new THREE.CylinderGeometry(.052, .052, .01, 32), MAT.spot); disque.position.copy(P(l.x, l.y, zp - 0.2)); E.g.plafond.add(disque);
+    const anneau = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .008, 20), garniture); anneau.position.copy(P(l.x, l.y, zp - 0.15)); E.g.plafond.add(anneau);
+    const disque = new THREE.Mesh(new THREE.CylinderGeometry(.052, .052, .01, 20), MAT.spot); disque.position.copy(P(l.x, l.y, zp - 0.2)); E.g.plafond.add(disque);
     ENCASTRES.push({ x: l.x, y: l.y, E, pos: P(l.x, l.y, zp - 0.6), cible: P(l.x, l.y, 0), i: (l.i || 9) * 3.6 });
   }
   // lumière du jour : un projecteur large et doux derrière chaque fenêtre, vers l'intérieur et le plancher
@@ -822,24 +919,43 @@ function repartis(ok) {
   }
   return (cacheRepartis[cle] = o);
 }
-const BASSINS = { ombre: null, simple: null, jour: null };
-function creerBassin(sources, n, couleur, angle, ombre, taille) {
+// Bassins créés une fois, de taille fixe (la qualité Normale éteint des places au lieu d'en retirer : pas de recompilation).
+// Lampes (sources ponctuelles) : 4 vraies lumières attribuées aux lampes les plus proches, comme les encastrés.
+// Ombres : chaque projecteur refait sa carte seulement quand il change de source ou qu'une porte, la toile... bouge près de lui.
+function creerBassin(sources, n, couleur, angle, ombre, ponctuelle) {
   const b = { sources, places: [] };
   for (let k = 0; k < Math.min(n, sources.length); k++) {
-    const l = new THREE.SpotLight(couleur, 0, 0, angle, couleur === COUL_JOUR ? 1 : 0.7, 2);
+    const l = ponctuelle ? new THREE.PointLight(couleur, 0, 0, 2) : new THREE.SpotLight(couleur, 0, 0, angle, couleur === COUL_JOUR ? 1 : 0.7, 2);
     if (ombre) {
-      l.castShadow = true; l.shadow.mapSize.set(taille, taille); l.shadow.radius = taille > 600 ? 3 : 2;
+      l.castShadow = true; l.shadow.autoUpdate = false; l.shadow.needsUpdate = false;
       l.shadow.bias = -0.0006; l.shadow.normalBias = 0.02; l.shadow.camera.near = 0.08; l.shadow.camera.far = 7;
     }
-    scene.add(l, l.target); b.places.push({ l, k: -1, veut: -1, f: 0 });
+    scene.add(l); if (l.target) scene.add(l.target);
+    b.places.push({ l, k: -1, veut: -1, f: 0 });
   }
   return b;
 }
-function preparerBassins(Q) {
-  for (const b of Object.values(BASSINS)) if (b) for (const p of b.places) { scene.remove(p.l, p.l.target); if (p.l.shadow.map) p.l.shadow.map.dispose(); p.l.dispose(); }
-  BASSINS.ombre = creerBassin(ENCASTRES, Q.fentes, COUL_ENCASTRE, 0.9, true, Q.carte);
-  BASSINS.simple = creerBassin(ENCASTRES, Q.feux - Q.fentes, COUL_ENCASTRE, 0.9, false);
-  BASSINS.jour = creerBassin(FENETRES, Q.jour, COUL_JOUR, 0.95, false);
+const BASSINS = {
+  ombre: creerBassin(ENCASTRES, PLACES.ombre, COUL_ENCASTRE, 0.9, true),
+  simple: creerBassin(ENCASTRES, PLACES.simple, COUL_ENCASTRE, 0.9, false),
+  jour: creerBassin(FENETRES, PLACES.jour, COUL_JOUR, 0.95, false),
+  lampe: creerBassin(LAMPES, PLACES.lampe, COUL_LAMPE, 0, false, true),
+};
+function tailleOmbres(Q) {                 // cartes d'ombre de la qualité (1024 ou 512 px) : refaites, sans recompiler
+  for (const p of BASSINS.ombre.places) {
+    const s = p.l.shadow; if (s.mapSize.x === Q.carte) continue;
+    s.mapSize.set(Q.carte, Q.carte); s.radius = Q.carte > 600 ? 3 : 2;
+    if (s.map) { s.map.dispose(); s.map = null; }
+    s.needsUpdate = true; renderer.shadowMap.needsUpdate = true;
+  }
+}
+// ombres à refaire : toutes (étage, mode, mobilier...) ou seulement celles des projecteurs à moins de « rayon » m de « pres »
+function refaireOmbres(pres, rayon = 6) {
+  for (const p of BASSINS.ombre.places) {
+    if (p.k < 0 || (pres && p.l.position.distanceTo(pres) > rayon)) continue;
+    p.l.shadow.needsUpdate = true; renderer.shadowMap.needsUpdate = true;
+  }
+  sale = true;
 }
 function relancerLumieres() {            // étages déplacés (maquette) : chaque place reprend sa source à la nouvelle position
   for (const b of Object.values(BASSINS)) if (b) for (const p of b.places) p.k = -2;
@@ -858,96 +974,146 @@ function etagesEclaires(maquette) {
   return ETAGES.map((E) => E.i === joueur.etage || (s >= 0 && (E.i === ESCALIERS[s].bas || E.i === ESCALIERS[s].haut)));
 }
 let tLum = 0;
-function majLumieres(x, y, maquette, instant) {
-  const ok = etagesEclaires(maquette), zc = MULTI && !maquette ? joueur.z : 0;
-  const proches = (src, n) => src.map((s, k) => [ok[s.E.i] ? (s.x - x) ** 2 + (s.y - y) ** 2 + (MULTI ? ((s.E.z - zc) * 2) ** 2 : 0) : Infinity, k])
+function majLumieres(x, y, maquette, instant) {      // vrai : un fondu est encore en cours (il faut redessiner)
+  const Q = QUALITES[qualite], ok = etagesEclaires(maquette), zc = MULTI && !maquette ? joueur.z : 0;
+  const px = (s) => s.x + (maquette ? s.E.decal.x / K : 0), py = (s) => s.y - (maquette ? s.E.decal.z / K : 0);
+  const proches = (src, n) => src.map((s, k) => [ok[s.E.i] ? (px(s) - x) ** 2 + (py(s) - y) ** 2 + (MULTI ? ((s.E.z - zc) * 2) ** 2 : 0) : Infinity, k])
     .filter((a) => a[0] < Infinity).sort((a, b) => a[0] - b[0]).slice(0, n).map((a) => a[1]);
-  const no = BASSINS.ombre.places.length, ns = BASSINS.simple.places.length;
+  const no = Math.min(Q.ombres, BASSINS.ombre.places.length), ns = Math.min(Q.simples, BASSINS.simple.places.length);
   const enc = maquette ? repartis(ok).slice(0, no + ns) : proches(ENCASTRES, no + ns);
   viser(BASSINS.ombre, enc.slice(0, no)); viser(BASSINS.simple, enc.slice(no));
-  viser(BASSINS.jour, maquette ? [] : proches(FENETRES, BASSINS.jour.places.length));
+  viser(BASSINS.jour, maquette ? [] : proches(FENETRES, Math.min(Q.jour, BASSINS.jour.places.length)));
+  viser(BASSINS.lampe, proches(LAMPES, BASSINS.lampe.places.length));
   // fondu en temps réel (même si l'image est lente) : ¼ s pour éteindre une place, ¼ s pour la rallumer ailleurs
-  const t = performance.now(), dt = instant ? 2 : Math.min(2, (t - tLum) / 250); tLum = t;
+  const t = performance.now(), dt = instant ? 2 : Math.min(2, Math.min(t - tLum, 100) / 250); tLum = t;
+  let change = false;
   for (const b of Object.values(BASSINS)) for (const p of b.places) {
+    const i0 = p.l.intensity;
     if (p.k === -2) { p.k = -1; p.f = 0; }
     if (p.k !== p.veut) {
       const reste = dt - p.f; p.f = Math.max(0, p.f - dt);
       if (p.f === 0) {
         p.k = p.veut;
-        if (p.k >= 0) { const s = b.sources[p.k]; p.l.position.copy(s.pos).add(s.E.decal); p.l.target.position.copy(s.cible).add(s.E.decal);
-          p.l.target.updateMatrixWorld(); p.l.updateMatrixWorld();
-          if (p.l.castShadow) renderer.shadowMap.needsUpdate = true; }
+        if (p.k >= 0) { const s = b.sources[p.k]; p.l.position.copy(s.pos).add(s.E.decal); p.l.updateMatrixWorld();
+          if (p.l.target) { p.l.target.position.copy(s.cible).add(s.E.decal); p.l.target.updateMatrixWorld(); }
+          if (p.l.castShadow) { p.l.shadow.needsUpdate = true; renderer.shadowMap.needsUpdate = true; } }
         p.f = instant ? 1 : p.k >= 0 ? Math.min(1, Math.max(0, reste)) : 0;     // le temps qui reste sert à rallumer
       }
-    } else if (p.k >= 0) p.f = Math.min(1, p.f + dt);
+      change = true;
+    } else if (p.k >= 0 && p.f < 1) { p.f = Math.min(1, p.f + dt); change = true; }
     p.l.intensity = p.k >= 0 ? b.sources[p.k].i * p.f : 0;
+    if (p.l.intensity !== i0) change = true;
   }
-  for (const q of LAMPES) q.l.intensity = ok[q.E.i] ? q.i : 0;    // lampes : allumées sur les étages éclairés seulement
   ambiance.intensity = maquette ? 1.0 : 0.25; soleil.intensity = maquette ? 1.6 : 0;
+  return change;
 }
-function ombresPortees() {               // qui projette et reçoit des ombres (le verre et les voiles ne projettent pas)
-  for (const g of [gMurs, gMob, gPlafond, gSols, gCoupe]) g.traverse((o) => {
+function ombresPortees() {               // qui projette et reçoit des ombres (le verre, les voiles et les petits objets ne projettent pas)
+  scene.updateMatrixWorld(true);
+  const ech = new THREE.Vector3();
+  for (const g of [gMurs, gMob, gPlafond, gSols, gCoupe, gExterieur]) g.traverse((o) => {
     if (!o.isMesh) return;
     const mats = Array.isArray(o.material) ? o.material : [o.material];
     o.receiveShadow = !mats.some((m) => m.isMeshBasicMaterial);
-    o.castShadow = !mats.some((m) => m.transparent || m.isMeshBasicMaterial) && g !== gSols;
+    let petit = o.userData.petit;
+    if (petit == null) { const gg = o.geometry; if (!gg.boundingSphere) gg.computeBoundingSphere(); o.getWorldScale(ech);
+      petit = gg.boundingSphere.radius * Math.max(ech.x, ech.y, ech.z) < PETIT / 2; }
+    o.castShadow = !petit && !mats.some((m) => m.transparent || m.isMeshBasicMaterial) && g !== gSols;
   });
 }
 
 ombresPortees();
-preparerBassins(QUALITES[qualite]);
+tailleOmbres(QUALITES[qualite]);
 majLumieres(S.depart.x, S.depart.y, false, true);
 
 // ---------- reflets : une image à 360° de la pièce sert d'environnement (miroirs, métal, verre)
-let recapturerReflets = () => {};      // refait l'environnement (après le mouvement d'une commande, ou à l'arrivée sur un étage)
-{
-  const rt = new THREE.WebGLCubeRenderTarget(256, { type: THREE.HalfFloatType });
-  const cc = new THREE.CubeCamera(0.05, 60, rt);
-  cc.position.copy(P(S.depart.x - 120, S.depart.y - 40, 55 + joueur.z)); scene.add(cc);
-  let envRT = null;
-  const capturer = () => {
-    cc.update(renderer, scene);
-    const pm = new THREE.PMREMGenerator(renderer), nouv = pm.fromCubemap(rt.texture); pm.dispose();
-    scene.environment = nouv.texture; if (envRT) envRT.dispose(); envRT = nouv;
-    MAT.miroir.envMap = rt.texture; MAT.miroir.needsUpdate = true;
-    // chaque miroir reçoit sa propre image, prise devant sa face (rendue une seule fois), à hauteur d'œil de son étage.
-    // Sa face : "face" de l'objet si donnée, sinon le côté le plus dégagé (une porte-miroir de garde-robe regarde la
-    // chambre, pas l'intérieur du placard) ; trop à l'étroit des deux côtés : image générale de la pièce (repli neutre).
-    for (const E of ETAGES) {
-      if (!E.g.mob.visible) continue;
-      const miroirs = [];
-      for (const g of [E.g.mob, E.g.murs]) g.traverse((o) => { if (o.isMesh && (o.material === MAT.miroir || o.material.name === "miroir")) miroirs.push(o); });
-      for (const o of miroirs) {
-        const b = new THREE.Box3().setFromObject(o), c = b.getCenter(new THREE.Vector3()), t = b.getSize(new THREE.Vector3());
-        const cx = (c.x - E.decal.x) / K, cy = -(c.z - E.decal.z) / K, enX = t.x < t.z;
-        const dega = (s) => { let d = 0; for (let k = 4; k <= 60; k += 4) { const x = cx + (enX ? s * k : 0), y = cy + (enX ? 0 : s * k);
-          if (!libreE(E, x, y, 3)) break; d = k; } return d; };
-        let s = { "+x": 1, "-x": -1, "+y": 1, "-y": -1 }[o.userData.face];
-        let recul = 24;
-        if (!s || (o.userData.face[1] === "x") !== enX) {
-          const dp = dega(1), dm = dega(-1);
-          s = dp > dm ? 1 : dm > dp ? -1 : (enX ? Math.sign(228 - cx) : Math.sign(190 - cy)) || 1;
-          recul = Math.max(dp, dm);
-        }
-        if (recul < 8) { o.material = MAT.miroir; continue; }      // repli : l'image générale (pas celle d'un placard)
-        recul = Math.min(24, Math.max(6, recul / 2));
-        const r2 = o.userData.rtMiroir || new THREE.WebGLCubeRenderTarget(256), c2 = new THREE.CubeCamera(0.05, 40, r2);
-        o.userData.rtMiroir = r2;               // une recapture réutilise la cible du miroir (pas de fuite de mémoire)
-        c2.position.copy(P(cx + (enX ? s * recul : 0), cy + (enX ? 0 : s * recul), 63)).add(E.decal);
-        o.visible = false; c2.update(renderer, scene); o.visible = true;
-        if (!o.userData.rtPropre) { o.material = MAT.miroir.clone(); o.material.name = "miroir"; o.userData.rtPropre = true; }
-        o.material.envMap = r2.texture; o.material.needsUpdate = true;
-      }
-    }
-  };
-  scene.background = ciel; renderer.shadowMap.needsUpdate = true;
-  capturer();
-  recapturerReflets = (ici) => {
-    if (ici) cc.position.copy(P(joueur.x, joueur.y, joueur.z + 55));    // nouvel étage : l'image est prise là où l'on est
-    const f = scene.background; scene.background = ciel; capturer(); scene.background = f;
-  };
-  THREE.DefaultLoadingManager.onLoad = () => recapturerReflets();
+// Un seul générateur PMREM, gardé. Deux cubes en alternance : une nouvelle image se prend une face par image affichée
+// (pas de gel au changement d'étage) pendant que l'ancienne reste en service. Miroirs : cube de 128 px chacun, pris
+// seulement quand le visiteur est à moins de 6 m, une face par image (en attendant : l'image générale floue de la pièce) ;
+// cube de 256 px en Haute, 128 px en Normale.
+// La première image attend la fin du décodage des textures (sinon tout serait à refaire aussitôt).
+await new Promise((r) => { if (CHARGE.n <= 0) r(); else CHARGE.fini.push(r); setTimeout(r, 8000); });
+THREE.DefaultLoadingManager.onLoad = () => { sale = true; };
+const REFLETS = { travaux: [], version: 1, miroirs: [], pm: null, env: null, cube: 0,
+  cubes: [0, 1].map(() => new THREE.WebGLCubeRenderTarget(256, { type: THREE.HalfFloatType })), cc: new THREE.CubeCamera(0.05, 60, null) };
+REFLETS.cc.position.copy(P(S.depart.x - 120, S.depart.y - 40, 55 + joueur.z));
+function rendreFace(tr) {                // une face d'un cube de reflet ; vrai quand le cube est fini
+  const cams = tr.cc.children, tm = renderer.toneMapping, fond = scene.background, cible = renderer.getRenderTarget();
+  renderer.toneMapping = THREE.NoToneMapping; scene.background = ciel;
+  tr.cc.updateMatrixWorld(true);
+  if (tr.cacher) tr.cacher.visible = false;
+  renderer.setRenderTarget(tr.rt, tr.face); renderer.render(scene, cams[tr.face]);
+  if (tr.cacher) tr.cacher.visible = true;
+  renderer.setRenderTarget(cible); renderer.toneMapping = tm; scene.background = fond;
+  if (++tr.face < 6) return false;
+  tr.fin(); return true;
 }
+function capturePrincipale(ici, toutDeSuite) {
+  REFLETS.travaux = REFLETS.travaux.filter((tr) => !tr.principal);     // une prise en cours est remplacée
+  if (ici) REFLETS.cc.position.copy(P(joueur.x, joueur.y, joueur.z + 55));
+  const rt = REFLETS.cubes[1 - REFLETS.cube];
+  const tr = { principal: true, cc: REFLETS.cc, rt, face: 0, fin: () => {
+    REFLETS.cube = 1 - REFLETS.cube;
+    if (!REFLETS.pm) { REFLETS.pm = new THREE.PMREMGenerator(renderer); REFLETS.env = REFLETS.pm.fromCubemap(rt.texture); }
+    else REFLETS.pm.fromCubemap(rt.texture, REFLETS.env);
+    scene.environment = REFLETS.env.texture;
+    MAT.miroir.envMap = rt.texture; sale = true;
+  } };
+  if (toutDeSuite) { while (!rendreFace(tr)); return; }
+  REFLETS.travaux.unshift(tr);
+}
+// chaque miroir : sa face (« face » de l'objet si donnée, sinon le côté le plus dégagé : une porte-miroir de garde-robe
+// regarde la chambre, pas le placard) et le point de prise de vue, à hauteur d'œil devant elle ; trop à l'étroit des deux
+// côtés : l'image générale de la pièce (repli neutre)
+for (const E of ETAGES) {
+  const miroirs = [];
+  for (const g of [E.g.mob, E.g.murs]) g.traverse((o) => { if (o.isMesh && (o.material === MAT.miroir || o.material.name === "miroir")) miroirs.push(o); });
+  for (const o of miroirs) {
+    const b = new THREE.Box3().setFromObject(o), c = b.getCenter(new THREE.Vector3()), t = b.getSize(new THREE.Vector3());
+    const cx = (c.x - E.decal.x) / K, cy = -(c.z - E.decal.z) / K, enX = t.x < t.z;
+    const dega = (s) => { let d = 0; for (let k = 4; k <= 60; k += 4) { const x = cx + (enX ? s * k : 0), y = cy + (enX ? 0 : s * k);
+      if (!libreE(E, x, y, 3)) break; d = k; } return d; };
+    let s = { "+x": 1, "-x": -1, "+y": 1, "-y": -1 }[o.userData.face];
+    let recul = 24;
+    if (!s || (o.userData.face[1] === "x") !== enX) {
+      const dp = dega(1), dm = dega(-1);
+      s = dp > dm ? 1 : dm > dp ? -1 : (enX ? Math.sign(228 - cx) : Math.sign(190 - cy)) || 1;
+      recul = Math.max(dp, dm);
+    }
+    if (recul < 8) { o.material = MAT.miroir; continue; }
+    recul = Math.min(24, Math.max(6, recul / 2));
+    o.material = MAT.miroir.clone(); o.material.name = "miroir";
+    REFLETS.miroirs.push({ o, E, x: cx, y: cy, pos: P(cx + (enX ? s * recul : 0), cy + (enX ? 0 : s * recul), 63), version: 0, rt: null, cc: null });
+  }
+}
+function miroirAFaire() {                // le miroir proche (6 m) le plus près dont l'image est à faire ou à refaire
+  if (mode !== "visite") return null;
+  let m = null, dm = 240 * 240;
+  for (const q of REFLETS.miroirs) {
+    if (q.version === REFLETS.version || q.E.i !== joueur.etage || !q.E.g.mob.visible) continue;
+    const d = (q.x - joueur.x) ** 2 + (q.y - joueur.y) ** 2; if (d < dm) { dm = d; m = q; }
+  }
+  return m;
+}
+function travaillerReflets(n) {          // au plus n faces de cube (une par image affichée en se promenant)
+  while (n-- > 0) {
+    if (!REFLETS.travaux.length) {
+      const m = miroirAFaire(); if (!m) return;
+      const taille = QUALITES[qualite].miroir, rt = m.rt && m.rt.width === taille ? m.rt : new THREE.WebGLCubeRenderTarget(taille);
+      const cc = new THREE.CubeCamera(0.05, 40, rt); cc.position.copy(m.pos).add(m.E.decal);
+      const v = REFLETS.version;
+      REFLETS.travaux.push({ cc, rt, face: 0, cacher: m.o, fin: () => {
+        m.version = v; sale = true;
+        if (m.rt !== rt) { const vieux = m.rt; m.rt = rt; if (vieux) vieux.dispose(); }   // nouvelle taille : l'ancienne image servait en attendant
+        if (m.o.material.envMap !== rt.texture) { m.o.material.envMap = rt.texture; m.o.material.needsUpdate = true; } } });
+    }
+    if (rendreFace(REFLETS.travaux[0])) REFLETS.travaux.shift();
+  }
+}
+const refletsEnCours = () => REFLETS.travaux.length > 0 || !!miroirAFaire();
+// refait l'environnement (après le mouvement d'une commande, ou à l'arrivée sur un étage) : progressivement
+function recapturerReflets(ici) { REFLETS.version++; capturePrincipale(ici, false); sale = true; }
+scene.background = ciel; renderer.shadowMap.needsUpdate = true;
+capturePrincipale(false, true);
 
 // ---------- chaîne de rendu : scène → cible multi-échantillonnée (couleur sRGB + profondeur) → passes plein écran
 // AO : occlusion ambiante à demi-résolution (coins, dessous des meubles), floutée en tenant compte de la profondeur.
@@ -955,7 +1121,7 @@ let recapturerReflets = () => {};      // refait l'environnement (après le mouv
 const POST = (() => {
   if (!renderer.capabilities.isWebGL2) return null;
   const cible = (w, h, o) => new THREE.WebGLRenderTarget(w, h, { depthBuffer: false, ...o });
-  const rt = new THREE.WebGLRenderTarget(4, 4, { samples: 4, encoding: THREE.sRGBEncoding });
+  const rt = new THREE.WebGLRenderTarget(4, 4, { samples: QUALITES[qualite].msaa, encoding: THREE.sRGBEncoding });
   rt.depthTexture = new THREE.DepthTexture(4, 4, THREE.UnsignedIntType);
   const ao1 = cible(2, 2), ao2 = cible(2, 2), h1 = cible(2, 2), h2 = cible(2, 2);
   const VS = "varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }";
@@ -1058,17 +1224,19 @@ const POST = (() => {
       mFinal.uniforms.aoForce.value = Q.ao ? 1 : 0; mFinal.uniforms.haloForce.value = Q.halo ? 0.3 : 0;
       tirer(mFinal, null);
     },
+    echantillons(n) { if (rt.samples !== n) { rt.samples = n; rt.dispose(); } },   // anticrénelage 4× ou 2× (cible refaite)
     mAO, mFlou, mFinal, rt,
   };
 })();
-function choisirQualite(q, manuel) {
+function choisirQualite(q, manuel) {      // ne change que des réglages (définition, cibles, places allumées) : aucune recompilation
   if (!QUALITES[q]) return;
+  if (QUALITES[qualite].miroir !== QUALITES[q].miroir) REFLETS.version++;   // miroirs refaits à la bonne taille
   qualite = q; const Q = QUALITES[q];
-  if (manuel) { qualiteManuelle = true; try { localStorage.setItem("visite3d-qualite", q); } catch (_) {} }
-  appliquerFinis(Q.fini);
-  preparerBassins(Q); majLumieres(mode === "visite" ? joueur.x : orbite.cx, mode === "visite" ? joueur.y : orbite.cy, mode !== "visite", true);
-  renderer.shadowMap.needsUpdate = true;
+  if (manuel) { try { localStorage.setItem("visite3d-qualite", q); } catch (_) {} }
+  tailleOmbres(Q); refaireOmbres();
+  majLumieres(mode === "visite" ? joueur.x : orbite.cx, mode === "visite" ? joueur.y : orbite.cy, mode !== "visite", true);
   renderer.setPixelRatio(Math.min(devicePixelRatio, Q.pr));
+  if (POST) POST.echantillons(Q.msaa);
   const b = $("t-qual"); b.textContent = Q.nom; b.setAttribute("aria-label", "Qualité du rendu : " + Q.nom.toLowerCase());
   if (typeof taille === "function" && camera.aspect) taille();
 }
@@ -1311,20 +1479,21 @@ function stop() { trajet = null; cacherMarque(); }
 // repère au sol du point visé
 const anneau = new THREE.Mesh(new THREE.RingGeometry(0.16, 0.22, 40), new THREE.MeshBasicMaterial({ color: "#ffffff", transparent: true, opacity: .85, depthWrite: false }));
 anneau.rotation.x = -Math.PI / 2; anneau.visible = false; scene.add(anneau);
-function marque(x, y, f = joueur.etage) { anneau.position.copy(P(x, y, 0.4)).add(ETAGES[f].decal); anneau.visible = true; }
-function cacherMarque() { anneau.visible = false; }
+function marque(x, y, f = joueur.etage) { anneau.position.copy(P(x, y, 0.4)).add(ETAGES[f].decal); anneau.visible = true; sale = true; }
+function cacherMarque() { if (anneau.visible) sale = true; anneau.visible = false; }
 
 // ---------- étage courant : plan, bouton Monter / Descendre, éclairage ; à l'arrivée, l'image des reflets est refaite
 let refletsEtage = 0;
 function majEtageCourant(f, instant) {
   joueur.etage = f;
   if (!MULTI) return;
-  refletsEtage = performance.now(); renderer.shadowMap.needsUpdate = true;
+  refletsEtage = performance.now(); refaireOmbres();
   majBoutonsEtage(); planEtage = -1;
   if (instant) { joueur.z = joueur.zVue = ETAGES[f].z; }
 }
-// étages cachés en visite : l'autre étage ne se voit que par la trémie (ou depuis l'escalier) ; s'il n'est pas dans le
-// champ de vision, on ne le dessine pas (deux fois moins d'objets à dessiner sur la tablette)
+// étages cachés en visite : l'autre étage ne se voit que par la trémie (ou depuis l'escalier). Trémie dans le champ de vision :
+// à moins de 3 m (ou dans l'escalier), l'étage voisin est dessiné en entier ; plus loin, seulement son enveloppe (murs,
+// marches, planchers, plafond : quelques maillages fusionnés), sans le mobilier ; hors du champ de vision, pas du tout.
 const BOITES_TREMIES = ESCALIERS.map((es) => {
   const [x0, y0, x1, y1] = es.emprise, Eb = ETAGES[es.bas], Eh = ETAGES[es.haut];
   return new THREE.Box3(new THREE.Vector3(x0 * K, (Eb.z + Eb.H - 2) * K, -y1 * K), new THREE.Vector3(x1 * K, (Eh.z + 2) * K, -y0 * K));
@@ -1332,19 +1501,22 @@ const BOITES_TREMIES = ESCALIERS.map((es) => {
 const frustum = new THREE.Frustum(), mPV = new THREE.Matrix4();
 function majVisibiliteEtages() {
   if (!MULTI) return;
-  let vus = ETAGES.map((E) => E.i === joueur.etage);
+  let vus = ETAGES.map((E) => (E.i === joueur.etage ? 2 : 0));     // 2 : en entier ; 1 : enveloppe seulement ; 0 : caché
   if (mode === "visite") {
     camera.updateMatrixWorld(); mPV.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); frustum.setFromProjectionMatrix(mPV);
     const s = surEscalier();
+    const pres = (k) => { const [x0, y0, x1, y1] = ESCALIERS[k].emprise; return Math.hypot(Math.max(x0 - joueur.x, 0, joueur.x - x1), Math.max(y0 - joueur.y, 0, joueur.y - y1)) < 120; };
     ESCALIERS.forEach((es, k) => {
-      if (s === k || ((es.bas === joueur.etage || es.haut === joueur.etage) && frustum.intersectsBox(BOITES_TREMIES[k]))) { vus[es.bas] = true; vus[es.haut] = true; }
+      if (s !== k && !((es.bas === joueur.etage || es.haut === joueur.etage) && frustum.intersectsBox(BOITES_TREMIES[k]))) return;
+      const v = s === k || pres(k) ? 2 : 1;
+      for (const f of [es.bas, es.haut]) vus[f] = Math.max(vus[f], v);
     });
-  } else vus = ETAGES.map((E) => vueMaquette === "deux" || vueMaquette === E.i);
+  } else vus = ETAGES.map((E) => (vueMaquette === "deux" || vueMaquette === E.i ? 2 : 0));
   for (const E of ETAGES) {
     if (E.vu === vus[E.i]) continue;
     E.vu = vus[E.i];
-    for (const k of ["murs", "mob", "plafond", "sols", "coupe"]) E.g[k].visible = E.vu;
-    renderer.shadowMap.needsUpdate = true;
+    for (const k of ["murs", "mob", "plafond", "sols", "coupe"]) E.g[k].visible = E.vu === 2 || (E.vu === 1 && k !== "mob" && k !== "coupe");
+    refaireOmbres();
   }
 }
 // maquette : un étage seul (à sa hauteur), ou les deux, le rez-de-chaussée à droite et plus haut (en escalier)
@@ -1358,7 +1530,7 @@ function poserEtages() {
     E.decal.set(dx * K, E.z * K, -dy * K);
     for (const g of Object.values(E.g)) g.position.copy(E.decal);
   }
-  relancerLumieres();
+  relancerLumieres(); sale = true;
 }
 function choisirVueMaquette(v) {
   if (!MULTI) return;
@@ -1370,7 +1542,7 @@ function choisirVueMaquette(v) {
   orbite.cz = montres.reduce((a, E) => a + E.z, 0) / montres.length;
   if (mode === "maquette") { orbite.dist = vueMaquette === "deux" ? 27 : 17; orbite.az = vueMaquette === "deux" ? -0.2 : -0.6; }
   majBoutonsEtage(); majEtiquettes(true); planEtage = -1;
-  renderer.shadowMap.needsUpdate = true;
+  refaireOmbres();
 }
 
 // ---------- portes : toucher une porte l'ouvre ou la ferme (animation douce) ; basculerPorte(id[, "ouverte" | "fermee"])
@@ -1383,15 +1555,17 @@ function basculerPorte(id, etat) {
   masquerAstuce();
   return etat;
 }
-function animerPortes(t) {
+const vPres = new THREE.Vector3();
+function animerPortes(t) {               // vrai : une porte a bougé (ombres refaites pour les projecteurs proches seulement)
   let bouge = false;
   for (const pt of Object.values(PORTES)) {
     if (!pt.anim) continue;
     const u = pt.anim.d > 0 ? Math.min(1, Math.max(0, (t - pt.anim.t0) / pt.anim.d)) : 1;
     pt.f = pt.anim.de + (pt.anim.a - pt.anim.de) * ADOUCIR(u); poserPorte(pt); bouge = true;
     if (u >= 1) { pt.f = pt.anim.a; poserPorte(pt); pt.anim = null; }
+    pt.groupes[0].ext.getWorldPosition(vPres); refaireOmbres(vPres);
   }
-  if (bouge) renderer.shadowMap.needsUpdate = true;
+  return bouge;
 }
 
 // ---------- gestes : un doigt glisse = regarder (ou tourner la maquette) ; toucher = marcher là ; deux doigts = zoom
@@ -1587,8 +1761,7 @@ function choisirMode(m) {
   mode = m; gPlafond.visible = m === "visite"; gMurs.visible = m === "visite"; gCoupe.visible = m !== "visite";
   gExterieur.visible = m === "visite"; scene.background = m === "visite" ? ciel : FOND_MAQUETTE;
   scene.fog.near = m === "visite" ? 10 : 1e4; scene.fog.far = m === "visite" ? 70 : 2e4;
-  renderer.shadowMap.needsUpdate = true;
-  stop(); vol = null; voile.style.opacity = "0";
+  stop(); vol = null; voile.style.opacity = "0"; refaireOmbres();
   $("m-visite").setAttribute("aria-pressed", String(m === "visite"));
   $("m-maquette").setAttribute("aria-pressed", String(m === "maquette"));
   joy.hidden = !(tactile && m === "visite");
@@ -1623,7 +1796,7 @@ S.visites.forEach((v, i) => {
 if (MULTI) rail.querySelector("h2").remove();      // « Aller à » suffit : le premier titre d'étage le remplace
 $("prec").onclick = () => allerArret(arret < 0 ? S.visites.length - 1 : arret - 1);
 $("suiv").onclick = () => allerArret(arret + 1);
-$("t-mob").onclick = (e) => { gMob.visible = !gMob.visible; renderer.shadowMap.needsUpdate = true; e.currentTarget.setAttribute("aria-pressed", String(gMob.visible)); };
+$("t-mob").onclick = (e) => { gMob.visible = !gMob.visible; refaireOmbres(); e.currentTarget.setAttribute("aria-pressed", String(gMob.visible)); };
 $("t-qual").onclick = () => choisirQualite(qualite === "haute" ? "normale" : "haute", true);
 $("t-pal").onclick = (e) => { const p = $("palette"); p.hidden = !p.hidden; e.currentTarget.setAttribute("aria-pressed", String(!p.hidden)); };
 $("t-aide").onclick = () => ($("aide").hidden = false);
@@ -1671,18 +1844,19 @@ function commander(id, etat, immediat) {
   majCommandes(); masquerAstuce();
   return true;
 }
-function animerCommandes(t) {
+function animerCommandes(t) {             // vrai : une commande a bougé
   let bouge = false;
   for (const cm of Object.values(CMD)) {
     if (!cm.anim) continue;
     const u = cm.anim.d > 0 ? Math.min(1, Math.max(0, (t - cm.anim.t0) / cm.anim.d)) : 1;
     cm.f = cm.anim.de + (cm.anim.a - cm.anim.de) * ADOUCIR(u); poserCommande(cm); bouge = true;
+    cm.etirer.getWorldPosition(vPres); refaireOmbres(vPres);   // ombres figées : refaites pendant le mouvement, près de l'objet
     if (u >= 1) { cm.f = cm.anim.a; poserCommande(cm); cm.anim = null; majCommandes(); finCommande(); }
   }
-  if (bouge) renderer.shadowMap.needsUpdate = true;     // ombres figées (autoUpdate = false) : refaites pendant le mouvement
+  return bouge;
 }
 function finCommande() {
-  renderer.shadowMap.needsUpdate = true;
+  refaireOmbres();
   // reflets (image à 360° prise une fois) : refaits à l'arrêt, en visite seulement (la maquette cache murs et plafond)
   if (mode === "visite") { refletsEnRetard = false; recapturerReflets(); } else refletsEnRetard = true;
 }
@@ -1808,14 +1982,6 @@ $("tourne-ok").onclick = () => { $("tourne").dataset.ok = "1"; orientation(); };
 choisirMode("visite");
 choisirQualite(qualite);
 $("ici-n").textContent = `${S.visites.length} arrêts`;
-
-// tablette : si les images sont lentes en Haute (plus de 45 ms en moyenne), on passe en Normale (sauf choix du visiteur)
-const cadence = { n: 0, t: 0, fait: false };
-function surveillerCadence(t) {
-  if (cadence.fait || qualiteManuelle || !tactile || qualite !== "haute" || document.hidden) return;
-  if (++cadence.n === 30) cadence.t = t;
-  else if (cadence.n === 90) { cadence.fait = true; if ((t - cadence.t) / 60 > 45) choisirQualite("normale"); }
-}
 // ---------- tests et étages : changerEtage("SS" | "RDC" | nom | indice | "deux") ; en visite, on arrive au haut (ou au
 // pied) de l'escalier, sinon au premier arrêt de l'étage ; en maquette, l'étage montré change
 function changerEtage(nom) {
@@ -1844,15 +2010,21 @@ function poserJoueur(x, y, cap, z) {
   return { z: joueur.z, etage: ETAGES[joueur.etage].id, escalier: s ? s.esc : -1 };
 }
 
-// ---------- boucle
+// ---------- boucle : rendu à la demande. On ne redessine que si quelque chose change : regard ou position (geste, joystick,
+// clavier, trajet, vol), porte, commande, fondu des lumières, reflets en cours, écran animé visible, étage, mode, qualité,
+// taille de la fenêtre. Immobile, la visite ne dessine rien (la tablette refroidit, la batterie dure).
 function taille() {
   const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); orientation();
   if (POST) { const t = renderer.getDrawingBufferSize(new THREE.Vector2()); POST.taille(t.x, t.y); }
+  sale = true;
 }
 addEventListener("resize", taille); taille();
-let t0 = performance.now(), escPrec = -1;
+let t0 = performance.now(), escPrec = -1, nImages = 0, lumEnFondu = true, nBoucle = 0;
+const camPrec = new THREE.Matrix4(), projPrec = new THREE.Matrix4();
 function boucle(t) {
-  const dt = Math.min(0.1, (t - t0) / 1000); t0 = t;
+  requestAnimationFrame(boucle);
+  const dt = Math.min(0.1, (t - t0) / 1000); t0 = t; nBoucle++;
+  if (perteContexte.perdu) return;
   if (mode === "visite") {
     let av = 0, lat = 0;
     if (touches.has("w") || touches.has("arrowup") || touches.has("z")) av += 1;
@@ -1865,32 +2037,70 @@ function boucle(t) {
     if (av || lat) { stop(); vol = null; voile.style.opacity = "0"; marcher(av, lat, dt); }
     avancerTrajets(dt);
   }
-  if (!vol) joueur.zVue += (joueur.z - joueur.zVue) * Math.min(1, dt * 12);
+  if (!vol) { const dz = joueur.z - joueur.zVue; joueur.zVue = Math.abs(dz) < 0.02 ? joueur.z : joueur.zVue + dz * Math.min(1, dt * 12); }
   if (MULTI) { const s = surEscalier(); if ((s >= 0) !== (escPrec >= 0)) { escPrec = s; majBoutonsEtage(); } }
-  animerCommandes(performance.now());
-  animerPortes(performance.now());
-  animerEcrans(performance.now());
-  placerCamera(); majVisibiliteEtages(); renderer.info.reset();
-  if (mode === "visite") majLumieres(joueur.x + Math.cos(joueur.cap) * 40, joueur.y + Math.sin(joueur.cap) * 40, false);
-  else majLumieres(orbite.cx, orbite.cy, true);
-  if (POST) POST.rendre(QUALITES[qualite]); else renderer.render(scene, camera);
-  dessinerPlan(); majIci(); majEtiquettes(); surveillerCadence(t);
+  const tt = performance.now();
+  if (animerCommandes(tt)) sale = true;
+  if (animerPortes(tt)) sale = true;
+  placerCamera(); camera.updateMatrixWorld();
+  let bouge = false;
+  if (!camPrec.equals(camera.matrixWorld) || !projPrec.equals(camera.projectionMatrix)) { camPrec.copy(camera.matrixWorld); projPrec.copy(camera.projectionMatrix); sale = bouge = true; }
+  if (animerEcrans(tt)) sale = true;
+  if (sale || lumEnFondu) {
+    majVisibiliteEtages();
+    lumEnFondu = mode === "visite" ? majLumieres(joueur.x + Math.cos(joueur.cap) * 40, joueur.y + Math.sin(joueur.cap) * 40, false)
+                                   : majLumieres(orbite.cx, orbite.cy, true);
+    if (lumEnFondu) sale = true;
+  }
+  // reflets en cours (étage, commande, miroirs proches) : une face de cube par image (une sur trois en se déplaçant)
+  if (mode === "visite" && (!bouge || nBoucle % 3 === 0) && (REFLETS.travaux.length || miroirAFaire())) { travaillerReflets(1); sale = true; }
   // nouvel étage : l'image des reflets est refaite là où l'on s'arrête
   if (refletsEtage && mode === "visite" && !trajet && !vol && performance.now() - refletsEtage > 400) { refletsEtage = 0; recapturerReflets(true); }
-  requestAnimationFrame(boucle);
+  if (!sale && !renderer.shadowMap.needsUpdate) return;
+  sale = false; nImages++;
+  renderer.info.reset();
+  if (POST) POST.rendre(QUALITES[qualite]); else renderer.render(scene, camera);
+  dessinerPlan(); majIci(); majEtiquettes();
 }
+// ---------- contexte WebGL perdu (l'appareil reprend la mémoire graphique) : message clair, reprise automatique (three.js
+// recrée son état ; on redécode les images libérées, puis ombres et reflets sont refaits), bouton Recharger si ça dure
+cnv.addEventListener("webglcontextlost", (e) => {
+  e.preventDefault(); perteContexte.perdu = true; perteContexte.t = performance.now();
+  $("perdu-txt").textContent = "L'affichage 3D a été interrompu par l'appareil (mémoire graphique). Reprise en cours…";
+  $("perdu-rec").hidden = true; $("perdu").hidden = false;
+  clearTimeout(perteContexte.minuterie);
+  perteContexte.minuterie = setTimeout(() => {
+    if (!perteContexte.perdu) return;
+    $("perdu-txt").textContent = "L'affichage 3D ne reprend pas tout seul. Rechargez la page pour continuer la visite.";
+    $("perdu-rec").hidden = false;
+  }, 8000);
+});
+cnv.addEventListener("webglcontextrestored", async () => {
+  const libres = [...TEXTURES.values()].filter((t) => t.userData.libre && !t.image);
+  await Promise.all(libres.map((t) => new Promise((r) => {
+    const im = new Image(); im.onload = () => { t.image = im; t.userData.libre = false; t.needsUpdate = true; r(); }; im.onerror = r; im.src = t.userData.src;
+  })));
+  perteContexte.perdu = false; clearTimeout(perteContexte.minuterie); $("perdu").hidden = true;
+  if (EMISSION.tex) EMISSION.tex.needsUpdate = true;
+  refaireOmbres(); REFLETS.version++; REFLETS.travaux.length = 0;
+  for (const m of REFLETS.miroirs) m.version = 0;
+  capturePrincipale(false, true); sale = true;
+});
+$("perdu-rec").onclick = () => location.reload();
 requestAnimationFrame(boucle);
 window.VISITE_PRETE = true;
 $("erreur").hidden = true;      // chargement lent (plus de 30 s) : le message d'erreur provisoire disparaît
 // accès pour les tests automatiques (Playwright)
-Object.assign(window, { joueur, orbite, choisirMode, choisirQualite, masquerAstuce, solSous, allerA, vx, vy, plan, scene, camera, renderer, MAT, POST, QUALITES });
+Object.assign(window, { joueur, orbite, choisirMode, choisirQualite, masquerAstuce, solSous, allerA, vx, vy, plan, scene, camera, renderer, MAT, POST, QUALITES,
+  THREE, EMISSION, BASSINS, FUSION, placerCamera, refletsEnCours, contexteOK: () => !perteContexte.perdu && !!scene.environment });
+Object.defineProperty(window, "imagesRendues", { get: () => nImages });
 Object.defineProperty(window, "qualite", { get: () => qualite });
 Object.defineProperty(window, "trajet", { get: () => trajet });
 Object.defineProperty(window, "mode", { get: () => mode });
 // commandes : commander(id, "bas" | "haut" | "basculer", immediat) ; etatsCommandes = {id: état visé}
 Object.assign(window, { commander, etatsCommandes, commandeSous, animerCommandes, commandes: CMD,
   fractionCommande: (id) => CMD[id] && CMD[id].f,
-  fixerFractionCommande: (id, f) => { const cm = CMD[id]; if (!cm) return; cm.anim = null; cm.f = f; poserCommande(cm); renderer.shadowMap.needsUpdate = true; majCommandes(); } });
+  fixerFractionCommande: (id, f) => { const cm = CMD[id]; if (!cm) return; cm.anim = null; cm.f = f; poserCommande(cm); refaireOmbres(); majCommandes(); } });
 // étages et portes : changerEtage(nom), allerEtage(nom) (en marchant), choisirVueMaquette(indice | "deux"), poserJoueur(x, y, cap, z) ;
 // basculerPorte(id[, "ouverte" | "fermee"]), portes = {id: {etat, f}}, porteSous(x, y) ; etage = id de l'étage courant
 Object.assign(window, { changerEtage, allerEtage, choisirVueMaquette, poserJoueur, basculerPorte, porteSous, objetSous, portes: PORTES,
