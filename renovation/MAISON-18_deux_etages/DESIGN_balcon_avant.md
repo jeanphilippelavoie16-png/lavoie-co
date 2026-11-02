@@ -24,6 +24,12 @@ poutres en bois font 16 à partir de gauche et arrêtent à 4 pieds de la maison
 - **filet de la grosseur du rectangle rouge** : mesuré sur l'annotation avec la cote « 60 » du croquis (= 60 po), environ
   **9'-5" vers la maison sur 10'-0" le long de la façade**, toujours au coin avant côté allée.
 
+Précision du client sur la 3e version (2026-11-02), mot pour mot : « pi le meuble avec le four à pizza fait toute la longueur des
+poutres (20') », puis il se corrige : « je voulais dire quelle faisais 16 pied le meuble pas 20 pieds ». Lu ainsi (4e version) :
+- **le meuble de cuisine fait 16'-0"**, toute la longueur des poutres de la pergola : du bord avant du balcon (y -240) jusqu'à la
+  rangée de poteaux à 4 pi de la maison (y -48) ; les 20 pi, c'est la profondeur du balcon, pas le meuble ;
+- la pergola (16 pi, à 4 pi de la maison), le toit de polycarbonate et le salon ne changent pas.
+
 C'est un balcon qui **existe** : on le reproduit tel quel, on n'en fait pas un nouveau design. Sources : 20 photos du client
 (`renovation/prive/balcon_avant/`, privées, jamais copiées dans le dépôt) et son croquis. Code : `balcon_avant.py` (appelé par
 `scene_3d.py`) et l'avant de `exterieur.py` (relief creusé à l'escalier, asphalte élargi).
@@ -56,7 +62,10 @@ client a confirmé en rouge que le filet est bien plus gros : ≈ 9'-5" × 10'-0
 - **Cuisine d'extérieur** (photos 17 à 20), le long de l'écran sous la pergola : comptoir de béton gris lissé (microciment) aux
   bouts en cascade, façades à lattes horizontales de bois teint foncé, frigo à boissons à porte vitrée noire, bacs à condiments
   d'inox encastrés dans le dessus, four à pizza (dôme crème sur socle noir) au bout côté rue ; puis, côté maison, un comptoir plus
-  bas avec le BBQ encastré (3 brûleurs, inox et noir) et la plaque de cuisson noire, sa tablette dépassant le comptoir.
+  bas avec le BBQ encastré (3 brûleurs, inox et noir) et la plaque de cuisson noire (4 boutons : 4 brûleurs), sa tablette
+  dépassant le comptoir. Le bout du comptoir haut côté rue est au poteau avant de l'écran et le garde-corps avant bute dessus
+  (photos 18, 19) ; le BBQ est collé au comptoir haut et la plaque au bout du comptoir bas (photos 18, 20) ; la tablette de la
+  plaque arrive au poteau du fond (photo 20).
   Au-dessus : toit de tôle ondulée translucide (polycarbonate) sur chevrons, guirlandes d'ampoules qui pendent des poutres.
   Mobilier de détente (photo 17) : sofa 3 places gris pâle à cadre d'aluminium noir, table basse à dessus de bois, 2 fauteuils à
   cadre noir et coussins gris, 2 poufs blancs. Cette installation **remplace** le BBQ sur roues et la banquette en L des photos
@@ -90,8 +99,9 @@ client a confirmé en rouge que le filet est bien plus gros : ≈ 9'-5" × 10'-0
 | Pergola : longueur | **poutres de 16'-0"** du bord avant (y -240) jusqu'à **4'-0" de la maison** (y -48) ; **3 rangées de poteaux : au bord avant (y -237¼), au milieu (y -144), à 4 pi de la maison (y -50¾)**, soit 8'-0" + 8'-0" | **client** (3e version) |
 | Pergola : largeur | 11'-10" : poteaux x 49 et dans l'écran (x -87) ; dessous des poutres à 7'-4" | estimé (photos 03, 07, 12, 18) |
 | Toit de polycarbonate | de l'écran à x -26 (≈ 5'-4"), sur 4 chevrons, toute la longueur de la pergola (16 pi) | estimé (photos 17 à 20) |
-| Cuisine d'extérieur | le long de l'écran, à 9 po du bord avant (y -231 à -60 avec la tablette), 28 po de profond ; comptoir haut 8'-0" à 36 po (four à pizza, frigo de 23 po, 8 bacs) ; comptoir bas 5'-2" à 26 po (BBQ 25 po, plaque 30 po + tablette 15 po) | estimé (photos 19, 20 : frigo et BBQ comme étalons) |
-| Mobilier | entre la cuisine et le passage, sous la pergola : sofa 78 × 31 le long du garde-corps avant (y -236), table 44 × 24, fauteuils 28 × 29, poufs 18 × 19 ; mêmes dégagements qu'avant | estimé (photo 17) |
+| Cuisine d'extérieur | **meuble de 16'-0"** le long de l'écran, du bord avant (y -240) jusqu'aux poteaux à 4 pi de la maison (y -48) ; 28 po de profond (x -84 à -56, dessus jusqu'à -55), devant les poteaux de l'écran (x -90 à -84½) | **client** (16'-0", 4e version) |
+| Cuisine : répartition | comptoir haut **10'-0"** à 36 po (y -240 à -120) : four à pizza (dôme de 26 po, centre à 2'-2" du bout côté rue), frigo à porte vitrée de 23 po (y -182 à -159), 8 bacs (6 au fond, 2 devant) au bout côté maison ; comptoir bas **6'-0"** à 26 po (y -120 à -48) : BBQ 28 po contre le comptoir haut, plaque 39 po (4 brûleurs) au bout, sa tablette de 15 po dépasse le bout de 1'-1" (jusqu'à y -35) | estimé (photos 17 à 20 : frigo, BBQ et plaque comme étalons) |
+| Mobilier | entre la cuisine et le passage, sous la pergola : sofa 78 × 31 le long du garde-corps avant (y -236), table 44 × 24, fauteuils 28 × 29, poufs 18 × 19 ; mêmes places qu'avant ; devant les comptoirs : 2'-10½" jusqu'à la table, 1'-9" jusqu'au fauteuil côté cuisine, 1'-7" jusqu'au sofa (au bout du four, comme sur la photo 17) | estimé (photo 17) |
 | Écran d'intimité | 7'-2" au-dessus du balcon (jusque sous les poutres), planches de 5½ po, jours de 1 po, sur les 20 pi | photos 19, 20 |
 | Filet catamaran | **≈ 9'-5" vers la maison × 10'-0" le long de la façade** : ouverture 113 × 120 po (x 93½-213½, y -230 à -117), à 10 po du bord avant ; flèche ≈ 4 po | **client** (rectangle rouge, mesuré avec sa cote « 60 ») ; position : son croquis |
 | Banc du filet | planche 2 × 12 le long du garde-corps droit, jusqu'au haut de l'escalier (y -121) | photos 04, 05 |
@@ -111,7 +121,33 @@ client a confirmé en rouge que le filet est bien plus gros : ≈ 9'-5" × 10'-0
 | Jardinière de cèdre | entre l'escalier et le mur (y -68 à -1), x 234 à 444, 4 gradins (dessus à 84, 64, 46, 34 ; le dernier 10 po sous l'allège de la fenêtre du sous-sol) | estimé (photo 16) |
 | Boîte aux lettres | noire, sur un court poteau, sur le dernier gradin de la jardinière | photo 16 |
 
+## Ce qui a changé dans la maquette (4e version : meuble de cuisine de 16 pi)
+
+- **`balcon_avant.py`** seulement (rien d'autre ne bouge : balcon, pergola, toit de polycarbonate, filet, salon, coin des enfants,
+  escalier) :
+  - **meuble de 16'-0"** : `CU_Y0`, `CU_Y1` (y -240 à -48, du bord avant aux poteaux à 4 pi de la maison) ; le meuble passe devant
+    les poteaux de l'écran (son dos à x -84, les poteaux jusqu'à -84½) ; comptoir haut `CU_HAUT` de 10'-0" et comptoir bas
+    `CU_BAS` de 6'-0" ; modules en constantes, partagés par la maquette, les obstacles et le croquis : `CU_FOUR`, `CU_FRIGO`,
+    `CU_BACS`, `CU_BBQ`, `CU_PLAQUE`, `CU_TABLETTE` ;
+  - **comptoir haut** : four à pizza au bout côté rue (à la même place qu'avant, y -214), façades à lattes en trois panneaux (grand
+    panneau sous le four, bande étroite contre le frigo, panneau côté maison, photo 19), frigo un peu passé le milieu, bacs au bout
+    côté maison ; les pelles et les bacs à fleurs de l'écran gardent leur place par rapport au four ;
+  - **comptoir bas** : BBQ 3 brûleurs (28 po) collé au comptoir haut, plaque 4 brûleurs (39 po) collée au bout, sa tablette dépasse
+    le bout du meuble (photo 20) ;
+  - **garde-corps avant** (au-dessus du coin des enfants) : il part maintenant du bout en cascade du comptoir haut (x -55) au lieu
+    de l'écran, poteau intermédiaire au milieu ; son obstacle est raccourci de même ;
+  - **obstacles** : cuisine (y -240 à -48) et tablette (y -48 à -35) ; le toit de polycarbonate (y -241 à -47) couvre toujours
+    toute la cuisine ;
+  - **arrêt « Cuisine d'extérieur (four à pizza) »** déplacé côté maison (x 30, y -14, cap 222) : on voit tout le meuble, le four
+    au fond.
+- **Salon** : à la même place (photo 17). On n'a pas pu mettre 3'-0" devant les comptoirs partout : entre le dessus des comptoirs
+  et les poteaux de la pergola, il reste 8'-5" ; le sofa (6'-6") avec 3'-0" devant le comptoir en demanderait 9'-6" et
+  boucherait le passage vers la plateforme. Il y a 2'-10½" jusqu'à la table, mais 1'-9" jusqu'au fauteuil côté cuisine et 1'-7"
+  jusqu'au sofa (au bout du four), comme avant.
+
 ## Ce qui a changé dans la maquette (3e version : 20 pi, pergola de 16 pi, gros filet)
+
+(Historique pour la cuisine : sa longueur et sa position sont remplacées par la 4e version.)
 
 - **`balcon_avant.py`** seulement (`exterieur.py` n'a pas changé : l'escalier reste à 6 pi du mur, y -120 à -72) :
   - **balcon de 20'-0"** : bord avant à y -240 (`YAV`) ; planches, bandes, rives, solives, 3 poutres (y -234, -156, -78) et
@@ -185,8 +221,10 @@ client a confirmé en rouge que le filet est bien plus gros : ≈ 9'-5" × 10'-0
 3. **Filet catamaran** : on l'a mesuré sur ton rectangle rouge (≈ 9'-5" vers la maison × 10'-0" le long de la façade). Ça le
    fait finir vis-à-vis du haut de l'escalier et laisse 2'-11½" de passage entre la pergola et le filet vers la plateforme :
    est-ce bien ça ? Les mesures exactes de l'ouverture ?
-4. **Cuisine d'extérieur** : la longueur du comptoir haut et du comptoir bas (on a mis 8'-0" et 5'-2") et leur hauteur (36 et
-   26 po).
+4. **Cuisine d'extérieur** : le meuble fait 16'-0" (toi), du bord avant aux poteaux à 4 pi de la maison. Reste la répartition :
+   le comptoir haut et le comptoir bas (on a mis 10'-0" et 6'-0") et leur hauteur (36 et 26 po) ; sur les photos 17 et 18, le
+   comptoir haut semble finir vis-à-vis du poteau du milieu : est-ce le cas ? Les 16 pi, est-ce le béton seul (on l'a fait
+   ainsi) ou avec la tablette de la plaque (on la fait dépasser de 1'-1" au bout) ?
 5. **Escalier avant** : la largeur entre les deux poteaux du haut (on a mis 4'-0") ; le panneau de verre teinté est-il encore
    dans le garde-corps (on l'a mis juste devant l'escalier) ?
 6. **Largeur du balcon** : de l'écran du voisin jusqu'au bout droit du balcon (on a mis 26'-10").

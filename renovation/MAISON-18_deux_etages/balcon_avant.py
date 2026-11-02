@@ -10,6 +10,8 @@ Puis, en rouge sur le croquis du dessus (3e version) : « le filet est plus cett
 jusqu'à la maison, le patio doit avoir 20 de large finalement et les poutres en bois font 16 à partir de gauche et arrêtent à
 4 pieds de la maison, avec celui du milieu dans le milieu » : balcon de 20 pi de la façade au bord avant ; poutres de la pergola
 de 16 pi, du bord avant jusqu'à 4 pi de la maison, poteaux du milieu au centre ; filet ≈ 9'-5" × 10'-0" (rectangle rouge).
+Puis (4e version) : « pi le meuble avec le four à pizza fait toute la longueur des poutres (20') », corrigé aussitôt : « je voulais
+dire quelle faisais 16 pied le meuble pas 20 pieds » : meuble de cuisine de 16'-0", du bord avant aux poteaux à 4 pi de la maison.
 Relevé estimé sur 20 photos (DESIGN_balcon_avant.md) : à valider, sauf les mesures du client.
 
 appliquer_exterieur(EXT) (appelé par scene_3d.py après la création de SCENE["exterieur"]) :
@@ -27,8 +29,9 @@ Plan retenu (vu de dessus, la rue en bas ; le croquis du client est tourné d'un
 - balcon : TOUT le rectangle, x -90 à 232 (26'-10"), y -240 à 0 (20'-0", client), à 103,5 (1½ po sous le seuil) ;
 - pergola contre l'écran du voisin (x -90 à 52) : poutres de 16'-0" du bord avant (y -240) jusqu'à 4'-0" de la maison (y -48),
   trois rangées de poteaux (bord avant, milieu y -144, à 4 pi de la maison) (client) ; toit de polycarbonate ondulé sur chevrons
-  au-dessus de la cuisine, guirlandes d'ampoules ; cuisine d'extérieur le long de l'écran (comptoir haut avec four à pizza,
-  frigo à boissons et bacs à condiments ; comptoir bas avec BBQ encastré et plaque de cuisson) ; sofa, table basse,
+  au-dessus de la cuisine, guirlandes d'ampoules ; cuisine d'extérieur le long de l'écran, meuble de 16'-0" sur toute la
+  longueur des poutres (client) : comptoir haut de 10'-0" avec four à pizza, frigo à boissons et bacs à condiments ; comptoir
+  bas de 6'-0" avec BBQ encastré et plaque de cuisson (sa tablette dépasse le bout) ; sofa, table basse,
   2 fauteuils, 2 poufs entre la cuisine et le passage ;
 - filet catamaran ≈ 9'-5" × 10'-0" (113 po vers la maison sur 120 le long de la façade, rectangle rouge du client) au coin avant
   côté allée, banc de planche le long du garde-corps droit, 3 coussins ;
@@ -85,11 +88,21 @@ PERGOLA_X = (XP - 2.75, XG + 2.75)
 PERGOLA_Y0, PERGOLA_Y1 = YAV, -48.0
 PERGOLA_Y = (PERGOLA_Y0 + 2.75, (PERGOLA_Y0 + PERGOLA_Y1) / 2, PERGOLA_Y1 - 2.75)
 ZH = ZB + 88                                  # dessous des poutres (7'-4" sur le balcon), poutres 5½ × 7½
-# cuisine d'extérieur le long de l'écran, sous la pergola (à 9 po du bord avant, comme avant) : profondeur x -84 à -56 ;
-# comptoir haut y -231 à -135, comptoir bas y -135 à -73 (sa tablette jusqu'à -60, 1 pi en deçà des poteaux du fond)
+# cuisine d'extérieur le long de l'écran, sous la pergola : le meuble fait 16'-0", toute la longueur des poutres (client,
+# 4e version), du bord avant (y -240 : son bout en cascade est contre le poteau avant, le garde-corps avant bute dessus, photos
+# 18, 19) jusqu'à la rangée de poteaux à 4 pi de la maison (y -48). Les poteaux de la rangée de l'écran (x -90 à -84,5) sont
+# derrière son dos (x -84) : il passe devant eux. Profondeur x -84 à -56 (dessus jusqu'à -55). (y0, y1, dessus)
 CU_X0, CU_X1 = -84.0, -56.0
-CU_HAUT = (YAV + 9.0, YAV + 105.0, ZB + 36)
-CU_BAS = (YAV + 105.0, YAV + 167.0, ZB + 26)
+CU_Y0, CU_Y1 = YAV, PERGOLA_Y1                          # 16'-0" (client)
+CU_HAUT = (CU_Y0, CU_Y0 + 120.0, ZB + 36)               # comptoir haut 10'-0" : four à pizza, frigo, bacs (photos 17 à 19)
+CU_BAS = (CU_HAUT[1], CU_Y1, ZB + 26)                   # comptoir bas 6'-0" : BBQ et plaque, collés (photos 18, 20)
+# modules, de la rue vers la maison (photos 17 à 20 ; frigo, BBQ et plaque comme étalons)
+CU_FOUR = (-70.0, CU_Y0 + 26.0, 13.0)                   # four à pizza (dôme de 26 po) : centre x, y et rayon
+CU_FRIGO = (CU_Y0 + 58.0, CU_Y0 + 81.0)                 # frigo à boissons à porte vitrée (23 po), un peu passé le milieu
+CU_BACS = CU_Y0 + 75.0                                  # 6 bacs à condiments au fond (et 2 devant) jusqu'au bout côté maison
+CU_BBQ = (CU_BAS[0] + 1.5, CU_BAS[0] + 29.5)            # BBQ encastré 3 brûleurs (28 po), contre le comptoir haut
+CU_PLAQUE = (CU_BBQ[1] + 1.5, CU_BAS[1] - 2.0)          # plaque de cuisson 4 brûleurs (39 po), au bout du meuble
+CU_TABLETTE = (CU_PLAQUE[1], CU_PLAQUE[1] + 15.0)       # sa tablette dépasse le bout du meuble, à côté du poteau (photo 20)
 # salon entre la cuisine et le passage (mêmes dégagements qu'avant, par rapport au bord avant) : sofa dos au garde-corps avant,
 # table basse, 2 fauteuils face au sofa, 2 poufs ; (x0, x1, y0, y1)
 SOFA = (-36.0, 42.0, YAV + 4.0, YAV + 35.0)
@@ -129,7 +142,7 @@ PALETTE = [
     ["Balcon avant : pin naturel", "planches de 5½ po (pas de composite), sens alternés d'un panneau à l'autre", "#AD967F"],
     ["Cadres teints foncés", "bandes de 5½ po autour du filet et entre les panneaux ; structure sous le balcon", "#3A332D"],
     ["Pergola de bois teint", "poteaux 6 × 6, poutres, chevrons ; toit de polycarbonate ondulé translucide au-dessus de la cuisine ; guirlandes d'ampoules", "#6E4C33"],
-    ["Cuisine d'extérieur", "comptoirs de microciment gris, façades à lattes de bois teint foncé, frigo à porte vitrée noire, four à pizza crème, BBQ et plaque de cuisson", "#A7A8A4"],
+    ["Cuisine d'extérieur", "meuble de 16 pi (toute la longueur de la pergola) : comptoirs de microciment gris, façades à lattes de bois teint foncé, frigo à porte vitrée noire, four à pizza crème, BBQ et plaque de cuisson", "#A7A8A4"],
     ["Mobilier de détente", "sofa 3 places et 2 fauteuils (aluminium noir, coussins gris), table basse à dessus de bois, 2 poufs blancs", "#C9CBCA"],
     ["Garde-corps du balcon", "main courante et poteaux de bois naturel, barreaux noirs ; un panneau de verre teinté à droite", "#B8895E"],
     ["Écrans d'intimité", "planches horizontales teintes à jours sur montants d'acier noir (voisin de gauche, coin des enfants)", "#966843"],
@@ -305,8 +318,10 @@ def plancher():
 
 def garde_corps_balcon():
     o = []
-    # devant, côté voisin : de l'écran au poteau avant de la pergola (au-dessus du coin des enfants)
-    o += garde_corps((XG + 1.5, YAV + 1.75), (XP - 5.5, YAV + 1.75), ZB, montants=(68,))
+    # devant, côté voisin : du bout en cascade de la cuisine (au bord avant, contre le poteau avant de l'écran) au poteau avant
+    # de la pergola, au-dessus du coin des enfants (photos 18, 19 : le garde-corps bute sur le bout du comptoir haut)
+    xg0 = CU_X1 + 1
+    o += garde_corps((xg0, YAV + 1.75), (XP - 5.5, YAV + 1.75), ZB, montants=((XP - 5.5 - xg0) / 2,))
     # devant, partie du filet : de la boîte d'écran au coin droit
     o += garde_corps((XF, YAV + 1.75), (XD, YAV + 1.75), ZB, montants=(60,))
     # côté droit : du coin avant à l'escalier (verre teinté juste devant l'escalier), puis de l'escalier au mur (côté porte)
@@ -410,28 +425,29 @@ def cuisine():
     l'écran."""
     o = []
     xa, xb = CU_X0, CU_X1
-    # comptoir haut
+    # comptoir haut (10'-0", du bord avant)
     ya, yb, zc = CU_HAUT
     o += [B(xa, ya, xb + 1, yb, zc - 2.5, zc, "bal-microciment"),                         # dessus
           B(xa, ya, xb + 1, ya + 3, ZB, zc - 2.5, "bal-microciment"),                      # bout en cascade (côté rue)
           B(xa, yb - 3, xb + 1, yb, ZB, zc - 2.5, "bal-microciment"),                      # bout côté maison
           B(xa, ya + 3, xb - 2, yb - 3, ZB, ZB + 1, "metal"),                              # socle en retrait
           B(xa, ya + 3, xa + 1, yb - 3, ZB, zc - 2.5, "bal-microciment")]                  # dos
-    yfr0, yfr1 = ya + 43.0, ya + 66.0                                                    # frigo à boissons (23 po)
-    o += lattes(xb, ya + 3, ya + 21.0, ZB + 1, zc - 2.5) + lattes(xb, ya + 21.4, yfr0, ZB + 1, zc - 2.5)
+    yfr0, yfr1 = CU_FRIGO                                                                # frigo à boissons (23 po)
+    # façades à lattes : grand panneau sous le four, bande étroite contre le frigo, panneau côté maison (photo 19)
+    o += lattes(xb, ya + 3, yfr0 - 9.0, ZB + 1, zc - 2.5) + lattes(xb, yfr0 - 8.6, yfr0, ZB + 1, zc - 2.5)
     o += lattes(xb, yfr1, yb - 3, ZB + 1, zc - 2.5)
     o += [B(xb - 1.2, yfr0, xb - 0.2, yfr1, ZB + 1.5, zc - 3, "ecran"),                   # porte vitrée noire
           B(xb - 1.6, yfr0 - 0.4, xb - 1.0, yfr1 + 0.4, ZB + 1, zc - 2.5, "metal"),
           B(xb - 0.2, yfr1 - 1.8, xb + 0.4, yfr1 - 1.0, ZB + 18, ZB + 30, "inox")]          # poignée
     # bacs à condiments encastrés (inox) : 6 au fond, 2 devant, au bout côté maison
     for k in range(6):
-        y = ya + 51.0 + k * 6.8
+        y = CU_BACS + k * 6.8
         o += [B(-79, y, -73, y + 6, zc - 0.05, zc + 0.15, "inox"), B(-78.2, y + 0.8, -73.8, y + 5.2, zc + 0.15, zc + 0.2, "metal")]
     for k in range(2):
-        y = ya + 78.0 + k * 6.8
+        y = CU_BACS + 26.0 + k * 6.8
         o += [B(-70, y, -64, y + 6, zc - 0.05, zc + 0.15, "inox"), B(-69.2, y + 0.8, -64.8, y + 5.2, zc + 0.15, zc + 0.2, "metal")]
     # four à pizza (dôme crème sur socle noir, style « dôme », sans logo), bouche vers l'avant (+x)
-    cx, cy = -70.0, ya + 17.0
+    cx, cy, _ = CU_FOUR
     o += [C(cx, cy, 12.5, zc, zc + 4, "metal", pans=24),                                  # socle noir
           C(cx, cy, 13.0, zc + 4, zc + 5, "metal", pans=24),
           SPH(cx, cy, zc + 5, 13.0, "bal-creme", ecrase=0.85),                             # dôme
@@ -441,34 +457,35 @@ def cuisine():
           C(cx - 3, cy, 3.2, zc + 22, zc + 23, "metal", pans=16),
           B(cx + 12.5, cy - 3.5, cx + 13.8, cy + 3.5, zc + 1, zc + 3.5, "metal")]          # commande
     # pelles à pizza accrochées à l'écran, bacs à fleurs noirs sur l'écran (photo 17)
-    o += [B(XG + 2.3, ya + 17, XG + 2.8, ya + 27, ZB + 44, ZB + 56, "inox"), B(XG + 2.3, ya + 21, XG + 2.8, ya + 23, ZB + 56, ZB + 72, "gris"),
-          B(XG + 2.3, ya + 30, XG + 2.8, ya + 39, ZB + 46, ZB + 57, "inox"), B(XG + 2.3, ya + 33.5, XG + 2.8, ya + 35.5, ZB + 57, ZB + 73, "gris")]
-    for (ya_, z_) in ((ya + 43, ZB + 66), (ya + 55, ZB + 54), (ya + 43, ZB + 42)):
+    o += [B(XG + 2.3, cy, XG + 2.8, cy + 10, ZB + 44, ZB + 56, "inox"), B(XG + 2.3, cy + 4, XG + 2.8, cy + 6, ZB + 56, ZB + 72, "gris"),
+          B(XG + 2.3, cy + 13, XG + 2.8, cy + 22, ZB + 46, ZB + 57, "inox"), B(XG + 2.3, cy + 16.5, XG + 2.8, cy + 18.5, ZB + 57, ZB + 73, "gris")]
+    for (ya_, z_) in ((cy + 26, ZB + 66), (cy + 38, ZB + 54), (cy + 26, ZB + 42)):
         o += [B(XG + 2.3, ya_, XG + 8.5, ya_ + 14, z_, z_ + 5.5, "metal"), B(XG + 3, ya_ + 1, XG + 7.8, ya_ + 13, z_ + 5.5, z_ + 8, "plante")]
-    # comptoir bas
+    # comptoir bas (6'-0", jusqu'aux poteaux à 4 pi de la maison)
     ya, yb, zc = CU_BAS
     o += [B(xa, ya, xb + 1, yb, zc - 2.5, zc, "bal-microciment"),
           B(xa, yb - 3, xb + 1, yb, ZB, zc - 2.5, "bal-microciment"),
           B(xa, ya, xb - 2, yb - 3, ZB, ZB + 1, "metal")]
     o += lattes(xb, ya + 0.5, yb - 3, ZB + 1, zc - 2.5)
     # BBQ encastré 3 brûleurs (inox et noir)
-    q0, q1 = ya + 2.0, ya + 27.0
+    q0, q1 = CU_BBQ
     o += [B(-82, q0, -61, q1, zc, zc + 9, "metal"),                                       # cuve
           B(-61, q0, -59.6, q1, zc + 0.5, zc + 8.5, "inox"),                               # panneau de commande
           ARR(-82, q0 - 0.5, -60, q1 + 0.5, zc + 9, zc + 18.5, "metal", r=3.5, b=1.5),      # couvercle noir
           B(-60.5, q0 + 2, -59.2, q1 - 2, zc + 13, zc + 14.2, "inox")]                    # poignée
     for k in range(3):
-        y = q0 + 5 + k * 7.5
+        y = (q0 + q1) / 2 + (k - 1) * 8.0
         o.append(C(-59.0, y, 1.1, zc + 3, zc + 5.4, "metal", pans=10))
-    # plaque de cuisson noire (style « griddle », sans logo) à tablette latérale qui dépasse le comptoir
-    g0, g1 = ya + 30.0, ya + 59.5
+    # plaque de cuisson noire 4 brûleurs (style « griddle », sans logo) à tablette latérale qui dépasse le bout du meuble
+    g0, g1 = CU_PLAQUE
+    t1 = CU_TABLETTE[1]
     o += [B(-82, g0, -60, g1, zc, zc + 7, "metal"),
           B(-81, g0 + 0.5, -61, g1 - 0.5, zc + 7, zc + 7.6, "carbone"),                     # plaque
           ARR(-82.5, g0 - 0.3, -60.5, g1 + 0.3, zc + 7.6, zc + 13, "metal", r=2.5, b=1.2),   # couvercle
-          B(-82, g1, -61, g1 + 15, zc + 6, zc + 7, "metal"),                               # tablette latérale
-          B(-81.5, g1 + 13, -61.5, g1 + 15, zc + 2, zc + 6, "metal")]
+          B(-82, g1, -61, t1, zc + 6, zc + 7, "metal"),                                    # tablette latérale
+          B(-81.5, t1 - 2, -61.5, t1, zc + 2, zc + 6, "metal")]
     for k in range(4):
-        y = g0 + 4 + k * 7.2
+        y = (g0 + g1) / 2 + (k - 1.5) * 9.0
         o.append(C(-59.4, y, 1.0, zc + 2.5, zc + 4.5, "metal", pans=10))
     return o
 
@@ -750,7 +767,7 @@ def _bande(a, b, e):
 def obstacles_balcon(poteaux):
     mx0, mx1, my0, my1 = MAISONNETTE
     y0j, y1j = JARDINIERE_Y
-    ob = [{"nom": "Garde-corps avant du balcon (au-dessus du coin des enfants)", "pts": rect(XG, YAV, XP - 5.5, YAV + 3.5)},
+    ob = [{"nom": "Garde-corps avant du balcon (au-dessus du coin des enfants)", "pts": rect(CU_X1 + 1, YAV, XP - 5.5, YAV + 3.5)},
           {"nom": "Garde-corps avant du balcon (filet)", "pts": rect(XF - 3.5, YAV, XD, YAV + 3.5)},
           {"nom": "Garde-corps droit du balcon (devant l'escalier, verre teinté)", "pts": rect(XD - 3.5, YAV, XD, YAE)},
           {"nom": "Garde-corps droit du balcon (côté porte)", "pts": rect(XD - 3.5, YBE, XD, 0)},
@@ -760,8 +777,8 @@ def obstacles_balcon(poteaux):
           {"nom": "Clôture du coin des enfants (côté rue)", "pts": rect(XG, YR - 0.5, XC, YR + 2.2)},
           {"nom": "Clôture du coin des enfants (biais)", "pts": _bande((XC, YR), (XF, YJ), 2.2)},
           {"nom": "Clôture de la plateforme", "pts": rect(XF - 2.2, YJ, XF + 0.6, YAV)},
-          {"nom": "Cuisine d'extérieur (comptoirs, four à pizza, BBQ, plaque de cuisson)", "pts": rect(CU_X0 - 1, CU_HAUT[0], CU_X1 + 1.5, CU_BAS[1])},
-          {"nom": "Tablette de la plaque de cuisson", "pts": rect(-82, CU_BAS[1], -61, CU_BAS[1] + 14)},
+          {"nom": "Cuisine d'extérieur (meuble de 16 pi : four à pizza, frigo, BBQ, plaque de cuisson)", "pts": rect(CU_X0 - 1, CU_Y0, CU_X1 + 1.5, CU_Y1)},
+          {"nom": "Tablette de la plaque de cuisson", "pts": rect(-82, CU_Y1, -61, CU_TABLETTE[1])},
           {"nom": "Sofa", "pts": rect(SOFA[0], SOFA[2], SOFA[1], SOFA[3])},
           {"nom": "Table basse", "pts": rect(TABLE[0] - 0.5, TABLE[2] - 0.5, TABLE[1] + 0.5, TABLE[3] + 0.5)},
           {"nom": "Maisonnette « 86 »", "pts": rect(mx0 - 1, my0 - 1, mx1 + 1, my1 + 1)},
@@ -780,7 +797,7 @@ def obstacles_balcon(poteaux):
 VISITES = [
     {"nom": "Balcon avant — vue sur le fleuve", "x": 192, "y": -22, "cap": 258, "z": ZB},         # en sortant de la porte
     {"nom": "Filet catamaran", "x": 168, "y": -84, "cap": 250, "z": ZB},                          # derrière le filet
-    {"nom": "Cuisine d'extérieur (four à pizza)", "x": 22, "y": -66, "cap": 228, "z": ZB},        # sous la pergola, côté maison
+    {"nom": "Cuisine d'extérieur (four à pizza)", "x": 30, "y": -14, "cap": 222, "z": ZB},        # côté maison : tout le meuble de 16 pi
     {"nom": "Coin des enfants", "x": 95, "y": YAV - 12, "cap": 210, "z": Z_PLAT},                 # sur la plateforme
     {"nom": "Escalier avant (de la rue)", "x": 486, "y": -236, "cap": 140, "z": None},
 ]
