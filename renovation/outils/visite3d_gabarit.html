@@ -688,7 +688,7 @@ for (const E of ETAGES) {                // empreintes au sol (OMBRES) : remises
       OMBRES.length = n0; continue;
     }
     const cm = o.commande && CMD[o.commande];
-    if (!cm) { (FORMES[o.forme] || boite)(o, E.g.mob); continue; }
+    if (!cm) { const m = (FORMES[o.forme] || boite)(o, E.g.mob); if (m && o.face && o.mat === "miroir") m.userData.face = o.face; continue; }
     if (!cm.E) { cm.E = E; E.g.mob.add(cm.etirer); }
     const n0 = OMBRES.length;                     // pas d'ombre de contact fixe sous un objet qui bouge
     if (o.anim === "suivre") {
@@ -908,16 +908,30 @@ let recapturerReflets = () => {};      // refait l'environnement (après le mouv
     const pm = new THREE.PMREMGenerator(renderer), nouv = pm.fromCubemap(rt.texture); pm.dispose();
     scene.environment = nouv.texture; if (envRT) envRT.dispose(); envRT = nouv;
     MAT.miroir.envMap = rt.texture; MAT.miroir.needsUpdate = true;
-    // chaque miroir reçoit sa propre image, prise devant lui à hauteur d'œil (rendue une seule fois)
+    // chaque miroir reçoit sa propre image, prise devant sa face (rendue une seule fois), à hauteur d'œil de son étage.
+    // Sa face : "face" de l'objet si donnée, sinon le côté le plus dégagé (une porte-miroir de garde-robe regarde la
+    // chambre, pas l'intérieur du placard) ; trop à l'étroit des deux côtés : image générale de la pièce (repli neutre).
     for (const E of ETAGES) {
       if (!E.g.mob.visible) continue;
-      const miroirs = []; E.g.mob.traverse((o) => { if (o.isMesh && (o.material === MAT.miroir || o.material.name === "miroir")) miroirs.push(o); });
+      const miroirs = [];
+      for (const g of [E.g.mob, E.g.murs]) g.traverse((o) => { if (o.isMesh && (o.material === MAT.miroir || o.material.name === "miroir")) miroirs.push(o); });
       for (const o of miroirs) {
         const b = new THREE.Box3().setFromObject(o), c = b.getCenter(new THREE.Vector3()), t = b.getSize(new THREE.Vector3());
-        const n = t.x < t.z ? new THREE.Vector3(Math.sign(228 * K - c.x) || 1, 0, 0) : new THREE.Vector3(0, 0, Math.sign(-190 * K - c.z) || 1);
+        const cx = (c.x - E.decal.x) / K, cy = -(c.z - E.decal.z) / K, enX = t.x < t.z;
+        const dega = (s) => { let d = 0; for (let k = 4; k <= 60; k += 4) { const x = cx + (enX ? s * k : 0), y = cy + (enX ? 0 : s * k);
+          if (!libreE(E, x, y, 3)) break; d = k; } return d; };
+        let s = { "+x": 1, "-x": -1, "+y": 1, "-y": -1 }[o.userData.face];
+        let recul = 24;
+        if (!s || (o.userData.face[1] === "x") !== enX) {
+          const dp = dega(1), dm = dega(-1);
+          s = dp > dm ? 1 : dm > dp ? -1 : (enX ? Math.sign(228 - cx) : Math.sign(190 - cy)) || 1;
+          recul = Math.max(dp, dm);
+        }
+        if (recul < 8) { o.material = MAT.miroir; continue; }      // repli : l'image générale (pas celle d'un placard)
+        recul = Math.min(24, Math.max(6, recul / 2));
         const r2 = o.userData.rtMiroir || new THREE.WebGLCubeRenderTarget(256), c2 = new THREE.CubeCamera(0.05, 40, r2);
         o.userData.rtMiroir = r2;               // une recapture réutilise la cible du miroir (pas de fuite de mémoire)
-        c2.position.copy(c).addScaledVector(n, 0.6); c2.position.y = 63 * K + E.decal.y;
+        c2.position.copy(P(cx + (enX ? s * recul : 0), cy + (enX ? 0 : s * recul), 63)).add(E.decal);
         o.visible = false; c2.update(renderer, scene); o.visible = true;
         if (!o.userData.rtPropre) { o.material = MAT.miroir.clone(); o.material.name = "miroir"; o.userData.rtPropre = true; }
         o.material.envMap = r2.texture; o.material.needsUpdate = true;
