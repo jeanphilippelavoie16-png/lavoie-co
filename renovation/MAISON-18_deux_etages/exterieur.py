@@ -223,6 +223,9 @@ PLATEAU, PALIER_BAS = 59.0, 16.5           # près de la façade : plateau à ga
 PLATEAU_RUE, PALIER_RUE = 34.0, 4.0        # à la ligne avant du lot (y = -480) : à valider sur place
 BORD = 444.0                               # bord du palier bas sur l'allée (chute presque verticale jusqu'à x = 456)
 Z_COULOIR = 3.0                            # bout de l'allée derrière la maison (niveau du sous-sol)
+# côté gauche (le long du mur x = 0) : 58 au coin avant (vidéo), 52 devant les deux fenêtres du sous-sol (allège 56, pas de
+# margelle dans notre proposition : 4 po de dégagement), 56 au coin arrière (vidéo 11) ; à valider sur place
+COTE_GAUCHE = [(0, 58.0), (24, 52.0), (210, 52.0), (380, 56.0)]
 
 
 def _lisse(t):
@@ -287,16 +290,18 @@ def _sol_cour(x, y):                       # derrière la maison (y > 380)
 
 
 def _sol(x, y):
-    """Terrain analytique (z absolu). Dans l'emprise de la maison, valeur sans effet (cases non dessinées)."""
+    """Terrain analytique (z absolu). Dans l'emprise de la maison (cases non dessinées), on reprend le terrain juste dehors,
+    devant le mur le plus proche : les sommets posés sur les murs ont ainsi le niveau du dehors."""
+    if 0 < x < 456 and 0 <= y <= 380:
+        mur = min((y, "avant"), (380 - y, "arriere"), (x, "gauche"), (456 - x, "droit"))[1]
+        x, y = {"avant": (x, -1e-6), "arriere": (x, 380 + 1e-6), "gauche": (0.0, y), "droit": (456.0, y)}[mur]
     if y < 0:
         return _sol_avant(x, y)
     if y <= 380:
         if x >= 456:
             za = z_allee(y)
             return za if x <= 552 else _cote_droit(x, za)
-        if x <= 0:
-            return 58.0 - 2.0 * y / 380           # côté gauche : 58 à l'avant, 56 au coin arrière
-        return SOL
+        return _lin(COTE_GAUCHE, y)
     return _sol_cour(x, y)
 
 
@@ -538,7 +543,7 @@ def toit():
             B(ENTREE_ARR[0], 440, ENTREE_ARR[2], EY1, ZS_APPENTIS - 1, ZS_APPENTIS, W),
             B(EX0, EY1 + 1, EX1, EY1 + 5, ZS_APPENTIS + 1, ze_e - 1, W)]                  # gouttière
     # évent noir près du faîte, sur le pan arrière, vers le milieu (vidéo 07, 09, 10)
-    out += [B(226, 196, 238, 208, 282, 312, "metal"), B(224.5, 194.5, 239.5, 209.5, 312, 314, "metal")]
+    out += [B(226, 196, 238, 208, 282, 300, "metal"), B(224.5, 194.5, 239.5, 209.5, 300, 302, "metal")]
     return out
 
 
