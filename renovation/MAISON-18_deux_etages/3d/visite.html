@@ -637,22 +637,54 @@ function prochePoly(pts, x, y, r) {
 // emprise d'un étage (faces extérieures de ses murs) : dedans ou dehors
 for (const E of ETAGES) E.emp = (E.d.empreinte || []).map((pts) => boiteDe({ pts }));
 const dansEmpreinte = (E, x, y) => E.emp.some((p) => x >= p.x0 && x <= p.x1 && y >= p.y0 && y <= p.y1 && dans(p.pts, x, y));
+const PENTE_MAX = 0.5;                   // dehors, pente du terrain au-delà de laquelle on ne marche plus (50 %, 27°)
+const dansTrou = (x, y) => XT.trousT.some((t) => x >= t.x0 && x <= t.x1 && y >= t.y0 && y <= t.y1 && dans(t.pts, x, y));
+// Relief (facultatif, S.exterieur.relief) : grille non uniforme {xs, ys, z[j][i]}, z absolu. Chaque case est coupée en deux
+// triangles par sa diagonale (xs[i], ys[j]) -> (xs[i+1], ys[j+1]) ; une case dont le centre tombe dans un trou n'existe pas
+// (ni dessinée, ni marchable). Le rendu et le pied du visiteur lisent les mêmes triangles (generer_3d.fonction_relief aussi).
+const RL = XT && XT.relief ? XT.relief : null;
+function indiceRelief(a, v) {             // plus grand k tel que a[k] <= v (borné à la dernière case)
+  let lo = 0, hi = a.length - 2;
+  while (lo < hi) { const m = (lo + hi + 1) >> 1; if (a[m] <= v) lo = m; else hi = m - 1; }
+  return lo;
+}
+function prepRelief() {
+  if (!RL) return;
+  const nx = RL.xs.length - 1, ny = RL.ys.length - 1;
+  RL.saute = new Uint8Array(nx * ny);
+  for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++)
+    RL.saute[j * nx + i] = dansTrou((RL.xs[i] + RL.xs[i + 1]) / 2, (RL.ys[j] + RL.ys[j + 1]) / 2) ? 1 : 0;
+}
+// terrain en (x, y) : {z, pente} (pente du triangle, sans unité), ou null (trou, case sautée, hors du relief)
+function terrainEn(x, y) {
+  if (!RL) return dansTrou(x, y) ? null : { z: XT.sol, pente: 0 };
+  const xs = RL.xs, ys = RL.ys;
+  if (x < xs[0] || x > xs[xs.length - 1] || y < ys[0] || y > ys[ys.length - 1]) return null;
+  const i = indiceRelief(xs, x), j = indiceRelief(ys, y);
+  if (RL.saute[j * (xs.length - 1) + i]) return null;
+  const dx = xs[i + 1] - xs[i], dy = ys[j + 1] - ys[j], u = (x - xs[i]) / dx, v = (y - ys[j]) / dy, Z = RL.z;
+  const z00 = Z[j][i], z10 = Z[j][i + 1], z01 = Z[j + 1][i], z11 = Z[j + 1][i + 1];
+  return u >= v ? { z: z00 + u * (z10 - z00) + v * (z11 - z10), pente: Math.hypot((z10 - z00) / dx, (z11 - z10) / dy) }
+                : { z: z00 + v * (z01 - z00) + u * (z11 - z01), pente: Math.hypot((z11 - z01) / dx, (z01 - z00) / dy) };
+}
 if (XT) {
   for (const p of XT.planchers) boiteDe(p);
   for (const o of XT.obstacles) boiteDe(o);
   XT.trousT = XT.trous_terrain.map((pts) => boiteDe({ pts }));
+  prepRelief();
 }
 // hauteur du sol dehors en (x, y) : le plus haut plancher qui le couvre, sinon le terrain (dans le lot, hors des trous et pas
-// sous une terrasse : on ne passe pas sous le deck) ; null : rien où poser le pied
-function hauteurExt(x, y) {
+// sous une terrasse : on ne passe pas sous le deck) ; null : rien où poser le pied. info.raide : terrain trop en pente
+function hauteurExt(x, y, info) {
   if (!XT) return null;
+  if (info) info.raide = false;
+  const t = terrainEn(x, y);
   let h = null, dessous = false;
   for (const p of XT.planchers) if (x >= p.x0 && x <= p.x1 && y >= p.y0 && y <= p.y1 && dans(p.pts, x, y)) {
     if (h == null || p.z > h) h = p.z;
-    if (p.z > XT.sol + MARCHE) dessous = true;
+    if (t && p.z > t.z + MARCHE) dessous = true;
   }
-  if (!dessous && dans(XT.terrain, x, y) && !XT.trousT.some((t) => x >= t.x0 && x <= t.x1 && y >= t.y0 && y <= t.y1 && dans(t.pts, x, y)))
-    h = h == null ? XT.sol : Math.max(h, XT.sol);
+  if (!dessous && t && dans(XT.terrain, x, y) && (h == null || t.z > h)) { h = t.z; if (info && t.pente > PENTE_MAX) info.raide = true; }
   return h;
 }
 
@@ -916,17 +948,37 @@ if (XT) {
   });
   const gz = Object.values(S.peintures || {}).find((v) => v[2] === "ext-gazon");
   MAT["ext-terrain"] = M("ext-terrain", { map: herbe, color: gz ? new THREE.Color(gz[0]).lerp(new THREE.Color("#ffffff"), .45) : "#c9d1b4", roughness: 1 }, 1.6);
-  const R = 8000, sh = new THREE.Shape([[-R, -R], [R, -R], [R, R], [-R, R]].map(([x, y]) => new THREE.Vector2(x * K, y * K)));
-  for (const t of XT.trous_terrain) sh.holes.push(new THREE.Path(t.map(([x, y]) => new THREE.Vector2(x * K, y * K))));
-  const g = new THREE.ShapeGeometry(sh); g.rotateX(-Math.PI / 2);
-  const uv = g.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / 1.6, uv.getY(i) / 1.6);
-  const t = new THREE.Mesh(g, MAT["ext-terrain"]); t.position.y = XT.sol * K;
+  const R = 8000;
+  let g;
+  if (RL) {
+    // relief : la grille prolongée d'une rangée à 8000 po de chaque côté (bords recopiés), deux triangles par case (même
+    // diagonale que terrainEn), sauf les cases sautées (trous)
+    const nx0 = RL.xs.length - 1, ny0 = RL.ys.length - 1, xs = [RL.xs[0] - R, ...RL.xs, RL.xs[nx0] + R], ys = [RL.ys[0] - R, ...RL.ys, RL.ys[ny0] + R];
+    const X = xs.length, Y = ys.length, pos = new Float32Array(X * Y * 3), uvs = new Float32Array(X * Y * 2), idx = [];
+    for (let j = 0; j < Y; j++) for (let i = 0; i < X; i++) {
+      const z = RL.z[Math.min(Math.max(j - 1, 0), ny0)][Math.min(Math.max(i - 1, 0), nx0)], k = j * X + i;
+      pos[3 * k] = xs[i] * K; pos[3 * k + 1] = z * K; pos[3 * k + 2] = -ys[j] * K; uvs[2 * k] = xs[i] * K / 1.6; uvs[2 * k + 1] = ys[j] * K / 1.6;
+    }
+    for (let j = 0; j < Y - 1; j++) for (let i = 0; i < X - 1; i++) {
+      if (i >= 1 && j >= 1 && i <= nx0 && j <= ny0 && RL.saute[(j - 1) * nx0 + (i - 1)]) continue;
+      const a = j * X + i, b = a + 1, c = a + X + 1, d = a + X;
+      idx.push(a, b, c, a, c, d);
+    }
+    g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(pos, 3)); g.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
+    g.setIndex(idx); g.computeVertexNormals();
+  } else {
+    const sh = new THREE.Shape([[-R, -R], [R, -R], [R, R], [-R, R]].map(([x, y]) => new THREE.Vector2(x * K, y * K)));
+    for (const t of XT.trous_terrain) sh.holes.push(new THREE.Path(t.map(([x, y]) => new THREE.Vector2(x * K, y * K))));
+    g = new THREE.ShapeGeometry(sh); g.rotateX(-Math.PI / 2); g.translate(0, XT.sol * K, 0);
+    const uv = g.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / 1.6, uv.getY(i) / 1.6);
+  }
+  const t = new THREE.Mesh(g, MAT["ext-terrain"]);
   t.userData.garder = true; t.userData.sansOmbre = true; t.userData.terrain = true; gExterieur.add(t);
   // vitres des fenêtres vues de dehors : verre sombre et un peu réfléchissant, une seule face (invisible de l'intérieur)
   MAT["vitre-ext"] = M("vitre-ext", { color: "#28323b", transparent: true, opacity: .82, roughness: .06, metalness: .3, depthWrite: false, envMapIntensity: 1.5 });
   const vitres = [], ROT = { "-y": 0, "+y": Math.PI, "+x": Math.PI / 2, "-x": -Math.PI / 2 };
   const garde = {};
-  for (const o of XT.objets) if (MAT[o.mat] && !(o.mat in garde)) {
+  for (const o of [...XT.objets, ...(XT.revetements || [])]) if (MAT[o.mat] && !(o.mat in garde)) {
     garde[o.mat] = MAT[o.mat];
     if (!MATX.has(MAT[o.mat])) { const c = MAT[o.mat].clone(); c.name = MAT[o.mat].name; MATX.set(MAT[o.mat], c); }
     MAT[o.mat] = MATX.get(MAT[o.mat]);
@@ -940,6 +992,55 @@ if (XT) {
       continue;
     }
     (FORMES[o.forme] || boite)(o, gExterieur);
+  }
+  // revêtements (allée, gravier, dalles...) drapés 0,3 po au-dessus du terrain, découpés case par case (bords nets) ; sans
+  // relief, à plat au niveau du sol
+  const parMat = {};
+  for (const rv of XT.revetements || []) {
+    const pts = rv.pts.map(([x, y]) => [x, y]), aire = pts.reduce((a, p, k) => a + (pts[(k + 1) % pts.length][0] - p[0]) * (pts[(k + 1) % pts.length][1] + p[1]), 0);
+    if (aire > 0) pts.reverse();                                        // sens antihoraire (vu de dessus)
+    const tris = parMat[rv.mat] || (parMat[rv.mat] = []), e = ECHELLE[rv.mat] || 1;
+    const poser = (poly, plan) => {                                      // polygone convexe découpé → triangles, z du plan
+      if (poly.length < 3) return;
+      const ind = THREE.ShapeUtils.triangulateShape(poly.map(([x, y]) => new THREE.Vector2(x, y)), []);
+      for (const [a, b, c] of ind) {
+        let q = [poly[a], poly[b], poly[c]];
+        if ((q[1][0] - q[0][0]) * (q[2][1] - q[0][1]) - (q[1][1] - q[0][1]) * (q[2][0] - q[0][0]) < 0) q = [q[0], q[2], q[1]];
+        for (const [x, y] of q) tris.push(x * K, (plan(x, y) + 0.3) * K, -y * K, x * K / e, y * K / e);
+      }
+    };
+    if (!RL) { poser(pts, () => XT.sol); continue; }
+    const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]), nx0 = RL.xs.length - 1;
+    const i0 = indiceRelief(RL.xs, Math.min(...xs)), i1 = indiceRelief(RL.xs, Math.max(...xs)), j0 = indiceRelief(RL.ys, Math.min(...ys)), j1 = indiceRelief(RL.ys, Math.max(...ys));
+    // découpe de Sutherland-Hodgman par un triangle (sens antihoraire)
+    const couper = (poly, tri) => {
+      let out = poly;
+      for (let k = 0; k < 3 && out.length; k++) {
+        const [ax, ay] = tri[k], [bx, by] = tri[(k + 1) % 3], dedans = (p) => (bx - ax) * (p[1] - ay) - (by - ay) * (p[0] - ax) >= -1e-9, src = out;
+        out = [];
+        for (let m = 0; m < src.length; m++) {
+          const p = src[m], q = src[(m + 1) % src.length], ip = dedans(p), iq = dedans(q);
+          if (ip) out.push(p);
+          if (ip !== iq) { const d1 = (bx - ax) * (p[1] - ay) - (by - ay) * (p[0] - ax), d2 = (bx - ax) * (q[1] - ay) - (by - ay) * (q[0] - ax), s = d1 / (d1 - d2);
+            out.push([p[0] + (q[0] - p[0]) * s, p[1] + (q[1] - p[1]) * s]); }
+        }
+      }
+      return out;
+    };
+    for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) {
+      if (RL.saute[j * nx0 + i]) continue;
+      const x0 = RL.xs[i], x1 = RL.xs[i + 1], y0 = RL.ys[j], y1 = RL.ys[j + 1];
+      for (const tri of [[[x0, y0], [x1, y0], [x1, y1]], [[x0, y0], [x1, y1], [x0, y1]]])
+        poser(couper(pts, tri), (x, y) => { const t2 = terrainEn(Math.min(Math.max(x, x0 + 1e-6), x1 - 1e-6), Math.min(Math.max(y, y0 + 1e-6), y1 - 1e-6)); return t2 ? t2.z : XT.sol; });
+    }
+  }
+  for (const [mat, tris] of Object.entries(parMat)) {
+    if (!tris.length) continue;
+    const a = new Float32Array(tris), n = a.length / 5, pos = new Float32Array(n * 3), uv = new Float32Array(n * 2);
+    for (let k = 0; k < n; k++) { pos.set(a.subarray(5 * k, 5 * k + 3), 3 * k); uv.set(a.subarray(5 * k + 3, 5 * k + 5), 2 * k); }
+    const g2 = new THREE.BufferGeometry(); g2.setAttribute("position", new THREE.BufferAttribute(pos, 3)); g2.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+    g2.computeVertexNormals();
+    const m = new THREE.Mesh(g2, MAT[mat] || MAT["ext-terrain"]); m.userData.sansOmbre = true; m.userData.garder = true; gExterieur.add(m);
   }
   for (const [k, m] of Object.entries(garde)) MAT[k] = m;
   if (garde.eau) Object.assign(MATX.get(garde.eau), { opacity: .72 }).color.set("#5f9fbe");    // eau de piscine : bleue, sur la toile
@@ -1445,8 +1546,10 @@ const libre = (x, y, r = RAYON) => libreE(zoneDe(joueur.etage), x, y, r);
 // libre dehors : un sol sous le pied (hauteurExt), dans le lot (à r de ses limites), hors des obstacles de la cour, des murs de
 // la maison à hauteur du corps (12 à 60 po au-dessus du sol : sur le perron, les murs du sous-sol dessous ne gênent pas ; une
 // porte ouverte laisse passer) et des portes extérieures fermées (avecPortes)
-function libreExt(x, y, r = RAYON, avecPortes = false, h = hauteurExt(x, y)) {
-  if (h == null || !dans(XT.terrain, x, y) || prochePoly(XT.terrain, x, y, r)) return false;
+const INFO_EXT = { raide: false };
+function libreExt(x, y, r = RAYON, avecPortes = false) {
+  const h = hauteurExt(x, y, INFO_EXT);
+  if (h == null || INFO_EXT.raide || !dans(XT.terrain, x, y) || prochePoly(XT.terrain, x, y, r)) return false;
   for (const o of XT.obstacles) if (x > o.x0 - r && x < o.x1 + r && y > o.y0 - r && y < o.y1 + r && (dans(o.pts, x, y) || prochePoly(o.pts, x, y, r))) return false;
   const za = h + 12, zb = h + 60;
   for (const b of EXT.murs) if (b.za < zb && b.zb > za && x > b.x0 - r && x < b.x1 + r && y > b.y0 - r && y < b.y1 + r) return false;
@@ -1516,7 +1619,7 @@ if (EXT) {
   for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
     const x = x0 + (i + .5) * G, y = y0 + (j + .5) * G, h = hauteurExt(x, y);
     if (h == null) continue;
-    gr.h[j * nx + i] = h; gr.libre[j * nx + i] = libreExt(x, y, RAYON, false, h) ? 1 : 0;
+    gr.h[j * nx + i] = h; gr.libre[j * nx + i] = libreExt(x, y, RAYON, false) ? 1 : 0;
   }
   EXT.gr = gr; EXT.grille = gr.libre; EXT.msGrille = Math.round(performance.now() - t0);
 }
@@ -2119,6 +2222,8 @@ if (EXT) {                                 // plan du lot (dehors) : gazon, all�
   g.fillStyle = "#c5d1ae"; trace(XT.terrain); g.fill(); g.strokeStyle = "#6f7d55"; g.lineWidth = 2; g.setLineDash([6, 4]); g.stroke(); g.setLineDash([]);
   for (const o of XT.objets) if (o.mat === "ext-asphalte" && !o.pts && o.z1 < XT.sol + 3) { g.fillStyle = "#8d8f93"; g.fillRect(vx(o.x0), vy(o.y1), (o.x1 - o.x0) * cadre.ech, (o.y1 - o.y0) * cadre.ech); }
   for (const t of XT.trousT) { g.fillStyle = "#9a958c"; trace(t.pts); g.fill(); }
+  const coul = (mat) => { const v = Object.values(S.peintures || {}).find((q) => q[2] === mat); return v ? v[0] : "#8d8f93"; };
+  for (const rv of XT.revetements || []) { g.fillStyle = coul(rv.mat); trace(rv.pts); g.fill(); }
   for (const p of [...XT.planchers].sort((a, b) => a.z - b.z)) { g.fillStyle = p.z > XT.sol + MARCHE ? "#d9c09a" : "#e7e2d6"; trace(p.pts); g.fill(); g.strokeStyle = "rgba(107,90,68,.55)"; g.lineWidth = 1; g.stroke(); }
   for (const o of XT.obstacles) { g.fillStyle = /piscine/i.test(o.nom) ? "#7fb2cf" : "rgba(80,84,90,.55)"; trace(o.pts); g.fill(); }
   for (const E of ETAGES) for (const p of E.emp) { g.fillStyle = "#3a3d42"; trace(p.pts); g.fill(); }

@@ -69,7 +69,11 @@ dans le docstring de `MAISON-18_deux_etages/exterieur.py`). La visite dessine le
 l'enveloppe de la maison sous le soleil du jour ; on marche dehors (marches de 8 po au plus montées seules, obstacles, murs,
 lignes de lot) et on entre ou sort par les portes extérieures ouvertes (une porte dont un côté est hors de l'emprise de son
 étage). Arrêts dehors dans la section « Extérieur » ; petit plan du lot dehors ; maquette : vue « Extérieur » (maison avec
-son toit). Dedans, l'extérieur n'est dessiné qu'à travers les fenêtres et les portes ouvertes (et l'inverse dehors). Sortie
+son toit). Dedans, l'extérieur n'est dessiné qu'à travers les fenêtres et les portes ouvertes (et l'inverse dehors).
+Facultatif : `"relief"` (terrain non plat : grille `xs`, `ys`, `z[j][i]` en z absolu ; chaque case en deux triangles par la
+diagonale (xs[i], ys[j]) → (xs[i+1], ys[j+1]), sautée si son centre tombe dans un trou ; on ne marche pas sur une pente de
+plus de 50 % ; les margelles lisent le sol devant chaque fenêtre) et `"revetements"` (`[{"nom", "pts", "mat"}]` drapés sur
+le relief, découpés case par case ; on y marche comme sur le terrain). Sans relief, terrain plat à `"sol"`. Sortie
 ailleurs que dans le projet (essais) : `python3 renovation/outils/generer_3d.py renovation/<projet> /chemin/visite.html`.
 
 ## Matériaux

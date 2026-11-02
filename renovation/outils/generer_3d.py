@@ -104,9 +104,31 @@ def allege_tete(o, sill, head, fen):
     return (r["allege"], r["tete"]) if r else (sill, head)
 
 
+def fonction_relief(R):
+    """Relief du terrain (SCENE["exterieur"]["relief"] = {"xs", "ys", "z"}, grille non uniforme, z absolu) : fonction
+    (x, y) -> z, ou None hors de la grille. Chaque case est coupée en deux triangles par sa diagonale (xs[i], ys[j]) ->
+    (xs[i+1], ys[j+1]) : les mêmes triangles que le rendu et la marche de la visionneuse (zTerrain du gabarit)."""
+    if not R:
+        return None
+    import bisect
+    xs, ys, Z = R["xs"], R["ys"], R["z"]
+
+    def f(x, y):
+        if not (xs[0] <= x <= xs[-1] and ys[0] <= y <= ys[-1]):
+            return None
+        i = min(max(bisect.bisect_right(xs, x) - 1, 0), len(xs) - 2)
+        j = min(max(bisect.bisect_right(ys, y) - 1, 0), len(ys) - 2)
+        u, v = (x - xs[i]) / (xs[i + 1] - xs[i]), (y - ys[j]) / (ys[j + 1] - ys[j])
+        z00, z10, z01, z11 = Z[j][i], Z[j][i + 1], Z[j + 1][i], Z[j + 1][i + 1]
+        return z00 + u * (z10 - z00) + v * (z11 - z10) if u >= v else z00 + v * (z01 - z00) + u * (z11 - z01)
+    return f
+
+
 def margelles(niv, par_mur, fen, sol_ext, centre):
     """Margelles (puits de fenêtre) devant les fenêtres de SCENE["fenetres"] dont l'allège tombe sous le terrain :
-    fond de gravier, trois parois, et leurs rectangles (pour trouer le terrain). Retourne (boîtes, rectangles)."""
+    fond de gravier, trois parois, et leurs rectangles (pour trouer le terrain). Retourne (boîtes, rectangles).
+    sol_ext : z du terrain (repère de l'étage), un nombre ou une fonction (x, y) -> z (relief de l'extérieur, lu devant
+    chaque fenêtre ; None hors du relief : on prend alors son attribut « defaut »)."""
     boites, rects = [], []
     murs = {m["id"]: m for m in niv["murs"]}
     for mid, ouvs in par_mur.items():
@@ -120,12 +142,18 @@ def margelles(niv, par_mur, fen, sol_ext, centre):
         nx, ny = (0, math.copysign(1, m["y1"] - centre[1])) if horiz else (math.copysign(1, m["x1"] - centre[0]), 0)   # vers l'extérieur
         for o in ouvs:
             r = fen.get(o["id"]) if o["type"] == "fenetre" else None
-            if not r or r.get("margelle") is False or (r.get("margelle") is None and r["allege"] >= sol_ext + 2):
+            if not r:
+                continue
+            c, w = o["position"]["valeur"], o["largeur"]["valeur"]
+            sol = sol_ext
+            if callable(sol_ext):                   # relief : sol devant le milieu de la fenêtre, à 6 po du mur
+                q = sol_ext(m["x1"] + ux * c + nx * (t / 2 + 6), m["y1"] + uy * c + ny * (t / 2 + 6))
+                sol = q if q is not None else getattr(sol_ext, "defaut", 48)
+            if r.get("margelle") is False or (r.get("margelle") is None and r["allege"] >= sol + 2):
                 continue
             g = r["margelle"] if isinstance(r.get("margelle"), dict) else {}
             P, e, ep = g.get("saillie", 36), g.get("debord", 6), 1.5
-            zf, zh = g.get("fond", r["allege"] - 8), g.get("dessus", sol_ext + 4)
-            c, w = o["position"]["valeur"], o["largeur"]["valeur"]
+            zf, zh = g.get("fond", r["allege"] - 8), g.get("dessus", sol + 4)
             a, b, f = c - w / 2 - e, c + w / 2 + e, t / 2          # le long du mur ; face extérieure à t/2 de l'axe
 
             def bx(s0, s1, q0, q1, z0, z1, mat):                    # s le long du mur, q vers l'extérieur depuis l'axe
@@ -1060,7 +1088,7 @@ def construire(M, S, ctx=None):
     scene["sol_exterieur"] = S.get("sol_exterieur", sill - 8 if niv["id"] == "SS" else -30)
     if fen:
         # fenêtres descendues sous le terrain : margelles, et terrain troué au ras de la maison et des margelles
-        mb, mr = margelles(niv, par_mur, fen, scene["sol_exterieur"], ((xs and (min(xs) + max(xs)) / 2) or 228,
+        mb, mr = margelles(niv, par_mur, fen, (ctx or {}).get("sol_relief") or scene["sol_exterieur"], ((xs and (min(xs) + max(xs)) / 2) or 228,
                                                                          (ys and (min(ys) + max(ys)) / 2) or 190))
         if mb:
             scene["boites"] += mb
@@ -1097,10 +1125,33 @@ def _trouer_sol(s, trous):
     return out
 
 
+def valider_relief(R):
+    """Relief de l'extérieur (facultatif) : {"xs": [x croissants], "ys": [y croissants], "z": [[z(xs[i], ys[j]) pour i]
+    pour j]}, z absolu. Retourne le relief (nombres) ou None ; erreur explicite s'il ne respecte pas ce contrat."""
+    if R is None:
+        return None
+    def err(msg):
+        raise SystemExit("scene_3d.py, exterieur, relief : " + msg)
+    num = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool)
+    if not isinstance(R, dict) or set(R) - {"xs", "ys", "z", "note"}:
+        err('{"xs": [...], "ys": [...], "z": [[...], ...]} attendu')
+    xs, ys, Z = R.get("xs"), R.get("ys"), R.get("z")
+    for nom, a in (("xs", xs), ("ys", ys)):
+        if not isinstance(a, list) or len(a) < 2 or not all(num(v) for v in a) or any(b <= a_ for a_, b in zip(a, a[1:])):
+            err(f'"{nom}" : au moins 2 nombres strictement croissants')
+    if not isinstance(Z, list) or len(Z) != len(ys) or not all(isinstance(r, list) and len(r) == len(xs) and all(num(v) for v in r) for r in Z):
+        err(f'"z" : {len(ys)} rangées (une par y) de {len(xs)} nombres (un par x)')
+    return {"xs": [float(v) for v in xs], "ys": [float(v) for v in ys], "z": [[round(float(v), 2) for v in r] for r in Z]}
+
+
 def preparer_exterieur(X, M, etages, scene):
     """Extérieur (opt-in, maquette à plusieurs étages) : SCENE["exterieur"] = {"sol", "terrain", "objets", "planchers",
     "obstacles", "trous", "visites", "lumieres", "peintures"} (contrat détaillé dans le docstring d'exterieur.py de MAISON-18),
-    pouces, z ABSOLU (repère du plancher de l'étage le plus bas). Clé facultative : "palette" ([nom, description, couleur]).
+    pouces, z ABSOLU (repère du plancher de l'étage le plus bas). Clés facultatives : "palette" ([nom, description, couleur]) ;
+    "relief" (terrain non plat, voir valider_relief : chaque case en deux triangles, diagonale (xs[i], ys[j]) -> (xs[i+1],
+    ys[j+1]) ; une case dont le centre tombe dans un trou n'est pas dessinée ; sans relief, terrain plat à "sol") ;
+    "revetements" ([{"nom", "pts", "mat"}] : asphalte, gravier, dalles... drapés sur le relief, 0,3 po au-dessus, découpés
+    case par case ; on y marche comme sur le terrain).
     Prépare pour la visionneuse :
     - l'emprise de chaque étage (E["empreinte"] : dedans / dehors) et les portes extérieures (une porte dont un côté est dans
       l'emprise de son étage et l'autre dehors reçoit "dedans" et "dehors" : points de passage de part et d'autre du mur) ;
@@ -1121,7 +1172,8 @@ def preparer_exterieur(X, M, etages, scene):
         return [[round(float(q[0]), 2), round(float(q[1]), 2)] for q in p]
     if not isinstance(X, dict):
         err('SCENE["exterieur"] doit être un dictionnaire (voir le contrat dans exterieur.py)')
-    inconnues = set(X) - {"sol", "terrain", "objets", "planchers", "obstacles", "trous", "visites", "lumieres", "peintures", "palette"}
+    inconnues = set(X) - {"sol", "terrain", "objets", "planchers", "obstacles", "trous", "visites", "lumieres", "peintures", "palette",
+                          "relief", "revetements"}
     if inconnues:
         err(f'clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
     sol = X.get("sol")
@@ -1136,6 +1188,12 @@ def preparer_exterieur(X, M, etages, scene):
     obstacles = [{"nom": str(o.get("nom") or f"obstacle {i + 1}"), "pts": poly(o.get("pts"), f'obstacle « {o.get("nom")} »')}
                  for i, o in enumerate(X.get("obstacles") or []) if isinstance(o, dict) or err(f"obstacle n° {i + 1} : dictionnaire attendu")]
     trous = [poly(t, f"trou n° {i + 1}") for i, t in enumerate(X.get("trous") or [])]
+    relief = valider_relief(X.get("relief"))
+    revetements = []
+    for i, r in enumerate(X.get("revetements") or []):
+        if not isinstance(r, dict) or not isinstance(r.get("mat"), str):
+            err(f'revêtement n° {i + 1} : {{"nom", "pts", "mat"}} attendu ("mat" : matériau du catalogue ou alias de "peintures")')
+        revetements.append({"nom": str(r.get("nom") or f"revêtement {i + 1}"), "pts": poly(r.get("pts"), f'revêtement « {r.get("nom")} »'), "mat": r["mat"]})
     # emprise de chaque étage ; la maison au sol = leur réunion
     nivs = {n["id"]: n for n in M["niveaux"]}
     emp = {}
@@ -1196,8 +1254,13 @@ def preparer_exterieur(X, M, etages, scene):
         scene["peintures"][n2] = list(v)
     if X.get("palette"):
         scene["palettes"].append({"titre": "Extérieur", "items": X["palette"]})
-    return {"sol": float(sol), "terrain": terrain, "trous_terrain": trous_terrain, "objets": objets, "planchers": planchers,
-            "obstacles": obstacles, "lumieres": lumieres}
+    out = {"sol": float(sol), "terrain": terrain, "trous_terrain": trous_terrain, "objets": objets, "planchers": planchers,
+           "obstacles": obstacles, "lumieres": lumieres}
+    if relief:
+        out["relief"] = relief
+    if revetements:
+        out["revetements"] = revetements
+    return out
 
 
 def fusionner(M, S, dossier):
@@ -1217,6 +1280,7 @@ def fusionner(M, S, dossier):
     conflits = {n for n, c in couleurs.items() if len(c) > 1}
     conflits_alias = {n for n, c in alias.items() if len(c) > 1}
     out_etages, z, peintures, palettes, visites, cmds, images, ctx = [], 0.0, {}, [], [], [], {}, {}
+    relief = fonction_relief(valider_relief((S.get("exterieur") or {}).get("relief")))
     for idx, Se in enumerate(etages):
         nid = Se.get("niveau", "SS")
         nom = NOMS_ETAGES.get(nid, nid)
@@ -1239,6 +1303,12 @@ def fusionner(M, S, dossier):
                 return o
             Se["mobilier"] = [remat(o) for o in Se.get("mobilier", [])]
             Se["revetements"] = [remat(o) for o in Se.get("revetements", [])]
+        if relief:                                     # extérieur avec relief : les margelles lisent le sol devant chaque fenêtre
+            def sol_relief(x, y, dz=z):
+                q = relief(x, y)
+                return None if q is None else q - dz
+            sol_relief.defaut = S["exterieur"].get("sol", 48) - z
+            ctx = dict(ctx, sol_relief=sol_relief)
         sc = construire(M, Se, ctx)
         for k, v in sc["peintures"].items():
             peintures.setdefault(k, v)
@@ -1291,7 +1361,7 @@ def fusionner(M, S, dossier):
             tous[k] += E[k]
         tous["portes"] += [q for bt in E["battants"] for q in bt["boites"]]
     if scene.get("exterieur"):
-        tous["mobilier"] += scene["exterieur"]["objets"]
+        tous["mobilier"] += scene["exterieur"]["objets"] + [{"mat": r["mat"]} for r in scene["exterieur"].get("revetements", [])]
     Sf = {"commandes": cmds, "mobilier": tous["mobilier"], "visites": visites, "images": images,
           "mat_colonne": etages[0].get("mat_colonne", "placage")}
     cmd = commandes(Sf)
