@@ -52,14 +52,9 @@ SCENE["fenetres"] = {"ouv-SS-002": {"allege": 40},                       # tête
 | ouv-SS-003 | chambre 2, mur de droite (évacuation) | 80 po | 56 → **40** | idem | y 260½–355½ |
 | ouv-SS-006 (salle de bain), ouv-SS-007 (salle de lavage) | — | 36 po | **56, inchangée** (demande du client) | — | — |
 
-- **Pourquoi 40 po** : le vitrage grandit de moitié, et l'allège reste au-dessus des meubles bas :
-  - banc à jouets du séjour : 16 po ;
-  - banquette de la chambre 1 : 16 po ;
-  - banc de la chambre 2 : 18 po ;
-  - bureaux : 30 po.
-
-  Pour une fenêtre d'évacuation, on sort beaucoup plus facilement : la marche passe de 38-40 po à environ 22-24 po
-  au-dessus de la banquette.
+- **Pourquoi 40 po** : le vitrage grandit de moitié, et l'allège reste au-dessus des meubles bas (banc à jouets du séjour
+  à 16 po, bancs et bureaux à 30 po ou moins). Pour une fenêtre d'évacuation, environ 1 m d'allège se franchit sans
+  marche ; à 56 po (1,42 m), il en fallait une.
 - **Terrain** : le terrain est à environ 48 po au-dessus du plancher du sous-sol (56 − 8). Une allège de 40 po tombe
   donc 8 po sous le terrain, d'où une margelle devant chacune. Fond de gravier à 32 po, parois jusqu'à 52 po, soit
   4 po au-dessus du terrain. Les 36 po de saillie dépassent les 760 mm (30 po) de dégagement demandés devant une fenêtre
@@ -87,9 +82,11 @@ Recherche : tout objet à moins de 32 po d'une fenêtre visée et qui monte plus
   - la **toile motorisée** descend devant cette fenêtre, comme avant ;
   - le banc à jouets (16 po), la barre de son et les blocs de bois restent sous l'allège ;
   - rien devant la fenêtre avant.
-- **Chambre 1 et chambre 2 (zones des autres agents, non touchées)** :
-  - aujourd'hui, rien ne dépasse 40 po devant ouv-SS-009, ouv-SS-010 et ouv-SS-003 ;
-  - la banquette (16 po) et le banc (18 po) restent sous l'allège et servent toujours de marche d'évacuation ;
+- **Chambre 1 et chambre 2 (zones des autres agents, non touchées)** — contrôle refait sur les nouvelles chambres :
+  - rien ne dépasse 40 po devant ouv-SS-009, ouv-SS-010 et ouv-SS-003, à part une tringle au plafond (chambre 1) ;
+  - la nouvelle chambre 1 n'a plus de banquette sous ses fenêtres. Avec l'allège à 40 po (≈ 1 m), on sort encore sans
+    marche (à confirmer) ; à 56 po, ça n'aurait pas été le cas. **L'allège basse est donc nécessaire à cette chambre** ;
+  - chambre 2 : seuls des meubles bas (≤ 25 po) sont au bout de la fenêtre ;
   - **pour leurs nouvelles versions** : rien de plus haut qu'environ 38 po à moins de 30 po de ces fenêtres (pas
     d'étagère, de tête de lit haute ni de garde-robe devant) ;
   - un bureau sous une fenêtre d'évacuation est déconseillé : il gêne la sortie.
@@ -255,3 +252,12 @@ ajoutée.
   - deux étages (sans ETAGE) : page de 12,6 Mo, sous le budget de 14 Mo.
 - **Script de plan (matplotlib)** : congélateur, porte du lavage, dégagements du panneau et du chauffe-eau, margelles et
   trou du terrain.
+- **Rendus (2 appels, script CSP, aucune erreur de page)** :
+  - fenêtres agrandies : séjour avant et côté, chambre 1, chambre 2 ;
+  - congélateur : de face et en diagonale avec le bac ;
+  - salle de lavage : déshumidificateur sous la fenêtre ;
+  - salon du RDC ;
+  - margelle avant vue de l'extérieur ;
+  - maquette des deux étages.
+
+  Planche : `scratchpad/m18/fenetres/planche_fenetres_congelateur.jpg`.
