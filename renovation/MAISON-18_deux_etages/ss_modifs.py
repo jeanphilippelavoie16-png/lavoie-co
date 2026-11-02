@@ -49,7 +49,7 @@ def appliquer(maison):
     notes = [
         "Esquisse par-dessus SS-16 (le reste est l'existant, base R0) ; béton poli d'un seul tenant.",
         "Chambres d'enfants : lits queen 60 × 80 et rangement intégré de chêne ; fenêtres d'évacuation ouvrantes à vérifier.",
-        "Walk-in (ancien caveau) : isolé, évents fermés, chauffé ; porte-bibliothèque pivotante depuis la chambre 2.",
+        "Walk-in (ancien caveau) : isolé, évents fermés, chauffé ; porte dérobée dans le mur de chêne de la chambre 2.",
         "Escalier : banc-cabane bas (≤ 26 po) dessous ; vides entre les marches (5½ po) à valider avec des enfants.",
         "Gym : cardio contre le mur avant, mur-miroir sur le mur du lavage, porte vitrée coulissante.",
         "Insonorisation, VRC et déshumidificateur ; hauteur 8 pi (propriétaire) ; à valider avec la Ville et un professionnel.",

@@ -47,3 +47,18 @@ elif _E == "RDC":
 else:
     _ss = scene_ss()
     SCENE = {"titre": TITRE, "etages": [_ss, scene_rdc()], "depart": dict(_ss["depart"], etage="SS")}
+
+# --- Extérieur (opt-in) : exterieur.py fournit EXTERIEUR (terrain, enveloppe de la maison, cour arrière du plan DAG ; contrat
+# dans son docstring), objets en z ABSOLU dans le repère du plancher du sous-sol.
+# - EXT_APERCU=1 : aperçu dans le moteur actuel, qui ne marche pas encore dehors : les objets d'EXTERIEUR sont ajoutés au
+#   mobilier de l'étage SS (z inchangé) et ses couleurs (alias « ext-… ») aux peintures du sous-sol (aussi avec ETAGE=SS).
+# - Sinon (maquette à deux étages) : SCENE["exterieur"] = EXTERIEUR, que le moteur ignore tant qu'il ne le gère pas.
+if os.path.isfile(os.path.join(ICI, "exterieur.py")):
+    _ext = _charger("m18_exterieur", "exterieur.py").EXTERIEUR
+    if os.environ.get("EXT_APERCU") == "1":
+        _S = SCENE["etages"][0] if "etages" in SCENE else SCENE
+        if _S.get("niveau", "SS") == "SS":
+            _S["mobilier"] = list(_S.get("mobilier", [])) + [dict(o) for o in _ext["objets"]]
+            _S["peintures"] = dict(_S.get("peintures") or {}, **_ext["peintures"])
+    elif "etages" in SCENE:
+        SCENE["exterieur"] = _ext
