@@ -6221,66 +6221,6 @@
      "y2": 142,
      "source_position": "PHOTO",
      "note": "Cloison salle de bain / chambre avant, reportée 15 po plus à l'avant que la base (y 157 → 142) : la salle de bain des photos 13 à 15 est plus profonde que 61 po — À MESURER (relevé photo RDC-01 (photos du 2026-11-01))."
-    },
-    {
-     "id": "mur-RDC-E01",
-     "type": "int",
-     "etat": "nouveau",
-     "porteur": "non",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 2.0,
-      "source": "PRÉSUMÉ",
-      "photo": null,
-      "note": "mur de verre trempé feuilleté plancher-plafond, cadre d'aluminium noir mat de 1¾ po"
-     },
-     "x1": 146,
-     "y1": 157,
-     "x2": 224,
-     "y2": 157,
-     "materiau": "verre",
-     "source_position": "PRÉSUMÉ",
-     "note": "Mur de verre projeté — entrée / dégagement, du poteau C04 au poteau C05, sous la poutre de bois brut (proposition MAISON-18 (esquisse) — entrée vitrée)."
-    },
-    {
-     "id": "mur-RDC-E02",
-     "type": "int",
-     "etat": "nouveau",
-     "porteur": "non",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 2.0,
-      "source": "PRÉSUMÉ",
-      "photo": null,
-      "note": "mur de verre trempé feuilleté plancher-plafond, cadre d'aluminium noir mat de 1¾ po"
-     },
-     "x1": 232,
-     "y1": 157,
-     "x2": 272.25,
-     "y2": 157,
-     "materiau": "verre",
-     "source_position": "PRÉSUMÉ",
-     "note": "Mur de verre projeté — entrée / dégagement, du poteau C05 au coin (proposition MAISON-18 (esquisse) — entrée vitrée)."
-    },
-    {
-     "id": "mur-RDC-E03",
-     "type": "int",
-     "etat": "nouveau",
-     "porteur": "non",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 2.0,
-      "source": "PRÉSUMÉ",
-      "photo": null,
-      "note": "mur de verre trempé feuilleté plancher-plafond, cadre d'aluminium noir mat de 1¾ po"
-     },
-     "x1": 272.25,
-     "y1": 157,
-     "x2": 272.25,
-     "y2": 5,
-     "materiau": "verre",
-     "source_position": "PRÉSUMÉ",
-     "note": "Mur de verre projeté — entrée et escalier / salon (sert aussi de garde à la volée) (proposition MAISON-18 (esquisse) — entrée vitrée)."
     }
    ],
    "ouvertures": [
@@ -6856,41 +6796,6 @@
      "note": "porte extérieure arrière (vers les marches arrière) ; ouvre vers l'intérieur de l'entrée"
     },
     {
-     "id": "ouv-RDC-E01",
-     "type": "porte",
-     "operation": "battante",
-     "mur_id": "mur-RDC-E01",
-     "etat": "nouveau",
-     "position": {
-      "valeur": 58.75,
-      "source": "PRÉSUMÉ",
-      "photo": null,
-      "note": "porte vitrée contre l'habillage du poteau C05"
-     },
-     "largeur": {
-      "valeur": 36.0,
-      "source": "PRÉSUMÉ",
-      "photo": null
-     },
-     "hauteur": {
-      "valeur": 80,
-      "source": "PRÉSUMÉ",
-      "photo": null
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null
-     },
-     "sens": {
-      "charniere": "fin",
-      "ouvre_vers": "gauche"
-     },
-     "materiau": "verre",
-     "texte_original": null,
-     "note": "Porte vitrée battante (verre trempé clair, cadre noir mat mince, poignée longue noire), ouvre vers le dégagement, pentures côté poteau ; ferme-porte doux — proposition MAISON-18 (esquisse) — entrée vitrée"
-    },
-    {
      "id": "ouv-RDC-CH1-GR",
      "type": "porte",
      "operation": "coulissante",
@@ -7212,14 +7117,6 @@
       ],
       [
        146.0,
-       158.0
-      ],
-      [
-       273.25,
-       158.0
-      ],
-      [
-       273.25,
        157.0
       ],
       [
@@ -7240,7 +7137,7 @@
       ]
      ],
      "superficie": {
-      "valeur": 67.0,
+      "valeur": 67.9,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu des murs"
@@ -7269,19 +7166,19 @@
      "nom": "Entrée",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Grande entrée vitrée (trémie de l'escalier comprise) : porte d'entrée, haut de l'escalier du sous-sol, garde-corps de verre, banc à bottes, armoires-vestiaires et niche-console ; murs de verre à cadres noirs — proposition MAISON-18 (esquisse) — entrée vitrée",
+     "description": "Grande entrée ouverte (trémie de l'escalier comprise) : porte d'entrée, haut de l'escalier du sous-sol entouré d'un garde-corps de verre, banc à bottes, armoires-vestiaires et niche-console ; ouverte sur le salon et le dégagement — proposition MAISON-18 (esquisse) — entrée vitrée",
      "polygone": [
       [
-       271.25,
+       272.25,
        10.0
       ],
       [
-       271.25,
-       156.0
+       272.25,
+       157.0
       ],
       [
        148.25,
-       156.0
+       157.0
       ],
       [
        148.25,
@@ -7289,19 +7186,19 @@
       ]
      ],
      "superficie": {
-      "valeur": 124.7,
+      "valeur": 126.6,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu des murs"
      },
      "dimensions": {
       "x": {
-       "valeur": 123.0,
+       "valeur": 124.0,
        "source": "DÉDUIT",
        "photo": null
       },
       "y": {
-       "valeur": 146.0,
+       "valeur": 147.0,
        "source": "DÉDUIT",
        "photo": null
       }
@@ -7325,11 +7222,11 @@
        157.0
       ],
       [
-       273.25,
+       272.25,
        157.0
       ],
       [
-       273.25,
+       272.25,
        10.0
       ],
       [
@@ -7338,14 +7235,14 @@
       ]
      ],
      "superficie": {
-      "valeur": 176.3,
+      "valeur": 177.4,
       "source": "DÉDUIT",
       "photo": null,
       "note": "aire du polygone au nu des murs"
      },
      "dimensions": {
       "x": {
-       "valeur": 172.75,
+       "valeur": 173.75,
        "source": "DÉDUIT",
        "photo": null
       },
@@ -7836,6 +7733,33 @@
      "libelle": ""
     },
     {
+     "id": "elem-RDC-E-GC3",
+     "type": "autre",
+     "nom": "Garde-corps de verre clair, poteaux d'acier noir, main courante de chêne (36 po ; 42 po en option) (côté salon)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 271.25,
+      "y": 72.96,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 125.91999999999999,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 1.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — entrée vitrée",
+     "libelle": ""
+    },
+    {
      "id": "elem-RDC-P-BUR-CH1",
      "type": "autre",
      "nom": "Chaise ergonomique, poste 1 (gauche)",
@@ -8052,7 +7976,7 @@
        134.67
       ]
      },
-     "note": "Escalier à l'entrée avant (option 2 de l'étude 3, choisie par le propriétaire le 2026-10-30) : 14 contremarches, 3 tournantes en haut, sortie à l'ouest dans le vestibule d'entrée. Hauteur d'étage ≈ 105 po (8 pi au sous-sol, propriétaire) ; giron, échappée et trémie à valider — proposition SS-17 (esquisse) — RDC (entrée vitrée) : trémie d'environ 36 × 121 po (x 234 → 270, y 14 → 134,7) ; échappée ≈ 77 po (1,96 m) au bord de la trémie avec le plafond du sous-sol à 8 pi ; largeur 36 po ; garde-corps de verre (36 po min., 42 po en option) côté entrée et au bout de la trémie ; le mur de verre côté salon sert de garde à droite ; main courante continue côté salon — à valider (proposition MAISON-18 (esquisse) — entrée vitrée)."
+     "note": "Escalier à l'entrée avant (option 2 de l'étude 3, choisie par le propriétaire le 2026-10-30) : 14 contremarches, 3 tournantes en haut, sortie à l'ouest dans le vestibule d'entrée. Hauteur d'étage ≈ 105 po (8 pi au sous-sol, propriétaire) ; giron, échappée et trémie à valider — proposition SS-17 (esquisse) — RDC (entrée vitrée) : trémie d'environ 36 × 121 po (x 234 → 270, y 14 → 134,7) ; échappée ≈ 77 po (1,96 m) au bord de la trémie avec le plafond du sous-sol à 8 pi ; largeur 36 po ; garde-corps de verre (36 po min., 42 po en option) sur les trois côtés libres de la trémie (entrée, bout, salon), ouvert à l'arrivée ; main courante continue côté salon — à valider (proposition MAISON-18 (esquisse) — entrée vitrée)."
     },
     {
      "id": "elem-RDC-R-COL",
@@ -8310,33 +8234,6 @@
      },
      "photo": "rdc_actuel/01, 02",
      "note": "vu sur les photos 01, 02 ; position et dimensions estimées — relevé photo RDC-01 (photos du 2026-11-01)"
-    },
-    {
-     "id": "elem-RDC-R-FRIGO2",
-     "type": "refrigerateur",
-     "nom": "Frigo inox à portes françaises (devant la fenêtre)",
-     "nom_original": null,
-     "etat": "existant",
-     "position": {
-      "x": 431,
-      "y": 180,
-      "rotation_deg": 90,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 36,
-       "source": "ESTIMÉ",
-       "photo": "rdc_actuel/01, 02, 03"
-      },
-      "largeur": {
-       "valeur": 30,
-       "source": "ESTIMÉ",
-       "photo": "rdc_actuel/01, 02, 03"
-      }
-     },
-     "photo": "rdc_actuel/01, 02, 03",
-     "note": "vu sur les photos 01, 02, 03 ; position et dimensions estimées — relevé photo RDC-01 (photos du 2026-11-01)"
     },
     {
      "id": "elem-RDC-R-ILOT",
@@ -10775,7 +10672,7 @@
      "id": "note-RDC-P02",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Entrée vitrée : garde-robes du hall enlevées, murs de verre à cadres noirs, porte vitrée vers le dégagement."
+     "interpretation": "Grande entrée ouverte : garde-robes du hall enlevées ; escalier entouré d'un garde-corps de verre."
     },
     {
      "id": "note-RDC-P03",

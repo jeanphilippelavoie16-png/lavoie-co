@@ -32,7 +32,6 @@ EQUIPEMENTS = [
     ("elem-RDC-R-CPT3", "comptoir", "Comptoir (après la cuisinière)", None, 433.5, 298, 90, (16, 25), "02"),
     ("elem-RDC-R-COL", "armoires", "Colonne d'armoires pleine hauteur noir mat", None, 433.5, 248, 90, (84, 25), "01, 02"),
     ("elem-RDC-R-FRIGO1", "refrigerateur", "Frigo inox encastré dans la colonne", None, 432, 258, 90, (36, 28), "01, 02"),
-    ("elem-RDC-R-FRIGO2", "refrigerateur", "Frigo inox à portes françaises (devant la fenêtre)", None, 431, 180, 90, (36, 30), "01, 02, 03"),
     ("elem-RDC-R-ILOT", "comptoir", "Îlot noir, dessus en bois de grange (3 tabourets côté salle à manger)", "ÎLOT", 362, 258, 90, (84, 40), "01, 02, 03, 08"),
     # salle de bain — laveuse et sécheuse empilées, douche vitrée, toilette sous la fenêtre, vanité double
     ("elem-RDC-R-LAV", "laveuse", "Laveuse et sécheuse frontales empilées", None, 90.5, 158.25, 0, (27, 28), "13, 14, 15"),

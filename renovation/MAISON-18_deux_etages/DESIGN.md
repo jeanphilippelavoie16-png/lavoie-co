@@ -649,3 +649,16 @@ Ces totaux excluent les matelas (800 à 1 500 $ chacun), les tapis (5 × 8 pi : 
 - Étages empilés (rez-de-chaussée à 105 po), escalier praticable, plancher et plafond troués à la trémie avec garde-corps de verre.
 - Portes battantes et coulissantes interactives (toucher pour ouvrir ou fermer ; une porte fermée bloque la marche et s'ouvre toute seule sur un trajet).
 - Les marches de l'entrée arrière ne sont pas dessinées : elles plongeraient dans le walk-in du sous-sol sous le perron ; le niveau réel de l'entrée arrière est à mesurer.
+
+## Mise à jour (2026-11-02) : entrée ouverte
+À la demande du client (« Enlève la vitre en haut, garde la vitre seulement tout le tour des marches, comme garde-corps en vitre,
+mais le reste de l'entrée ouvert »), les trois murs de verre et la porte vitrée de l'entrée sont retirés. L'entrée est ouverte sur
+le salon et le dégagement ; l'ouverture de l'escalier est entourée d'un garde-corps de verre clair (poteaux d'acier noir, main
+courante de chêne) sur ses trois côtés libres — côté entrée, au bout et côté salon — et reste ouverte à l'arrivée en haut de la
+volée. Le rangement de l'entrée (banc à bottes, armoires-vestiaires, niche-console) ne change pas. Les mentions de murs de verre
+dans la section « grande entrée vitrée » ci-dessus ne s'appliquent plus.
+
+
+## Mise à jour (2026-11-02) : un seul frigo en haut
+Le 2e frigo (portes françaises, devant la fenêtre du mur de droite de la cuisine) est retiré à la demande du client : la
+fenêtre est dégagée ; le frigo encastré dans la colonne d'armoires reste.

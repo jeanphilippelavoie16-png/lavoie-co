@@ -164,7 +164,7 @@ def frigo_36(xf, y0, y1, H=70):
     return out
 
 
-M += frigo_36(416.6, 162.3, 197.7)
+# (2026-11-02) le 2e frigo est retiré à la demande du client : la fenêtre du mur de droite est dégagée
 # îlot noir, dessus de bois de grange, 3 tabourets côté salle à manger, poubelles inox au bout
 M += [A(352, 218, 380, 298, 4, 34.5, NOIR, r=0.3, b=0.3), B(354, 220, 378, 296, 0, 4, "carbone"),
       A(340, 214, 384, 302, 34.5, 36.5, "bois_grange", r=0.5, b=0.35)]

@@ -98,47 +98,44 @@
 <path class="cart-lourd" fill-rule="evenodd" d="M 872.96 149.445 L 899.84 149.445 L 899.84 156.485 L 872.96 156.485 Z"/>
 <text x="906.24" y="155.845" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Mur extérieur / fondation</text>
 <path class="cart-leger" fill-rule="evenodd" d="M 872.96 162.485 L 899.84 162.485 L 899.84 167.765 L 872.96 167.765 Z"/>
-<text x="906.24" y="168.005" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Mur intérieur existant</text>
-<path class="cart-neuf" fill-rule="evenodd" d="M 872.96 174.645 L 899.84 174.645 L 899.84 179.925 L 872.96 179.925 Z"/>
-<text x="906.24" y="180.165" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Cloison projetée (nouvelle)</text>
-<path class="cart-neuf" fill-rule="evenodd" d="M 872.96 188.213 L 899.84 188.213 L 899.84 190.677 L 872.96 190.677 Z"/>
-<polyline class="ouv-fin" points="872.96,189.445 899.84,189.445"/>
-<text x="906.24" y="192.325" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Cloison vitrée projetée</text>
-<polygon class="str" points="883.2,198.405 889.6,198.405 889.6,204.805 883.2,204.805"/>
-<polyline class="str-fin" points="883.2,198.405 889.6,204.805"/>
-<polyline class="str-fin" points="889.6,198.405 883.2,204.805"/>
-<text x="906.24" y="204.485" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Colonne</text>
-<text x="886.4" y="216.645" font-family="Arial, Helvetica, sans-serif" font-size="10.557" font-weight="bold" text-anchor="middle" fill="#000000">≈</text>
-<text x="906.24" y="216.645" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Valeur estimée (mesurée sur l'image)</text>
-<path class="inc" fill-rule="evenodd" d="M 878.801 229.475 L 888.879 229.475 L 883.84 220.746 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 883.134 226.74 L 884.546 226.74 L 884.404 222.899 L 883.276 222.899 Z"/>
-<path class="inc-blanc" fill-rule="evenodd" d="M 883.134 228.311 L 884.546 228.311 L 884.546 227.438 L 883.134 227.438 Z"/>
-<text x="889.887" y="229.475" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">n</text>
-<text x="906.24" y="228.805" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Voir registre des écarts dans</text>
-<text x="906.24" y="239.829" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">RAPPORT.md</text>
-<polyline class="cote" points="872.96,251.029 899.84,251.029"/>
-<polyline class="cote-tick" points="870.644,253.345 875.276,248.712"/>
-<polyline class="cote-tick" points="897.524,253.345 902.156,248.712"/>
-<text x="906.24" y="251.989" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Cotes en pieds-pouces</text>
-<text x="906.24" y="264.149" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Petites pièces : nom seul ; dimensions et</text>
-<text x="906.24" y="275.172" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">superficie dans tableau_pieces.csv</text>
-<polyline class="cart-l" points="867.2,282.532 1072,282.532"/>
-<text x="872.96" y="292.671" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DE LA PROPOSITION</text>
-<text x="872.96" y="303.38" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Esquisse sur le relevé photo RDC-01 (le reste</text>
-<text x="872.96" y="314.404" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">est l'existant ; cotes estimées sur photos, à</text>
-<text x="872.96" y="325.427" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">mesurer).</text>
-<text x="872.96" y="338.371" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Entrée vitrée : garde-robes du hall enlevées,</text>
-<text x="872.96" y="349.395" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">murs de verre à cadres noirs, porte vitrée vers le</text>
-<text x="872.96" y="360.418" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">dégagement.</text>
-<text x="872.96" y="373.362" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Escalier vers le sous-sol : trémie ≈ 3 × 10 pi ;</text>
-<text x="872.96" y="384.386" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">échappée ≈ 1,96 m à vérifier ; garde-corps de 42</text>
-<text x="872.96" y="395.409" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">po conseillé.</text>
-<text x="872.96" y="408.353" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Chambre des parents : lit king, mur de tête en</text>
-<text x="872.96" y="419.376" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">bois de grange, garde-robes réunies à portes</text>
-<text x="872.96" y="430.4" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">coulissantes.</text>
-<text x="872.96" y="443.344" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">5. Bureau-gaming (ancienne chambre avant) : 2</text>
-<text x="872.96" y="454.367" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">postes face à la fenêtre avant.</text>
-<text x="872.96" y="467.311" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">… autres notes : voir maison.json</text>
+<text x="906.24" y="168.005" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Mur intérieur (cloison)</text>
+<polygon class="str" points="883.2,174.085 889.6,174.085 889.6,180.485 883.2,180.485"/>
+<polyline class="str-fin" points="883.2,174.085 889.6,180.485"/>
+<polyline class="str-fin" points="889.6,174.085 883.2,180.485"/>
+<text x="906.24" y="180.165" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Colonne</text>
+<text x="886.4" y="192.325" font-family="Arial, Helvetica, sans-serif" font-size="10.557" font-weight="bold" text-anchor="middle" fill="#000000">≈</text>
+<text x="906.24" y="192.325" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Valeur estimée (mesurée sur l'image)</text>
+<path class="inc" fill-rule="evenodd" d="M 878.801 205.155 L 888.879 205.155 L 883.84 196.426 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 883.134 202.42 L 884.546 202.42 L 884.404 198.579 L 883.276 198.579 Z"/>
+<path class="inc-blanc" fill-rule="evenodd" d="M 883.134 203.991 L 884.546 203.991 L 884.546 203.118 L 883.134 203.118 Z"/>
+<text x="889.887" y="205.155" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#E8730C">n</text>
+<text x="906.24" y="204.485" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Voir registre des écarts dans</text>
+<text x="906.24" y="215.509" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">RAPPORT.md</text>
+<polyline class="cote" points="872.96,226.709 899.84,226.709"/>
+<polyline class="cote-tick" points="870.644,229.025 875.276,224.392"/>
+<polyline class="cote-tick" points="897.524,229.025 902.156,224.392"/>
+<text x="906.24" y="227.669" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Cotes en pieds-pouces</text>
+<text x="906.24" y="239.829" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">Petites pièces : nom seul ; dimensions et</text>
+<text x="906.24" y="250.852" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">superficie dans tableau_pieces.csv</text>
+<polyline class="cart-l" points="867.2,258.212 1072,258.212"/>
+<text x="872.96" y="268.351" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DE LA PROPOSITION</text>
+<text x="872.96" y="279.06" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Esquisse sur le relevé photo RDC-01 (le reste</text>
+<text x="872.96" y="290.084" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">est l'existant ; cotes estimées sur photos, à</text>
+<text x="872.96" y="301.107" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">mesurer).</text>
+<text x="872.96" y="314.051" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Grande entrée ouverte : garde-robes du hall</text>
+<text x="872.96" y="325.075" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">enlevées ; escalier entouré d'un garde-corps de</text>
+<text x="872.96" y="336.098" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">verre.</text>
+<text x="872.96" y="349.042" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Escalier vers le sous-sol : trémie ≈ 3 × 10 pi ;</text>
+<text x="872.96" y="360.066" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">échappée ≈ 1,96 m à vérifier ; garde-corps de 42</text>
+<text x="872.96" y="371.089" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">po conseillé.</text>
+<text x="872.96" y="384.033" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">4. Chambre des parents : lit king, mur de tête en</text>
+<text x="872.96" y="395.056" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">bois de grange, garde-robes réunies à portes</text>
+<text x="872.96" y="406.08" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">coulissantes.</text>
+<text x="872.96" y="419.024" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">5. Bureau-gaming (ancienne chambre avant) : 2</text>
+<text x="872.96" y="430.047" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">postes face à la fenêtre avant.</text>
+<text x="872.96" y="442.991" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">6. Poutre et appuis de l'ancienne cloison</text>
+<text x="872.96" y="454.014" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">hall/salon, coupe-feu entre logements : à valider</text>
+<text x="872.96" y="465.038" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">avec la Ville et un professionnel.</text>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="10-Murs" id="10-Murs">
@@ -177,19 +174,6 @@
 <g id="mur-RDC-R01">
 <path class="mur-leger" fill-rule="evenodd" d="M 223.21 425.229 L 333.46 425.229 L 333.46 420.729 L 223.21 420.729 Z"/>
 </g>
-<g id="mur-RDC-E01">
-<path class="mur-neuf" fill-rule="evenodd" d="M 366.96 408.979 L 366.96 406.979 L 409.96 406.979 L 409.96 408.979 Z"/>
-<path class="mur-neuf" fill-rule="evenodd" d="M 447.21 406.979 L 447.21 408.979 L 445.96 408.979 L 445.96 406.979 Z"/>
-<polyline class="ouv-fin" points="369.21,407.979 447.21,407.979"/>
-</g>
-<g id="mur-RDC-E02">
-<path class="mur-neuf" fill-rule="evenodd" d="M 455.21 408.979 L 496.46 408.979 L 496.46 406.979 L 455.21 406.979 Z"/>
-<polyline class="ouv-fin" points="455.21,407.979 495.46,407.979"/>
-</g>
-<g id="mur-RDC-E03">
-<path class="mur-neuf" fill-rule="evenodd" d="M 494.46 406.979 L 494.46 564.979 L 496.46 564.979 L 496.46 406.979 Z"/>
-<polyline class="ouv-fin" points="495.46,407.979 495.46,559.979"/>
-</g>
 <g id="mur-RDC-001">
 <path class="mur-lourd" fill-rule="evenodd" d="M 223.21 564.979 L 223.21 554.979 L 283.71 554.979 L 283.71 564.979 Z"/>
 <path class="mur-lourd" fill-rule="evenodd" d="M 358.71 564.979 L 358.71 554.979 L 405.21 554.979 L 405.21 564.979 Z"/>
@@ -223,9 +207,9 @@
 <path class="mur-lourd" fill-rule="evenodd" d="M 550.21 194.979 L 540.21 194.979 L 540.21 172.979 L 550.21 172.979 Z"/>
 </g>
 <g id="contour-murs-legers">
-<polyline class="mur-leger-c" points="328.96,405.729 328.96,391.979 333.46,391.979 333.46,405.729 335.21,405.729 335.21,410.229 333.46,410.229 333.46,420.729 333.46,425.229 328.96,425.229 233.23,425.229"/>
-<polyline class="mur-leger-c" points="233.23,420.729 328.96,420.729 328.96,410.229 328.96,405.729"/>
-<polyline class="mur-leger-c" points="371.46,405.729 371.46,406.979 409.96,406.979 409.96,408.979 371.46,408.979 371.46,410.229 371.46,554.959"/>
+<polyline class="mur-leger-c" points="328.96,410.229 328.96,405.729 328.96,391.979 333.46,391.979 333.46,405.729 335.21,405.729 335.21,410.229 333.46,410.229 333.46,420.729 333.46,425.229 328.96,425.229 233.23,425.229"/>
+<polyline class="mur-leger-c" points="233.23,420.729 328.96,420.729 328.96,410.229"/>
+<polyline class="mur-leger-c" points="371.46,405.729 371.46,410.229 371.46,554.959"/>
 <polyline class="mur-leger-c" points="366.96,554.959 366.96,410.229 365.21,410.229 365.21,405.729 366.96,405.729 371.46,405.729"/>
 <polyline class="mur-leger-c" points="333.46,361.979 328.96,361.979 328.96,355.229 328.96,350.729 328.96,344.979 233.23,344.979"/>
 <polyline class="mur-leger-c" points="233.23,338.979 328.96,338.979 333.46,338.979 333.46,344.979 333.46,350.729 335.21,350.729 335.21,355.229 333.46,355.229 333.46,361.979"/>
@@ -233,9 +217,6 @@
 <polyline class="mur-leger-c" points="400.46,194.999 400.46,266.729 400.46,271.229 400.46,276.479 395.96,276.479 395.96,271.229 371.46,271.229 371.46,309.729 395.96,309.729 395.96,304.479 400.46,304.479 400.46,309.729 400.46,314.229 395.96,314.229 371.46,314.229 371.46,350.729 371.46,355.229 371.46,360.979 366.96,360.979 366.96,355.229 365.21,355.229 365.21,350.729 366.96,350.729 366.96,314.229"/>
 <polyline class="mur-leger-c" points="371.46,196.979 366.96,196.979 366.96,194.999"/>
 <polyline class="mur-leger-c" points="371.46,194.999 371.46,196.979"/>
-<polyline class="mur-leger-c" points="455.21,408.979 455.21,406.979 494.46,406.979 496.46,406.979 496.46,408.979 496.46,554.959"/>
-<polyline class="mur-leger-c" points="494.46,554.959 494.46,408.979 455.21,408.979"/>
-<polyline class="mur-leger-c" points="445.96,408.979 445.96,406.979 447.21,406.979 447.21,408.979 445.96,408.979"/>
 </g>
 <g id="contour-murs-lourds">
 <polyline class="mur-lourd-c" points="233.21,564.979 223.21,564.979 223.21,554.979 223.21,391.979 233.21,391.979 233.21,554.979 283.71,554.979 283.71,564.979 233.21,564.979"/>
@@ -335,10 +316,6 @@
 <polyline class="ouv" points="540.21,138.979 506.21,138.979"/>
 <path class="ouv-fin" d="M 540.21 172.979 A 34 34 0 0 1 506.21 138.979"/>
 </g>
-<g id="ouv-RDC-E01">
-<polyline class="ouv" points="445.96,406.979 445.96,370.979"/>
-<path class="ouv-fin" d="M 409.96 406.979 A 36 36 0 0 1 445.96 370.979"/>
-</g>
 <g id="ouv-RDC-CH1-GR">
 <polygon class="ouv" points="369.022,262.979 369.022,227.979 367.897,227.979 367.897,262.979"/>
 <polygon class="ouv" points="370.522,231.979 370.522,196.979 369.397,196.979 369.397,231.979"/>
@@ -402,6 +379,9 @@
 </g>
 <g id="elem-RDC-E-GC2">
 <polygon class="elem" points="457.21,429.809 493.21,429.809 493.21,428.309 457.21,428.309"/>
+</g>
+<g id="elem-RDC-E-GC3">
+<polygon class="elem" points="495.21,554.979 495.21,429.059 493.71,429.059 493.71,554.979"/>
 </g>
 <g id="elem-RDC-P-BUR-CH1">
 <polygon class="elem" points="296.21,494.479 270.21,494.479 270.21,520.479 296.21,520.479"/>
@@ -495,11 +475,6 @@
 <polygon class="elem" points="669.21,324.979 669.21,288.979 641.21,288.979 641.21,324.979"/>
 <polyline class="elem-fin" points="643.21,324.979 643.21,288.979"/>
 <text x="633.189" y="285.415" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">RÉF.</text>
-</g>
-<g id="elem-RDC-R-FRIGO2">
-<polygon class="elem" points="669.21,402.979 669.21,366.979 639.21,366.979 639.21,402.979"/>
-<polyline class="elem-fin" points="641.21,402.979 641.21,366.979"/>
-<text x="654.21" y="387.267" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">RÉF.</text>
 </g>
 <g id="elem-RDC-R-ILOT">
 <polygon class="elem" points="605.21,348.979 605.21,264.979 565.21,264.979 565.21,348.979"/>
@@ -771,10 +746,10 @@
 <text x="605.074" y="260.457" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">192,3 pi² (17,9 m²)</text>
 </g>
 <g id="piece-RDC-SAL">
-<path class="invisible" fill-rule="evenodd" d="M 669.21 407.979 L 496.46 407.979 L 496.46 554.979 L 669.21 554.979 Z"/>
+<path class="invisible" fill-rule="evenodd" d="M 669.21 407.979 L 495.46 407.979 L 495.46 554.979 L 669.21 554.979 Z"/>
 <text x="595.71" y="474.758" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">SALON</text>
-<text x="595.71" y="486.406" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">14'-4¾&quot; × 12'-3&quot;</text>
-<text x="595.71" y="496.788" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">176,3 pi² (16,4 m²)</text>
+<text x="595.71" y="486.406" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">14'-5¾&quot; × 12'-3&quot;</text>
+<text x="595.71" y="496.788" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">177,4 pi² (16,5 m²)</text>
 </g>
 <g id="piece-RDC-UTI">
 <path class="invisible" fill-rule="evenodd" d="M 371.46 360.979 L 539.21 360.979 L 539.21 194.979 L 400.46 194.979 L 400.46 314.229 L 371.46 314.229 Z"/>
@@ -788,18 +763,20 @@
 <text x="306.392" y="481.235" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">11'-1¾&quot; × 12'-0¾&quot;</text>
 <text x="306.392" y="491.617" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">124,0 pi² (11,5 m²)</text>
 </g>
+<g id="piece-RDC-DEG">
+<path class="invisible" fill-rule="evenodd" d="M 333.46 355.229 L 333.46 405.729 L 369.21 405.729 L 369.21 407.979 L 539.21 407.979 L 539.21 360.979 L 366.96 360.979 L 366.96 355.229 Z"/>
+<text x="425.072" y="377.867" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">DÉGAGEMENT</text>
+<text x="425.072" y="389.516" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">17'-1¾&quot; × 4'-4¾&quot;</text>
+<text x="425.072" y="399.897" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">67,9 pi² (6,3 m²)</text>
+</g>
 <g id="piece-RDC-CH1">
 <path class="invisible" fill-rule="evenodd" d="M 233.21 338.979 L 333.46 338.979 L 333.46 350.729 L 366.96 350.729 L 366.96 194.979 L 233.21 194.979 Z"/>
 <text x="341.545" y="266.801" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 341.545 266.801)">CHAMBRE</text>
 <text x="358.155" y="266.801" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 358.155 266.801)">DES PARENTS</text>
 </g>
 <g id="piece-RDC-ENT">
-<path class="invisible" fill-rule="evenodd" d="M 494.46 554.979 L 494.46 408.979 L 371.46 408.979 L 371.46 554.979 Z"/>
+<path class="invisible" fill-rule="evenodd" d="M 495.46 554.979 L 495.46 407.979 L 371.46 407.979 L 371.46 554.979 Z"/>
 <text x="424.877" y="515.301" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">ENTRÉE</text>
-</g>
-<g id="piece-RDC-DEG">
-<path class="invisible" fill-rule="evenodd" d="M 333.46 355.229 L 333.46 405.729 L 369.21 405.729 L 369.21 406.979 L 496.46 406.979 L 496.46 407.979 L 539.21 407.979 L 539.21 360.979 L 366.96 360.979 L 366.96 355.229 Z"/>
-<text x="491.696" y="385.985" font-family="Arial, Helvetica, sans-serif" font-size="12.317" font-weight="bold" text-anchor="middle" fill="#000000">DÉGAGEMENT</text>
 </g>
 <g id="piece-RDC-GRU">
 <path class="invisible" fill-rule="evenodd" d="M 371.46 271.229 L 371.46 309.729 L 395.96 309.729 L 395.96 271.229 Z"/>

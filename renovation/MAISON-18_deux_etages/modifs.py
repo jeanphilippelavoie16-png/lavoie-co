@@ -53,7 +53,7 @@ def appliquer(maison):
     # notes de la feuille P-130 (le cartouche en tient 6) : le détail est dans DESIGN.md
     notes = [
         "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes estimées sur photos, à mesurer).",
-        "Entrée vitrée : garde-robes du hall enlevées, murs de verre à cadres noirs, porte vitrée vers le dégagement.",
+        "Grande entrée ouverte : garde-robes du hall enlevées ; escalier entouré d'un garde-corps de verre.",
         "Escalier vers le sous-sol : trémie ≈ 3 × 10 pi ; échappée ≈ 1,96 m à vérifier ; garde-corps de 42 po conseillé.",
         "Chambre des parents : lit king, mur de tête en bois de grange, garde-robes réunies à portes coulissantes.",
         "Bureau-gaming (ancienne chambre avant) : 2 postes face à la fenêtre avant.",

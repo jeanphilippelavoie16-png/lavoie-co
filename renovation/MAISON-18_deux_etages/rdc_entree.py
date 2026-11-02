@@ -1,4 +1,5 @@
-"""MAISON-18 — RDC, zone « entrée » : la grande entrée vitrée avec le haut de l'escalier.
+"""MAISON-18 — RDC, zone « entrée » : la grande entrée ouverte avec le haut de l'escalier (2026-11-02 : plus de murs de
+verre, seulement un garde-corps de verre tout autour de l'escalier).
 
 Demandes du client (annotations rouge et jaune sur la feuille P-128 de SS-17, 2026-11-01) :
 « Enlève les garde-robes en rouge en haut pour que ça fasse une grosse entrée, et entoure l'entrée de murs de verre côté
@@ -47,7 +48,8 @@ P_ARM = 24                               # profondeur des armoires
 ZONE = (146.0, 5.0, 273.5, 157.0)        # emprise de la zone (meubles RDC-01 retirés)
 # garde-corps autour de la trémie, aux places où le moteur les pose dans la maquette à deux étages (garde_corps_tremies :
 # 1¼ po hors du bord, ouvert au haut de la volée y 12 → 52, rien le long du mur avant ni du mur de verre)
-GC = [((TREMIE[0] - 1.25, 52.0), (TREMIE[0] - 1.25, TREMIE[3])), ((TREMIE[0], TREMIE[3] + 1.25), (TREMIE[2], TREMIE[3] + 1.25))]
+GC = [((TREMIE[0] - 1.25, 52.0), (TREMIE[0] - 1.25, TREMIE[3])), ((TREMIE[0], TREMIE[3] + 1.25), (TREMIE[2], TREMIE[3] + 1.25)),
+      ((TREMIE[2] + 1.25, 10.0), (TREMIE[2] + 1.25, TREMIE[3] + 1.25))]          # côté salon (plus de mur de verre, 2026-11-02)
 GC_NOM = "Garde-corps de verre clair, poteaux d'acier noir, main courante de chêne (36 po ; 42 po en option)"
 
 MURS_RETIRES = ["mur-RDC-014", "mur-RDC-015", "mur-RDC-016", "mur-RDC-017", "mur-RDC-018"]
@@ -129,23 +131,10 @@ def appliquer_modifs_rdc(maison, ctx):
     rdc["structure"] = [s for s in rdc["structure"] if s["id"] != "str-RDC-R01"]
     rdc.setdefault("structure_retiree", []).extend(parties)
 
-    # 2) murs de verre : côté logement sous la poutre de l'axe B (poteaux C04 et C05 en montants), côté salon le long
-    #    de l'escalier (garde du côté droit de la volée) ; porte vitrée battante de 36 po vers le dégagement
-    murs_v = [_mur_verre("mur-RDC-E01", 146, YV, 224, YV, "entrée / dégagement, du poteau C04 au poteau C05, sous la poutre de bois brut"),
-              _mur_verre("mur-RDC-E02", 232, YV, XV, YV, "entrée / dégagement, du poteau C05 au coin"),
-              _mur_verre("mur-RDC-E03", XV, YV, XV, 5, "entrée et escalier / salon (sert aussi de garde à la volée)")]
-    ids = {m["id"] for m in murs_v}
-    rdc["murs"] = [m for m in rdc["murs"] if m["id"] not in ids] + murs_v
-    c = (PORTE_V[0] + PORTE_V[1]) / 2
+    # 2) (2026-11-02) le client ne veut plus de murs de verre : l'entrée reste ouverte sur le salon et le dégagement ;
+    #    seul l'escalier est entouré d'un garde-corps de verre (3 côtés, ouvert à l'arrivée en haut de la volée)
+    rdc["murs"] = [m for m in rdc["murs"] if m["id"] not in ("mur-RDC-E01", "mur-RDC-E02", "mur-RDC-E03")]
     rdc["ouvertures"] = [o for o in rdc["ouvertures"] if o["id"] != "ouv-RDC-E01"]
-    rdc["ouvertures"].append({
-        "id": "ouv-RDC-E01", "type": "porte", "operation": "battante", "mur_id": "mur-RDC-E01", "etat": "nouveau",
-        "position": dim(round(c - 146, 2), "porte vitrée contre l'habillage du poteau C05"),
-        "largeur": dim(PORTE_V[1] - PORTE_V[0]), "hauteur": dim(80),
-        "allege": {"valeur": None, "source": "ILLISIBLE", "photo": None},
-        "sens": {"charniere": "fin", "ouvre_vers": "gauche"}, "materiau": "verre", "texte_original": None,
-        "note": "Porte vitrée battante (verre trempé clair, cadre noir mat mince, poignée longue noire), ouvre vers le "
-                "dégagement, pentures côté poteau ; ferme-porte doux — " + SOURCE})
     # porte d'entrée : pentures à gauche (comme SS-17) : elle s'ouvre contre le banc, le haut de l'escalier reste dégagé
     for o in rdc["ouvertures"]:
         if o["id"] == "ouv-RDC-010":
@@ -169,8 +158,8 @@ def appliquer_modifs_rdc(maison, ctx):
         esc["note"] = (esc.get("note") or "") + (
             " — RDC (entrée vitrée) : trémie d'environ 36 × 121 po (x 234 → 270, y 14 → 134,7) ; échappée ≈ 77 po "
             "(1,96 m) au bord de la trémie avec le plafond du sous-sol à 8 pi ; largeur 36 po ; garde-corps de verre "
-            "(36 po min., 42 po en option) côté entrée et au bout de la trémie ; le mur de verre côté salon sert de garde "
-            "à droite ; main courante continue côté salon — à valider (" + SOURCE + ").")
+            "(36 po min., 42 po en option) sur les trois côtés libres de la trémie (entrée, bout, salon), ouvert à "
+            "l'arrivée ; main courante continue côté salon — à valider (" + SOURCE + ").")
     rdc["tremies"] = [t for t in rdc.get("tremies", []) if t.get("id") != "tremie-RDC-ESC"] + [
         {"id": "tremie-RDC-ESC", "rect": list(TREMIE), "element": "elem-RDC-P-ESC",
          "note": "ouverture du plancher du RDC au-dessus de l'escalier du sous-sol (chevêtres et solives doublées : ingénieur)"}]
@@ -191,25 +180,27 @@ def appliquer_modifs_rdc(maison, ctx):
                  GC[0][1][1] - GC[0][0][1], 1.5),
         _element("elem-RDC-E-GC2", "autre", GC_NOM + " (bout de la trémie)", "", (GC[1][0][0] + GC[1][1][0]) / 2, GC[1][0][1], 0,
                  GC[1][1][0] - GC[1][0][0], 1.5),
+        _element("elem-RDC-E-GC3", "autre", GC_NOM + " (côté salon)", "", GC[2][0][0], (GC[2][0][1] + GC[2][1][1]) / 2, 90,
+                 GC[2][1][1] - GC[2][0][1], 1.5),
     ]
     ids = {e["id"] for e in els}
     rdc["elements"] = [e for e in rdc["elements"] if e["id"] not in ids] + els
     rdc["elements"].sort(key=lambda e: e["id"])
 
-    # 5) pièces : une seule « Entrée » (hall, entrée, vestibule, garde-robes, lingerie réunis, trémie exclue) ;
-    #    salon et dégagement recoupés par les murs de verre
+    # 5) pièces : une seule « Entrée » (hall, entrée, vestibule, garde-robes, lingerie réunis), zone ouverte sur le salon
+    #    et le dégagement (limites sans mur, le long de la poutre de l'axe B et du garde-corps côté salon)
     pieces = rdc["pieces"]
     rdc["pieces"] = pieces = [p for p in pieces if p["id"] not in PIECES_RETIREES]
-    ent = box(XB, 10, XV - T_VERRE / 2, YV - T_VERRE / 2)       # trémie comprise (le moteur la troue à 2 étages)
+    ent = box(XB, 10, XV, YV)       # trémie comprise (le moteur la troue à 2 étages)
     _piece(pieces, "piece-RDC-ENT", "Entrée", ent,
-           "Grande entrée vitrée (trémie de l'escalier comprise) : porte d'entrée, haut de l'escalier du sous-sol, garde-corps de verre, "
-           "banc à bottes, armoires-vestiaires et niche-console ; murs de verre à cadres noirs — " + SOURCE)
+           "Grande entrée ouverte (trémie de l'escalier comprise) : porte d'entrée, haut de l'escalier du sous-sol entouré d'un "
+           "garde-corps de verre, banc à bottes, armoires-vestiaires et niche-console ; ouverte sur le salon et le dégagement — " + SOURCE)
     for p in pieces:
         P = Polygon(p["polygone"])
         if p["id"] == "piece-RDC-SAL":
-            P = P.difference(box(0, 0, XV + T_VERRE / 2, YV + 1))
+            P = P.difference(box(0, 0, XV, YV))
         elif p["id"] == "piece-RDC-DEG":
-            P = P.union(box(146, YV + T_VERRE / 2, 177.25, 159.25)).difference(box(146, 140, XV + T_VERRE / 2, YV + T_VERRE / 2))
+            P = P.union(box(146, YV, 177.25, 159.25)).difference(box(146, 140, XV, YV))
         else:
             continue
         if P.geom_type != "Polygon":
@@ -219,8 +210,8 @@ def appliquer_modifs_rdc(maison, ctx):
     # 6) note du cartouche (une seule ; le détail est dans DESIGN_entree.md)
     rdc["notes"] = [n for n in rdc.get("notes", []) if n.get("id") != "note-RDC-E01"] + [
         {"id": "note-RDC-E01", "texte_original": None, "photo": None,
-         "interpretation": "Entrée vitrée : garde-robes enlevées, murs de verre sous la poutre, trémie et garde-corps de "
-                           "verre ; structure, échappée et coupe-feu à valider avec la Ville et un professionnel."}]
+         "interpretation": "Grande entrée ouverte : garde-robes enlevées, trémie entourée d'un garde-corps de verre ; "
+                           "structure, échappée et coupe-feu à valider avec la Ville et un professionnel."}]
 
 
 # =============================================================================================== 3D (SCENE du RDC)
@@ -359,7 +350,7 @@ def _main_courante(h):
            (xr, 68.0, zl(68.0)), (271.0, 80.3, zl(80.3))]
     out = [T(pts, 0.75, "metal", bouts=True)]
     out += [B(236.5, 10, 237.5, yr, 31.0, 32.0, "metal"), B(253.5, 10, 254.5, yr, 23.6, 24.6, "metal"),
-            B(xr, 39.5, XV - T_VERRE / 2, 40.5, 13.8, 14.8, "metal")]
+            B(xr, 39.5, TREMIE[2] + 0.6, 40.5, 13.8, 14.8, "metal")]               # console vers le garde-corps côté salon
     out += [B(x0, 53, x0 + 0.15, y1, 0.4, 0.8, "spot"), B(x0 + 0.5, y1 - 0.15, x1 - 0.5, y1, 0.4, 0.8, "spot")]
     return out
 
@@ -400,7 +391,7 @@ def appliquer_scene_rdc(S, h):
         R.append(o)
     S["revetements"] = R
     M = []
-    # sectionnel du client replacé dans le salon, dos au mur de verre (même meuble, décalé de 52 po)
+    # sectionnel du client replacé dans le salon, dos au garde-corps de l'escalier (même meuble, décalé de 52 po)
     if hasattr(h, "sectionnel"):
         for o in h.sectionnel():
             o = dict(o)
@@ -436,16 +427,17 @@ def appliquer_scene_rdc(S, h):
     pe = S.setdefault("peinture", {})
     pe.pop("piece-RDC-HALL", None)
     pe["piece-RDC-ENT"] = "Vert sauge"
-    # visite : deux arrêts « Entrée vitrée » au début, l'arrêt du salon renommé
+    # visite : arrêts de l'entrée au début, l'arrêt du salon renommé
     vis = [v for v in S.get("visites", []) if v.get("nom") not in ("Entrée avant", "Hall (mur de cadres)")]
     for v in vis:
         if v.get("nom") == "Salon vers le hall":
-            v["nom"] = "Salon vers l'entrée vitrée"
-    S["visites"] = [{"nom": "Entrée vitrée", "x": 200, "y": 30, "cap": 92},
-                    {"nom": "Entrée vitrée — banc et vestiaire", "x": 222, "y": 132, "cap": 222},
-                    {"nom": "Entrée vitrée vue du dégagement", "x": 214, "y": 214, "cap": 262}] + vis
+            v["nom"] = "Salon vers l'entrée"
+    S["visites"] = [{"nom": "Entrée", "x": 200, "y": 30, "cap": 92},
+                    {"nom": "Entrée — banc et vestiaire", "x": 222, "y": 132, "cap": 222},
+                    {"nom": "Entrée vue du dégagement", "x": 214, "y": 214, "cap": 262}] + vis
     S["depart"] = {"x": 200, "y": 30, "cap": 92}
     pal = [p for p in S.get("palette", []) if p[0] != "Hall"]
-    pal.insert(min(3, len(pal)), ["Entrée vitrée", "ardoise noire, murs de verre plancher-plafond à cadres noirs sous la poutre de "
-                                  "bois brut, garde-corps de verre ; banc de chêne, armoires noir mat, niche-console de chêne et miroir", "#2B2F2E"])
+    pal.insert(min(3, len(pal)), ["Entrée", "grande entrée ouverte sur le salon et le dégagement, ardoise noire ; escalier entouré "
+                                  "d'un garde-corps de verre clair (poteaux noirs, main courante de chêne) ; banc de chêne, armoires "
+                                  "noir mat, niche-console de chêne et miroir", "#2B2F2E"])
     S["palette"] = pal
