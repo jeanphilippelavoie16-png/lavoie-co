@@ -13,6 +13,13 @@ Huit changements pour deux garçons de 4 et 6 ans, l'hiver à Baie-Comeau :
 7. salle de bain à hauteur d'enfant : marchepied sous la vanité, crochets à serviette à 38 po (mélangeur
    thermostatique au chauffe-eau, amortisseurs et verrou de la porte coulissante : notes) ;
 8. salle de lavage : un panier de linge propre par garçon, trieur à 2 sacs, capsules en hauteur.
+MAISON-18 (client, 2026-11-02) : « les fenêtres en bas sont plus grosses aussi (par le bas), sauf salle de bain et salle de
+lavage » et « un gros congélateur debout ... lui trouver une place en bas » :
+9. fenêtres du séjour, de la chambre 1 et de la chambre 2 descendues par le bas (allège 40 po, HYPOTHÈSE à mesurer ; tête
+   inchangée) avec margelles (SCENE["fenetres"] du moteur) ; bain et lavage inchangés ;
+10. congélateur vertical (≈ 20 pi³, 32 × 30 × 70 po) dans une niche de 33 po au bout du comptoir de pliage (le trieur part,
+   le bac recule de 7 po, paniers des garçons de 12 po), prise simple dédiée au-dessus ; le déshumidificateur, qui était
+   à 5 po devant le chauffe-eau, passe sous la fenêtre à côté de la laveuse (36 po libres devant le panneau et le chauffe-eau).
 Écart assumé avec la spec : casiers de 18 po de profond (y 209¾–227¾) au lieu de 20, au nu du banc et des armoires
 vertes existantes — leur dessus à 88 po ne bute plus sur la retombée de la poutre arrière (y 199–209, dessous ≈ 86 po).
 Ne touche pas au mur du bain, à la galerie de photos du séjour, aux chambres, au gym ni au dessous de l'escalier.
@@ -29,7 +36,10 @@ NOUVEAUX = [  # id, type, nom, libellé, x, y, rotation, (longueur, largeur)
      "6 tiroirs, niche ventilée, barre de son dessus", None, 438, 83.5, 90, (143, 16)),
     ("elem-SS-Q-BOITEPL", "autre", "Boîte de plancher (2 prises + 2 USB-C) au bout du divan, sous le guéridon", "",
      309, 138, 0, (6, 6)),
-    ("elem-SS-Q-DESHUM", "autre", "Déshumidificateur à drain permanent (hygrostat)", "DÉSH.", 57, 138, 90, (20, 14)),
+    ("elem-SS-Q-DESHUM", "autre", "Déshumidificateur à drain permanent (hygrostat), sous la fenêtre à côté de la laveuse "
+     "(dégagement de 36 po devant le chauffe-eau)", "DÉSH.", 18, 56, 90, (20, 14)),
+    ("elem-SS-Q-CONG", "refrigerateur", "Congélateur vertical ≈ 20 pi³ (≈ 32 × 30 × 70 po, blanc), niche de 33 po au bout du "
+     "comptoir de pliage, porte à droite ; prise simple dédiée au-dessus (circuit séparé)", "CONG.", 92.6, 103, 90, (32, 30)),
     ("elem-SS-Q-VRC", "trappe", "Échangeur d'air récupérateur de chaleur (VRC), suspendu au mur avant à 74–94 po",
      "VRC", 85, 19, 0, (30, 18)),
 ]
@@ -41,17 +51,40 @@ NOTES = [  # le cartouche est déjà plein : notes courtes (elles restent dans m
 ]
 
 
+# --- MAISON-18 : fenêtres descendues par le bas et niche du congélateur
+ALLEGE_SS = 40          # HYPOTHÈSE : le client n'a pas donné de mesure (« plus grosses par le bas ») ; tête inchangée (86 po)
+FENETRES_BASSES = ["ouv-SS-002", "ouv-SS-004",       # séjour : façade avant, mur de droite (store, toile)
+                   "ouv-SS-009", "ouv-SS-010",       # chambre 1 : les deux fenêtres d'évacuation (mur arrière)
+                   "ouv-SS-003"]                     # chambre 2 : mur de droite
+# gardées à 56 po : ouv-SS-006 (salle de bain) et ouv-SS-007 (salle de lavage, au-dessus de la laveuse)
+YN0, YN1 = 86.5, 119.5  # niche du congélateur le long du mur du gym (x 77½–109¾) : 33 po ; la porte du lavage (y 120–150)
+                        # balaie un quart de cercle de 30 po autour de (112, 150) : le coin du congélateur passe à 1 po
+
+
 def appliquer_modifs(L, base):
     eq = L["EQUIPEMENTS"]
     for i, e in enumerate(eq):
         if e[0] == "elem-SS-P-BANC":   # banc gardé ; les cases à souliers deviennent des bacs d'égouttement
             eq[i] = (e[0], e[1], "Vestiaire ouvert (gardé) : banc, bacs d'égouttement, crochets, tablette, poste de recharge") + tuple(e[3:])
+        elif e[0] == "elem-SS-P-PLIAGE":   # comptoir de pliage raccourci (y 35 → 86½) : niche du congélateur au bout
+            eq[i] = (e[0], e[1], "Comptoir de pliage en L avec rangement dessous (mur du gym), raccourci : niche du congélateur au bout",
+                     e[3], e[4], (35 + YN0) / 2, e[6], (YN0 - 35, e[7][1]))
+        elif e[0] == "elem-SS-P-BAC":      # bac reculé de 7 po (4½ po de comptoir entre le bac et le congélateur)
+            eq[i] = e[:5] + (e[5] - 7,) + e[6:]
     ids = {n[0] for n in NOUVEAUX}
     eq[:] = [e for e in eq if e[0] not in ids] + NOUVEAUX
 
 
 def apres_modifs(maison, base):
     ss = next(n for n in maison["niveaux"] if n["id"] == "SS")
+    # fenêtres descendues : l'allège (hypothèse) et la note sont reportées dans maison.json (le plan ne dessine pas l'allège)
+    for o in ss["ouvertures"]:
+        if o["id"] in FENETRES_BASSES:
+            o["allege"] = {"valeur": ALLEGE_SS, "source": "PRÉSUMÉ", "photo": None,
+                           "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po "
+                                   "(HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"}
+            o["note"] = (o.get("note") or "") + (" — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), "
+                                                 "margelle ; appui, allège de béton et margelle à valider avec un professionnel.")
     ss.setdefault("notes", [])
     ss["notes"] = [n for n in ss["notes"] if not str(n.get("id", "")).startswith("note-SS-Q")]
     ss["notes"] += [{"id": f"note-SS-Q{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t}
@@ -91,6 +124,18 @@ def _retirer_ss16(M):
             return True
         # salle de lavage : caisson plein sous le comptoir de pliage et ses traits (refait : paniers des garçons)
         if _est(o, "laque-marine", 85.75, 35, 109.75, 110, 4, 34.5) or any(_est(o, "carbone", 85.2, 37, 85.75, 109, z, z + 0.4) for z in (14, 24)):
+            return True
+        # MAISON-18 : comptoir de pliage raccourci pour la niche du congélateur (dessus, socle, bac et robinet reculés de 7 po,
+        # poignée du trieur, tablettes et paniers au-dessus du trieur)
+        if (_est(o, "placage", 84.75, 35, 109.75, 111, 34.5, 36) or _est(o, "metal", 85.75, 37, 109.75, 108, 0, 4)
+                or _est(o, "inox", 89, 71, 107, 89, 35.7, 36.1) or _est(o, "inox", 90, 72, 106, 88, 26, 35.7)
+                or any(_est(o, "placage", 97.75, 92, 109.75, 110, z, z + 1.5) for z in (54, 68))):
+            return True
+        if o.get("forme") == "tube" and o["pts"] in ([[108.5, 80, 36], [108.5, 80, 50], [105.5, 80, 52.5], [101, 80, 50]],
+                                                    [[85.3, 95, 30], [85.3, 103, 30]]):
+            return True
+        if o.get("forme") == "cylindre" and "axe" not in o and ((o["mat"] == "metal" and (o["x"], o["y"], o["z0"]) == (108.4, 85, 36))
+                                                               or (o["mat"] == "osier" and o["x"] == 103 and o["y"] in (98, 105) and o["z0"] == 55.5)):
             return True
         return False
 
@@ -191,38 +236,66 @@ def _salle_de_bain(h):
 
 
 def _lavage(h):
-    A, B, C = h.A, h.B, h.C
+    A, B, C, T = h.A, h.B, h.C, h.T
     out = []
     # bas du comptoir de pliage refait : 2 paniers coulissants de linge propre (un par garçon) dans une niche ouverte,
     # portes sous le bac (loquet magnétique), trieur à 2 sacs au bout
+    # MAISON-18 : le comptoir s'arrête à y = 86½ (niche du congélateur au bout) ; le trieur part, le bac recule de 7 po,
+    # les paniers des garçons passent à 11½ po de large
     out += [A(85.75, 35, 109.75, 37.5, 4, 34.5, "laque-marine", r=0.3, b=0.3),
-            A(85.75, 37.5, 109.75, 70, 21.75, 34.5, "laque-marine", r=0.3, b=0.3),
-            B(109, 37.5, 109.75, 70, 4, 21.75, "laque-marine"), B(86.5, 53.5, 109.75, 54, 4, 21.75, "laque-marine"),
-            A(85.75, 70, 109.75, 90, 4, 34.5, "laque-marine", r=0.3, b=0.3),
-            A(85.75, 90, 109.75, 110, 4, 34.5, "laque-marine", r=0.3, b=0.3)]
-    out += [B(85.6, 79.85, 85.75, 80.15, 4.5, 34, "carbone"),                      # 2 portes sous le bac
-            B(85.6, 89.85, 85.75, 90.15, 4.5, 34, "carbone"),
-            B(85.6, 70, 85.75, 70.3, 4.5, 34, "carbone"),
-            B(85.6, 37.5, 85.75, 70, 21.75, 22.05, "carbone"),
-            B(85.4, 96, 85.75, 104, 25.5, 26.3, "metal")]                          # poignée du trieur
-    for (ya, yb), plaque, linge in (((38, 53), "laque-vert", "draps"), ((54.5, 69.5), "laque-marine", "tissu")):
+            A(85.75, 37.5, 109.75, 63, 21.75, 34.5, "laque-marine", r=0.3, b=0.3),
+            B(109, 37.5, 109.75, 63, 4, 21.75, "laque-marine"), B(86.5, 50, 109.75, 50.5, 4, 21.75, "laque-marine"),
+            A(85.75, 63, 109.75, YN0, 4, 34.5, "laque-marine", r=0.3, b=0.3)]
+    out += [B(85.6, 74.6, 85.75, 74.9, 4.5, 34, "carbone"),                        # 2 portes sous le bac
+            B(85.6, 63, 85.75, 63.3, 4.5, 34, "carbone"),
+            B(85.6, 37.5, 85.75, 63, 21.75, 22.05, "carbone")]
+    out += [B(85.75, 37, 109.75, YN0 - 1, 0, 4, "metal"), A(84.75, 35, 109.75, YN0, 34.5, 36, "placage", r=0.3, b=0.3),   # socle, dessus
+            A(89, 64, 107, 82, 35.7, 36.1, "inox", r=2.5, b=0.1), B(90, 65, 106, 81, 26, 35.7, "inox"),                  # bac encastré
+            T([(108.5, 73, 36), (108.5, 73, 50), (105.5, 73, 52.5), (101, 73, 50)], 0.45, "metal"),                        # robinet
+            C(108.4, 78, 0.6, 36, 39, "metal")]
+    for (ya, yb), plaque, linge in (((38, 49.5), "laque-vert", "draps"), ((51, 62.5), "laque-marine", "tissu")):
         out += [A(86.6, ya, 108.6, yb, 4.3, 17, "tapis", r=0.8, b=0.5),                                  # panier de toile
                 A(88, ya + 1.5, 107, yb - 1.5, 17, 19.2, linge, r=1, b=0.8),                             # linge plié
                 B(86.35, (ya + yb) / 2 - 3, 86.6, (ya + yb) / 2 + 3, 12.5, 15.5, plaque),                # plaquette
                 B(86.4, (ya + yb) / 2 - 2.5, 86.6, (ya + yb) / 2 + 2.5, 15.9, 16.6, "carbone")]          # poignée découpée
     # capsules de détergent sur la tablette du haut (66 po), hors de portée
     out += [C(37.5, 16, 2.4, 67.5, 72, "blanc"), C(37.5, 16, 2.5, 72, 73, "laque-marine")]
-    # déshumidificateur à drain permanent (boyau vers le bac), hors du dégagement du panneau électrique
-    out += [A(50, 128, 64, 148, 0, 24, "blanc", r=1.5, b=0.6), B(51.5, 130, 62.5, 146, 24, 24.12, "gris"),
-            B(64, 132, 64.15, 144, 4, 18, "gris"), B(55, 147.9, 59, 148.05, 20, 22, "ecran")]
+    # déshumidificateur à drain permanent (boyau vers le tuyau d'évacuation de la laveuse), sous la fenêtre à côté de la
+    # laveuse : hors du dégagement du panneau électrique et des 36 po devant le chauffe-eau (MAISON-18)
+    out += [A(11, 46, 25, 66, 0, 24, "blanc", r=1.5, b=0.6), B(12.5, 48, 23.5, 64, 24, 24.12, "gris"),
+            B(25, 50, 25.15, 62, 4, 18, "gris"), B(19, 62.2, 23, 64.2, 24.12, 24.2, "ecran"),
+            T([(11.6, 49, 2.5), (10.7, 46, 2), (10.7, 30, 2)], 0.35, "gris")]
     # VRC suspendu au mur avant au-dessus du retour du comptoir ; 4 conduits vers le plafond
     out += [A(70.5, 10.5, 99.5, 27.5, 74, 92, "blanc", r=1, b=0.5), B(78, 27.5, 92, 27.6, 80, 86, "gris"),
             B(83, 27.6, 87, 27.7, 88, 89.5, "ecran")]
     out += [C(x, 19, 2.8, 92, 96, "inox") for x in (75, 81.5, 88.5, 95)]
     out += [B(55, 100, 63, 108, 95.7, 96, "metal"), B(56, 101, 62, 107, 95.6, 95.7, "pneu")]   # évacuation du VRC
+    out += _congelateur(h)
     # mélangeur thermostatique à la sortie du chauffe-eau (eau chaude limitée aux appareils)
     out += [C(31, 138, 0.5, 66, 96, "laiton"), C(37, 138, 0.5, 66, 96, "laiton"),
             B(30, 136.6, 38, 139.4, 70, 73.4, "laiton"), h.CY(34, 135.5, 136.6, 71.7, 1.1, "metal")]
+    return out
+
+
+def _congelateur(h):
+    """Congélateur vertical ≈ 20 pi³ (32 × 30 × 70 po, blanc comme la laveuse et la sécheuse) dans la niche au bout du comptoir
+    de pliage, dos au mur du gym (2 po d'air), face vers la pièce (-x), porte à droite (pentures côté porte du lavage, elle
+    s'ouvre en s'éloignant du comptoir où l'on pose l'épicerie) ; prise simple dédiée au-dessus, au mur."""
+    A, B, C, T = h.A, h.B, h.C, h.T
+    X0, X1, Y0, Y1 = 79.5, 107.75, YN0 + 0.5, YN1 - 0.5          # caisse (x 79½–107¾, y 87–119)
+    out = [B(X0 + 1, Y0 + 1, X1 - 0.5, Y1 - 1, 0, 0.6, "carbone"),                     # socle en retrait, pattes
+           A(X0, Y0, X1, Y1, 0.6, 70, "blanc", r=1.2, b=0.5),                          # caisse
+           A(X0 - 2, Y0, X0 + 0.1, Y1, 4.4, 69.6, "blanc", r=0.8, b=0.5),              # porte (2 po)
+           B(X0 - 1.3, Y0 + 1.5, X0, Y1 - 1.5, 0.8, 4, "carbone"),                     # grille du bas
+           B(X0 - 2.2, Y1 - 1.6, X0, Y1, 69.6, 70.2, "gris"),                          # penture du haut
+           B(X0 - 2.1, 96, X0 - 2, 104, 62, 65, "ecran"), B(X0 - 2.15, 99.3, X0 - 2.1, 100.7, 63, 64, "spot")]   # afficheur
+    xp, yp = X0 - 3.6, Y0 + 3.2                                                        # poignée verticale inox, côté comptoir
+    out += [C(xp, yp, 0.55, 30, 56, "inox"),
+            T([(X0 - 2, yp, 31.5), (xp, yp, 31.5)], 0.4, "inox", bouts=True), T([(X0 - 2, yp, 54.5), (xp, yp, 54.5)], 0.4, "inox", bouts=True)]
+    # prise simple dédiée (circuit séparé) au mur au-dessus du congélateur, fiche et cordon qui descend derrière
+    out += [B(109.45, 101.5, 109.75, 104.25, 74, 78.5, "blanc"), B(109.38, 102.4, 109.45, 103.35, 75.3, 77.2, "gris"),
+            B(108.6, 102.3, 109.38, 103.45, 75.6, 76.9, "pneu"),
+            T([(108.9, 102.9, 75.6), (108.9, 102.9, 70.6), (108.3, 102.9, 69.8)], 0.17, "pneu")]
     return out
 
 
@@ -257,8 +330,8 @@ def _sejour(h):
     out += [B(402, 38, 405, 41, 0.5, 3.5, "placage"), B(405.6, 38.4, 408.6, 41.4, 0.5, 3.5, "laque-marine"),
             B(403.8, 38.8, 406.8, 41.8, 3.5, 6.5, "art-argile"), B(398, 46, 404, 49, 0.5, 3.5, "placage")]
     # store à enrouleur sans cordon dans l'embrasure de la fenêtre (y 57–93), à moitié remonté
-    out += [h.CY(447.6, 57.5, 92.5, 85.1, 0.8, "carbone"), B(447.5, 57.6, 447.7, 92.4, 74, 84.4, "tissu"),
-            B(447.3, 57.6, 447.9, 92.4, 73.4, 74, "metal")]
+    out += [h.CY(447.6, 57.5, 92.5, 85.1, 0.8, "carbone"), B(447.5, 57.6, 447.7, 92.4, 63, 84.4, "tissu"),
+            B(447.3, 57.6, 447.9, 92.4, 62.4, 63, "metal")]
     # --- boîte de plancher (2 prises + 2 USB-C) au bout de l'accoudoir, sous un guéridon avec lampe : pas de rallonge
     out += [B(306, 135, 312, 141, 0.5, 0.62, "laiton"), B(307, 136, 311, 140, 0.62, 0.66, "carbone")]
     gx, gy = 312, 140
@@ -279,6 +352,8 @@ def _sejour(h):
 def appliquer_scene(S, h):
     M = S["mobilier"]
     _retirer_ss16(M)
+    # fenêtres descendues par le bas (allège 40 po, tête de l'étage) ; le moteur pose les margelles (terrain à 48 po)
+    S["fenetres"] = dict(S.get("fenetres") or {}, **{oid: {"allege": ALLEGE_SS} for oid in FENETRES_BASSES})
     M += _vestiaire(h) + _nuit(h) + _salle_de_bain(h) + _lavage(h) + _sejour(h)
     # l'encastré du séjour sous le nuage devient une lumière intégrée au nuage (la source passe sous les lattes)
     S["lumieres"][:] = [l for l in S["lumieres"] if not (l.get("x") == 330 and l.get("y") == 80 and not l.get("z"))]
@@ -292,15 +367,20 @@ def appliquer_scene(S, h):
               {"nom": "Seuil à neige (porte de côté)", "x": 352, "y": 176, "cap": 8},
               {"nom": "Trajet de nuit vers la salle de bain", "x": 238, "y": 188, "cap": 178},
               {"nom": "Banc à jouets sous la toile", "x": 384, "y": 146, "cap": 322, "commandes": {"toile": "haut"}},
-              {"nom": "Paniers de linge des garçons", "x": 36, "y": 58, "cap": 5}]:
+              {"nom": "Paniers de linge des garçons", "x": 36, "y": 58, "cap": 5},
+              {"nom": "Congélateur (salle de lavage)", "x": 30, "y": 104, "cap": 2}]:
         if v["nom"] not in noms:
             V.append(v)
     for ligne in S["palette"]:
         if ligne[0] == "Séjour":
             ligne[1] = ligne[1].replace("meuble bas de chêne", "banc à jouets de chêne de 143 po sous la toile, nuage de lattes "
                                         "de chêne au plafond")
+        elif ligne[0] == "Salle de lavage":
+            ligne[1] += ", congélateur vertical blanc dans une niche au bout du comptoir (prise dédiée)"
         elif ligne[0] == "Vestiaire":
             ligne[1] = ligne[1].replace("banc et cases en chêne", "banc de chêne et bacs d'égouttement")
+    S["palette"].append(["Fenêtres (MAISON-18)", "séjour et chambres : fenêtres agrandies vers le bas (allège ≈ 40 po, à "
+                         "mesurer), cadres noirs, margelles de béton ; salle de bain et salle de lavage inchangées", "#1E1E1E"])
     S["palette"].append(["Rangements des garçons (SS-17)", "casiers d'hiver de chêne avec séchoirs à bottes et portes hautes "
                          "vert forêt (comme les armoires gardées), grille à neige encastrée en aluminium noir, banc à jouets "
                          "de chêne, paniers de linge et serviettes à la couleur de chaque garçon (vert forêt, marine), "

@@ -752,7 +752,9 @@ if (S.sol_exterieur != null) {
   });
   herbe.repeat.set(40, 40);
   const m = 2, sh = new THREE.Shape([[-3000, -3000], [3000, -3000], [3000, 3000], [-3000, 3000]].map(([x, y]) => new THREE.Vector2(x * K, y * K)));
-  sh.holes.push(new THREE.Path([[bx0 - m, by0 - m], [bx0 - m, by1 + m], [bx1 + m, by1 + m], [bx1 + m, by0 - m]].map(([x, y]) => new THREE.Vector2(x * K, y * K))));
+  // trou : le rectangle de la maison, ou (margelles devant des fenêtres descendues) l'emprise exacte de la maison et des margelles
+  for (const t of S.terrain_trou || [[[bx0 - m, by0 - m], [bx0 - m, by1 + m], [bx1 + m, by1 + m], [bx1 + m, by0 - m]]])
+    sh.holes.push(new THREE.Path(t.map(([x, y]) => new THREE.Vector2(x * K, y * K))));
   const g = new THREE.ShapeGeometry(sh); g.rotateX(-Math.PI / 2);
   const uv = g.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / 150, uv.getY(i) / 150);
   const t = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ map: herbe, color: "#b9c2a6" }));

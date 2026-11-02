@@ -15,6 +15,10 @@ seule scène : S["etages"] (géométrie par étage), visites, palettes, peinture
 L'escalier du sous-sol devient praticable (grille de hauteurs + ligne de foulée), le plancher du RDC est troué à la trémie
 avec un garde-corps de verre. Un projet sans "etages" garde exactement la même scène (à part les portes interactives).
 
+Fenêtres (opt-in) : SCENE["fenetres"] = {id d'ouverture: {"allege": z, "tete": z}} donne à une fenêtre sa propre allège
+et sa propre tête (sinon SCENE["allege_fenetre"] / "tete_fenetre" de l'étage) ; une fenêtre descendue sous le terrain reçoit
+une margelle et le terrain est troué au ras de la maison (voir reglages_fenetres). Sans "fenetres", rien ne change.
+
 Usage : python3 renovation/outils/generer_3d.py renovation/SS-02_aire_ouverte_gym_vitre
 """
 import base64, copy, importlib.util, io, json, math, os, sys
@@ -33,8 +37,120 @@ def charger_scene(dossier):
     return m.SCENE
 
 
-def boites_mur(m, ouvs, H, sill, head):
-    """Découpe un mur (axe, épaisseur) en boîtes pleines autour de ses ouvertures. Pouces, repère maison."""
+def reglages_fenetres(S, niv, sill, head, H):
+    """Allège et tête par fenêtre (opt-in) : SCENE["fenetres"] = {id d'ouverture: {"allege": z, "tete": z}} (pouces,
+    repère du plancher), pour une fenêtre agrandie ou réduite ; les autres gardent SCENE["allege_fenetre"] / "tete_fenetre".
+    Servent partout : trou dans le mur, vitre, cadre, meneaux, tablette, jambages, lumière du jour (la visionneuse suit la
+    vitre) et terrain extérieur. Clés facultatives :
+    - "sections" : nombre de châssis (meneaux verticaux également répartis ; défaut 2 = un meneau au centre, comme avant) ;
+    - "traverses" : [z, ...] traverses horizontales (ex. un panneau fixe en bas) ;
+    - "margelle" : puits de fenêtre devant une fenêtre dont l'allège tombe sous le terrain (sol_exterieur + 2 po) :
+      ajoutée d'office dans ce cas ; False = jamais ; True ou {"saillie": 36, "debord": 6, "fond": allège - 8,
+      "dessus": terrain + 4, "mat": "beton", "mat_fond": "beton"} pour la forcer ou la régler (saillie depuis la face
+      extérieure du mur, débord de chaque côté de la fenêtre). Le terrain est alors troué au ras de la maison et des margelles.
+    Retourne {id: réglages complets} ; erreur explicite si les données ne respectent pas ce contrat. Sans "fenetres" : {}."""
+    reg = S.get("fenetres")
+    if not reg:
+        return {}
+
+    def err(msg):
+        raise SystemExit(f'scene_3d.py, fenetres (niveau {niv["id"]}) : ' + msg)
+    if not isinstance(reg, dict):
+        err('SCENE["fenetres"] doit être un dictionnaire {"<id de fenêtre>": {"allege": z, "tete": z}}')
+    ids = [o["id"] for o in niv["ouvertures"] if o["type"] == "fenetre"]
+    num = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool)
+    out = {}
+    for oid, r in reg.items():
+        if oid not in ids:
+            err(f'"{oid}" n\'est pas une fenêtre de ce niveau (fenêtres : {", ".join(ids) or "aucune"})')
+        if not isinstance(r, dict):
+            err(f'"{oid}" : réglages attendus sous forme de dictionnaire, reçu {r!r}')
+        inconnues = set(r) - {"allege", "tete", "sections", "traverses", "margelle", "note"}
+        if inconnues:
+            err(f'"{oid}" : clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
+        a, t = r.get("allege", sill), r.get("tete", head)
+        if not num(a) or not num(t) or not 0 <= a < t <= H:
+            err(f'"{oid}" : il faut 0 <= allège < tête <= plafond ({H} po), reçu allège {a!r}, tête {t!r}')
+        n = r.get("sections", 2)
+        if not isinstance(n, int) or isinstance(n, bool) or n < 1:
+            err(f'"{oid}" : "sections" doit être un entier >= 1, reçu {n!r}')
+        tr = r.get("traverses", [])
+        if not isinstance(tr, list) or not all(num(z) and a + 2 < z < t - 2 for z in tr):
+            err(f'"{oid}" : "traverses" doit être une liste de z entre l\'allège et la tête (à 2 po près), reçu {tr!r}')
+        mg = r.get("margelle")
+        if mg is not None and not isinstance(mg, (bool, dict)):
+            err(f'"{oid}" : "margelle" doit valoir True, False ou un dictionnaire, reçu {mg!r}')
+        if isinstance(mg, dict):
+            for k, v in mg.items():
+                if k in ("mat", "mat_fond"):
+                    if not isinstance(v, str):
+                        err(f'"{oid}" : margelle, "{k}" doit être une clé de matériau, reçu {v!r}')
+                elif k not in ("saillie", "debord", "fond", "dessus") or not num(v):
+                    err(f'"{oid}" : margelle, clé "{k}" inconnue ou valeur non numérique ({v!r})')
+        out[oid] = dict(r, allege=a, tete=t, sections=n, traverses=list(tr))
+    return out
+
+
+def allege_tete(o, sill, head, fen):
+    """(allège, tête) d'une ouverture : réglage de SCENE["fenetres"] s'il y en a un, sinon ceux de l'étage."""
+    r = (fen or {}).get(o.get("id")) if o.get("type") == "fenetre" else None
+    return (r["allege"], r["tete"]) if r else (sill, head)
+
+
+def margelles(niv, par_mur, fen, sol_ext, centre):
+    """Margelles (puits de fenêtre) devant les fenêtres de SCENE["fenetres"] dont l'allège tombe sous le terrain :
+    fond de gravier, trois parois, et leurs rectangles (pour trouer le terrain). Retourne (boîtes, rectangles)."""
+    boites, rects = [], []
+    murs = {m["id"]: m for m in niv["murs"]}
+    for mid, ouvs in par_mur.items():
+        m = murs.get(mid)
+        if not m or m["type"] not in ("fondation", "ext"):
+            continue
+        t = (m.get("epaisseur") or {}).get("valeur") or 4.5
+        L = math.hypot(m["x2"] - m["x1"], m["y2"] - m["y1"])
+        ux, uy = (m["x2"] - m["x1"]) / L, (m["y2"] - m["y1"]) / L
+        horiz = abs(ux) > 0.5
+        nx, ny = (0, math.copysign(1, m["y1"] - centre[1])) if horiz else (math.copysign(1, m["x1"] - centre[0]), 0)   # vers l'extérieur
+        for o in ouvs:
+            r = fen.get(o["id"]) if o["type"] == "fenetre" else None
+            if not r or r.get("margelle") is False or (r.get("margelle") is None and r["allege"] >= sol_ext + 2):
+                continue
+            g = r["margelle"] if isinstance(r.get("margelle"), dict) else {}
+            P, e, ep = g.get("saillie", 36), g.get("debord", 6), 1.5
+            zf, zh = g.get("fond", r["allege"] - 8), g.get("dessus", sol_ext + 4)
+            c, w = o["position"]["valeur"], o["largeur"]["valeur"]
+            a, b, f = c - w / 2 - e, c + w / 2 + e, t / 2          # le long du mur ; face extérieure à t/2 de l'axe
+
+            def bx(s0, s1, q0, q1, z0, z1, mat):                    # s le long du mur, q vers l'extérieur depuis l'axe
+                pa = (m["x1"] + ux * s0 + nx * q0, m["y1"] + uy * s0 + ny * q0)
+                pb = (m["x1"] + ux * s1 + nx * q1, m["y1"] + uy * s1 + ny * q1)
+                return {"x0": round(min(pa[0], pb[0]), 3), "x1": round(max(pa[0], pb[0]), 3), "y0": round(min(pa[1], pb[1]), 3),
+                        "y1": round(max(pa[1], pb[1]), 3), "z0": z0, "z1": z1, "mat": mat}
+            mat, fond = g.get("mat", "beton"), g.get("mat_fond", g.get("mat", "beton"))
+            boites += [bx(a, b, f, f + P, zf - 2, zf, fond),                                   # fond (gravier drainant)
+                       bx(a - ep, a, f, f + P + ep, zf - 2, zh, mat), bx(b, b + ep, f, f + P + ep, zf - 2, zh, mat),   # côtés
+                       bx(a, b, f + P, f + P + ep, zf - 2, zh, mat)]                           # paroi du fond
+            q = bx(a - ep, b + ep, f - 0.5, f + P + ep, 0, 0, "")
+            rects.append([[q["x0"], q["y0"]], [q["x1"], q["y0"]], [q["x1"], q["y1"]], [q["x0"], q["y1"]]])
+    return boites, rects
+
+
+def terrain_trou(niv, rects):
+    """Contour(s) du trou du terrain : emprise de la maison (faces extérieures des murs) plus les margelles."""
+    from shapely.geometry import LineString, Polygon
+    from shapely.ops import unary_union
+    murs = [m for m in niv["murs"] if m["type"] == "fondation"] or [m for m in niv["murs"] if m["type"] == "ext"]
+    U = unary_union([LineString([(m["x1"], m["y1"]), (m["x2"], m["y2"])]).buffer(
+        ((m.get("epaisseur") or {}).get("valeur") or 4.5) / 2, cap_style=3, join_style=2) for m in murs])
+    pleins = [Polygon(p.exterior) for p in (U.geoms if hasattr(U, "geoms") else [U])]
+    T = unary_union(pleins + [Polygon(r) for r in rects])
+    return [[[round(x, 2), round(y, 2)] for x, y in list(p.exterior.coords)[:-1]]
+            for p in (T.geoms if hasattr(T, "geoms") else [T]) if p.area > 1]
+
+
+def boites_mur(m, ouvs, H, sill, head, fen=None):
+    """Découpe un mur (axe, épaisseur) en boîtes pleines autour de ses ouvertures. Pouces, repère maison.
+    fen : {id de fenêtre: {"allege", "tete", ...}} (SCENE["fenetres"], voir reglages_fenetres) ; sinon sill / head."""
     x1, y1, x2, y2 = m["x1"], m["y1"], m["x2"], m["y2"]
     t = (m.get("epaisseur") or {}).get("valeur") or 4.5
     L = math.hypot(x2 - x1, y2 - y1)
@@ -49,7 +165,8 @@ def boites_mur(m, ouvs, H, sill, head):
         if c is None or w is None:
             continue
         porte = o["type"] != "fenetre"
-        trous.append((c - w / 2, c + w / 2, 0 if porte else sill, 80 if porte else head, o))
+        sl, hd = allege_tete(o, sill, head, fen)
+        trous.append((c - w / 2, c + w / 2, 0 if porte else sl, 80 if porte else hd, o))
     trous.sort(key=lambda z: z[0])
 
     def boite(a, b, z0, z1, matiere):
@@ -292,9 +409,10 @@ def reculer_bouts_de_murs(boites):
                                 b[kk] = v - s_ * (o[k + "1"] - o[k + "0"]) / 2   # le bout de cloison s'arrête au milieu du mur traversé (plus de ligne aux jonctions en T)
 
 
-def finitions(niv, par_mur, H, sill, head, S):
-    """Plinthes, chambranles et seuils des portes, cadres, meneaux et tablettes des fenêtres."""
+def finitions(niv, par_mur, H, sill, head, S, fen=None):
+    """Plinthes, chambranles et seuils des portes, cadres, meneaux et tablettes des fenêtres (fen : voir reglages_fenetres)."""
     sol = S.get("sol_defaut", "chene")
+    sill0, head0 = sill, head
     out = []
     cx0, cy0 = 228, 190                                   # vers l'intérieur de la maison
     for m in niv["murs"]:
@@ -334,9 +452,14 @@ def finitions(niv, par_mur, H, sill, head, S):
             if o["type"] == "fenetre":
                 # cadre noir et meneau dans le plan de la vitre, jambages blancs, tablette de chêne
                 f, d = 1.5, 2.5
+                sill, head = allege_tete(o, sill0, head0, fen)
+                r = (fen or {}).get(o["id"]) or {}
+                n = r.get("sections", 2)
+                meneaux = [(a + b) / 2] if n == 2 else [a + (b - a) * k / n for k in range(1, n)]
                 out += [b_(a, b, -d / 2, d / 2, sill, sill + f, "metal"), b_(a, b, -d / 2, d / 2, head - f, head, "metal"),
-                        b_(a, a + f, -d / 2, d / 2, sill, head, "metal"), b_(b - f, b, -d / 2, d / 2, sill, head, "metal"),
-                        b_((a + b) / 2 - 0.75, (a + b) / 2 + 0.75, -d / 2, d / 2, sill, head, "metal")]
+                        b_(a, a + f, -d / 2, d / 2, sill, head, "metal"), b_(b - f, b, -d / 2, d / 2, sill, head, "metal")]
+                out += [b_(xm - 0.75, xm + 0.75, -d / 2, d / 2, sill, head, "metal") for xm in meneaux]
+                out += [b_(a, b, -d / 2, d / 2, z - 0.75, z + 0.75, "metal") for z in r.get("traverses", [])]
                 for s_ in cotes:
                     out += [b_(a, a + 0.5, s_ * d / 2, s_ * t / 2, sill, head, "porte"), b_(b - 0.5, b, s_ * d / 2, s_ * t / 2, sill, head, "porte"),
                             b_(a, b, s_ * d / 2, s_ * t / 2, head - 0.5, head, "porte"),
@@ -737,6 +860,7 @@ def construire(M, S, ctx=None):
     niv = next(n for n in M["niveaux"] if n["id"] == S.get("niveau", "SS"))
     H = S.get("plafond", 90)
     sill, head = S.get("allege_fenetre", 56), S.get("tete_fenetre", 86)
+    fen = reglages_fenetres(S, niv, sill, head, H)        # allège et tête par fenêtre (opt-in)
     mobilier = S.get("mobilier", [])
     par_mur = {}
     for o in niv["ouvertures"]:
@@ -749,20 +873,21 @@ def construire(M, S, ctx=None):
         if m.get("materiau") == "garde-corps" or m["type"] == "garde-corps":   # garde-corps dessiné dans les données
             boites += garde_corps([((m["x1"], m["y1"]), (m["x2"], m["y2"]))])
             continue
-        bx, t = boites_mur(m, par_mur.get(m["id"], []), H, sill, head)
+        bx, t = boites_mur(m, par_mur.get(m["id"], []), H, sill, head, fen)
         boites += bx
         for o in par_mur.get(m["id"], []):
             if o["type"] == "fenetre":
                 c, w = o["position"]["valeur"], o["largeur"]["valeur"]
+                sl, hd = allege_tete(o, sill, head, fen)
                 # vitre de fenêtre : une boîte mince au centre du mur, entre allège et tête
                 L = math.hypot(m["x2"] - m["x1"], m["y2"] - m["y1"])
                 ux, uy = (m["x2"] - m["x1"]) / L, (m["y2"] - m["y1"]) / L
                 a, b = c - w / 2, c + w / 2
                 pa = (m["x1"] + ux * a, m["y1"] + uy * a); pb = (m["x1"] + ux * b, m["y1"] + uy * b)
                 if abs(ux) > 0.5:
-                    boites.append({"x0": min(pa[0], pb[0]), "x1": max(pa[0], pb[0]), "y0": m["y1"] - 0.5, "y1": m["y1"] + 0.5, "z0": sill, "z1": head, "mat": "vitre"})
+                    boites.append({"x0": min(pa[0], pb[0]), "x1": max(pa[0], pb[0]), "y0": m["y1"] - 0.5, "y1": m["y1"] + 0.5, "z0": sl, "z1": hd, "mat": "vitre"})
                 else:
-                    boites.append({"x0": m["x1"] - 0.5, "x1": m["x1"] + 0.5, "y0": min(pa[1], pb[1]), "y1": max(pa[1], pb[1]), "z0": sill, "z1": head, "mat": "vitre"})
+                    boites.append({"x0": m["x1"] - 0.5, "x1": m["x1"] + 0.5, "y0": min(pa[1], pb[1]), "y1": max(pa[1], pb[1]), "z0": sl, "z1": hd, "mat": "vitre"})
             else:
                 # porte battante ou coulissante : objet interactif (ouvrir, fermer), dessiné dans l'état du plan
                 bt = battant(dict(m, _ouvertures=par_mur.get(m["id"], [])), o, t, mobilier)
@@ -859,7 +984,7 @@ def construire(M, S, ctx=None):
         boites += garde_corps_tremies(trous, niv, ctx_sorties)
     boites = couper_aux_cloisons(boites, niv)
     reculer_bouts_de_murs(boites)
-    finis = finitions(niv, par_mur, H, sill, head, S)
+    finis = finitions(niv, par_mur, H, sill, head, S, fen)
     # SCENE["mats_finitions"] = {matériau de base: matériau du catalogue} : portes, chambranles, plinthes et cadres de
     # fenêtres d'une autre essence (ex. pin teint au rez-de-chaussée) ; absent = rendu inchangé
     for b in finis + portes + [q for bt in battants for q in bt["boites"]]:
@@ -893,6 +1018,13 @@ def construire(M, S, ctx=None):
         scene["escaliers"] = escaliers
     # terrain extérieur vu par les fenêtres (pouces, repère du plancher) : un peu sous l'allège au sous-sol
     scene["sol_exterieur"] = S.get("sol_exterieur", sill - 8 if niv["id"] == "SS" else -30)
+    if fen:
+        # fenêtres descendues sous le terrain : margelles, et terrain troué au ras de la maison et des margelles
+        mb, mr = margelles(niv, par_mur, fen, scene["sol_exterieur"], ((xs and (min(xs) + max(xs)) / 2) or 228,
+                                                                         (ys and (min(ys) + max(ys)) / 2) or 190))
+        if mb:
+            scene["boites"] += mb
+            scene["terrain_trou"] = terrain_trou(niv, mr)
     return scene
 
 
@@ -982,6 +1114,8 @@ def fusionner(M, S, dossier):
                   "obstacles", "escaliers"):
             e_out[k] = sc.get(k, [])
         e_out["sol_exterieur"] = sc["sol_exterieur"]
+        if sc.get("terrain_trou"):
+            e_out["terrain_trou"] = sc["terrain_trou"]
         out_etages.append(e_out)
         # étage suivant : trémies et sorties de cet escalier (plancher troué, garde-corps), posé à la hauteur d'étage
         ctx = {"trous": sc["tremies"], "sorties": [es["sortie"] for es in sc.get("escaliers", [])]}
@@ -1000,6 +1134,10 @@ def fusionner(M, S, dossier):
              "bornes": [min(xs), min(ys), max(xs), max(ys)], "palette": [], "palettes": palettes, "peintures": peintures,
              # un seul terrain : celui de l'étage le plus bas (le sous-sol est enterré jusque sous ses fenêtres)
              "sol_exterieur": out_etages[0]["sol_exterieur"] + out_etages[0]["z"]}
+    if out_etages[0].get("terrain_trou"):                 # margelles du sous-sol : terrain troué au ras de la maison
+        scene["terrain_trou"] = out_etages[0].pop("terrain_trou")
+    for E in out_etages:
+        E.pop("terrain_trou", None)
     # matériaux, modèles, commandes et images : une seule fois chacun, pour tous les étages
     tous = {"boites": [], "portes": [], "mobilier": [], "sols": [], "revetements": [], "materiaux": None}
     for E in out_etages:

@@ -392,6 +392,9 @@ SCENE = {
     # visionneuse ne perce pas le plancher, le sous-plancher de béton cache alors tout ce qui est sous z = 0)
     "tremies_plancher": [[EAR_X0, EAR_Y0, EAR_XN, EAR_Y1]],
     "allege_fenetre": 34, "tete_fenetre": 82,     # ESTIMÉ sur les photos
+    # MAISON-18 (client, 2026-11-02 : « la fenêtre du salon en haut est aussi plus grande vers le bas ») : grande fenêtre de
+    # façade du salon (3 sections) descendue à 20 po (HYPOTHÈSE à mesurer), tête et linteau 2-2×10 inchangés
+    "fenetres": {"ouv-RDC-002": {"allege": 20, "sections": 3}},
     "sol_defaut": "erable",
     "sols": {"piece-RDC-CUI": "ardoise_noire", "piece-RDC-ENT": "ardoise_noire", "piece-RDC-EAR": "ardoise_noire",
              "piece-RDC-SDB": "porcelaine"},

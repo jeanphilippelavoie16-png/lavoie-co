@@ -33,7 +33,7 @@ SCENE["palette"] = [p for p in SCENE["palette"] if p[0] != "Chambres"]
 _ORDRE = ["Entrée", "Vestiaire", "Casiers d'hiver des garçons", "Seuil à neige (porte de côté)", "Escalier", "Escalier vu du séjour",
           "Banc-cabane cinéma (sous l'escalier)", "Coin-cabane et sa lune", "Séjour", "Galerie de famille", "Coin cinéma (toile)",
           "Banc à jouets sous la toile", "Gym (porte vitrée)", "Gym — mur-miroir et zone au sol", "Gym — cardio", "Salle de lavage",
-          "Paniers de linge des garçons", "Trajet de nuit vers la salle de bain", "Salle de bain (entrée)", "Le bain (alcôve de pierre)",
+          "Paniers de linge des garçons", "Congélateur (salle de lavage)", "Trajet de nuit vers la salle de bain", "Salle de bain (entrée)", "Le bain (alcôve de pierre)",
           "Douche simple", "Vanité (marchepied, crochets des garçons)"]
 _rang = {n: i for i, n in enumerate(_ORDRE)}
 SCENE["visites"] = sorted(SCENE["visites"], key=lambda v: _rang.get(v["nom"], len(_ORDRE)))   # tri stable : chambres et walk-in à la fin, dans leur ordre
