@@ -37,3 +37,11 @@ _ORDRE = ["Entrée", "Vestiaire", "Casiers d'hiver des garçons", "Seuil à neig
           "Douche simple", "Vanité (marchepied, crochets des garçons)"]
 _rang = {n: i for i, n in enumerate(_ORDRE)}
 SCENE["visites"] = sorted(SCENE["visites"], key=lambda v: _rang.get(v["nom"], len(_ORDRE)))   # tri stable : chambres et walk-in à la fin, dans leur ordre
+
+# --- couleurs d'accent utilisées par de petits objets (livres, pictogrammes, coussins) des autres zones : les chambres
+# refaites ont retiré les peintures qui les définissaient ; on les redéfinit ici pour qu'ils ne s'affichent pas en blanc
+for _nom, _v in (("Accent argile", ["#C39A82", "petits objets : livres, pictogrammes, coussins", "art-argile"]),
+                 ("Accent sable", ["#D8C3A0", "petits objets : livres, pictogrammes, coussins", "art-sable"]),
+                 ("Accent sauge", ["#A6AF9A", "petits objets : livres, pictogrammes", "art-sauge"])):
+    if not any(len(v) > 2 and v[2] == _v[2] for v in SCENE.get("peintures", {}).values()):
+        SCENE.setdefault("peintures", {})[_nom] = _v
