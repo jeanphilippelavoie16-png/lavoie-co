@@ -79,6 +79,10 @@ def appliquer(maison):
     for o in rdc["ouvertures"]:
         if o["id"] in ("ouv-RDC-018", "ouv-RDC-020", "ouv-RDC-021", "ouv-RDC-022"):
             o["fermee"] = True
+        # portes plates blanches des garde-robes de la chambre arrière (photo 10) ; les autres sont en pin teint.
+        # "finition" : matériau du battant dans la maquette 3D (base_rdc01_scene.portes_finies) ; absent = pin des finitions
+        if o["id"] in ("ouv-RDC-019", "ouv-RDC-020"):
+            o["finition"] = "blanc"
     rdc["murs"].append({"id": "mur-RDC-R01", "type": "int", "porteur": "inconnu", "indices_porteur": [],
                         "epaisseur": dict(m12["epaisseur"]), "x1": 5, "y1": 142, "x2": 108, "y2": 142,
                         "source_position": "PHOTO",
@@ -122,6 +126,18 @@ def appliquer(maison):
         if lib is not None:
             e["libelle"] = lib
         rdc["elements"].append(e)
+    # 4) entrée arrière : volée qui descend le long du mur du fond vers la gauche, main courante de bois au mur
+    #    (photos 01, 07, 08) ; palier au niveau du RDC devant la porte extérieure. Tout est ESTIMÉ : compter les marches.
+    rdc["elements"].append({
+        "id": "elem-RDC-R-ESCARR", "type": "escalier", "nom": "Escalier existant de l'entrée arrière (descend vers la gauche)",
+        "nom_original": None, "etat": "existant", "libelle": "DESCEND",
+        "position": {"x": 256.5, "y": 414, "rotation_deg": 0, "source": "ESTIMÉ"},
+        "dimensions": {"longueur": dim(55, "du nez du palier (x ≈ 284) au mur de gauche (x = 229)", "ESTIMÉ", "rdc_actuel/01, 07, 08"),
+                       "largeur": dim(32, "le long du mur du fond", "ESTIMÉ", "rdc_actuel/01, 07, 08")},
+        "escalier": {"nb_contremarches": dim(6, "seules les premières marches sont visibles sur les photos", "ESTIMÉ", "rdc_actuel/01"),
+                     "fleche": "DESCEND", "direction": "-x"},
+        "photo": "rdc_actuel/01, 07, 08",
+        "note": "Main courante de bois sur le mur du fond ; volée, palier et porte extérieure à mesurer — " + SOURCE})
     rdc["elements"].sort(key=lambda e: e["id"])
 
     rdc["notes"] = [{"id": f"note-RDC-R{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t} for i, t in enumerate((

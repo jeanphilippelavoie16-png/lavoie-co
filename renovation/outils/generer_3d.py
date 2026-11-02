@@ -5,9 +5,19 @@ Lit <projet>/donnees/maison.json (produit par construire_projet.py) et, s'il exi
 (mobilier, matériaux par pièce, hauteur de plafond). Les textures (Poly Haven, CC0) sont intégrées au fichier.
 Facultatif : SCENE["commandes"] (toile motorisée, stores...) rend des objets du mobilier mobiles dans la visite (voir commandes()).
 
+Portes : chaque porte battante ou coulissante devient un objet qu'on ouvre et ferme en le touchant (voir battant()) ; état de
+départ = celui dessiné (« fermee » ou ouverte à 90°). Un objet du mobilier qui porte "porte": id d'ouverture pivote avec elle.
+
+Plusieurs étages (opt-in) : SCENE = {"titre", "etages": [scène SS, scène RDC], "depart": {..., "etage": "SS"}}, chaque scène
+d'étage complète (comme aujourd'hui, avec son "niveau"). Chaque étage est construit avec la géométrie de son niveau de
+maison.json, le RDC est posé à la hauteur d'étage du sous-sol (SCENE SS "hauteur_etage"), puis tout est fusionné en une
+seule scène : S["etages"] (géométrie par étage), visites, palettes, peintures, commandes, images, modèles et matériaux.
+L'escalier du sous-sol devient praticable (grille de hauteurs + ligne de foulée), le plancher du RDC est troué à la trémie
+avec un garde-corps de verre. Un projet sans "etages" garde exactement la même scène (à part les portes interactives).
+
 Usage : python3 renovation/outils/generer_3d.py renovation/SS-02_aire_ouverte_gym_vitre
 """
-import base64, importlib.util, json, math, os, sys
+import base64, copy, importlib.util, io, json, math, os, sys
 
 ICI = os.path.dirname(os.path.abspath(__file__))
 TEX = os.path.join(ICI, "textures")
@@ -185,8 +195,9 @@ def palier(e, H, etage):
     return [dict(b, z0=0, z1=z - 1.25, mat="gypse"), dict(b, z0=z - 1.25, z1=z, mat="placage")], tr, b
 
 
-def cage_tremie(rects, H, etage):
-    """Réunit les trémies (rectangles qui se touchent) en polygones ; murs de la cage au-dessus du plafond."""
+def cage_tremie(rects, H, etage, multi=False):
+    """Réunit les trémies (rectangles qui se touchent) en polygones ; murs de la cage au-dessus du plafond.
+    multi (maquette à plusieurs étages) : la cage s'arrête au plancher de l'étage du dessus, sans couvercle."""
     from shapely.geometry import box
     from shapely.ops import unary_union
     from shapely.geometry.polygon import orient
@@ -196,15 +207,17 @@ def cage_tremie(rects, H, etage):
         p = orient(p.simplify(0.01), 1.0)
         pts = [list(q) for q in list(p.exterior.coords)[:-1]]
         polys.append(pts)
+        zh = etage if multi else H + etage
         for (xa, ya), (xb, yb) in zip(pts, pts[1:] + pts[:1]):   # sens antihoraire : l'extérieur est à droite
             if abs(ya - yb) < 0.01:
                 y = ya - 2 if xb > xa else ya
-                boites.append({"x0": min(xa, xb) - 2, "x1": max(xa, xb) + 2, "y0": y, "y1": y + 2, "z0": H + 0.2, "z1": H + etage, "mat": "gypse"})
+                boites.append({"x0": min(xa, xb) - 2, "x1": max(xa, xb) + 2, "y0": y, "y1": y + 2, "z0": H + 0.2, "z1": zh, "mat": "gypse"})
             else:
                 x = xa if yb > ya else xa - 2
-                boites.append({"x0": x, "x1": x + 2, "y0": min(ya, yb) - 2, "y1": max(ya, yb) + 2, "z0": H + 0.2, "z1": H + etage, "mat": "gypse"})
-        mx0, my0, mx1, my1 = p.bounds
-        boites.append({"x0": mx0 - 2, "x1": mx1 + 2, "y0": my0 - 2, "y1": my1 + 2, "z0": H + etage, "z1": H + etage + 1, "mat": "plafond"})
+                boites.append({"x0": x, "x1": x + 2, "y0": min(ya, yb) - 2, "y1": max(ya, yb) + 2, "z0": H + 0.2, "z1": zh, "mat": "gypse"})
+        if not multi:
+            mx0, my0, mx1, my1 = p.bounds
+            boites.append({"x0": mx0 - 2, "x1": mx1 + 2, "y0": my0 - 2, "y1": my1 + 2, "z0": H + etage, "z1": H + etage + 1, "mat": "plafond"})
     return polys, boites
 
 
@@ -258,23 +271,6 @@ def modeles(scene):
         if m.get("source") in ("ambientcg", "polyhaven"):
             credits.append([m["usage"], {"ambientcg": "ambientCG", "polyhaven": "Poly Haven"}[m["source"]] + " " + m["id"], "CC0 1.0"])
     return out, info, credits
-
-
-def porte_fermee(m, o, t):
-    """Porte extérieure fermée dans l'épaisseur du mur, avec poignée côté intérieur."""
-    L = math.hypot(m["x2"] - m["x1"], m["y2"] - m["y1"])
-    ux, uy = (m["x2"] - m["x1"]) / L, (m["y2"] - m["y1"]) / L
-    c, w = o["position"]["valeur"], o["largeur"]["valeur"]
-    pa = (m["x1"] + ux * (c - w / 2), m["y1"] + uy * (c - w / 2)); pb = (m["x1"] + ux * (c + w / 2), m["y1"] + uy * (c + w / 2))
-    if abs(ux) > 0.5:
-        f = {"x0": min(pa[0], pb[0]), "x1": max(pa[0], pb[0]), "y0": m["y1"] - 0.9, "y1": m["y1"] + 0.9}
-        cy = m["y1"] + (2 if m["y1"] < 190 else -2)
-        poignee = {"x0": f["x1"] - 4, "x1": f["x1"] - 3, "y0": min(cy, m["y1"]), "y1": max(cy, m["y1"])}
-    else:
-        f = {"x0": m["x1"] - 0.9, "x1": m["x1"] + 0.9, "y0": min(pa[1], pb[1]), "y1": max(pa[1], pb[1])}
-        cx = m["x1"] + (2 if m["x1"] < 228 else -2)
-        poignee = {"x0": min(cx, m["x1"]), "x1": max(cx, m["x1"]), "y0": f["y1"] - 4, "y1": f["y1"] - 3}
-    return [dict(f, z0=0.5, z1=80, mat="porte-ext"), dict(poignee, z0=37, z1=39, mat="inox")]
 
 
 def reculer_bouts_de_murs(boites):
@@ -404,22 +400,273 @@ def peindre(boites, pieces, S):
             b["faces"] = faces
 
 
-def feuille_porte(m, o, t):
-    """Vantail ouvert à 90° (porte battante) : boîte mince depuis la charnière, du côté où la porte pousse."""
+def bbox_objet(o):
+    """Emprise (x0, y0, x1, y1, z0, z1) d'un objet du mobilier aux coordonnées explicites, sinon None."""
+    f = o.get("forme", "boite")
+    if f in ("boite", "arrondi") and all(k in o for k in ("x0", "x1", "y0", "y1", "z0", "z1")) and not o.get("pts"):
+        return o["x0"], o["y0"], o["x1"], o["y1"], o["z0"], o["z1"]
+    if f == "cylindre" and "r" in o:
+        if o.get("axe") == "y":
+            return o["x"] - o["r"], o["y0"], o["x"] + o["r"], o["y1"], o["z"] - o["r"], o["z"] + o["r"]
+        if o.get("axe") == "x":
+            return o["x0"], o["y"] - o["r"], o["x1"], o["y"] + o["r"], o["z"] - o["r"], o["z"] + o["r"]
+        if "z0" in o:
+            return o["x"] - o["r"], o["y"] - o["r"], o["x"] + o["r"], o["y"] + o["r"], o["z0"], o["z1"]
+    if f == "sphere" and "r" in o:
+        return o["x"] - o["r"], o["y"] - o["r"], o["x"] + o["r"], o["y"] + o["r"], o["z"] - o["r"], o["z"] + o["r"]
+    if f == "tube" and o.get("pts"):
+        xs, ys, zs = zip(*[(p[0], p[1], p[2]) for p in o["pts"]])
+        r = o.get("r", 0)
+        return min(xs) - r, min(ys) - r, max(xs) + r, max(ys) + r, min(zs) - r, max(zs) + r
+    return None
+
+
+def battant(m, o, t, mobilier):
+    """Porte interactive : vantail à l'état FERMÉ (boîtes, repère maison) et son mouvement.
+    Battante : rotation de "angle" degrés (sens antihoraire en plan) autour de "pivot" (charnière, au nu du mur du côté où
+    la porte pousse) ; coulissante : translation "glisse" [dx, dy] (dans le mur si la place y est : porte escamotable,
+    sinon le long de la face du mur ou de la cloison vitrée). "etat" de départ = celui dessiné (« fermee » ou ouverte) ;
+    "zone" = baie dans le mur (une porte fermée y bloque la marche). Porte « fermee » cachée derrière un meuble qui la
+    couvre (porte-bibliothèque) : ce mobilier pivote avec elle (clé "porte" ajoutée à l'objet). Retourne None sans porte."""
+    op = o.get("operation") or "battante"
+    if op == "aucune" or o.get("position", {}).get("valeur") is None or o.get("largeur", {}).get("valeur") is None:
+        return None
     x1, y1, x2, y2 = m["x1"], m["y1"], m["x2"], m["y2"]
     L = math.hypot(x2 - x1, y2 - y1)
     ux, uy = (x2 - x1) / L, (y2 - y1) / L
     nx, ny = -uy, ux
-    c = o["position"]["valeur"]; w = o["largeur"]["valeur"]
+    c, w = o["position"]["valeur"], o["largeur"]["valeur"]
+    a, b = c - w / 2, c + w / 2
     s = o.get("sens") or {}
-    a = c - w / 2 if s.get("charniere", "debut") == "debut" else c + w / 2
-    hx, hy = x1 + ux * a, y1 + uy * a
     side = 1 if s.get("ouvre_vers", "gauche") == "gauche" else -1
-    fx, fy = hx + nx * side * (t / 2 + w), hy + ny * side * (t / 2 + w)
-    e = 0.9
-    if abs(nx) > 0.5:
-        return {"x0": min(hx, fx), "x1": max(hx, fx), "y0": hy - e, "y1": hy + e}
-    return {"x0": hx - e, "x1": hx + e, "y0": min(hy, fy), "y1": max(hy, fy)}
+    pt = lambda al, ac: (x1 + ux * al + nx * ac, y1 + uy * al + ny * ac)
+
+    def bx(al0, al1, ac0, ac1, z0, z1, mat):
+        p0, p1 = pt(al0, ac0), pt(al1, ac1)
+        return {"x0": round(min(p0[0], p1[0]), 3), "x1": round(max(p0[0], p1[0]), 3), "y0": round(min(p0[1], p1[1]), 3),
+                "y1": round(max(p0[1], p1[1]), 3), "z0": z0, "z1": z1, "mat": mat}
+    z = bx(a, b, -t / 2 - 0.5, t / 2 + 0.5, 0, 0, "")
+    zone = [z["x0"], z["y0"], z["x1"], z["y1"]]
+    verre = o.get("materiau") == "verre"
+    exterieure = m["type"] != "int" and not o.get("interieure")
+    mat = "porte-verre" if verre else "porte" if o.get("fermee") or not exterieure else "porte-ext"
+    out = {"id": o["id"], "zone": zone, "etat": "fermee" if (o.get("fermee") or (exterieure and not verre)) else "ouverte"}
+
+    def vantail(al0, al1, ac0, ac1):
+        """Vantail (porte pleine, ou vitrée dans un cadre noir de 1½ po) entre al0 < al1 et ac0 < ac1."""
+        if not verre:
+            return [bx(al0, al1, ac0, ac1, 0.5, 80, mat)]
+        k = 1.5
+        mi = (ac0 + ac1) / 2
+        return [bx(al0 + k, al1 - k, mi - 0.3, mi + 0.3, 2, 78.5, "porte-verre"),
+                bx(al0, al0 + k, ac0, ac1, 0.5, 80, "metal"), bx(al1 - k, al1, ac0, ac1, 0.5, 80, "metal"),
+                bx(al0, al1, ac0, ac1, 0.5, 2, "metal"), bx(al0, al1, ac0, ac1, 78.5, 80, "metal")]
+
+    if op == "coulissante":
+        # place libre dans le mur de chaque côté de la baie (jusqu'à la prochaine ouverture ou au bout du mur)
+        out["type"] = "coulissante"
+        autres = [((q["position"]["valeur"] - q["largeur"]["valeur"] / 2), (q["position"]["valeur"] + q["largeur"]["valeur"] / 2))
+                  for q in m.get("_ouvertures", []) if q is not o and q.get("position", {}).get("valeur") is not None]
+        lib_d = a - max([q1 for q0, q1 in autres if q1 <= a + 0.1] + [0])
+        lib_f = min([q0 for q0, q1 in autres if q0 >= b - 0.1] + [L]) - b
+        dirg = 1 if lib_f >= lib_d else -1
+        dans_mur = m.get("materiau") != "verre" and not verre and max(lib_d, lib_f) >= w and t >= 3.5
+        ac0, ac1 = (-0.7, 0.7) if dans_mur else sorted([side * (t / 2 + 0.6), side * (t / 2 + 2.0)])
+        al0, al1 = (a + 0.25, b - 0.25) if dans_mur else (a - 1, b + 1)
+        out["boites"] = vantail(al0, al1, ac0, ac1)
+        if not dans_mur:                                       # poignée creuse côté pièce
+            out["boites"].append(bx(*sorted([b - 4 if dirg > 0 else a + 3, b - 3 if dirg > 0 else a + 4]),
+                                    *sorted([side * (t / 2 + 2.0), side * (t / 2 + 2.6)]), 34, 42, "metal"))
+        d = (w - 0.5) if dans_mur else (w - 1)
+        out["pivot"] = [round(v, 3) for v in pt(c, 0)]
+        out["glisse"] = [round(ux * dirg * d, 3), round(uy * dirg * d, 3)]
+        return out
+
+    out["type"] = "battante"
+    sgn = 1 if s.get("charniere", "debut") == "debut" else -1
+    ah = a if sgn > 0 else b                                   # charnière (le long du mur)
+    e = 1.8
+    acs = sorted([side * (t / 2 - e), side * t / 2])
+    als = sorted([ah + sgn * 0.5, ah + sgn * (w - 0.5)])
+    boites = vantail(als[0], als[1], acs[0], acs[1])
+    # béquilles des deux côtés, à 4 po du bord libre
+    q = ah + sgn * (w - 4)
+    pm = "inox" if mat == "porte-ext" else "metal"
+    boites += [bx(q - 0.5, q + 0.5, *sorted([side * t / 2, side * (t / 2 + 2.2)]), 36, 38, pm),
+               bx(q - 0.5, q + 0.5, *sorted([side * (t / 2 - e), side * (t / 2 - e - 2.2)]), 36, 38, pm)]
+    pivot = pt(ah + sgn * 0.5, side * t / 2)
+    # porte « fermee » couverte par un meuble (porte-bibliothèque) : le meuble fait partie du battant
+    lies = [ob for ob in mobilier if ob.get("porte") == o["id"]]
+    if o.get("fermee") and not lies:
+        cand = []
+        for ob in mobilier:
+            bb = bbox_objet(ob)
+            if not bb or ob.get("commande") or ob.get("porte"):
+                continue
+            p0, p1 = (bb[0] - x1) * ux + (bb[1] - y1) * uy, (bb[2] - x1) * ux + (bb[3] - y1) * uy
+            q0, q1 = (bb[0] - x1) * nx + (bb[1] - y1) * ny, (bb[2] - x1) * nx + (bb[3] - y1) * ny
+            al_lo, al_hi, ac_lo, ac_hi = min(p0, p1), max(p0, p1), min(q0, q1), max(q0, q1)
+            if al_lo >= a - 1.5 and al_hi <= b + 1.5 and bb[4] < 80 and bb[5] <= 84 and ac_lo >= -t / 2 - 12 and ac_hi <= t / 2 + 12:
+                cand.append((ob, al_lo, al_hi, side * ac_lo, side * ac_hi, bb))
+        # couvre la baie du côté où la porte pousse, sur au moins 70 % de la largeur et 60 po de haut
+        devant = sorted((max(a, c_[1]), min(b, c_[2])) for c_ in cand if min(c_[3], c_[4]) >= t / 2 - 0.5 and c_[5][5] >= 60)
+        couvert, fin = 0, a
+        for lo, hi in devant:
+            if hi > fin:
+                couvert += hi - max(lo, fin); fin = hi
+        if couvert >= 0.7 * w:
+            lies = [c_[0] for c_ in cand]
+            for ob in lies:
+                ob["porte"] = o["id"]
+    if lies:
+        # pivot au coin de l'ensemble (côté charnière, côté où il pousse), pour qu'il tourne sans frotter le cadre
+        al_e, ac_e = [], []
+        for ob in lies:
+            bb = bbox_objet(ob)
+            if bb:
+                for xx, yy in ((bb[0], bb[1]), (bb[2], bb[3])):
+                    al_e.append((xx - x1) * ux + (yy - y1) * uy); ac_e.append(side * ((xx - x1) * nx + (yy - y1) * ny))
+        pal = min(al_e + [ah + sgn * 0.5]) if sgn > 0 else max(al_e + [ah + sgn * 0.5])
+        pivot = pt(pal, side * max(ac_e + [t / 2]))
+    out.update({"pivot": [round(pivot[0], 3), round(pivot[1], 3)], "angle": 90 * side * sgn, "boites": boites})
+    return out
+
+
+def garde_corps(segments):
+    """Garde-corps de verre de 36 po : poteaux d'acier noir (au plus 48 po d'entraxe), panneaux de verre clair, main
+    courante de chêne. segments = [((xa, ya), (xb, yb))] axe du garde-corps, horizontaux ou verticaux."""
+    out = []
+    for (xa, ya), (xb, yb) in segments:
+        horiz = abs(ya - yb) < 0.01
+        lo, hi = sorted([xa, xb] if horiz else [ya, yb])
+        f = ya if horiz else xa
+        if hi - lo < 4:
+            continue
+        r = lambda u0, u1, v0, v1, z0, z1, mat: ({"x0": u0, "x1": u1, "y0": f + v0, "y1": f + v1, "z0": z0, "z1": z1, "mat": mat} if horiz else
+                                                 {"x0": f + v0, "x1": f + v1, "y0": u0, "y1": u1, "z0": z0, "z1": z1, "mat": mat})
+        n = max(1, math.ceil((hi - lo) / 48))
+        for k in range(n + 1):
+            u = lo + (hi - lo) * k / n
+            out.append(r(max(lo, u - 1), min(hi, u + 1), -1, 1, 0, 34.5, "metal"))
+        out.append(r(lo, hi, -0.25, 0.25, 2, 34, "verre-clair"))
+        out.append(r(lo, hi, -0.6, 0.6, 1, 2, "metal"))
+        out.append(r(lo, hi, -1.25, 1.25, 34.5, 36, "placage"))
+    return out
+
+
+def garde_corps_tremies(polys, niv, sorties, largeur=36):
+    """Garde-corps autour des trémies d'un étage (polygones antihoraires), sauf le long d'un mur (à moins de 7 po) et à
+    l'arrivée de l'escalier (sorties : points où la ligne de foulée franchit le bord)."""
+    segs = []
+    for pts in polys:
+        for (xa, ya), (xb, yb) in zip(pts, pts[1:] + pts[:1]):
+            horiz = abs(ya - yb) < 0.01
+            if not horiz and abs(xa - xb) > 0.01:
+                continue
+            Lg = math.hypot(xb - xa, yb - ya)
+            rx, ry = (yb - ya) / Lg, -(xb - xa) / Lg              # à droite du bord : le plancher
+            lo, hi = sorted([xa, xb] if horiz else [ya, yb])
+            f = (ya if horiz else xa) + (ry if horiz else rx) * 1.25
+            trous = []
+            for mm in niv["murs"]:
+                mh = abs(mm["y1"] - mm["y2"]) < 0.01
+                if mh != horiz or mm.get("materiau") == "garde-corps":
+                    continue
+                tm = (mm.get("epaisseur") or {}).get("valeur") or 4.5
+                mf = mm["y1"] if mh else mm["x1"]
+                m0, m1 = sorted([mm["x1"], mm["x2"]] if mh else [mm["y1"], mm["y2"]])
+                if abs(mf - f) <= tm / 2 + 7 and m1 > lo and m0 < hi:
+                    trous.append((m0 - 2, m1 + 2))
+            for sx, sy in sorties:
+                d = abs((sy if horiz else sx) - (ya if horiz else xa))
+                u = sx if horiz else sy
+                if d < 4 and lo - 2 <= u <= hi + 2:
+                    trous.append((u - largeur / 2 - 2, u + largeur / 2 + 2))
+            morceaux = [(lo, hi)]
+            for t0, t1 in trous:
+                morceaux = [q for (m0, m1) in morceaux for q in ((m0, min(m1, t0)), (max(m0, t1), m1)) if q[1] - q[0] > 0.01]
+            for m0, m1 in morceaux:
+                if m1 - m0 >= 6:
+                    segs.append(((m0, f), (m1, f)) if horiz else ((f, m0), (f, m1)))
+    return garde_corps(segs)
+
+
+def marche_escalier(e, etage):
+    """Escalier praticable (une volée droite, avec ou sans marches tournantes en haut) : grille de hauteurs de 2 po
+    (hauteur du pas en pouces au-dessus du plancher du bas, rampe régulière d'un nez de marche au suivant ; -1 hors de
+    l'escalier) et ligne de foulée du pied (sur l'étage du bas) jusqu'au palier d'arrivée (sur l'étage du haut)."""
+    es = e.get("escalier") or {}
+    n = int(round(es["nb_contremarches"]["valeur"]))
+    L, W = e["dimensions"]["longueur"]["valeur"], e["dimensions"]["largeur"]["valeur"]
+    cx, cy = e["position"]["x"], e["position"]["y"]
+    d = {"+y": (0, 1), "-y": (0, -1), "+x": (1, 0), "-x": (-1, 0)}[es.get("direction", "+y")]
+    total, depart = int(es.get("total", n)), int(es.get("depart", 0))
+    if depart:
+        return None                                           # volées en L (palier) : pas encore praticables
+    r = etage / total
+    girons = int(es.get("girons", n - 1))
+    tr = es.get("tournant")
+    nb = int(tr["nb"]) if tr else 0
+    nd = girons - nb
+    pied = (cx - d[0] * L / 2, cy - d[1] * L / 2)
+    if tr:
+        Lc = (tr["carre"][3] - tr["carre"][1]) if d[0] == 0 else (tr["carre"][2] - tr["carre"][0])
+        pas = (L - Lc) / nd
+        Ls = nd * pas
+        px, py = tr["pivot"]
+        ray = eventail(tr)
+        fin_droit = (pied[0] + d[0] * Ls, pied[1] + d[1] * Ls)
+        # le rayon d'entrée est celui qui touche le bout de la volée droite
+        def dist(j):                                          # écart angulaire entre le rayon j et le bout de la volée
+            vx, vy, fx, fy = ray[j][1][0] - px, ray[j][1][1] - py, fin_droit[0] - px, fin_droit[1] - py
+            return abs(math.atan2(vx * fy - vy * fx, vx * fx + vy * fy))
+        if dist(len(ray) - 1) < dist(0):
+            ray = ray[::-1]
+        a0 = math.atan2(ray[0][1][1] - py, ray[0][1][0] - px)
+        a1 = math.atan2(ray[-1][1][1] - py, ray[-1][1][0] - px)
+        sw = math.atan2(math.sin(a1 - a0), math.cos(a1 - a0))      # ± 90°
+        R = math.hypot(fin_droit[0] - px, fin_droit[1] - py)
+    else:
+        Ls, pas = L, L / max(1, girons)
+    x0 = cx - (W / 2 if d[0] == 0 else L / 2); x1 = cx + (W / 2 if d[0] == 0 else L / 2)
+    y0 = cy - (L / 2 if d[0] == 0 else W / 2); y1 = cy + (L / 2 if d[0] == 0 else W / 2)
+    if tr:
+        x0, y0 = min(x0, tr["carre"][0]), min(y0, tr["carre"][1]); x1, y1 = max(x1, tr["carre"][2]), max(y1, tr["carre"][3])
+    g = 2.0
+    NX, NY = int(math.ceil((x1 - x0) / g)), int(math.ceil((y1 - y0) / g))
+    zs = []
+    for j in range(NY):
+        for i in range(NX):
+            x, y = x0 + (i + .5) * g, y0 + (j + .5) * g
+            s_ = (x - pied[0]) * d[0] + (y - pied[1]) * d[1]
+            t_ = (x - cx) * (-d[1]) + (y - cy) * d[0]
+            v = -1
+            if -0.01 <= s_ <= Ls + 0.01 and abs(t_) <= W / 2 + 0.01:
+                u = s_ / pas if tr else s_ / L * n
+                v = u * r
+            elif tr and tr["carre"][0] - 0.01 <= x <= tr["carre"][2] + 0.01 and tr["carre"][1] - 0.01 <= y <= tr["carre"][3] + 0.01:
+                an = math.atan2(y - py, x - px)
+                th = max(0.0, min(1.0, math.atan2(math.sin(an - a0), math.cos(an - a0)) / sw))
+                v = (nd + th * (nb + 1)) * r
+            zs.append(round(v, 1))
+    chemin = [(pied[0] - d[0] * 16, pied[1] - d[1] * 16), pied]
+    if tr:
+        chemin.append(fin_droit)
+        for k in range(1, 7):
+            an = a0 + sw * k / 6
+            chemin.append((px + R * math.cos(an), py + R * math.sin(an)))
+        an = a1 if abs(math.atan2(math.sin(a0 + sw - a1), math.cos(a0 + sw - a1))) < 1e-6 else a0 + sw
+        tg = (-math.sin(an) * math.copysign(1, sw), math.cos(an) * math.copysign(1, sw))
+        bord = (px + R * math.cos(an), py + R * math.sin(an))
+        sortie = (bord[0] + tg[0] * 2, bord[1] + tg[1] * 2)
+        chemin.append((bord[0] + tg[0] * 18, bord[1] + tg[1] * 18))
+    else:
+        haut = (pied[0] + d[0] * L, pied[1] + d[1] * L)
+        chemin += [haut, (haut[0] + d[0] * 18, haut[1] + d[1] * 18)]
+        sortie = (haut[0] + d[0] * 2, haut[1] + d[1] * 2)
+    return {"id": e["id"], "grille": {"x0": round(x0, 3), "y0": round(y0, 3), "pas": g, "nx": NX, "ny": NY, "z": zs},
+            "chemin": [[round(p[0], 2), round(p[1], 2)] for p in chemin], "emprise": [x0, y0, x1, y1],
+            "sortie": [round(sortie[0], 2), round(sortie[1], 2)], "largeur": W}
 
 
 def commandes(S):
@@ -479,20 +726,28 @@ def commandes(S):
     return out
 
 
-def main(dossier):
-    dossier = os.path.abspath(dossier)
-    M = json.load(open(os.path.join(dossier, "donnees", "maison.json"), encoding="utf-8"))
-    S = charger_scene(dossier)
+NOMS_ETAGES = {"SS": "Sous-sol", "RDC": "Rez-de-chaussée", "ETAGE": "Étage", "COMBLES": "Combles"}
+
+
+def construire(M, S, ctx=None):
+    """Scène d'un étage (repère de son plancher). ctx (maquette à plusieurs étages, sinon None) :
+    {"bas": True} pour l'étage qui porte l'escalier (escalier praticable, cage arrêtée au plancher du dessus),
+    {"trous": [polygones], "sorties": [points]} pour l'étage du dessus (plancher troué à la trémie, garde-corps)."""
+    multi = ctx is not None
     niv = next(n for n in M["niveaux"] if n["id"] == S.get("niveau", "SS"))
     H = S.get("plafond", 90)
     sill, head = S.get("allege_fenetre", 56), S.get("tete_fenetre", 86)
+    mobilier = S.get("mobilier", [])
     par_mur = {}
     for o in niv["ouvertures"]:
         par_mur.setdefault(o["mur_id"], []).append(o)
-    boites, portes = [], []
+    boites, portes, battants = [], [], []
     for m in niv["murs"]:
         if m.get("materiau") == "lattes":
             boites += lattes(m, H)
+            continue
+        if m.get("materiau") == "garde-corps" or m["type"] == "garde-corps":   # garde-corps dessiné dans les données
+            boites += garde_corps([((m["x1"], m["y1"]), (m["x2"], m["y2"]))])
             continue
         bx, t = boites_mur(m, par_mur.get(m["id"], []), H, sill, head)
         boites += bx
@@ -508,30 +763,11 @@ def main(dossier):
                     boites.append({"x0": min(pa[0], pb[0]), "x1": max(pa[0], pb[0]), "y0": m["y1"] - 0.5, "y1": m["y1"] + 0.5, "z0": sill, "z1": head, "mat": "vitre"})
                 else:
                     boites.append({"x0": m["x1"] - 0.5, "x1": m["x1"] + 0.5, "y0": min(pa[1], pb[1]), "y1": max(pa[1], pb[1]), "z0": sill, "z1": head, "mat": "vitre"})
-            elif o.get("operation") == "coulissante":
-                pass                      # porte coulissante : représentée ouverte (dans le mur)
-            elif o.get("operation") != "aucune":
-                f = feuille_porte(m, o, t)
-                if o.get("materiau") == "verre":
-                    # porte vitrée : panneau de verre dans un cadre noir de 1½ po
-                    f.update({"z0": 0.5, "z1": 80, "mat": "porte-verre"})
-                    portes.append(f)
-                    long_x = (f["x1"] - f["x0"]) > (f["y1"] - f["y0"])
-                    c = 1.5
-                    if long_x:
-                        cadres = [(f["x0"], f["x0"] + c, 0.5, 80), (f["x1"] - c, f["x1"], 0.5, 80), (f["x0"], f["x1"], 0.5, 2), (f["x0"], f["x1"], 78.5, 80)]
-                        portes += [{"x0": a0, "x1": a1, "y0": f["y0"] - 0.2, "y1": f["y1"] + 0.2, "z0": z0, "z1": z1, "mat": "metal"} for a0, a1, z0, z1 in cadres]
-                    else:
-                        cadres = [(f["y0"], f["y0"] + c, 0.5, 80), (f["y1"] - c, f["y1"], 0.5, 80), (f["y0"], f["y1"], 0.5, 2), (f["y0"], f["y1"], 78.5, 80)]
-                        portes += [{"x0": f["x0"] - 0.2, "x1": f["x1"] + 0.2, "y0": a0, "y1": a1, "z0": z0, "z1": z1, "mat": "metal"} for a0, a1, z0, z1 in cadres]
-                    portes.append({**f, "z0": 38, "z1": 40, "mat": "metal", **({"x0": f["x1"] - 4, "x1": f["x1"] - 3} if long_x else {"y0": f["y1"] - 4, "y1": f["y1"] - 3})})
-                elif o.get("fermee"):          # porte intérieure dessinée fermée (relevé photo) ; absent = ouverte à 90°
-                    portes += [dict(b, mat="porte" if b["mat"] == "porte-ext" else b["mat"]) for b in porte_fermee(m, o, t)]
-                elif m["type"] != "int" and not o.get("interieure"):
-                    portes += porte_fermee(m, o, t)    # porte extérieure (sauf si elle donne sur une pièce intérieure)
-                else:
-                    f.update({"z0": 0.5, "z1": 80, "mat": "porte"})
-                    portes.append(f)
+            else:
+                # porte battante ou coulissante : objet interactif (ouvrir, fermer), dessiné dans l'état du plan
+                bt = battant(dict(m, _ouvertures=par_mur.get(m["id"], [])), o, t, mobilier)
+                if bt:
+                    battants.append(bt)
     # meneaux des cloisons vitrées
     for m in niv["murs"]:
         if m.get("materiau") != "verre":
@@ -563,32 +799,79 @@ def main(dossier):
                            "y0": min(g["y1"], g["y2"]) - (e if horiz else 0), "y1": max(g["y1"], g["y2"]) + (e if horiz else 0),
                            "z0": H - 10.03, "z1": H, "mat": S.get("mat_poutre", "gypse")})
     # escaliers projetés : marches, trémie dans le plafond, cage au-dessus, obstacle pour la visite
-    rects, obstacles = [], []
+    rects, obstacles, escaliers, descentes = [], [], [], []
+    etage = S.get("hauteur_etage", 105)
+    trous = (ctx or {}).get("trous") or []
     for e in niv["elements"]:
         if e["type"] == "escalier" and e.get("etat") == "nouveau":
-            bx, tr, ob = escalier(e, H, S.get("hauteur_etage", 105))
+            if trous and ((e.get("escalier") or {}).get("fleche") == "DESCEND" or any(
+                    _dans_poly(p, e["position"]["x"], e["position"]["y"]) for p in trous)):
+                continue                             # arrivée de l'escalier du dessous : le plancher est troué (plus bas)
+            if not multi and (e.get("escalier") or {}).get("fleche") == "DESCEND":
+                descentes.append(e)                  # étage seul : l'escalier descend sous le plancher (voir plus bas)
+                continue
+            bx, tr, ob = escalier(e, H, etage)
+            if multi:                                # marches et obstacles de l'escalier n° k (praticable dans la visite)
+                k = len(escaliers)
+                for q in bx + ob:
+                    q["esc"] = k
+                me = marche_escalier(e, etage)
+                if me:
+                    escaliers.append(me)
             boites += bx; rects.append(tr); obstacles += ob
         elif e.get("palier") and e.get("etat") == "nouveau":
-            bx, tr, ob = palier(e, H, S.get("hauteur_etage", 105))
+            bx, tr, ob = palier(e, H, etage)
             boites += bx; obstacles.append(ob)
             if tr:
                 rects.append(tr)
-    tremies, cage = cage_tremie(rects, H, S.get("hauteur_etage", 105)) if rects else ([], [])
+    tremies, cage = cage_tremie(rects, H, etage, multi) if rects else ([], [])
     boites += cage
+    if descentes:
+        # étage seul (ETAGE=RDC) avec l'arrivée d'un escalier qui descend : plancher troué, garde-corps, et l'escalier
+        # dessiné sous le plancher dans une cage fermée (comme le construira l'étage du dessous)
+        rd, sorties = [], []
+        hb = S.get("plafond_dessous", 96)
+        for e in descentes:
+            e2 = copy.deepcopy(e)
+            e2["escalier"]["direction"] = {"+y": "-y", "-y": "+y", "+x": "-x", "-x": "+x"}[e2["escalier"].get("direction", "+y")]
+            bx, tr, _ = escalier(e2, hb, etage)
+            me = marche_escalier(e2, etage)
+            if me:
+                sorties.append(me["sortie"])
+            xs_ = [q for b in bx for q in ([b["x0"], b["x1"]] if "x0" in b else [p_[0] for p_ in b["pts"]])]
+            ys_ = [q for b in bx for q in ([b["y0"], b["y1"]] if "y0" in b else [p_[1] for p_ in b["pts"]])]
+            x0_, y0_, x1_, y1_ = min(xs_), min(ys_), max(xs_), max(ys_)
+            for b in bx:
+                b["z0"] -= etage; b["z1"] -= etage
+            boites += bx + [dict(q, z0=-etage, z1=-0.2, mat="gypse") for q in (
+                {"x0": x0_ - 2, "x1": x1_ + 2, "y0": y0_ - 2, "y1": y0_}, {"x0": x0_ - 2, "x1": x1_ + 2, "y0": y1_, "y1": y1_ + 2},
+                {"x0": x0_ - 2, "x1": x0_, "y0": y0_, "y1": y1_}, {"x0": x1_, "x1": x1_ + 2, "y0": y0_, "y1": y1_})]
+            boites.append({"x0": x0_, "x1": x1_, "y0": y0_, "y1": y1_, "z0": -etage - 1, "z1": -etage, "mat": "beton"})
+            rd.append(tr)
+        trous, cage_d = cage_tremie(rd, hb, etage, True)
+        for b in cage_d:
+            b["z0"] -= etage; b["z1"] -= etage
+        boites += cage_d
+        ctx_sorties = sorties
+    else:
+        ctx_sorties = (ctx or {}).get("sorties") or []
+    if trous:                                         # étage du dessus : garde-corps autour de la trémie
+        boites += garde_corps_tremies(trous, niv, ctx_sorties)
     boites = couper_aux_cloisons(boites, niv)
     reculer_bouts_de_murs(boites)
     finis = finitions(niv, par_mur, H, sill, head, S)
     # SCENE["mats_finitions"] = {matériau de base: matériau du catalogue} : portes, chambranles, plinthes et cadres de
     # fenêtres d'une autre essence (ex. pin teint au rez-de-chaussée) ; absent = rendu inchangé
-    for b in finis + portes:
+    for b in finis + portes + [q for bt in battants for q in bt["boites"]]:
         b["mat"] = (S.get("mats_finitions") or {}).get(b["mat"], b["mat"])
     peindre(boites, niv["pieces"], S)
     mats = S.get("sols", {})
     sols = []
     for p in niv["pieces"]:
         pts = p["polygone"]
-        sols.append({"id": p["id"], "nom": p["nom"], "pts": pts, "mat": mats.get(p["id"], S.get("sol_defaut", "chene")),
-                     "cx": sum(q[0] for q in pts) / len(pts), "cy": sum(q[1] for q in pts) / len(pts)})
+        s = {"id": p["id"], "nom": p["nom"], "pts": pts, "mat": mats.get(p["id"], S.get("sol_defaut", "chene")),
+             "cx": sum(q[0] for q in pts) / len(pts), "cy": sum(q[1] for q in pts) / len(pts)}
+        sols += _trouer_sol(s, trous) if trous else [s]
     empreinte = []
     for m in niv["murs"]:
         if m["type"] == "fondation":
@@ -596,38 +879,214 @@ def main(dossier):
     if not empreinte:                                     # rez-de-chaussée : murs extérieurs (« ext ») au lieu de la fondation
         empreinte = [q for m in niv["murs"] if m["type"] == "ext" for q in ([m["x1"], m["y1"]], [m["x2"], m["y2"]])]
     xs = [q[0] for q in empreinte]; ys = [q[1] for q in empreinte]
-    scene = {"H": H, "boites": boites + finis, "portes": portes, "sols": sols, "mobilier": S.get("mobilier", []),
+    scene = {"H": H, "boites": boites + finis, "portes": portes, "sols": sols, "mobilier": mobilier,
              "revetements": S.get("revetements", []), "lumieres": S.get("lumieres", []),
              "visites": S.get("visites", []), "depart": S.get("depart", {"x": 400, "y": 180, "cap": 200}),
              "bornes": [min(xs), min(ys), max(xs), max(ys)], "titre": S.get("titre", M["projet"].get("proposition", "")),
              "projet": M["projet"]["nom"], "palette": S.get("palette", []),
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
-    # commandes interactives (toile motorisée, stores...) : clé ajoutée seulement si la scène en déclare (opt-in)
-    cmd = commandes(S)
-    if cmd:
-        scene["commandes"] = cmd
+    if battants:
+        scene["battants"] = battants
+    if multi or trous:
+        scene["trous"] = [[list(q) for q in p] for p in trous]
+    if multi:
+        scene["escaliers"] = escaliers
     # terrain extérieur vu par les fenêtres (pouces, repère du plancher) : un peu sous l'allège au sous-sol
     scene["sol_exterieur"] = S.get("sol_exterieur", sill - 8 if niv["id"] == "SS" else -30)
-    scene["materiaux"] = bibliotheque(scene, S)
-    scene["modeles_glb"], scene["modeles_info"], scene["credits"] = modeles(scene)
-    # photos et cadres : SCENE["images"] = {clé: chemin relatif au projet}. Un fichier absent (ex. dossier renovation/prive/,
-    # gardé hors du dépôt) est simplement omis : le cadre reste, vide. SANS_PRIVE=1 force l'omission (version à committer).
+    return scene
+
+
+def _dans_poly(pts, x, y):
+    c = False
+    for i in range(len(pts)):
+        (xi, yi), (xj, yj) = pts[i], pts[i - 1]
+        if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / (yj - yi) + xi:
+            c = not c
+    return c
+
+
+def _trouer_sol(s, trous):
+    """Plancher d'une pièce moins les trémies : un ou plusieurs morceaux, avec leurs trous."""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    P = Polygon(s["pts"]).buffer(0)
+    T = unary_union([Polygon(t) for t in trous])
+    if not P.intersects(T) or P.intersection(T).area < 1:
+        return [s]
+    D = P.difference(T)
+    out = []
+    for g in (D.geoms if hasattr(D, "geoms") else [D]):
+        if g.area < 4:
+            continue
+        q = dict(s, pts=[[round(x, 3), round(y, 3)] for x, y in list(g.exterior.coords)[:-1]])
+        if g.interiors:
+            q["trous"] = [[[round(x, 3), round(y, 3)] for x, y in list(i.coords)[:-1]] for i in g.interiors]
+        out.append(q)
+    return out
+
+
+def fusionner(M, S, dossier):
+    """Plusieurs étages (SCENE["etages"]) : chaque étage est construit dans le repère de son plancher, posé à la somme
+    des hauteurs d'étage des niveaux du dessous, puis fusionné en une scène (voir le gabarit : S.etages)."""
+    ordre = {"SS": 0, "RDC": 1, "ETAGE": 2, "COMBLES": 3}
+    etages = sorted(S["etages"], key=lambda e: ordre.get(e.get("niveau", "SS"), 9))
+    if len({e.get("niveau", "SS") for e in etages}) != len(etages):
+        raise SystemExit('scene_3d.py, etages : deux scènes du même "niveau"')
+    # renommer les peintures (et alias) homonymes de couleurs différentes : « Sous-sol · Blanc », « Rez-de-chaussée · Blanc »
+    couleurs, alias = {}, {}
+    for e in etages:
+        for nom, v in (e.get("peintures") or {}).items():
+            couleurs.setdefault(nom, set()).add(str(v[0]).lower())
+            if len(v) > 2 and v[2]:
+                alias.setdefault(v[2], set()).add(str(v[0]).lower())
+    conflits = {n for n, c in couleurs.items() if len(c) > 1}
+    conflits_alias = {n for n, c in alias.items() if len(c) > 1}
+    out_etages, z, peintures, palettes, visites, cmds, images, ctx = [], 0.0, {}, [], [], [], {}, {}
+    for idx, Se in enumerate(etages):
+        nid = Se.get("niveau", "SS")
+        nom = NOMS_ETAGES.get(nid, nid)
+        Se = dict(Se)
+        ren = {n: f"{nom} · {n}" for n in (Se.get("peintures") or {}) if n in conflits}
+        ren_al = {a: f"{a}@{nid}" for a in conflits_alias}
+        if ren or ren_al:
+            Se["peintures"] = {ren.get(n, n): ([v[0], v[1] if len(v) > 1 else ""] + ([ren_al.get(v[2], v[2])] if len(v) > 2 else []))
+                               for n, v in Se["peintures"].items()}
+            Se["peinture"] = {p: ren.get(n, n) for p, n in (Se.get("peinture") or {}).items()}
+            Se["accents"] = [dict(a, peinture=ren.get(a["peinture"], a["peinture"])) for a in Se.get("accents", [])]
+
+            def remat(o):
+                m = o.get("mat")
+                if isinstance(m, str):
+                    if m in ren_al:
+                        o = dict(o, mat=ren_al[m])
+                    elif m.startswith("peinture:") and m[9:] in ren:
+                        o = dict(o, mat="peinture:" + ren[m[9:]])
+                return o
+            Se["mobilier"] = [remat(o) for o in Se.get("mobilier", [])]
+            Se["revetements"] = [remat(o) for o in Se.get("revetements", [])]
+        sc = construire(M, Se, ctx)
+        for k, v in sc["peintures"].items():
+            peintures.setdefault(k, v)
+        palettes.append({"titre": nom, "items": sc["palette"]})
+        visites += [dict(v, etage=nid) for v in sc["visites"]]
+        for c in Se.get("commandes") or []:
+            if any(c["id"] == q["id"] for q in cmds):
+                raise SystemExit(f'scene_3d.py, etages : commande "{c["id"]}" déclarée dans deux étages')
+            cmds.append(c)
+        for k, rel in (Se.get("images") or {}).items():
+            if k in images and images[k] != rel:
+                print(f"  image {k} : deux étages la déclarent avec des fichiers différents ; on garde {images[k]}")
+            images.setdefault(k, rel)
+        e_out = {"id": nid, "nom": nom, "z": z, "H": sc["H"], "bornes": sc["bornes"]}
+        for k in ("boites", "portes", "battants", "sols", "mobilier", "revetements", "lumieres", "tremies", "trous",
+                  "obstacles", "escaliers"):
+            e_out[k] = sc.get(k, [])
+        e_out["sol_exterieur"] = sc["sol_exterieur"]
+        out_etages.append(e_out)
+        # étage suivant : trémies et sorties de cet escalier (plancher troué, garde-corps), posé à la hauteur d'étage
+        ctx = {"trous": sc["tremies"], "sorties": [es["sortie"] for es in sc.get("escaliers", [])]}
+        z += Se.get("hauteur_etage", 105)
+    escaliers = []
+    for i, E in enumerate(out_etages):
+        for es in E.pop("escaliers"):
+            if i + 1 < len(out_etages):
+                escaliers.append(dict(es, bas=i, haut=i + 1))
+    xs = [E["bornes"][0] for E in out_etages] + [E["bornes"][2] for E in out_etages]
+    ys = [E["bornes"][1] for E in out_etages] + [E["bornes"][3] for E in out_etages]
+    dep = dict(S.get("depart") or etages[0].get("depart") or {"x": 400, "y": 180, "cap": 200})
+    dep.setdefault("etage", etages[0].get("niveau", "SS"))
+    scene = {"titre": S.get("titre") or etages[0].get("titre", ""), "projet": M["projet"]["nom"],
+             "etages": out_etages, "escaliers": escaliers, "visites": visites, "depart": dep,
+             "bornes": [min(xs), min(ys), max(xs), max(ys)], "palette": [], "palettes": palettes, "peintures": peintures,
+             # un seul terrain : celui de l'étage le plus bas (le sous-sol est enterré jusque sous ses fenêtres)
+             "sol_exterieur": out_etages[0]["sol_exterieur"] + out_etages[0]["z"]}
+    # matériaux, modèles, commandes et images : une seule fois chacun, pour tous les étages
+    tous = {"boites": [], "portes": [], "mobilier": [], "sols": [], "revetements": [], "materiaux": None}
+    for E in out_etages:
+        for k in ("boites", "portes", "mobilier", "sols", "revetements"):
+            tous[k] += E[k]
+        tous["portes"] += [q for bt in E["battants"] for q in bt["boites"]]
+    Sf = {"commandes": cmds, "mobilier": tous["mobilier"], "visites": visites, "images": images,
+          "mat_colonne": etages[0].get("mat_colonne", "placage")}
+    cmd = commandes(Sf)
+    if cmd:
+        scene["commandes"] = cmd
+    scene["materiaux"] = bibliotheque(tous, Sf)
+    tous["materiaux"] = scene["materiaux"]
+    scene["modeles_glb"], scene["modeles_info"], scene["credits"] = modeles(tous)
+    sc_img = {}
+    completer_images(sc_img, images, dossier)
+    scene["images"] = sc_img["images"]
+    return scene
+
+
+def completer_images(scene, images, dossier):
     scene["images"] = {}
-    for cle, rel in (S.get("images") or {}).items():
+    for cle, rel in (images or {}).items():
         f = os.path.normpath(os.path.join(dossier, rel))
         if os.path.isfile(f) and not os.environ.get("SANS_PRIVE"):
             mime = "image/png" if f.lower().endswith(".png") else "image/jpeg"
             scene["images"][cle] = f"data:{mime};base64," + base64.b64encode(open(f, "rb").read()).decode()
         else:
             print(f"  image {cle} omise ({rel})")
+
+
+BUDGET = 13.6 * 1024 * 1024        # la page publiée doit rester sous 14 Mo
+
+
+def alleger(scene, html_len):
+    """Page trop lourde : les images de couleur des matériaux les plus lourds sont réenregistrées (JPEG qualité 78,
+    2048 px ramenés à 1024) jusqu'à passer sous le budget. Sans effet sur une page qui y est déjà."""
+    if html_len <= BUDGET:
+        return False
+    from PIL import Image
+    reste = html_len - BUDGET
+    for cle in sorted(scene["materiaux"], key=lambda k: -len(scene["materiaux"][k].get("couleur", ""))):
+        m = scene["materiaux"][cle]
+        if "couleur" not in m:
+            continue
+        im = Image.open(io.BytesIO(base64.b64decode(m["couleur"].split(",", 1)[1]))).convert("RGB")
+        if max(im.size) > 1024:
+            im = im.resize((im.size[0] * 1024 // max(im.size), im.size[1] * 1024 // max(im.size)), Image.LANCZOS)
+        buf = io.BytesIO(); im.save(buf, "JPEG", quality=78, optimize=True)
+        nouv = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+        if len(nouv) < len(m["couleur"]):
+            reste -= len(m["couleur"]) - len(nouv); m["couleur"] = nouv
+            print(f"  matériau {cle} allégé (page sous 14 Mo)")
+        if reste <= 0:
+            break
+    return True
+
+
+def main(dossier):
+    dossier = os.path.abspath(dossier)
+    M = json.load(open(os.path.join(dossier, "donnees", "maison.json"), encoding="utf-8"))
+    S = charger_scene(dossier)
+    if S.get("etages"):
+        scene = fusionner(M, S, dossier)
+    else:
+        scene = construire(M, S)
+        sol_ext = scene.pop("sol_exterieur")
+        cmd = commandes(S)
+        if cmd:
+            scene["commandes"] = cmd
+        scene["sol_exterieur"] = sol_ext
+        scene["materiaux"] = bibliotheque(scene, S)
+        scene["modeles_glb"], scene["modeles_info"], scene["credits"] = modeles(scene)
+        completer_images(scene, S.get("images"), dossier)
     textures = {}
     for f in sorted(os.listdir(TEX)):
         if f.endswith(".jpg"):
             textures[f[:-4]] = "data:image/jpeg;base64," + base64.b64encode(open(os.path.join(TEX, f), "rb").read()).decode()
     gab = open(os.path.join(ICI, "visite3d_gabarit.html"), encoding="utf-8").read()
-    html = (gab.replace("/*__SCENE__*/null", json.dumps(scene, ensure_ascii=False).replace("</", "<\\/"))
-               .replace("/*__TEXTURES__*/null", json.dumps(textures))
-               .replace("__TITRE__", scene["titre"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")))
+
+    def page():
+        return (gab.replace("/*__SCENE__*/null", json.dumps(scene, ensure_ascii=False).replace("</", "<\\/"))
+                   .replace("/*__TEXTURES__*/null", json.dumps(textures))
+                   .replace("__TITRE__", scene["titre"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")))
+    html = page()
+    if alleger(scene, len(html.encode("utf-8"))):
+        html = page()
     os.makedirs(os.path.join(dossier, "3d"), exist_ok=True)
     out = os.path.join(dossier, "3d", "visite.html")
     open(out, "w", encoding="utf-8").write(html)

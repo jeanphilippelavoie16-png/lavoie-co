@@ -143,8 +143,25 @@ M += [A(421.4, 276, 446, 290, 0, 95.8, NOIR, r=0.2, b=0.2), A(421.4, 206, 446, 2
 M += [B(421.1, y - 0.12, 421.4, y + 0.12, 1, 95.5, "carbone") for y in (223, 240, 276)] + \
      [B(421.1, 206, 421.4, 240, 49.9, 50.1, "carbone"), B(421.1, 240, 421.4, 276, 83.9, 84.1, "carbone")]
 M += [B(421.0, y, 421.4, y + 0.6, 40, 46, "metal") for y in (221, 225.5, 287)]
-# deuxième frigo à portes françaises, devant la fenêtre du mur de droite
-M += [MOD("frigo_30", 430.5, 180, face="-x", L=36)]
+# deuxième frigo à portes françaises 36 po, devant la fenêtre du mur de droite (photos 01 à 03) : construit en blocs, car le
+# modèle frigo_30 (30 × 24 × 69 po) agrandi par L=36 l'était dans les trois sens (≈ 83 po de haut). Ici 36 × 29 × 70 po.
+def frigo_36(xf, y0, y1, H=70):
+    """Frigo inox à portes françaises, devant vers -x en xf (face des portes), dos au mur de droite ; congélateur en tiroir."""
+    yc = (y0 + y1) / 2
+    out = [A(xf + 1.6, y0, 445.6, y1, 0.6, H - 0.4, "inox", r=0.8, b=0.4),                  # caisse
+           B(xf + 1.3, y0 + 0.3, xf + 1.7, y1 - 0.3, 3.4, H - 0.6, "carbone"),               # joints sombres entre les portes
+           A(xf, y0, xf + 1.6, yc - 0.15, 31.2, H, "inox", r=0.5, b=0.3), A(xf, yc + 0.15, xf + 1.6, y1, 31.2, H, "inox", r=0.5, b=0.3),
+           A(xf, y0, xf + 1.6, y1, 3.6, 30.9, "inox", r=0.5, b=0.3),                          # tiroir du congélateur
+           B(xf + 1.8, y0 + 0.6, xf + 2.2, y1 - 0.6, 0.6, 3.4, "carbone")]                   # grille du socle
+    for yp in (yc - 2.2, yc + 2.2):                                                              # poignées verticales
+        out += [T([(xf - 1.4, yp, 40), (xf - 1.4, yp, 64)], 0.42, "inox", bouts=True),
+                B(xf - 1.4, yp - 0.3, xf, yp + 0.3, 41, 42, "inox"), B(xf - 1.4, yp - 0.3, xf, yp + 0.3, 62, 63, "inox")]
+    out += [T([(xf - 1.4, y0 + 5, 27.5), (xf - 1.4, y1 - 5, 27.5)], 0.42, "inox", bouts=True),
+            B(xf - 1.4, y0 + 6, xf, y0 + 6.6, 27, 28, "inox"), B(xf - 1.4, y1 - 6.6, xf, y1 - 6, 27, 28, "inox")]
+    return out
+
+
+M += frigo_36(416.6, 162.3, 197.7)
 # îlot noir, dessus de bois de grange, 3 tabourets côté salle à manger, poubelles inox au bout
 M += [A(352, 218, 380, 298, 4, 34.5, NOIR, r=0.3, b=0.3), B(354, 220, 378, 296, 0, 4, "carbone"),
       A(340, 214, 384, 302, 34.5, 36.5, "bois_grange", r=0.5, b=0.35)]
@@ -252,7 +269,7 @@ M += [B(12, 176.9, 44, 177.3, 2.5, 76, "verre"), B(40, 177.6, 71, 178, 2.5, 76, 
 M += [MOD("colonne_douche_noire", 56, 154.6, face="+y", z=30)]
 M += [A(10.5, 182, 18.5, 198, 14, 30, "blanc", r=2, b=1), A(16, 183, 37, 197, 0, 15.5, "blanc", r=6.5, b=2),
       A(16.5, 183.5, 36.5, 196.5, 15.5, 16.8, "blanc", r=6.5, b=0.6), B(12, 187, 14, 193, 30, 30.4, "inox")]
-M += [C(13.5, 203, 2.2, 47, 51, "blanc", axe="x", x0=10.5, x1=16, z=49), B(10.5, 202, 15, 203, 49, 50, "metal")]          # papier
+M += [C(13.5, 203, 2.2, 25, 29, "blanc", axe="x", x0=10.5, x1=16, z=27), B(10.5, 202, 15, 203, 27, 28, "metal")]          # papier, sous l'allège (photo 14)
 M += [A(42, 200, 104, 219.75, 32, 34, NOIR, r=0.4, b=0.3), A(43, 201.5, 103, 219.5, 22, 32, NOIR, r=0.3, b=0.3),
       B(44, 202, 102, 219, 6, 7, NOIR)] + [B(x, y, x + 1.5, y + 1.5, 0, 32, NOIR) for x in (43, 101.5) for y in (201, 218)]
 for xs in (58, 88):
@@ -299,7 +316,57 @@ M += [MOD("lit_queen", 52, 85, face="+x"), MOD("table_chevet", 19, 39, face="+x"
       A(14, 11, 50, 29, 0.5, 34, "blanc", r=0.4, b=0.3)]
 
 # =============================================================================================== entrée arrière
-M += [A(296, 383, 318, 400, 0, 0.4, "tapis", r=2, b=0.2)]
+# palier au niveau du RDC devant la porte extérieure (x ≥ 292) ; volée qui descend vers la gauche le long du mur du fond
+# (y 398 → 430), main courante de bois au mur (photos 01, 07, 08). ESTIMÉ : nombre de marches, largeur, giron à mesurer.
+# Sous le plancher (z < 0) : visible seulement quand la visionneuse perce le plancher (SCENE["tremies_plancher"]).
+EAR_X0, EAR_XN, EAR_Y0, EAR_Y1, GIRON, CM = 229, 284, 398, 430, 10.5, 7.5     # nez du palier à x = 284 : la porte
+# extérieure (pentures côté mur du fond, battant de 34 po jusqu'à x ≈ 285½) ne balaie pas la volée
+M += [A(294, 395, 315.5, 425, 0, 0.4, "tapis", r=2, b=0.2)]                                   # devant la porte extérieure
+for k in range(1, 7):                                                                        # 6 contremarches, palier tournant
+    xa, xb, z = max(EAR_X0, EAR_XN - GIRON * k), EAR_XN - GIRON * (k - 1), -CM * k
+    M += [B(xa, EAR_Y0, xb + 1, EAR_Y1, z - 1.5, z, "ardoise_noire"), B(xb - 0.5, EAR_Y0, xb + 0.25, EAR_Y1, z, z + CM, NOIR)]
+M += [B(EAR_X0, EAR_Y0 - 1.5, EAR_XN, EAR_Y0, -60, 0, NOIR),                                    # limon côté palier
+      B(EAR_X0, EAR_Y0 - 0.3, EAR_XN + 0.6, EAR_Y0 + 0.4, -0.2, 0.3, "inox"), B(EAR_XN, EAR_Y0, EAR_XN + 0.6, EAR_Y1, -0.2, 0.3, "inox")]
+# main courante : 34 po au-dessus du nez des marches, retour au mur en haut, consoles noires
+ZR = lambda x: 34 - CM * (EAR_XN - x) / GIRON
+M += [T([(EAR_XN, EAR_Y1, ZR(EAR_XN)), (EAR_XN, EAR_Y1 - 2.6, ZR(EAR_XN)), (EAR_XN - 2, EAR_Y1 - 2.6, ZR(EAR_XN - 2)),
+         (EAR_X0 + 3, EAR_Y1 - 2.6, ZR(EAR_X0 + 3))], 0.8, "bois_brut", bouts=True)]
+M += [CY(x, EAR_Y1 - 2, EAR_Y1, ZR(x) - 1.6, 0.3, NOIR) for x in (EAR_XN - 5, EAR_XN - 28, EAR_X0 + 8)]
+
+# portes d'une autre finition que le pin (portes plates blanches des garde-robes de la chambre arrière, photo 10) : l'ouverture
+# porte "finition": "<matériau>" dans maison.json (base_rdc01_modifs.py ou un module rdc_*.py). La visionneuse ne connaît
+# qu'un matériau de battant par maquette ("porte" → mats_finitions) : on habille le battant, calculé par les fonctions du
+# moteur (porte ouverte à 90° ou fermée), d'une pellicule de 0,08 po de ce matériau. Objets marqués "role": "finition_porte".
+def portes_finies(niveau="RDC"):
+    import importlib.util, json, os, sys
+    ici = os.path.dirname(os.path.abspath(__file__))
+    try:
+        mj = json.load(open(os.path.join(ici, "donnees", "maison.json"), encoding="utf-8"))
+        niv = next(n for n in mj["niveaux"] if n["id"] == niveau)
+        g = sys.modules.get("__main__")                # le moteur qui nous charge (generer_3d.py), sinon son fichier
+        if not (hasattr(g, "feuille_porte") and hasattr(g, "porte_fermee")):
+            f = next(p for p in (os.path.join(ici, "..", "outils", "generer_3d.py"),
+                                 os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "generer_3d.py")) if os.path.isfile(p))
+            spec = importlib.util.spec_from_file_location("m18_moteur_portes", f)
+            g = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(g)
+    except Exception as err:                       # maison.json pas encore construit, moteur en chantier : battants en pin
+        print("  portes finies ignorées :", err)
+        return []
+    murs, out, e = {m["id"]: m for m in niv["murs"]}, [], 0.08
+    for o in niv["ouvertures"]:
+        m = murs.get(o["mur_id"])
+        if not o.get("finition") or not m or o["type"] == "fenetre" or o.get("operation") in ("coulissante", "aucune") \
+                or o.get("materiau") == "verre" or (o.get("position") or {}).get("valeur") is None:
+            continue
+        t = (m.get("epaisseur") or {}).get("valeur") or 4.5
+        f = g.porte_fermee(m, o, t)[0] if o.get("fermee") else dict(g.feuille_porte(m, o, t), z0=0.5, z1=80)
+        out.append(dict(B(f["x0"] - e, f["y0"] - e, f["x1"] + e, f["y1"] + e, f["z0"] - e, f["z1"] + e, o["finition"]),
+                        role="finition_porte", ouverture=o["id"]))
+    return out
+
+
+M += portes_finies()
 
 # bande d'ardoise devant la baie de l'entrée arrière, prolongement du plancher de la cuisine (photo 07), et barres de seuil
 R += [B(262, 336, 316.1, 370, 0, 0.12, "ardoise_noire"), B(261.5, 335.5, 316.5, 336.2, 0, 0.3, "inox"),
@@ -309,6 +376,9 @@ SCENE = {
     "niveau": "RDC",
     "titre": TITRE,
     "plafond": 96,               # PRÉSUMÉ (8 pi) : à mesurer
+    # trou dans le plancher [x0, y0, x1, y1] : volée qui descend de l'entrée arrière (demande au moteur ; ignoré tant que la
+    # visionneuse ne perce pas le plancher, le sous-plancher de béton cache alors tout ce qui est sous z = 0)
+    "tremies_plancher": [[EAR_X0, EAR_Y0, EAR_XN, EAR_Y1]],
     "allege_fenetre": 34, "tete_fenetre": 82,     # ESTIMÉ sur les photos
     "sol_defaut": "erable",
     "sols": {"piece-RDC-CUI": "ardoise_noire", "piece-RDC-ENT": "ardoise_noire", "piece-RDC-EAR": "ardoise_noire",

@@ -56,8 +56,16 @@ body.sans-joy #rail { bottom: var(--sb); }
 @keyframes cmd-pulse { 50% { opacity: .45; } }
 @media (prefers-reduced-motion: reduce) { #commandes button.bouge .ic { animation: none; } }
 
-/* bas droite : plan miniature */
+/* bas droite : plan miniature (et, au-dessus, les étages : Monter / Descendre, ou le choix de la maquette) */
 .mini { position: fixed; right: var(--sr); bottom: var(--sb); padding: 6px; }
+.mini h2 { margin: 2px 8px 4px; }
+#etages { position: fixed; right: var(--sr); bottom: calc(var(--sb) + 252px); display: flex; gap: 4px; padding: 4px; max-width: calc(100vw - 24px); flex-wrap: wrap; justify-content: flex-end; }
+#etages button { display: flex; align-items: center; gap: 9px; font-size: .95rem; font-weight: 700; padding: 6px 14px 6px 8px; text-align: left; }
+#etages button small { display: block; font-weight: 400; font-size: .74rem; color: var(--muted); }
+#etages .ic { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: .8rem; background: var(--accent); color: var(--accent-ink); flex: none; }
+#etages.choix button { padding: 6px 12px; font-size: .88rem; }
+#etages.choix button[aria-pressed="true"] small { color: inherit; }
+body.multi .palette { max-height: calc(100vh - 420px); }
 #plan { display: block; width: 210px; height: 210px; touch-action: none; cursor: crosshair; border-radius: 8px; }
 
 /* matériaux */
@@ -67,6 +75,8 @@ body.sans-joy #rail { bottom: var(--sb); }
 .palette li { display: grid; grid-template-columns: 20px minmax(0,1fr); gap: 8px; align-items: start; }
 .palette i { width: 20px; height: 20px; border-radius: 5px; border: 1px solid var(--line); display: block; }
 .palette b { display: block; }
+.palette li.sous { display: block; font-weight: 700; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.etiq.nom-etage { font-size: .95rem; padding: 5px 12px; background: rgba(29,31,34,.88); color: #fff; }
 
 /* joystick (écrans tactiles) */
 #joy { position: fixed; left: calc(var(--sl) + 18px); bottom: calc(var(--sb) + 8px); width: 128px; height: 128px; border-radius: 50%;
@@ -85,8 +95,8 @@ body.sans-joy #rail { bottom: var(--sb); }
   background: rgba(255,255,255,.88); color: #1d1f22; pointer-events: none; white-space: nowrap; box-shadow: 0 1px 6px rgba(0,0,0,.18); }
 #erreur { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; }
 @media (max-height: 820px) { #rail button { min-height: 40px; padding: 7px 10px; font-size: .86rem; } #rail { top: calc(var(--st) + 66px); } }
-@media (max-height: 560px) { #plan { width: 160px; height: 160px; } #rail { width: 150px; } #rail button { min-height: 38px; padding: 6px 10px; font-size: .84rem; } }
-@media (max-width: 760px) { .titre { display: none; } #rail { width: 140px; } #ici { min-width: 120px; } #plan { width: 150px; height: 150px; } .palette { top: auto; bottom: 240px; } }
+@media (max-height: 560px) { #plan { width: 160px; height: 160px; } #rail { width: 150px; } #rail button { min-height: 38px; padding: 6px 10px; font-size: .84rem; } #etages { bottom: calc(var(--sb) + 202px); } }
+@media (max-width: 760px) { .titre { display: none; } #rail { width: 140px; } #ici { min-width: 120px; } #plan { width: 150px; height: 150px; } .palette { top: auto; bottom: 240px; } #etages { bottom: calc(var(--sb) + 192px); } }
 </style>
 
 <div id="vue"></div>
@@ -112,7 +122,8 @@ body.sans-joy #rail { bottom: var(--sb); }
   <button id="suiv" aria-label="Arrêt suivant">▶</button>
 </div>
 <div class="carte" id="commandes" role="group" aria-label="Commandes de la maison" hidden></div>
-<div class="carte mini"><canvas id="plan" width="420" height="420" aria-label="Plan : touchez pour y aller"></canvas></div>
+<div class="carte" id="etages" role="group" aria-label="Étages" hidden></div>
+<div class="carte mini"><h2 id="plan-nom" hidden></h2><canvas id="plan" width="420" height="420" aria-label="Plan : touchez pour y aller"></canvas></div>
 <div class="carte palette" id="palette" hidden><h2>Matériaux proposés</h2><ul id="pal"></ul><h2>Peinture</h2><ul id="pei"></ul>
   <h2>Crédits (modèles 3D et textures)</h2><ol id="cred" style="margin:0;padding-left:18px;font-size:.72rem;color:var(--muted);display:grid;gap:4px"></ol></div>
 <div id="joy" hidden><span></span></div>
@@ -127,6 +138,8 @@ body.sans-joy #rail { bottom: var(--sb); }
     <li><b>Joystick</b> (en bas à gauche) pour marcher librement. Au clavier : W A S D ou les flèches.</li>
     <li><b>Maquette</b> : vue de dessus sans plafond ; un doigt tourne, deux doigts zooment et déplacent ; touchez une pièce pour y entrer.</li>
     <li><b>Haute / Normale</b> (en haut) : qualité de l'image (ombres, reflets, lumière). Normale est plus fluide sur une tablette lente.</li>
+    <li id="aide-portes" hidden><b>Portes</b> : touchez une porte pour l'ouvrir ou la fermer (en visite comme en maquette). Une porte fermée bloque le passage ; en marchant au toucher, elle s'ouvre toute seule.</li>
+    <li id="aide-etages" hidden><b>▲ Monter / ▼ Descendre</b> (au-dessus du petit plan) : on marche jusqu'à l'escalier et on le monte (ou le descend) en douceur. On peut aussi marcher dans l'escalier, ou toucher une marche. En maquette : Sous-sol, Rez-de-chaussée ou Les deux.</li>
     <li id="aide-cmd" hidden></li>
   </ul>
   <button id="aide-ok" aria-pressed="true">Compris</button>
@@ -548,36 +561,69 @@ function modele(o, groupe) {
   return pivot;
 }
 
+// ---------- étages : un projet simple est un seul étage (S lui-même) ; S.etages = maquette à plusieurs étages, chaque
+// étage dans le repère de son plancher (z), posé à sa hauteur dans la visite (en maquette : seul, ou les deux décalés)
+const MULTI = Array.isArray(S.etages) && S.etages.length > 0;
+const ETAGES = (MULTI ? S.etages : [S]).map((d, i) => ({ d, i, id: d.id || S.niveau || "SS", nom: d.nom || "", z: d.z || 0, H: d.H,
+  decal: new THREE.Vector3(0, (d.z || 0) * K, 0), g: {}, obstacles: [], portes: [], trous: d.trous || [], vu: true }));
+const ESCALIERS = S.escaliers || [];
+// visiteur : position (pouces), étage courant, hauteur des pieds z (absolue : plancher de l'étage, ou une marche)
+let mode = "visite";
+const iDepart = MULTI ? Math.max(0, ETAGES.findIndex((E) => E.id === S.depart.etage)) : 0;
+let vueMaquette = iDepart;               // maquette à plusieurs étages : indice de l'étage montré, ou "deux"
+const joueur = { x: S.depart.x, y: S.depart.y, cap: S.depart.cap * Math.PI / 180, tangage: -0.08, etage: iDepart, z: ETAGES[iDepart].z, zVue: ETAGES[iDepart].z };
+const idEtage = (v) => { if (typeof v === "number") return v; const k = ETAGES.findIndex((E) => E.id === v || E.nom === v); return k < 0 ? 0 : k; };
+
 // ---------- construction
-const gMurs = new THREE.Group(), gMob = new THREE.Group(), gPlafond = new THREE.Group(), gSols = new THREE.Group();
-scene.add(gMurs, gMob, gPlafond, gSols);
-const obstacles = [];
-for (const b of S.boites) {
-  boite(b, b.z0 >= S.H - 0.01 ? gPlafond : gMurs);
-  if (b.z0 < 60 && b.z1 > 20) obstacles.push(b);
-}
-for (const o of S.obstacles || []) obstacles.push(o);
-for (const b of S.portes) boite(b, gMurs);
-for (const b of S.revetements) boite(b, gMurs);
-for (const s of S.sols) {
-  const sh = new THREE.Shape(s.pts.map(([x, y]) => new THREE.Vector2(x * K, y * K)));
-  const g = new THREE.ShapeGeometry(sh);
-  const e = ECHELLE[s.mat] || 1, uv = g.attributes.uv;
-  for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / e, uv.getY(i) / e);
-  g.rotateX(-Math.PI / 2);
-  const m = new THREE.Mesh(g, MAT[s.mat] || MAT.chene); m.position.y = 0.001; m.userData.piece = s; gSols.add(m);
+const gMurs = new THREE.Group(), gMob = new THREE.Group(), gPlafond = new THREE.Group(), gSols = new THREE.Group(), gLum = new THREE.Group();
+const gCoupe = new THREE.Group(); gCoupe.visible = false;
+scene.add(gMurs, gMob, gPlafond, gSols, gCoupe, gLum);
+const TYPES = { murs: gMurs, mob: gMob, plafond: gPlafond, sols: gSols, coupe: gCoupe, lum: gLum };
+for (const E of ETAGES) for (const [k, parent] of Object.entries(TYPES)) {
+  const g = new THREE.Group(); g.position.copy(E.decal); g.userData.etage = E.i; E.g[k] = g; parent.add(g);
 }
 const [bx0, by0, bx1, by1] = S.bornes;
-{ // sous-plancher (sous les murs) et plafond, percé aux trémies d'escalier
-  const sol = new THREE.Mesh(new THREE.PlaneGeometry((bx1 - bx0) * K + 4, (by1 - by0) * K + 4), MAT.beton);
-  sol.rotation.x = -Math.PI / 2; sol.position.set((bx0 + bx1) / 2 * K, -0.002, -(by0 + by1) / 2 * K); scene.add(sol);
-  const m = 10, sh = new THREE.Shape([[bx0 - m, by0 - 60], [bx1 + m, by0 - 60], [bx1 + m, by1 + 80], [bx0 - m, by1 + 80]].map(([x, y]) => new THREE.Vector2(x * K, y * K)));
-  for (const t of S.tremies || []) {         // trémie : rectangle [x0, y0, x1, y1] ou polygone [[x, y], ...]
+function ouvertures(contour, trous) {      // forme plane (pouces) percée de trous : rectangle [x0, y0, x1, y1] ou polygone
+  const sh = new THREE.Shape(contour.map(([x, y]) => new THREE.Vector2(x * K, y * K)));
+  for (const t of trous || []) {
     const pts = Array.isArray(t[0]) ? t : [[t[0], t[1]], [t[0], t[3]], [t[2], t[3]], [t[2], t[1]]];
     sh.holes.push(new THREE.Path(pts.map(([x, y]) => new THREE.Vector2(x * K, y * K))));
   }
-  const g = new THREE.ShapeGeometry(sh); g.rotateX(-Math.PI / 2);
-  const pl = new THREE.Mesh(g, MAT.plafond); pl.material.side = THREE.DoubleSide; pl.position.y = S.H * K; gPlafond.add(pl);
+  return sh;
+}
+for (const E of ETAGES) {
+  const D = E.d;
+  for (const b of D.boites) {
+    const m = boite(b, b.z0 >= D.H - 0.01 ? E.g.plafond : E.g.murs);
+    if (m && b.esc != null) m.userData.esc = b.esc;         // marche d'escalier : toucher = monter ou descendre
+    if (b.z0 < 60 && b.z1 > 20) E.obstacles.push(b);
+  }
+  for (const o of D.obstacles || []) E.obstacles.push(o);
+  for (const b of D.portes || []) boite(b, E.g.murs);
+  for (const b of D.revetements || []) boite(b, E.g.murs);
+  for (const s of D.sols) {
+    const g = s.trous ? new THREE.ShapeGeometry(ouvertures(s.pts, s.trous)) : new THREE.ShapeGeometry(new THREE.Shape(s.pts.map(([x, y]) => new THREE.Vector2(x * K, y * K))));
+    const e = ECHELLE[s.mat] || 1, uv = g.attributes.uv;
+    for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / e, uv.getY(i) / e);
+    g.rotateX(-Math.PI / 2);
+    const m = new THREE.Mesh(g, MAT[s.mat] || MAT.chene); m.position.y = 0.001; m.userData.piece = s; m.userData.etage = E.i; E.g.sols.add(m);
+  }
+  const [ex0, ey0, ex1, ey1] = D.bornes;
+  { // sous-plancher (sous les murs, troué à la trémie de l'escalier du dessous) et plafond, percé aux trémies d'escalier
+    let sol;
+    if (E.trous.length) {
+      const g = new THREE.ShapeGeometry(ouvertures([[ex0 - 2, ey0 - 2], [ex1 + 2, ey0 - 2], [ex1 + 2, ey1 + 2], [ex0 - 2, ey1 + 2]], E.trous));
+      g.rotateX(-Math.PI / 2); sol = new THREE.Mesh(g, MAT.beton); sol.position.y = -0.002;
+    } else {
+      sol = new THREE.Mesh(new THREE.PlaneGeometry((ex1 - ex0) * K + 4, (ey1 - ey0) * K + 4), MAT.beton);
+      sol.rotation.x = -Math.PI / 2; sol.position.set((ex0 + ex1) / 2 * K, -0.002, -(ey0 + ey1) / 2 * K);
+    }
+    E.g.sols.add(sol);
+    const m = 10;
+    const g = new THREE.ShapeGeometry(ouvertures([[ex0 - m, ey0 - 60], [ex1 + m, ey0 - 60], [ex1 + m, ey1 + 80], [ex0 - m, ey1 + 80]], D.tremies));
+    g.rotateX(-Math.PI / 2);
+    const pl = new THREE.Mesh(g, MAT.plafond); pl.material.side = THREE.DoubleSide; pl.position.y = D.H * K; E.g.plafond.add(pl);
+  }
 }
 // modèles 3D (GLB) du catalogue, chargés une fois puis copiés à chaque emplacement
 // La page publiée interdit fetch(), même vers une data: URI : on décode le base64 nous-mêmes et on passe les octets au
@@ -594,61 +640,97 @@ const GLB = {}, ECHECS = [];
   try { window.createImageBitmap = cib; } catch (_) {}
 }
 const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele, image, ecran };
+// Portes interactives (S.battants de chaque étage) : le vantail est décrit FERMÉ ; f = 0 fermée, 1 ouverte.
+// Battante : rotation de f·angle autour du pivot (charnière) ; coulissante : translation de f·glisse. Chaque porte existe
+// deux fois : pleine hauteur dans la visite, coupée à 4 pi dans la maquette ; les deux bougent ensemble.
+const PORTES = {};
+for (const E of ETAGES) for (const p of E.d.battants || []) {
+  const pt = { p, E, f: p.etat === "fermee" ? 0 : 1, etat: p.etat, anim: null, groupes: [] };
+  for (const [parent, couper] of [[E.g.murs, false], [E.g.coupe, true]]) {
+    const ext = new THREE.Group(), int = new THREE.Group();
+    ext.position.copy(P(p.pivot[0], p.pivot[1], 0)); int.position.copy(P(-p.pivot[0], -p.pivot[1], 0));
+    ext.add(int); parent.add(ext); ext.userData.porte = p.id;
+    for (const b of p.boites) {
+      if (!couper) boite(b, int);
+      else if (b.z0 < 48) boite({ ...b, z1: Math.min(b.z1, 48) }, int);
+    }
+    pt.groupes.push({ ext, int });
+  }
+  PORTES[p.id] = pt; E.portes.push(pt); poserPorte(pt);
+}
+function poserPorte(pt) {
+  for (const g of pt.groupes) {
+    if (pt.p.type === "coulissante") g.ext.position.copy(P(pt.p.pivot[0] + pt.p.glisse[0] * pt.f, pt.p.pivot[1] + pt.p.glisse[1] * pt.f, 0));
+    else g.ext.rotation.y = pt.p.angle * Math.PI / 180 * pt.f;
+  }
+}
 // Commandes interactives (opt-in, SCENE["commandes"]) : les objets liés à une commande sont construits dans leurs propres
 // groupes (jamais fusionnés ni copiés dans un lot fixe), décrits à l'état « bas ». Fraction f : 1 = bas, fraction_min = haut.
 //  « etirer » : échelle verticale autour de pivot_z (groupe extérieur posé à pivot_z, intérieur décalé de -pivot_z) ;
 //  « suivre » : translation de (pivot_z - z1)·(1 - f), z1 = haut de l'objet à l'état bas (barre de lestage).
+// Plusieurs étages : le groupe d'une commande va dans le mobilier de l'étage de son premier objet.
 const CMD = {}, etatsCommandes = {};
 for (const c of S.commandes || []) {
   const ext = new THREE.Group(), int = new THREE.Group();
-  ext.position.y = c.pivot_z * K; int.position.y = -c.pivot_z * K; ext.add(int); gMob.add(ext);
+  ext.position.y = c.pivot_z * K; int.position.y = -c.pivot_z * K; ext.add(int);
   ext.userData.commande = c.id;
   const f = c.depart === "bas" ? 1 : c.fraction_min;
-  CMD[c.id] = { c, f, etat: c.depart, anim: null, etirer: ext, interieur: int, suivre: [] };
+  CMD[c.id] = { c, f, etat: c.depart, anim: null, etirer: ext, interieur: int, suivre: [], E: null };
   etatsCommandes[c.id] = c.depart;
 }
-for (const o of S.mobilier) {
-  const cm = o.commande && CMD[o.commande];
-  if (!cm) { (FORMES[o.forme] || boite)(o, gMob); continue; }
-  const n0 = OMBRES.length;                     // pas d'ombre de contact fixe sous un objet qui bouge
-  if (o.anim === "suivre") {
-    const g = new THREE.Group(); g.userData.commande = cm.c.id; gMob.add(g);
-    (FORMES[o.forme] || boite)(o, g);
-    g.updateMatrixWorld(true); const bb = new THREE.Box3().setFromObject(g, true);
-    cm.suivre.push({ g, z1: bb.isEmpty() ? cm.c.pivot_z : bb.max.y / K });
-  } else (FORMES[o.forme] || boite)(o, cm.interieur);
-  OMBRES.length = n0;
+for (const E of ETAGES) {                // empreintes au sol (OMBRES) : remises à zéro pour chaque étage
+  OMBRES.length = 0;
+  for (const o of E.d.mobilier) {
+    const pt = o.porte && PORTES[o.porte];
+    if (pt) {                                    // meuble porté par une porte (porte-bibliothèque) : il pivote avec elle
+      const n0 = OMBRES.length;
+      for (const g of pt.groupes) (FORMES[o.forme] || boite)(o, g.int);
+      OMBRES.length = n0; continue;
+    }
+    const cm = o.commande && CMD[o.commande];
+    if (!cm) { (FORMES[o.forme] || boite)(o, E.g.mob); continue; }
+    if (!cm.E) { cm.E = E; E.g.mob.add(cm.etirer); }
+    const n0 = OMBRES.length;                     // pas d'ombre de contact fixe sous un objet qui bouge
+    if (o.anim === "suivre") {
+      const g = new THREE.Group(); g.userData.commande = cm.c.id; E.g.mob.add(g);
+      (FORMES[o.forme] || boite)(o, g);
+      g.updateMatrixWorld(true); const bb = new THREE.Box3().setFromObject(g, true);
+      cm.suivre.push({ g, z1: bb.isEmpty() ? cm.c.pivot_z : (bb.max.y - E.decal.y) / K });
+    } else (FORMES[o.forme] || boite)(o, cm.interieur);
+    OMBRES.length = n0;
+  }
+  { // ombres de contact sous les meubles : empreintes au sol unies puis floues, un seul plan transparent
+    const [ex0, ey0, ex1, ey1] = E.d.bornes;
+    const mx = 12, W = Math.ceil(ex1 - ex0 + 2 * mx), Hh = Math.ceil(ey1 - ey0 + 2 * mx);
+    const c = document.createElement("canvas"); c.width = W; c.height = Hh; const g = c.getContext("2d");
+    const X = (x) => x - ex0 + mx, Y = (y) => ey1 + mx - y;
+    g.fillStyle = "#000"; g.fillRect(0, 0, W, Hh); g.filter = "blur(5px)"; g.fillStyle = "#fff";
+    for (const o of E.d.mobilier) {
+      if (o.commande && CMD[o.commande] || o.porte && PORTES[o.porte]) continue;
+      if (o.forme === "modele" || o.axe || o.pts || o.z0 > 14 || o.z1 - o.z0 < 8) continue;
+      if (o.forme === "cylindre" || o.forme === "sphere") { g.beginPath(); g.arc(X(o.x), Y(o.y), o.r + 1, 0, 6.3); g.fill(); }
+      else if (o.x1 - o.x0 > 1.2 && o.y1 - o.y0 > 1.2) g.fillRect(X(o.x0) - 1, Y(o.y1) - 1, o.x1 - o.x0 + 2, o.y1 - o.y0 + 2);
+    }
+    for (const [x0, y0, x1, y1] of OMBRES) g.fillRect(X(x0), Y(y1), x1 - x0, y1 - y0);
+    const mo = new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: new THREE.CanvasTexture(c), transparent: true, opacity: 0.38,
+      depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+    const pl = new THREE.Mesh(new THREE.PlaneGeometry(W * K, Hh * K), mo); pl.rotation.x = -Math.PI / 2;
+    pl.position.copy(P((ex0 + ex1) / 2, (ey0 + ey1) / 2, 0.45)); pl.renderOrder = 1; E.g.mob.add(pl);
+  }
 }
+for (const cm of Object.values(CMD)) if (!cm.E) { cm.E = ETAGES[0]; ETAGES[0].g.mob.add(cm.etirer); }
 function poserCommande(cm) {
   cm.etirer.scale.y = cm.f;
   for (const s of cm.suivre) s.g.position.y = (cm.c.pivot_z - s.z1) * (1 - cm.f) * K;
 }
 for (const cm of Object.values(CMD)) poserCommande(cm);
-{ // ombres de contact sous les meubles : empreintes au sol unies puis floues, un seul plan transparent
-  const mx = 12, W = Math.ceil(bx1 - bx0 + 2 * mx), Hh = Math.ceil(by1 - by0 + 2 * mx);
-  const c = document.createElement("canvas"); c.width = W; c.height = Hh; const g = c.getContext("2d");
-  const X = (x) => x - bx0 + mx, Y = (y) => by1 + mx - y;
-  g.fillStyle = "#000"; g.fillRect(0, 0, W, Hh); g.filter = "blur(5px)"; g.fillStyle = "#fff";
-  for (const o of S.mobilier) {
-    if (o.commande && CMD[o.commande]) continue;
-    if (o.forme === "modele" || o.axe || o.pts || o.z0 > 14 || o.z1 - o.z0 < 8) continue;
-    if (o.forme === "cylindre" || o.forme === "sphere") { g.beginPath(); g.arc(X(o.x), Y(o.y), o.r + 1, 0, 6.3); g.fill(); }
-    else if (o.x1 - o.x0 > 1.2 && o.y1 - o.y0 > 1.2) g.fillRect(X(o.x0) - 1, Y(o.y1) - 1, o.x1 - o.x0 + 2, o.y1 - o.y0 + 2);
-  }
-  for (const [x0, y0, x1, y1] of OMBRES) g.fillRect(X(x0), Y(y1), x1 - x0, y1 - y0);
-  const mo = new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: new THREE.CanvasTexture(c), transparent: true, opacity: 0.38,
-    depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
-  const pl = new THREE.Mesh(new THREE.PlaneGeometry(W * K, Hh * K), mo); pl.rotation.x = -Math.PI / 2;
-  pl.position.copy(P((bx0 + bx1) / 2, (by0 + by1) / 2, 0.45)); pl.renderOrder = 1; gMob.add(pl);
-}
 // maquette : murs coupés à 4 pi avec le dessus foncé (poché), comme un plan en relief
-const gCoupe = new THREE.Group(); gCoupe.visible = false; scene.add(gCoupe);
 {
   const poche = new THREE.MeshStandardMaterial({ color: "#2b2d30", roughness: .8 });
-  for (const b of [...S.boites, ...S.portes]) {
+  for (const E of ETAGES) for (const b of [...E.d.boites, ...(E.d.portes || [])]) {
     if (b.z0 >= 48 || b.mat === "plafond") continue;
-    const m = boite({ ...b, z1: Math.min(b.z1, 48) }, gCoupe);
-    if (m && !b.pts && m.geometry.type === "BoxGeometry" && (b.mur || b.z1 >= S.H - 0.01) && !["verre", "vitre"].includes(b.mat)) {
+    const m = boite({ ...b, z1: Math.min(b.z1, 48) }, E.g.coupe);
+    if (m && !b.pts && m.geometry.type === "BoxGeometry" && (b.mur || b.z1 >= E.H - 0.01) && !["verre", "vitre"].includes(b.mat)) {
       const mats = Array.isArray(m.material) ? m.material.slice() : Array(6).fill(m.material); mats[2] = poche; m.material = mats;
     }
   }
@@ -692,41 +774,52 @@ const garniture = new THREE.MeshStandardMaterial({ color: "#f4f2ee", roughness: 
 // Les encastrés et les fenêtres sont des « sources » ; un nombre fixe de vraies lumières (un « bassin ») est attribué
 // aux sources les plus proches du visiteur, avec un fondu. Le nombre de lumières ne change pas en se promenant
 // (pas de recompilation), chaque pixel calcule moins de lumières, et les pièces voisines ne « fuient » plus à travers les murs.
-const ENCASTRES = [], FENETRES = [];
-for (const l of S.lumieres) {
-  if (l.z) {
-    const p = new THREE.PointLight(COUL_LAMPE, (l.i || 9) * 1.1, 0, 2); p.position.copy(P(l.x, l.y, l.z - 8)); scene.add(p);
-    continue;
+// Plusieurs étages : seulement les sources de l'étage courant (des deux étages dans l'escalier) ; positions locales à
+// l'étage, décalées à l'attribution (la maquette peut décaler un étage).
+const ENCASTRES = [], FENETRES = [], LAMPES = [];
+for (const E of ETAGES) {
+  const D = E.d;
+  for (const l of D.lumieres) {
+    if (l.z) {
+      const p = new THREE.PointLight(COUL_LAMPE, (l.i || 9) * 1.1, 0, 2); p.position.copy(P(l.x, l.y, l.z - 8)); E.g.lum.add(p);
+      LAMPES.push({ l: p, E, i: (l.i || 9) * 1.1 });
+      continue;
+    }
+    // encastré de 4 po : garniture et disque lumineux au plafond ; la lumière (projecteur vers le bas) vient du bassin.
+    // Sous une retombée (poutre, soffite), il descend sous la retombée au lieu d'y être enfoui.
+    let zp = D.H;
+    for (const q of D.boites) if (!q.pts && q.z1 >= D.H - 0.01 && q.z0 > 60 && q.z0 < zp && l.x > q.x0 && l.x < q.x1 && l.y > q.y0 && l.y < q.y1) zp = q.z0;
+    const anneau = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .008, 32), garniture); anneau.position.copy(P(l.x, l.y, zp - 0.15)); E.g.plafond.add(anneau);
+    const disque = new THREE.Mesh(new THREE.CylinderGeometry(.052, .052, .01, 32), MAT.spot); disque.position.copy(P(l.x, l.y, zp - 0.2)); E.g.plafond.add(disque);
+    ENCASTRES.push({ x: l.x, y: l.y, E, pos: P(l.x, l.y, zp - 0.6), cible: P(l.x, l.y, 0), i: (l.i || 9) * 3.6 });
   }
-  // encastré de 4 po : garniture et disque lumineux au plafond ; la lumière (projecteur vers le bas) vient du bassin.
-  // Sous une retombée (poutre, soffite), il descend sous la retombée au lieu d'y être enfoui.
-  let zp = S.H;
-  for (const q of S.boites) if (!q.pts && q.z1 >= S.H - 0.01 && q.z0 > 60 && q.z0 < zp && l.x > q.x0 && l.x < q.x1 && l.y > q.y0 && l.y < q.y1) zp = q.z0;
-  const anneau = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .008, 32), garniture); anneau.position.copy(P(l.x, l.y, zp - 0.15)); gPlafond.add(anneau);
-  const disque = new THREE.Mesh(new THREE.CylinderGeometry(.052, .052, .01, 32), MAT.spot); disque.position.copy(P(l.x, l.y, zp - 0.2)); gPlafond.add(disque);
-  ENCASTRES.push({ x: l.x, y: l.y, pos: P(l.x, l.y, zp - 0.6), cible: P(l.x, l.y, 0), i: (l.i || 9) * 3.6 });
-}
-{ // lumière du jour : un projecteur large et doux derrière chaque fenêtre, vers l'intérieur et le plancher
-  const cx = (bx0 + bx1) / 2, cy = (by0 + by1) / 2;
-  for (const b of S.boites) {
+  // lumière du jour : un projecteur large et doux derrière chaque fenêtre, vers l'intérieur et le plancher
+  const [ex0, ey0, ex1, ey1] = D.bornes, cx = (ex0 + ex1) / 2, cy = (ey0 + ey1) / 2;
+  for (const b of D.boites) {
     if (b.mat !== "vitre") continue;
     const enX = b.x1 - b.x0 < b.y1 - b.y0, x = (b.x0 + b.x1) / 2, y = (b.y0 + b.y1) / 2, z = (b.z0 + b.z1) / 2;
     const n = enX ? [Math.sign(x - cx) || 1, 0] : [0, Math.sign(y - cy) || 1];   // vers l'extérieur
     const aire = Math.max(b.x1 - b.x0, b.y1 - b.y0) * (b.z1 - b.z0);
-    FENETRES.push({ x, y, pos: P(x + n[0] * 30, y + n[1] * 30, z + 14), cible: P(x - n[0] * 90, y - n[1] * 90, 0), i: 4 + aire / 300 });
+    FENETRES.push({ x, y, E, pos: P(x + n[0] * 30, y + n[1] * 30, z + 14), cible: P(x - n[0] * 90, y - n[1] * 90, 0), i: 4 + aire / 300 });
   }
 }
-// ordre « bien réparti » des encastrés (maquette : on allume des sources partout plutôt qu'au centre)
-const REPARTIS = (() => {
-  const o = [], reste = ENCASTRES.map((_, k) => k);
-  let d = reste.map((k) => (ENCASTRES[k].x - (bx0 + bx1) / 2) ** 2 + (ENCASTRES[k].y - (by0 + by1) / 2) ** 2);
+// ordre « bien réparti » des encastrés des étages montrés (maquette : on allume des sources partout plutôt qu'au centre)
+const cacheRepartis = {};
+function repartis(ok) {
+  const cle = ok.map(Number).join("");
+  if (cacheRepartis[cle]) return cacheRepartis[cle];
+  const o = [], reste = ENCASTRES.map((_, k) => k).filter((k) => ok[ENCASTRES[k].E.i]);
+  const px = (s) => s.x + s.E.decal.x / K, py = (s) => s.y - s.E.decal.z / K;     // position montrée (étages décalés)
+  let cx = 0, cy = 0; for (const k of reste) { cx += px(ENCASTRES[k]) / reste.length; cy += py(ENCASTRES[k]) / reste.length; }
+  if (!MULTI) { cx = (bx0 + bx1) / 2; cy = (by0 + by1) / 2; }
+  let d = reste.map((k) => (px(ENCASTRES[k]) - cx) ** 2 + (py(ENCASTRES[k]) - cy) ** 2);
   while (reste.length) {
     let m = 0; for (let k = 1; k < reste.length; k++) if (d[k] > d[m]) m = k;
     const c = ENCASTRES[reste[m]]; o.push(reste[m]); reste.splice(m, 1); d.splice(m, 1);
-    d = d.map((v, k) => Math.min(v, (ENCASTRES[reste[k]].x - c.x) ** 2 + (ENCASTRES[reste[k]].y - c.y) ** 2));
+    d = d.map((v, k) => Math.min(v, (px(ENCASTRES[reste[k]]) - px(c)) ** 2 + (py(ENCASTRES[reste[k]]) - py(c)) ** 2));
   }
-  return o;
-})();
+  return (cacheRepartis[cle] = o);
+}
 const BASSINS = { ombre: null, simple: null, jour: null };
 function creerBassin(sources, n, couleur, angle, ombre, taille) {
   const b = { sources, places: [] };
@@ -746,33 +839,48 @@ function preparerBassins(Q) {
   BASSINS.simple = creerBassin(ENCASTRES, Q.feux - Q.fentes, COUL_ENCASTRE, 0.9, false);
   BASSINS.jour = creerBassin(FENETRES, Q.jour, COUL_JOUR, 0.95, false);
 }
+function relancerLumieres() {            // étages déplacés (maquette) : chaque place reprend sa source à la nouvelle position
+  for (const b of Object.values(BASSINS)) if (b) for (const p of b.places) p.k = -2;
+}
 function viser(b, choix) {                // choix : indices de sources voulues (au plus une par place)
   const libres = [];
   for (const p of b.places) if (!choix.includes(p.veut)) libres.push(p);
   for (const k of choix) if (!b.places.some((p) => p.veut === k)) { const p = libres.shift(); if (p) p.veut = k; }
   for (const p of libres) p.veut = -1;
 }
+// étages éclairés : en visite, l'étage courant (les deux dans l'escalier) ; en maquette, les étages montrés
+function etagesEclaires(maquette) {
+  if (!MULTI) return [true];
+  if (maquette) return ETAGES.map((E) => vueMaquette === "deux" || vueMaquette === E.i);
+  const s = surEscalier();
+  return ETAGES.map((E) => E.i === joueur.etage || (s >= 0 && (E.i === ESCALIERS[s].bas || E.i === ESCALIERS[s].haut)));
+}
 let tLum = 0;
 function majLumieres(x, y, maquette, instant) {
-  const proches = (src, n) => src.map((s, k) => [(s.x - x) ** 2 + (s.y - y) ** 2, k]).sort((a, b) => a[0] - b[0]).slice(0, n).map((a) => a[1]);
+  const ok = etagesEclaires(maquette), zc = MULTI && !maquette ? joueur.z : 0;
+  const proches = (src, n) => src.map((s, k) => [ok[s.E.i] ? (s.x - x) ** 2 + (s.y - y) ** 2 + (MULTI ? ((s.E.z - zc) * 2) ** 2 : 0) : Infinity, k])
+    .filter((a) => a[0] < Infinity).sort((a, b) => a[0] - b[0]).slice(0, n).map((a) => a[1]);
   const no = BASSINS.ombre.places.length, ns = BASSINS.simple.places.length;
-  const enc = maquette ? REPARTIS.slice(0, no + ns) : proches(ENCASTRES, no + ns);
+  const enc = maquette ? repartis(ok).slice(0, no + ns) : proches(ENCASTRES, no + ns);
   viser(BASSINS.ombre, enc.slice(0, no)); viser(BASSINS.simple, enc.slice(no));
   viser(BASSINS.jour, maquette ? [] : proches(FENETRES, BASSINS.jour.places.length));
   // fondu en temps réel (même si l'image est lente) : ¼ s pour éteindre une place, ¼ s pour la rallumer ailleurs
   const t = performance.now(), dt = instant ? 2 : Math.min(2, (t - tLum) / 250); tLum = t;
   for (const b of Object.values(BASSINS)) for (const p of b.places) {
+    if (p.k === -2) { p.k = -1; p.f = 0; }
     if (p.k !== p.veut) {
       const reste = dt - p.f; p.f = Math.max(0, p.f - dt);
       if (p.f === 0) {
         p.k = p.veut;
-        if (p.k >= 0) { const s = b.sources[p.k]; p.l.position.copy(s.pos); p.l.target.position.copy(s.cible); p.l.target.updateMatrixWorld(); p.l.updateMatrixWorld();
+        if (p.k >= 0) { const s = b.sources[p.k]; p.l.position.copy(s.pos).add(s.E.decal); p.l.target.position.copy(s.cible).add(s.E.decal);
+          p.l.target.updateMatrixWorld(); p.l.updateMatrixWorld();
           if (p.l.castShadow) renderer.shadowMap.needsUpdate = true; }
         p.f = instant ? 1 : p.k >= 0 ? Math.min(1, Math.max(0, reste)) : 0;     // le temps qui reste sert à rallumer
       }
     } else if (p.k >= 0) p.f = Math.min(1, p.f + dt);
     p.l.intensity = p.k >= 0 ? b.sources[p.k].i * p.f : 0;
   }
+  for (const q of LAMPES) q.l.intensity = ok[q.E.i] ? q.i : 0;    // lampes : allumées sur les étages éclairés seulement
   ambiance.intensity = maquette ? 1.0 : 0.25; soleil.intensity = maquette ? 1.6 : 0;
 }
 function ombresPortees() {               // qui projette et reçoit des ombres (le verre et les voiles ne projettent pas)
@@ -783,16 +891,17 @@ function ombresPortees() {               // qui projette et reçoit des ombres (
     o.castShadow = !mats.some((m) => m.transparent || m.isMeshBasicMaterial) && g !== gSols;
   });
 }
+
 ombresPortees();
 preparerBassins(QUALITES[qualite]);
 majLumieres(S.depart.x, S.depart.y, false, true);
 
 // ---------- reflets : une image à 360° de la pièce sert d'environnement (miroirs, métal, verre)
-let recapturerReflets = () => {};      // refait l'environnement (après le mouvement d'une commande)
+let recapturerReflets = () => {};      // refait l'environnement (après le mouvement d'une commande, ou à l'arrivée sur un étage)
 {
   const rt = new THREE.WebGLCubeRenderTarget(256, { type: THREE.HalfFloatType });
   const cc = new THREE.CubeCamera(0.05, 60, rt);
-  cc.position.copy(P(S.depart.x - 120, S.depart.y - 40, 55)); scene.add(cc);
+  cc.position.copy(P(S.depart.x - 120, S.depart.y - 40, 55 + joueur.z)); scene.add(cc);
   let envRT = null;
   const capturer = () => {
     cc.update(renderer, scene);
@@ -800,22 +909,28 @@ let recapturerReflets = () => {};      // refait l'environnement (après le mouv
     scene.environment = nouv.texture; if (envRT) envRT.dispose(); envRT = nouv;
     MAT.miroir.envMap = rt.texture; MAT.miroir.needsUpdate = true;
     // chaque miroir reçoit sa propre image, prise devant lui à hauteur d'œil (rendue une seule fois)
-    const miroirs = []; gMob.traverse((o) => { if (o.isMesh && (o.material === MAT.miroir || o.material.name === "miroir")) miroirs.push(o); });
-    for (const o of miroirs) {
-      const b = new THREE.Box3().setFromObject(o), c = b.getCenter(new THREE.Vector3()), t = b.getSize(new THREE.Vector3());
-      const n = t.x < t.z ? new THREE.Vector3(Math.sign(228 * K - c.x) || 1, 0, 0) : new THREE.Vector3(0, 0, Math.sign(-190 * K - c.z) || 1);
-      const r2 = o.userData.rtMiroir || new THREE.WebGLCubeRenderTarget(256), c2 = new THREE.CubeCamera(0.05, 40, r2);
-      o.userData.rtMiroir = r2;               // une recapture réutilise la cible du miroir (pas de fuite de mémoire)
-      c2.position.copy(c).addScaledVector(n, 0.6); c2.position.y = 63 * K;
-      o.visible = false; c2.update(renderer, scene); o.visible = true;
-      if (!o.userData.rtPropre) { o.material = MAT.miroir.clone(); o.material.name = "miroir"; o.userData.rtPropre = true; }
-      o.material.envMap = r2.texture; o.material.needsUpdate = true;
+    for (const E of ETAGES) {
+      if (!E.g.mob.visible) continue;
+      const miroirs = []; E.g.mob.traverse((o) => { if (o.isMesh && (o.material === MAT.miroir || o.material.name === "miroir")) miroirs.push(o); });
+      for (const o of miroirs) {
+        const b = new THREE.Box3().setFromObject(o), c = b.getCenter(new THREE.Vector3()), t = b.getSize(new THREE.Vector3());
+        const n = t.x < t.z ? new THREE.Vector3(Math.sign(228 * K - c.x) || 1, 0, 0) : new THREE.Vector3(0, 0, Math.sign(-190 * K - c.z) || 1);
+        const r2 = o.userData.rtMiroir || new THREE.WebGLCubeRenderTarget(256), c2 = new THREE.CubeCamera(0.05, 40, r2);
+        o.userData.rtMiroir = r2;               // une recapture réutilise la cible du miroir (pas de fuite de mémoire)
+        c2.position.copy(c).addScaledVector(n, 0.6); c2.position.y = 63 * K + E.decal.y;
+        o.visible = false; c2.update(renderer, scene); o.visible = true;
+        if (!o.userData.rtPropre) { o.material = MAT.miroir.clone(); o.material.name = "miroir"; o.userData.rtPropre = true; }
+        o.material.envMap = r2.texture; o.material.needsUpdate = true;
+      }
     }
   };
   scene.background = ciel; renderer.shadowMap.needsUpdate = true;
   capturer();
-  recapturerReflets = () => { const f = scene.background; scene.background = ciel; capturer(); scene.background = f; };
-  THREE.DefaultLoadingManager.onLoad = recapturerReflets;
+  recapturerReflets = (ici) => {
+    if (ici) cc.position.copy(P(joueur.x, joueur.y, joueur.z + 55));    // nouvel étage : l'image est prise là où l'on est
+    const f = scene.background; scene.background = ciel; capturer(); scene.background = f;
+  };
+  THREE.DefaultLoadingManager.onLoad = () => recapturerReflets();
 }
 
 // ---------- chaîne de rendu : scène → cible multi-échantillonnée (couleur sRGB + profondeur) → passes plein écran
@@ -943,57 +1058,97 @@ function choisirQualite(q, manuel) {
 }
 
 // ---------- déplacements
-let mode = "visite";
-const joueur = { x: S.depart.x, y: S.depart.y, cap: S.depart.cap * Math.PI / 180, tangage: -0.08 };
-const orbite = { az: -0.6, el: 0.95, dist: 17, cx: (bx0 + bx1) / 2, cy: (by0 + by1) / 2 };
+const orbite = { az: -0.6, el: 0.95, dist: 17, cx: (bx0 + bx1) / 2, cy: (by0 + by1) / 2, cz: MULTI ? ETAGES[iDepart].z : 0 };
 const OEIL = 63;           // 5'-3"
 const RAYON = 9;           // rayon du visiteur (po)
 function placerCamera() {
   if (mode === "visite") {
-    camera.position.copy(P(joueur.x, joueur.y, OEIL));
+    const zo = joueur.zVue + OEIL;
+    camera.position.copy(P(joueur.x, joueur.y, zo));
     const dx = Math.cos(joueur.cap) * Math.cos(joueur.tangage), dy = Math.sin(joueur.cap) * Math.cos(joueur.tangage), dz = Math.sin(joueur.tangage);
-    camera.lookAt(P(joueur.x + dx * 100, joueur.y + dy * 100, OEIL + dz * 100));
+    camera.lookAt(P(joueur.x + dx * 100, joueur.y + dy * 100, zo + dz * 100));
   } else {
-    const c = new THREE.Vector3(orbite.cx * K, 0, -orbite.cy * K);
-    camera.position.set(c.x + orbite.dist * Math.cos(orbite.el) * Math.sin(orbite.az), orbite.dist * Math.sin(orbite.el),
+    const c = new THREE.Vector3(orbite.cx * K, orbite.cz * K, -orbite.cy * K);
+    camera.position.set(c.x + orbite.dist * Math.cos(orbite.el) * Math.sin(orbite.az), c.y + orbite.dist * Math.sin(orbite.el),
                         c.z + orbite.dist * Math.cos(orbite.el) * Math.cos(orbite.az));
     camera.lookAt(c);
   }
 }
-function libre(x, y, r = RAYON) {
-  for (const b of obstacles) if (x > b.x0 - r && x < b.x1 + r && y > b.y0 - r && y < b.y1 + r) return false;
+const dansZone = (q, x, y, r) => x > q[0] - r && x < q[2] + r && y > q[1] - r && y < q[3] + r;
+const porteBloque = (pt) => pt.etat === "fermee" || pt.f < 0.8;          // fermée, ou pas encore assez ouverte
+// libre sur l'étage E : murs et obstacles (sauf les marches de l'escalier qu'on emprunte, esc >= 0), trémies (plancher troué),
+// portes fermées (avecPortes), sans jamais enfermer le visiteur qui se tient déjà dans l'embrasure
+function libreE(E, x, y, r = RAYON, esc = -1, avecPortes = false) {
+  for (const b of E.obstacles) if (!(esc >= 0 && b.esc != null) && x > b.x0 - r && x < b.x1 + r && y > b.y0 - r && y < b.y1 + r) return false;
+  if (esc < 0) for (const t of E.trous) if (dans(t, x, y)) return false;
+  if (avecPortes) for (const pt of E.portes) if (porteBloque(pt) && dansZone(pt.p.zone, x, y, r) && !dansZone(pt.p.zone, joueur.x, joueur.y, r)) return false;
   return x > bx0 && x < bx1 && y > by0 - 60 && y < by1 + 80;
 }
+const libre = (x, y, r = RAYON) => libreE(ETAGES[joueur.etage], x, y, r);
+// escalier praticable : hauteur (absolue) du pas en (x, y), interpolée sur la grille de 2 po ; null hors de l'escalier
+function hauteurEsc(es, x, y) {
+  const g = es.grille, ic = Math.floor((x - g.x0) / g.pas), jc = Math.floor((y - g.y0) / g.pas);
+  if (ic < 0 || jc < 0 || ic >= g.nx || jc >= g.ny || g.z[jc * g.nx + ic] < 0) return null;
+  const fx = (x - g.x0) / g.pas - .5, fy = (y - g.y0) / g.pas - .5, i0 = Math.floor(fx), j0 = Math.floor(fy);
+  let s = 0, w = 0;
+  for (let dj = 0; dj < 2; dj++) for (let di = 0; di < 2; di++) {
+    const i = i0 + di, j = j0 + dj; if (i < 0 || j < 0 || i >= g.nx || j >= g.ny) continue;
+    const v = g.z[j * g.nx + i]; if (v < 0) continue;
+    const k = (di ? fx - i0 : 1 - fx + i0) * (dj ? fy - j0 : 1 - fy + j0);
+    s += v * k; w += k;
+  }
+  return w > 1e-6 ? ETAGES[es.bas].z + s / w : null;
+}
+// sol sous le visiteur qui est à la hauteur z : une marche (à une contremarche près) ou le plancher de l'étage le plus proche
+function solA(x, y, z) {
+  for (let k = 0; k < ESCALIERS.length; k++) {
+    const es = ESCALIERS[k], h = hauteurEsc(es, x, y);
+    if (h != null && Math.abs(h - z) <= 12) return { z: h, etage: h < (ETAGES[es.bas].z + ETAGES[es.haut].z) / 2 ? es.bas : es.haut, esc: k };
+  }
+  let m = 0; for (const E of ETAGES) if (Math.abs(E.z - z) < Math.abs(ETAGES[m].z - z)) m = E.i;
+  return Math.abs(ETAGES[m].z - z) <= 12 ? { z: ETAGES[m].z, etage: m, esc: -1 } : null;
+}
+function surEscalier() { if (!ESCALIERS.length) return -1; const s = solA(joueur.x, joueur.y, joueur.z); return s ? s.esc : -1; }
+function poser(x, y) {                   // essaie d'aller en (x, y) en marchant (marches, plancher, obstacles, portes)
+  const s = solA(x, y, joueur.z);
+  if (!s || !libreE(ETAGES[s.etage], x, y, RAYON, s.esc, true)) return false;
+  joueur.x = x; joueur.y = y; joueur.z = s.z;
+  if (s.etage !== joueur.etage) majEtageCourant(s.etage);
+  return true;
+}
 function marcher(av, lat, dt) {
-  const v = 70 * dt;   // po/s
+  const v = (surEscalier() >= 0 ? 50 : 70) * dt;   // po/s
   const dx = (Math.cos(joueur.cap) * av + Math.cos(joueur.cap - Math.PI / 2) * lat) * v;
   const dy = (Math.sin(joueur.cap) * av + Math.sin(joueur.cap - Math.PI / 2) * lat) * v;
-  if (libre(joueur.x + dx, joueur.y)) joueur.x += dx;
-  if (libre(joueur.x, joueur.y + dy)) joueur.y += dy;
+  poser(joueur.x + dx, joueur.y); poser(joueur.x, joueur.y + dy);
 }
 const angle = (a) => Math.atan2(Math.sin(a), Math.cos(a));
 
-// chemin automatique (A* sur une grille de 4 po), pour marcher d'un point touché à l'autre en passant par les portes
+// chemin automatique (A* sur une grille de 4 po par étage), pour marcher d'un point touché à l'autre en passant par les
+// portes (une porte fermée sur le chemin s'ouvre toute seule) et, d'un étage à l'autre, par l'escalier
 const G = 4, GX0 = bx0, GY0 = by0 - 60, NX = Math.ceil((bx1 - bx0) / G), NY = Math.ceil((by1 + 80 - GY0) / G);
-const grille = new Uint8Array(NX * NY);
-for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) grille[j * NX + i] = libre(GX0 + (i + .5) * G, GY0 + (j + .5) * G) ? 1 : 0;
+for (const E of ETAGES) {
+  E.grille = new Uint8Array(NX * NY);
+  for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) E.grille[j * NX + i] = libreE(E, GX0 + (i + .5) * G, GY0 + (j + .5) * G) ? 1 : 0;
+}
 const cellule = (x, y) => [Math.max(0, Math.min(NX - 1, Math.floor((x - GX0) / G))), Math.max(0, Math.min(NY - 1, Math.floor((y - GY0) / G)))];
-function plusProcheLibre(i, j) {
+function plusProcheLibre(i, j, E = ETAGES[joueur.etage]) {
   for (let r = 0; r < 12; r++) for (let dj = -r; dj <= r; dj++) for (let di = -r; di <= r; di++) {
     const a = i + di, b = j + dj;
-    if (a >= 0 && b >= 0 && a < NX && b < NY && grille[b * NX + a]) return [a, b];
+    if (a >= 0 && b >= 0 && a < NX && b < NY && E.grille[b * NX + a]) return [a, b];
   }
   return null;
 }
-function vue(x0, y0, x1, y1) {        // segment entièrement dans des cellules libres
+function vue(E, x0, y0, x1, y1) {        // segment entièrement dans des cellules libres
   const n = Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 2);
-  for (let k = 1; k <= n; k++) { const [i, j] = cellule(x0 + (x1 - x0) * k / n, y0 + (y1 - y0) * k / n); if (!grille[j * NX + i]) return false; }
+  for (let k = 1; k <= n; k++) { const [i, j] = cellule(x0 + (x1 - x0) * k / n, y0 + (y1 - y0) * k / n); if (!E.grille[j * NX + i]) return false; }
   return true;
 }
-function chemin(x0, y0, x1, y1) {
+function cheminE(E, x0, y0, x1, y1) {
+  const grille = E.grille;
   let a = cellule(x0, y0), b = cellule(x1, y1);
-  if (!grille[a[1] * NX + a[0]]) a = plusProcheLibre(...a);
-  if (!grille[b[1] * NX + b[0]]) b = plusProcheLibre(...b);
+  if (!grille[a[1] * NX + a[0]]) a = plusProcheLibre(...a, E);
+  if (!grille[b[1] * NX + b[0]]) b = plusProcheLibre(...b, E);
   if (!a || !b) return null;
   const N = NX * NY, cout = new Float32Array(N).fill(Infinity), de = new Int32Array(N).fill(-1), fait = new Uint8Array(N);
   const s = a[1] * NX + a[0], t = b[1] * NX + b[0]; cout[s] = 0;
@@ -1019,43 +1174,119 @@ function chemin(x0, y0, x1, y1) {
   if (de[t] < 0 && s !== t) return null;
   const pts = []; for (let k = t; k >= 0; k = de[k]) { pts.push([GX0 + (k % NX + .5) * G, GY0 + (Math.floor(k / NX) + .5) * G]); if (k === s) break; }
   pts.reverse(); pts[0] = [x0, y0];
-  if (libre(x1, y1)) pts[pts.length - 1] = [x1, y1];
+  if (libreE(E, x1, y1)) pts[pts.length - 1] = [x1, y1];
   const lisse = [pts[0]];                    // on tend la ficelle : on garde seulement les virages nécessaires
   let i = 0;
   while (i < pts.length - 1) {
     let j = i + 1;
-    while (j + 1 < pts.length && vue(pts[i][0], pts[i][1], pts[j + 1][0], pts[j + 1][1])) j++;
+    while (j + 1 < pts.length && vue(E, pts[i][0], pts[i][1], pts[j + 1][0], pts[j + 1][1])) j++;
     lisse.push(pts[j]); i = j;
   }
-  return lisse;
+  return lisse.map((q) => [q[0], q[1], E.i]);
+}
+const chemin = (x0, y0, x1, y1) => cheminE(ETAGES[joueur.etage], x0, y0, x1, y1);
+// ligne de foulée d'un escalier, de l'étage f0 vers l'étage f1 ; le bout d'arrivée est reculé jusqu'au plancher libre
+function ligneEscalier(k, versHaut) {
+  const es = ESCALIERS[k], l = es.chemin.map((q) => [q[0], q[1], -1]);
+  if (!versHaut) l.reverse();
+  const E0 = ETAGES[versHaut ? es.bas : es.haut], E1 = ETAGES[versHaut ? es.haut : es.bas];
+  l[0][2] = E0.i; l[l.length - 1][2] = E1.i;
+  const [ax, ay] = l[l.length - 2], [bx, by] = l[l.length - 1], d = Math.hypot(bx - ax, by - ay) || 1;
+  for (let s = d; s >= 2; s -= 2) {                  // arrivée : le plus loin possible sur le plancher libre (≤ 18 po)
+    const x = ax + (bx - ax) * s / d, y = ay + (by - ay) * s / d;
+    if (libreE(E1, x, y, RAYON - 3)) { l[l.length - 1] = [x, y, E1.i]; break; }
+  }
+  return l;
+}
+function escalierEntre(a, b) { return ESCALIERS.findIndex((e) => (e.bas === a && e.haut === b) || (e.bas === b && e.haut === a)); }
+// trajet (points [x, y, étage ou -1 dans l'escalier]) jusqu'à (x, y) sur l'étage f, au besoin par l'escalier
+function trajetVers(x, y, f) {
+  const ici = solA(joueur.x, joueur.y, joueur.z), esc = ici ? ici.esc : -1;
+  if (f === joueur.etage && esc < 0) return cheminE(ETAGES[f], joueur.x, joueur.y, x, y);
+  const k = esc >= 0 ? esc : escalierEntre(joueur.etage, f);
+  if (k < 0) return null;
+  const es = ESCALIERS[k], monte = f === es.haut, l = ligneEscalier(k, monte);
+  let debut;
+  if (esc >= 0) {                                    // déjà dans l'escalier : on continue depuis le point de foulée le plus proche
+    let m = 0, dm = Infinity;
+    l.forEach((q, i) => { const d = (q[0] - joueur.x) ** 2 + (q[1] - joueur.y) ** 2; if (d < dm) { dm = d; m = i; } });
+    debut = [[joueur.x, joueur.y, -1], ...l.slice(m + 1)];
+  } else {
+    const c1 = cheminE(ETAGES[joueur.etage], joueur.x, joueur.y, l[0][0], l[0][1]);
+    if (!c1) return null;
+    debut = [...c1, ...l.slice(1)];
+  }
+  const fin = debut[debut.length - 1];
+  if (Math.hypot(fin[0] - x, fin[1] - y) < 6) return debut;
+  const c2 = cheminE(ETAGES[f], fin[0], fin[1], x, y);
+  return c2 ? [...debut, ...c2.slice(1)] : null;
+}
+// portes fermées que le trajet traverse : elles s'ouvrent toutes seules
+function ouvrirPortesSur(pts) {
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0] = pts[i - 1], [x1, y1, f] = pts[i], E = ETAGES[f >= 0 ? f : pts[i - 1][2]];
+    if (!E) continue;
+    const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 3));
+    for (const pt of E.portes) {
+      if (pt.etat !== "fermee") continue;
+      for (let k = 0; k <= n; k++) if (dansZone(pt.p.zone, x0 + (x1 - x0) * k / n, y0 + (y1 - y0) * k / n, 2)) { basculerPorte(pt.p.id, "ouverte"); break; }
+    }
+  }
 }
 
-// trajets en cours : marche (chemin) ou vol court (changement de pièce), interrompus par toute commande manuelle
+// trajets en cours : marche (chemin) ou vol court (changement de pièce ou d'étage), interrompus par toute commande manuelle
 let trajet = null, vol = null;
-function allerA(x, y, capFinal) {
-  const c = chemin(joueur.x, joueur.y, x, y);
+function allerA(x, y, capFinal, f = joueur.etage) {
+  const c = trajetVers(x, y, f);
   if (!c || c.length < 2) return false;
-  vol = null; trajet = { pts: c, i: 1, capFinal }; marque(c[c.length - 1][0], c[c.length - 1][1]);
+  vol = null; trajet = { pts: c, i: 1, capFinal }; marque(c[c.length - 1][0], c[c.length - 1][1], f);
+  ouvrirPortesSur(c);
   return true;
 }
 function volerA(v) {
   trajet = null;
-  vol = { t: 0, debut: performance.now(), de: { ...joueur }, a: { x: v.x, y: v.y, cap: joueur.cap + angle(v.cap * Math.PI / 180 - joueur.cap), tangage: -0.08 } };
+  const f = v.etage == null ? joueur.etage : idEtage(v.etage);
+  vol = { t: 0, debut: performance.now(), de: { ...joueur }, etage: f, change: f !== joueur.etage || joueur.z !== ETAGES[f].z,
+          a: { x: v.x, y: v.y, cap: joueur.cap + angle(v.cap * Math.PI / 180 - joueur.cap), tangage: -0.08, z: ETAGES[f].z } };
+}
+// monter ou descendre : on marche jusqu'à l'escalier, on le parcourt en douceur et on s'arrête un peu après l'arrivée
+function allerEtage(f) {
+  f = idEtage(f);
+  const s = surEscalier(), k = s >= 0 ? s : escalierEntre(joueur.etage, f);
+  if (k < 0 || f === joueur.etage && s < 0) return false;
+  const l = ligneEscalier(k, f === ESCALIERS[k].haut), fin = l[l.length - 1], av = l[l.length - 2];
+  const cap = Math.atan2(fin[1] - av[1], fin[0] - av[0]);
+  if (mode !== "visite") choisirMode("visite");
+  if (allerA(fin[0], fin[1], cap, f)) return true;
+  volerA({ x: fin[0], y: fin[1], cap: cap * 180 / Math.PI, etage: f });      // pas de chemin (pièce fermée) : on y vole
+  return true;
 }
 const voile = $("voile");
 function avancerTrajets(dt) {
   if (vol) {
-    vol.t = Math.min(1, (performance.now() - vol.debut) / 900);     // durée réelle, même si l'image est lente
+    vol.t = Math.min(1, (performance.now() - vol.debut) / (vol.change ? 1300 : 900));     // durée réelle, même si l'image est lente
     const e = vol.t < .5 ? 4 * vol.t ** 3 : 1 - (-2 * vol.t + 2) ** 3 / 2;
     for (const k of ["x", "y", "cap", "tangage"]) joueur[k] = vol.de[k] + (vol.a[k] - vol.de[k]) * e;
-    voile.style.opacity = String(Math.sin(Math.PI * vol.t) * 0.75);
+    if (vol.change) { joueur.z = joueur.zVue = vol.t < .5 ? vol.de.z : vol.a.z; if (vol.t >= .5 && joueur.etage !== vol.etage) majEtageCourant(vol.etage); }
+    voile.style.opacity = String(Math.sin(Math.PI * vol.t) * (vol.change ? 1 : 0.75));
     if (vol.t >= 1) { vol = null; voile.style.opacity = "0"; }
   }
   if (trajet) {
-    const [tx, ty] = trajet.pts[trajet.i], dx = tx - joueur.x, dy = ty - joueur.y, d = Math.hypot(dx, dy), pas = 85 * dt;
+    const [tx, ty] = trajet.pts[trajet.i], dx = tx - joueur.x, dy = ty - joueur.y, d = Math.hypot(dx, dy);
+    const esc = surEscalier(), pas = (esc >= 0 ? 55 : 85) * dt;
     const visee = Math.atan2(dy, dx);
     if (d > 6) joueur.cap += angle(visee - joueur.cap) * Math.min(1, dt * 4);
-    if (d <= pas) { joueur.x = tx; joueur.y = ty; trajet.i++; } else { joueur.x += dx / d * pas; joueur.y += dy / d * pas; }
+    const nx = d <= pas ? tx : joueur.x + dx / d * pas, ny = d <= pas ? ty : joueur.y + dy / d * pas;
+    // une porte sur le passage : on attend qu'elle soit ouverte ; refermée entre-temps : on s'arrête devant
+    const E = ETAGES[joueur.etage];
+    for (const pt of E.portes) if (porteBloque(pt) && dansZone(pt.p.zone, nx, ny, 3) && !dansZone(pt.p.zone, joueur.x, joueur.y, 3)) {
+      if (pt.etat === "fermee") stop();
+      return;
+    }
+    joueur.x = nx; joueur.y = ny;
+    if (d <= pas) trajet.i++;
+    const s = solA(joueur.x, joueur.y, joueur.z);
+    if (s) { joueur.z = s.z; if (s.etage !== joueur.etage) majEtageCourant(s.etage); }
     if (trajet.i >= trajet.pts.length) { trajet = null; cacherMarque(); }
   }
 }
@@ -1064,38 +1295,127 @@ function stop() { trajet = null; cacherMarque(); }
 // repère au sol du point visé
 const anneau = new THREE.Mesh(new THREE.RingGeometry(0.16, 0.22, 40), new THREE.MeshBasicMaterial({ color: "#ffffff", transparent: true, opacity: .85, depthWrite: false }));
 anneau.rotation.x = -Math.PI / 2; anneau.visible = false; scene.add(anneau);
-function marque(x, y) { anneau.position.copy(P(x, y, 0.4)); anneau.visible = true; }
+function marque(x, y, f = joueur.etage) { anneau.position.copy(P(x, y, 0.4)).add(ETAGES[f].decal); anneau.visible = true; }
 function cacherMarque() { anneau.visible = false; }
+
+// ---------- étage courant : plan, bouton Monter / Descendre, éclairage ; à l'arrivée, l'image des reflets est refaite
+let refletsEtage = 0;
+function majEtageCourant(f, instant) {
+  joueur.etage = f;
+  if (!MULTI) return;
+  refletsEtage = performance.now(); renderer.shadowMap.needsUpdate = true;
+  majBoutonsEtage(); planEtage = -1;
+  if (instant) { joueur.z = joueur.zVue = ETAGES[f].z; }
+}
+// étages cachés en visite : l'autre étage ne se voit que par la trémie (ou depuis l'escalier) ; s'il n'est pas dans le
+// champ de vision, on ne le dessine pas (deux fois moins d'objets à dessiner sur la tablette)
+const BOITES_TREMIES = ESCALIERS.map((es) => {
+  const [x0, y0, x1, y1] = es.emprise, Eb = ETAGES[es.bas], Eh = ETAGES[es.haut];
+  return new THREE.Box3(new THREE.Vector3(x0 * K, (Eb.z + Eb.H - 2) * K, -y1 * K), new THREE.Vector3(x1 * K, (Eh.z + 2) * K, -y0 * K));
+});
+const frustum = new THREE.Frustum(), mPV = new THREE.Matrix4();
+function majVisibiliteEtages() {
+  if (!MULTI) return;
+  let vus = ETAGES.map((E) => E.i === joueur.etage);
+  if (mode === "visite") {
+    camera.updateMatrixWorld(); mPV.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); frustum.setFromProjectionMatrix(mPV);
+    const s = surEscalier();
+    ESCALIERS.forEach((es, k) => {
+      if (s === k || ((es.bas === joueur.etage || es.haut === joueur.etage) && frustum.intersectsBox(BOITES_TREMIES[k]))) { vus[es.bas] = true; vus[es.haut] = true; }
+    });
+  } else vus = ETAGES.map((E) => vueMaquette === "deux" || vueMaquette === E.i);
+  for (const E of ETAGES) {
+    if (E.vu === vus[E.i]) continue;
+    E.vu = vus[E.i];
+    for (const k of ["murs", "mob", "plafond", "sols", "coupe"]) E.g[k].visible = E.vu;
+    renderer.shadowMap.needsUpdate = true;
+  }
+}
+// maquette : un étage seul (à sa hauteur), ou les deux, le rez-de-chaussée à droite et plus haut (en escalier)
+function decalMaquette(E) {
+  if (mode !== "maquette" || vueMaquette !== "deux" || E.i === 0) return [0, 0];
+  return [E.i * ((bx1 - bx0) + 90), 0];
+}
+function poserEtages() {
+  for (const E of ETAGES) {
+    const [dx, dy] = decalMaquette(E);
+    E.decal.set(dx * K, E.z * K, -dy * K);
+    for (const g of Object.values(E.g)) g.position.copy(E.decal);
+  }
+  relancerLumieres();
+}
+function choisirVueMaquette(v) {
+  if (!MULTI) return;
+  vueMaquette = v === "deux" ? "deux" : idEtage(v);
+  poserEtages(); majVisibiliteEtages();
+  const montres = ETAGES.filter((E) => vueMaquette === "deux" || vueMaquette === E.i);
+  const xs = montres.flatMap((E) => [E.d.bornes[0] + E.decal.x / K, E.d.bornes[2] + E.decal.x / K]);
+  orbite.cx = (Math.min(...xs) + Math.max(...xs)) / 2; orbite.cy = (by0 + by1) / 2;
+  orbite.cz = montres.reduce((a, E) => a + E.z, 0) / montres.length;
+  if (mode === "maquette") { orbite.dist = vueMaquette === "deux" ? 27 : 17; orbite.az = vueMaquette === "deux" ? -0.2 : -0.6; }
+  majBoutonsEtage(); majEtiquettes(true); planEtage = -1;
+  renderer.shadowMap.needsUpdate = true;
+}
+
+// ---------- portes : toucher une porte l'ouvre ou la ferme (animation douce) ; basculerPorte(id[, "ouverte" | "fermee"])
+function basculerPorte(id, etat) {
+  const pt = PORTES[id]; if (!pt) return null;
+  if (etat !== "ouverte" && etat !== "fermee") etat = pt.etat === "fermee" ? "ouverte" : "fermee";
+  pt.etat = etat;
+  const a = etat === "ouverte" ? 1 : 0;
+  if (pt.f !== a) pt.anim = { de: pt.f, a, t0: performance.now(), d: (pt.p.type === "coulissante" ? 1100 : 900) * Math.abs(a - pt.f) };
+  masquerAstuce();
+  return etat;
+}
+function animerPortes(t) {
+  let bouge = false;
+  for (const pt of Object.values(PORTES)) {
+    if (!pt.anim) continue;
+    const u = pt.anim.d > 0 ? Math.min(1, Math.max(0, (t - pt.anim.t0) / pt.anim.d)) : 1;
+    pt.f = pt.anim.de + (pt.anim.a - pt.anim.de) * ADOUCIR(u); poserPorte(pt); bouge = true;
+    if (u >= 1) { pt.f = pt.anim.a; poserPorte(pt); pt.anim = null; }
+  }
+  if (bouge) renderer.shadowMap.needsUpdate = true;
+}
 
 // ---------- gestes : un doigt glisse = regarder (ou tourner la maquette) ; toucher = marcher là ; deux doigts = zoom
 const cnv = renderer.domElement, doigts = new Map();
 let geste = null;
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
-function solSous(cx, cy) {
+const estVu = (o) => { for (let q = o; q; q = q.parent) if (!q.visible) return false; return true; };
+function viser3D(cx, cy) {
   const r = cnv.getBoundingClientRect();
   ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
   ray.setFromCamera(ndc, camera);
-  // le mobilier ne bloque pas (on vise le plancher dessous) ; en maquette, les murs non plus
-  const h = ray.intersectObjects(mode === "visite" ? [gSols, gMurs] : [gSols], true)[0];
-  if (!h || !gSols.children.includes(h.object)) return null;
-  return { x: h.point.x / K, y: -h.point.z / K, piece: h.object.userData.piece };
 }
-// objet d'une commande sous le doigt : premier objet visible et opaque touché (un mur ou un meuble devant le cache)
-function commandeSous(cx, cy) {
-  if (!Object.keys(CMD).length) return null;
-  const r = cnv.getBoundingClientRect();
-  ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
-  ray.setFromCamera(ndc, camera);
+function solSous(cx, cy) {
+  viser3D(cx, cy);
+  // le mobilier ne bloque pas (on vise le plancher dessous) ; en maquette, les murs non plus
+  const h = ray.intersectObjects(mode === "visite" ? [gSols, gMurs, gPlafond] : [gSols], true).find((q) => estVu(q.object));
+  if (!h) return null;
+  if (h.object.userData.esc != null && mode === "visite") return { esc: h.object.userData.esc, z: h.point.y / K };
+  if (h.object.userData.piece == null) return null;
+  const E = ETAGES[h.object.userData.etage || 0];
+  return { x: (h.point.x - E.decal.x) / K, y: -(h.point.z - E.decal.z) / K, piece: h.object.userData.piece, etage: E.i };
+}
+// objet mobile sous le doigt (commande : toile... ; porte) : premier objet visible et opaque touché (un mur ou un meuble
+// devant le cache) ; le verre d'une porte vitrée compte
+function objetSous(cx, cy) {
+  if (!Object.keys(CMD).length && !Object.keys(PORTES).length) return null;
+  viser3D(cx, cy);
   for (const h of ray.intersectObjects(mode === "visite" ? [gMurs, gPlafond, gMob] : [gCoupe, gMob], true)) {
-    let o = h.object, vu = true, id = null;
-    for (let q = o; q; q = q.parent) { if (!q.visible) vu = false; if (id == null && q.userData.commande) id = q.userData.commande; }
+    let o = h.object, vu = true, id = null, porte = null;
+    for (let q = o; q; q = q.parent) { if (!q.visible) vu = false; if (id == null && q.userData.commande) id = q.userData.commande; if (porte == null && q.userData.porte) porte = q.userData.porte; }
     if (!vu) continue;
     const m = Array.isArray(o.material) ? o.material[h.face ? h.face.materialIndex : 0] : o.material;
+    if (porte) return { porte };
     if (m && (m.transparent && m.opacity < 0.5 || m.isMeshBasicMaterial)) continue;   // verre, vitres, ombres de contact
-    return id;
+    return id ? { commande: id } : null;
   }
   return null;
 }
+const commandeSous = (cx, cy) => { const o = objetSous(cx, cy); return o && o.commande || null; };
+const porteSous = (cx, cy) => { const o = objetSous(cx, cy); return o && o.porte || null; };
 cnv.addEventListener("pointerdown", (e) => {
   cnv.setPointerCapture(e.pointerId);
   doigts.set(e.pointerId, { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now(), bouton: e.button });
@@ -1126,19 +1446,24 @@ function finDoigt(e) {
   if (!f || doigts.size) return;
   const tap = Math.hypot(e.clientX - f.x0, e.clientY - f.y0) < 10 && performance.now() - f.t0 < 800;
   if (!tap) return;
-  const id = commandeSous(e.clientX, e.clientY);       // toucher un objet mobile (toile...) : il monte ou descend
-  if (id) { commander(id, "basculer"); return; }
+  const o = objetSous(e.clientX, e.clientY);          // toucher un objet mobile : la toile monte ou descend, la porte s'ouvre ou se ferme
+  if (o && o.commande) { commander(o.commande, "basculer"); return; }
+  if (o && o.porte) { basculerPorte(o.porte); return; }
   const s = solSous(e.clientX, e.clientY);
   if (!s) return;
-  if (mode === "visite") allerA(s.x, s.y);
-  else entrerDans(s.x, s.y);
+  if (s.esc != null) {                                // une marche : on monte (ou on descend) l'escalier
+    const es = ESCALIERS[s.esc]; if (es) allerEtage(s.z > joueur.z + 4 ? es.haut : es.bas);
+    return;
+  }
+  if (mode === "visite") allerA(s.x, s.y, undefined, s.etage);
+  else entrerDans(s.x, s.y, s.etage);
 }
 cnv.addEventListener("pointerup", finDoigt);
 let survol = 0;                                         // souris : main au-dessus d'un objet mobile
 cnv.addEventListener("pointermove", (e) => {
-  if (e.pointerType !== "mouse" || doigts.size || !Object.keys(CMD).length) return;
+  if (e.pointerType !== "mouse" || doigts.size || (!Object.keys(CMD).length && !Object.keys(PORTES).length)) return;
   const t = performance.now(); if (t - survol < 120) return; survol = t;
-  cnv.style.cursor = commandeSous(e.clientX, e.clientY) ? "pointer" : "";
+  cnv.style.cursor = objetSous(e.clientX, e.clientY) ? "pointer" : "";
 });
 cnv.addEventListener("pointercancel", (e) => { doigts.delete(e.pointerId); geste = null; });
 cnv.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -1160,14 +1485,16 @@ function deplacerOrbite(dx, dy) {
   const k = 2 * orbite.dist * Math.tan(camera.fov * Math.PI / 360) / Math.max(300, innerHeight) / K;   // pouces par pixel
   const ca = Math.cos(orbite.az), sa = Math.sin(orbite.az);
   const tx = (-ca * dx - sa * dy) * k, tz = (sa * dx - ca * dy) * k;   // déplacement en repère three (x, z)
-  orbite.cx = Math.min(bx1, Math.max(bx0, orbite.cx + tx)); orbite.cy = Math.min(by1, Math.max(by0, orbite.cy - tz));
+  const xmax = bx1 + (MULTI && vueMaquette === "deux" ? (ETAGES.length - 1) * ((bx1 - bx0) + 90) : 0);
+  orbite.cx = Math.min(xmax, Math.max(bx0, orbite.cx + tx)); orbite.cy = Math.min(by1, Math.max(by0, orbite.cy - tz));
 }
-function entrerDans(x, y) {
+function entrerDans(x, y, f = MULTI && vueMaquette !== "deux" ? vueMaquette : joueur.etage) {
   // depuis la maquette : on se place au point touché, le regard dans la direction de la caméra
-  const cap = Math.atan2(Math.cos(orbite.az), -Math.sin(orbite.az));
+  const cap = Math.atan2(Math.cos(orbite.az), -Math.sin(orbite.az)), E = ETAGES[f];
   let p = { x, y };
-  if (!libre(x, y)) { const c = plusProcheLibre(...cellule(x, y)); if (c) p = { x: GX0 + (c[0] + .5) * G, y: GY0 + (c[1] + .5) * G }; }
+  if (!libreE(E, x, y)) { const c = plusProcheLibre(...cellule(x, y), E); if (c) p = { x: GX0 + (c[0] + .5) * G, y: GY0 + (c[1] + .5) * G }; }
   joueur.x = p.x; joueur.y = p.y; joueur.cap = cap; joueur.tangage = -0.08;
+  if (f !== joueur.etage || joueur.z !== E.z) majEtageCourant(f, true);
   choisirMode("visite");
   voile.style.opacity = ".6"; setTimeout(() => (voile.style.opacity = "0"), 60);
 }
@@ -1189,30 +1516,42 @@ function bougerJoy(e) {
   jv = { x, y }; bouton.style.transform = `translate(${x * 40}px, ${y * 40}px)`;
 }
 
-// ---------- plan miniature (repère du plan : façade en bas)
+// ---------- plan miniature (repère du plan : façade en bas), un fond par étage
 const plan = $("plan"), pg = plan.getContext("2d");
-const fond = document.createElement("canvas"); fond.width = plan.width; fond.height = plan.height;
 const MARGE = 14, ech = Math.min((plan.width - 2 * MARGE) / (bx1 - bx0), (plan.height - 2 * MARGE) / (by1 + 60 - (by0 - 50)));
 const ox = (plan.width - (bx1 - bx0) * ech) / 2 - bx0 * ech, oy = plan.height - (plan.height - (by1 + 60 - (by0 - 50)) * ech) / 2 + (by0 - 50) * ech;
 const vx = (x) => ox + x * ech, vy = (y) => oy - y * ech;
-{
+for (const E of ETAGES) {
+  const D = E.d, fond = document.createElement("canvas"); fond.width = plan.width; fond.height = plan.height; E.fond = fond;
   const g = fond.getContext("2d");
   const couleurSol = { chene: "#dcc6a4", beton: "#cfcac2", caoutchouc: "#55575a", porcelaine: "#e4e1db", terrazzo: "#e6e1d8" };
-  for (const s of S.sols) {
-    g.fillStyle = couleurSol[s.mat] || "#e8dfcf"; g.beginPath();
-    s.pts.forEach(([x, y], i) => (i ? g.lineTo(vx(x), vy(y)) : g.moveTo(vx(x), vy(y)))); g.closePath(); g.fill();
+  const trace = (pts) => pts.forEach(([x, y], i) => (i ? g.lineTo(vx(x), vy(y)) : g.moveTo(vx(x), vy(y))));
+  for (const s of D.sols) {
+    g.fillStyle = couleurSol[s.mat] || "#e8dfcf"; g.beginPath(); trace(s.pts); g.closePath();
+    for (const t of s.trous || []) { trace(t); g.closePath(); }
+    g.fill("evenodd");
   }
-  for (const b of S.boites) if (b.mur && b.z0 === 0 && b.z1 >= S.H - 0.01 || (b.mat === "placage" && b.z1 >= S.H - 0.01)) {
+  for (const b of D.boites) if (b.mur && b.z0 === 0 && b.z1 >= D.H - 0.01 || (b.mat === "placage" && b.z1 >= D.H - 0.01)) {
     g.fillStyle = b.mat === "verre" ? "#8fb6c2" : "#2b2d30";
     g.fillRect(vx(b.x0), vy(b.y1), Math.max(1.5, (b.x1 - b.x0) * ech), Math.max(1.5, (b.y1 - b.y0) * ech));
   }
-  for (const o of S.obstacles || []) { g.strokeStyle = "#6b5a44"; g.lineWidth = 1.5; g.strokeRect(vx(o.x0), vy(o.y1), (o.x1 - o.x0) * ech, (o.y1 - o.y0) * ech);
+  for (const o of D.obstacles || []) { g.strokeStyle = "#6b5a44"; g.lineWidth = 1.5; g.strokeRect(vx(o.x0), vy(o.y1), (o.x1 - o.x0) * ech, (o.y1 - o.y0) * ech);
     for (let y = o.y0; y < o.y1; y += 9.4) { g.beginPath(); g.moveTo(vx(o.x0), vy(y)); g.lineTo(vx(o.x1), vy(y)); g.stroke(); } }
+  for (const t of E.trous) {                         // trémie : vide hachuré (on voit l'escalier qui descend)
+    g.save(); g.beginPath(); trace(t); g.closePath(); g.fillStyle = "#cfc6b8"; g.fill(); g.clip();
+    g.strokeStyle = "#6b5a44"; g.lineWidth = 1.5;
+    for (let y = by0 - 60; y < by1 + 80; y += 9.4) { g.beginPath(); g.moveTo(vx(bx0), vy(y)); g.lineTo(vx(bx1), vy(y)); g.stroke(); }
+    g.restore(); g.strokeStyle = "#2b2d30"; g.lineWidth = 2; g.beginPath(); trace(t); g.closePath(); g.stroke();
+  }
 }
+let planEtage = -1;
 function dessinerPlan() {
-  pg.clearRect(0, 0, plan.width, plan.height); pg.drawImage(fond, 0, 0);
+  const f = mode === "visite" || vueMaquette === "deux" ? joueur.etage : vueMaquette;
+  if (MULTI && f !== planEtage) { planEtage = f; $("plan-nom").textContent = ETAGES[f].nom; }
+  pg.clearRect(0, 0, plan.width, plan.height); pg.drawImage(ETAGES[f].fond, 0, 0);
   if (trajet) { pg.strokeStyle = "rgba(185,142,94,.9)"; pg.lineWidth = 4; pg.setLineDash([8, 6]); pg.beginPath(); pg.moveTo(vx(joueur.x), vy(joueur.y));
-    for (let k = trajet.i; k < trajet.pts.length; k++) pg.lineTo(vx(trajet.pts[k][0]), vy(trajet.pts[k][1])); pg.stroke(); pg.setLineDash([]); }
+    for (let k = trajet.i; k < trajet.pts.length; k++) { const q = trajet.pts[k]; if (q[2] >= 0 && q[2] !== f) break; pg.lineTo(vx(q[0]), vy(q[1])); }
+    pg.stroke(); pg.setLineDash([]); }
   if (mode !== "visite") return;
   const x = vx(joueur.x), y = vy(joueur.y), a = -joueur.cap, o = Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect);
   pg.fillStyle = "rgba(185,142,94,.35)"; pg.beginPath(); pg.moveTo(x, y); pg.arc(x, y, 60, a - o, a + o); pg.closePath(); pg.fill();
@@ -1221,10 +1560,10 @@ function dessinerPlan() {
 plan.addEventListener("pointerdown", (e) => {
   const r = plan.getBoundingClientRect();
   const px = (e.clientX - r.left) * plan.width / r.width, py = (e.clientY - r.top) * plan.height / r.height;
-  const x = (px - ox) / ech, y = (oy - py) / ech;
+  const x = (px - ox) / ech, y = (oy - py) / ech, f = mode === "visite" || vueMaquette === "deux" ? joueur.etage : vueMaquette;
   masquerAstuce();
-  if (mode !== "visite") { entrerDans(x, y); return; }
-  if (!allerA(x, y)) { const c = plusProcheLibre(...cellule(x, y)); if (c) volerA({ x: GX0 + (c[0] + .5) * G, y: GY0 + (c[1] + .5) * G, cap: joueur.cap * 180 / Math.PI }); }
+  if (mode !== "visite") { entrerDans(x, y, f); return; }
+  if (!allerA(x, y, undefined, f)) { const c = plusProcheLibre(...cellule(x, y), ETAGES[f]); if (c) volerA({ x: GX0 + (c[0] + .5) * G, y: GY0 + (c[1] + .5) * G, cap: joueur.cap * 180 / Math.PI, etage: f }); }
 });
 
 // ---------- interface
@@ -1238,6 +1577,7 @@ function choisirMode(m) {
   $("m-maquette").setAttribute("aria-pressed", String(m === "maquette"));
   joy.hidden = !(tactile && m === "visite");
   document.body.classList.toggle("sans-joy", joy.hidden);
+  if (MULTI) { if (m === "maquette") choisirVueMaquette(joueur.etage); else { poserEtages(); majVisibiliteEtages(); majBoutonsEtage(); } }
   for (const el of etiquettes) el.div.hidden = m !== "maquette";
   if (m === "visite" && refletsEnRetard) { refletsEnRetard = false; recapturerReflets(); }
 }
@@ -1247,18 +1587,24 @@ const rail = $("rail"), boutons = [];
 let arret = -1;
 function allerArret(i) {
   arret = i = (i + S.visites.length) % S.visites.length;
-  const v = S.visites[arret];
-  if (mode !== "visite") { choisirMode("visite"); joueur.x = v.x; joueur.y = v.y; joueur.cap = v.cap * Math.PI / 180; joueur.tangage = -0.08; }
-  else volerA(v);
+  const v = S.visites[arret], f = v.etage == null ? joueur.etage : idEtage(v.etage);
+  if (mode !== "visite") {
+    choisirMode("visite"); joueur.x = v.x; joueur.y = v.y; joueur.cap = v.cap * Math.PI / 180; joueur.tangage = -0.08;
+    if (f !== joueur.etage || joueur.z !== ETAGES[f].z) majEtageCourant(f, true);
+  } else volerA({ ...v, etage: f });
   // arrêt avec "commandes" : la toile (ou autre) s'anime vers l'état demandé, une fois arrivé
   for (const [id, etat] of Object.entries(v.commandes || {})) setTimeout(() => { if (arret === i) commander(id, etat); }, 700);
   boutons.forEach((b, k) => b.setAttribute("aria-pressed", String(k === arret)));
   $("ici-n").textContent = `Arrêt ${arret + 1} de ${S.visites.length}`;
 }
 S.visites.forEach((v, i) => {
+  if (MULTI && (i === 0 || v.etage !== S.visites[i - 1].etage)) {   // plusieurs étages : un titre par étage
+    const h = document.createElement("h2"); h.textContent = ETAGES[idEtage(v.etage)].nom; rail.appendChild(h);
+  }
   const b = document.createElement("button"); b.textContent = v.nom; b.setAttribute("aria-pressed", "false");
   b.onclick = () => allerArret(i); rail.appendChild(b); boutons.push(b);
 });
+if (MULTI) rail.querySelector("h2").remove();      // « Aller à » suffit : le premier titre d'étage le remplace
 $("prec").onclick = () => allerArret(arret < 0 ? S.visites.length - 1 : arret - 1);
 $("suiv").onclick = () => allerArret(arret + 1);
 $("t-mob").onclick = (e) => { gMob.visible = !gMob.visible; renderer.shadowMap.needsUpdate = true; e.currentTarget.setAttribute("aria-pressed", String(gMob.visible)); };
@@ -1266,6 +1612,32 @@ $("t-qual").onclick = () => choisirQualite(qualite === "haute" ? "normale" : "ha
 $("t-pal").onclick = (e) => { const p = $("palette"); p.hidden = !p.hidden; e.currentTarget.setAttribute("aria-pressed", String(!p.hidden)); };
 $("t-aide").onclick = () => ($("aide").hidden = false);
 $("aide-ok").onclick = () => ($("aide").hidden = true);
+// ---------- étages : bouton « ▲ Monter / ▼ Descendre » en visite, choix « Sous-sol / Rez-de-chaussée / Les deux » en maquette
+function majBoutonsEtage() {
+  if (!MULTI) return;
+  const c = $("etages"); c.replaceChildren(); c.hidden = false;
+  const ajouter = (ic, lib, sous, presse, action) => {
+    const b = document.createElement("button");
+    if (ic) { const i = document.createElement("span"); i.className = "ic"; i.setAttribute("aria-hidden", "true"); i.textContent = ic; b.append(i); }
+    const t = document.createElement("span"); t.className = "lib"; t.textContent = lib;
+    if (sous) { const s = document.createElement("small"); s.textContent = sous; t.append(s); }
+    b.append(t); if (presse != null) b.setAttribute("aria-pressed", String(presse));
+    b.onclick = action; c.append(b);
+  };
+  if (mode === "maquette") {
+    for (const E of ETAGES) ajouter("", E.nom, "", vueMaquette === E.i, () => choisirVueMaquette(E.i));
+    ajouter("", "Les deux", "", vueMaquette === "deux", () => choisirVueMaquette("deux"));
+    c.classList.add("choix"); return;
+  }
+  c.classList.remove("choix");
+  const s = surEscalier(), dirs = [];
+  ESCALIERS.forEach((es, k) => {
+    if (s === k || es.bas === joueur.etage) dirs.push(["▲", "Monter", es.haut]);
+    if (s === k || es.haut === joueur.etage) dirs.push(["▼", "Descendre", es.bas]);
+  });
+  for (const [ic, lib, f] of dirs) ajouter(ic, lib, (f > joueur.etage ? "au " : "au ") + ETAGES[f].nom.toLowerCase(), null, () => allerEtage(f));
+  c.hidden = !dirs.length;
+}
 // ---------- commandes interactives (toile motorisée, stores, porte de garage...) : bouton, toucher l'objet, arrêts de visite
 const ADOUCIR = (u) => (u < .5 ? 4 * u ** 3 : 1 - (-2 * u + 2) ** 3 / 2);     // départ et arrivée en douceur
 let refletsEnRetard = false;
@@ -1318,6 +1690,8 @@ if (Object.keys(CMD).length) {
   li.append(Object.assign(document.createElement("b"), { textContent: Object.values(CMD).map((cm) => cm.c.nom).join(", ") }),
     " : bouton ▼ ▲ au-dessus de la visite guidée, ou touchez l'objet directement dans la vue pour le monter ou le descendre.");
 }
+if (Object.keys(PORTES).length) $("aide-portes").hidden = false;
+if (MULTI) { $("aide-etages").hidden = false; document.body.classList.add("multi"); $("plan-nom").hidden = false; }
 const pleinOK = document.fullscreenEnabled || document.webkitFullscreenEnabled;
 $("t-plein").hidden = !pleinOK;
 $("t-plein").onclick = () => {
@@ -1327,10 +1701,14 @@ $("t-plein").onclick = () => {
     else { const r = (d.requestFullscreen || d.webkitRequestFullscreen).call(d); if (r && r.catch) r.catch(() => {}); }
   } catch (_) {}
 };
-for (const [nom, desc, coul] of S.palette) {
-  const li = document.createElement("li"); const i = document.createElement("i"); i.style.background = coul;
-  const t = document.createElement("span"); const b = document.createElement("b"); b.textContent = nom; t.append(b, desc);
-  li.append(i, t); $("pal").append(li);
+// matériaux : une section par étage (plusieurs étages) ou une seule liste
+for (const sec of S.palettes || [{ titre: "", items: S.palette }]) {
+  if (sec.titre) { const li = document.createElement("li"); li.className = "sous"; li.textContent = sec.titre; $("pal").append(li); }
+  for (const [nom, desc, coul] of sec.items) {
+    const li = document.createElement("li"); const i = document.createElement("i"); i.style.background = coul;
+    const t = document.createElement("span"); const b = document.createElement("b"); b.textContent = nom; t.append(b, desc);
+    li.append(i, t); $("pal").append(li);
+  }
 }
 for (const [nom, v] of Object.entries(S.peintures || {})) {
   const li = document.createElement("li"); const i = document.createElement("i"); i.style.background = v[0];
@@ -1352,36 +1730,44 @@ function dans(pts, x, y) {
 }
 let pieceIci = null;
 function majIci() {
-  const s = S.sols.find((s) => dans(s.pts, joueur.x, joueur.y));
-  const nom = mode === "maquette" ? "Maquette" : s ? s.nom : "—";
+  const s = ETAGES[joueur.etage].d.sols.find((s) => dans(s.pts, joueur.x, joueur.y));
+  const nom = mode === "maquette" ? "Maquette" : s ? s.nom : surEscalier() >= 0 ? "Escalier" : "—";
   if (nom !== pieceIci) { pieceIci = nom; $("ici-nom").textContent = nom; }
 }
-// étiquettes des pièces en maquette
+// étiquettes des pièces en maquette (et des étages, s'il y en a plusieurs)
 const etiquettes = [];
-for (const s of S.sols) {
-  let aire = 0; for (let i = 0, j = s.pts.length - 1; i < s.pts.length; j = i++) aire += (s.pts[j][0] + s.pts[i][0]) * (s.pts[j][1] - s.pts[i][1]);
-  if (Math.abs(aire) / 2 / 144 < 20) continue;
-  const div = document.createElement("div"); div.className = "etiq"; div.textContent = s.nom; div.hidden = true;
-  let meil = [s.cx, s.cy], dmax = -1;                 // point le plus éloigné des bords (pièces en L)
-  const xs = s.pts.map((q) => q[0]), ys = s.pts.map((q) => q[1]);
-  for (let x = Math.min(...xs); x <= Math.max(...xs); x += 3) for (let y = Math.min(...ys); y <= Math.max(...ys); y += 3) {
-    if (!dans(s.pts, x, y)) continue;
-    let d = 1e9;
-    for (let i = 0, j = s.pts.length - 1; i < s.pts.length; j = i++) {
-      const [ax, ay] = s.pts[j], [bx, by] = s.pts[i], L2 = (bx - ax) ** 2 + (by - ay) ** 2 || 1;
-      const t = Math.max(0, Math.min(1, ((x - ax) * (bx - ax) + (y - ay) * (by - ay)) / L2)); d = Math.min(d, Math.hypot(x - ax - t * (bx - ax), y - ay - t * (by - ay)));
+for (const E of ETAGES) {
+  const vus = new Set();
+  for (const s of E.d.sols) {
+    let aire = 0; for (let i = 0, j = s.pts.length - 1; i < s.pts.length; j = i++) aire += (s.pts[j][0] + s.pts[i][0]) * (s.pts[j][1] - s.pts[i][1]);
+    if (Math.abs(aire) / 2 / 144 < 20 || vus.has(s.id)) continue;      // un morceau de plancher troué : une seule étiquette
+    vus.add(s.id);
+    const div = document.createElement("div"); div.className = "etiq"; div.textContent = s.nom; div.hidden = true;
+    let meil = [s.cx, s.cy], dmax = -1;                 // point le plus éloigné des bords (pièces en L)
+    const xs = s.pts.map((q) => q[0]), ys = s.pts.map((q) => q[1]);
+    for (let x = Math.min(...xs); x <= Math.max(...xs); x += 3) for (let y = Math.min(...ys); y <= Math.max(...ys); y += 3) {
+      if (!dans(s.pts, x, y) || (s.trous || []).some((t) => dans(t, x, y))) continue;
+      let d = 1e9;
+      for (const c of [s.pts, ...(s.trous || [])]) for (let i = 0, j = c.length - 1; i < c.length; j = i++) {
+        const [ax, ay] = c[j], [bx, by] = c[i], L2 = (bx - ax) ** 2 + (by - ay) ** 2 || 1;
+        const t = Math.max(0, Math.min(1, ((x - ax) * (bx - ax) + (y - ay) * (by - ay)) / L2)); d = Math.min(d, Math.hypot(x - ax - t * (bx - ax), y - ay - t * (by - ay)));
+      }
+      if (d > dmax) { dmax = d; meil = [x, y]; }
     }
-    if (d > dmax) { dmax = d; meil = [x, y]; }
+    $("etiquettes").appendChild(div); etiquettes.push({ div, p: P(meil[0], meil[1], 8), aire: Math.abs(aire), E });
   }
-  $("etiquettes").appendChild(div); etiquettes.push({ div, p: P(meil[0], meil[1], 8), aire: Math.abs(aire) });
+  if (MULTI) {                                          // nom de l'étage devant sa façade
+    const div = document.createElement("div"); div.className = "etiq nom-etage"; div.textContent = E.nom; div.hidden = true;
+    $("etiquettes").appendChild(div); etiquettes.push({ div, p: P((E.d.bornes[0] + E.d.bornes[2]) / 2, E.d.bornes[1] - 40, 0), aire: 1e12, E });
+  }
 }
 function majEtiquettes() {
   if (mode !== "maquette") return;
   const v = new THREE.Vector3();
   for (const e of etiquettes) {
-    v.copy(e.p).project(camera);
+    v.copy(e.p).add(e.E.decal).project(camera);
     e.div.style.transform = `translate(${(v.x + 1) / 2 * innerWidth}px, ${(1 - v.y) / 2 * innerHeight}px) translate(-50%, -50%)`;
-    e.div.hidden = v.z > 1;
+    e.div.hidden = v.z > 1 || !e.E.vu;
   }
   const pris = [];                                   // les plus grandes pièces d'abord ; on cache ce qui chevauche
   for (const e of [...etiquettes].sort((a, b) => b.aire - a.aire)) {
@@ -1393,8 +1779,9 @@ function majEtiquettes() {
 }
 // astuces
 const astuce = $("astuce");
-astuce.textContent = tactile ? "Touchez le plancher pour y marcher · glissez pour regarder · ◀ ▶ pour la visite guidée"
-                             : "Cliquez sur le plancher pour y marcher · glissez pour regarder · W A S D ou flèches · ◀ ▶ visite guidée";
+astuce.textContent = (tactile ? "Touchez le plancher pour y marcher · touchez une porte pour l'ouvrir · glissez pour regarder · ◀ ▶ visite guidée"
+                              : "Cliquez sur le plancher pour y marcher · cliquez une porte pour l'ouvrir · glissez pour regarder · W A S D ou flèches · ◀ ▶ visite guidée")
+                     + (MULTI ? " · ▲ ▼ pour changer d'étage" : "");
 if (ECHECS.length) astuce.textContent = `${ECHECS.length} modèle(s) 3D n'ont pas pu se charger (${ECHECS.join(", ")}). Rechargez la page.`;
 let astuceVue = false;
 function masquerAstuce() { if (astuceVue) return; astuceVue = true; astuce.style.opacity = "0"; setTimeout(() => (astuce.hidden = true), 700); }
@@ -1412,6 +1799,33 @@ function surveillerCadence(t) {
   if (++cadence.n === 30) cadence.t = t;
   else if (cadence.n === 90) { cadence.fait = true; if ((t - cadence.t) / 60 > 45) choisirQualite("normale"); }
 }
+// ---------- tests et étages : changerEtage("SS" | "RDC" | nom | indice | "deux") ; en visite, on arrive au haut (ou au
+// pied) de l'escalier, sinon au premier arrêt de l'étage ; en maquette, l'étage montré change
+function changerEtage(nom) {
+  if (!MULTI) return false;
+  if (nom === "deux" || nom === "Les deux") { if (mode !== "maquette") choisirMode("maquette"); choisirVueMaquette("deux"); return true; }
+  const f = typeof nom === "number" ? nom : ETAGES.findIndex((E) => E.id === nom || E.nom === nom);
+  if (f < 0 || f >= ETAGES.length) return false;
+  if (mode === "maquette") { choisirVueMaquette(f); return true; }
+  stop(); vol = null;
+  const k = ESCALIERS.findIndex((es) => es.bas === f || es.haut === f);
+  if (k >= 0) {
+    const l = ligneEscalier(k, ESCALIERS[k].haut === f), q = l[l.length - 1], av = l[l.length - 2];
+    joueur.x = q[0]; joueur.y = q[1]; joueur.cap = Math.atan2(q[1] - av[1], q[0] - av[0]);
+  } else { const v = S.visites.find((v) => v.etage === ETAGES[f].id); if (v) { joueur.x = v.x; joueur.y = v.y; joueur.cap = v.cap * Math.PI / 180; } }
+  majEtageCourant(f, true); refletsEtage = 0; recapturerReflets(true);
+  return true;
+}
+// place le visiteur (tests) : z absolu des pieds (une marche, par exemple) ; sans z, sur le plancher de son étage
+function poserJoueur(x, y, cap, z) {
+  stop(); vol = null;
+  joueur.x = x; joueur.y = y; if (cap != null) joueur.cap = cap * Math.PI / 180;
+  const s = solA(x, y, z == null ? ETAGES[joueur.etage].z : z);
+  joueur.z = joueur.zVue = s ? s.z : (z == null ? ETAGES[joueur.etage].z : z);
+  const f = s ? s.etage : joueur.etage;
+  if (f !== joueur.etage) majEtageCourant(f); else majBoutonsEtage();
+  return { z: joueur.z, etage: ETAGES[joueur.etage].id, escalier: s ? s.esc : -1 };
+}
 
 // ---------- boucle
 function taille() {
@@ -1419,7 +1833,7 @@ function taille() {
   if (POST) { const t = renderer.getDrawingBufferSize(new THREE.Vector2()); POST.taille(t.x, t.y); }
 }
 addEventListener("resize", taille); taille();
-let t0 = performance.now();
+let t0 = performance.now(), escPrec = -1;
 function boucle(t) {
   const dt = Math.min(0.1, (t - t0) / 1000); t0 = t;
   if (mode === "visite") {
@@ -1434,13 +1848,18 @@ function boucle(t) {
     if (av || lat) { stop(); vol = null; voile.style.opacity = "0"; marcher(av, lat, dt); }
     avancerTrajets(dt);
   }
+  if (!vol) joueur.zVue += (joueur.z - joueur.zVue) * Math.min(1, dt * 12);
+  if (MULTI) { const s = surEscalier(); if ((s >= 0) !== (escPrec >= 0)) { escPrec = s; majBoutonsEtage(); } }
   animerCommandes(performance.now());
+  animerPortes(performance.now());
   animerEcrans(performance.now());
-  placerCamera(); renderer.info.reset();
+  placerCamera(); majVisibiliteEtages(); renderer.info.reset();
   if (mode === "visite") majLumieres(joueur.x + Math.cos(joueur.cap) * 40, joueur.y + Math.sin(joueur.cap) * 40, false);
   else majLumieres(orbite.cx, orbite.cy, true);
   if (POST) POST.rendre(QUALITES[qualite]); else renderer.render(scene, camera);
   dessinerPlan(); majIci(); majEtiquettes(); surveillerCadence(t);
+  // nouvel étage : l'image des reflets est refaite là où l'on s'arrête
+  if (refletsEtage && mode === "visite" && !trajet && !vol && performance.now() - refletsEtage > 400) { refletsEtage = 0; recapturerReflets(true); }
   requestAnimationFrame(boucle);
 }
 requestAnimationFrame(boucle);
@@ -1455,4 +1874,9 @@ Object.defineProperty(window, "mode", { get: () => mode });
 Object.assign(window, { commander, etatsCommandes, commandeSous, animerCommandes, commandes: CMD,
   fractionCommande: (id) => CMD[id] && CMD[id].f,
   fixerFractionCommande: (id, f) => { const cm = CMD[id]; if (!cm) return; cm.anim = null; cm.f = f; poserCommande(cm); renderer.shadowMap.needsUpdate = true; majCommandes(); } });
+// étages et portes : changerEtage(nom), allerEtage(nom) (en marchant), choisirVueMaquette(indice | "deux"), poserJoueur(x, y, cap, z) ;
+// basculerPorte(id[, "ouverte" | "fermee"]), portes = {id: {etat, f}}, porteSous(x, y) ; etage = id de l'étage courant
+Object.assign(window, { changerEtage, allerEtage, choisirVueMaquette, poserJoueur, basculerPorte, porteSous, objetSous, portes: PORTES,
+  ETAGES, ESCALIERS, solA });
+Object.defineProperty(window, "etage", { get: () => ETAGES[joueur.etage].id });
 </script>
