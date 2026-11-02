@@ -1031,7 +1031,7 @@ def completer_images(scene, images, dossier):
             print(f"  image {cle} omise ({rel})")
 
 
-BUDGET = 13.6 * 1024 * 1024        # la page publiée doit rester sous 14 Mo
+BUDGET = float(os.environ.get("BUDGET_MO", 13.6)) * 1024 * 1024        # la page publiée doit rester sous 14 Mo
 
 
 def alleger(scene, html_len):
@@ -1087,6 +1087,8 @@ def main(dossier):
     html = page()
     if alleger(scene, len(html.encode("utf-8"))):
         html = page()
+    if len(html.encode("utf-8")) > 14 * 1024 * 1024:
+        print("  ATTENTION : page de plus de 14 Mo (trop lourde pour être publiée) : moins de matériaux ou de modèles")
     os.makedirs(os.path.join(dossier, "3d"), exist_ok=True)
     out = os.path.join(dossier, "3d", "visite.html")
     open(out, "w", encoding="utf-8").write(html)
