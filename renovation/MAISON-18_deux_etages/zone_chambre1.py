@@ -1,30 +1,48 @@
-"""MAISON-18 — zone CHAMBRE 1 (l'enfant de 4 ans) : « Le socle de chêne », version allégée.
+"""MAISON-18 — zone CHAMBRE 1 (le petit de 4 ans) : « La niche bleue ».
 
-Demande du client (2026-11-01) : « Dans les chambres en bas il y a comme trop de meubles, exagère pas. » On garde trois
-pièces de chêne, belles et utiles, et on rend le plancher :
-- LIT-PLATEFORME QUEEN dans le coin ouest-arrière (tête au mur ouest, long côté au mur arrière, dessus du matelas à 22 po),
-  3 bacs-wagons roulants dessous (les jouets du jour), tête en lattes de chêne, simple tablette-dosseret le long du mur ;
-- BANQUETTE sous les deux fenêtres, du pied du lit au mur de la chambre 2 (4 grands tiroirs ; c'est aussi la marche
-  d'évacuation) ;
-- GARDE-ROBE INTÉGRÉE de 134 po sur le mur de la salle de bain = LE rangement principal : portes pleines de chêne, penderie
-  évolutive, 4 tiroirs à sa hauteur, module de rotation des jouets (ce qui ne sert pas cette semaine dort là).
-- COIN JEU AU SOL : tapis 5 × 8 pi au centre, un pouf, un seul rebord à livres (couvertures de face) au mur est.
-Retirés de la version SS-17 : canopée au-dessus du lit, rideau-cabane (déjà retiré), niches éclairées du dosseret, deux
-bibliothèques et valance autour de la banquette, gare à jouets et mur à crémaillères (panneau perforé, câble à dessins),
-station du matin du recoin, niche-cachette de la garde-robe, tiroirs de plinthe, la moitié des jouets.
+Demande du client (2026-11-02) : « Les chambres des enfants en bas, j'aime pas super ça, faut les refaire. » Après le
+rangement « wow » (SS-17), le lit queen « pour que ça dure », puis « trop de meubles, exagère pas » et une version
+allégée toute en chêne qui ne lui plaît pas non plus, on change de direction : une chambre d'enfant CHIC, CALME ET
+CHALEUREUSE, qui grandira avec lui. Peu de pièces, des surfaces planes et propres :
+- UN MUR DE RANGEMENT INTÉGRÉ pleine hauteur sur le mur ouest (fondation, sans fenêtre) : façades affleurantes peintes
+  « bleu brume » (la seule couleur d'accent), ouverture par pression, aucune quincaillerie ; deux colonnes de 27 po
+  (penderie évolutive ; jouets et livres en rotation) et un pont au-dessus du lit (les parents) ;
+- LA NICHE DU LIT QUEEN creusée dans ce mur, doublée de chêne blanc (cadre de chant de ¾ po) : tête de lit rembourrée
+  à canaux verticaux en lin, tablette de chêne, deux liseuses murales noir mat, DEL douce sous le pont ; le lit est un
+  socle de chêne à 4 tiroirs sans poignée (2 par côté) ;
+- LE BUREAU DU RECOIN : plateau de chêne de 52½ po glissé dans le recoin à gauche de la porte, sur crémaillères noires
+  (22 po aujourd'hui, 29 po plus tard), un tiroir, une petite chaise de chêne et une lampe noire ;
+- LE COIN LECTURE à la fenêtre est : un fauteuil de cuir cognac et une liseuse sur pied (un parent y lit avec lui) ;
+- un grand tapis de laine 8 × 10 pi, une grande lanterne de papier au centre de la pièce (dans l'axe de la niche),
+  des rideaux de lin plafond-plancher repliés entre les deux fenêtres. Murs et plafond blanc chaud ; béton poli.
+Retirés de la version allégée : banquette des fenêtres, garde-robe de 134 po du mur de la salle de bain, rebord à
+livres, pouf, jouets au sol ; le mur argile (accent) disparaît.
 
-L'ancienne garde-robe de SS-16 (cloisons P12 et P13, portes coulissantes P07) reste fusionnée à la chambre.
-Pouces, repère de la maison. Faces des murs : ouest (fondation) x = 10 ; arrière (fondation) y = 370 ; P05 (salle de bain)
-y = 252,25 ; P07 (chambre 2) x = 237,75 ; P06 (hall) y = 232,25 ; P04 (salle de bain / recoin) x = 144,25.
-Fenêtres (mur arrière) : x 92-132 et 156-196. Porte (P05) : x 201-231 sur P06, battant vers la chambre.
-Rien ne dépasse x = 237,75.
+L'ancienne garde-robe de SS-16 (cloisons P12 et P13, portes coulissantes P07) reste fusionnée à la chambre ; la commode
+SS-16 reste retirée. Pouces, repère de la maison. Faces des murs : ouest (fondation) x = 10 ; arrière (fondation)
+y = 370 ; P05 (salle de bain) y = 252,25 ; P07 (chambre 2) x = 237,75 ; P06 (hall) y = 232,25 ; P04 (salle de bain /
+recoin) x = 144,25. Fenêtres (mur arrière) : x 92-132 et 156-196, allège abaissée vers 40 po par un autre module :
+rien de plus haut que le lit devant elles. Porte (P05) : x 201-231 sur P06, battant vers la chambre. Rien ne dépasse
+x = 237,75.
 """
+import math
 
 # --------------------------------------------------------------------------------------------- repères de la pièce
 XW, YB, YS, XE = 10.0, 370.0, 252.25, 237.75        # nu : mur ouest, mur arrière, mur P05, mur P07
 YR, XR = 232.25, 144.25                              # recoin d'entrée : face de P06, face de P04
 AIR = 0.5                                            # vide d'air derrière les caissons contre la fondation
-YBA = YB - AIR                                       # dos des caissons du mur arrière
+XB = XW + AIR                                        # dos des caissons du mur de rangement
+FX = XB + 24.0                                       # plan des façades (34,5)
+FD = FX - 0.75                                       # dos des portes
+COL = 27.0                                           # largeur d'une colonne
+NY0, NY1 = YS + COL, YB - COL                        # baie de la niche (279,25 → 343,0 : 63¾ po)
+LT = 0.75                                            # doublure de chêne de la niche
+NC0, NC1 = NY0 + LT, NY1 - LT                        # niche finie (280,0 → 342,25 : 62¼ po)
+YC = (NY0 + NY1) / 2                                 # axe de la niche et de la pièce (311,125)
+ZP, ZN, ZH = 3.5, 74.0, 96.0                         # socle en retrait, dessous du pont, plafond
+BX1 = 95.25                                          # pied du lit (socle)
+LX, LY = 136.0, YC                                   # lanterne : centre de la pièce hors mur de rangement, axe de la niche
+PEINT = "laque-bleu-brume"                           # alias de la peinture « Bleu brume » (mobilier peint)
 
 # emprise de la zone (pour retirer le mobilier de SS-16) : chambre + ancienne garde-robe, et le recoin d'entrée
 ZONE = [(9.5, 250.5, 240.0, 371.0), (142.0, 230.5, 240.0, 252.6)]
@@ -33,15 +51,23 @@ ZONE = [(9.5, 250.5, 240.0, 371.0), (142.0, 230.5, 240.0, 252.6)]
 RETIRER_MURS = {"mur-SS-P12", "mur-SS-P13"}          # cloisons de l'ancienne garde-robe
 RETIRER_PORTES = {"ouv-SS-P07"}                      # ses portes coulissantes
 RETIRER_PIECES = {"piece-SS-GR1"}                    # fusionnée à la chambre 1
-RETIRER_EQUIP = {"elem-SS-P-COMMODE1"}               # commode du mur est (le mur est reste libre : coin jeu)
+RETIRER_EQUIP = {"elem-SS-P-COMMODE1"}               # commode SS-16 du mur est
 
-EQUIPEMENTS = [  # id, type, nom, libellé, x, y, rotation, (longueur, largeur) — repère local : dos vers −y
-    ("elem-SS-P-C1-LIT", "autre", "Lit-plateforme queen (matelas 60 × 80 à 22 po), 3 bacs-wagons roulants dessous, tête en "
-     "lattes de chêne, tablette-dosseret", "LIT QUEEN", 52.0, 336.0, 0, (82, 68)),
-    ("elem-SS-P-C1-BANC", "autre", "Banquette des fenêtres (assise 16 po), 4 grands tiroirs ; marche d'évacuation",
-     "BANQUETTE", 165.375, 360.75, 180, (144.75, 17.5)),
-    ("elem-SS-P-C1-GR", "armoires", "Garde-robe intégrée 134 po à portes pleines de chêne (penderie évolutive, 4 tiroirs, "
-     "rotation des jouets ; le haut aux parents)", "G.-R.", 77.125, 264.25, 0, (134.25, 24)),
+EQUIPEMENTS = [  # id, type, nom, libellé, x, y, rotation, (longueur sur x, largeur sur y)
+    ("elem-SS-P-C1-RGS", "armoires", "Mur de rangement intégré, colonne sud (27 × 24 po, pleine hauteur) : penderie "
+     "évolutive (2 tringles à sa hauteur, puis une à 66 po) et tiroirs intérieurs ; façades peintes affleurantes, "
+     "ouverture par pression", "", (XB + FX) / 2, (YS + NY0) / 2, 0, (24, COL)),
+    ("elem-SS-P-C1-RGN", "armoires", "Mur de rangement intégré, colonne nord (27 × 24 po, pleine hauteur) : tablettes "
+     "réglables, bacs de jouets en rotation et livres à sa hauteur ; façades peintes affleurantes, ouverture par pression",
+     "", (XB + FX) / 2, (NY1 + YB) / 2, 0, (24, COL)),
+    ("elem-SS-P-C1-LIT", "autre", "Lit queen dans la niche du mur de rangement (matelas 60 × 80, dessus à 22 po) : socle "
+     "de chêne à 4 tiroirs sans poignée, tête rembourrée en lin et tablette, 2 liseuses ; pont de rangement au-dessus "
+     "(74 → 96 po, les parents)", "LIT QUEEN", (XB + BX1) / 2, YC, 0, (BX1 - XB, NY1 - NY0)),
+    ("elem-SS-P-C1-BUREAU", "comptoir", "Bureau du recoin : plateau de chêne de 52½ × 20 po sur crémaillères noires "
+     "(22 po aujourd'hui, jusqu'à 29 po), un tiroir ; chaise d'enfant de chêne", "BUREAU", (XR + 0.25 + 197.0) / 2,
+     (YR + YS) / 2, 0, (197.0 - XR - 0.25, YS - YR)),
+    ("elem-SS-P-C1-LECTURE", "autre", "Coin lecture : fauteuil de cuir cognac et liseuse sur pied, à côté de la fenêtre "
+     "est (pas devant)", "", 216.8, 347.0, 335, (26, 31.5)),
 ]
 
 
@@ -57,14 +83,16 @@ def apres_modifs(maison, base):
     ss = next(n for n in maison["niveaux"] if n["id"] == "SS")
     for p in ss["pieces"]:
         if p["id"] == "piece-SS-CH1":
-            p["description"] = ("Chambre 1 (enfant de 4 ans), allégée : lit queen sur plateforme à bacs en coin, banquette sous "
-                                "les fenêtres, garde-robe intégrée sur le mur de la salle de bain (l'ancienne garde-robe est "
-                                "fusionnée), coin jeu au sol au centre — proposition MAISON-18 (esquisse)")
+            p["description"] = ("Chambre 1 (enfant de 4 ans), « la niche bleue » : mur de rangement intégré pleine hauteur "
+                                "sur le mur ouest (façades peintes affleurantes, sans quincaillerie) avec la niche du lit "
+                                "queen doublée de chêne, bureau dans le recoin d'entrée, coin lecture à la fenêtre est, "
+                                "grand tapis et lanterne centrale — proposition MAISON-18 (esquisse)")
     for o in ss["ouvertures"]:
         if o["id"] in ("ouv-SS-009", "ouv-SS-010"):
             o["note"] = ((o.get("note") or "") + " Fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², "
-                         "aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à "
-                         "mesurer ; à valider avec la Ville et un professionnel.").strip()
+                         "aucune dimension < 380 mm) ; plancher libre devant (aucun meuble), rideaux repliés entre les "
+                         "deux fenêtres ; allège abaissée (≈ 40 po) et puits à vérifier ; à valider avec la Ville et un "
+                         "professionnel.").strip()
 
 
 # --------------------------------------------------------------------------------------------------- maquette 3D
@@ -95,130 +123,135 @@ def _dans_zone(o):
     return any(zx0 <= b[0] and b[2] <= zx1 and zy0 <= b[1] and b[3] <= zy1 for zx0, zy0, zx1, zy1 in ZONE)
 
 
-def _mobilier(h):
-    A, B, C, CX, CY, SPH = h.A, h.B, h.C, h.CX, h.CY, h.SPH
+def _mur_rangement(h):
+    """Mur de rangement pleine hauteur (façades peintes affleurantes, joints d'ombre) et niche doublée de chêne."""
+    A, B = h.A, h.B
     M = []
+    g = 0.12                                                                                    # demi-joint d'ombre
+    for y0, y1 in ((YS, NY0), (NY1, YB)):                                                       # 2 colonnes de 27 po
+        M += [B(XB, y0 + 0.05, FX - 3, y1 - 0.05, 0, ZP, "carbone"),                            # socle noir en retrait
+              B(XB, y0 + 0.05, FD - 0.3, y1 - 0.05, ZP, ZH, PEINT),                             # caisson
+              B(FD - 0.3, y0 + 0.05, FD, y1 - 0.05, ZP, ZH, "carbone"),                          # fond des joints
+              B(FD, y0 + g, FX, y1 - g, ZP + g, ZN - g, PEINT, r=0.12),                          # porte basse (70 po)
+              B(FD, y0 + g, FX, y1 - g, ZN + g, ZH - 0.2, PEINT, r=0.12)]                         # porte haute
+    # pont au-dessus du lit : 2 portes relevables, même bande que les portes hautes des colonnes
+    M += [B(XB, NY0, FD - 0.3, NY1, ZN, ZH, PEINT), B(FD - 0.3, NY0, FD, NY1, ZN, ZH, "carbone")]
+    M += [B(FD, a + g, FX, b - g, ZN + g, ZH - 0.2, PEINT, r=0.12) for a, b in ((NY0, YC), (YC, NY1))]
+    # doublure de chêne de la niche : dos, joues et plafond (leurs chants de ¾ po cadrent la baie)
+    M += [B(XB, NC0, XB + LT, NC1, 0, ZN - LT, "placage"),
+          B(XB, NY0, FX, NC0, ZP, ZN, "placage"), B(XB, NC1, FX, NY1, ZP, ZN, "placage"),
+          B(XB, NY0, FX, NY1, ZN - LT, ZN, "placage")]
+    M += [B(31.4, NC0 + 0.6, 32.4, NC1 - 0.6, ZN - LT - 0.25, ZN - LT, "spot")]                 # DEL douce sous le pont
+    return M
 
-    # ================================================================ C1-LIT : lit-plateforme queen, 3 bacs-wagons
-    LX0, LX1, LY0, LY1 = 11.0, 93.0, 302.0, 364.0
-    M += [A(LX0, LY0, LX1, LY1, 10.5, 12, "placage", r=1, b=0.5)]                              # plateau (dessus à 12)
-    M += [A(LX0, LY0, 14.5, LY1, 1.5, 10.5, "placage", r=0.5, b=0.3),                           # flanc ouest
-          A(89.5, LY0, LX1, LY1, 3, 10.5, "placage", r=1, b=0.5),                               # flanc est (pied du lit)
-          B(90.0, LY0 + 3, LX1 - 0.5, LY1, 0, 3, "carbone")]                                    # socle en retrait de 3 po
-    M += [A(x, LY0, x + 3, LY1, 1.5, 10.5, "placage", r=0.4, b=0.3) for x in (37.5, 63.5)]      # cloisons des « garages »
-    M += [B(14.5, 303.2, 89.5, 304.0, 0, 10.5, "carbone"),                                      # fond d'ombre des bacs
-          B(15.0, 302.8, 89.0, 303.1, 0.3, 0.6, "spot")]                                         # DEL de plinthe (chemin de nuit)
-    for wx0 in (14.5, 40.5, 66.5):                                                              # 3 bacs-wagons de 23 po
-        xc = wx0 + 11.5
-        M += [A(wx0 + 0.2, LY0, wx0 + 22.8, 303.25, 1.6, 10.2, "placage", r=0.8, b=0.4),
-              A(xc - 4, 301.88, xc + 4, 302.02, 7.2, 8.8, "carbone", r=0.7, b=0.1)]             # poignée découpée
-    # matelas, couette, jeté, 2 oreillers, un coussin d'accent, l'ourson
-    M += [A(12, 303, 92, 363, 12, 22, "draps", r=3, b=2.5),
-          A(34, 302.6, 92.4, 363.4, 20.6, 23.2, "draps", r=2.5, b=1.8),
-          A(70, 302.3, 92.7, 363.7, 22.8, 24.2, "tissu", r=2, b=1.0),
-          A(14, 306, 31, 331.5, 21.5, 27.5, "draps", r=4, b=3), A(14, 334.5, 31, 360, 21.5, 27.5, "draps", r=4, b=3),
-          A(30, 336, 34, 358, 22, 30, "art-argile", r=3, b=2)]
-    M += [SPH(44, 350, 25.8, 3.4, "art-sable"), SPH(44, 350, 30.6, 2.5, "art-sable"),
-          SPH(42.6, 350, 32.8, 0.9, "art-sable"), SPH(45.4, 350, 32.8, 0.9, "art-sable")]
 
-    # ================================================================ C1-DOSSERET : panneau plein + tablette à 31½ po
-    M += [B(LX0, LY1, LX1, YBA, 12, 30, "placage"),
-          A(LX0, 363.4, LX1, YBA, 30, 31.5, "placage", r=0.8, b=0.4)]
-    M += [C(22, 366.5, 1.6, 31.5, 32, "carbone"), SPH(22, 366.5, 34, 2.2, "abat-jour")]          # veilleuse
-    M += [B(78 + 1.3 * k, 365.4, 79.1 + 1.3 * k, 368.6, 31.5, 31.5 + 7.5 - (k % 2), ["laque-marine", "art-sable", "blanc"][k])
-          for k in range(3)]                                                                    # 3 livres du soir
+def _lit(h):
+    """Lit queen dans la niche : socle de chêne à 4 tiroirs, tête rembourrée à canaux, tablette, 2 liseuses, literie."""
+    A, B, C, CX, SPH, T = h.A, h.B, h.C, h.CX, h.SPH, h.T
+    M = []
+    X0 = XB + LT                                                                                # 11,25 : dos de la niche
+    M += [B(14.0, NC0 + 2.5, BX1 - 2.5, NC1 - 2.5, 0, ZP, "carbone"),                           # socle en retrait
+          B(X0, NC0, BX1, NC1, ZP, 12, "placage", r=0.25)]                                      # caisse (dessus à 12)
+    # 4 tiroirs sans poignée (gorge au chant du haut), 2 par côté, hors de la niche
+    xs = [FX + 1.5, (FX + 1.5 + BX1 - 1.0) / 2, BX1 - 1.0]
+    for yf, s in ((NC0, -1), (NC1, 1)):
+        for a, b in zip(xs, xs[1:]):
+            xc = (a + b) / 2
+            M += [B(a + 0.2, min(yf, yf + 0.6 * s), b - 0.2, max(yf, yf + 0.6 * s), ZP + 0.4, 11.6, "placage", r=0.2),
+                  B(xc - 5, min(yf + 0.55 * s, yf + 0.65 * s), xc + 5, max(yf + 0.55 * s, yf + 0.65 * s), 10.3, 11.0, "carbone")]
+    # tête de lit : 6 canaux verticaux rembourrés (lin), tablette de chêne de 4½ po au-dessus
+    w = (NC1 - NC0 - 0.2) / 6
+    M += [A(X0, NC0 + 0.1 + k * w + 0.08, 14.5, NC0 + 0.1 + (k + 1) * w - 0.08, 12.3, 45.7, "tissu", r=1.4, b=1.1)
+          for k in range(6)]
+    M += [A(X0, NC0, 15.75, NC1, 45.8, 47.0, "placage", r=0.3, b=0.2)]
+    M += [B(11.8, 287.5, 15.4, 295.5, 47.0, 47.8, "laque-marine"), B(12.0, 288.2, 15.2, 294.8, 47.8, 48.4, "draps")]  # 2 livres
+    # 2 liseuses murales noir mat (bras articulé, tête conique), tournées vers les oreillers
+    for y, s in ((NC0 + 7.0, 1), (NC1 - 7.0, -1)):
+        yt = y + 3 * s
+        M += [CX(X0, X0 + 1.0, y, 57, 1.9, "metal", pans=24),
+              h.T([(X0 + 1.0, y, 57), (18.5, y, 57), (21, yt, 55.2)], 0.28, "metal"),
+              C(21, yt, 1.7, 51.6, 55.2, "metal", r2=1.05, pans=24), C(21, yt, 1.3, 51.5, 51.65, "spot", pans=24)]
+    # literie : matelas, couette repliée, jeté bleu brume au pied, 2 oreillers, un coussin de lin, l'ourson
+    M += [A(14.75, NC0 + 1.1, 94.75, NC1 - 1.1, 12, 22, "draps", r=3, b=2.5),
+          A(32, NC0 + 0.6, 95.2, NC1 - 0.6, 20.6, 23.4, "draps", r=2.5, b=1.8),
+          A(32, NC0 + 0.5, 40, NC1 - 0.5, 23.2, 24.6, "draps", r=2, b=1.2),
+          A(74, NC0 + 0.2, 95.6, NC1 - 0.2, 23.3, 24.5, PEINT, r=1.5, b=0.8),
+          A(95.3, NC0 + 3, 96.3, NC1 - 3, 14.5, 24.3, PEINT, r=0.5, b=0.3),
+          A(15.5, 284.5, 31, 309.5, 21.5, 27.5, "draps", r=4, b=3), A(15.5, 312.75, 31, 337.75, 21.5, 27.5, "draps", r=4, b=3),
+          A(29, 299, 34, 323.25, 22.5, 30, "tissu", r=3, b=2)]
+    M += [SPH(38, 331, 26.0, 3.6, "osier"), SPH(38, 331, 31.2, 2.6, "osier"),
+          SPH(38, 329.4, 33.4, 0.95, "osier"), SPH(38, 332.6, 33.4, 0.95, "osier")]
+    return M
 
-    # ================================================================ C1-TETE : tête de lit en lattes (mur ouest), 1 liseuse
-    M += [B(XW, LY0, XW + 0.3, LY1, 12, 46, "carbone")]
-    y = LY0
-    while y + 1.5 <= LY1 + 0.01:
-        M.append(A(XW, y, XW + 1, y + 1.5, 12, 46, "placage", r=0.3, b=0.2))
-        y += 2.0
-    yl = 333.0
-    M += [CX(XW, XW + 0.8, yl, 51, 1.8, "metal", pans=24),
-          h.T([(XW + 0.8, yl, 51), (15.5, yl, 51), (17, yl, 50)], 0.3, "metal"),
-          C(17, yl, 1.9, 46.6, 50.2, "metal", r2=1.0), C(17, yl, 1.6, 46.5, 46.65, "abat-jour")]
 
-    # (canopée, rideau-cabane et niches éclairées : retirés — client, 2026-11-01)
+def _bureau(h):
+    """Bureau du recoin : plateau de chêne sur crémaillères noires, un tiroir, chaise d'enfant, lampe noire."""
+    A, B, C, T = h.A, h.B, h.C, h.T
+    M = [A(XR + 0.25, YR + 0.25, 197.0, YS, 20.5, 22.0, "placage", r=0.4, b=0.25)]
+    for xs in (151.0, 190.5):
+        M += [B(xs - 0.5, YR, xs + 0.5, YR + 0.45, 8, 34, "metal"),                              # crémaillère
+              B(xs - 0.35, YR + 0.45, xs + 0.35, 248.5, 19.6, 20.5, "metal")]                     # console
+    M += [A(158, 234, 184, 251.7, 17.8, 20.4, "placage", r=0.3, b=0.2),
+          B(166, 251.65, 176, 251.78, 19.0, 19.6, "carbone")]                                     # tiroir, gorge
+    M += [B(158, 236, 171, 245, 22.0, 22.35, "draps"), C(150.5, 237.5, 1.4, 22, 25.8, "placage", pans=20)]  # cahier, pot
+    M += [C(190, 237.5, 2.6, 22.0, 22.7, "metal", pans=24),                                      # lampe noir mat
+          T([(190, 237.5, 22.7), (190, 238.5, 36.5)], 0.3, "metal"),
+          T([(190, 238.5, 36.5), (183.5, 241.5, 36.2)], 0.3, "metal"),
+          C(183.5, 241.5, 2.3, 32.6, 35.9, "metal", r2=1.3, pans=24), C(183.5, 241.5, 1.9, 32.5, 32.65, "spot", pans=24)]
+    # chaise d'enfant de chêne (assise à 12 po), tournée vers le bureau
+    M += [A(162, 254.5, 176, 266.5, 11.0, 12.0, "placage", r=1, b=0.4)]
+    M += [C(x, 255.6, 0.55, 0, 11, "placage", pans=12) for x in (163.1, 174.9)]
+    M += [C(x, 265.4, 0.55, 0, 23.5, "placage", pans=12) for x in (163.1, 174.9)]
+    M += [A(162.4, 264.9, 175.6, 266.1, 17.5, 23.5, "placage", r=0.5, b=0.3)]
+    return M
 
-    # ================================================================ C1-BANC : banquette des fenêtres, 4 grands tiroirs
-    BX0, BX1, BY0 = 93.0, XE, 352.0
-    M += [B(BX0 + 0.5, BY0 + 3, BX1, YBA, 0, 3, "carbone"),                                      # socle en retrait
-          A(BX0, BY0, BX1, YBA, 3, 15, "placage", r=0.5, b=0.3),
-          A(BX0 - 0.25, BY0 - 0.5, BX1, YBA, 15, 16, "placage", r=1, b=0.5)]                     # dessus arrondi à 16 po
-    TX = [BX0 + k * (BX1 - 0.25 - BX0) / 4 for k in range(5)]                                  # 4 tiroirs de 36 po
-    for a, b in zip(TX, TX[1:]):
-        xc = (a + b) / 2
-        M += [A(a + 0.2, BY0 - 0.7, b - 0.2, BY0 + 0.05, 3.6, 14.6, "placage", r=0.8, b=0.3),
-              A(xc - 4, BY0 - 0.8, xc + 4, BY0 - 0.66, 12.0, 13.2, "carbone", r=0.5, b=0.1)]  # poignée découpée
-    M += [A(BX0 + 0.6, BY0 - 0.2, 165.0, YBA - 0.2, 16, 18.5, "tissu", r=1.5, b=1.2),           # 2 coussins amovibles
-          A(165.6, BY0 - 0.2, BX1 - 0.3, YBA - 0.2, 16, 18.5, "tissu", r=1.5, b=1.2)]
-    M += [A(95, 364, 109, 368.6, 18.5, 31, "art-argile", r=3, b=2), A(222, 364.2, 236, 368.8, 18.5, 30, "laque-marine", r=3, b=2)]
 
-    # (bibliothèques, valance, gare à jouets, mur à crémaillères et station du matin : retirés — client, 2026-11-01)
-
-    # ================================================================ GARDE-ROBE intégrée (mur P05) : 134¼ × 24 po
-    GY0, GY1 = YS, YS + 24.0                                                                    # face à y = 276,25
-    GF = GY1 - 0.75                                                                             # plan des façades
-    M += [B(XW, GY0, XR, GY1 - 3, 0, 4, "carbone")]                                             # coup-de-pied en retrait
-    M += [B(XW, GY0, XR, GF - 0.2, 4, 96, "placage"), B(XW, GF - 0.2, XR, GF, 4, 96, "carbone")]  # caissons, fond d'ombre
-
-    def porte(x0, x1, z0, z1, poignee):
-        out = [A(x0 + 0.1, GF, x1 - 0.1, GY1, z0 + 0.1, z1 - 0.1, "placage", r=0.3, b=0.2)]
-        xp = x1 - 1.6 if poignee == "d" else x0 + 0.6
-        zp = min(max(z0 + 2, 40), z1 - 14)
-        out.append(B(xp + 0.2, GY1 - 0.02, xp + 0.8, GY1 + 0.06, zp, zp + 9, "carbone"))         # poignée encastrée (gorge)
-        return out
-
-    # A : penderie évolutive (tringle à 36 po aujourd'hui, à 66 po plus tard), 2 portes de 21 po pleine hauteur
-    M += porte(XW, 31.0, 4, 96, "d") + porte(31.0, 52.0, 4, 96, "g")
-    # B : 4 tiroirs à sa hauteur (4 → 40 po), 2 portes au-dessus (les parents)
-    for k in range(4):
-        z0 = 4 + 9 * k
-        M += [A(52.2, GF, 93.8, GY1, z0 + 0.15, z0 + 8.85, "placage", r=0.6, b=0.3),
-              A(69, GY1 - 0.02, 77, GY1 + 0.12, z0 + 6.6, z0 + 7.8, "carbone", r=0.5, b=0.1)]
-    M += porte(52.0, 73.0, 40, 96, "d") + porte(73.0, 94.0, 40, 96, "g")
-    # C : rotation des jouets (tablettes et bacs derrière 2 portes pleine hauteur)
-    M += porte(94.0, 119.125, 4, 96, "d") + porte(119.125, XR, 4, 96, "g")
-
-    # ================================================================ C1-JEU : coin jeu au sol (tapis 5 × 8 pi)
-    M += [A(117, 284, 213, 344, 0, 0.5, "tapis", r=2, b=0.2)]
-    M += [C(202, 331, 9, 0.5, 9.5, "tissu", pans=36, r2=8.4)]                                    # pouf
-    M += [A(130, 306, 142, 312, 2.0, 6.4, "art-argile", r=1, b=0.5), A(138, 306.4, 142.2, 311.6, 6.4, 9.6, "placage", r=0.8, b=0.4),
-          CY(132.5, 305.4, 312.6, 1.9, 1.4, "carbone", pans=16), CY(139.5, 305.4, 312.6, 1.9, 1.4, "carbone", pans=16)]  # camion de bois
-    M += [A(152 + (k % 2) * 0.5, 322, 156 + (k % 2) * 0.5, 326, 0.5 + 4 * k, 4.5 + 4 * k,
-            ["placage", "laque-marine", "art-sable"][k], r=0.4, b=0.2) for k in range(3)]   # 3 blocs
-    # un seul rebord à livres (couvertures de face) au mur est, à sa hauteur (dessus à 26 po)
-    RX0 = XE - 4.5
-    M += [B(RX0, 290, XE, 338, 25.25, 26, "placage"), A(RX0, 290, RX0 + 0.75, 338, 25.25, 28, "placage", r=0.3, b=0.15)]
-    for k, (ya, c1, c2) in enumerate(((292.5, "laque-marine", "art-sable"), (304.5, "art-argile", "blanc"),
-                                      (316.5, "osier", "laque-marine"), (327.0, "blanc", "art-argile"))):
-        hh = 9.5 - (k % 2) * 1.5
-        M += [B(XE - 1.6, ya, XE - 1.1, ya + 9, 26, 26 + hh, c1),
-              B(XE - 1.7, ya + 1, XE - 1.6, ya + 8, 28, 24 + hh, c2)]                                 # illustration
+def _ambiance(h):
+    """Tapis, lanterne de papier, coin lecture, rideaux de lin."""
+    A, B, C, MOD, SPH, TOR = h.A, h.B, h.C, h.MOD, h.SPH, h.TOR
+    M = [A(60.0, YC - 48, 180.0, YC + 48, 0, 0.5, "tapis", r=1.5, b=0.2)]                       # tapis de laine 8 × 10 pi
+    # grande lanterne de papier (30 po × 16½ po, nervures), semi-plafonnier : dessous à 77 po
+    R, ec, zc = 15.0, 0.55, 85.25
+    hz = R * ec
+    M += [SPH(LX, LY, zc, R, "abat-jour", ecrase=ec)]
+    M += [TOR(LX, LY, zc + dz, R * math.sqrt(1 - (dz / hz) ** 2) + 0.06, 0.13, "draps", axe="z")
+          for dz in (-6.0, -3.0, 0.0, 3.0, 6.0)]
+    M += [TOR(LX, LY, zc - hz + 0.4, 3.6, 0.18, "metal", axe="z"), TOR(LX, LY, zc + hz - 0.3, 2.8, 0.18, "metal", axe="z"),
+          C(LX, LY, 0.18, zc + hz - 0.3, ZH - 0.6, "metal", pans=8), C(LX, LY, 2.4, ZH - 0.6, ZH, "metal", pans=24)]
+    # coin lecture : fauteuil de cuir cognac tourné vers la pièce, liseuse sur pied à sa gauche
+    M += [MOD("fauteuil_cuir", 216.8, 347.0, face="-y", rot=-25), MOD("lampe_pied", 232.0, 327.0, face="+y")]
+    # rideaux de lin plafond-plancher sur rail noir, repliés entre les deux fenêtres (rien devant le vitrage)
+    M += [B(89.0, 365.6, 199.0, 366.9, 94.8, 96.0, "metal")]
+    for xa in (134.2, 145.2):
+        M += [C(xa + 2.2 * k, 366.25 + (0.55 if k % 2 else -0.55), 1.3, 0.6, 94.8, "draps", pans=12) for k in range(5)]
     return M
 
 
 VISITES = [
-    {"nom": "Chambre 1 — vue d'entrée", "x": 230, "y": 274, "cap": 158},
-    {"nom": "Chambre 1 — lit sur plateforme à bacs", "x": 150, "y": 300, "cap": 168},
-    {"nom": "Chambre 1 — banquette des fenêtres", "x": 166, "y": 288, "cap": 92},
-    {"nom": "Chambre 1 — coin jeu au sol", "x": 100, "y": 300, "cap": 12},
-    {"nom": "Chambre 1 — garde-robe intégrée", "x": 214, "y": 342, "cap": 210},
+    {"nom": "Chambre 1 — la niche bleue", "x": 226, "y": 311, "cap": 180},
+    {"nom": "Chambre 1 — coin lecture et bureau", "x": 100, "y": 360, "cap": 334},
+    {"nom": "Chambre 1 — la niche de près", "x": 150, "y": 259, "cap": 160},
 ]
 
 
 def appliquer_scene(S, h):
-    S["mobilier"][:] = [o for o in S["mobilier"] if not _dans_zone(o)] + _mobilier(h)
-    # éclairage encastré : un au-dessus du coin jeu, un entre le lit et la garde-robe, un dans le recoin d'entrée
-    S["lumieres"][:] = [l for l in S["lumieres"] if not (10 < l["x"] < 240 and 250 < l["y"] < 370)]
-    S["lumieres"] += [{"x": 166, "y": 318}, {"x": 56, "y": 289, "i": 7}, {"x": 190, "y": 244, "i": 6}]
+    S["mobilier"][:] = [o for o in S["mobilier"] if not _dans_zone(o)] + _mur_rangement(h) + _lit(h) + _bureau(h) + _ambiance(h)
+    # peinture : la seule couleur d'accent est sur le mur de rangement (le mur argile de SS-16 disparaît)
+    S["peintures"]["Bleu brume"] = ["#7F94A8", "mur de rangement et jeté de la chambre 1 (bleu-gris poudré, doux ; ≈ Farrow & "
+                                    "Ball Selvedge n° 306, à valider sur échantillon), laque mate lavable", PEINT]
+    S["accents"][:] = [a for a in S.get("accents", []) if a.get("piece") != "piece-SS-CH1"]
+    if not any(a.get("peinture") == "Argile" for a in S["accents"]) and "Argile" not in S.get("peinture", {}).values():
+        S["peintures"].pop("Argile", None)
+    # éclairage : la lanterne, une lueur dans la niche, un encastré au-dessus du bureau, un près du coin lecture
+    S["lumieres"][:] = [l for l in S["lumieres"] if not (10 < l["x"] < 240 and 232 < l["y"] < 370)]
+    S["lumieres"] += [{"x": LX, "y": LY, "z": 93, "i": 8}, {"x": 22, "y": YC, "z": 80, "i": 2.5},
+                      {"x": 171, "y": 244, "i": 6}, {"x": 200, "y": 300, "i": 6}]
     v = S["visites"]
     i = next((k for k, s in enumerate(v) if s.get("nom") == "Chambre 1"), len(v))
     v[i:i + 1 if i < len(v) else i] = VISITES
     S["palette"].append(["Chambre 1 (4 ans)",
-                         "« le socle de chêne », allégé : trois pièces de chêne et du plancher libre — lit-plateforme queen en "
-                         "coin (matelas à 22 po, 3 bacs-wagons roulants, tête en lattes, tablette-dosseret), banquette des "
-                         "fenêtres à 4 grands tiroirs (marche d'évacuation) devant le mur argile, garde-robe intégrée de 134 po "
-                         "à portes pleines (penderie évolutive, tiroirs, rotation des jouets) ; au centre, coin jeu au sol "
-                         "(tapis de laine 5 × 8, pouf, un rebord à livres)", "#C39A82"])
+                         "« la niche bleue » : mur de rangement pleine hauteur peint bleu brume (laque mate, façades "
+                         "affleurantes, ouverture par pression) ; niche du lit queen doublée de chêne blanc, tête rembourrée "
+                         "en lin à canaux, deux liseuses noir mat ; socle de chêne à 4 tiroirs ; bureau de chêne sur "
+                         "crémaillères noires dans le recoin ; fauteuil de cuir cognac ; tapis de laine crème 8 × 10 ; "
+                         "lanterne de papier ; rideaux de lin ; murs blanc chaud, béton poli", "#7F94A8"])

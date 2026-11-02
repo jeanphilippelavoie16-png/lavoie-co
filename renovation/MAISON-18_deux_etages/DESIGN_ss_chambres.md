@@ -1,209 +1,202 @@
-## Sous-sol — chambres des garçons allégées (zone_chambre1.py, zone_chambre2.py)
+## Sous-sol — chambre 1 refaite : « la niche bleue » (zone_chambre1.py)
+
+La chambre 2 (le grand de 6 ans) est refaite en parallèle : voir DESIGN_ss_chambre2.md.
 
 ### Demande
 
-> « Dans les chambres en bas il y a comme trop de meubles, exagère pas. »
+> « Les chambres des enfants en bas, j'aime pas super ça, faut les refaire. »
 
-Le client veut garder quatre choses :
-- le lit queen sur plateforme à tiroirs ;
-- un rangement principal bien pensé par chambre ;
-- la porte-bibliothèque secrète vers le walk-in de la chambre 2 (son « wow ») ;
-- un coin pour jouer au sol.
+Ce que le client a dit au fil des versions :
+- SS-17 : il voulait du rangement « wow, bien pensé » ;
+- puis « lit queen minimum pour que ça dure » ;
+- puis « trop de meubles, exagère pas » ;
+- la version allégée (lit-plateforme en coin, banquette sous les fenêtres, garde-robe de 134 po, tout en chêne devant un
+  mur argile) ne lui plaît pas non plus.
 
-Le reste est retiré ou simplifié. Le rideau au plafond était déjà retiré à sa demande.
+Ses goûts : chêne, noir mat, bois de grange, travertin, béton poli ; « du chic et fonctionnel ». Il n'aime pas la tuile
+verte ni la céramique.
 
-**Parti pris** : quelques pièces de chêne, belles et utiles, et du plancher libre au centre de chaque chambre. Aucune cloison,
-porte ou fenêtre ne change par rapport à SS-17. Seuls le mobilier intégré, le plan, la 3D, les arrêts de visite et la
-palette des deux modules sont touchés.
+### Parti pris : une chambre d'enfant chic, calme et chaleureuse, qui grandit avec lui
 
-### Chambre 1 — le petit de 4 ans : « le socle de chêne », allégé
+On ne retouche pas la version allégée : on change de direction. Au lieu de plusieurs meubles de chêne répartis dans la
+pièce, **tout le rangement et le lit tiennent dans un seul mur**, traité comme de l'architecture : un plan lisse,
+pleine hauteur, sans poignée. Le reste de la pièce garde très peu d'objets, mais de belle qualité.
 
-**On garde (3 pièces)**
+- **Une seule couleur d'accent, douce** : le mur de rangement est peint **bleu brume** (gris-bleu poudré, pas de vert).
+- **Le chêne blanc là où on le touche** : la niche du lit, le socle du lit, le bureau et la chaise.
+- **Le noir mat en traits fins** : liseuses, lampe du bureau, crémaillères, rail des rideaux.
+- **De la chaleur par les textures** : lin, laine, cuir cognac, papier.
+- **Murs et plafond blanc chaud** ; le béton poli reste partout.
 
-- **Lit-plateforme queen en coin**
-  - Tête au mur ouest, long côté au mur arrière, dessus du matelas à 22 po.
-  - Trois bacs-wagons roulants sous le lit : les jouets de la semaine, qu'on roule jusqu'au tapis.
-  - Tête en lattes de chêne et une seule liseuse.
-  - Au lieu des niches éclairées, une simple tablette-dosseret le long du mur, pour la veilleuse et les livres du soir.
-  - On garde la DEL de plinthe : c'est le chemin de nuit.
-- **Banquette des fenêtres**
-  - Du pied du lit au mur de la chambre 2.
-  - Quatre grands tiroirs de 36 po au lieu de six, deux coussins.
-  - Elle sert aussi de marche d'évacuation.
-  - Le mur argile derrière reste l'accent de la pièce.
-- **Garde-robe intégrée de 134 po (le rangement principal)**
-  - Façade calme : portes pleines de chêne et gorges noires.
-  - Penderie évolutive.
-  - Quatre tiroirs à sa hauteur.
-  - Un module de « rotation des jouets » : ce qui ne sert pas cette semaine dort là, et ce qui sert tient dans les bacs du lit.
-  - Le haut est aux parents.
+Le mur argile de SS-16 disparaît.
 
-**Coin jeu au sol, au centre**
-- Tapis de laine 5 × 8 pi entre le lit, la garde-robe et la banquette.
-- Un pouf.
-- Un seul rebord de chêne de 48 po au mur est, à 26 po, pour 4 livres de face.
+Aucune cloison, porte ou fenêtre ne change par rapport à la version allégée. L'ancienne garde-robe de SS-16 (cloisons
+P12 et P13, portes P07) reste fusionnée à la chambre, et la commode SS-16 reste retirée.
 
-**Retirés**
-- La canopée au-dessus du lit, ses loquets et ses DEL.
-- Les niches éclairées et la prise cachée du dosseret.
-- Les deux bibliothèques de part et d'autre de la banquette, la valance et les stores cachés : les stores sans cordon vont dans l'embrasure.
-- La gare à jouets (12 bacs, comptoir de jeu) et le mur à crémaillères (panneau perforé, chevilles, câble à dessins).
-- La station du matin du recoin. Le recoin redevient une entrée libre, où la porte s'ouvre.
-- La niche-cachette de la garde-robe (coussin, veilleuse, tringle à billes), les tiroirs de plinthe et les étiquettes-images.
-- La moitié des jouets : il reste un camion de bois et trois blocs.
+### La chambre, pièce par pièce
 
-**Plan P-129**
+**1. Le mur de rangement (mur ouest, 118 × 96 po, 24 po de profondeur)**
+- Il occupe le mur de fondation sans fenêtre, du mur de la salle de bain au mur arrière.
+- Façades affleurantes en laque mate bleu brume, joints d'ombre de ⅛ po, ouverture par pression, aucune quincaillerie
+  apparente. Socle noir en retrait de 3 po.
+- Une ligne horizontale continue à 74 po : portes basses de 70 po, et au-dessus une bande de portes hautes qui court sur
+  tout le mur. C'est elle qui donne la proportion calme.
+- **Colonne sud (27 po)** : penderie évolutive.
+  - Aujourd'hui : deux tringles à sa hauteur et quatre tiroirs intérieurs.
+  - Plus tard : une tringle à 66 po.
+- **Colonne nord (27 po)** : tablettes réglables.
+  - En bas, les bacs de jouets « de la semaine » et ses livres, à sa portée.
+  - En haut, la rotation des jouets.
+- **Pont au-dessus du lit (74 → 96 po)** : deux portes relevables, pour les parents (literie, vêtements de la saison suivante).
+
+**2. La niche du lit queen**
+- Baie de 63¾ × 74 po, doublée de chêne blanc. Les chants de ¾ po cadrent la baie d'un trait de bois.
+- **Tête de lit rembourrée** : six canaux verticaux en lin naturel, de 12 à 46 po.
+- Au-dessus, une **tablette de chêne** de 4½ po pour un livre et un verre d'eau. Elle remplace les tables de chevet.
+- **Deux liseuses murales noir mat**, à bras court, tournées vers les oreillers : une pour lui, une pour le parent qui
+  lit l'histoire.
+- **DEL douce** sous le pont : c'est la veilleuse.
+- **Le lit** : un socle de chêne avec un dessus à 12 po, matelas 60 × 80 de 10 po (dessus à 22 po).
+  - Quatre tiroirs sans poignée, deux de chaque côté, avec une gorge au chant du haut et fermeture douce.
+  - Ils sont hors de la niche ; on y met les jouets et la literie de rechange.
+- **Dégagements autour du lit**
+  - 27¾ po de chaque côté (mur de la salle de bain au sud, mur arrière au nord).
+  - Plus de 8 pi libres au pied.
+- Le lit est la tête au mur de fondation : rien ne le sépare du bain de l'autre côté du mur P05.
+
+**3. Le bureau du recoin**
+- Le recoin d'entrée, à gauche de la porte, fait 20 po de profondeur : un plateau de chêne de 52½ × 20 po s'y glisse
+  exactement. Il affleure le plan du mur de la salle de bain.
+- Il est posé sur deux **crémaillères noires** : 22 po aujourd'hui, et on le remonte jusqu'à 29 po quand il grandit.
+- Un tiroir mince, une petite chaise de chêne (assise à 12 po) et une lampe noire.
+- Il reste hors du battant de la porte.
+
+**4. Le coin lecture à la fenêtre est**
+- Un **fauteuil de cuir cognac** tourné vers la pièce, à côté de la fenêtre et non devant.
+- Une **liseuse sur pied** noir et laiton.
+- Assez grand pour un parent avec l'enfant sur les genoux. Il servira encore à 15 ans.
+
+**5. Ce qui lie la pièce**
+- **Tapis de laine crème de 8 × 10 pi**, posé sous le tiers du lit et étendu vers la pièce : c'est le coin jeu.
+- **Une grande lanterne de papier** (30 po, nervures, type Akari), en semi-plafonnier avec le dessous à 77 po.
+  - Elle est au centre de la pièce, dans l'axe de la niche : en entrant, elle flotte devant le mur bleu.
+  - C'est le luminaire « qui a du caractère ».
+- **Rideaux de lin** plafond-plancher sur rail noir.
+  - Ils se replient entre les deux fenêtres : rien devant le vitrage.
+  - Des toiles opaques sans cordon sont posées dans l'embrasure.
+- **Éclairage** :
+  - la lanterne ;
+  - un encastré au-dessus du bureau et un près du coin lecture (aucun au-dessus du lit) ;
+  - les liseuses et la DEL de la niche.
+- **Objets** : deux livres sur la tablette, un ourson, un cahier et un pot de crayons. C'est tout. Les jouets dorment dans le mur.
+
+### Ce qui disparaît de la version allégée
+
+- La banquette des fenêtres et ses 4 tiroirs.
+- La garde-robe de 134 po du mur de la salle de bain : ce mur redevient libre et calme.
+- Le lit en coin avec les bacs-wagons et la tête en lattes.
+- La tablette-dosseret, le rebord à livres, le pouf et les jouets au sol.
+- Le mur argile (accent) : la teinte « Argile » est retirée des peintures.
+
+### Plan P-129
 
 Éléments retirés :
-- `elem-SS-P-C1-CANOPEE`, `-BIB1`, `-BIB2`, `-GARE`, `-VEST`.
+- `elem-SS-P-C1-BANC` ;
+- `elem-SS-P-C1-GR`.
 
-Éléments gardés, avec un nouveau libellé :
-- `elem-SS-P-C1-LIT`, `-BANC` (4 tiroirs), `-GR` (portes pleines).
+Élément redessiné :
+- `elem-SS-P-C1-LIT` : lit queen dans la niche, de 84¾ × 63¾ po, le pont mentionné dans la description.
+
+Éléments nouveaux :
+- `elem-SS-P-C1-RGS` et `elem-SS-P-C1-RGN` : les deux colonnes du mur de rangement, armoires de 24 × 27 po.
+- `elem-SS-P-C1-BUREAU` : plateau du recoin.
+- `elem-SS-P-C1-LECTURE` : fauteuil, tracé incliné, sans libellé.
 
 Les retraits de SS-17 sont maintenus : cloisons P12 et P13, portes P07, pièce GR1, commode SS-16.
 
-**Visite 3D** : 5 arrêts.
-1. vue d'entrée ;
-2. lit sur plateforme à bacs ;
-3. banquette des fenêtres ;
-4. coin jeu au sol ;
-5. garde-robe intégrée.
+Autres changements du plan :
+- La description de `piece-SS-CH1` est réécrite.
+- La note des fenêtres `ouv-SS-009` et `ouv-SS-010` dit : fenêtres d'évacuation, plancher libre devant, rideaux repliés.
 
-### Chambre 2 — le grand de 6 ans : « la bibliothèque secrète », allégée
+### Visite 3D (3 arrêts)
 
-Le **rangement principal de la chambre 2, c'est le walk-in** (ancien caveau, inchangé) :
-- penderie double qui grandit sur crémaillères noires ;
-- banc à souliers ;
-- tour de tiroirs ;
-- miroir au dos de la porte.
+1. **La niche bleue** : depuis le mur de la chambre 2, dans l'axe de la niche. On voit tout le mur, la lanterne devant,
+   les fenêtres à droite et le bureau du recoin à gauche.
+2. **Coin lecture et bureau** : depuis le pied du lit, vers la porte. On voit le fauteuil et la liseuse, le recoin avec
+   le bureau, et la porte.
+3. **La niche de près** : de biais. On voit les tiroirs du socle, la tête rembourrée, les liseuses et le cadre de chêne.
 
-La chambre elle-même n'a donc plus besoin de mur de rangement.
-
-**On garde**
-
-- **Porte-bibliothèque secrète et son imposte**
-  - Telles quelles, livre-levier rouge compris.
-  - Elles sont maintenant seules dans le coin nord-ouest, au bout de l'axe de la porte d'entrée : c'est la première chose qu'on voit en entrant.
-- **Lit queen sur plateforme**
-  - Quatre tiroirs, deux par côté.
-  - Tête au mur arrière, au même endroit.
-- **Tête de lit simplifiée**
-  - Un seul panneau de lattes de chêne sur feutre noir, de 106 × 60 po, coiffé d'un chapeau de chêne.
-  - Deux chevets flottants à tiroir, de 16 × 12 po, avec le dessus à 24 po.
-  - Deux liseuses DEL encastrées dans les lattes.
-- **Banc de fenêtre sous la fenêtre est**
-  - Ramené à 24 po de profondeur (au lieu de 28) : il reste 34 po de passage entre le lit et le banc.
-  - Trois tiroirs. Celui du centre s'enlève : c'est la trappe d'accès au drain (432½, 314¼).
-  - Deux dossiers, un coussin d'accent, une liseuse.
-  - Il sert aussi de marche d'évacuation.
-- **Pupitre à rabat**
-  - C'est ce qui reste du mur d'activité.
-  - Une boîte de chêne de 36 × 9 × 20 po, fixée au mur du vestiaire (x 282-318).
-  - Le rabat s'ouvre à 23¾ po (hauteur d'un enfant de 6 ans), sur deux compas amortis, avec une DEL dessous.
-  - Fermé, c'est une simple boîte au mur. Un tabouret rond l'accompagne.
-  - Il est déplacé hors du mur mitoyen : le mur d'activité de SS-17 bloquait, une fois ouvert, le chemin entre la porte et la porte-bibliothèque.
-- **Coin jeu au sol**
-  - Tapis rond de laine de 64 po, bordé d'osier, entre la porte, le pupitre et le lit.
-  - Il est placé **hors du balayage des deux portes** : rien ne doit gêner la porte-bibliothèque qui pivote vers la chambre.
-  - Un petit train de bois.
-
-**Retirés**
-- La tour gauche du mur de tête et le pont d'armoires hautes blanches : l'alias de peinture « Blanc chaud mat » est retiré, il ne sert plus.
-- Les deux chevets-niches pleine hauteur.
-- La tour d'angle à trésors : vitrine LEGO, globe, coffre, bocal.
-- Le garage à jouets, ses rebords à livres et le rail de galerie.
-- Le mur d'activité : crochets, cases, panneau perforé, armoires hautes.
-- Les bacs-wagons du pied du lit et les LEGO éparpillés.
-- Les coussins en trop sur le banc.
-
-**Plan P-129**
-
-Éléments retirés :
-- `elem-SS-P-CH2-TG`, `-PONT`, `-TOUR`, `-GARAGE`, `-ACTIV`.
-
-Éléments nouveaux :
-- `elem-SS-P-CH2-PUPITRE`.
-
-Éléments redimensionnés :
-- `-LATTES` (106 po) ;
-- `-NG` et `-ND` (chevets flottants 16 × 12) ;
-- `-BANC` (24 × 108).
-
-Éléments gardés : `-LIT`, `-PB` et les trois éléments du walk-in.
-
-Description de la pièce `piece-SS-CH2` ajoutée.
-
-**Visite 3D** : 5 arrêts.
-1. vue d'entrée (la bibliothèque au bout) ;
-2. lit queen et tête de lattes ;
-3. banc de fenêtre ;
-4. coin jeu et pupitre ;
-5. walk-in (inchangé).
+Palette :
+- La ligne « Chambre 1 (4 ans) » est réécrite.
+- Nouvelle peinture « Bleu brume » (#7F94A8, ≈ Farrow & Ball Selvedge n° 306), avec l'alias `laque-bleu-brume` pour le mobilier peint.
 
 ### Options pour le client
 
 | Sujet | A (proposé) | B |
 |---|---|---|
-| Garde-robe ch. 1 | Tout sur mesure en placage de chêne | Caissons de série et façades de chêne sur mesure (≈ −30 %) |
-| Niche-cachette ch. 1 | Retirée (portes pleines) | Remise dans le module C de la garde-robe (+ 600 à 1 000 $) si le petit y tient |
-| Banquette ch. 1 | 4 grands tiroirs | Caissons ouverts et 4 paniers d'osier (≈ −800 $, encore plus léger à l'œil) |
-| Recoin ch. 1 | Libre | 3 crochets de chêne au mur (≈ 60 $) |
-| Pupitre ch. 2 | Maintenant (fermé, c'est une boîte au mur) | Plus tard, vers 7-8 ans (les ancrages sont prévus dès maintenant) |
-| Rangement des parents ch. 2 | Tablette et bacs du walk-in (74 po) | Une armoire haute au-dessus du pupitre, plus tard |
-| Porte du walk-in | Porte-bibliothèque secrète | Porte pleine de chêne avec miroir et bibliothèque fixe à côté (≈ −2 000 $) |
+| Façades du mur | Laque mate bleu brume | Chêne blanc scié sur quartier (≈ +20 à 30 %) ; ou blanc chaud, le mur disparaît et l'accent passe à la tête de lit |
+| Quantité de rangement | 2 colonnes de 27 po, le pont et 4 tiroirs | Plus des armoires basses de 30 po le long du mur de la salle de bain (dessus = rebord à livres), + 2 500 à 4 000 $ |
+| Marche sous la fenêtre | Aucune (plancher libre) | Marche fixe de chêne de 12 po sous la fenêtre est, si l'allège reste haute pour un enfant |
+| Lanterne | Papier washi de 30 po | Lin plissé ou verre opale (plus résistant aux ballons) |
+| Fenêtres | Rideaux de lin et toiles opaques | Toiles opaques seulement (encore plus épuré, ≈ −800 $) |
+| Bureau | Plateau du recoin maintenant | Plus tard, vers 6-7 ans (on pose les crémaillères dès maintenant) |
 
-### Coût (ordre de grandeur, estimation du designer : ébénisterie résidentielle au Québec 2025-2026, non sourcée ; à confirmer par 2 ou 3 soumissions d'ébénistes de la Côte-Nord)
+### Coût (ordre de grandeur)
 
-**Chambre 1**
+Il s'agit d'une estimation du designer, non sourcée, pour de l'ébénisterie résidentielle au Québec en 2025-2026. À
+confirmer par 2 ou 3 soumissions d'ébénistes de la Côte-Nord.
 
 | Poste | Fourchette |
 |---|---|
-| Lit-plateforme + 3 bacs-wagons + tablette-dosseret + tête en lattes | 4 000 – 6 000 $ |
-| Banquette de 12 pi, 4 tiroirs, coussins | 3 500 – 5 500 $ |
-| Garde-robe intégrée de 134 po à portes pleines (3 modules) | 6 500 – 9 500 $ |
-| Rebord à livres | 150 – 300 $ |
-| Électricité (DEL de plinthe, liseuse, prises TR) | 700 – 1 200 $ |
+| Mur de rangement de 118 × 96 po (2 colonnes, pont, aménagement intérieur, ouverture par pression, laque) | 7 000 – 11 000 $ |
+| Doublure de chêne de la niche, socle de lit à 4 tiroirs et tablette | 3 000 – 4 500 $ |
+| Tête de lit rembourrée sur mesure (lin, canaux) | 800 – 1 500 $ |
+| Bureau du recoin (plateau de chêne, crémaillères, tiroir) | 600 – 1 200 $ |
+| Électricité (2 liseuses, DEL de la niche, boîte de plafond de la lanterne, 2 encastrés, prises TR) | 1 500 – 2 500 $ |
 | Crédit : garde-robe SS-16 non construite | − 1 500 à − 2 500 $ |
-| **Total** | **≈ 13 000 – 20 000 $** (au lieu de 25 000 – 37 000 $ en SS-17) |
+| **Total** | **≈ 11 500 – 18 000 $** (version allégée : 13 000 – 20 000 $) |
 
-**Chambre 2 et walk-in**
-
-| Poste | Fourchette |
-|---|---|
-| Lit-plateforme à 4 tiroirs | 2 000 – 3 500 $ |
-| Panneau de lattes de 106 po + 2 chevets flottants | 1 800 – 3 000 $ |
-| Porte-bibliothèque secrète (pivots, loquet, miroir, imposte) | 2 500 – 4 000 $ |
-| Banc de fenêtre (3 tiroirs, trappe du drain, coussins) | 1 800 – 3 000 $ |
-| Pupitre à rabat mural | 500 – 1 000 $ |
-| Walk-in aménagé (inchangé) | 3 500 – 6 000 $ |
-| Électricité (3 liseuses, USB, DEL du pupitre, panneau rayonnant, détecteur) | 1 500 – 2 800 $ |
-| **Total** | **≈ 13 500 – 23 500 $** (au lieu de 24 000 – 42 000 $ en SS-17) |
-
-Ces totaux excluent les matelas (800 à 1 500 $ chacun), les tapis (5 × 8 pi : 400 à 1 200 $ ; rond de 64 po : 250 à
-700 $), le pouf et le tabouret. L'économie des deux chambres réunies est d'environ 20 000 à 35 000 $.
+Ces totaux excluent :
+- le matelas : 800 à 1 500 $ ;
+- le tapis de laine de 8 × 10 pi : 800 à 2 500 $ ;
+- le fauteuil de cuir : 800 à 2 000 $ ;
+- la liseuse sur pied : 200 à 500 $ ;
+- la lanterne : 150 à 1 000 $ selon l'original ou une copie ;
+- les rideaux de lin sur rail et les toiles : 800 à 1 800 $ ;
+- la chaise d'enfant : 100 à 300 $.
 
 ### Points à vérifier — à valider avec la Ville et un professionnel
 
-- **Fenêtres d'évacuation**
-  - Concernées : ouv-SS-009 et ouv-SS-010 (chambre 1), ouv-SS-003 (chambre 2).
+- **Fenêtres d'évacuation** (`ouv-SS-009` et `ouv-SS-010`)
   - Elles doivent **ouvrir** : ouverture libre d'au moins 0,35 m², aucune dimension sous 380 mm, puits dégagé.
-  - Allège (56 po) et tête (86 po) PRÉSUMÉES : à mesurer.
-  - La banquette (16 po) et le banc (18 po) servent de marche ; rien d'autre devant le vitrage.
-  - Limiteur d'ouverture qui se déverrouille sans outil.
-- **Porte-bibliothèque**
-  - Prévoir des pivots à usage intensif, dimensionnés pour le poids chargé.
-  - Aucun verrou : elle s'ouvre en poussant depuis le walk-in.
-  - Son balayage (x 245-277, y 338-370) reste libre : ni tapis, ni jouet, ni meuble.
-  - Il faut vérifier la hauteur de la baie et le linteau.
-- **Tapis sur béton poli** : sous-tapis antidérapant. Le tapis rond de la chambre 2 reste hors des deux battants.
-- **Drain (432½, 314¼)** sous le banc de la chambre 2 : bouchonner ou garder accessible (le tiroir du centre s'enlève) ; vérifier le siphon et les odeurs.
-- **Ancrages**
-  - Garde-robe et banquette : vissées dans les montants ou les fourrures, avec attaches anti-basculement. Laisser ½ po d'air contre la fondation.
-  - Chevets flottants : tasseau français dans du blocage.
-  - Pupitre : vissé dans les montants du mur du vestiaire, avec blocage, sans toucher les armoires vert forêt de l'autre côté.
+  - Elles seront agrandies vers le bas (allège d'environ 40 po) par un autre module : sciage de la fondation, linteau et
+    puits à faire vérifier par un ingénieur.
+  - Rien de plus haut que le lit devant elles. Les rideaux se replient entre les fenêtres. Toiles sans cordon.
+  - Si l'allège reste haute pour un enfant de 4 ans, voir l'option B (marche fixe).
+- **Mur de rangement contre la fondation**
+  - Le mur doit être isolé et sec avant la pose.
+  - Laisser ½ po d'air derrière les caissons, avec des grilles discrètes au socle et dans le joint du haut.
+  - Caissons en contreplaqué, pas en aggloméré.
+  - Attaches anti-basculement dans les fourrures. Le pont est vissé aux colonnes et au plafond, puisqu'il est au-dessus
+    de la tête d'un enfant.
+- **Ouverture par pression**
+  - Loquets et tiroirs à ouverture assistée de qualité.
+  - Trois charnières à fermeture douce par porte de 70 po.
+  - Rien qui pince les doigts.
 - **Électricité**
-  - Prises inviolables (TR).
-  - Liseuses DEL à basse tension.
-  - Détecteurs de fumée et de CO reliés.
-- **Arêtes** : coins arrondis à hauteur de tête et tiroirs à fermeture douce.
-- **Caveau (walk-in)** : hauteur libre, isolation et humidité (moins de 50 % HR) avant d'y ranger les vêtements, comme en SS-17.
+  - Liseuses à basse tension, interrupteur à portée du lit, fils encastrés dans la doublure (à prévoir avant la pose).
+  - Boîte de plafond pour la lanterne, avec DEL de 2700 K peu chaudes (papier).
+  - Prises inviolables (TR) ; détecteurs de fumée et de CO reliés.
+- **Hauteurs**
+  - Dessous de la lanterne à 77 po, au-dessus du tapis : on passe dessous sans se cogner.
+  - Plafond de 8 pi selon le propriétaire ; mesurer sous les poutres.
+- **Tapis sur béton poli** : sous-tapis antidérapant.
+- **Teinte** : bleu brume à valider sur échantillon, en laque mate lavable, à côté d'un échantillon de chêne.
+
+### Décisions à demander au client
+
+1. Le mur de rangement : bleu brume (proposé), chêne blanc, ou blanc chaud ?
+2. La lanterne de papier au centre : oui ?
+3. Rideaux de lin et toiles, ou toiles seulement ?
+4. Le bureau maintenant, ou seulement les crémaillères et le plateau plus tard ?
+5. Assez de rangement avec le mur seul, ou ajoute-t-on les armoires basses du mur de la salle de bain (option B) ?
