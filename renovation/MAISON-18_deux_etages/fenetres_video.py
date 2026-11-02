@@ -115,7 +115,7 @@ NON_VISIBLES = {
     "ouv-SS-006": "salle de bain, mur gauche : jamais montré",
     "ouv-SS-007": "salle de lavage, mur gauche : jamais montré",
     "ouv-SS-009": "chambre 1, mur arrière : cachée par le deck, son garde-corps et le sofa (10, 11)",
-    "ouv-SS-010": "chambre 1, mur arrière : la vidéo n'y dessine AUCUNE fenêtre (11) ; fenêtre d'évacuation exigée, gardée",
+    "ouv-SS-010": "chambre 1, mur arrière : la vidéo n'y dessine AUCUNE fenêtre (11), mais le client confirme qu'elle existe (2026-11-02) : gardée",
 }
 
 

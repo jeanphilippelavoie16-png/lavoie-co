@@ -35,7 +35,7 @@ Gardées telles quelles, car on ne les voit pas dans la vidéo :
 - ouv-SS-006 et ouv-SS-007 (salle de bain et salle de lavage du SS, mur gauche) : allège 56, tête 86 ;
 - ouv-SS-009 et ouv-SS-010 (chambre 1, mur arrière) : 40 po, allège 40, tête 86. Elles sont cachées par le deck dans
   la vidéo. Sur la capture 11, la vidéo ne dessine aucune fenêtre à l'endroit de ouv-SS-010. C'est pourtant une fenêtre
-  d'évacuation exigée : on la garde, et c'est au client de décider.
+  d'évacuation exigée : on la garde. **Confirmé par le client le 2026-11-02 : la 2e fenêtre existe bien** (la vidéo l'a omise).
 
 ## Méthode
 Deux relevés indépendants des captures ont été faits, puis comparés :
@@ -160,4 +160,4 @@ qu'on en tire sont à ± 1½ po en hauteur, ± 2 po en largeur sur les captures 
    12 po (305 mm), sous 450 mm. Si la chute dehors dépasse environ 1,8 m, le code peut exiger une protection : partie
    basse fixe, ouverture limitée ou garde-corps. Il peut aussi exiger un verre de sécurité. À valider avec la Ville.
 6. **Sections inégales** de la façade (bureau 1/3 + 2/3, salon 3/4 + 1/4) : vérifier lesquelles ouvrent.
-7. ouv-SS-010 : le client veut-il vraiment l'enlever, comme dans la vidéo ? C'est une fenêtre d'évacuation de la chambre 1.
+7. ~~ouv-SS-010 : l'enlever comme dans la vidéo ?~~ Réglé : le client confirme qu'elle existe (2026-11-02) ; on la garde.
