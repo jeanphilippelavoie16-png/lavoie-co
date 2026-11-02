@@ -132,9 +132,9 @@
 <text x="872.96" y="327.7" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Fenêtres selon la vidéo DAG (allège ≈ 44, tête</text>
 <text x="872.96" y="338.724" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">≈ 80 po ; chambre 1 : allège ≈ 40) ; congélateur</text>
 <text x="872.96" y="349.747" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">au lavage.</text>
-<text x="872.96" y="362.691" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Chambres d'enfants : lits queen 60 × 80 et</text>
-<text x="872.96" y="373.715" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">rangement intégré de chêne ; fenêtres</text>
-<text x="872.96" y="384.738" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">d'évacuation ouvrantes à vérifier.</text>
+<text x="872.96" y="362.691" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Hall : mur épais sous la poutre arrière</text>
+<text x="872.96" y="373.715" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">(colonnes cachées) ; chambre 1 et salle de bain</text>
+<text x="872.96" y="384.738" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">agrandies ; fenêtres d'évacuation à vérifier.</text>
 <text x="872.96" y="397.682" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">3. Walk-in (ancien caveau) : isolé, évents fermés,</text>
 <text x="872.96" y="408.706" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">chauffé ; porte dérobée dans le mur de chêne de</text>
 <text x="872.96" y="419.729" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">la chambre 2.</text>
@@ -162,25 +162,28 @@
 <path class="mur-neuf" fill-rule="evenodd" d="M 329.885 381.729 L 334.385 381.729 L 334.385 390.979 L 329.885 390.979 Z"/>
 </g>
 <g id="mur-SS-P04">
-<path class="mur-neuf" fill-rule="evenodd" d="M 364.385 386.229 L 359.885 386.229 L 359.885 372.979 L 364.385 372.979 Z"/>
-<path class="mur-neuf" fill-rule="evenodd" d="M 359.885 288.729 L 364.385 288.729 L 364.385 342.979 L 359.885 342.979 Z"/>
+<path class="mur-neuf" fill-rule="evenodd" d="M 364.385 386.229 L 359.885 386.229 L 359.885 375.229 L 364.385 375.229 Z"/>
+<path class="mur-neuf" fill-rule="evenodd" d="M 359.885 331.479 L 364.385 331.479 L 364.385 345.229 L 359.885 345.229 Z"/>
 </g>
 <g id="mur-SS-P05">
-<path class="mur-neuf" fill-rule="evenodd" d="M 220.135 293.229 L 364.385 293.229 L 364.385 288.729 L 220.135 288.729 Z"/>
+<path class="mur-neuf" fill-rule="evenodd" d="M 220.135 293.229 L 408.385 293.229 L 408.385 288.729 L 220.135 288.729 Z"/>
 </g>
 <g id="mur-SS-P06">
-<path class="mur-neuf" fill-rule="evenodd" d="M 359.885 313.229 L 359.885 308.729 L 421.135 308.729 L 421.135 313.229 Z"/>
-<path class="mur-neuf" fill-rule="evenodd" d="M 462.385 308.729 L 462.385 313.229 L 451.135 313.229 L 451.135 308.729 Z"/>
+<path class="mur-neuf" fill-rule="evenodd" d="M 359.885 342.479 L 359.885 331.479 L 411.635 331.479 L 411.635 342.479 Z"/>
+<path class="mur-neuf" fill-rule="evenodd" d="M 462.385 331.479 L 462.385 342.479 L 441.635 342.479 L 441.635 331.479 Z"/>
 </g>
 <g id="mur-SS-P07">
-<path class="mur-neuf" fill-rule="evenodd" d="M 462.385 313.229 L 462.385 160.979 L 457.885 160.979 L 457.885 313.229 Z"/>
+<path class="mur-neuf" fill-rule="evenodd" d="M 462.385 342.479 L 462.385 160.979 L 457.885 160.979 L 457.885 342.479 Z"/>
+</g>
+<g id="mur-SS-P15">
+<path class="mur-neuf" fill-rule="evenodd" d="M 408.385 342.479 L 408.385 288.729 L 403.885 288.729 L 403.885 342.479 Z"/>
 </g>
 <g id="mur-SS-P11">
 <path class="mur-neuf" fill-rule="evenodd" d="M 457.885 313.229 L 457.885 308.729 L 466.135 308.729 L 466.135 313.229 Z"/>
 <path class="mur-neuf" fill-rule="evenodd" d="M 676.135 308.729 L 676.135 313.229 L 498.135 313.229 L 498.135 308.729 Z"/>
 </g>
 <g id="mur-SS-P14">
-<path class="mur-neuf" fill-rule="evenodd" d="M 270.635 341.229 L 270.635 288.729 L 266.135 288.729 L 266.135 341.229 Z"/>
+<path class="mur-neuf" fill-rule="evenodd" d="M 334.635 339.479 L 334.635 288.729 L 330.135 288.729 L 330.135 339.479 Z"/>
 </g>
 <g id="mur-SS-001">
 <path class="mur-lourd" fill-rule="evenodd" d="M 220.135 540.979 L 220.135 530.979 L 579.135 530.979 L 579.135 540.979 Z"/>
@@ -222,14 +225,15 @@
 <path class="mur-lourd" fill-rule="evenodd" d="M 454.135 588.979 L 454.135 530.979 L 448.135 530.979 L 448.135 588.979 Z"/>
 </g>
 <g id="contour-murs-legers">
-<polyline class="mur-leger-c" points="329.885,530.959 329.885,420.979 334.385,420.979 334.385,530.959"/>
-<polyline class="mur-leger-c" points="372.135,384.979 366.135,384.979 366.135,386.229 364.385,386.229 359.885,386.229 334.385,386.229 334.385,390.979 329.885,390.979 329.885,386.229 230.155,386.229"/>
-<polyline class="mur-leger-c" points="230.155,381.729 329.885,381.729 334.385,381.729 359.885,381.729 359.885,372.979 364.385,372.979 364.385,381.729 366.135,381.729 366.135,382.979 372.135,382.979 372.135,384.979"/>
-<polyline class="mur-leger-c" points="359.885,308.729 359.885,293.229 270.635,293.229 270.635,341.229 266.135,341.229 266.135,293.229 230.155,293.229"/>
-<polyline class="mur-leger-c" points="230.155,288.729 266.135,288.729 270.635,288.729 359.885,288.729 364.385,288.729 364.385,293.229 364.385,308.729 421.135,308.729 421.135,313.229 364.385,313.229 364.385,342.979 359.885,342.979 359.885,313.229 359.885,308.729"/>
-<polyline class="mur-leger-c" points="447.135,382.979 449.135,382.979 449.135,384.979 449.135,530.959"/>
-<polyline class="mur-leger-c" points="447.135,530.959 447.135,384.979 404.135,384.979 404.135,382.979 447.135,382.979"/>
-<polyline class="mur-leger-c" points="462.385,170.999 462.385,308.729 466.135,308.729 466.135,313.229 462.385,313.229 457.885,313.229 451.135,313.229 451.135,308.729 457.885,308.729 457.885,170.999"/>
+<polyline class="mur-leger-c" points="329.885,420.979 334.385,420.979 334.385,530.959"/>
+<polyline class="mur-leger-c" points="329.885,530.959 329.885,420.979"/>
+<polyline class="mur-leger-c" points="230.155,381.729 329.885,381.729 334.385,381.729 359.885,381.729 359.885,375.229 364.385,375.229 364.385,381.729 366.135,381.729 366.135,382.979 372.135,382.979 372.135,384.979 366.135,384.979 366.135,386.229 364.385,386.229 359.885,386.229 334.385,386.229 334.385,390.979 329.885,390.979 329.885,386.229 230.155,386.229"/>
+<polyline class="mur-leger-c" points="359.885,331.479 364.385,331.479 403.885,331.479 403.885,293.229 334.635,293.229 334.635,339.479 330.135,339.479 330.135,293.229 230.155,293.229"/>
+<polyline class="mur-leger-c" points="230.155,288.729 330.135,288.729 334.635,288.729 403.885,288.729 408.385,288.729 408.385,293.229 408.385,331.479 411.635,331.479 411.635,342.479 408.385,342.479 403.885,342.479 364.385,342.479 364.385,345.229 359.885,345.229 359.885,342.479 359.885,331.479"/>
+<polyline class="mur-leger-c" points="404.135,382.979 447.135,382.979 449.135,382.979 449.135,384.979 449.135,530.959"/>
+<polyline class="mur-leger-c" points="447.135,530.959 447.135,384.979 404.135,384.979 404.135,382.979"/>
+<polyline class="mur-leger-c" points="457.885,313.229 457.885,308.729 457.885,170.999"/>
+<polyline class="mur-leger-c" points="462.385,170.999 462.385,308.729 466.135,308.729 466.135,313.229 462.385,313.229 462.385,331.479 462.385,342.479 457.885,342.479 441.635,342.479 441.635,331.479 457.885,331.479 457.885,313.229"/>
 <polyline class="mur-leger-c" points="498.135,313.229 498.135,308.729 666.115,308.729"/>
 <polyline class="mur-leger-c" points="666.115,313.229 498.135,313.229"/>
 </g>
@@ -314,14 +318,12 @@
 <path class="ouv-fin" d="M 329.885 420.979 A 30 30 0 0 1 299.885 390.979"/>
 </g>
 <g id="ouv-SS-P03">
-<polygon class="ouv" points="361.947,372.979 361.947,355.979 360.822,355.979 360.822,372.979"/>
-<polygon class="ouv" points="363.447,359.979 363.447,342.979 362.322,342.979 362.322,359.979"/>
-<polyline class="ouv-fin" points="364.385,372.979 359.885,372.979"/>
-<polyline class="ouv-fin" points="364.385,342.979 359.885,342.979"/>
+<polyline class="ouv" points="359.885,375.229 329.885,375.229"/>
+<path class="ouv-fin" d="M 359.885 345.229 A 30 30 0 0 0 329.885 375.229"/>
 </g>
 <g id="ouv-SS-P05">
-<polyline class="ouv" points="451.135,308.729 451.135,278.729"/>
-<path class="ouv-fin" d="M 421.135 308.729 A 30 30 0 0 1 451.135 278.729"/>
+<polyline class="ouv" points="411.635,331.479 411.635,301.479"/>
+<path class="ouv-fin" d="M 441.635 331.479 A 30 30 0 0 0 411.635 301.479"/>
 </g>
 <g id="ouv-SS-P06">
 <polyline class="ouv" points="466.135,308.729 466.135,276.729"/>
@@ -372,9 +374,9 @@
 <text x="295.555" y="484.022" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">BAC</text>
 </g>
 <g id="elem-SS-P-BAIN">
-<polygon class="elem" points="282.635,331.729 348.635,331.729 348.635,299.729 282.635,299.729"/>
-<polygon class="elem-fin" points="340.635,328.729 290.635,328.729 288.722,328.349 287.099,327.265 286.016,325.643 285.635,323.729 285.635,307.229 286.016,305.316 287.099,303.694 288.722,302.61 290.635,302.229 340.635,302.229 342.548,302.61 344.171,303.694 345.254,305.316 345.635,307.229 345.635,323.729 345.254,325.643 344.171,327.265 342.548,328.349"/>
-<circle class="elem-fin" cx="289.635" cy="315.479" r="1"/>
+<polygon class="elem" points="247.135,331.729 313.135,331.729 313.135,299.729 247.135,299.729"/>
+<polygon class="elem-fin" points="305.135,328.729 255.135,328.729 253.222,328.349 251.599,327.265 250.516,325.643 250.135,323.729 250.135,307.229 250.516,305.316 251.599,303.694 253.222,302.61 255.135,302.229 305.135,302.229 307.048,302.61 308.671,303.694 309.754,305.316 310.135,307.229 310.135,323.729 309.754,325.643 308.671,327.265 307.048,328.349"/>
+<circle class="elem-fin" cx="254.135" cy="315.479" r="1"/>
 </g>
 <g id="elem-SS-P-BANC">
 <polygon class="elem" points="622.135,313.229 554.135,313.229 554.135,331.229 622.135,331.229"/>
@@ -384,9 +386,12 @@
 <g id="elem-SS-P-BANCCAB">
 <polygon class="elem" points="449.885,488.479 490.385,488.479 490.385,412.729 449.885,412.729"/>
 </g>
+<g id="elem-SS-P-BANCDOUCHE">
+<polygon class="elem" points="387.16,331.479 403.91,331.479 403.91,293.229 387.16,293.229"/>
+</g>
 <g id="elem-SS-P-C1-BUREAU">
-<polygon class="elem" points="364.635,308.729 417.135,308.729 417.135,288.729 364.635,288.729"/>
-<text x="390.885" y="301.017" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">BUREAU</text>
+<polygon class="elem" points="351.385,288.729 403.885,288.729 403.885,268.729 351.385,268.729"/>
+<text x="377.635" y="281.017" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">BUREAU</text>
 </g>
 <g id="elem-SS-P-C1-LECTURE">
 <polygon class="elem" points="418.497,202.76 442.061,213.748 455.373,185.199 431.809,174.211"/>
@@ -440,8 +445,9 @@
 <polygon class="elem" points="560.135,500.979 590.135,500.979 590.135,464.979 560.135,464.979"/>
 </g>
 <g id="elem-SS-P-DOUCHE">
-<polygon class="elem" points="230.135,341.229 266.135,341.229 266.135,293.229 230.135,293.229"/>
-<text x="257.938" y="349.296" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">DOUCHE</text>
+<polygon class="elem" points="334.635,331.479 403.885,331.479 403.885,293.229 334.635,293.229"/>
+<text x="365.375" y="310.434" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">DOUCHE</text>
+<text x="365.375" y="320.816" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">38 × 69</text>
 </g>
 <g id="elem-SS-P-ESC">
 <polygon class="elem" points="454.135,390.979 454.135,526.979 490.135,526.979 490.135,390.979"/>
@@ -490,8 +496,17 @@
 <text x="245.635" y="519.767" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">L</text>
 </g>
 <g id="elem-SS-P-LAVABO1">
-<polygon class="elem" points="317.135,377.479 335.135,377.479 335.135,363.479 317.135,363.479"/>
-<polygon class="elem-fin" points="332.615,369.359 332.517,368.581 332.224,367.827 331.747,367.119 331.099,366.48 330.3,365.927 329.375,365.48 328.351,365.15 327.26,364.947 326.135,364.879 325.01,364.947 323.919,365.15 322.895,365.48 321.97,365.927 321.171,366.48 320.523,367.119 320.046,367.827 319.753,368.581 319.655,369.359 319.753,370.137 320.046,370.892 320.523,371.599 321.171,372.239 321.97,372.791 322.895,373.239 323.919,373.569 325.01,373.771 326.135,373.839 327.26,373.771 328.351,373.569 329.375,373.239 330.3,372.791 331.099,372.239 331.747,371.599 332.224,370.892 332.517,370.137"/>
+<polygon class="elem" points="271.135,377.479 289.135,377.479 289.135,363.479 271.135,363.479"/>
+<polygon class="elem-fin" points="286.615,369.359 286.517,368.581 286.224,367.827 285.747,367.119 285.099,366.48 284.3,365.927 283.375,365.48 282.351,365.15 281.26,364.947 280.135,364.879 279.01,364.947 277.919,365.15 276.895,365.48 275.97,365.927 275.171,366.48 274.523,367.119 274.046,367.827 273.753,368.581 273.655,369.359 273.753,370.137 274.046,370.892 274.523,371.599 275.171,372.239 275.97,372.791 276.895,373.239 277.919,373.569 279.01,373.771 280.135,373.839 281.26,373.771 282.351,373.569 283.375,373.239 284.3,372.791 285.099,372.239 285.747,371.599 286.224,370.892 286.517,370.137"/>
+</g>
+<g id="elem-SS-P-LAVABO2">
+<polygon class="elem" points="301.135,377.479 319.135,377.479 319.135,363.479 301.135,363.479"/>
+<polygon class="elem-fin" points="316.615,369.359 316.517,368.581 316.224,367.827 315.747,367.119 315.099,366.48 314.3,365.927 313.375,365.48 312.351,365.15 311.26,364.947 310.135,364.879 309.01,364.947 307.919,365.15 306.895,365.48 305.97,365.927 305.171,366.48 304.523,367.119 304.046,367.827 303.753,368.581 303.655,369.359 303.753,370.137 304.046,370.892 304.523,371.599 305.171,372.239 305.97,372.791 306.895,373.239 307.919,373.569 309.01,373.771 310.135,373.839 311.26,373.771 312.351,373.569 313.375,373.239 314.3,372.791 315.099,372.239 315.747,371.599 316.224,370.892 316.517,370.137"/>
+</g>
+<g id="elem-SS-P-LINGERIE">
+<polygon class="elem" points="373.135,342.479 407.135,342.479 407.135,334.979 373.135,334.979"/>
+<polyline class="elem-fin" points="373.135,342.479 407.135,334.979"/>
+<polyline class="elem-fin" points="373.135,334.979 407.135,342.479"/>
 </g>
 <g id="elem-SS-P-LUNE">
 <polygon class="elem-tir" points="476.535,504.579 488.535,504.579 488.535,492.579 476.535,492.579"/>
@@ -529,11 +544,11 @@
 <text x="591.682" y="408.719" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">TOILE MOTORISÉE 120 po</text>
 </g>
 <g id="elem-SS-P-VAN">
-<polygon class="elem" points="308.135,381.729 344.135,381.729 344.135,359.729 308.135,359.729"/>
+<polygon class="elem" points="265.135,381.729 325.135,381.729 325.135,359.729 265.135,359.729"/>
 </g>
 <g id="elem-SS-P-WC">
-<polygon class="elem" points="276.135,381.729 296.135,381.729 296.135,372.769 276.135,372.769"/>
-<polygon class="elem" points="294.135,363.249 294.013,361.596 293.653,359.993 293.063,358.489 292.263,357.13 291.277,355.957 290.135,355.005 288.871,354.303 287.524,353.874 286.135,353.729 284.746,353.874 283.399,354.303 282.135,355.005 280.993,355.957 280.007,357.13 279.207,358.489 278.617,359.993 278.257,361.596 278.135,363.249 278.257,364.902 278.617,366.505 279.207,368.009 280.007,369.369 280.993,370.542 282.135,371.494 283.399,372.195 284.746,372.625 286.135,372.769 287.524,372.625 288.871,372.195 290.135,371.494 291.277,370.542 292.263,369.369 293.063,368.009 293.653,366.505 294.013,364.902"/>
+<polygon class="elem" points="237.635,381.729 257.635,381.729 257.635,372.769 237.635,372.769"/>
+<polygon class="elem" points="255.635,363.249 255.513,361.596 255.153,359.993 254.563,358.489 253.763,357.13 252.777,355.957 251.635,355.005 250.371,354.303 249.024,353.874 247.635,353.729 246.246,353.874 244.899,354.303 243.635,355.005 242.493,355.957 241.507,357.13 240.707,358.489 240.117,359.993 239.757,361.596 239.635,363.249 239.757,364.902 240.117,366.505 240.707,368.009 241.507,369.369 242.493,370.542 243.635,371.494 244.899,372.195 246.246,372.625 247.635,372.769 249.024,372.625 250.371,372.195 251.635,371.494 252.777,370.542 253.763,369.369 254.563,368.009 255.153,366.505 255.513,364.902"/>
 </g>
 <g id="elem-SS-P-WI-BANC">
 <polygon class="elem" points="520.635,159.979 534.635,159.979 534.635,135.979 520.635,135.979"/>
@@ -904,10 +919,10 @@
 <text x="448.135" y="682.529" font-family="Arial, Helvetica, sans-serif" font-size="12.317" font-weight="bold" text-anchor="middle" fill="#000000">FAÇADE AVANT (RUE)</text>
 </g>
 <g id="piece-SS-CH1">
-<path class="invisible" fill-rule="evenodd" d="M 230.135 170.979 L 230.135 288.729 L 364.385 288.729 L 364.385 308.729 L 457.885 308.729 L 457.885 170.979 Z"/>
-<text x="395.165" y="227.35" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">CHAMBRE 1</text>
-<text x="395.165" y="238.998" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">18'-11¾&quot; × 11'-5¾&quot;</text>
-<text x="395.165" y="249.38" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">199,2 pi² (18,5 m²)</text>
+<path class="invisible" fill-rule="evenodd" d="M 230.135 170.979 L 230.135 288.729 L 403.885 288.729 L 403.885 288.679 L 408.385 288.679 L 408.385 331.479 L 457.885 331.479 L 457.885 170.979 Z"/>
+<text x="379.596" y="223.156" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">CHAMBRE 1</text>
+<text x="379.596" y="234.805" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">18'-11¾&quot; × 13'-4½&quot;</text>
+<text x="379.596" y="245.186" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">200,9 pi² (18,7 m²)</text>
 </g>
 <g id="piece-SS-CH2">
 <path class="invisible" fill-rule="evenodd" d="M 666.135 170.979 L 462.385 170.979 L 462.385 308.729 L 666.135 308.729 Z"/>
@@ -922,16 +937,16 @@
 <text x="597.642" y="460.523" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">177,4 pi² (16,5 m²)</text>
 </g>
 <g id="piece-SS-VEST">
-<path class="invisible" fill-rule="evenodd" d="M 449.135 390.979 L 492.385 390.979 L 492.385 383.979 L 666.135 383.979 L 666.135 313.229 L 448.135 313.229 L 448.135 382.979 L 449.135 382.979 Z"/>
-<text x="492.044" y="344.008" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">VESTIAIRE</text>
-<text x="492.044" y="355.656" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">18'-2&quot; × 6'-5¾&quot;</text>
-<text x="492.044" y="366.037" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">109,2 pi² (10,1 m²)</text>
+<path class="invisible" fill-rule="evenodd" d="M 449.135 390.979 L 492.385 390.979 L 492.385 383.979 L 666.135 383.979 L 666.135 313.229 L 462.385 313.229 L 462.385 331.479 L 462.435 331.479 L 462.435 342.479 L 448.135 342.479 L 448.135 382.979 L 449.135 382.979 Z"/>
+<text x="534.124" y="353.155" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">VESTIAIRE</text>
+<text x="534.124" y="364.804" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">18'-2&quot; × 6'-5¾&quot;</text>
+<text x="534.124" y="375.185" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">106,3 pi² (9,9 m²)</text>
 </g>
 <g id="piece-SS-HALL">
-<path class="invisible" fill-rule="evenodd" d="M 448.135 382.979 L 448.135 313.229 L 364.385 313.229 L 364.385 381.729 L 368.385 381.729 L 368.385 382.979 Z"/>
-<text x="406.26" y="341.383" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">HALL</text>
-<text x="406.26" y="353.031" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">6'-11¾&quot; × 5'-9¾&quot;</text>
-<text x="406.26" y="363.413" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">40,5 pi² (3,8 m²)</text>
+<path class="invisible" fill-rule="evenodd" d="M 448.135 382.979 L 448.135 342.479 L 364.385 342.479 L 364.385 381.729 L 368.385 381.729 L 368.385 382.979 Z"/>
+<text x="406.26" y="356.008" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">HALL</text>
+<text x="406.26" y="367.656" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">6'-11¾&quot; × 3'-4½&quot;</text>
+<text x="406.26" y="378.038" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">23,5 pi² (2,2 m²)</text>
 </g>
 <g id="piece-SS-GYM">
 <path class="invisible" fill-rule="evenodd" d="M 334.385 530.979 L 447.135 530.979 L 447.135 384.979 L 368.385 384.979 L 368.385 386.229 L 334.385 386.229 Z"/>
@@ -956,7 +971,7 @@
 <text x="602.574" y="94.553" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">WALK-IN ISOLÉ</text>
 </g>
 <g id="piece-SS-SDB">
-<path class="invisible" fill-rule="evenodd" d="M 230.135 293.229 L 230.135 381.729 L 359.885 381.729 L 359.885 293.229 L 270.635 293.229 L 270.635 343.479 L 266.135 343.479 L 266.135 293.229 Z"/>
+<path class="invisible" fill-rule="evenodd" d="M 230.135 293.229 L 230.135 381.729 L 359.885 381.729 L 359.885 342.479 L 359.835 342.479 L 359.835 331.479 L 403.885 331.479 L 403.885 293.229 L 334.635 293.229 L 334.635 341.729 L 330.135 341.729 L 330.135 293.229 Z"/>
 <polyline class="rappel" points="212.286,296.253 233.159,296.253"/>
 <circle class="elem-plein" cx="233.159" cy="296.253" r="1.26"/>
 <text x="209.33" y="287.03" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000" transform="rotate(-90 209.33 287.03)">SALLE DE BAIN</text>

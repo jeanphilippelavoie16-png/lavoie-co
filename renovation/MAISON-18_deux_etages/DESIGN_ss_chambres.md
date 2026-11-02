@@ -65,6 +65,9 @@ P12 et P13, portes P07) reste fusionnée à la chambre, et la commode SS-16 rest
 - Le lit est la tête au mur de fondation : rien ne le sépare du bain de l'autre côté du mur P05.
 
 **3. Le bureau du recoin**
+- **MAISON-18 (2026-11-02)** : le recoin est devenu la douche de la salle de bain agrandie, et la chambre gagne un
+  vestibule d'entrée sous la poutre. Le même plateau passe sur le mur de la salle de bain, à l'est du pied du lit.
+  Voir DESIGN_ss_poutre.md. Les puces ci-dessous décrivent la version précédente.
 - Le recoin d'entrée, à gauche de la porte, fait 20 po de profondeur : un plateau de chêne de 52½ × 20 po s'y glisse
   exactement. Il affleure le plan du mur de la salle de bain.
 - Il est posé sur deux **crémaillères noires** : 22 po aujourd'hui, et on le remonte jusqu'à 29 po quand il grandit.

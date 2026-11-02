@@ -10,6 +10,7 @@ de produit.
 import math
 
 TITRE = "SS-16 — Le bain en vedette, béton poli"
+# MAISON-18 (2026-11-02) : hall, salle de bain et lumières revus pour le mur sous la poutre arrière (DESIGN_ss_poutre.md)
 
 
 def B(x0, y0, x1, y1, z0, z1, mat, r=None):
@@ -288,8 +289,20 @@ M += [A(337, 220, 352, 226, 27, 58, "jete", r=2, b=1.5), A(359, 219.5, 375, 226,
 M += [A(337 + 11 * k, 212, 346 + 11 * k, 224, 3, 7, "cuir" if k % 2 else "carbone", r=2, b=1) for k in range(6)]  # souliers
 M += [A(404, 203.75, 444, 227.75, 0, 88, "laque-vert", r=0.3, b=0.3), B(423.6, 203.4, 424.4, 203.75, 0.5, 87.5, "carbone"),
       T([(422, 203.2, 34), (422, 203.2, 54)], 0.35, "laiton"), T([(426, 203.2, 34), (426, 203.2, 54)], 0.35, "laiton")]
-# --- hall : tapis de passage
-M += [A(158, 166, 214, 202, 0, 0.5, "tapis", r=2, b=0.2)]
+# --- hall (MAISON-18) : 40½ po de large entre le verre du gym et le mur de la poutre (y 158 → 198½) ; tapis de passage ;
+#     lingerie encastrée dans l'épaisseur du mur de la poutre, entre la colonne C01 et la porte de la chambre 1 : deux portes
+#     de chêne affleurantes (joints d'ombre, ouverture par pression), 7½ po de profond, sous la retombée (z 3½ → 82)
+M += [A(152, 166, 216, 192, 0, 0.5, "tapis", r=2, b=0.2)]
+LX0, LX1, LY = 153.0, 187.0, 198.5
+M += [B(LX0 - 0.25, LY - 0.08, LX1 + 0.25, LY, 3.25, 82.25, "carbone"),                         # joint d'ombre (cadre)
+      B(LX0, LY - 0.3, (LX0 + LX1) / 2 - 0.1, LY - 0.08, 3.5, 82, "placage"),
+      B((LX0 + LX1) / 2 + 0.1, LY - 0.3, LX1, LY - 0.08, 3.5, 82, "placage"),
+      B(LX0 + 0.5, LY - 0.08, LX1 - 0.5, LY, 0, 3.25, "carbone")]                                 # socle en retrait
+# porte de la chambre 1 (ouv-SS-P05, x 191½ → 221½) : embrasure de 11 po doublée de chêne (le mur de la poutre se lit
+# comme voulu) ; 0,1 po en retrait de la face côté chambre, où se loge le vantail fermé
+PA, PB = 191.5, 221.5
+M += [B(PA + 0.5, LY, PA + 1.1, 209.4, 0, 79.5, "placage"), B(PB - 1.1, LY, PB - 0.5, 209.4, 0, 79.5, "placage"),
+      B(PA + 0.5, LY, PB - 0.5, 209.4, 78.9, 79.5, "placage")]
 # --- salle d'entraînement : tapis roulant, vélo de route sur base d'entraînement, petits poids au sol, miroir
 M += [B(118, 10.2, 224, 10.8, 6, 84, "miroir")]
 M += [A(146, 17, 226, 57, 0, 0.35, "caoutchouc-noir", r=2, b=0.15), MOD("tapis_roulant", 186, 37, face="+x")]
@@ -317,75 +330,99 @@ M += [A(97.75, 92, 109.75, 110, z, z + 1.5, "placage", r=0.3, b=0.3) for z in (5
      [C(103, 98 + 7 * k, 3, 55.5, 63, "osier") for k in range(2)] + [A(90, 44, 104, 62, 36, 39, "draps", r=1.5, b=0.8)]
 M += [CX(30, 80, y, 80, 0.5, "placage") for y in (66, 72, 78, 84)] + [B(30, 64, 31, 86, 80, 89.5, "metal"), B(79, 64, 80, 86, 80, 89.5, "metal")]
 M += [MOD("chauffe_eau", 34, 138, face="+x", H=66), A(10.2, 99, 14, 119, 40, 70, "gris", r=0.5, b=0.3)]
-# --- salle de bain (SS-16) : le bain en vedette. Bain sculptural centré dans une alcôve de pierre (travertin beige-gris
-#     pâle adouci en dalles verticales de 24 × 48 po à joints fins, à la place du zellige vert refusé par le client ; mur
-#     de la chambre 1, fourré de 2½ po pour une niche éclairée), bordée par la retombée de la poutre arrière (y = 204) et par le
-#     muret de la douche ; suspension globe au-dessus, robinet sur pied noir, plateau de chêne. Douche simple 36 × 48 dans
-#     le coin arrière gauche (verre clair, profilés noirs, une seule pomme pluie noire). Toilette et vanité le long du mur
-#     de la salle de lavage, comme avant. Béton poli au sol partout, y compris dans la douche (pente vers un drain linéaire).
-XB0, XB1, YB, ZN0, ZN1 = 50.5, 139.75, 247.75, 33.5, 48.0      # alcôve : muret → mur du hall ; face du mur ; niche (z)
-FOUR = 2.5                                                      # mur d'accent fourré : face de la pierre à y = 245.25
-YF = YB - FOUR
-XC, YC = (XB0 + 0.75 + XB1) / 2, YF - 4 - 16                    # centre du bain : 4 po de la pierre
-NX0, NX1 = XC - 24, XC + 24                                     # niche de 48 po centrée sur le bain
-# calepinage : joints verticaux à x = 71½, 95½ et 119½ (bords de la niche et axe du bain : dalles de 24 po, coupes
-# égales de 20¼ po aux deux bouts), joints horizontaux à 48 po (= linteau de la niche) ; voir le matériau
-# pierre_travertin (catalogue_materiaux.py)
-# mur d'accent en pierre (plancher au plafond), percé de la niche
-M += [B(XB0 + 0.75, YF, XB1, YB, 0, ZN0, "pierre_travertin"), B(XB0 + 0.75, YF, XB1, YB, ZN1, 96, "pierre_travertin"),
-      B(XB0 + 0.75, YF, NX0, YB, ZN0, ZN1, "pierre_travertin"), B(NX1, YF, XB1, YB, ZN0, ZN1, "pierre_travertin")]
-M += [B(XB0, 209, XB0 + 0.75, YF, 0, 96, "pierre_travertin"), B(XB0, 199.75, XB0 + 0.75, 209, 0, 86, "pierre_travertin")]   # face du muret côté bain
+# --- salle de bain (MAISON-18, agrandie dans le coin de la chambre 1 — DESIGN_ss_poutre.md) : le bain reste la vedette.
+#     Le mur hall / chambre (mur-SS-P06) passe maintenant SOUS la poutre arrière (mur épais de 11 po, y 198½ → 209½) et la
+#     salle de bain prend l'ancien recoin de la chambre (x 139¾ → 183¾) : la douche s'y installe, derrière le mur de la poutre.
+#     - Alcôve du bain : entre le mur de fondation (x = 10) et le muret mur-SS-P14 (x 110 → 114½), bordée par la retombée
+#       de la poutre (y 199 → 209) ; travertin beige-gris pâle adouci (dalles verticales de 24 × 48 po, joints fins) sur les
+#       trois côtés, mur du fond fourré de 2½ po pour la niche éclairée ; bain sculptural centré, robinet sur pied noir mat,
+#       suspension globe, plateau de chêne.
+#     - Douche à l'italienne de 38 × 69 po (x 114½ → 183¾, y 209½ → 247¾) : on y entre sous la retombée par une ouverture de
+#       24 po (pierre à pierre) entre le muret et le coin du mur de la poutre ; travertin plancher au plafond, pomme pluie noire, mitigeur et
+#       douchette près de l'entrée (on ouvre l'eau sans se mouiller), banc de travertin au fond, drain linéaire.
+#     - Mur du lavage : toilette suspendue près de la fenêtre, vanité double de chêne de 60 po (deux vasques, deux miroirs
+#       ronds, trois appliques) ; porte battante qui s'ouvre contre ce mur (derrière : les crochets des garçons).
+#     Béton poli au sol partout, douche comprise (pente vers le drain linéaire, seuil à niveau).
+XA0, XA1, YB, ZN0, ZN1 = 10.0, 110.0, 247.75, 33.5, 48.0      # alcôve : mur de fondation → muret ; face du mur ; niche (z)
+FOUR, EP_P = 2.5, 0.75                                        # fourrure du mur du fond ; épaisseur des dalles de pierre
+YF = YB - FOUR                                                # face de la pierre du fond (245,25)
+XC, YC = (XA0 + EP_P + XA1 - EP_P) / 2, YF - 4 - 16           # centre du bain (60 ; 225,25) : 4 po de la pierre
+NX0, NX1 = XC - 24, XC + 24                                   # niche de 48 po centrée sur le bain
+XD0, XD1, YD0 = 114.5, 183.75, 209.5                          # douche : muret (face est) → mur-SS-P15 ; mur de la poutre
+XK = 139.7                                                    # bout du mur de la poutre (coin de l'entrée de la douche)
+PIERRE = "pierre_travertin"
+# calepinage du fond de l'alcôve : joints verticaux à x = 36, 60 et 84 (bords de la niche et axe du bain : dalles de
+# 24 po, coupes égales de 25¼ po aux deux bouts), joints horizontaux à 48 po (= linteau de la niche)
+M += [B(XA0, YF, XA1, YB, 0, ZN0, PIERRE), B(XA0, YF, XA1, YB, ZN1, 96, PIERRE),
+      B(XA0, YF, NX0, YB, ZN0, ZN1, PIERRE), B(NX1, YF, XA1, YB, ZN0, ZN1, PIERRE)]
+# côtés de l'alcôve : mur de fondation (après la fenêtre) et face ouest du muret ; bout du muret enveloppé
+M += [B(XA0, 209, XA0 + EP_P, YF, 0, 96, PIERRE), B(XA0, 200, XA0 + EP_P, 209, 0, 85.95, PIERRE),
+      B(XA1 - EP_P, 209, XA1, YF, 0, 96, PIERRE), B(XA1 - EP_P, 199.25, XA1, 209, 0, 85.95, PIERRE),
+      B(XA1 - EP_P, 198.5, XD0 + EP_P, 199.25, 0, 85.95, PIERRE)]
 M += [B(NX0, YF, NX1, YF + 0.75, ZN0 - 0.6, ZN0, "quartz"),                                         # appui de la niche
-      B(NX0, YB - 0.4, NX1, YB, ZN0, ZN1, "pierre_travertin"),                                          # fond de la niche
+      B(NX0, YB - 0.4, NX1, YB, ZN0, ZN1, PIERRE),                                                  # fond de la niche
       B(NX0 + 0.5, YF + 0.3, NX1 - 0.5, YB - 0.4, ZN1 - 0.45, ZN1, "spot")]                          # DEL sous le linteau
 # objets dans la niche : bougies, vase, serviettes roulées
 M += [C(NX0 + 6, YB - 1.4, 1.3, ZN0, ZN0 + 4.5, "blanc"), C(NX0 + 9.5, YB - 1.4, 1.3, ZN0, ZN0 + 3, "blanc"),
       MOD("vase", XC + 2, YB - 1.4, z=ZN0, H=9)]
 M += [CX(NX1 - 14 + 4.6 * k, NX1 - 10 + 4.6 * k, YB - 1.4, ZN0 + 2.1, 2.0, "draps", pans=24) for k in range(3)]
 # lueur rasante sur la pierre : DEL linéaire cachée sous la retombée de la poutre, côté alcôve
-M += [B(XB0 + 1, 208.6, XB1 - 0.5, 209.2, 85.4, 85.9, "spot")]
+M += [B(XA0 + 1, 208.6, XA1 - 1, 209.2, 85.4, 85.9, "spot")]
 # bain sculptural (pièce maîtresse) et plateau de chêne
 M += [MOD("bain_sculptural", XC, YC, face="-y")]
 M += [A(XC - 5, YC - 17.5, XC + 5, YC + 17.5, 23.15, 23.9, "placage", r=0.8, b=0.3),
       C(XC + 1, YC + 6, 1.4, 23.9, 27.2, "blanc"), C(XC - 1.5, YC - 4, 1.1, 23.9, 28, "verre-clair")]
-# robinet sur pied noir mat (bec col-de-cygne au-dessus du rebord, douchette à main), au bout gauche du bain
-XR_, YR_ = XB0 + 0.75 + (XC - 33 - XB0 - 0.75) / 2, YC
+# robinet sur pied noir mat (bec col-de-cygne au-dessus du rebord, douchette à main), 6 po avant le bout ouest du bain
+XR_, YR_ = XC - 33 - 6, YC
 M += [C(XR_, YR_, 2.6, 0, 0.4, "metal", pans=40), T([(XR_, YR_, 0.4), (XR_, YR_, 38.5), (XR_ + 0.6, YR_, 41.2), (XR_ + 2.6, YR_, 42.6),
       (XR_ + 5.4, YR_, 42.4), (XR_ + 7.6, YR_, 40.6), (XR_ + 8.3, YR_, 38.2)], 0.6, "metal"),
       C(XR_ + 8.3, YR_, 0.75, 37.4, 38.4, "metal"), C(XR_, YR_, 0.9, 30, 33, "metal"), B(XR_ - 0.3, YR_ - 2.6, XR_ + 0.3, YR_, 31.2, 31.8, "metal"),
       C(XR_ - 1.3, YR_ + 1.5, 0.7, 20, 28, "metal"), C(XR_ - 1.3, YR_ + 1.5, 1.05, 28, 29.6, "metal")]
 # suspension globe opale (≈ 13 po), centrée sur le bain (bas du globe à ~ 43 po au-dessus du rebord)
 M += [MOD("suspension_globe", XC, YC, z=96 - 30, H=30)]
-# plante au bout du bain (côté hall) et petite serviette sur le muret
-M += [MOD("plante_sansevieria", XB1 - 7, YF - 9)]
-# douche simple 36 × 48 : même travertin que l'alcôve du bain (demande du client), verre clair (panneau fixe + porte),
-# profilés noirs, pomme pluie au plafond
-M += [B(10, 199.75, 10.625, YB, 0, 96, "pierre_travertin"), B(10, YB - 0.625, 46, YB, 0, 96, "pierre_travertin"),
-      B(45.375, 199.75, 46, YB, 0, 96, "pierre_travertin")]
-M += [B(10.5, 199.5, 45.5, 200.0, 0.4, 78, "verre"),                                                   # verre clair
-      B(10.5, 199.3, 11.3, 200.2, 0.4, 78, "metal"), B(44.7, 199.3, 45.5, 200.2, 0.4, 78, "metal"),        # profilés muraux
-      B(21.8, 199.3, 22.2, 200.2, 0.4, 78, "metal"), B(10.5, 199.3, 45.5, 200.2, 77.6, 78.4, "metal"),    # joint porte, traverse
-      T([(25, 199.3, 34), (25, 197.6, 34), (25, 197.6, 50), (25, 199.3, 50)], 0.35, "metal")]             # poignée
-M += [B(12, YB - 3.2, 44, YB - 0.6, 0, 0.12, "metal")]                                                  # drain linéaire
-M += [C(28, 226, 0.45, 88.5, 96, "metal"), C(28, 226, 5, 87.6, 88.5, "metal", pans=48),                 # pomme pluie noire
-      CY(28, YB - 0.9, YB - 0.5, 46, 3.4, "metal", pans=40), CY(28, YB - 2.6, YB - 0.9, 46, 0.6, "metal"),  # mitigeur
-      B(25.5, YB - 3, 30.5, YB - 2.4, 45.6, 46.4, "metal")]
-M += [B(40.5, 214, 45.5, 238, 40, 41, "quartz"), C(43, 220, 1.3, 41, 48, "blanc"), C(43, 224, 1.1, 41, 46.5, "ecran")]  # tablette
-# vanité simple de chêne suspendue (36 po), quartz, vasque, mitigeur noir, miroir rond, deux appliques
-M += [A(88, 159.25, 124, 181.25, 12, 32, "placage", r=0.5, b=0.4), A(87.5, 159.25, 124.5, 181.75, 32, 33.5, "quartz", r=0.6, b=0.4),
-      B(105.8, 181.25, 106.2, 181.45, 13, 31, "carbone"),
-      MOD("vasque_carree", 106, 171.5, face="+y", z=33.5), MOD("robinet_vasque_noir", 106, 165, face="+y", z=33.5),
-      CY(106, 159.3, 159.8, 60, 13, "miroir"), TOR(106, 159.6, 60, 13, 0.45, "metal"),
-      MOD("distributeurs_marbre", 119, 165, z=33.5), MOD("serviettes_pliees", 92.6, 172, z=33.5, L=9.5),
-      MOD("panier_osier", 106, 170, z=1)]
-for xa in (88.5, 123.5):
+# plante au bout est du bain ; porte-serviette noir mat sur la pierre du mur ouest, à portée du bain
+M += [MOD("plante_sansevieria", XA1 - 9, YF - 9)]
+M += [T([(XA0 + EP_P, 214, 40), (XA0 + 3.6, 214, 40), (XA0 + 3.6, 238, 40), (XA0 + EP_P, 238, 40)], 0.35, "metal"),
+      A(XA0 + 1.6, 216, XA0 + 5.6, 236, 25, 40.6, "draps", r=1.2, b=0.8)]
+# --- douche à l'italienne : travertin plancher au plafond (même pierre que l'alcôve, demande du client)
+M += [B(XD0, 199.25, XD0 + EP_P, 209, 0, 85.95, PIERRE), B(XD0, 209, XD0 + EP_P, YB - EP_P, 0, 96, PIERRE),     # muret, côté douche
+      B(XD0 + EP_P, YB - EP_P, XD1, YB, 0, 96, PIERRE),                                                  # mur de la chambre
+      B(XD1 - EP_P, YD0, XD1, YB - EP_P, 0, 96, PIERRE),                                                 # mur-SS-P15
+      B(XK, YD0, XD1 - EP_P, YD0 + EP_P, 0, 96, PIERRE),                                                 # dos du mur de la poutre
+      B(XK - EP_P, 198.5, XK, YD0 + EP_P, 0, 85.95, PIERRE)]                                             # coin de l'entrée
+# banc de travertin au fond (assise à 17½ po, nez de 2 po), drain linéaire le long du mur de la chambre
+M += [B(XD1 - 14.75, YD0 + EP_P, XD1 - EP_P, YB - EP_P, 0, 15.5, PIERRE),
+      B(XD1 - 16.75, YD0 + EP_P, XD1 - EP_P, YB - EP_P, 15.5, 17.5, PIERRE)]
+M += [B(XD0 + 2, YB - 3.6, XD1 - 18, YB - 1.2, 0, 0.12, "metal")]
+# pomme pluie noire au plafond (au milieu de la partie cachée derrière le mur de la poutre), mitigeur et douchette à main
+# sur le muret, juste après l'entrée
+XP, YP = 158.0, (YD0 + YB) / 2
+M += [C(XP, YP, 0.45, 88.5, 96, "metal"), C(XP, YP, 5, 87.6, 88.5, "metal", pans=48)]
+M += [CX(XD0 + EP_P, XD0 + 1.15, 216, 46, 3.4, "metal", pans=40), CX(XD0 + 1.15, XD0 + 2.85, 216, 46, 0.6, "metal"),
+      B(XD0 + 0.95, 222.5, XD0 + 1.55, 223.5, 40, 74, "metal"),                                        # barre de douchette
+      CX(XD0 + 1.55, XD0 + 3.4, 223, 66, 1.3, "metal", pans=24), T([(XD0 + 2.4, 223, 64.7), (XD0 + 2.4, 223.6, 50)], 0.25, "carbone")]
+# serviettes roulées et savon sur le banc ; encastré étanche au plafond
+M += [CY(XD1 - 8, 236, 244, 19.5, 2.0, "draps", pans=24), CY(XD1 - 8, 231.5, 235.5, 19.3, 1.8, "draps", pans=24),
+      A(XD1 - 10, 214, XD1 - 5, 217, 17.5, 18.6, "blanc", r=0.8, b=0.4)]
+M += [C(146, YP, 2.3, 95.7, 96, "carbone", pans=32), C(146, YP, 1.6, 95.55, 95.7, "spot", pans=32)]
+# tablette de travertin éclairée au-dessus du banc (savons des parents, hors de portée des petits), DEL dessous
+M += [B(XD1 - 5.25, 216, XD1 - EP_P, 241, 44, 45.25, PIERRE), B(XD1 - 5.0, 216.5, XD1 - EP_P, 240.5, 43.85, 44, "spot")]
+M += [C(XD1 - 3, 220 + 4 * k, 1.1, 45.25, 45.25 + hb, mt, pans=24) for k, (hb, mt) in enumerate(((7.5, "blanc"), (6.5, "carbone"), (7.5, "blanc")))]
+# --- mur du lavage : toilette suspendue (muret technique) près de la fenêtre, plaque noire
+M += [MOD("toilette_suspendue", 27.5, 169.7, face="+y", z=2), MOD("plaque_chasse", 27.5, 159.6, face="+y", z=40)]
+# vanité double de chêne suspendue (60 po), quartz, deux vasques, mitigeurs noirs, deux miroirs ronds, trois appliques
+VX0, VX1 = 45.0, 105.0
+M += [A(VX0, 159.25, VX1, 181.25, 12, 32, "placage", r=0.5, b=0.4), A(VX0 - 0.5, 159.25, VX1 + 0.5, 181.75, 32, 33.5, "quartz", r=0.6, b=0.4),
+      B(74.8, 181.25, 75.2, 181.45, 13, 31, "carbone"), B(VX0 + 0.5, 181.25, VX1 - 0.5, 181.45, 22.3, 22.6, "carbone")]
+for xv in (60.0, 90.0):
+    M += [MOD("vasque_carree", xv, 171.5, face="+y", z=33.5), MOD("robinet_vasque_noir", xv, 165, face="+y", z=33.5),
+          CY(xv, 159.3, 159.8, 60, 10.5, "miroir"), TOR(xv, 159.6, 60, 10.5, 0.45, "metal")]
+M += [MOD("distributeurs_marbre", 75, 165, z=33.5), MOD("serviettes_pliees", 100.5, 176, z=33.5, L=8)]
+for xa in (VX0, 75.0, VX1):
     M += [CY(xa, 159.25, 159.7, 64, 2.2, "laiton", pans=32), CY(xa, 159.7, 163.5, 64, 0.35, "laiton"),
           SPH(xa, 165, 64, 3, "abat-jour")]
-# toilette suspendue (muret technique), plaque noire
-M += [MOD("toilette_suspendue", 66, 169.7, face="+y", z=2), MOD("plaque_chasse", 66, 159.6, face="+y", z=40)]
-# plante sous la fenêtre, tapis de bain devant le bain
-M += [MOD("plante_syngonium", 20, 171, H=24)]
-M += [A(XC - 16, 190, XC + 16, 205, 0, 0.45, "draps", r=2, b=0.3)]
+# tapis de bain devant le bain
+M += [A(XC - 16, 191, XC + 16, 205, 0, 0.45, "draps", r=2, b=0.3)]
 def commode(x0, y0, x1, y1, face, h=32):
     """Commode de chêne à trois tiroirs, poignées noires ; face = côté des tiroirs."""
     out = [A(x0, y0, x1, y1, 3, h, "placage", r=0.4, b=0.3), B(x0 + 1, y0 + 1, x1 - 1, y1 - 1, 0, 3, "carbone")]
@@ -473,8 +510,9 @@ SCENE = {
     # generer_3d.py les intègre à la visite (sans SANS_PRIVE) — publication acceptée par le client
     "images": {cle: f"../prive/famille/{cle}.jpg" for rang in GALERIE for cle in rang},
     "lumieres": [{"x": 288, "y": 132}, {"x": 404, "y": 90}, {"x": 368, "y": 196}, {"x": 424, "y": 190}, {"x": 400, "y": 126}, {"x": 190, "y": 182},
-                 {"x": 198, "y": 214}, {"x": 170, "y": 50}, {"x": 160, "y": 120}, {"x": 50, "y": 60}, {"x": 60, "y": 120},
-                 {"x": 106, "y": 188}, {"x": 30, "y": 182}, {"x": 28, "y": 214, "i": 6}, {"x": 95.5, "y": 225.25, "z": 78, "i": 4}, {"x": 100, "y": 310}, {"x": 360, "y": 300}, {"x": 190, "y": 300}, {"x": 330, "y": 80},
+                 {"x": 170, "y": 50}, {"x": 160, "y": 120}, {"x": 50, "y": 60}, {"x": 60, "y": 120},
+                 {"x": 75, "y": 186}, {"x": 28, "y": 190}, {"x": 150, "y": 228.6, "i": 6}, {"x": 128, "y": 228, "i": 3},
+                 {"x": 60.0, "y": 225.25, "z": 78, "i": 4}, {"x": 100, "y": 310}, {"x": 360, "y": 300}, {"x": 190, "y": 300}, {"x": 330, "y": 80},
                  {"x": 273, "y": 408}, {"x": 252, "y": 60, "z": 185, "i": 7},
                  {"x": GLX[0], "y": 30, "z": 96, "i": 2.5}, {"x": GLX[1], "y": 30, "z": 96, "i": 2.5}],   # galerie
     "visites": [{"nom": "Entrée", "x": 430, "y": 178, "cap": 168},
@@ -486,10 +524,11 @@ SCENE = {
                 {"nom": "Gym (porte vitrée)", "x": 168, "y": 192, "cap": 270},
                 {"nom": "Vélo et tapis roulant", "x": 126, "y": 146, "cap": 320},
                 {"nom": "Salle de lavage", "x": 70, "y": 128, "cap": 262},
-                {"nom": "Salle de bain (entrée)", "x": 134, "y": 184, "cap": 168},
-                {"nom": "Le bain (alcôve de pierre)", "x": 130, "y": 176, "cap": 134},
-                {"nom": "Douche simple", "x": 34, "y": 186, "cap": 90},
-                {"nom": "Vanité", "x": 106, "y": 204, "cap": 270},
+                {"nom": "Hall — le mur de la poutre", "x": 252, "y": 172, "cap": 155},
+                {"nom": "Salle de bain (entrée)", "x": 134, "y": 182, "cap": 162},
+                {"nom": "Le bain (alcôve de pierre)", "x": 128, "y": 188, "cap": 150},
+                {"nom": "Douche à l'italienne (derrière la poutre)", "x": 122, "y": 222, "cap": 8},
+                {"nom": "Vanité", "x": 75, "y": 202, "cap": 270},
                 {"nom": "Chambre 1", "x": 222, "y": 246, "cap": 132},
                 {"nom": "Chambre 2", "x": 262, "y": 250, "cap": 40},
                 {"nom": "Walk-in (caveau isolé)", "x": 270, "y": 330, "cap": 100},
@@ -502,7 +541,7 @@ SCENE = {
                                 ["Vestiaire", "banc et cases en chêne, crochets laiton, armoire à manteaux et armoires du haut vert forêt", "#34473B"],
                 ["Escalier flottant", "limon central en acier noir, marches de chêne de 2 po ; verre côté gym, rampe à barreaux d'acier noir côté séjour ; dessous dégagé (béton poli continu)", "#1E1E1E"],
                 ["Chambres", "chambre 1 : lit entre les deux fenêtres, bureau, commode de chêne ; chambre 2 (sauge) : bureau sous la fenêtre, walk-in dans l'ancien caveau (isolé, évents fermés, chauffé)", "#A6AF9A"],
-                ["Salle de bain", "bain sculptural en pierre de résine dans une alcôve de travertin beige-gris pâle adouci (dalles verticales 24 × 48 po, joints fins, plancher au plafond ; à la place du zellige vert, à la demande du client), niche éclairée, suspension globe, robinet sur pied noir mat, plateau de chêne ; douche simple 36 × 48 vitrée en travertin (comme le bain), une pomme pluie noire ; vanité de chêne suspendue ; murs greige", "#CFC6B8"],
+                ["Salle de bain", "agrandie dans le coin de la chambre 1 (MAISON-18) ; bain sculptural en pierre de résine centré dans une alcôve de travertin beige-gris pâle adouci sur trois côtés (dalles verticales 24 × 48 po, joints fins, plancher au plafond ; à la place du zellige vert, à la demande du client), niche éclairée, suspension globe, robinet sur pied noir mat, plateau de chêne ; douche à l'italienne de 38 × 69 po en travertin dans l'épaisseur gagnée derrière le mur de la poutre (entrée libre de 24 po, pomme pluie noire, banc de pierre) ; vanité double de chêne suspendue de 60 po, deux miroirs ronds ; murs greige ; lingerie de chêne encastrée côté hall", "#CFC6B8"],
                 ["Gym", "béton poli, tapis de caoutchouc noir sous les appareils et les poids, murs anthracite, miroir, tapis roulant, vélo de route sur base d'entraînement", "#2A2A2A"],
                 ["Salle de lavage", "béton poli, laveuse à chargement par le dessus, comptoir de pliage en L en chêne avec bac inox encastré, armoires marine, séchoir suspendu", "#2E3B4E"],
                 ["Séjour", "divan en L en tissu gris chaud, projecteur 4K au plafond (support noir court), toile motorisée de 120 po centrée (boîtier noir au plafond, descend devant la fenêtre), meuble bas de chêne, table basse ronde en chêne, tapis de laine crème ; au mur avant, galerie de six photos de famille (cadres identiques de métal noir mat, passe-partout blanc chaud, grille 3 × 2) éclairée par deux petits encastrés orientables", "#9A5B32"],

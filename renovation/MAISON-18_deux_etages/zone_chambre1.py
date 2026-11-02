@@ -10,8 +10,9 @@ CHALEUREUSE, qui grandira avec lui. Peu de pièces, des surfaces planes et propr
 - LA NICHE DU LIT QUEEN creusée dans ce mur, doublée de chêne blanc (cadre de chant de ¾ po) : tête de lit rembourrée
   à canaux verticaux en lin, tablette de chêne, deux liseuses murales noir mat, DEL douce sous le pont ; le lit est un
   socle de chêne à 4 tiroirs sans poignée (2 par côté) ;
-- LE BUREAU DU RECOIN : plateau de chêne de 52½ po glissé dans le recoin à gauche de la porte, sur crémaillères noires
-  (22 po aujourd'hui, 29 po plus tard), un tiroir, une petite chaise de chêne et une lampe noire ;
+- LE BUREAU : plateau de chêne de 52½ po fixé au mur de la salle de bain, à gauche en entrant, sur crémaillères noires
+  (22 po aujourd'hui, 29 po plus tard), un tiroir, une petite chaise de chêne et une lampe noire (MAISON-18 : l'ancien
+  recoin du bureau est devenu la douche, voir plus bas) ;
 - LE COIN LECTURE à la fenêtre est : un fauteuil de cuir cognac et une liseuse sur pied (un parent y lit avec lui) ;
 - un grand tapis de laine 8 × 10 pi, une grande lanterne de papier au centre de la pièce (dans l'axe de la niche),
   des rideaux de lin plafond-plancher repliés entre les deux fenêtres. Murs et plafond blanc chaud ; béton poli.
@@ -19,17 +20,26 @@ Retirés de la version allégée : banquette des fenêtres, garde-robe de 134 po
 livres, pouf, jouets au sol ; le mur argile (accent) disparaît.
 
 L'ancienne garde-robe de SS-16 (cloisons P12 et P13, portes coulissantes P07) reste fusionnée à la chambre ; la commode
-SS-16 reste retirée. Pouces, repère de la maison. Faces des murs : ouest (fondation) x = 10 ; arrière (fondation)
-y = 370 ; P05 (salle de bain) y = 252,25 ; P07 (chambre 2) x = 237,75 ; P06 (hall) y = 232,25 ; P04 (salle de bain /
-recoin) x = 144,25. Fenêtres (mur arrière) : x 92-132 et 156-196, allège abaissée vers 40 po par un autre module :
-rien de plus haut que le lit devant elles. Porte (P05) : x 201-231 sur P06, battant vers la chambre. Rien ne dépasse
-x = 237,75.
+SS-16 reste retirée. Pouces, repère de la maison.
+
+MAISON-18 (client, 2026-11-02 : « la poutre devant la porte de la chambre du fond a pas rapport, donne l'espace à la
+chambre ; la salle de bain un peu plus grosse, prise dans la chambre ») — DESIGN_ss_poutre.md : le mur hall / chambre
+(P06) passe sous la poutre arrière (mur épais de 11 po) ; la chambre reprend l'ancienne bande du hall et la salle de bain
+prend l'ancien recoin du bureau (douche). L'entrée de la chambre devient un petit vestibule (x 188¼ → 237¾, y 209½ →
+252¼) ; le mur de rangement, la niche, le lit, le coin lecture et les fenêtres ne bougent pas.
+
+Faces des murs : ouest (fondation) x = 10 ; arrière (fondation) y = 370 ; P05 (salle de bain) y = 252,25 (de x = 10 à
+188,25) ; P07 (chambre 2) x = 237,75 ; P06 (mur de la poutre) y = 209,5 ; P15 (douche / vestibule) x = 188,25.
+Fenêtres (mur arrière) : x 92-132 et 156-196, allège abaissée vers 40 po par un autre module : rien de plus haut que le
+lit devant elles. Porte (ouv-SS-P05) : x 191½-221½ dans P06, pentures à l'ouest, battant vers la chambre contre P15.
+Rien ne dépasse x = 237,75.
 """
 import math
 
 # --------------------------------------------------------------------------------------------- repères de la pièce
 XW, YB, YS, XE = 10.0, 370.0, 252.25, 237.75        # nu : mur ouest, mur arrière, mur P05, mur P07
-YR, XR = 232.25, 144.25                              # recoin d'entrée : face de P06, face de P04
+YR, XR = 209.5, 188.25                               # vestibule d'entrée : face de P06 (mur de la poutre), face de P15
+DX0, DX1 = 131.25, 183.75                            # bureau contre P05 (mur de la salle de bain), à l'est du pied du lit
 AIR = 0.5                                            # vide d'air derrière les caissons contre la fondation
 XB = XW + AIR                                        # dos des caissons du mur de rangement
 FX = XB + 24.0                                       # plan des façades (34,5)
@@ -44,8 +54,8 @@ BX1 = 95.25                                          # pied du lit (socle)
 LX, LY = 136.0, YC                                   # lanterne : centre de la pièce hors mur de rangement, axe de la niche
 PEINT = "laque-bleu-brume"                           # alias de la peinture « Bleu brume » (mobilier peint)
 
-# emprise de la zone (pour retirer le mobilier de SS-16) : chambre + ancienne garde-robe, et le recoin d'entrée
-ZONE = [(9.5, 250.5, 240.0, 371.0), (142.0, 230.5, 240.0, 252.6)]
+# emprise de la zone (pour retirer le mobilier de SS-16) : chambre + ancienne garde-robe, et le vestibule d'entrée
+ZONE = [(9.5, 250.5, 240.0, 371.0), (186.0, 209.0, 240.0, 252.6)]
 
 # ------------------------------------------------------------------------------------------------- plan (P-129)
 RETIRER_MURS = {"mur-SS-P12", "mur-SS-P13"}          # cloisons de l'ancienne garde-robe
@@ -63,9 +73,9 @@ EQUIPEMENTS = [  # id, type, nom, libellé, x, y, rotation, (longueur sur x, lar
     ("elem-SS-P-C1-LIT", "autre", "Lit queen dans la niche du mur de rangement (matelas 60 × 80, dessus à 22 po) : socle "
      "de chêne à 4 tiroirs sans poignée, tête rembourrée en lin et tablette, 2 liseuses ; pont de rangement au-dessus "
      "(74 → 96 po, les parents)", "LIT QUEEN", (XB + BX1) / 2, YC, 0, (BX1 - XB, NY1 - NY0)),
-    ("elem-SS-P-C1-BUREAU", "comptoir", "Bureau du recoin : plateau de chêne de 52½ × 20 po sur crémaillères noires "
-     "(22 po aujourd'hui, jusqu'à 29 po), un tiroir ; chaise d'enfant de chêne", "BUREAU", (XR + 0.25 + 197.0) / 2,
-     (YR + YS) / 2, 0, (197.0 - XR - 0.25, YS - YR)),
+    ("elem-SS-P-C1-BUREAU", "comptoir", "Bureau : plateau de chêne de 52½ × 20 po sur crémaillères noires fixées au mur "
+     "de la salle de bain (22 po aujourd'hui, jusqu'à 29 po), un tiroir ; chaise d'enfant de chêne", "BUREAU",
+     (DX0 + DX1) / 2, YS + 10.0, 0, (DX1 - DX0, 20.0)),
     ("elem-SS-P-C1-LECTURE", "autre", "Coin lecture : fauteuil de cuir cognac et liseuse sur pied, à côté de la fenêtre "
      "est (pas devant)", "", 216.8, 347.0, 335, (26, 31.5)),
 ]
@@ -85,8 +95,9 @@ def apres_modifs(maison, base):
         if p["id"] == "piece-SS-CH1":
             p["description"] = ("Chambre 1 (enfant de 4 ans), « la niche bleue » : mur de rangement intégré pleine hauteur "
                                 "sur le mur ouest (façades peintes affleurantes, sans quincaillerie) avec la niche du lit "
-                                "queen doublée de chêne, bureau dans le recoin d'entrée, coin lecture à la fenêtre est, "
-                                "grand tapis et lanterne centrale — proposition MAISON-18 (esquisse)")
+                                "queen doublée de chêne, bureau contre le mur de la salle de bain, coin lecture à la fenêtre "
+                                "est, grand tapis et lanterne centrale ; entrée par un petit vestibule sous la poutre (le mur "
+                                "du hall passe sous la poutre arrière) — proposition MAISON-18 (esquisse)")
     for o in ss["ouvertures"]:
         if o["id"] in ("ouv-SS-009", "ouv-SS-010"):
             o["note"] = ((o.get("note") or "") + " Fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², "
@@ -185,24 +196,38 @@ def _lit(h):
 
 
 def _bureau(h):
-    """Bureau du recoin : plateau de chêne sur crémaillères noires, un tiroir, chaise d'enfant, lampe noire."""
+    """Bureau : plateau de chêne sur crémaillères noires fixées au mur de la salle de bain (P05), un tiroir, chaise
+    d'enfant, lampe noire. Le plateau est suspendu (aucune patte) : le tapis passe dessous."""
     A, B, C, T = h.A, h.B, h.C, h.T
-    M = [A(XR + 0.25, YR + 0.25, 197.0, YS, 20.5, 22.0, "placage", r=0.4, b=0.25)]
-    for xs in (151.0, 190.5):
-        M += [B(xs - 0.5, YR, xs + 0.5, YR + 0.45, 8, 34, "metal"),                              # crémaillère
-              B(xs - 0.35, YR + 0.45, xs + 0.35, 248.5, 19.6, 20.5, "metal")]                     # console
-    M += [A(158, 234, 184, 251.7, 17.8, 20.4, "placage", r=0.3, b=0.2),
-          B(166, 251.65, 176, 251.78, 19.0, 19.6, "carbone")]                                     # tiroir, gorge
-    M += [B(158, 236, 171, 245, 22.0, 22.35, "draps"), C(150.5, 237.5, 1.4, 22, 25.8, "placage", pans=20)]  # cahier, pot
-    M += [C(190, 237.5, 2.6, 22.0, 22.7, "metal", pans=24),                                      # lampe noir mat
-          T([(190, 237.5, 22.7), (190, 238.5, 36.5)], 0.3, "metal"),
-          T([(190, 238.5, 36.5), (183.5, 241.5, 36.2)], 0.3, "metal"),
-          C(183.5, 241.5, 2.3, 32.6, 35.9, "metal", r2=1.3, pans=24), C(183.5, 241.5, 1.9, 32.5, 32.65, "spot", pans=24)]
-    # chaise d'enfant de chêne (assise à 12 po), tournée vers le bureau
-    M += [A(162, 254.5, 176, 266.5, 11.0, 12.0, "placage", r=1, b=0.4)]
-    M += [C(x, 255.6, 0.55, 0, 11, "placage", pans=12) for x in (163.1, 174.9)]
-    M += [C(x, 265.4, 0.55, 0, 23.5, "placage", pans=12) for x in (163.1, 174.9)]
-    M += [A(162.4, 264.9, 175.6, 266.1, 17.5, 23.5, "placage", r=0.5, b=0.3)]
+    Y1 = YS + 20.0                                                                              # devant du plateau
+    xm = (DX0 + DX1) / 2
+    M = [A(DX0, YS + 0.25, DX1, Y1, 20.5, 22.0, "placage", r=0.4, b=0.25)]
+    for xs in (DX0 + 6.0, DX1 - 6.0):
+        M += [B(xs - 0.5, YS, xs + 0.5, YS + 0.45, 8, 34, "metal"),                              # crémaillère
+              B(xs - 0.35, YS + 0.45, xs + 0.35, Y1 - 3.75, 19.6, 20.5, "metal")]                 # console
+    M += [A(xm - 13, YS + 1.75, xm + 13, Y1 - 0.55, 17.8, 20.4, "placage", r=0.3, b=0.2),
+          B(xm - 5, Y1 - 0.6, xm + 5, Y1 - 0.47, 19.0, 19.6, "carbone")]                          # tiroir, gorge
+    M += [B(xm - 14, YS + 4, xm - 1, YS + 13, 22.0, 22.35, "draps"),                              # cahier
+          C(DX0 + 4.5, YS + 5.25, 1.4, 22, 25.8, "placage", pans=20)]                              # pot de crayons
+    lx, ly = DX1 - 7.0, YS + 5.25                                                               # lampe noir mat, à droite
+    M += [C(lx, ly, 2.6, 22.0, 22.7, "metal", pans=24),
+          T([(lx, ly, 22.7), (lx, ly + 1, 36.5)], 0.3, "metal"),
+          T([(lx, ly + 1, 36.5), (lx - 6.5, ly + 4, 36.2)], 0.3, "metal"),
+          C(lx - 6.5, ly + 4, 2.3, 32.6, 35.9, "metal", r2=1.3, pans=24), C(lx - 6.5, ly + 4, 1.9, 32.5, 32.65, "spot", pans=24)]
+    # chaise d'enfant de chêne (assise à 12 po), tournée vers le bureau, dos vers la pièce
+    y0 = Y1 + 2.25
+    M += [A(xm - 7, y0, xm + 7, y0 + 12, 11.0, 12.0, "placage", r=1, b=0.4)]
+    M += [C(x, y0 + 1.1, 0.55, 0, 11, "placage", pans=12) for x in (xm - 5.9, xm + 5.9)]
+    M += [C(x, y0 + 10.9, 0.55, 0, 23.5, "placage", pans=12) for x in (xm - 5.9, xm + 5.9)]
+    M += [A(xm - 6.6, y0 + 10.4, xm + 6.6, y0 + 11.6, 17.5, 23.5, "placage", r=0.5, b=0.3)]
+    return M
+
+
+def _vestibule(h):
+    """Vestibule d'entrée (MAISON-18) : trois patères de chêne à 44 po sur le mur de la chambre 2, une robe de chambre."""
+    A, CX = h.A, h.CX
+    M = [CX(XE - 3.0, XE, y, 44, 0.6, "placage", pans=16) for y in (224.0, 232.0, 240.0)]
+    M += [A(XE - 3.4, 236.6, XE - 0.4, 243.4, 17, 43.6, "tissu", r=1.2, b=0.8)]
     return M
 
 
@@ -229,23 +254,28 @@ def _ambiance(h):
 
 VISITES = [
     {"nom": "Chambre 1 — la niche bleue", "x": 226, "y": 311, "cap": 180},
-    {"nom": "Chambre 1 — coin lecture et bureau", "x": 100, "y": 360, "cap": 334},
-    {"nom": "Chambre 1 — la niche de près", "x": 150, "y": 259, "cap": 160},
+    {"nom": "Chambre 1 — coin lecture et bureau", "x": 100, "y": 360, "cap": 322},
+    {"nom": "Chambre 1 — la niche de près", "x": 172, "y": 296, "cap": 168},
+    {"nom": "Chambre 1 — l'entrée sous la poutre", "x": 213, "y": 300, "cap": 270},
 ]
 
 
 def appliquer_scene(S, h):
-    S["mobilier"][:] = [o for o in S["mobilier"] if not _dans_zone(o)] + _mur_rangement(h) + _lit(h) + _bureau(h) + _ambiance(h)
+    S["mobilier"][:] = [o for o in S["mobilier"] if not _dans_zone(o)] + _mur_rangement(h) + _lit(h) + _bureau(h) + \
+        _ambiance(h) + _vestibule(h)
     # peinture : la seule couleur d'accent est sur le mur de rangement (le mur argile de SS-16 disparaît)
     S["peintures"]["Bleu brume"] = ["#7F94A8", "mur de rangement et jeté de la chambre 1 (bleu-gris poudré, doux ; ≈ Farrow & "
                                     "Ball Selvedge n° 306, à valider sur échantillon), laque mate lavable", PEINT]
     S["accents"][:] = [a for a in S.get("accents", []) if a.get("piece") != "piece-SS-CH1"]
     if not any(a.get("peinture") == "Argile" for a in S["accents"]) and "Argile" not in S.get("peinture", {}).values():
         S["peintures"].pop("Argile", None)
-    # éclairage : la lanterne, une lueur dans la niche, un encastré au-dessus du bureau, un près du coin lecture
-    S["lumieres"][:] = [l for l in S["lumieres"] if not (10 < l["x"] < 240 and 232 < l["y"] < 370)]
+    # éclairage : la lanterne, une lueur dans la niche, un encastré au-dessus du bureau, un près du coin lecture, un dans
+    # le vestibule d'entrée
+    S["lumieres"][:] = [l for l in S["lumieres"] if not ((10 < l["x"] < 240 and 252 < l["y"] < 370)
+                                                         or (XR < l["x"] < 240 and YR < l["y"] <= 252))]
     S["lumieres"] += [{"x": LX, "y": LY, "z": 93, "i": 8}, {"x": 22, "y": YC, "z": 80, "i": 2.5},
-                      {"x": 171, "y": 244, "i": 6}, {"x": 200, "y": 300, "i": 6}]
+                      {"x": (DX0 + DX1) / 2, "y": YS + 26, "i": 6}, {"x": 200, "y": 300, "i": 6},
+                      {"x": (XR + XE) / 2, "y": 231, "i": 5}]
     v = S["visites"]
     i = next((k for k, s in enumerate(v) if s.get("nom") == "Chambre 1"), len(v))
     v[i:i + 1 if i < len(v) else i] = VISITES
@@ -253,5 +283,6 @@ def appliquer_scene(S, h):
                          "« la niche bleue » : mur de rangement pleine hauteur peint bleu brume (laque mate, façades "
                          "affleurantes, ouverture par pression) ; niche du lit queen doublée de chêne blanc, tête rembourrée "
                          "en lin à canaux, deux liseuses noir mat ; socle de chêne à 4 tiroirs ; bureau de chêne sur "
-                         "crémaillères noires dans le recoin ; fauteuil de cuir cognac ; tapis de laine crème 8 × 10 ; "
+                         "crémaillères noires contre le mur de la salle de bain ; vestibule d'entrée sous la poutre "
+                         "(embrasure de chêne, patères) ; fauteuil de cuir cognac ; tapis de laine crème 8 × 10 ; "
                          "lanterne de papier ; rideaux de lin ; murs blanc chaud, béton poli", "#7F94A8"])

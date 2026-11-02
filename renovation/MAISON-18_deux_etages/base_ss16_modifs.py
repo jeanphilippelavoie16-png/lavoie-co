@@ -11,6 +11,17 @@ Salle de bain refaite : douche de 36 × 48 po dans le coin arrière gauche (mure
 sur un mur d'accent (le mur de la chambre 1) entre ce muret et le mur du hall, toilette et vanité le long du mur de la
 salle de lavage ; porte coulissante gardée au même endroit (la colonne de l'axe arrière est juste derrière). La retombée de
 la poutre arrière (y = 204) encadre le bain : elle devient le bord d'une alcôve. Le reste est identique à SS-15. Pouces, repère de la maison.
+
+MAISON-18 (client, 2026-11-02 : « une poutre devant la porte de la chambre du fond qui a pas rapport, donne l'espace à la
+chambre ; la salle de bain un peu plus grosse, prise dans la chambre ») — détail dans DESIGN_ss_poutre.md :
+- la cloison hall / chambre 1 (mur-SS-P06) passe SOUS la poutre arrière (axe y = 204) : mur épais de 11 po (EPAISSEUR) qui
+  enveloppe la retombée et les colonnes C01 et C02 ; le hall garde 40½ po de large (y 158 → 198½) ;
+- la chambre 1 reprend l'ancienne bande du hall ; la salle de bain prend le coin de l'ancien recoin (x 142 → 186) :
+  mur-SS-P04 raccourci (y 157 → 204), mur-SS-P05 prolongé jusqu'à x = 186, nouveau mur-SS-P15 (douche / entrée de la chambre) ;
+- salle de bain refaite : douche à l'italienne de 38 × 69 po dans l'épaisseur gagnée (muret mur-SS-P14 déplacé à x = 112¼),
+  bain centré dans une alcôve de pierre plus large, vanité double de 60 po, toilette près de la fenêtre ; porte battante ;
+- la porte de la chambre 1 (ouv-SS-P05) passe dans le mur épais ; lingerie encastrée dans ce mur, côté hall.
+Les extrémités de P06 sont décalées (x 145,2 → 236,8) pour que ses bouts carrés (5½ po) arrivent au nu de P04 et de P07.
 """
 from shapely.geometry import LineString, Point, Polygon
 from shapely.ops import polygonize, unary_union
@@ -22,6 +33,10 @@ SOURCE = "proposition SS-16 (esquisse)"
 # Hauteur du sous-sol donnée par le propriétaire le 2026-10-29 (« 8 pi en bas ») : plancher au plafond actuel.
 HAUTEUR_SS = {"valeur": 96, "source": "MESURÉ", "photo": None,
               "note": "8 pi, plancher du sous-sol au plafond, donné par le propriétaire (2026-10-29) ; sous les poutres : moins"}
+
+
+# épaisseurs particulières (sinon T ; cloisons vitrées et claustras : 2 po)
+EPAISSEUR = {"mur-SS-P06": 11.0}   # mur sous la poutre arrière : enveloppe la retombée (8 po) et les colonnes C01, C02 (8 × 8)
 
 
 def dim(v, note=None, src="PRÉSUMÉ"):
@@ -36,21 +51,23 @@ MURS = [  # id, x1, y1, x2, y2, rôle (« VERRE » = cloison vitrée, « LATTES 
     ("mur-SS-P10", 146, 157, 228, 157, "VERRE : salle d'entraînement / hall (axe de la poutre avant)"),
     ("mur-SS-P09", 228, 10, 228, 157, "VERRE : salle d'entraînement / escalier"),
     ("mur-SS-P08", 112, 10, 112, 157, "salle de lavage / salle d'entraînement"),
-    ("mur-SS-P04", 142, 157, 142, 250, "salle de bain / hall"),
-    ("mur-SS-P05", 10, 250, 142, 250, "salle de bain / chambre 1"),
-    ("mur-SS-P06", 142, 230, 240, 230, "hall / chambre 1 (la chambre reprend le recoin du hall)"),
-    ("mur-SS-P07", 240, 230, 240, 370, "chambre 1 / chambre 2 (à l'ouest de la porte du caveau)"),
+    ("mur-SS-P04", 142, 157, 142, 204, "salle de bain / hall (bout ouest du hall)"),
+    ("mur-SS-P05", 10, 250, 186, 250, "salle de bain / chambre 1 (prolongé jusqu'à la douche)"),
+    ("mur-SS-P06", 145.2, 204, 236.8, 204, "hall / chambre 1 et douche, SOUS la poutre arrière : mur épais de 11 po qui "
+     "enveloppe la retombée et les colonnes C01, C02 (lingerie encastrée côté hall)"),
+    ("mur-SS-P07", 240, 204, 240, 370, "chambre 1 / chambre 2 (à l'ouest de la porte du caveau), prolongé jusqu'au mur de la poutre"),
+    ("mur-SS-P15", 186, 204, 186, 250.05, "douche (salle de bain) / entrée de la chambre 1"),
     ("mur-SS-P11", 240, 230, 446, 230, "vestiaire / chambre 2"),
     ("mur-SS-P12", 38.25, 280, 38.25, 370, "garde-robe / chambre 1"),
     ("mur-SS-P13", 10, 280, 38.25, 280, "garde-robe / chambre 1"),
-    ("mur-SS-P14", 48.25, 199.75, 48.25, 250, "muret de la douche / niche du bain (plancher au plafond : tuile blanche côté douche, pierre côté bain)"),
+    ("mur-SS-P14", 112.25, 201.5, 112.25, 250, "muret de la douche / alcôve du bain (plancher au plafond, travertin des deux côtés)"),
 ]
 
 PORTES = [  # id, mur, centre, largeur, ouvre_vers, rôle, opération, matériau, charnière (None = début du mur)
     ("ouv-SS-P01", "mur-SS-P10", 168.0, 32, "droite", "porte vitrée de la salle d'entraînement", "battante", "verre", "fin"),
     ("ouv-SS-P02", "mur-SS-P08", 135.0, 30, "gauche", "porte de la salle de lavage", "battante", None, "fin"),
-    ("ouv-SS-P03", "mur-SS-P04", 183.0, 30, "gauche", "porte coulissante de la salle de bain (depuis le hall) : rail apparent côté salle de bain, elle se range vers l'arrière, au bout du bain", "coulissante", None, None),
-    ("ouv-SS-P05", "mur-SS-P06", 216.0, 30, "gauche", "porte de la chambre 1 (depuis le hall)", "battante", None, "fin"),
+    ("ouv-SS-P03", "mur-SS-P04", 180.75, 30, "gauche", "porte de la salle de bain (depuis le bout du hall) : battante pleine, pentures côté avant, elle s'ouvre contre le mur du lavage (derrière : les crochets des garçons)", "battante", None, "debut"),
+    ("ouv-SS-P05", "mur-SS-P06", 206.5, 30, "gauche", "porte de la chambre 1 (depuis le hall), dans le mur épais de la poutre (embrasure de chêne de 11 po) ; elle s'ouvre contre le mur de la douche", "battante", None, "debut"),
     ("ouv-SS-P06", "mur-SS-P11", 262.0, 32, "gauche", "porte de la chambre 2 (depuis le pied de l'escalier)", "battante", None, None),
     ("ouv-SS-P07", "mur-SS-P12", 325.0, 60, "droite", "portes coulissantes de la garde-robe (chambre 1)", "coulissante", None, None),
 ]
@@ -61,7 +78,7 @@ PIECES = [  # id, nom, point dans la pièce
     ("piece-SS-ESC", "Escalier", (252, 100)),
     ("piece-SS-SALON", "Séjour", (360, 80)),
     ("piece-SS-VEST", "Vestiaire", (390, 190)),
-    ("piece-SS-HALL", "Hall", (195, 190)),
+    ("piece-SS-HALL", "Hall", (195, 180)),
     ("piece-SS-SDB", "Salle de bain", (60, 215)),
     ("piece-SS-CH1", "Chambre 1", (100, 320)),
     ("piece-SS-GR1", "G.-R.", (24, 320)),
@@ -70,7 +87,7 @@ PIECES = [  # id, nom, point dans la pièce
 COUPES = [  # limites sans mur (prolongées jusqu'aux murs ; l'excédent est coupé par la région)
     ((272.25, 8), (272.25, 157), (452, 157)),   # escalier (rampe de métal) / séjour, puis séjour / vestiaire
     ((226, 150), (274, 150)),   # pied de l'escalier
-    ((228, 148), (228, 231)),   # hall / vestiaire
+    ((228, 148), (228, 199)),   # hall / vestiaire (jusqu'au mur de la poutre)
 ]
 
 # Escalier : option 2 (entrée avant) ; volée droite qui monte vers l'avant, 3 marches tournantes en haut, sortie à l'ouest
@@ -84,11 +101,15 @@ EQUIPEMENTS = [  # id, type, nom, libellé, x, y, rotation, (longueur, largeur)
     ("elem-SS-P-PLIAGE", "comptoir", "Comptoir de pliage en L avec rangement dessous (mur du gym)", None, 97.75, 72.5, 90, (75, 24)),
     ("elem-SS-P-PLIAGE2", "comptoir", "Comptoir de pliage en L (mur avant), paniers dessous", None, 90, 22.5, 0, (40, 25)),
     ("elem-SS-P-BAC", "bac-lavage", "Bac de lavage encastré dans le comptoir de pliage", None, 98, 80, 90, (22, 18)),
-    ("elem-SS-P-BAIN", "baignoire", "Bain autoportant sculptural (pierre de résine), centré sur le mur d'accent (travertin adouci en dalles de 24 × 48 po sur fourrure de 2½ po, niche)", None, 95.5, 225.25, 0, (66, 32)),
-    ("elem-SS-P-DOUCHE", "autre", "Douche simple de 36 × 48 po, panneau et porte vitrés", "DOUCHE", 28, 223.75, 0, (36, 48)),
-    ("elem-SS-P-WC", "toilette", "Toilette", None, 66, 173.25, 0, (20, 28)),
-    ("elem-SS-P-VAN", "comptoir", "Vanité simple de 36 po", None, 106, 170.25, 0, (36, 22)),
-    ("elem-SS-P-LAVABO1", "lavabo", "Lavabo", None, 106, 170.5, 0, (18, 14)),
+    # MAISON-18 : salle de bain agrandie dans le coin de la chambre 1 (voir DESIGN_ss_poutre.md)
+    ("elem-SS-P-BAIN", "baignoire", "Bain autoportant sculptural (pierre de résine), centré dans l'alcôve de pierre (travertin adouci en dalles de 24 × 48 po sur fourrure de 2½ po, niche ; murs ouest et muret aussi en travertin)", None, 60.0, 225.25, 0, (66, 32)),
+    ("elem-SS-P-DOUCHE", "autre", "Douche à l'italienne de 38 × 69 po dans l'épaisseur gagnée derrière le mur de la poutre : entrée libre de 24 po sous la retombée, travertin plancher au plafond, banc de travertin au fond, pomme pluie, drain linéaire le long du mur de la chambre", "DOUCHE 38 × 69", 149.125, 228.625, 0, (69.25, 38.25)),
+    ("elem-SS-P-BANCDOUCHE", "autre", "Banc de travertin au fond de la douche (assise à 17½ po)", "", 175.4, 228.625, 0, (16.75, 38.25)),
+    ("elem-SS-P-WC", "toilette", "Toilette suspendue (muret technique), près de la fenêtre", None, 27.5, 173.25, 0, (20, 28)),
+    ("elem-SS-P-VAN", "comptoir", "Vanité double de chêne suspendue de 60 po (2 vasques, tiroirs), dessus de quartz", None, 75, 170.25, 0, (60, 22)),
+    ("elem-SS-P-LAVABO1", "lavabo", "Lavabo", None, 60, 170.5, 0, (18, 14)),
+    ("elem-SS-P-LAVABO2", "lavabo", "Lavabo", None, 90, 170.5, 0, (18, 14)),
+    ("elem-SS-P-LINGERIE", "armoires", "Lingerie encastrée dans le mur de la poutre, côté hall : 2 portes de chêne affleurantes (ouverture par pression), 34 po de large, 7½ po de profond, tablettes jusqu'à 82 po (serviettes roulées, papier, savons)", None, 170, 202.25, 0, (34, 7.5)),
     ("elem-SS-P-BANC", "armoires", "Vestiaire ouvert : banc, cases à souliers, crochets, tablette", None, 368, 218.75, 180, (68, 18)),
     ("elem-SS-P-MANT", "armoires", "Armoire à manteaux", None, 424, 215.75, 180, (40, 24)),
     ("elem-SS-P-DIVAN", "autre", "Divan en L", "DIVAN", 321, 84, 0, (38, 88)),
@@ -108,8 +129,11 @@ EQUIPEMENTS = [  # id, type, nom, libellé, x, y, rotation, (longueur, largeur)
 def _mur(mid, x1, y1, x2, y2, role):
     verre = role.startswith("VERRE")
     lattes = role.startswith("LATTES")
+    ep = EPAISSEUR.get(mid)
     m = {"id": mid, "type": "int", "etat": "nouveau", "porteur": "non", "indices_porteur": [],
-         "epaisseur": dim(2.0 if verre or lattes else T, "cloison vitrée, cadre d'aluminium noir" if verre else
+         "epaisseur": dim(ep, "mur épais sous la poutre : ossature de 2x4 de part et d'autre de la poutre et des colonnes, "
+                              "gypse des deux faces (la retombée et les colonnes disparaissent dans le mur)") if ep else
+                      dim(2.0 if verre or lattes else T, "cloison vitrée, cadre d'aluminium noir" if verre else
                           "claustra de lattes de chêne 1x2 espacées, plancher au plafond" if lattes else "cloison projetée 2x4 + gypse"),
          "x1": x1, "y1": y1, "x2": x2, "y2": y2,
          "source_position": "PRÉSUMÉ", "note": f"Cloison projetée — {role} ({SOURCE})."}

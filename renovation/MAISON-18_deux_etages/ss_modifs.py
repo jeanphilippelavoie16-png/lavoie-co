@@ -48,7 +48,7 @@ def appliquer(maison):
     # notes de la feuille P-127 (le cartouche en tient 6) : le détail de chaque zone est dans DESIGN.md
     notes = [
         "Esquisse par-dessus SS-16 (le reste est l'existant, base R0) ; béton poli d'un seul tenant.",
-        "Chambres d'enfants : lits queen 60 × 80 et rangement intégré de chêne ; fenêtres d'évacuation ouvrantes à vérifier.",
+        "Hall : mur épais sous la poutre arrière (colonnes cachées) ; chambre 1 et salle de bain agrandies ; fenêtres d'évacuation à vérifier.",
         "Walk-in (ancien caveau) : isolé, évents fermés, chauffé ; porte dérobée dans le mur de chêne de la chambre 2.",
         "Escalier : banc-cabane bas (≤ 26 po) dessous ; vides entre les marches (5½ po) à valider avec des enfants.",
         "Gym : cardio contre le mur avant, mur-miroir sur le mur du lavage, porte vitrée coulissante.",

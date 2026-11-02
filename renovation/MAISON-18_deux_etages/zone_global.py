@@ -24,6 +24,9 @@ lavage » et « un gros congélateur debout ... lui trouver une place en bas » 
 Écart assumé avec la spec : casiers de 18 po de profond (y 209¾–227¾) au lieu de 20, au nu du banc et des armoires
 vertes existantes — leur dessus à 88 po ne bute plus sur la retombée de la poutre arrière (y 199–209, dessous ≈ 86 po).
 Ne touche pas au mur du bain, à la galerie de photos du séjour, aux chambres, au gym ni au dessous de l'escalier.
+MAISON-18 (2026-11-02, DESIGN_ss_poutre.md) : le mur hall / chambre 1 passe sous la poutre arrière et cache la colonne C02
+(son habillage de chêne disparaît, C03 garde le sien) ; veilleuses, DEL de la vanité, interrupteur, marchepied et grille
+d'évacuation suivent la nouvelle salle de bain et le hall de 40½ po.
 Pouces, repère de la maison.
 """
 
@@ -182,8 +185,9 @@ def _vestiaire(h):
                 T([(xc, 224.5, 44.6), (xc + 0.3, 222, 43)], 0.2, "pneu")]
         out += [A(xc - 7.6, 212, xc + 7.6, 224, 46.75, 54.75, "osier", r=0.8, b=0.4),                  # panier : tuques, mitaines
                 h.SPH(xc, 218.5, 62.75 + 3.0, 3.6, "carbone" if xc < 300 else "blanc", ecrase=0.85)]   # casque de vélo / ski
-    # --- colonnes C02 et C03 : habillage de chêne à coins arrondis (trajet de nuit, hauteur de tête des enfants)
-    out += [A(x - 5.5, 198.5, x + 5.5, 209.5, 0, 85.9, "placage", r=0.75, b=0.5) for x in (228, 324)]
+    # --- colonne C03 : habillage de chêne à coins arrondis (trajet de nuit, hauteur de tête des enfants) ; C02 est
+    #     maintenant cachée dans le mur de la poutre (MAISON-18)
+    out += [A(x - 5.5, 198.5, x + 5.5, 209.5, 0, 85.9, "placage", r=0.75, b=0.5) for x in (324,)]
     # minuterie 2 h des séchoirs et thermostat du sol chauffant, face avant de C03 (commandes des parents)
     out += [B(322, 198.2, 326, 198.5, 48, 53, "carbone"), B(323.3, 198.1, 324.7, 198.2, 51, 52, "spot"),
             B(322, 198.2, 326, 198.5, 55, 60, "blanc"), B(322.6, 198.1, 325.4, 198.2, 57, 59, "ecran")]
@@ -213,26 +217,28 @@ def _vestiaire(h):
 def _nuit(h):
     """Veilleuses encastrées à 10–13 po (DEL ambre, détection de mouvement), interrupteur et DEL de la salle de bain."""
     B = h.B
-    out = [B(236.5, 227.5, 239.5, 227.75, 10, 13, "metal"), B(237, 227.4, 239, 227.5, 10.6, 11.6, "spot"),     # V1
-           B(144.25, 213, 144.5, 216, 10, 13, "metal"), B(144.5, 213.5, 144.6, 215.5, 10.6, 11.6, "spot"),     # V2
-           B(168, 227.5, 171, 227.75, 10, 13, "metal"), B(168.5, 227.4, 170.5, 227.5, 10.6, 11.6, "spot")]     # V3
-    out += [B(89, 179.4, 123, 180.4, 11.55, 11.95, "spot"),                                                   # DEL sous la vanité
-            B(139.4, 161, 139.75, 164, 40, 44, "metal")]                                                       # interrupteur à 42 po
+    # MAISON-18 : V1 et V2 au pied du mur de la poutre, côté hall (bout est et bout ouest) ; V3 dans l'entrée de la
+    # chambre 1 (mur de la chambre 2) ; interrupteur sur le coin du mur de la poutre, côté poignée de la porte
+    out = [B(224.5, 198.25, 227.5, 198.5, 10, 13, "metal"), B(225, 198.15, 227, 198.25, 10.6, 11.6, "spot"),     # V1
+           B(147, 198.25, 150, 198.5, 10, 13, "metal"), B(147.5, 198.15, 149.5, 198.25, 10.6, 11.6, "spot"),     # V2
+           B(237.5, 236, 237.75, 239, 10, 13, "metal"), B(237.4, 236.5, 237.5, 238.5, 10.6, 11.6, "spot")]       # V3
+    out += [B(46, 179.4, 104, 180.4, 11.55, 11.95, "spot"),                                                   # DEL sous la vanité
+            B(138.55, 201, 138.95, 204, 40, 44, "metal")]                                                      # interrupteur à 42 po
     return out
 
 
 def _salle_de_bain(h):
     A, B, T = h.A, h.B, h.T
-    # boîte-marchepied de chêne rangée sous la vanité suspendue (dessous à 12 po), dessus antidérapant
-    out = [A(94, 166, 118, 178, 0, 7.75, "placage", r=0.6, b=0.4), B(94.6, 166.6, 117.4, 177.4, 7.75, 8, "caoutchouc-noir"),
-           B(93.9, 170, 94, 174, 4.5, 6, "carbone"), B(118, 170, 118.1, 174, 4.5, 6, "carbone")]
+    # boîte-marchepied de chêne rangée sous la vanité suspendue (dessous à 12 po), sous la vasque de droite, dessus antidérapant
+    out = [A(78, 166, 102, 178, 0, 7.75, "placage", r=0.6, b=0.4), B(78.6, 166.6, 101.4, 177.4, 7.75, 8, "caoutchouc-noir"),
+           B(77.9, 170, 78, 174, 4.5, 6, "carbone"), B(102, 170, 102.1, 174, 4.5, 6, "carbone")]
     # crochets à serviette : 2 à 38 po (un par garçon, serviette à sa couleur), 1 à 64 po
     for x, z in ((128.5, 38), (135.5, 38), (132, 64)):
         out.append(T([(x, 159.25, z), (x, 161.6, z + 0.8)], 0.35, "laiton", bouts=True))
     out += [A(125.3, 159.6, 131.7, 161.2, 18, 38.3, "laque-vert", r=0.6, b=0.5),
             A(132.3, 159.6, 138.7, 161.2, 18, 38.3, "laque-marine", r=0.6, b=0.5)]
-    # évacuation du VRC (ou ventilateur à hygrostat) au plafond, hors de la retombée de la poutre
-    out += [B(70, 190, 78, 198, 95.7, 96, "metal"), B(71, 191, 77, 197, 95.6, 95.7, "pneu")]
+    # évacuation du VRC (ou ventilateur à hygrostat) au plafond de la douche (MAISON-18), hors de la retombée de la poutre
+    out += [B(124, 224, 132, 232, 95.7, 96, "metal"), B(125, 225, 131, 231, 95.6, 95.7, "pneu")]
     return out
 
 

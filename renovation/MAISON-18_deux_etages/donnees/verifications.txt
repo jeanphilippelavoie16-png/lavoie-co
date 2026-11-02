@@ -2,7 +2,7 @@ RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
 Révision : A    Date : 2026-11-01
-Données  : maison.json, sha256 73e24a2c3aa2216d9dc4bd442804a4d2aa8819a6a766548729ceea3fa13f102c
+Données  : maison.json, sha256 e46fe609d4be95639da618656b1918ad727e1ad3c8e6aff41cfd939b98d70b8c
 Feuilles : P-129 Sous-sol proposé (3/16" = 1'-0") ; P-130 Rez-de-chaussée proposé (3/16" = 1'-0")
 
 SOMMAIRE
@@ -19,7 +19,7 @@ SOMMAIRE
 
 1. IDENTIFIANTS
 ------------------------------------------------------------------------
-  [OK] 505 identifiants, aucun doublon
+  [OK] 509 identifiants, aucun doublon
 
 2. MURS
 ------------------------------------------------------------------------
@@ -36,7 +36,7 @@ SOMMAIRE
 
 5. BILAN DE SURFACE
 ------------------------------------------------------------------------
-  [OK] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1103,8 pi² + murs 168,4 pi² − chevauchement pièces/murs 0,0 pi² = 1272,2 pi² ; écart 0,1 pi²
+  [OK] [SS] brute (empreinte) 1272,3 pi² ; Σ pièces 1097,3 pi² + murs 174,9 pi² − chevauchement pièces/murs 0,0 pi² = 1272,2 pi² ; écart 0,1 pi²
   [OK] [SS] aucun trou > 1 pi² entre pièces et murs
   [OK] [RDC] brute (empreinte) 1248,3 pi² ; Σ pièces 1093,7 pi² + murs 154,7 pi² − chevauchement pièces/murs 0,0 pi² = 1248,3 pi² ; écart 0,0 pi²
   [OK] [RDC] aucun trou > 1 pi² entre pièces et murs
@@ -63,12 +63,12 @@ SOMMAIRE
 7. REPÈRES D'INCERTITUDE
 ------------------------------------------------------------------------
   [AVERT] [SS] lc-SS-033 : repère « ecart-020 » absent du registre — aucun repère dessiné
-  [AVERT] [SS] épaisseur présumée sans écart référencé (epaisseur.ref) : mur-SS-005, mur-SS-006, mur-SS-009, mur-SS-010, mur-SS-P01, mur-SS-P10, mur-SS-P09, mur-SS-P08, mur-SS-P04, mur-SS-P05, mur-SS-P06, mur-SS-P07, mur-SS-P11, mur-SS-P14 — aucun repère dessiné
+  [AVERT] [SS] épaisseur présumée sans écart référencé (epaisseur.ref) : mur-SS-005, mur-SS-006, mur-SS-009, mur-SS-010, mur-SS-P01, mur-SS-P10, mur-SS-P09, mur-SS-P08, mur-SS-P04, mur-SS-P05, mur-SS-P06, mur-SS-P07, mur-SS-P15, mur-SS-P11, mur-SS-P14 — aucun repère dessiné
   [AVERT] [RDC] épaisseur présumée sans écart référencé (epaisseur.ref) : mur-RDC-005, mur-RDC-006, mur-RDC-007 — aucun repère dessiné
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
-  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (145 textes vérifiés)
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (146 textes vérifiés)
   [AVERT] [RDC] texte/texte : cartouche « REZ-DE-CHAUSSÉE » × cartouche « PROPOSÉ » (x≈700.488, y≈-97.127 po)
 
 9. MISE EN PAGE
@@ -84,7 +84,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF P-129_sous-sol.dxf : sha256 309926072e892fce… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF P-129_sous-sol.dxf : sha256 713ebe82e69b284d… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
   [OK] [RDC] DXF P-130_rdc.dxf : sha256 f5bbd701eb6c9d3a… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

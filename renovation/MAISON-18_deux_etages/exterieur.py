@@ -13,8 +13,13 @@ Sources
   d'implantation de 1957 (P7) à 4 po près.
 - Vidéo DAG « C-1329 Aménagement extérieur » : 12 captures nettes (2026-11-02, dag_01 à dag_12). On en suit l'allure : toit à deux
   versants avec pignons blancs en déclin vertical et pignon avant, fondation blanche lisse, terrain en pente (allée au niveau
-  du sous-sol, talus en S devant), muret de blocs et marches de pierre, escalier ouvert, piscine de 15 pi, porte de garage du
-  cabanon, salon de patio, feuillus. Écarts voulus : fenêtres et portes de NOTRE proposition, perron du relevé (DESIGN_exterieur.md).
+  du sous-sol, talus en S devant), muret de blocs et marches de pierre, escalier ouvert, porte de garage du cabanon, salon de
+  patio, feuillus. Écarts voulus : fenêtres et portes de NOTRE proposition, perron du relevé (DESIGN_exterieur.md).
+- Réponses du client du 2026-11-02 : piscine de 21 pi à la position du plan (la vidéo en montrait une de 15 pi), clôture de bois
+  de 6 pi sur les lignes de lot avec deux portillons, cabanon agrandi en garage de 13' × 17' (5 pi vers la maison, 3 pi vers la
+  piscine).
+- Demande du client du 2026-11-02 (aménager le garage : atelier, vélos suspendus, rangement de bacs, souffleuse) : garage.py,
+  chargé ici (GARAGE_AMENAGE) ; programme et coûts dans DESIGN_garage.md.
 - donnees/maison.json (murs extérieurs, ouvertures, cheminée, perron, entrée arrière), lu à l'import : les fenêtres et portes
   suivent les changements des autres modules (repli : les valeurs du relevé si le fichier manque).
 
@@ -32,7 +37,7 @@ CONTRAT (lu par le moteur) — EXTERIEUR = {
                              en z ABSOLU, posés sur le relief ; matériaux du catalogue ou alias de EXTERIEUR["peintures"] ;
   "planchers": [{"nom", "pts", "z"}],   surfaces où l'on marche au-dessus du terrain (palier, marches, patio, deck, pierres…),
                              z fixe = dessus ; une marche = un plancher ; jamais sous le relief ;
-  "obstacles": [{"nom", "pts"}],        emprises où l'on ne passe pas (piscine, cabanon, murets, garde-corps, mobilier…) ;
+  "obstacles": [{"nom", "pts"}],        emprises où l'on ne passe pas (piscine, murs du garage, clôture, murets, garde-corps, mobilier…) ;
                              les murs de la maison bloquent d'office (sauf aux portes extérieures ouvertes), une marche de
                              plus de 8 po aussi ;
   "trous": [[[x, y], ...]],  où le terrain n'est pas dessiné : emprise de la maison (corps, entrée arrière, perron plein,
@@ -60,11 +65,23 @@ SOFFITE = 202.0            # dessous des soffites (plafond du RDC à 201)
 PENTE = 5 / 12             # toit à deux versants : fermes 5/12 (croquis P1 2016), pente confirmée par la vidéo (0,44)
 DEBORD = 16                # débord de toit (soffite)
 
+# GARAGE (le « cabanon » du plan DAG, agrandi le 2026-11-02 : 5 pi vers la maison, 3 pi vers la piscine) — constantes reprises
+# par garage.py, qui aménage l'intérieur (établi, mur de bacs, vélos, souffleuse ; demande du client du 2026-11-02). Murs minces (obstacles), dalle où l'on marche (planchers), porte de garage OUVERTE.
+CAB = (355, 621, 511, 825)       # murs, nu extérieur : 13' × 17' (156 × 204 po) ; avant (porte) du côté y0, vers la maison
+CAB_TOIT = (343, 609, 523, 837)  # débord de toit de 12 po ; à 3'-0" des lignes de lot côté arrière et côté x = 560 (plan)
+CAB_EP = 5.0                     # épaisseur des murs : planches verticales blanches 3/4 po + ossature 2 × 4 + contreplaqué 1/2 po
+CAB_INT = (CAB[0] + CAB_EP, CAB[1] + CAB_EP, CAB[2] - CAB_EP, CAB[3] - CAB_EP)   # intérieur fini : 146 × 194 po (≈ 12'-2" × 16'-2")
+CAB_Z_DALLE = 48.5               # dessus de la dalle de béton (gazon à 48 tout autour : au ras, comme dans la vidéo)
+CAB_H_MURS = 96.0                # murs de 8 pi (dessus de la dalle au dessus des sablières)
+CAB_Z_PLAFOND = CAB_Z_DALLE + CAB_H_MURS - 2     # dessous du plafond de contreplaqué (142,5 ; 7'-10" de haut)
+CAB_PORTE = (385.0, 481.0, 84.0)                 # porte de garage 8' × 7' : x0, x1 (centrée sur le mur avant, y = 621), hauteur
+CAB_Z_PANNEAU = CAB_Z_DALLE + CAB_PORTE[2] + 2   # dessous du panneau relevé sous le plafond (porte ouverte), de y 627 à 711
+
 PEINTURES = {   # nom : [couleur à l'écran, description, alias employé par les objets]
-    "Blanc extérieur": ["#F4F4F2", "fascias, soffites, rives, pignons en déclin vertical, jupe, limons, cabanon", "ext-blanc"],
+    "Blanc extérieur": ["#F4F4F2", "fascias, soffites, rives, pignons en déclin vertical, jupe, limons, garage", "ext-blanc"],
     "Crépi blanc": ["#EEEDE8", "fondation apparente (crépi lisse)", "ext-crepi"],
     "Bardeau gris anthracite": ["#3F4245", "toit de la maison (bardeau d'asphalte)", "ext-bardeau"],
-    "Bardeau du cabanon": ["#4E5154", "toit du cabanon", "ext-bardeau-cab"],
+    "Bardeau du garage": ["#4E5154", "toit du garage", "ext-bardeau-cab"],
     "Asphalte": ["#1D1E20", "allée au niveau du sous-sol", "ext-asphalte"],
     "Gravier gris pâle": ["#9A9A96", "sous l'escalier du deck, autour de la piscine", "ext-gravier"],
     "Composite beige clair": ["#A88D69", "platelage et girons (palier, patio, deck, escalier)", "ext-composite"],
@@ -81,15 +98,30 @@ PEINTURES = {   # nom : [couleur à l'écran, description, alias employé par le
     "Gris BBQ": ["#3A3D3D", "caisson du BBQ", "ext-bbq"],
     "Résine tressée anthracite": ["#3A3B3C", "salon de patio modulaire", "ext-osier"],
     "Coussins blanc cassé": ["#D8D6D0", "coussins du salon de patio", "ext-coussin"],
-    "Carreaux de porte": ["#C9CFD2", "carreaux de la porte de garage du cabanon", "ext-carreau"],
-    "Dalle blanche": ["#C8CBC8", "pas japonais (dalles blanc gris)", "ext-dalle"],
-    "Bois de clôture": ["#8A6A48", "clôture d'intimité au fond du lot", "ext-cloture"],
+    "Carreaux de porte": ["#C9CFD2", "carreaux de la porte de garage", "ext-carreau"],
+    "Dalle blanche": ["#C8CBC8", "pas japonais (dalles blanc gris), dalle des appareils de la piscine", "ext-dalle"],
+    "Bois de clôture": ["#8A6A48", "clôture d'intimité de 6 pi et portillons (planches sur planches teintes)", "ext-cloture"],
+    "Contreplaqué": ["#C7A676", "intérieur des murs et plafond du garage", "ext-contreplaque"],
     "Feuillage": ["#4F6B3E", "feuillus", "ext-feuillage"],
     "Feuillage clair": ["#6A8748", "feuillus au soleil, arbre ornemental", "ext-feuillage-clair"],
     "Épinette": ["#3E5A3F", "pins, haie du voisin, arbustes", "ext-sapin"],
     "Écorce de bouleau": ["#E9E6DE", "troncs de bouleaux", "ext-bouleau"],
     "Gazon": ["#6E8A4E", "pelouse (aperçu du relief)", "ext-gazon"],
 }
+
+
+def _charger_garage():
+    """garage.py (même dossier) : l'aménagement intérieur du garage, fusionné dans EXTERIEUR (objets, obstacles, lumières, arrêts,
+    peintures, palette)."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("m18_garage", os.path.join(ICI, "garage.py"))
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m.amenagement(CAB, CAB_EP, CAB_Z_DALLE, CAB_Z_PLAFOND, CAB_PORTE, CAB_Z_PANNEAU)
+
+
+GARAGE_AMENAGE = _charger_garage()
+PEINTURES.update(GARAGE_AMENAGE["peintures"])
 
 
 # ------------------------------------------------------------------------------------------------- formes du moteur
@@ -209,17 +241,29 @@ def _dans(x, y, rects):
 PALIER = (327, 380, 456, 440)              # ±10'-9" × 4'-11", contre le mur arrière, à côté de l'entrée arrière
 ESC = (386, 440, 456, 494)                 # escalier de 5'-9½" de large, 6 girons de 9 po, 7 contremarches de 7,07 po
 PATIO = (159, 440, 386, 560)               # ±19' × 10'
-DECK = (159, 560, 314, 675)                # ±13' de large ; il s'arrête sur la piscine (vidéo)
-PISC = (219.0, 699.0, 93.0)                # piscine hors-terre de 15' (vidéo DAG ; le plan écrit 21') : centre, rayon
-GRAVIER_R = 103.0                          # anneau de gravier autour de la piscine
-CAB = (391, 681, 511, 825)                 # cabanon 10' × 12' (murs) ; débord de toit 12 po ; à 3'-0" des lignes de lot (plan)
-CAB_TOIT = (379, 669, 523, 837)
+DECK = (159, 560, 314, 712)                # ±13' × 11'-9" (plan) ; il s'arrête sur la piscine (y 601 à gauche, 705 à droite)
+# piscine hors-terre de 21' DIA. (plan DAG ; réponse du client du 2026-11-02) : centre, rayon hors tout (margelle comprise).
+# Moindres carrés sur les trois cotes du plan (6'-2 5/8" du mur de l'ANCIEN cabanon, x = 391 ; 9'-10 3/8" de la ligne oblique ;
+# 3'-4 1/4" de la ligne arrière) : (190,4 ; 724,1), écarts de 0,04 po au plus. Décalée de 2 po vers la ligne oblique pour garder
+# 1 m (40,6 po) entre la paroi et le mur du garage agrandi (x = 355) : 9'-8 3/8" de la ligne oblique, 3'-4 3/8" de la ligne arrière.
+PISC = (188.4, 724.1, 126.0)
+GRAVIER_R = 138.0                          # anneau de gravier de 12 po autour de la piscine (plan)
+# dalle des appareils de la piscine (thermopompe, filtre) 3' × 6', orientée comme au plan (« emplacement approx. ») : coin le plus
+# proche à 41 po de la paroi (plus de 1 m, règlement) et à 3'-4" de la ligne arrière
+APPAREILS = [(31.8, 782.1), (-3.2, 793.3), (22.0, 859.5), (55.3, 848.8)]
 MURET_Y = (445, 380, 457, 548)             # muret de soutènement le long de l'allée (cour 48 / allée ≈ 3)
 MURET_X = (500, 510, 572, 522)             # aile du muret le long de x, de la dernière pierre jusqu'au-delà de la ligne de lot
 GRAVIER_ESC = (386, 440, 445, 526)         # gravier sous l'escalier et devant, bordure blanche au sud
-DALLES = [[(486.5, 598.4), (495.4, 575.5), (461.2, 562.2), (452.3, 585.2)],      # pas japonais (dalles) 36 × 24 po (plan)
-          [(473.6, 632.1), (482.5, 609.1), (448.3, 595.9), (439.4, 618.8)],
-          [(433.4, 665.9), (469.7, 665.9), (469.7, 641.5), (433.4, 641.5)]]
+
+
+def _dalle(cx, cy, a, l=36.0, p=24.0):     # dalle l × p centrée en (cx, cy), tournée de a degrés
+    c, s = math.cos(math.radians(a)), math.sin(math.radians(a))
+    return [(round(cx + c * u - s * v, 1), round(cy + s * u + c * v, 1)) for u, v in ((-l / 2, -p / 2), (l / 2, -p / 2), (l / 2, p / 2), (-l / 2, p / 2))]
+
+
+# pas japonais (dalles 36 × 24 po du plan) : du haut des marches de pierre (portillon) jusqu'à la porte du garage, sans y entrer
+DALLES = [_dalle(471.0, 568.0, -8), _dalle(446.0, 602.0, -4)]
+CORDE_POTEAU = (-32.0, 770.0)              # poteau de la corde à linge, près de la ligne oblique : le fil reste à 4 pi de la paroi
 PIERRES_Y0, PIERRES_GIRON, PIERRES_H = 452.0, 15.5, 7.5      # marches de pierre : début, giron, hauteur (6 marches)
 # lignes de lot : arrière et côtés mesurés sur le plan DAG ; devant prolongé avec le plan d'implantation de 1957 (marge avant
 # de 40', ligne droite ⟂ à la rue, façade du lot 57,23')
@@ -288,7 +332,17 @@ def _sol_avant(x, y):                      # devant la façade (y < 0)
     return _cote_droit(x, za)
 
 
-def _sol_cour(x, y):                       # derrière la maison (y > 380)
+def _sol_cour(x, y):
+    """Derrière la maison (y > 380). L'assise de la piscine et son anneau de gravier sont nivelés à SOL (une piscine hors-terre
+    se pose de niveau ; la paroi garde ainsi au moins 1,2 m partout), raccord doux sur 3 pi vers le terrain naturel."""
+    z = _sol_cour_naturel(x, y)
+    d = math.hypot(x - PISC[0], y - PISC[1])
+    if d < GRAVIER_R + 36:
+        z = SOL + (z - SOL) * _lisse((d - GRAVIER_R) / 36)
+    return z
+
+
+def _sol_cour_naturel(x, y):
     if x < 445:                             # cour à 48, monte doucement vers la ligne gauche (≈ 56 au coin arrière gauche)
         return SOL + 8 * _lisse((120 - x) / 120)
     if x < 456:                             # dans le muret le long de l'allée (marche du relief dans son épaisseur)
@@ -752,45 +806,81 @@ def cour():
     out += verre_pur(Z)                                                                            # bleu + portillon
     out += garde_corps((312.75, 560), (312.75, yd - 1), Z, 48)                                    # rouge
     out += garde_corps((160.25, 560), (160.25, yg - 1), Z, 48)                                    # rouge
-    # piscine hors-terre 15' : paroi grise lisse, margelle gris pâle, eau turquoise, écumoire (gravier : revêtement)
+    # piscine hors-terre 21' : paroi grise lisse, margelle gris pâle, eau turquoise, écumoire du côté des appareils (gravier :
+    # revêtement ; assise nivelée à SOL)
     cx, cy, R = PISC
     zp = _zmin(cercle(cx, cy, R, 16))
-    out += [C(cx, cy, R, zp - 1, 98.5, "ext-piscine", pans=64), C(cx, cy, R - 2.5, 98.5, 98.7, "ext-toile", pans=64),
-            C(cx, cy, R - 2.5, 98.7, 99.2, "eau", pans=64), TOR(cx, cy, 100.5, R - 1, 2.6, "ext-margelle", axe="z"),
-            B(305.5, 719, 313.5, 727, 88, 98.5, "ext-gris")]
-    # appareils de la piscine (thermopompe, filtre au sable) sur le gazon, à plus de 1 m de la paroi
-    za, zf = _zg(75, 760), _zg(100, 792)
-    out += [B(60, 745, 90, 775, za + 1, za + 33, "ext-appareil"), C(75, 760, 11, za + 33, za + 34, "metal", pans=24),
-            C(100, 792, 12, zf + 1, zf + 30, "ext-appareil", pans=24), C(100, 792, 4, zf + 30, zf + 36, "ext-gris", pans=12)]
+    ae = math.radians(150)                                  # écumoire : vers la dalle des appareils
+    xe, ye = cx + (R - 1) * math.cos(ae), cy + (R - 1) * math.sin(ae)
+    out += [C(cx, cy, R, zp - 1, 98.5, "ext-piscine", pans=72), C(cx, cy, R - 2.5, 98.5, 98.7, "ext-toile", pans=72),
+            C(cx, cy, R - 2.5, 98.7, 99.2, "eau", pans=72), TOR(cx, cy, 100.5, R - 1, 2.6, "ext-margelle", axe="z"),
+            B(xe - 4, ye - 4, xe + 4, ye + 4, 88, 98.5, "ext-gris")]
+    out += appareils_piscine()
     # murets de soutènement en blocs gris pâle (cour 48 / allée ≈ 3), couronnement clair, joints sur la face côté allée
     for (x0, y0, x1, y1) in (MURET_Y, MURET_X):
         out += [B(x0, y0, x1, y1, Z_COULOIR - 4, SOL, "ext-bloc"), B(x0 - 0.75, y0 - 0.75, x1 + 0.75, y1 + 0.75, SOL, SOL + 2, "ext-chaperon")]
     for zj in (11, 19, 27, 35, 43):
         out += [B(MURET_Y[2], MURET_Y[1], MURET_Y[2] + 0.3, MURET_Y[3], zj, zj + 0.5, "ext-joint-bloc"),
                 B(MURET_X[0], MURET_X[1] - 0.3, MURET_X[2], MURET_X[1], zj, zj + 0.5, "ext-joint-bloc")]
+    # sous l'escalier ouvert, côté allée : jupe blanche du dessus du muret (50) au dessous de chaque giron, comme sous le palier
+    # (sinon un enfant passe sous la main courante et sort de la cour par le muret)
+    for i in range(1, 7):
+        y = ESC[1] + 9 * (i - 1)
+        out += jupe(455.5, y, 456, y + 9, SOL + 2, Z - r_esc * i - 1)
     # marches de pierre de l'allée à la cour, bordure blanche du gravier
     out += [P(p, Z_COULOIR - 3, z, "ext-pierre") for p, z in _pierres()]
     out.append(B(GRAVIER_ESC[0], GRAVIER_ESC[3], GRAVIER_ESC[2], GRAVIER_ESC[3] + 4, SOL - 1, SOL + 1, W))
-    out += cabanon()
+    out += garage()
     out += mobilier_patio()
     return out
 
 
-def cabanon():
-    """Cabanon 10' × 12' (plan DAG) : planches verticales blanches à couvre-joints, toit à deux versants 7/12 (faîte selon y,
-    pignon vers la maison), débord 12 po, rives, gouttières et retours blancs ; une porte de garage noire de 8' × 7' à 8 carreaux
-    et écharpes en Λ (vidéo). Posé au ras du gazon."""
+def appareils_piscine():
+    """Thermopompe et filtre au sable sur une dalle de 3' × 6' (APPAREILS, position du plan), à plus de 1 m de la paroi."""
+    (ax, ay), (bx, by), (qx, qy), (dx, dy) = APPAREILS
+    ux, uy = (qx - bx) / math.dist((bx, by), (qx, qy)), (qy - by) / math.dist((bx, by), (qx, qy))   # grand axe
+    vx, vy = uy, -ux                                                                                 # petit axe
+    mx, my = sum(p[0] for p in APPAREILS) / 4, sum(p[1] for p in APPAREILS) / 4
+    zb = _zmin(APPAREILS) - 2
+    zd = max(_zg(x, y) for x, y in APPAREILS) + 1.5
+    def carre(cx, cy, a, b):                     # rectangle a (grand axe) × b (petit axe) centré en (cx, cy)
+        return [(cx + ux * i * a / 2 + vx * j * b / 2, cy + uy * i * a / 2 + vy * j * b / 2) for i, j in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+    tx, ty = mx - ux * 17, my - uy * 17          # thermopompe 30 × 30 × 32, grille du ventilateur sur le dessus
+    fx, fy = mx + ux * 18, my + uy * 18          # filtre au sable et pompe
+    return [P(APPAREILS, zb, zd, "ext-dalle"), P(carre(tx, ty, 30, 30), zd, zd + 32, "ext-appareil"),
+            C(round(tx, 2), round(ty, 2), 11, zd + 32, zd + 33, "metal", pans=24),
+            C(round(fx, 2), round(fy, 2), 12, zd, zd + 29, "ext-appareil", pans=24), C(round(fx, 2), round(fy, 2), 4, zd + 29, zd + 35, "ext-gris", pans=12),
+            P(carre(fx - vx * 15, fy - vy * 15, 12, 8), zd, zd + 9, "ext-gris")]
+
+
+def garage():
+    """Garage 13' × 17' (le cabanon du plan DAG agrandi, réponse du client du 2026-11-02) : même style que le cabanon de la vidéo,
+    planches verticales blanches à couvre-joints, toit à deux versants 7/12 (faîte selon y, pignon vers la maison), débord 12 po,
+    rives, gouttières et retours blancs ; porte de garage noire de 8' × 7' à 8 carreaux centrée sur le mur avant, dessinée OUVERTE
+    (panneau relevé sous le plafond, sur ses rails). On y entre : murs minces (parement blanc dehors, contreplaqué dedans), plafond
+    de contreplaqué, dalle de béton au ras du gazon. Constantes en tête du module (CAB, CAB_Z_DALLE, CAB_H_MURS, CAB_PORTE…).
+    L'intérieur aménagé (souffleuse, établi, mur de bacs, vélos, luminaires DEL) vient de garage.py (GARAGE_AMENAGE)."""
     x0, y0, x1, y1 = CAB
-    W = "ext-blanc"
+    e, zs = CAB_EP, CAB_Z_DALLE
+    zm = zs + CAB_H_MURS                             # haut des murs
+    pa, pb, hp = CAB_PORTE
+    zh = zs + hp                                     # tête de la porte
+    W, CP = "ext-blanc", "ext-contreplaque"
     zsol = _zmin([(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
-    zs = zsol + 0.5
-    zm = zs + 96                                    # haut des murs
-    out = [B(x0 - 2, y0 - 2, x1 + 2, y1 + 2, zsol - 1, zs, "beton"), B(x0, y0, x1, y1, zs, zm + 1, W)]
-    xm = (x0 + x1) / 2
-    porte = (xm - 48, xm + 48)
-    for x in range(x0 + 6, x1, 12):                 # couvre-joints des planches verticales
+    out = [B(x0 - 2, y0 - 2, x1 + 2, y1 + 2, min(zsol, zs - 0.5) - 4, zs, "beton")]          # dalle (débord de 2 po)
+    # murs minces : parement blanc de 3/4 po dehors, âme en contreplaqué dedans (on ne voit pas de blanc à l'intérieur)
+    k = 0.75
+    out += [B(x0, y0, pa, y0 + k, zs, zm, W), B(pb, y0, x1, y0 + k, zs, zm, W), B(pa, y0, pb, y0 + k, zh, zm, W),   # avant
+            B(x0, y1 - k, x1, y1, zs, zm, W), B(x0, y0, x0 + k, y1, zs, zm, W), B(x1 - k, y0, x1, y1, zs, zm, W)]
+    out += [B(x0 + k, y0 + k, pa, y0 + e, zs, zm, CP), B(pb, y0 + k, x1 - k, y0 + e, zs, zm, CP), B(pa, y0 + k, pb, y0 + e, zh, zm, CP),
+            B(x0 + k, y1 - e, x1 - k, y1 - k, zs, zm, CP), B(x0 + k, y0 + e, x0 + e, y1 - e, zs, zm, CP),
+            B(x1 - e, y0 + e, x1 - k, y1 - e, zs, zm, CP)]
+    out.append(B(x0 + e, y0 + e, x1 - e, y1 - e, zm - 2, zm - 1, CP))                          # plafond (dessous à CAB_Z_PLAFOND)
+    out += [B(pa, y0, pa + 0.75, y0 + e, zs, zh, W), B(pb - 0.75, y0, pb, y0 + e, zs, zh, W),   # jambages et linteau de l'ouverture
+            B(pa, y0, pb, y0 + e, zh - 0.75, zh, W)]
+    for x in range(x0 + 6, x1, 12):                  # couvre-joints des planches verticales
         out.append(B(x - 0.75, y1, x + 0.75, y1 + 0.6, zs, zm, W))
-        if not (porte[0] - 3 < x < porte[1] + 3):
+        if not (pa - 3 < x < pb + 3):
             out.append(B(x - 0.75, y0 - 0.6, x + 0.75, y0, zs, zm, W))
     for y in range(y0 + 6, y1, 12):
         out += [B(x0 - 0.6, y - 0.75, x0, y + 0.75, zs, zm, W), B(x1, y - 0.75, x1 + 0.6, y + 0.75, zs, zm, W)]
@@ -809,23 +899,26 @@ def cabanon():
             B(tx0, ty0, tx1, y0, ze - 8, ze, W), B(tx0, y1, tx1, ty1, ze - 8, ze, W)]                     # caissons sous les pignons
     for (xa, xb) in ((tx0 - 1, tx0 + 11), (tx1 - 11, tx1 + 1)):                                         # retours de corniche
         out += [B(xa, ty0 - 1, xb, ty0 + 7, ze - 10, ze, W), B(xa, ty1 - 7, xb, ty1 + 1, ze - 10, ze, W)]
-    # porte de garage noire 96 × 84 : 2 groupes de 4 carreaux en haut, montant central, traverses, écharpes en Λ, chambranle blanc
-    ya, yb = y0 - 1.5, y0 + 0.2
-    zh = zs + 84
-    out += [B(porte[0], ya, porte[1], yb, zs, zh, "porte-ext"),
-            B(porte[0] - 3, ya - 0.4, porte[0], yb, zs, zh + 3, W), B(porte[1], ya - 0.4, porte[1] + 3, yb, zs, zh + 3, W),
-            B(porte[0] - 3, ya - 0.4, porte[1] + 3, yb, zh, zh + 3, W)]
-    for (a, b) in ((porte[0] + 4, xm - 2), (xm + 2, porte[1] - 4)):
-        out.append(B(a, ya - 0.3, b, ya, zs + 66, zs + 80, "ext-carreau"))
+    # chambranle blanc de la porte, dehors
+    out += [B(pa - 3, y0 - 0.4, pa, y0, zs, zh + 3, W), B(pb, y0 - 0.4, pb + 3, y0, zs, zh + 3, W), B(pa - 3, y0 - 0.4, pb + 3, y0, zh, zh + 3, W)]
+    # porte de garage OUVERTE : panneau noir relevé à l'horizontale sous le plafond (4 sections de 21 po, les 8 carreaux de la
+    # section du haut au fond), rails noirs horizontaux et verticaux, arbre des ressorts au-dessus de l'ouverture
+    zp, yp0 = CAB_Z_PANNEAU, y0 + e + 1
+    xm = (pa + pb) / 2
+    out.append(B(pa + 0.5, yp0, pb - 0.5, yp0 + hp, zp, zp + 1.5, "porte-ext"))
+    for j in (1, 2, 3):
+        out.append(B(pa + 0.5, yp0 + 21 * j - 0.4, pb - 0.5, yp0 + 21 * j + 0.4, zp - 0.3, zp, "metal"))
+    for (a, b) in ((pa + 4, xm - 2), (xm + 2, pb - 4)):
+        out.append(B(a, yp0 + 66, b, yp0 + 80, zp - 0.25, zp, "ext-carreau"))
         for j in range(1, 4):
             xx = a + (b - a) * j / 4
-            out.append(B(xx - 0.6, ya - 0.7, xx + 0.6, ya, zs + 66, zs + 80, "metal"))
-    out += [B(xm - 2, ya - 0.8, xm + 2, ya, zs, zh, "metal"), B(porte[0], ya - 0.8, porte[1], ya, zs + 2, zs + 6, "metal"),
-            B(porte[0], ya - 0.8, porte[1], ya, zs + 60, zs + 66, "metal"), B(porte[0], ya - 0.8, porte[1], ya, zs + 80, zh, "metal"),
-            B(porte[0], ya - 0.8, porte[0] + 4, ya, zs, zh, "metal"), B(porte[1] - 4, ya - 0.8, porte[1], ya, zs, zh, "metal"),
-            T([(porte[0] + 4, ya - 0.5, zs + 6), (xm - 2, ya - 0.5, zs + 60)], 1.2, "metal", pans=6),
-            T([(porte[1] - 4, ya - 0.5, zs + 6), (xm + 2, ya - 0.5, zs + 60)], 1.2, "metal", pans=6)]
-    return out
+            out.append(B(xx - 0.6, yp0 + 66, xx + 0.6, yp0 + 80, zp - 0.5, zp, "metal"))
+    for xr in (pa - 2.25, pb + 0.75):
+        out += [B(xr, y0 + e, xr + 1.5, yp0 + hp + 6, zp - 0.5, zp + 3, "metal"),                     # rails horizontaux
+                B(xr, y0 + e, xr + 1.5, y0 + e + 2, zs, zp + 3, "metal")]                              # rails verticaux
+    out.append(T([(pa - 3, y0 + e + 2.5, zh + 7), (pb + 3, y0 + e + 2.5, zh + 7)], 1.0, "metal", pans=8))   # arbre des ressorts
+    # aménagement intérieur (garage.py) : souffleuse, établi, mur de bacs, vélos, outils, luminaires DEL
+    return out + GARAGE_AMENAGE["objets"]
 
 
 def _palmier(x, y, z, g):
@@ -878,7 +971,7 @@ ARBRES = [  # (x, y, hauteur, genre) : f = feuillu, b = bouleau, p = pin, o = ar
     (-200, 960, 560, "f"), (-110, 1050, 620, "f"), (-20, 970, 520, "f"), (70, 1070, 600, "f"), (160, 985, 540, "f"),
     (250, 1060, 640, "f"), (340, 975, 560, "f"), (430, 1090, 600, "f"), (530, 1010, 580, "f"), (620, 1080, 620, "f"),
     (690, 960, 540, "f"),
-    # bouleaux derrière le cabanon
+    # bouleaux derrière le garage (au-delà de la ligne arrière)
     (455, 930, 380, "b"), (510, 955, 420, "b"), (565, 920, 360, "b"), (405, 955, 400, "b"),
     # le long de la ligne gauche (cimes au-dessus de la pelouse)
     (-200, 80, 600, "f"), (-185, 240, 520, "f"), (-150, 400, 580, "f"), (-130, 560, 540, "f"),
@@ -910,24 +1003,192 @@ def terrain_et_vegetation():
     # arbustes bas de l'autre côté de l'allée (chez le voisin) et à l'est du bout de l'allée (gazon bas), à valider
     out += [SPH(x, y, _zg(x, y) + r * 0.5, r, "ext-sapin", ecrase=0.75) for (x, y, r) in
             ((592, 20, 20), (598, 140, 24), (590, 260, 20), (596, 360, 22), (550, 448, 17), (552, 486, 18))]
-    # clôture d'intimité en bois (6 pi) sur la ligne arrière, poteaux 4 × 4 tous les 96 po (à valider : voisin ou nouvelle)
-    a, b = (-43.0, 903.0), (560.0, 871.0)
-    n = 3
-    for k in range(n):
-        p0 = (a[0] + (b[0] - a[0]) * k / n, a[1] + (b[1] - a[1]) * k / n)
-        p1 = (a[0] + (b[0] - a[0]) * (k + 1) / n, a[1] + (b[1] - a[1]) * (k + 1) / n)
-        zb = min(_zg(*p0), _zg(*p1)) - 2
-        out.append(P([p0, p1, (p1[0], p1[1] + 1), (p0[0], p0[1] + 1)], zb, zb + 74, "ext-cloture"))
-    L = math.hypot(b[0] - a[0], b[1] - a[1])
-    for k in range(int(L // 96) + 1):
-        t = min(1.0, k * 96 / L)
-        x, y = a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t
-        out.append(B(x - 2, y - 1, x + 2, y + 3, _zg(x, y) - 2, _zg(x, y) + 75, "ext-cloture"))
-    # corde à linge : poulie sur le mur arrière, deux fils blancs, poteau au fond du terrain (vidéo 08 à 12)
-    zc = _zg(0, 855)
-    out += [B(168, 380, 176, 382, 165, 177, "metal"), T([(172, 381.5, 168), (0, 855, 168)], 0.25, "blanc", pans=4),
-            T([(172, 381.5, 173), (0, 855, 173)], 0.25, "blanc", pans=4), C(0, 855, 2, zc, 180, "gris", pans=10),
-            B(-1.5, 852.5, 1.5, 857.5, 164, 177, "metal")]
+    out += cloture()
+    # corde à linge : poulie sur le mur arrière, deux fils blancs, poteau près de la ligne oblique (CORDE_POTEAU, déplacé le
+    # 2026-11-02 pour que le fil ne passe pas au-dessus de la piscine de 21 pi : il reste à 4 pi de la paroi)
+    px, py = CORDE_POTEAU
+    zc = _zg(px, py)
+    L = math.hypot(px - 172, py - 381.5)
+    nx, ny = (py - 381.5) / L, -(px - 172) / L                 # traverse perpendiculaire au fil
+    out += [B(168, 380, 176, 382, 165, 177, "metal"), T([(172, 381.5, 168), (px, py, 168)], 0.25, "blanc", pans=4),
+            T([(172, 381.5, 173), (px, py, 173)], 0.25, "blanc", pans=4), C(px, py, 2, zc, 180, "gris", pans=10),
+            T([(px - 5 * nx, py - 5 * ny, 176), (px + 5 * nx, py + 5 * ny, 176)], 0.8, "metal", pans=6)]
+    return out
+
+
+# ------------------------------------------------------------------------------------------------- clôture et portillons
+# Clôture d'intimité en bois de 6 pi (comme celle du fond dans la vidéo DAG 08) : planches sur planches teintes brun, chapeau,
+# poteaux 4 × 4 aux 8 pi au plus, à CL_RETRAIT en dedans des lignes de lot ; panneaux en escalier qui suivent le relief (bas des
+# planches à 1½ po du point bas de chaque panneau : jamais plus de 4 po de vide). Deux portillons de 42 po, quincaillerie noir mat,
+# dessinés ouverts. Rien de haut dans la cour avant : à droite, la clôture s'arrête derrière la maison (portillon en haut des
+# marches de pierre) ; à gauche, elle revient vers le mur de la maison à 8 po du coin arrière.
+CL_RETRAIT = 4.0           # axe à 4 po en dedans des lignes de lot : face extérieure des poteaux (3½ po) à 2¼ po de la ligne
+CL_H = 72.0                # 6 pi au-dessus du point bas de chaque panneau (dessus du chapeau)
+CL_ENTRAXE = 96.0          # poteaux aux 8 pi au plus
+CL_POT = 3.5               # poteaux 4 × 4
+CL_Y_GAUCHE = 372.0        # fermeture côté gauche : de la ligne oblique au mur gauche de la maison, 8 po devant le coin arrière
+CL_Y_DROITE = 553.0        # fermeture côté droit : de la ligne x = 560 au haut des marches de pierre (portillon), puis sur le muret
+CL_X_MURET = 454.75        # axe de la clôture sur le muret le long de l'allée (dans l'axe du garde-corps de l'escalier du deck)
+
+
+def _cl_axes():
+    """Sommets de l'axe de la clôture : coin arrière gauche et coin arrière droit (intersections des lignes décalées)."""
+    k = 32.1 / 523.3
+    xg = lambda y: _ligne_gauche(y) + CL_RETRAIT * math.sqrt(1 + k * k)
+    (ax, ay), (bx, by) = (560.0, 871.0), (-43.0, 903.0)        # ligne arrière
+    L = math.hypot(bx - ax, by - ay)
+    nx, ny = -(by - ay) / L, (bx - ax) / L                     # normale vers l'intérieur du lot (-y)
+    a2 = (ax + CL_RETRAIT * nx, ay + CL_RETRAIT * ny)
+    yr = lambda x: a2[1] + (x - a2[0]) * (by - ay) / (bx - ax)
+    xd = 560.0 - CL_RETRAIT
+    y = 900.0
+    for _ in range(20):                                        # coin arrière gauche (point fixe, pentes faibles)
+        y = yr(xg(y))
+    return xg, (round(xg(y), 2), round(y, 2)), (xd, round(yr(xd), 2))
+
+
+XG_CL, CL_COIN_G, CL_COIN_D = _cl_axes()
+# tronçons (polylignes de l'axe) : poteaux aux sommets et aux 8 pi au plus
+CL_TRONCONS = [
+    ("Clôture côté gauche (ligne oblique)", [(round(XG_CL(CL_Y_GAUCHE), 2), CL_Y_GAUCHE), CL_COIN_G]),
+    ("Clôture arrière", [CL_COIN_G, CL_COIN_D]),
+    ("Clôture côté droit (ligne x = 560)", [CL_COIN_D, (CL_COIN_D[0], CL_Y_DROITE)]),
+    ("Clôture devant le garage, côté allée", [(CL_COIN_D[0], CL_Y_DROITE), (501.25, CL_Y_DROITE)]),
+    ("Clôture sur le muret de l'allée", [(CL_X_MURET, CL_Y_DROITE), (CL_X_MURET, 497.0)]),
+    ("Clôture à gauche de la maison", [(round(XG_CL(CL_Y_GAUCHE), 2), CL_Y_GAUCHE), (-48.5, CL_Y_GAUCHE)]),
+]
+# portillons de 42 po : (nom, poteau des pentures, poteau du loquet, rotation à l'ouverture en degrés (+ = antihoraire vu de dessus))
+PORTILLONS = [
+    ("Portillon de l'allée (haut des marches de pierre)", (501.25, CL_Y_DROITE), (CL_X_MURET, CL_Y_DROITE), 180),
+    ("Portillon du côté gauche de la maison", (-2.5, CL_Y_GAUCHE), (-48.5, CL_Y_GAUCHE), -90),
+]
+
+
+def _cl_sol(x, y):
+    """Dessus de ce sur quoi la clôture est posée : le relief, ou le couronnement des murets (50)."""
+    z = _zg(x, y)
+    for (x0, y0, x1, y1) in (MURET_Y, MURET_X):
+        if x0 - 0.75 <= x <= x1 + 0.75 and y0 - 0.75 <= y <= y1 + 0.75:
+            z = max(z, SOL + 2)
+    return z
+
+
+def _bande(p, u, n, s0, s1, w0, w1):
+    """Rectangle le long de la direction u (unitaire) depuis p : de s0 à s1 en long, de w0 à w1 selon la normale n."""
+    return [(p[0] + u[0] * s + n[0] * w, p[1] + u[1] * s + n[1] * w) for s, w in ((s0, w0), (s1, w0), (s1, w1), (s0, w1))]
+
+
+def _panneau(p, u, n, s0, s1, zmin, mat="ext-cloture"):
+    """Panneau de planches sur planches de s0 à s1 le long de u : âme mince, planches de 5½ po alternées sur les deux faces
+    (aux 9 po), chapeau ; bas à zmin + 1½, dessus du chapeau à zmin + CL_H."""
+    zb, zt = zmin + 1.5, zmin + CL_H - 1.5
+    out = [P(_bande(p, u, n, s0, s1, -0.3, 0.3), zb, zt, mat), P(_bande(p, u, n, s0 - 0.5, s1 + 0.5, -2.75, 2.75), zt, zt + 1.5, mat)]
+    s = s0
+    while s < s1 - 0.5:
+        for (d, w0, w1) in ((0.0, 0.3, 1.05), (4.5, -1.05, -0.3)):
+            a, b = s + d, min(s + d + 5.5, s1)
+            if b - a > 0.5:
+                out.append(P(_bande(p, u, n, a, b, w0, w1), zb, zt, mat))
+        s += 9.0
+    return out
+
+
+def _cl_poteaux_baies():
+    """[(p0, p1)] baies de chaque tronçon, et {poteau arrondi: (x, y)}."""
+    baies, poteaux = [], {}
+    for nom, pts in CL_TRONCONS:
+        for (xa, ya), (xb, yb) in zip(pts, pts[1:]):
+            L = math.hypot(xb - xa, yb - ya)
+            m = max(1, math.ceil(L / CL_ENTRAXE - 1e-9))
+            q = [(xa + (xb - xa) * i / m, ya + (yb - ya) * i / m) for i in range(m + 1)]
+            for p0, p1 in zip(q, q[1:]):
+                baies.append((nom, p0, p1))
+            for x, y in q:
+                poteaux[(round(x, 1), round(y, 1))] = (x, y)
+    for _, h, l, _ in PORTILLONS:
+        for x, y in (h, l):
+            poteaux[(round(x, 1), round(y, 1))] = (x, y)
+    return baies, poteaux
+
+
+def _zmin_seg(p0, p1, n=8):
+    return min(_cl_sol(p0[0] + (p1[0] - p0[0]) * k / n, p0[1] + (p1[1] - p0[1]) * k / n) for k in range(n + 1))
+
+
+def cloture():
+    out, hauts = [], {}
+    baies, poteaux = _cl_poteaux_baies()
+    for _, p0, p1 in baies:
+        L = math.hypot(p1[0] - p0[0], p1[1] - p0[1])
+        u = ((p1[0] - p0[0]) / L, (p1[1] - p0[1]) / L)
+        n = (-u[1], u[0])
+        zmin = _zmin_seg(p0, p1)
+        out += _panneau(p0, u, n, CL_POT / 2, L - CL_POT / 2, zmin)
+        for q in (p0, p1):
+            k = (round(q[0], 1), round(q[1], 1))
+            hauts[k] = max(hauts.get(k, -1e9), zmin + CL_H)
+    # portillons : planches sur planches, deux traverses et une écharpe dedans, pentures en T, loquet et poignée noir mat
+    for _, h, l, rot in PORTILLONS:
+        L = math.hypot(l[0] - h[0], l[1] - h[1])
+        u0 = ((l[0] - h[0]) / L, (l[1] - h[1]) / L)              # du poteau des pentures vers le loquet (fermé)
+        a = math.radians(rot)
+        u = (u0[0] * math.cos(a) - u0[1] * math.sin(a), u0[0] * math.sin(a) + u0[1] * math.cos(a))
+        n = (-u[1], u[0])
+        # pivot sur la face du poteau, battant décalé de son demi-épais pour se rabattre à côté (180°) ou s'ouvrir (90°)
+        piv = (h[0] + u0[0] * CL_POT / 2, h[1] + u0[1] * CL_POT / 2)
+        if rot == 180:
+            piv = (h[0] - u0[0] * CL_POT / 2 + n[0] * 6.0, h[1] - u0[1] * CL_POT / 2 + n[1] * 6.0)
+        else:
+            piv = (h[0] + u0[0] * (CL_POT / 2 + 1.2), h[1] + u0[1] * (CL_POT / 2 + 1.2))
+        s0, s1 = 0.5, 42.5
+        zg = _zmin_seg(piv, (piv[0] + u[0] * s1, piv[1] + u[1] * s1))
+        out += _panneau(piv, u, n, s0, s1, zg)
+        zb = zg + 1.5
+        out += [P(_bande(piv, u, n, s0 + 1, s1 - 1, 1.05, 2.55), zb + 6, zb + 9.5, "ext-cloture"),
+                P(_bande(piv, u, n, s0 + 1, s1 - 1, 1.05, 2.55), zb + 56, zb + 59.5, "ext-cloture"),
+                T([(piv[0] + u[0] * (s1 - 3) + n[0] * 1.8, piv[1] + u[1] * (s1 - 3) + n[1] * 1.8, zb + 10),
+                   (piv[0] + u[0] * (s0 + 3) + n[0] * 1.8, piv[1] + u[1] * (s0 + 3) + n[1] * 1.8, zb + 55)], 1.3, "ext-cloture", pans=6)]
+        for zz in (zb + 7, zb + 57):                              # pentures en T noires
+            out += [P(_bande(piv, u, n, s0, s0 + 16, 2.55, 2.85), zz, zz + 1.5, "metal"),
+                    C(round(piv[0], 2), round(piv[1], 2), 0.6, zz - 1, zz + 2.5, "metal", pans=8)]
+        out += [P(_bande(piv, u, n, s1 - 5, s1 - 0.5, 1.05, 1.9), zb + 52, zb + 55, "metal"),   # loquet à gravité à 54 po (hors de portée des petits)
+                P(_bande(piv, u, n, s1 - 4, s1 - 3.2, -1.9, -1.05), zb + 34, zb + 46, "metal")]   # poignée
+    # poteaux 4 × 4 (chapeau), enfouis dans le sol
+    for k, (x, y) in poteaux.items():
+        zt = hauts.get(k, _cl_sol(x, y) + CL_H) + 2
+        zb = min(_cl_sol(x + dx, y + dy) for dx in (-2, 2) for dy in (-2, 2)) - 4
+        u = (1.0, 0.0)
+        for _, p0, p1 in baies:
+            if (round(p0[0], 1), round(p0[1], 1)) == k or (round(p1[0], 1), round(p1[1], 1)) == k:
+                L = math.hypot(p1[0] - p0[0], p1[1] - p0[1])
+                u = ((p1[0] - p0[0]) / L, (p1[1] - p0[1]) / L)
+                break
+        n = (-u[1], u[0])
+        out += [P(_bande((x, y), u, n, -CL_POT / 2, CL_POT / 2, -CL_POT / 2, CL_POT / 2), zb, zt, "ext-cloture"),
+                P(_bande((x, y), u, n, -2.75, 2.75, -2.75, 2.75), zt, zt + 1, "ext-cloture")]
+    return out
+
+
+def _cl_obstacles():
+    """Obstacles minces (4 po) le long de chaque baie, poteaux compris ; rien dans l'ouverture des portillons ; battants ouverts."""
+    baies, _ = _cl_poteaux_baies()
+    out = []
+    for i, (nom, p0, p1) in enumerate(baies):
+        L = math.hypot(p1[0] - p0[0], p1[1] - p0[1])
+        u = ((p1[0] - p0[0]) / L, (p1[1] - p0[1]) / L)
+        n = (-u[1], u[0])
+        out.append({"nom": f"{nom} ({i + 1})", "pts": [[round(x, 2), round(y, 2)] for x, y in _bande(p0, u, n, -2, L + 2, -2, 2)]})
+    for nom, h, l, rot in PORTILLONS:
+        for q in (h, l):
+            out.append({"nom": f"{nom}, poteau", "pts": rect(round(q[0] - 2, 2), round(q[1] - 2, 2), round(q[0] + 2, 2), round(q[1] + 2, 2))})
+        L = math.hypot(l[0] - h[0], l[1] - h[1])
+        u0 = ((l[0] - h[0]) / L, (l[1] - h[1]) / L)
+        a = math.radians(rot)
+        u = (u0[0] * math.cos(a) - u0[1] * math.sin(a), u0[0] * math.sin(a) + u0[1] * math.cos(a))
+        n = (-u[1], u[0])
+        piv = (h[0] - u0[0] * CL_POT / 2 + n[0] * 6.0, h[1] - u0[1] * CL_POT / 2 + n[1] * 6.0) if rot == 180 else \
+              (h[0] + u0[0] * (CL_POT / 2 + 1.2), h[1] + u0[1] * (CL_POT / 2 + 1.2))
+        out.append({"nom": f"{nom} (battant ouvert)", "pts": [[round(x, 2), round(y, 2)] for x, y in _bande(piv, u, n, 0, 43, -1.5, 3)]})
     return out
 
 
@@ -949,6 +1210,7 @@ def _planchers():
            {"nom": "Deck de la piscine", "pts": _deck_pts(), "z": Z}]
     out += [{"nom": f"Escalier de la cour, marche {i}", "pts": rect(ESC[0], ESC[1] + 9 * (i - 1), ESC[2], ESC[1] + 9 * i),
              "z": round(Z - r_esc * i, 2)} for i in range(1, 7)]
+    out.append({"nom": "Garage (dalle de béton)", "pts": rect(CAB[0] - 2, CAB[1] - 2, CAB[2] + 2, CAB[3] + 2), "z": CAB_Z_DALLE})
     out.append({"nom": "Perron avant", "pts": rect(*PERRON), "z": Z_PERRON})
     out += [{"nom": f"Marches du perron, marche {i}", "pts": p, "z": z} for i, p, z in _marches_perron()]
     out += [{"nom": f"Marches de pierre, marche {i + 1}", "pts": [[round(x, 2), round(y, 2)] for x, y in p], "z": z}
@@ -961,7 +1223,6 @@ def _obstacles():
     yd, yg = _bout_deck(314), _bout_deck(159)
     cer = lambda x, y, r, n=12: cercle(x, y, r, n)
     return [{"nom": "Piscine", "pts": cer(cx, cy, R + 1, 32)},
-            {"nom": "Cabanon", "pts": rect(*CAB)},
             {"nom": "Muret le long de l'allée", "pts": rect(*MURET_Y)}, {"nom": "Muret (aile)", "pts": rect(*MURET_X)},
             {"nom": "Garde-corps du palier et de l'escalier", "pts": rect(453.5, 380, 456, 494)},
             {"nom": "Garde-corps patio / escalier", "pts": rect(385, 440, 387, 560)},
@@ -972,14 +1233,25 @@ def _obstacles():
             {"nom": "Verre patio / deck, bout droit", "pts": rect(310, 559, 314, 561)},
             {"nom": "Garde-corps du deck (droite)", "pts": rect(311.5, 560, 314, round(yd, 1))},
             {"nom": "Garde-corps du deck (gauche)", "pts": rect(159, 560, 161.5, round(yg, 1))},
-            {"nom": "Appareils de la piscine", "pts": rect(58, 743, 114, 806)},
+            {"nom": "Appareils de la piscine", "pts": [list(p) for p in APPAREILS]},
             {"nom": "Salon du patio", "pts": rect(175, 440, 272, 542)}, {"nom": "BBQ", "pts": rect(348, 462, 380, 558)},
             {"nom": "Cheminée", "pts": rect(*CHEMINEE)},
             {"nom": "Garde-corps du perron (gauche)", "pts": rect(162, -92, 165, 0)},
             {"nom": "Garde-corps du perron (droite)", "pts": rect(231, -92, 234, 0)},
             {"nom": "Palmier (patio)", "pts": cer(180, 532, 10)}, {"nom": "Palmier (palier)", "pts": cer(425, 393, 10)},
-            {"nom": "Poteau de la corde à linge", "pts": cer(0, 855, 3, 8)},
-            {"nom": "Arbre ornemental (tronc)", "pts": cer(-60, -250, 6)}]
+            {"nom": "Poteau de la corde à linge", "pts": cer(CORDE_POTEAU[0], CORDE_POTEAU[1], 3, 8)},
+            {"nom": "Arbre ornemental (tronc)", "pts": cer(-60, -250, 6)}] + _obstacles_garage() + _cl_obstacles()
+
+
+def _obstacles_garage():
+    """Murs minces du garage (la porte de garage est ouverte : on entre)."""
+    x0, y0, x1, y1 = CAB
+    e = CAB_EP
+    return [{"nom": "Garage, mur avant (gauche de la porte)", "pts": rect(x0, y0, CAB_PORTE[0], y0 + e)},
+            {"nom": "Garage, mur avant (droite de la porte)", "pts": rect(CAB_PORTE[1], y0, x1, y0 + e)},
+            {"nom": "Garage, mur arrière", "pts": rect(x0, y1 - e, x1, y1)},
+            {"nom": "Garage, mur côté piscine", "pts": rect(x0, y0, x0 + e, y1)},
+            {"nom": "Garage, mur côté x = 560", "pts": rect(x1 - e, y0, x1, y1)}] + GARAGE_AMENAGE["obstacles"]
 
 
 def _visites():
@@ -990,12 +1262,16 @@ def _visites():
         {"nom": "Façade avant de biais (côté allée)", "x": 500, "y": -300, "cap": 118, "z": s(500, -300)},
         {"nom": "L'allée et le côté", "x": 530, "y": -430, "cap": 100, "z": s(530, -430)},
         {"nom": "L'allée devant la porte de côté", "x": 530, "y": 110, "cap": 145, "z": s(530, 110)},
-        {"nom": "Le bout de l'allée et les marches de pierre", "x": 481, "y": 405, "cap": 92, "z": s(481, 405)},
-        {"nom": "Cour arrière — vue d'ensemble", "x": 535, "y": 640, "cap": 207, "z": s(535, 640)},
+        {"nom": "Le bout de l'allée, les marches de pierre et le portillon", "x": 481, "y": 405, "cap": 90, "z": s(481, 405)},
+        {"nom": "Cour arrière — vue d'ensemble (du coin du fond)", "x": 60, "y": 880, "cap": 312, "z": s(60, 880)},
         {"nom": "Le patio", "x": 372, "y": 452, "cap": 123, "z": Z},
-        {"nom": "Le deck et la piscine", "x": 300, "y": 586, "cap": 140, "z": Z},
-        {"nom": "Le cabanon et les pas japonais", "x": 420, "y": 515, "cap": 80, "z": s(420, 515)},
-        {"nom": "La piscine vue de la cour", "x": 60, "y": 560, "cap": 45, "z": s(60, 560)},
+        {"nom": "Le deck et la piscine", "x": 330, "y": 515, "cap": 120, "z": Z},
+        {"nom": "Le garage agrandi et les pas japonais", "x": 420, "y": 508, "cap": 84, "z": s(420, 508)},
+        {"nom": "Garage vu de la cour", "x": 433, "y": 548, "cap": 90, "z": s(433, 548)},
+        *GARAGE_AMENAGE["visites"],
+        {"nom": "Dans le garage (vers la porte ouverte)", "x": 440, "y": 766, "cap": 270, "z": CAB_Z_DALLE},
+        {"nom": "La piscine vue de la cour", "x": 30, "y": 505, "cap": 55, "z": s(30, 505)},
+        {"nom": "Le portillon du côté gauche de la maison", "x": -20, "y": 470, "cap": 268, "z": s(-20, 470)},
     ]
 
 
@@ -1039,7 +1315,8 @@ EXTERIEUR = {
     "obstacles": _obstacles(),
     "trous": TROUS,
     "visites": _visites(),
-    "lumieres": [{"x": 328.5, "y": 432, "z": 178, "i": 2}, {"x": 240, "y": -1.5, "z": 170, "i": 2}],
+    "lumieres": [{"x": 328.5, "y": 432, "z": 178, "i": 2}, {"x": 240, "y": -1.5, "z": 170, "i": 2},
+                 *GARAGE_AMENAGE["lumieres"]],   # 4 luminaires DEL du garage (garage.py)
     "peintures": PEINTURES,
     "palette": [["Brique rouge", "parement du rez-de-chaussée (existant)", "#8E3B2E"],
                 ["Fondation crépie blanche", "fondation apparente, lisse (vidéo DAG)", "#EEEDE8"],
@@ -1048,11 +1325,12 @@ EXTERIEUR = {
                 ["Platelage composite beige clair", "palier, patio, deck et girons (teinte de la vidéo DAG, à choisir)", "#CBB592"],
                 ["Garde-corps d'aluminium noir", "barreaux 36 et 48 po, portillon à barreaux ; verre pur sur pinces entre le patio et le deck", "#1A1A1A"],
                 ["Jupe en déclin blanc", "sous les terrasses ; limons blancs de l'escalier ouvert", "#F4F4F2"],
-                ["Piscine hors-terre 15 pi", "paroi grise, margelle gris pâle, eau turquoise", "#8C9090"],
+                ["Piscine hors-terre 21 pi", "paroi grise de 52 po, margelle gris pâle, eau turquoise ; anneau de gravier", "#8C9090"],
                 ["Muret de blocs gris pâle", "soutènement entre la cour et l'allée, marches de pierre naturelle", "#A8AAA6"],
                 ["Asphalte", "allée au niveau du sous-sol, jusqu'au bout derrière la maison", "#45474A"],
-                ["Cabanon 10' × 12'", "planches verticales blanches, porte de garage noire à carreaux", "#F4F4F2"],
-                ["Salon de patio", "résine tressée anthracite, coussins blanc cassé", "#3A3B3C"]],
+                ["Garage 13' × 17'", "planches verticales blanches, toit 7/12, porte de garage noire à carreaux ; dedans : contreplaqué", "#F4F4F2"],
+                ["Clôture de bois 6 pi", "planches sur planches teintes brun, poteaux 4 × 4 ; 2 portillons de 42 po, quincaillerie noir mat", "#8A6A48"],
+                ["Salon de patio", "résine tressée anthracite, coussins blanc cassé", "#3A3B3C"]] + GARAGE_AMENAGE["palette"],
 }
 # appliques des portes (les lumières ci-dessus y sont placées)
 EXTERIEUR["objets"] += [B(327.5, 429, 333, 435, 172, 184, "metal"), B(328.5, 430, 332, 434, 174, 182, "abat-jour"),
