@@ -137,7 +137,14 @@ Vérifiés objet par objet : tout le mobilier et les revêtements, de l'embrasur
   à 24 → 80 po. La tablette de la fenêtre de l'évier est à 36¾–37½ po, au ras du comptoir de 36¼ po.
 
 ## Vérifications
-(voir la fin du fichier)
+- `construire_projet.py` : `verifications.txt` est identique à la version précédente, aux empreintes sha256 près.
+  Toujours 0 erreur, et les mêmes 4 avertissements qu'avant : 3 repères d'incertitude, dont lc-SS-033 → ecart-020
+  absent du registre, et le chevauchement de textes du cartouche P-130. Les PNG P-129 et P-130 sont relus autour de
+  ouv-SS-002, ouv-SS-003 et ouv-RDC-008 : les chaînes ≈ retombent sur 38'-0" et 31'-8".
+- 3D sur une copie du projet, avec le moteur figé `git archive fb236b8 renovation/outils` (2 chargements) :
+  8 vues de l'intérieur (séjour, chambre 2, salon, bureau, chambre des parents, cuisine × 2, entrée arrière) et 3 vues
+  de dehors (EXT_APERCU=1). Aucune erreur de page. Planche :
+  `scratchpad/m18/fen_application/planche_fenetres.jpg` (capture / rendu).
 
 ## À valider sur place
 Mesurer les vraies fenêtres (baie brute et cadre) : la vidéo est une maquette d'architecte paysagiste, et les mesures
