@@ -82,7 +82,7 @@ pas japonais, la piscine vue de la cour, la façade avant, l'allée.
    est plus basse que la cour. Le moteur ne fait qu'un plan de gazon et cache tout ce qui est sous 48 po : la pente n'est donc
    pas reproduite. Le muret est dessiné comme une bordure de 18 po.
 2. **Porte de côté du sous-sol** (côté allée, y ≈ 180) : son seuil est au niveau du plancher du sous-sol, 48 po sous le terrain
-   supposé. On a dessiné une **descente extérieure en béton** (6 marches de 10 po, palier, murets, garde-corps), mais c'est une
+   supposé. On a dessiné une **descente extérieure en béton** (6 marches de 9 po, palier, murets, garde-corps), mais c'est une
    hypothèse : si l'allée descend jusqu'à cette porte, il n'y a pas de descente. Elle est sous le gazon : `EXTERIEUR["trous"]`
    dit au moteur où couper le terrain.
 3. **Le « patio » est une terrasse surélevée** au niveau du palier, pas un pavé au sol. Les garde-corps de 36 po du plan
@@ -95,8 +95,7 @@ pas japonais, la piscine vue de la cour, la façade avant, l'allée.
    (environ 60 po) : à faire vérifier par DAG.
 5. **Toit** : en croupe partout, 5/12, débord de 16 po. Sur la vignette de la vidéo prise de face, le salon semble avoir un
    **pignon** au-dessus de la grande fenêtre avant : à confirmer. La hauteur de la cheminée est estimée.
-6. **Fenêtres** : allège et tête lues dans les scènes d'étage (sous-sol 56-86, RDC 34-82 au-dessus du plancher). Fenêtres
-   noires d'après la vidéo.
+6. **Fenêtres** : allège et tête lues dans les scènes d'étage (sous-sol 56-86, RDC 34-82 au-dessus du plancher), sauf les fenêtres agrandies vers le bas : leur allège propre est lue dans `maison.json` (sous-sol à 40, salon à 20). Les 5 fenêtres du sous-sol plus basses que le terrain ont une margelle (dessinée par le moteur) ; le gazon d'`EXTERIEUR` y est troué. Fenêtres noires d'après la vidéo.
 7. **Perron avant** : on ne connaît ni le nombre de marches ni leur direction. Elles sont dessinées droit vers la rue.
 
 ### Code et réglementation (à valider avec la Ville et un professionnel)
