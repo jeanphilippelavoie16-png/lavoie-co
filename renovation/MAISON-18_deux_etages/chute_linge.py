@@ -18,7 +18,8 @@ Parti pris (l'option B de DESIGN_cafe_sdb.md devient le choix dessiné ; conditi
 - Plans : symbole « CHUTE » aux deux niveaux (gaine au RDC, sortie et déflecteur en pointillé au SS : au-dessus), note de
   la proposition sur P-129 (celles de P-130 sont fixées dans modifs.py) ; le chariot, meuble roulant, n'est pas au plan.
 - 3D (maquette à deux étages) : SCENE["sequences"] — trappe, ballot de linge froissé, chute, glissade dans le déflecteur,
-  arrivée dans le chariot ; boutons « Envoyer du linge » (deux étages) et « Voir arriver au lavage » ; arrêts « Chute à
+  arrivée dans le chariot ; on TOUCHE la trappe (en haut) ou le chariot (en bas : il en arrive un, vu d'en bas), puis
+  l'invite passagère « Voir arriver au lavage » (10 s, en haut) ; plus de boutons ; arrêts « Chute à
   linge » (RDC) et « Chute à linge — arrivée au lavage » (SS). Avec ETAGE=RDC ou SS, pas de séquence (la trappe reste fixe).
 Ne touche à aucun autre module du sous-sol : rien du lavage n'est déplacé (le chariot loge dans un coin libre).
 Pouces, repère de la maison (x le long de la façade, y vers l'arrière) ; z depuis le plancher de chaque étage, sauf dans
@@ -143,7 +144,9 @@ def _sous_sol():
         zt = _z_axe(xs) + R_DEF / 0.83
         out += [T([(xs, YS, PLAFOND_SS), (xs, YS, zt + 0.4)], 0.22, "metal"),
                 B(xs - 0.6, YS - R_DEF - 0.3, xs + 0.6, YS + R_DEF + 0.3, zt - 0.6, zt + 0.4, "metal")]
-    # chariot à linge : cadre d'acier noir mat (montants, cadres haut et bas), 4 roulettes, sac de toile écrue creux
+    # chariot à linge : cadre d'acier noir mat (montants, cadres haut et bas), 4 roulettes, sac de toile écrue creux ;
+    # on le touche dans la visite pour envoyer un ballot vu d'en bas ("sequence": "chute")
+    k_chariot = len(out)
     x0, y0, x1, y1 = CHARIOT
     i = 0.45
     coins = [(x0 + i, y0 + i), (x1 - i, y0 + i), (x1 - i, y1 - i), (x0 + i, y1 - i)]
@@ -163,6 +166,8 @@ def _sous_sol():
     h0, h1 = 30.9, 33.6
     out += [B(x0 - 0.15, y0 - 0.15, x1 + 0.15, y0 + 0.95, h0, h1, TOILE), B(x0 - 0.15, y1 - 0.95, x1 + 0.15, y1 + 0.15, h0, h1, TOILE),
             B(x0 - 0.15, y0 + 0.95, x0 + 0.95, y1 - 0.95, h0, h1, TOILE), B(x1 - 0.95, y0 + 0.95, x1 + 0.15, y1 - 0.95, h0, h1, TOILE)]
+    for o in out[k_chariot:]:
+        o["sequence"] = "chute"
     return out
 
 
@@ -225,7 +230,7 @@ def appliquer_scene_deux(SCENE):
         "panier": {"pile": [[0, 0, 0], [1.6, -0.7, 5.0], [-1.4, 0.6, 10.0]]},
         "vue_depart": {"x": 87, "y": 197, "cap": 266, "etage": "RDC", "tangage": -24},
         "vue_arrivee": {"x": 54, "y": 64, "cap": 79, "etage": "SS", "tangage": -10},
-        "attente_voir": 15}]
+        "attente_voir": 10, "invite": "Touche la trappe", "invite_panier": "Touche le panier"}]
     # 4) arrêts de visite et palettes
     def inserer(E, arret, apres):
         vis = [v for v in E.get("visites", []) if v.get("nom") != arret["nom"]]

@@ -139,7 +139,7 @@ def traversier():
 
 def anime_traversier():
     v = VITESSE_REELLE * ACCELERE * M                # po/s
-    return {"id": "traversier", "nom": "Le traversier F.-A.-Gauthier", "lointain": True, "cadence": 10, "ombre": False, "bouton": False,
+    return {"id": "traversier", "nom": "Le traversier F.-A.-Gauthier", "lointain": True, "cadence": 10, "ombre": False, "toucher": False,
             "objets": traversier(), "z": round(Z_EAU, 1),
             "trajet": [[-X_BOUT, Y_ALLER], [X_BOUT, Y_ALLER], [X_BOUT, Y_RETOUR], [-X_BOUT, Y_RETOUR]],
             "vitesse": round(v, 1), "rotation": 2.0, "depart": DEPART,

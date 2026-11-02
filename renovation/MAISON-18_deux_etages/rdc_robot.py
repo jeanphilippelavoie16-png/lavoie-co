@@ -14,7 +14,8 @@ Ce module (chargé en dernier par scene_3d.py et modifs.py) :
   poteaux, garde-corps de la trémie, portes dans leur état de départ, pieds de chaises et de tabourets, sofa, îlot, poubelles,
   plantes ; centre du robot à au moins 7,9 po de tout obstacle (rayon 6,9 + 1 po de jeu). Le moteur ne fait aucun
   évitement : si le mobilier de ces zones change, refaire le trajet (_verifier() avertit d'un segment qui frôle un meuble) ;
-- un arrêt de visite « Aspirateur robot » d'où on le voit passer ; bouton « Arrêter le robot » / « Repartir le robot ».
+- un arrêt de visite « Aspirateur robot » d'où on le voit passer ; on TOUCHE le robot pour l'arrêter ou le faire repartir
+  (petit bip ; zone de toucher élargie ; repère « Touche le robot » sur tablette en arrivant à l'arrêt) — plus de bouton.
 Plan P-130 : le garde-manger (elem-RDC-K-GM) mentionne le garage du robot (appliquer_modifs_rdc).
 Détail et coûts : DESIGN_robot.md. Pouces, repère du plancher du RDC (x le long de la façade, y vers l'arrière).
 """
@@ -159,7 +160,7 @@ def appliquer_scene_rdc(S, h):
         "id": "robot", "nom": "Aspirateur robot",
         "objets": _robot(), "trajet": [list(p) for p in TRAJET], "vitesse": VITESSE, "rotation": ROTATION,
         "pauses": [{"point": 0, "duree": PAUSE_BASE}], "depart": DEPART,
-        "bouton": {"libelle_pause": "Arrêter le robot", "libelle_reprendre": "Repartir le robot"},
+        "invite": "Touche le robot",                         # repère sur tablette (on le touche : pause / il repart)
         "note": "Aspirateur robot : sort du garage du garde-manger, allers-retours dans le passage, le salon et la cuisine — " + SOURCE})
     _verifier(S, TRAJET)
     v = S.setdefault("visites", [])

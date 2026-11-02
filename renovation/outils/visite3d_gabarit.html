@@ -48,15 +48,23 @@ body.sans-joy #rail { bottom: var(--sb); }
 #ici { min-width: 190px; text-align: center; padding: 0 6px; }
 #ici b { display: block; font-size: 1rem; }
 #ici small { color: var(--muted); font-size: .75rem; }
-/* juste au-dessus : commandes interactives (toile motorisée, stores...), seulement si la scène en déclare */
-#commandes { position: fixed; bottom: calc(var(--sb) + 64px); left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 4px; max-width: calc(100vw - 24px); flex-wrap: wrap; justify-content: center; }
-#commandes button { display: flex; align-items: center; gap: 9px; font-size: .92rem; white-space: nowrap; padding: 6px 14px 6px 8px; }
-#commandes .ic { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; background: var(--accent); color: var(--accent-ink); }
-#commandes button.bouge .ic { animation: cmd-pulse 1s ease-in-out infinite; }
-#commandes button.appel { background: var(--accent); color: var(--accent-ink); }
-#commandes button.appel .ic { background: var(--accent-ink); color: var(--accent); }
-@keyframes cmd-pulse { 50% { opacity: .45; } }
-@media (prefers-reduced-motion: reduce) { #commandes button.bouge .ic { animation: none; } }
+/* toucher les objets (toile, bureaux, robot, trappe, porte d'entrée...) : aucun bouton d'action ; juste au-dessus de la
+   visite guidée, une invite passagère (« Voir arriver au lavage » après un envoi) qui s'efface seule */
+#invite-voir { position: fixed; bottom: calc(var(--sb) + 66px); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 9px;
+  font-size: .92rem; font-weight: 700; white-space: nowrap; padding: 6px 16px 6px 8px; overflow: hidden; animation: invite-entree .35s ease-out; }
+#invite-voir .ic { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; background: var(--accent); color: var(--accent-ink); }
+#invite-voir .duree { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--wood); transform-origin: left; animation: invite-duree linear forwards; }
+@keyframes invite-entree { from { opacity: 0; transform: translate(-50%, 8px); } }
+@keyframes invite-duree { to { transform: scaleX(0); } }
+/* repère passager sur écran tactile : « Touche le robot »... au-dessus de l'objet, en arrivant à un arrêt */
+.invite-touche { position: fixed; left: 0; top: 0; pointer-events: none; display: flex; align-items: center; gap: 7px; padding: 5px 12px 5px 9px;
+  border-radius: 999px; background: rgba(29,31,34,.84); color: #fff; font-size: .84rem; font-weight: 700; white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25); animation: invite-vie 3.4s ease forwards; }
+.invite-touche::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #ffc35a; box-shadow: 0 0 0 0 rgba(255,195,90,.8); animation: invite-point 1s ease-out 3; }
+@keyframes invite-vie { 0% { opacity: 0; } 8%, 78% { opacity: 1; } 100% { opacity: 0; } }
+.invite-touche.tenue { animation: none; }
+@keyframes invite-point { to { box-shadow: 0 0 0 9px rgba(255,195,90,0); } }
+@media (prefers-reduced-motion: reduce) { #invite-voir, .invite-touche::before { animation: none; } }
 /* --- scénarios : bulle au-dessus de la tête du personnage (rabattue au bord de l'écran, sans pointe, s'il est hors champ) */
 .bulle-scen { position: fixed; left: 0; top: 0; pointer-events: none; padding: 7px 16px; border-radius: 18px; background: #fff; color: #1d1f22;
   border: 2.5px solid #1d1f22; font-weight: 700; font-size: 1.3rem; letter-spacing: .02em; white-space: nowrap; box-shadow: 0 3px 12px rgba(0,0,0,.25); }
@@ -105,6 +113,16 @@ body.multi .palette { max-height: calc(100vh - 420px); }
 #aide .carte { max-width: 520px; margin: 16px; padding: 16px 20px; font-size: .92rem; line-height: 1.45; }
 #aide h2 { margin: 0 0 8px; font-size: 1.05rem; }
 #aide ul { margin: 0 0 12px; padding-left: 18px; }
+#aide .carte { max-height: calc(100vh - 32px); overflow-y: auto; }
+#aide ul ul { margin: 4px 0 2px; padding-left: 16px; }
+#aide-sons { list-style: none; margin-left: -18px; }
+#aide-sons small { display: block; color: var(--muted); font-size: .78rem; margin-top: 2px; }
+/* interrupteur « Sons de la visite » */
+.inter { display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%; padding: 8px 10px; border: 1px solid var(--line); font-weight: 700; text-align: left; }
+.inter i { position: relative; flex: none; width: 46px; height: 26px; border-radius: 13px; background: var(--line); transition: background .2s; }
+.inter i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .2s; }
+.inter[aria-checked="true"] i { background: #2f8f5b; }
+.inter[aria-checked="true"] i::after { transform: translateX(20px); }
 .etiq { position: fixed; left: 0; top: 0; transform: translate(-50%, -50%); padding: 3px 8px; border-radius: 6px; font-size: .78rem; font-weight: 700;
   background: rgba(255,255,255,.88); color: #1d1f22; pointer-events: none; white-space: nowrap; box-shadow: 0 1px 6px rgba(0,0,0,.18); }
 #erreur { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; }
@@ -137,7 +155,7 @@ body.multi .palette { max-height: calc(100vh - 420px); }
   <div id="ici"><b id="ici-nom">—</b><small id="ici-n"></small></div>
   <button id="suiv" aria-label="Arrêt suivant">▶</button>
 </div>
-<div class="carte" id="commandes" role="group" aria-label="Commandes de la maison" hidden></div>
+<button class="carte" id="invite-voir" hidden><span class="ic" aria-hidden="true">▶</span><span class="lib"></span><i class="duree" aria-hidden="true"></i></button>
 <div class="carte" id="etages" role="group" aria-label="Étages" hidden></div>
 <div class="carte mini"><h2 id="plan-nom" hidden></h2><canvas id="plan" width="420" height="420" aria-label="Plan : touchez pour y aller"></canvas></div>
 <div class="carte palette" id="palette" hidden><h2>Matériaux proposés</h2><ul id="pal"></ul><h2>Peinture</h2><ul id="pei"></ul>
@@ -157,8 +175,10 @@ body.multi .palette { max-height: calc(100vh - 420px); }
     <li id="aide-portes" hidden><b>Portes</b> : touchez une porte pour l'ouvrir ou la fermer (en visite comme en maquette). Une porte fermée bloque le passage ; en marchant au toucher, elle s'ouvre toute seule.</li>
     <li id="aide-etages" hidden><b>▲ Monter / ▼ Descendre</b> (au-dessus du petit plan) : on marche jusqu'à l'escalier et on le monte (ou le descend) en douceur. On peut aussi marcher dans l'escalier, ou toucher une marche. En maquette : Sous-sol, Rez-de-chaussée ou Les deux.</li>
     <li id="aide-ext" hidden><b>Dehors</b> : passez par une porte extérieure (touchez-la pour l'ouvrir), ou choisissez un arrêt de la section « Extérieur ». Dehors, touchez le gazon, une terrasse ou une marche pour y aller ; on monte et on descend les marches tout seul. En maquette : vue Extérieur (la maison avec son toit, au milieu de son lot).</li>
-    <li id="aide-cmd" hidden></li>
-    <li id="aide-anim" hidden></li>
+    <li id="aide-touche" hidden><b>Touchez les objets pour qu'ils bougent</b> (aucun bouton : on touche l'objet dans la vue, en visite comme en maquette) :<ul id="aide-touche-liste"></ul>
+      Pour savoir quoi toucher : sur ordinateur, la main et un léger halo au survol ; sur tablette, en arrivant à un arrêt, un halo et une petite étiquette (« Touche le robot »...) qui s'effacent seuls. Glisser pour regarder ne déclenche rien.</li>
+    <li id="aide-sons" hidden><button class="inter" id="t-sons" role="switch" aria-checked="true"><span>Sons de la visite</span><i aria-hidden="true"></i></button>
+      <small>Coups à la porte, voix, robot, chute à linge... Rien ne joue avant votre premier geste sur la page ; la voix est celle de l'appareil.</small></li>
   </ul>
   <button id="aide-ok" aria-pressed="true">Compris</button>
 </div></div>
@@ -812,6 +832,7 @@ for (const c of S.commandes || []) {
   CMD[c.id] = { c, f, etat: c.depart, anim: null, etirer: ext, interieur: int, suivre: [], E: null };
   etatsCommandes[c.id] = c.depart;
 }
+const PANIERS = {};                      // id de séquence → groupe des objets du mobilier qui la déclenchent (panier du bas)
 for (const E of ETAGES) {                // empreintes au sol (OMBRES) : remises à zéro pour chaque étage
   OMBRES.length = 0;
   for (const o of E.d.mobilier) {
@@ -822,6 +843,12 @@ for (const E of ETAGES) {                // empreintes au sol (OMBRES) : remises
       OMBRES.length = n0; continue;
     }
     const cm = o.commande && CMD[o.commande];
+    // objet fixe qui déclenche une séquence quand on le touche (panier du bas de la chute à linge) : groupe à part, jamais fusionné
+    if (!cm && o.sequence && (S.sequences || []).some((q) => q.id === o.sequence)) {
+      let g = PANIERS[o.sequence];
+      if (!g) { g = PANIERS[o.sequence] = new THREE.Group(); g.userData.garder = true; g.userData.panierSeq = o.sequence; g.userData.etage = E.i; E.g.mob.add(g); }
+      (FORMES[o.forme] || boite)(o, g); continue;
+    }
     if (!cm) { const m = (FORMES[o.forme] || boite)(o, E.g.mob); if (m && o.face && o.mat === "miroir") m.userData.face = o.face; continue; }
     if (!cm.E) { cm.E = E; E.g.mob.add(cm.etirer); }
     const n0 = OMBRES.length;                     // pas d'ombre de contact fixe sous un objet qui bouge
@@ -864,7 +891,7 @@ for (const cm of Object.values(CMD)) poserCommande(cm);
 // ils bougent ; une ombre de contact ronde suit le robot) et ne bloquent pas le visiteur. Rendu continu (30 images/s au plus)
 // seulement pendant une séquence, ou quand un objet animé qui roule est visible (étage montré, dans le champ de vision, aucun
 // mur entre lui et le visiteur, page visible) ; à l'arrêt avec un voyant qui clignote : 8 images/s ; en pause : aucune.
-const ANIM = { fige: false, liste: [], seqs: [], tPrec: 0, tImage: 0, tVu: 0, boutons: [] };
+const ANIM = { fige: false, liste: [], seqs: [], tPrec: 0, tImage: 0, tVu: 0 };
 const ANIMES = {}, SEQ = {};
 const ecartAngle = (a) => Math.atan2(Math.sin(a), Math.cos(a));
 const douceur = (u) => (u < .5 ? 4 * u ** 3 : 1 - (-2 * u + 2) ** 3 / 2);
@@ -958,6 +985,8 @@ for (const d of S.sequences || []) {
   ext.position.copy(P(a[0], a[1], a[2] - Et.z)); int.position.copy(P(-a[0], -a[1], -a[2])); ext.add(int); Et.g.mob.add(ext);
   const Q = { d, Et, Ep: ETAGES[etageDeZ(ch[ch.length - 1][2])], trappe: ext, axe: P(b[0] - a[0], b[1] - a[1], b[2] - a[2]).normalize(),
     tournants: [], voyants: [], t: null, f: 0, pile: [], bal: null, rejeu: false, attente: null, voirJusqua: 0 };
+  Q.voir = !!(d.vue_arrivee && Q.Ep !== Q.Et);       // invite passagère « Voir arriver » après un envoi depuis l'étage de la trappe
+  Q.panierG = PANIERS[d.id] || null;                 // objets du mobilier qui la déclenchent aussi (panier du bas)
   construireMobiles(d.trappe.objets, int, Q);
   // ballot : origine au centre de son dessous ; pivot au milieu de sa hauteur (culbute) ; copié à chaque lancer
   const mod = new THREE.Group(), piv = new THREE.Group(), bi = new THREE.Group();
@@ -1266,11 +1295,13 @@ fusionnerGroupe(gExterieur, XT ? 40 : CASE, !XT);
 // Contrat : generer_3d.scenarios() et renovation/README.md (section « Scénario »). Étapes : marcher (chemin trouvé sur la
 // grille de la zone, par les portes extérieures, marches de 8 po au plus ; z lu au sol à l'exécution), tourner, cogner (coups
 // synthétisés), dire (bulle au-dessus de la tête + voix du navigateur), son (Web Audio, aucun fichier), ouvrir / fermer une
-// porte, attendre. Déclenché quand le visiteur s'approche (rayon ; au plus une fois par « attente » s), par son bouton ou par
-// un arrêt de visite ("scenario": id). Le personnage a ses propres groupes (jamais fusionnés), ne porte pas d'ombre, ne bloque
-// rien et ne se touche pas ; il est dans le mobilier de l'étage où il marche, ou dans l'extérieur. Rendu continu (30 images/s
-// au plus) seulement pendant qu'il joue et qu'il est dans le champ de vision. Rien ne sonne avant le premier geste sur la page.
-const SCEN = { liste: [], boutons: [], geste: false, muet: false, audio: null, fige: false, tPrec: 0, tImage: 0, voix: null, bulles: null };
+// porte, attendre. Déclenché quand le visiteur s'approche (rayon ; au plus une fois par « attente » s), quand on touche sa porte
+// fermée (« porte », sinon la première que ses étapes ouvrent) ou par un arrêt de visite ("scenario": id). Le personnage a ses
+// propres groupes (jamais fusionnés), ne porte pas d'ombre et ne bloque rien ; une zone de toucher l'entoure pendant qu'il joue
+// (toucher : il s'efface et les portes reviennent comme avant). Il est dans le mobilier de l'étage où il marche, ou dans
+// l'extérieur. Rendu continu (30 images/s au plus) seulement pendant qu'il joue et qu'il est dans le champ de vision. Rien ne
+// sonne avant le premier geste sur la page ; interrupteur « Sons de la visite » dans le panneau d'aide.
+const SCEN = { liste: [], geste: false, muet: false, audio: null, fige: false, tPrec: 0, tImage: 0, voix: null, bulles: null };
 const SCENS = {};
 const PAS_SCEN = 2;                                   // pas d'échantillonnage du chemin (po)
 const posesNulles = [0, 0, 0];
@@ -1517,7 +1548,7 @@ function poserScenario(Q, t) {
   Q.bulle = null;
   for (const b of Q.plan.bulles) if (t >= b.t0 && t < b.t1) Q.bulle = b;
 }
-// ---------- sons : Web Audio (rien avant le premier geste ; bouton pour couper) et voix du navigateur
+// ---------- sons : Web Audio (rien avant le premier geste ; interrupteur « Sons de la visite » de l'aide) et voix du navigateur
 function audioScen() {
   if (!SCEN.geste || SCEN.muet) return null;
   if (!SCEN.audio) {
@@ -1603,14 +1634,15 @@ function voixScen(texte) {
   } catch (_) {}
 }
 // ---------- lancer, arrêter, avancer
-function lancerScenario(id, depuis = "bouton") {
+function lancerScenario(id, depuis = "bouton") {     // depuis : "porte" (on a touché sa porte), "auto", "arret", "bouton" (tests)
   const Q = SCENS[id]; if (!Q || Q.t != null) return false;
+  finSortie(Q);
   if (!Q.racine.parent) gExterieur.add(Q.racine);
   planScenario(Q);
   Q.portesAvant = {};
   for (const e of Q.plan.ev) if (e.porte && PORTES[e.porte] && !(e.porte in Q.portesAvant)) Q.portesAvant[e.porte] = PORTES[e.porte].etat;
   Q.depuis = depuis; Q.t = depuis === "auto" ? 0 : Q.plan.debuts[Q.d.depart_bouton] || 0; Q.retard = 0;
-  // bouton loin de l'action : on va d'abord voir (vol avec fondu), il commence à l'arrivée
+  // (tests) « bouton » loin de l'action : on va d'abord voir (vol avec fondu), il commence à l'arrivée ; la porte touchée, on la voit
   if (depuis === "bouton" && Q.d.vue && mode === "visite") {
     const v = Q.d.vue, dc = Q.d.declencheur, f = idEtage(v.etage ?? zoneDe(joueur.etage).id);
     const pres = dc ? Math.hypot(joueur.x - dc.x, joueur.y - dc.y) < dc.rayon && Math.abs(joueur.z - dc.z) < dc.hauteur : f === joueur.etage;
@@ -1620,9 +1652,10 @@ function lancerScenario(id, depuis = "bouton") {
   SCEN.tImage = 0; sale = true; majCommandes(); masquerAstuce();
   return true;
 }
-function arreterScenario(id, fini) {
+function arreterScenario(id, fini, fondu) {           // fondu : on l'a touché, il s'efface en 0,45 s (sinon il disparaît)
   const Q = SCENS[id]; if (!Q || Q.t == null) return false;
-  Q.t = null; Q.racine.visible = false; Q.bulle = null;
+  Q.t = null; Q.bulle = null;
+  if (fondu && !fini) { Q.sortie = { t0: performance.now() }; SCEN.tImage = 0; } else Q.racine.visible = false;
   if (!fini) {                                         // arrêté en cours : sons coupés, portes remises comme avant
     couperSonsScen();
     for (const [pid, etat] of Object.entries(Q.portesAvant || {})) if (PORTES[pid] && PORTES[pid].etat !== etat) basculerPorte(pid, etat);
@@ -1646,6 +1679,11 @@ function majScenarios(tms) {                          // vrai : une image est à
   mScen.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); frScen.setFromProjectionMatrix(mScen);
   for (const Q of SCEN.liste) {
     const dc = Q.d.declencheur;
+    if (Q.sortie) {                                   // renvoyé d'un toucher : il s'efface
+      const u = (tms - Q.sortie.t0) / 450;
+      if (u >= 1) finSortie(Q); else fonduScenario(Q, lisse(u));
+      besoin = true; continue;
+    }
     if (Q.t == null) {                                // déclenchement automatique : le visiteur s'approche de l'entrée (après un
       // premier geste sur la page : on l'entend ; jamais pendant un test automatique sans geste)
       if (dc && dc.auto && SCEN.geste && !SCEN.fige && mode === "visite" && !vol && !document.hidden && tms >= (Q.prochainAuto || 0)
@@ -1690,60 +1728,33 @@ function majBullesScen() {
     if (el.hidden) el.hidden = false;
   }
 }
-// ---------- construction, boutons, aide
+// ---------- construction (plus de bouton : on touche la porte pour le faire venir, on le touche pour qu'il s'en aille)
 for (const d of S.scenarios || []) {
-  const Q = { d, t: null, plan: null, bulle: null, prochainAuto: 0, retard: 0 };
+  const Q = { d, t: null, plan: null, bulle: null, prochainAuto: 0, retard: 0, sortie: null };
   construirePersonnage(Q); SCEN.liste.push(Q); SCENS[d.id] = Q;
+  // porte dont le toucher le fait venir : "porte" du scénario, sinon la première que ses étapes ouvrent
+  Q.porte = d.porte || ((d.etapes || []).find((e) => e.ouvrir) || {}).ouvrir || null;
+  if (Q.porte && !PORTES[Q.porte]) Q.porte = null;
+  // matériaux propres au personnage (ses "couleurs", dedans et dehors) : fondu quand on le renvoie (pas ceux du catalogue,
+  // partagés avec la maison)
+  const noms = new Set(Object.keys(d.personnage.couleurs || {}));
+  Q.mats = [...new Set(Q.meshes.flatMap((m) => [m.userData.matInt, m.userData.matExt]).flat().filter((m) => m && noms.has(m.name)))];
 }
 if (SCEN.liste.length) {
   SCEN.bulles = document.createElement("div"); SCEN.bulles.className = "bulles-scen"; $("etiquettes").append(SCEN.bulles);
   for (const Q of SCEN.liste) {
     Q.el = document.createElement("div"); Q.el.className = "bulle-scen"; Q.el.hidden = true; Q.el.setAttribute("aria-live", "polite");
     Q.el.append(document.createElement("span")); SCEN.bulles.append(Q.el);
-    const b = document.createElement("button"), ic = document.createElement("span"), lib = document.createElement("span");
-    ic.className = "ic"; ic.setAttribute("aria-hidden", "true"); lib.className = "lib"; b.append(ic, lib); b.hidden = true;
-    b.onclick = () => (Q.t != null ? arreterScenario(Q.d.id) : lancerScenario(Q.d.id, "bouton"));
-    $("commandes").append(b); Q.bouton = b; SCEN.boutons.push(b);
   }
-  // son coupé / remis (tous les scénarios) ; la voix et les sons attendent le premier geste sur la page
-  const b = document.createElement("button"), ic = document.createElement("span"), lib = document.createElement("span");
-  ic.className = "ic"; ic.setAttribute("aria-hidden", "true"); lib.className = "lib"; b.append(ic, lib); b.hidden = true;
-  b.onclick = () => { SCEN.muet = !SCEN.muet; if (SCEN.muet) couperSonsScen(); majCommandes(); };
-  $("commandes").append(b); SCEN.boutonSon = b; SCEN.boutons.push(b);
-  const geste = () => {
-    SCEN.geste = true; audioScen();
-    if (!SCEN.voixPrete && window.speechSynthesis) {   // iOS : la première parole doit venir d'un geste
-      SCEN.voixPrete = true; try { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch (_) {}
-    }
-    if (SCEN.audio && SCEN.audio.ctx.state === "running") for (const k of ["pointerup", "touchend", "keydown", "click"]) removeEventListener(k, geste, true);
-  };
-  for (const k of ["pointerup", "touchend", "keydown", "click"]) addEventListener(k, geste, true);
-  if (window.speechSynthesis) { try { speechSynthesis.addEventListener("voiceschanged", () => { SCEN.voix = null; }); } catch (_) {} }
-  const li = document.createElement("li"), ul = $("aide-ok").previousElementSibling;
-  for (const Q of SCEN.liste) li.append(Object.assign(document.createElement("b"), { textContent: Q.d.nom }),
-    ` : il arrive tout seul quand vous approchez` + (Q.d.declencheur ? ` (au plus une fois aux ${Math.round(Q.d.declencheur.attente / 60)} minutes)` : "")
-    + `, ou avec le bouton « ${Q.d.libelle} » ; « ${Q.d.libelle_arret} » le renvoie. `);
-  li.append(`« ${SCEN.liste[0].d.libelle_son} » coupe ou remet ses sons. Le son ne joue qu'après un premier geste sur la page ; la voix est celle de l'appareil (elle change d'un appareil à l'autre).`);
-  if (ul) ul.append(li);
 }
-const texteBoutonScen = (b, ic, lib) => { b.querySelector(".ic").textContent = ic; b.querySelector(".lib").textContent = lib; };
-function majBoutonsScenarios() {                      // nombre de boutons montrés (seulement près de l'action : son étage ou dehors)
-  let n = 0, joue = false;
-  for (const Q of SCEN.liste) {
-    const Ei = Q.d.etage != null ? idEtage(Q.d.etage) : 0;
-    const ici = Q.t != null || !MULTI || (mode === "visite" ? dehors() || joueur.etage === Ei : vueMaquette === "deux" || vueMaquette === "ext" || vueMaquette === Ei);
-    Q.bouton.hidden = !ici; if (ici) n++;
-    if (Q.t != null) joue = true;
-    texteBoutonScen(Q.bouton, Q.t != null ? "■" : "▶", Q.t != null ? Q.d.libelle_arret : Q.d.libelle);
-    Q.bouton.classList.toggle("bouge", Q.t != null); Q.bouton.title = Q.d.nom;
+// on le touche pendant qu'il joue : sons coupés, portes remises comme avant, il s'efface en 0,45 s
+function fonduScenario(Q, u) {                        // u : 0 = opaque, 1 = effacé ; null = matériaux remis
+  for (const m of Q.mats) {
+    if (u == null) { m.opacity = 1; m.transparent = false; m.depthWrite = true; }
+    else { m.transparent = true; m.opacity = Math.max(0, 1 - u); m.depthWrite = u < 0.5; }
   }
-  if (SCEN.boutonSon) {
-    const ici = SCEN.liste.some((Q) => !Q.bouton.hidden); SCEN.boutonSon.hidden = !ici; if (ici) n++;
-    texteBoutonScen(SCEN.boutonSon, SCEN.muet ? "✕" : "♪", SCEN.liste[0].d.libelle_son + (SCEN.muet ? " : coupé" : ""));
-    SCEN.boutonSon.setAttribute("aria-pressed", String(!SCEN.muet)); SCEN.boutonSon.title = SCEN.muet ? "Remettre le son" : "Couper le son";
-  }
-  return n;
 }
+function finSortie(Q) { if (!Q.sortie) return; Q.sortie = null; fonduScenario(Q, null); if (Q.t == null) Q.racine.visible = false; sale = true; }
 // --- fin scénarios
 
 // --- lointain (opt-in : S.exterieur.lointain et objets animés « lointain » de l'extérieur : fleuve, basse-ville, traversier)
@@ -1888,7 +1899,7 @@ if (LOIN) {
   if (geos.length) gLoin.add(loinMaillage(new THREE.Mesh(mergeBufferGeometries(geos, false), MAT_LOIN)));
 }
 // objets animés « lointain » (traversier...) : les formes simples de leur repère, fusionnées (une fois par partie qui tourne),
-// voyants à part ; même horloge, mêmes trajets et mêmes boutons que les autres (poserAnime)
+// voyants à part ; même horloge et mêmes trajets que les autres (poserAnime) ; le lointain ne se touche pas
 for (const A of ANIM.liste) if (A.E === EXT && A.d.lointain) {
   const parts = new Map();
   for (const o of A.d.objets) {
@@ -2933,7 +2944,7 @@ function solSous(cx, cy) {
   const cibles = mode === "visite" ? [gSols, gMurs, gPlafond] : vueMaquette === "ext" ? [gSols, gMurs] : [gSols];
   if (XT && gExterieur.visible) cibles.push(gExterieur);
   const verre = (q) => { const m = Array.isArray(q.object.material) ? q.object.material[q.face ? q.face.materialIndex : 0] : q.object.material; return m && m.transparent; };
-  const h = ray.intersectObjects(cibles, true).find((q) => estVu(q.object) && !(XT && verre(q)));
+  const h = ray.intersectObjects(cibles, true).find((q) => !q.object.userData.zone && estVu(q.object) && !(XT && verre(q)));
   if (!h) return null;
   if (h.object.userData.esc != null && mode === "visite") return { esc: h.object.userData.esc, z: h.point.y / K };
   if (XT) { let o = h.object; while (o && o !== gExterieur) o = o.parent;
@@ -2942,23 +2953,27 @@ function solSous(cx, cy) {
   const E = ETAGES[h.object.userData.etage || 0];
   return { x: (h.point.x - E.decal.x) / K, y: -(h.point.z - E.decal.z) / K, piece: h.object.userData.piece, etage: E.i };
 }
-// objet mobile sous le doigt (commande : toile... ; porte) : premier objet visible et opaque touché (un mur ou un meuble
-// devant le cache) ; le verre d'une porte vitrée compte
+// objet mobile sous le doigt (commande : toile, bureau... ; porte ; robot ; trappe ou panier d'une séquence ; personnage d'un
+// scénario) : premier objet visible et opaque touché (un mur ou un meuble devant le cache) ; le verre d'une porte vitrée compte ;
+// une zone de toucher invisible (robot, trappe, panier, visiteur, course d'une commande) compte comme l'objet
 function objetSous(cx, cy) {
-  if (!Object.keys(CMD).length && !Object.keys(PORTES).length && !ANIM.liste.length && !ANIM.seqs.length) return null;
+  if (!Object.keys(CMD).length && !Object.keys(PORTES).length && !ANIM.liste.length && !ANIM.seqs.length && !SCEN.liste.length) return null;
   viser3D(cx, cy);
   const cibles = mode === "visite" ? [gMurs, gPlafond, gMob] : vueMaquette === "ext" ? [gMurs] : [gCoupe, gMob];
   if (XT && gExterieur.visible) cibles.push(gExterieur);     // dehors : un mur de brique cache la porte qui est derrière
   for (const h of ray.intersectObjects(cibles, true)) {
-    let o = h.object, vu = true, id = null, porte = null, seq = null, an = null;
+    let o = h.object, vu = true, id = null, porte = null, seq = null, an = null, pan = null;
     for (let q = o; q; q = q.parent) { if (!q.visible) vu = false; if (id == null && q.userData.commande) id = q.userData.commande; if (porte == null && q.userData.porte) porte = q.userData.porte;
-      if (seq == null && q.userData.sequence) seq = q.userData.sequence; if (an == null && q.userData.anime) an = q.userData.anime; }
-    if (!vu) continue;
+      if (seq == null && q.userData.sequence) seq = q.userData.sequence; if (an == null && q.userData.anime) an = q.userData.anime;
+      if (pan == null && q.userData.panierSeq) pan = q.userData.panierSeq; }
+    if (!vu || o.userData.haloDe) continue;
+    if (o.userData.zone) { const c = o.userData.zone; if (c.ignorer && c.ignorer()) continue; return c.res; }   // zone de toucher
     const m = Array.isArray(o.material) ? o.material[h.face ? h.face.materialIndex : 0] : o.material;
     if (porte) return { porte };
     if (m && (m.transparent && m.opacity < 0.5 || m.isMeshBasicMaterial)) continue;   // verre, vitres, ombres de contact
     if (seq) return { sequence: seq };                   // trappe d'une séquence (chute à linge)
-    if (an) return { anime: an };                        // objet animé (robot) : pause / reprendre
+    if (pan) return { sequence: pan, panier: true };     // panier du bas : la séquence part, vue d'en bas
+    if (an) return ANIMES[an] && ANIMES[an].touchable !== false ? { anime: an } : null;   // objet animé (robot) : pause / reprendre
     return id ? { commande: id } : null;
   }
   return null;
@@ -2967,8 +2982,11 @@ const commandeSous = (cx, cy) => { const o = objetSous(cx, cy); return o && o.co
 const porteSous = (cx, cy) => { const o = objetSous(cx, cy); return o && o.porte || null; };
 cnv.addEventListener("pointerdown", (e) => {
   cnv.setPointerCapture(e.pointerId);
-  doigts.set(e.pointerId, { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now(), bouton: e.button });
+  doigts.set(e.pointerId, { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now(), bouton: e.button,
+    seuil: e.pointerType === "mouse" ? 5 : 10, glisse: false, multi: false });
   if (doigts.size === 2) { const [a, b] = [...doigts.values()]; geste = { d: Math.hypot(a.x - b.x, a.y - b.y), mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2, fov: camera.fov }; }
+  if (doigts.size >= 2) for (const f of doigts.values()) f.multi = true;      // pincement : aucun doigt ne compte comme un toucher
+  if (e.pointerType === "mouse") survoler(null);
   masquerAstuce();
 });
 cnv.addEventListener("pointermove", (e) => {
@@ -2985,7 +3003,8 @@ cnv.addEventListener("pointermove", (e) => {
     geste.d = d; geste.mx = mx; geste.my = my; if (mode !== "maquette") geste.fov = camera.fov;
     return;
   }
-  if (Math.hypot(f.x - f.x0, f.y - f.y0) < 6) return;
+  if (!f.glisse && Math.hypot(f.x - f.x0, f.y - f.y0) < f.seuil) return;
+  f.glisse = true;                                      // il glisse : on regarde autour, ce ne sera pas un toucher
   if (mode === "maquette" && (f.bouton === 2 || e.shiftKey)) { deplacerOrbite(dx, dy); return; }
   tourner(dx, dy);
 });
@@ -2993,13 +3012,12 @@ function finDoigt(e) {
   const f = doigts.get(e.pointerId); doigts.delete(e.pointerId);
   if (doigts.size < 2) geste = null;
   if (!f || doigts.size) return;
-  const tap = Math.hypot(e.clientX - f.x0, e.clientY - f.y0) < 10 && performance.now() - f.t0 < 800;
+  // un toucher : le doigt n'a pas glissé (la vue n'a pas tourné), ce n'était pas un pincement, et il a été bref
+  const tap = !f.glisse && !f.multi && Math.hypot(e.clientX - f.x0, e.clientY - f.y0) < f.seuil && performance.now() - f.t0 < 800;
   if (!tap) return;
-  const o = objetSous(e.clientX, e.clientY);          // toucher un objet mobile : la toile monte ou descend, la porte s'ouvre ou se ferme
-  if (o && o.commande) { commander(o.commande, "basculer"); return; }
-  if (o && o.porte) { basculerPorte(o.porte); return; }
-  if (o && o.sequence) { declencherSequence(o.sequence, "objet"); return; }
-  if (o && o.anime) { basculerAnime(o.anime); return; }
+  // toucher un objet : la toile ou le bureau monte ou descend, le robot s'arrête ou repart, la trappe envoie le linge, la porte
+  // d'entrée fermée fait venir le visiteur (il s'en va si on le touche), une autre porte s'ouvre ou se ferme
+  if (toucherObjet(e.clientX, e.clientY)) return;
   const s = solSous(e.clientX, e.clientY);
   if (!s) return;
   if (s.esc != null) {                                // une marche : on monte (ou on descend) l'escalier
@@ -3010,12 +3028,20 @@ function finDoigt(e) {
   else entrerDans(s.x, s.y, s.etage);
 }
 cnv.addEventListener("pointerup", finDoigt);
-let survol = 0;                                         // souris : main au-dessus d'un objet mobile
+let survol = 0, survolMin = 0;                          // souris : main et léger halo au-dessus d'un objet qu'on peut toucher
+function survolA(x, y) {
+  survol = performance.now();
+  const o = objetSous(x, y), c = o ? cibleDe(o) : null;
+  cnv.style.cursor = o ? "pointer" : ""; cnv.title = c && c.titre ? c.titre() || "" : "";
+  survoler(c);
+}
 cnv.addEventListener("pointermove", (e) => {
-  if (e.pointerType !== "mouse" || doigts.size || (!Object.keys(CMD).length && !Object.keys(PORTES).length && !ANIM.liste.length && !ANIM.seqs.length)) return;
-  const t = performance.now(); if (t - survol < 120) return; survol = t;
-  cnv.style.cursor = objetSous(e.clientX, e.clientY) ? "pointer" : "";
+  if (e.pointerType !== "mouse" || doigts.size || (!Object.keys(CMD).length && !Object.keys(PORTES).length && !ANIM.liste.length && !ANIM.seqs.length && !SCEN.liste.length)) return;
+  clearTimeout(survolMin); const x = e.clientX, y = e.clientY;
+  if (performance.now() - survol < 90) { survolMin = setTimeout(() => survolA(x, y), 100); return; }    // le dernier point compte aussi
+  survolA(x, y);
 });
+cnv.addEventListener("pointerleave", () => { clearTimeout(survolMin); cnv.style.cursor = ""; survoler(null); });
 cnv.addEventListener("pointercancel", (e) => { doigts.delete(e.pointerId); geste = null; });
 cnv.addEventListener("contextmenu", (e) => e.preventDefault());
 cnv.addEventListener("wheel", (e) => {
@@ -3180,6 +3206,7 @@ function allerArret(i) {
   // arrêt avec "commandes" : la toile (ou autre) s'anime vers l'état demandé, une fois arrivé
   for (const [id, etat] of Object.entries(v.commandes || {})) setTimeout(() => { if (arret === i) commander(id, etat); }, 700);
   if (v.scenario) setTimeout(() => { if (arret === i) lancerScenario(v.scenario, "arret"); }, 900);   // --- scénarios : arrêt qui le fait venir
+  inviteArret = { i, t: performance.now() };           // écran tactile : repères des objets à toucher, une fois arrivé
   boutons.forEach((b, k) => b.setAttribute("aria-pressed", String(k === arret)));
   $("ici-n").textContent = `Arrêt ${arret + 1} de ${S.visites.length}`;
 }
@@ -3226,7 +3253,7 @@ function majBoutonsEtage() {
   for (const [ic, lib, f] of dirs) ajouter(ic, lib, vers(ETAGES[f].nom), null, () => allerEtage(f));
   c.hidden = !dirs.length;
 }
-// ---------- commandes interactives (toile motorisée, stores, porte de garage...) : bouton, toucher l'objet, arrêts de visite
+// ---------- commandes interactives (toile motorisée, bureaux assis-debout, stores...) : toucher l'objet, arrêts de visite
 const ADOUCIR = (u) => (u < .5 ? 4 * u ** 3 : 1 - (-2 * u + 2) ** 3 / 2);     // départ et arrivée en douceur
 let refletsEnRetard = false;
 function commander(id, etat, immediat) {
@@ -3258,75 +3285,19 @@ function finCommande() {
   // reflets (image à 360° prise une fois) : refaits à l'arrêt, en visite seulement (la maquette cache murs et plafond)
   if (mode === "visite") { refletsEnRetard = false; recapturerReflets(); } else refletsEnRetard = true;
 }
+// Plus aucun bouton d'action : on touche l'objet. majCommandes() garde à jour ce qui en dépend (invite passagère « Voir
+// arriver », repères) ; appelée après chaque changement d'état, d'étage ou de mode.
 function majCommandes() {
-  let n = 0;
-  for (const cm of Object.values(CMD)) {
-    const b = cm.bouton; if (!b) continue;
-    const monter = cm.etat === "bas";                   // le bouton propose l'action possible
-    b.querySelector(".ic").textContent = monter ? "▲" : "▼";
-    b.querySelector(".lib").textContent = monter ? cm.c.libelle_haut : cm.c.libelle_bas;
-    b.classList.toggle("bouge", !!cm.anim);
-    // plusieurs étages : le bouton n'apparaît que sur l'étage de la commande (ni sur l'autre, ni dehors) ; en maquette, quand
-    // cet étage est montré
-    const ici = !MULTI || !cm.E || (mode === "visite" ? cm.E.i === joueur.etage : vueMaquette === "deux" || vueMaquette === cm.E.i);
-    b.hidden = !ici; if (ici) n++;
-  }
-  n += majBoutonsAnimes();
-  if (SCEN.boutons.length) n += majBoutonsScenarios();         // --- scénarios
-  if (Object.values(CMD).some((cm) => cm.bouton) || ANIM.boutons.length || SCEN.boutons.length) $("commandes").hidden = !n;
-}
-if (Object.keys(CMD).length) {
-  for (const cm of Object.values(CMD)) {
-    const b = document.createElement("button"), ic = document.createElement("span"), lib = document.createElement("span");
-    ic.className = "ic"; ic.setAttribute("aria-hidden", "true"); lib.className = "lib"; b.append(ic, lib); b.title = cm.c.nom;
-    b.onclick = () => commander(cm.c.id, "basculer");
-    $("commandes").append(b); cm.bouton = b;
-  }
-  $("commandes").hidden = false; majCommandes();
-  const li = $("aide-cmd"); li.hidden = false;
-  li.append(Object.assign(document.createElement("b"), { textContent: Object.values(CMD).map((cm) => cm.c.nom).join(", ") }),
-    " : bouton ▼ ▲ au-dessus de la visite guidée, ou touchez l'objet directement dans la vue pour le monter ou le descendre.");
-}
-// ---------- objets animés et séquences : boutons (seulement sur leur étage), toucher, mise à jour à chaque image
-function boutonAnim(titre, action) {
-  const b = document.createElement("button"), ic = document.createElement("span"), lib = document.createElement("span");
-  ic.className = "ic"; ic.setAttribute("aria-hidden", "true"); lib.className = "lib"; b.append(ic, lib); b.title = titre;
-  b.onclick = action; b.hidden = true; $("commandes").append(b); ANIM.boutons.push(b); return b;
-}
-const texteBouton = (b, ic, lib) => { b.querySelector(".ic").textContent = ic; b.querySelector(".lib").textContent = lib; };
-for (const A of ANIM.liste) if (A.d.bouton) A.bouton = boutonAnim(A.d.nom, () => basculerAnime(A.d.id));
-for (const Q of ANIM.seqs) {
-  Q.bouton = boutonAnim(Q.d.nom, () => declencherSequence(Q.d.id, "bouton")); texteBouton(Q.bouton, "▼", Q.d.libelle);
-  if (Q.d.vue_arrivee && Q.Ep !== Q.Et) {
-    Q.boutonVoir = boutonAnim(Q.d.libelle_voir, () => voirArrivee(Q.d.id)); Q.boutonVoir.classList.add("appel"); texteBouton(Q.boutonVoir, "▶", Q.d.libelle_voir);
-  }
-}
-function majBoutonsAnimes() {             // nombre de boutons montrés
-  let n = 0;
-  const montre = (E) => (EXT && E === EXT ? (mode === "visite" ? dehors() : vueMaquette === "ext") :      // --- lointain : dehors
-    !MULTI || (mode === "visite" ? !dehors() && E.i === joueur.etage : vueMaquette === "deux" || vueMaquette === E.i));
-  for (const A of ANIM.liste) if (A.bouton) {
-    const ici = montre(A.E); A.bouton.hidden = !ici; if (ici) n++;
-    texteBouton(A.bouton, A.pause ? "▶" : "❚❚", A.pause ? A.d.bouton.libelle_reprendre : A.d.bouton.libelle_pause);
-  }
-  for (const Q of ANIM.seqs) {
-    if (!Q.bouton) continue;
-    const ici = montre(Q.Et) || montre(Q.Ep); Q.bouton.hidden = !ici; if (ici) n++;
-    Q.bouton.classList.toggle("bouge", Q.t != null);
-    if (Q.boutonVoir) {
-      const v = mode === "visite" && !dehors() && joueur.etage === Q.Et.i && performance.now() < Q.voirJusqua;
-      Q.boutonVoir.hidden = !v; if (v) n++;
-    }
-  }
-  return n;
+  majInviteVoir();
 }
 function basculerAnime(id, pause) {
   const A = ANIMES[id]; if (!A) return null;
   A.pause = pause == null ? !A.pause : !!pause; ANIM.tImage = 0; poserAnime(A, 0); sale = true;
   majCommandes(); masquerAstuce(); return A.pause;
 }
-// déclencher : depuis le bouton, si l'on est loin du point de vue de son étage (vue_depart en haut, vue_arrivee en bas), on y
-// va d'abord et la séquence part à l'arrivée ; depuis l'étage de la trappe, « Voir arriver » est proposé un moment
+// déclencher : en touchant la trappe (ou le panier du bas), elle part tout de suite ; (tests) « bouton » : si l'on est loin du
+// point de vue de son étage (vue_depart en haut, vue_arrivee en bas), on y va d'abord et la séquence part à l'arrivée ; depuis
+// l'étage de la trappe, l'invite passagère « Voir arriver » est proposée « attente_voir » s
 function declencherSequence(id, depuis = "bouton") {
   const Q = SEQ[id]; if (!Q || Q.t != null) return false;
   let delai = 0;
@@ -3338,7 +3309,7 @@ function declencherSequence(id, depuis = "bouton") {
     }
   }
   lancerSequence(Q, delai);
-  if (Q.boutonVoir && ici === Q.Et.i) Q.voirJusqua = performance.now() + (delai + Q.Tm.fin + Q.d.attente_voir) * 1000;
+  if (Q.voir && ici === Q.Et.i) Q.voirJusqua = performance.now() + (delai + Q.d.attente_voir) * 1000;
   majCommandes(); masquerAstuce(); return true;
 }
 function voirArrivee(id) {
@@ -3392,7 +3363,8 @@ function majAnimations(t) {                // pose les objets animés ; vrai : u
     if (Q.attente === "rejouer" && !vol) { Q.attente = null; rejouerArrivee(Q); }
     if (Q.voirJusqua && t > Q.voirJusqua) { Q.voirJusqua = 0; majCommandes(); }
     if (Q.t == null) continue;
-    Q.t += dt; besoin = 2;
+    const tAv = Q.t; Q.t += dt; besoin = 2;
+    if (tAv < Q.Tm.arrivee && Q.t >= Q.Tm.arrivee) sonPouf();     // le ballot tombe dans le panier
     if (Q.t >= Q.Tm.fin) { Q.t = Q.Tm.fin; poserSequence(Q); Q.t = null; Q.rejeu = false; majCommandes(); }
     else poserSequence(Q);
   }
@@ -3404,13 +3376,290 @@ function majAnimations(t) {                // pose les objets animés ; vrai : u
   if (ANIM.fige || !page || !besoin || t - ANIM.tImage < 1000 / cad - 4) return false;   // figé (tests) : une image par changement
   ANIM.tImage = t; return true;
 }
-if (ANIM.boutons.length) { $("commandes").hidden = false; majCommandes(); }
-if (ANIM.liste.length || ANIM.seqs.length) {
-  const li = $("aide-anim"); li.hidden = false;
-  for (const Q of ANIM.seqs) li.append(Object.assign(document.createElement("b"), { textContent: Q.d.nom }),
-    ` : touchez la trappe, ou le bouton « ${Q.d.libelle} »` + (Q.boutonVoir ? ` (en haut comme en bas ; après l'envoi, « ${Q.d.libelle_voir} » vous amène à l'arrivée). ` : ". "));
-  for (const A of ANIM.liste) li.append(Object.assign(document.createElement("b"), { textContent: A.d.nom }),
-    " : il fait sa tournée tout seul ; touchez-le" + (A.bouton ? " (ou son bouton)" : "") + " pour l'arrêter ou le faire repartir. ");
+// ---------- toucher les objets (aucun bouton d'action) : toile et bureaux (commandes), robot (objets animés), trappe et panier
+// (séquences), porte d'entrée et visiteur (scénarios). Chaque objet touchable est une « cible » : ses groupes (pour le halo et
+// le repère), une zone de toucher invisible et généreuse au besoin (robot, trappe, panier, visiteur ; la course entière d'une
+// commande, pour qu'on la retrouve même enroulée), son étiquette (« Touche le robot »), et si elle répond en ce moment.
+// Repères sans bouton : à la souris, la main et un léger halo au survol ; sur écran tactile, en arrivant à un arrêt de visite,
+// un halo pulsé (2 s) et une petite étiquette sur les objets touchables visibles à 15 pi au plus.
+const CIBLES = [], CIBLE = {};
+const MAT_ZONE = new THREE.MeshBasicMaterial({ visible: false });       // jamais dessinée, mais le rayon du toucher la voit
+const lcFr = (t) => (t ? t.charAt(0).toLowerCase() + t.slice(1) : "");
+function boiteVisible(groupes, b = new THREE.Box3()) {     // boîte (repère du monde) des maillages montrés, sans zones, halos ni ombres
+  b.makeEmpty(); const t = new THREE.Box3();
+  for (const g of groupes) {
+    if (!g) continue;
+    g.updateWorldMatrix(true, true);
+    g.traverse((m) => {
+      if (!m.isMesh || !m.visible || m.userData.zone || m.userData.haloDe) return;
+      const mats = Array.isArray(m.material) ? m.material : [m.material];
+      if (mats.every((q) => !q || q.isMeshBasicMaterial && q.transparent)) return;          // ombre de contact, nuage
+      if (!m.geometry.boundingBox) m.geometry.computeBoundingBox();
+      t.copy(m.geometry.boundingBox).applyMatrix4(m.matrixWorld); b.union(t);
+    });
+  }
+  return b;
+}
+function zoneBoite(parent, bMonde, marge, haut = 0) {      // zone de toucher : boîte (monde) élargie de « marge » po, + « haut » po vers le haut
+  parent.updateWorldMatrix(true, false);
+  const b = bMonde.clone().applyMatrix4(parent.matrixWorld.clone().invert()), c = new THREE.Vector3(), t = new THREE.Vector3();
+  b.expandByScalar(marge * K); b.max.y += haut * K; b.getCenter(c); b.getSize(t);
+  const m = new THREE.Mesh(new THREE.BoxGeometry(t.x, t.y, t.z), MAT_ZONE); m.position.copy(c); parent.add(m); return m;
+}
+function zoneCylindre(parent, r, h, z0 = 0) {
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r * K, r * K, h * K, 16), MAT_ZONE); m.position.y = (z0 + h / 2) * K; parent.add(m); return m;
+}
+function ajouterCible(c) {
+  if (c.zoneM) { const z = c.zoneM; z.userData.zone = c; z.userData.garder = true; z.userData.sansOmbre = true; z.castShadow = z.receiveShadow = false; }
+  CIBLES.push(c); CIBLE[c.cle] = c; return c;
+}
+// commandes (toile, bureaux...) : zone = toute la course (bas et haut), un peu plus haut pour le boîtier
+for (const cm of Object.values(CMD)) {
+  const groupes = () => [cm.etirer, ...cm.suivre.map((s) => s.g)], f0 = cm.f, b = new THREE.Box3();
+  cm.f = 1; poserCommande(cm); boiteVisible(groupes(), b); const bb = b.clone();
+  cm.f = cm.c.fraction_min; poserCommande(cm); bb.union(boiteVisible(groupes(), b));
+  cm.f = f0; poserCommande(cm);
+  const suivant = () => (cm.etat === "bas" ? cm.c.libelle_haut : cm.c.libelle_bas);
+  ajouterCible({ cle: "commande:" + cm.c.id, res: { commande: cm.c.id }, groupes, zoneM: bb.isEmpty() ? null : zoneBoite(cm.E.g.mob, bb, 2, 6),
+    invite: () => cm.c.invite || "Touche pour " + lcFr(suivant()), titre: suivant, actif: () => true });
+}
+// objets animés (robot) : zone ronde élargie ; un objet du lointain (traversier) ou "toucher": false ne se touche pas
+for (const A of ANIM.liste) {
+  A.touchable = !A.d.lointain && A.d.toucher !== false;
+  if (!A.touchable) continue;
+  ajouterCible({ cle: "anime:" + A.d.id, res: { anime: A.d.id }, groupes: () => [A.ext], zoneM: zoneCylindre(A.ext, Math.max(A.rayon + 4.5, 10), A.haut + 7),
+    invite: () => A.d.invite || "Touche : " + lcFr(A.d.nom), titre: () => A.d.nom + (A.pause ? " : repartir" : " : pause"), actif: () => true });
+}
+// séquences : la trappe (en haut) et le panier (en bas), zones élargies de 2½ po
+for (const Q of ANIM.seqs) {
+  const b = boiteVisible([Q.trappe]);
+  ajouterCible({ cle: "sequence:" + Q.d.id, res: { sequence: Q.d.id }, groupes: () => [Q.trappe], zoneM: b.isEmpty() ? null : zoneBoite(Q.trappe, b, 2.5),
+    invite: () => Q.d.invite || "Touche la trappe", titre: () => Q.d.libelle, actif: () => Q.t == null });
+  if (Q.panierG) {
+    const bp = boiteVisible([Q.panierG]);
+    ajouterCible({ cle: "panier:" + Q.d.id, res: { sequence: Q.d.id, panier: true }, groupes: () => [Q.panierG], zoneM: bp.isEmpty() ? null : zoneBoite(Q.panierG, bp, 2.5),
+      invite: () => Q.d.invite_panier || "Touche le panier", titre: () => Q.d.libelle, actif: () => Q.t == null });
+  }
+}
+// scénarios : sa porte (fermée, lui au repos : il vient cogner) et le personnage (pendant qu'il joue : il s'en va)
+for (const Q of SCEN.liste) {
+  if (Q.porte) {
+    const pt = PORTES[Q.porte];
+    ajouterCible({ cle: "porte:" + Q.porte, res: { porte: Q.porte }, groupes: () => pt.groupes.flatMap((g) => [g.int, g.fixe]),
+      pointGroupes: () => [pt.groupes[mode === "maquette" ? 1 : 0].int], invite: () => Q.d.invite || "Touche la porte",
+      titre: () => (Q.t == null && !Q.sortie && pt.etat === "fermee" ? Q.d.libelle : pt.etat === "fermee" ? "Ouvrir la porte" : "Fermer la porte"),
+      actif: () => Q.t == null && !Q.sortie && pt.etat === "fermee" });
+  }
+  const c = ajouterCible({ cle: "scenario:" + Q.d.id, res: { scenario: Q.d.id }, groupes: () => [Q.corps], zoneM: zoneCylindre(Q.racine, Math.max(Q.rayon + 5, 15), Q.haut + 4),
+    invite: () => "Touche-le pour qu'il s'en aille", titre: () => Q.d.nom + " : le renvoyer", actif: () => Q.t != null, sansInvite: true });
+  c.ignorer = () => Q.t == null;                      // il s'efface : le toucher passe au travers
+}
+function cibleDe(o) {                                 // résultat d'objetSous → cible (une porte ordinaire : cible créée au besoin)
+  if (!o) return null;
+  const cle = o.commande ? "commande:" + o.commande : o.panier ? "panier:" + o.sequence : o.sequence ? "sequence:" + o.sequence
+    : o.anime ? "anime:" + o.anime : o.scenario ? "scenario:" + o.scenario : o.porte ? "porte:" + o.porte : null;
+  if (!cle) return null;
+  if (!CIBLE[cle] && o.porte && PORTES[o.porte]) {
+    const pt = PORTES[o.porte];
+    CIBLE[cle] = { cle, res: { porte: o.porte }, groupes: () => pt.groupes.flatMap((g) => [g.int, g.fixe]), invite: () => "Touche la porte",
+      titre: () => (pt.etat === "fermee" ? "Ouvrir la porte" : "Fermer la porte"), actif: () => true, sansInvite: true };
+  }
+  return CIBLE[cle] || null;
+}
+// ---------- halo : une teinte ambrée posée sur l'objet (même géométrie, devant de très peu) et un liseré (coque à peine plus
+// grande, vue de dos) ; ajoutés au premier besoin, cachés le reste du temps (aucun coût). Survol : léger ; arrivée à un arrêt :
+// deux pulsations en 2 s ; toucher : un éclair de 0,7 s.
+const HALO_COUL = new THREE.Color("#ffb43c"), HALOS = new Set();
+function preparerHalo(c) {
+  if (c.halo) return c.halo;
+  const teinte = new THREE.MeshBasicMaterial({ color: HALO_COUL, transparent: true, opacity: 0, depthWrite: false, depthFunc: THREE.LessEqualDepth,
+    polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -4, fog: false, toneMapped: false });
+  const bord = new THREE.MeshBasicMaterial({ color: HALO_COUL, transparent: true, opacity: 0, depthWrite: false, side: THREE.BackSide, fog: false, toneMapped: false });
+  const src = [], ms = [], ech = new THREE.Vector3();
+  for (const g of c.groupes()) if (g) g.traverse((m) => { if (m.isMesh && !m.userData.zone && !m.userData.haloDe) src.push(m); });
+  for (const m of src) {
+    const mats = Array.isArray(m.material) ? m.material : [m.material];
+    if (mats.every((q) => !q || q.isMeshBasicMaterial || q.transparent && q.opacity < 0.5)) continue;   // ombre de contact, verre, nuage
+    const geo = m.geometry; if (!geo.boundingSphere) geo.computeBoundingSphere();
+    m.getWorldScale(ech); const r = Math.max(1e-4, geo.boundingSphere.radius * Math.max(ech.x, ech.y, ech.z));
+    const s = Math.min(1.25, 1 + 0.6 * K / r), ctr = geo.boundingSphere.center;
+    for (const [mat, sc] of [[teinte, 1], [bord, s]]) {
+      const h = new THREE.Mesh(geo, mat); h.userData.haloDe = true; h.userData.garder = true; h.userData.sansOmbre = true;
+      h.raycast = () => {}; h.castShadow = h.receiveShadow = false; h.visible = false; h.renderOrder = 6;
+      if (sc !== 1) { h.scale.setScalar(sc); h.position.copy(ctr).multiplyScalar(1 - sc); }
+      m.add(h); ms.push(h);
+    }
+  }
+  return (c.halo = { teinte, bord, ms, survol: false, pouls: 0, duree: 2000, n: 2, k: 0 });
+}
+let survolCible = null;
+function survoler(c) {
+  if (c === survolCible) return;
+  if (survolCible && survolCible.halo) survolCible.halo.survol = false;
+  survolCible = c;
+  if (c) { preparerHalo(c).survol = true; HALOS.add(c); }
+  sale = true;
+}
+function pulser(c, duree = 2000, n = 2) { const h = preparerHalo(c); h.pouls = performance.now(); h.duree = duree; h.n = n; HALOS.add(c); sale = true; }
+function majHalos(t) {                                // vrai : une image est à refaire (pulsation en cours, ou halo qui change)
+  let encore = false, change = false;
+  for (const c of HALOS) {
+    const h = c.halo; let k = Math.max(h.survol ? 0.55 : 0, h.tenu || 0);      // tenu : images de test
+    if (h.pouls) {
+      const u = (t - h.pouls) / h.duree;
+      if (u >= 1) h.pouls = 0; else { k = Math.max(k, Math.sin(Math.PI * h.n * u) ** 2 * (1 - 0.25 * u)); encore = true; }
+    }
+    if (Math.abs(k - h.k) > 1e-3) {
+      h.k = k; h.teinte.opacity = 0.34 * k; h.bord.opacity = 0.8 * k; change = true;
+      for (const m of h.ms) m.visible = k > 0.01;
+    }
+    if (!k && !h.pouls && !h.survol && !h.tenu) HALOS.delete(c);
+  }
+  return encore || change;
+}
+// ---------- repères sur écran tactile : en arrivant à un arrêt, les objets touchables visibles (le toucher au point visé les
+// atteindrait vraiment) à 15 pi au plus de l'œil pulsent 2 s, avec une petite étiquette qui s'efface seule (3,4 s)
+const INVITES = [], vInv = new THREE.Vector3(), bInv = new THREE.Box3();
+function pointCible(c, v) {
+  boiteVisible(c.pointGroupes ? c.pointGroupes() : c.groupes(), bInv);
+  return bInv.isEmpty() ? null : bInv.getCenter(v);
+}
+function ecranCible(c) {                              // {x, y, d (po depuis l'œil), vu (le toucher à ce point l'atteint)} ou null
+  if (!pointCible(c, vInv)) return null;
+  camera.updateMatrixWorld();
+  const d = vInv.distanceTo(camera.position) / K;
+  vInv.project(camera);
+  if (vInv.z > 1 || Math.abs(vInv.x) > 0.92 || Math.abs(vInv.y) > 0.9) return { d, vu: false };
+  const r = cnv.getBoundingClientRect(), x = r.left + (vInv.x + 1) / 2 * r.width, y = r.top + (1 - vInv.y) / 2 * r.height;
+  return { x, y, d, vu: cibleDe(objetSous(x, y)) === c };
+}
+function inviterToucher(max = 2, garder = false) {   // repères de l'arrêt : retourne les clés des cibles montrées (garder : tests)
+  const res = [];
+  for (const c of CIBLES) {
+    if (c.sansInvite || !c.actif()) continue;
+    const e = ecranCible(c);
+    if (e && e.vu && e.d <= 180) res.push({ c, d: e.d });
+  }
+  res.sort((a, b) => a.d - b.d);
+  for (const { c } of res.slice(0, max)) {
+    pulser(c);
+    const el = document.createElement("div"); el.className = "invite-touche"; el.textContent = c.invite(); el.style.visibility = "hidden";
+    $("etiquettes").append(el); const I = { c, el }; INVITES.push(I);
+    if (garder) { el.classList.add("tenue"); continue; }
+    setTimeout(() => { el.remove(); const k = INVITES.indexOf(I); if (k >= 0) INVITES.splice(k, 1); }, 3500);
+  }
+  majInvites();
+  return res.slice(0, max).map((r) => r.c.cle);
+}
+function majInvites() {
+  if (!INVITES.length) return;
+  for (const I of INVITES) {
+    if (!pointCible(I.c, vInv)) { I.el.style.visibility = "hidden"; continue; }
+    vInv.project(camera);
+    if (vInv.z > 1) { I.el.style.visibility = "hidden"; continue; }
+    const x = (vInv.x + 1) / 2 * innerWidth, y = Math.max(60, (1 - vInv.y) / 2 * innerHeight);
+    I.el.style.visibility = ""; I.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, calc(-100% - 26px))`;
+  }
+}
+let inviteArret = null;                               // arrêt atteint : les repères attendent la fin du vol
+const FORCER_INVITES = { oui: false };                // (tests) repères aussi sans écran tactile
+function verifierInviteArret() {
+  if (!inviteArret || vol || trajet || mode !== "visite") return;
+  if (performance.now() - inviteArret.t < 950) return;
+  const a = inviteArret; inviteArret = null;
+  if (a.i === arret && (tactile || FORCER_INVITES.oui)) inviterToucher();
+}
+// ---------- sons des objets (robot, chute) : même interrupteur que le visiteur (« Sons de la visite », panneau d'aide)
+function bipRobot(pause) {                             // deux notes : descendantes à la pause, montantes quand il repart
+  const A = audioScen(); if (!A) return;
+  const c = A.ctx, t = c.currentTime + 0.01;
+  (pause ? [1320, 880] : [880, 1320]).forEach((fq, i) => {
+    const o = c.createOscillator(), g = c.createGain(), t0 = t + i * 0.11; o.type = "sine"; o.frequency.value = fq;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.16, t0 + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.09);
+    o.connect(g).connect(A.sortie); o.start(t0); o.stop(t0 + 0.1);
+  });
+}
+function sonPouf() {                                  // le ballot de linge qui tombe dans le panier : bruit sourd et étouffé
+  const A = audioScen(); if (!A) return;
+  const c = A.ctx, t = c.currentTime + 0.01;
+  const n = c.createBufferSource(), lp = c.createBiquadFilter(), g = c.createGain(); n.buffer = A.bruit;
+  lp.type = "lowpass"; lp.frequency.value = 420; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + 0.006);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3); n.connect(lp).connect(g).connect(A.sortie); n.start(t, Math.random()); n.stop(t + 0.32);
+  const o = c.createOscillator(), go = c.createGain(); o.type = "sine"; o.frequency.setValueAtTime(95, t); o.frequency.exponentialRampToValueAtTime(48, t + 0.14);
+  go.gain.setValueAtTime(0.0001, t); go.gain.exponentialRampToValueAtTime(0.35, t + 0.005); go.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+  o.connect(go).connect(A.sortie); o.start(t); o.stop(t + 0.2);
+}
+// ---------- toucher (ou cliquer) un objet : vrai s'il a répondu (sinon on marche là où l'on a touché)
+function toucherObjet(cx, cy) {
+  const o = objetSous(cx, cy); if (!o) return false;
+  const c = cibleDe(o);
+  if (o.commande) commander(o.commande, "basculer");
+  else if (o.scenario) { arreterScenario(o.scenario, false, true); return true; }
+  else if (o.porte) {
+    const Q = SCEN.liste.find((q) => q.porte === o.porte);
+    if (Q && (Q.t != null || Q.sortie)) return true;                   // il joue : la porte est à lui
+    if (Q && PORTES[o.porte].etat === "fermee") lancerScenario(Q.d.id, "porte");   // porte fermée : quelqu'un cogne
+    else basculerPorte(o.porte);
+  } else if (o.sequence) { if (!declencherSequence(o.sequence, "objet")) return true; }
+  else if (o.anime) bipRobot(basculerAnime(o.anime));
+  if (c && c.actif) pulser(c, 700, 1);                // un éclair de halo : « c'est bien ça que vous avez touché »
+  masquerAstuce();
+  return true;
+}
+// ---------- l'invite passagère « Voir arriver au lavage » : après un envoi depuis l'étage de la trappe, « attente_voir » s
+function majInviteVoir() {
+  const el = document.getElementById("invite-voir"); if (!el) return;
+  const now = performance.now(); let Q = null;
+  for (const q of ANIM.seqs) if (q.voir && q.voirJusqua > now && mode === "visite" && !dehors() && joueur.etage === q.Et.i) Q = q;
+  if (!Q) { if (!el.hidden) el.hidden = true; return; }
+  if (el.hidden || el.dataset.jusqua !== String(Q.voirJusqua)) {
+    el.dataset.jusqua = String(Q.voirJusqua);
+    el.querySelector(".lib").textContent = Q.d.libelle_voir; el.title = Q.d.nom;
+    const d = el.querySelector(".duree"); d.style.animation = "none"; void d.offsetWidth; d.style.animation = "";
+    d.style.animationDuration = Math.max(0.5, (Q.voirJusqua - now) / 1000).toFixed(2) + "s";
+    el.onclick = () => voirArrivee(Q.d.id);
+    el.hidden = false;
+  }
+}
+// ---------- sons : rien avant le premier geste (règle des navigateurs) ; interrupteur dans le panneau d'aide
+const SONS = SCEN.liste.length > 0 || ANIM.seqs.length > 0 || ANIM.liste.some((A) => A.touchable);
+if (SONS) {
+  try { if (localStorage.getItem("visite3d-sons") === "0") SCEN.muet = true; } catch (_) {}
+  const geste = () => {
+    SCEN.geste = true; audioScen();
+    if (SCEN.liste.length && !SCEN.voixPrete && window.speechSynthesis) {   // iOS : la première parole doit venir d'un geste
+      SCEN.voixPrete = true; try { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch (_) {}
+    }
+    if (SCEN.audio && SCEN.audio.ctx.state === "running") for (const k of ["pointerup", "touchend", "keydown", "click"]) removeEventListener(k, geste, true);
+  };
+  for (const k of ["pointerup", "touchend", "keydown", "click"]) addEventListener(k, geste, true);
+  if (window.speechSynthesis) { try { speechSynthesis.addEventListener("voiceschanged", () => { SCEN.voix = null; }); } catch (_) {} }
+  const b = $("t-sons"), maj = () => b.setAttribute("aria-checked", String(!SCEN.muet));
+  b.onclick = () => {
+    SCEN.muet = !SCEN.muet; if (SCEN.muet) couperSonsScen(); maj();
+    try { localStorage.setItem("visite3d-sons", SCEN.muet ? "0" : "1"); } catch (_) {}
+  };
+  maj(); $("aide-sons").hidden = false;
+}
+// ---------- panneau d'aide : ce qu'on peut toucher
+{
+  const ul = $("aide-touche-liste"), item = (nom, txt) => { const li = document.createElement("li"); li.append(Object.assign(document.createElement("b"), { textContent: nom }), " : " + txt); ul.append(li); };
+  for (const cm of Object.values(CMD)) {
+    const [a, b] = cm.c.depart === "bas" ? [cm.c.libelle_haut, cm.c.libelle_bas] : [cm.c.libelle_bas, cm.c.libelle_haut];
+    item(cm.c.nom, `un toucher pour ${lcFr(a)}, un autre pour ${lcFr(b)}.`);
+  }
+  for (const A of ANIM.liste) item(A.d.nom, A.touchable ? "il fait sa tournée tout seul ; touchez-le, il s'arrête ; touchez-le encore, il repart." : "il avance tout seul (rien à toucher).");
+  for (const Q of ANIM.seqs) item(Q.d.nom, "touchez la trappe" + (Q.voir ? ` ; après l'envoi, « ${Q.d.libelle_voir} » s'affiche un moment pour aller voir l'arrivée` : "")
+    + (Q.panierG ? " ; d'en bas, touchez le panier pour en envoyer un" : "") + ".");
+  for (const Q of SCEN.liste) {
+    const pt = Q.porte && PORTES[Q.porte], dc = Q.d.declencheur;
+    item(Q.d.nom, (pt ? `touchez ${pt.p.dehors ? "la porte d'entrée (dedans ou dehors)" : "sa porte"} quand elle est fermée : ${lcFr(Q.d.libelle)}. ` : "")
+      + (dc && dc.auto ? `Il vient aussi tout seul quand on s'approche (au plus une fois aux ${Math.max(1, Math.round(dc.attente / 60))} minutes). ` : "")
+      + "Touchez-le pendant qu'il joue : il s'en va.");
+  }
+  if (ul.children.length) $("aide-touche").hidden = false;
+  if (SCEN.liste.some((Q) => Q.porte && PORTES[Q.porte].p.dehors))
+    $("aide-portes").append(" La porte d'entrée fermée, elle, fait venir le visiteur (on entre et on sort en marchant : elle s'ouvre toute seule).");
 }
 if (Object.keys(PORTES).length) $("aide-portes").hidden = false;
 if (MULTI) { $("aide-etages").hidden = false; document.body.classList.add("multi"); $("plan-nom").hidden = false; }
@@ -3510,6 +3759,7 @@ function majEtiquettes() {
 const astuce = $("astuce");
 astuce.textContent = (tactile ? "Touchez le plancher pour y marcher · touchez une porte pour l'ouvrir · glissez pour regarder · ◀ ▶ visite guidée"
                               : "Cliquez sur le plancher pour y marcher · cliquez une porte pour l'ouvrir · glissez pour regarder · W A S D ou flèches · ◀ ▶ visite guidée")
+                     + (CIBLES.length ? (tactile ? " · touchez les objets pour qu'ils bougent (aide : ?)" : " · cliquez les objets pour qu'ils bougent (aide : ?)") : "")
                      + (MULTI ? " · ▲ ▼ pour changer d'étage" : "");
 if (ECHECS.length) astuce.textContent = `${ECHECS.length} modèle(s) 3D n'ont pas pu se charger (${ECHECS.join(", ")}). Rechargez la page.`;
 let astuceVue = false;
@@ -3588,6 +3838,8 @@ function boucle(t) {
   if (!vol) { const dz = joueur.z - joueur.zVue; joueur.zVue = Math.abs(dz) < 0.02 ? joueur.z : joueur.zVue + dz * Math.min(1, dt * 12); }
   if (MULTI) { const s = surEscalier(); if ((s >= 0) !== (escPrec >= 0)) { escPrec = s; majBoutonsEtage(); } }
   const tt = performance.now();
+  verifierInviteArret();                               // arrivé à un arrêt : repères des objets à toucher (écran tactile)
+  if (HALOS.size && majHalos(tt)) sale = true;         // halo : survol, pulsation, éclair du toucher
   if (animerCommandes(tt)) sale = true;
   if (animerPortes(tt)) sale = true;
   placerCamera(); camera.updateMatrixWorld();
@@ -3611,7 +3863,7 @@ function boucle(t) {
   sale = false; nImages++;
   renderer.info.reset();
   if (POST) POST.rendre(QUALITES[qualite]); else renderer.render(scene, camera);
-  dessinerPlan(); majIci(); majEtiquettes();
+  dessinerPlan(); majIci(); majEtiquettes(); majInvites();
 }
 // ---------- contexte WebGL perdu (l'appareil reprend la mémoire graphique) : message clair, reprise automatique (three.js
 // recrée son état ; on redécode les images libérées, puis ombres et reflets sont refaits), bouton Recharger si ça dure
@@ -3664,11 +3916,16 @@ Object.assign(window, { ANIM, figerAnimations: (v = true) => { ANIM.fige = !!v; 
   poserHorloge: (id, h) => { const A = ANIMES[id]; if (!A) return null; A.h = h; poserAnime(A, 0); ANIM.tImage = 0; sale = true;
     return { x: A.x, y: A.y, cap: A.ext.rotation.y * 180 / Math.PI, periode: A.T }; },
   basculerAnime, declencherSequence, voirArrivee,
+  // toucher (tests) : cibles() = [{cle, x, y, d, vu, actif}] à l'écran (vu : un toucher à (x, y) l'atteint) ; inviterToucher()
+  // montre les repères de l'arrêt (sans écran tactile : forcerInvites(true) pour ceux de la visite guidée) ; toucherObjet(x, y)
+  cibles: () => CIBLES.map((c) => ({ cle: c.cle, actif: c.actif(), ...(ecranCible(c) || {}) })), inviterToucher, toucherObjet,
+  forcerInvites: (v = true) => { FORCER_INVITES.oui = !!v; },
+  tenirHalo: (cle, k = 0.8) => { const c = CIBLE[cle]; if (!c) return false; preparerHalo(c).tenu = k; HALOS.add(c); sale = true; return true; },
   fixerSequence: (id, t) => { const Q = SEQ[id]; if (!Q) return null; if (Q.t == null) lancerSequence(Q, 0); Q.rejeu = false;
     if (t >= Q.Tm.fin) { Q.t = Q.Tm.fin; poserSequence(Q); Q.t = null; } else { Q.t = t; poserSequence(Q); }
     sale = true; majCommandes(); return etatSequence(Q.d.id); },
   etatSequence });
-// --- scénarios (tests) : lancerScenario(id[, "bouton" | "auto" | "arret"]), arreterScenario(id), fixerScenario(id, s) (horloge
+// --- scénarios (tests) : lancerScenario(id[, "porte" | "bouton" | "auto" | "arret"]), arreterScenario(id[, fini, fondu]), fixerScenario(id, s) (horloge
 // figée, personnage, bulle et portes posés à s secondes du début du plan ; lancé au besoin), etatScenario(id)
 Object.assign(window, { SCEN, lancerScenario, arreterScenario,
   fixerScenario: (id, t) => { const Q = SCENS[id]; if (!Q) return null; SCEN.fige = true; if (Q.t == null) lancerScenario(id, "test");
@@ -3686,7 +3943,7 @@ function etatScenario(id) {
 function etatSequence(id) {
   const Q = SEQ[id]; if (!Q) return null;
   let p = null; if (Q.bal && Q.bal.parent) { const E = ETAGES[Q.bal.parent.userData.etage ?? 0]; p = [Q.bal.position.x / K, -Q.bal.position.z / K, E.z + Q.bal.position.y / K]; }
-  return { t: Q.t, trappe: Q.f, pile: Q.pile.length, ballot: p, visible: !!(Q.bal && Q.bal.visible), voir: !!(Q.boutonVoir && !Q.boutonVoir.hidden),
+  return { t: Q.t, trappe: Q.f, pile: Q.pile.length, ballot: p, visible: !!(Q.bal && Q.bal.visible), voir: !$("invite-voir").hidden && $("invite-voir").dataset.jusqua === String(Q.voirJusqua),
     temps: Q.Tm, sortiePlafond: Q.tVisible, etageTrappe: Q.Et.id, etagePanier: Q.Ep.id };
 }
 // extérieur : EXT (zone, grille du lot), hauteurExt(x, y), libreExt(x, y), trajetVers(x, y, zone), CULL (découpe par les

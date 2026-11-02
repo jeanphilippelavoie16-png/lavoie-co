@@ -8,6 +8,9 @@ Facultatif : SCENE["animes"] d'un étage (objets qui se promènent en boucle : a
 SCENE["sequences"] de la scène principale (séquence déclenchée, d'un étage à l'autre : chute à linge ; voir sequences()).
 Facultatif : SCENE["scenarios"] de la scène principale (personnage articulé qui marche, cogne, parle, fait des sons et ouvre
 les portes : visiteur qui cogne à la porte ; voir scenarios()).
+Aucun bouton d'action dans la visite : on TOUCHE l'objet (toile, bureau, robot, trappe ou panier, porte d'entrée, visiteur) ;
+"invite" donne l'étiquette du repère sur tablette (« Touche le robot »). Les clés de boutons d'avant ("bouton" d'un objet
+animé, "libelle_arret" et "libelle_son" d'un scénario) sont encore acceptées mais sans effet.
 
 Portes : chaque porte battante ou coulissante devient un objet qu'on ouvre et ferme en le touchant (voir battant()) ; état de
 départ = celui dessiné (« fermee » ou ouverte à 90°). Un objet du mobilier qui porte "porte": id d'ouverture pivote avec elle
@@ -894,7 +897,9 @@ def marche_escalier(e, etage):
 
 def commandes(S):
     """Commandes interactives (opt-in) : SCENE["commandes"] = [{"id", "nom", "libelle_bas", "libelle_haut", "pivot_z",
-    "fraction_min", "depart", "duree"}]. Un objet du mobilier porte "commande": id et "anim": "etirer" (défaut, mise à
+    "fraction_min", "depart", "duree", "invite"}]. Dans la visite, on touche l'objet (ou l'endroit de sa course) pour le monter
+    ou le descendre ; libelle_bas / libelle_haut : texte de l'action (survol, aide, et repère « Touche pour descendre la
+    toile » si pas d'"invite"). Un objet du mobilier porte "commande": id et "anim": "etirer" (défaut, mise à
     l'échelle verticale autour de pivot_z) ou "suivre" (translation, suit le bas de la partie étirée) ; un arrêt de visite
     peut porter "commandes": {id: "haut" | "bas"}. Les données décrivent l'état « bas » (ex. toile déroulée).
     Retourne la liste complétée (valeurs par défaut) ; erreur explicite si les données ne respectent pas ce contrat."""
@@ -921,6 +926,8 @@ def commandes(S):
         duree = c.get("duree", 3.0)
         if not isinstance(duree, (int, float)) or duree < 0:
             err(f'commande "{cid}" : "duree" doit être un nombre de secondes >= 0, reçu {duree!r}')
+        if "invite" in c and not (isinstance(c["invite"], str) and c["invite"]):
+            err(f'commande "{cid}" : "invite" (étiquette du repère sur tablette, ex. « Touche le bureau ») doit être un texte')
         ids.add(cid)
         out.append(dict(c, nom=c.get("nom") or cid, libelle_bas=c.get("libelle_bas") or "Descendre",
                         libelle_haut=c.get("libelle_haut") or "Monter", pivot_z=float(c["pivot_z"]),
@@ -999,14 +1006,16 @@ def _objets_mobiles(liste, ou, err):
 
 def animes(S, bornes=None):
     """Objets animés en boucle (opt-in, aspirateur robot...) : SCENE["animes"] d'une scène d'ÉTAGE (repère de son plancher) =
-    [{"id", "nom", "objets", "trajet", "vitesse", "rotation", "z", "pauses", "depart", "ombre", "bouton"}].
+    [{"id", "nom", "objets", "trajet", "vitesse", "rotation", "z", "pauses", "depart", "ombre", "toucher", "invite"}].
     - "objets" : comme le mobilier, dans un repère LOCAL (origine au centre de l'objet, au sol ; +x = l'avant) ;
     - "trajet" : [[x, y], ...] (pouces, repère du plancher), parcouru en boucle (du dernier point on revient au premier) ;
       l'objet avance en ligne droite à "vitesse" (po/s), tourne sur place à chaque point à "rotation" (°/s, défaut 90)
       pour faire face au segment suivant ; "pauses" : [{"point": indice dans trajet, "duree": s}] (ex. base de recharge) ;
     - "z" : hauteur du dessous de l'objet au-dessus du plancher (défaut 0) ; "depart" : s déjà écoulées au chargement ;
-    - "ombre" (défaut True) : ombre de contact ronde qui suit l'objet ; "bouton" (défaut True) : bouton pause / reprendre
-      sur son étage, ou {"libelle_pause", "libelle_reprendre"}, ou False.
+    - "ombre" (défaut True) : ombre de contact ronde qui suit l'objet ;
+    - on le TOUCHE pour l'arrêter ou le faire repartir (zone de toucher élargie autour de lui) : "toucher" (défaut True ;
+      False : rien à toucher) ; "invite" : étiquette du repère sur tablette (défaut « Touche : <nom> ») ;
+    - "bouton" (ancien bouton pause / reprendre) : accepté, sans effet.
     Retourne la liste complétée ; erreur explicite si les données ne respectent pas ce contrat. Sans "animes" : []."""
     liste = S.get("animes") or []
 
@@ -1022,7 +1031,8 @@ def animes(S, bornes=None):
         if aid in ids:
             err(f'id "{aid}" en double')
         ids.add(aid)
-        inconnues = set(a) - {"id", "nom", "objets", "trajet", "vitesse", "rotation", "z", "pauses", "depart", "ombre", "bouton", "note"}
+        inconnues = set(a) - {"id", "nom", "objets", "trajet", "vitesse", "rotation", "z", "pauses", "depart", "ombre", "bouton",
+                              "toucher", "invite", "note"}
         if inconnues:
             err(f'"{aid}" : clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
         objets = _objets_mobiles(a.get("objets"), f'"{aid}"', err)
@@ -1049,29 +1059,34 @@ def animes(S, bornes=None):
         if not isinstance(pauses, list) or not all(isinstance(p, dict) and isinstance(p.get("point"), int) and not isinstance(p.get("point"), bool)
                                                     and 0 <= p["point"] < len(tr) and _num(p.get("duree")) and p["duree"] > 0 for p in pauses):
             err(f'"{aid}" : "pauses" doit être une liste de {{"point": indice du trajet (0..{len(tr) - 1}), "duree": s > 0}}, reçu {pauses!r}')
-        bt = a.get("bouton", True)
-        if not isinstance(bt, (bool, dict)):
-            err(f'"{aid}" : "bouton" doit valoir True, False ou {{"libelle_pause", "libelle_reprendre"}}')
+        if not isinstance(a.get("bouton", True), (bool, dict)):            # ancien bouton : accepté, sans effet
+            err(f'"{aid}" : "bouton" (sans effet : on touche l\'objet) doit valoir True, False ou {{"libelle_pause", "libelle_reprendre"}}')
+        if not isinstance(a.get("toucher", True), bool):
+            err(f'"{aid}" : "toucher" vaut True (on le touche pour l\'arrêter ou le faire repartir) ou False')
+        if "invite" in a and not (isinstance(a["invite"], str) and a["invite"]):
+            err(f'"{aid}" : "invite" (étiquette du repère sur tablette, ex. « Touche le robot ») doit être un texte')
         nom = a.get("nom") or aid
-        if bt is not False:
-            bt = bt if isinstance(bt, dict) else {}
-            bt = {"libelle_pause": bt.get("libelle_pause") or "Mettre en pause", "libelle_reprendre": bt.get("libelle_reprendre") or "Repartir"}
-        out.append({"id": aid, "nom": nom, "objets": objets, "trajet": [[float(p[0]), float(p[1])] for p in tr], "vitesse": float(v),
-                    "rotation": float(rot), "z": float(z), "pauses": [{"point": p["point"], "duree": float(p["duree"])} for p in pauses],
-                    "depart": float(dep), "ombre": a.get("ombre", True) is not False, "bouton": bt})
+        r = {"id": aid, "nom": nom, "objets": objets, "trajet": [[float(p[0]), float(p[1])] for p in tr], "vitesse": float(v),
+             "rotation": float(rot), "z": float(z), "pauses": [{"point": p["point"], "duree": float(p["duree"])} for p in pauses],
+             "depart": float(dep), "ombre": a.get("ombre", True) is not False, "toucher": a.get("toucher", True)}
+        if a.get("invite"):
+            r["invite"] = a["invite"]
+        out.append(r)
     return out
 
 
 def sequences(S, etages=None):
     """Séquences interactives (opt-in, chute à linge...) : SCENE["sequences"] de la scène PRINCIPALE (celle qui porte
     "etages" ; un projet à un étage : sa SCENE) ; tout en pouces, z ABSOLU de la maison (plancher du sous-sol = 0, RDC = sa
-    hauteur d'étage). Un déclencheur (toucher la trappe ou le bouton "libelle" sur l'étage de la trappe ET sur celui du
-    panier) joue : la trappe pivote de "angle" degrés autour de sa "charniere" [[x, y, z], [x, y, z]] (règle de la main
+    hauteur d'étage). On TOUCHE la trappe (ou, en bas, un objet du mobilier qui porte "sequence": id : le panier) et elle
+    joue : la trappe pivote de "angle" degrés autour de sa "charniere" [[x, y, z], [x, y, z]] (règle de la main
     droite autour de l'axe point 1 → point 2) en "duree" s ; le ballot apparaît au point 1 du "chemin", attend la trappe
     ouverte, puis suit le chemin (pente : glissade avec "frottement" ; verticale : chute libre, g = 386 po/s² ; à plat :
     "vitesse_depart" po/s) jusqu'au dernier point, où il se pose dans le panier (décalé de "pile"[k] pour le k-ième ballot ;
     pile pleine : on vide au lancer suivant) ; la trappe se referme "ferme_apres" s après que le ballot a passé le point 2.
-    Depuis l'étage de la trappe, le bouton "libelle_voir" amène à "vue_arrivee" et rejoue l'arrivée. Contrat complet :
+    Depuis l'étage de la trappe, une invite passagère "libelle_voir" ("attente_voir" s après l'envoi, défaut 10) amène à
+    "vue_arrivee" et rejoue l'arrivée. "invite" / "invite_panier" : étiquettes des repères sur tablette (défaut « Touche la
+    trappe » / « Touche le panier ») ; "libelle" : nom de l'action (survol de la souris). Contrat complet :
     renovation/README.md. etages : [(id, z, H)] des étages (maquette à plusieurs étages), sinon None.
     Retourne la liste complétée ; erreur explicite si les données ne respectent pas ce contrat. Sans "sequences" : []."""
     liste = S.get("sequences") or []
@@ -1110,7 +1125,10 @@ def sequences(S, etages=None):
             err(f'id "{sid}" en double')
         ids.add(sid)
         inconnues = set(q) - {"id", "nom", "libelle", "libelle_voir", "trappe", "ballot", "panier", "vue_depart", "vue_arrivee",
-                              "attente_voir", "note"}
+                              "attente_voir", "invite", "invite_panier", "note"}
+        for cle in ("invite", "invite_panier"):
+            if cle in q and not (isinstance(q[cle], str) and q[cle]):
+                err(f'"{sid}" : "{cle}" (étiquette du repère sur tablette) doit être un texte')
         if inconnues:
             err(f'"{sid}" : clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
         t = q.get("trappe")
@@ -1150,7 +1168,7 @@ def sequences(S, etages=None):
         va, vd = vue(q.get("vue_arrivee"), "vue_arrivee", sid), vue(q.get("vue_depart"), "vue_depart", sid)
         if etages and ft != fp and not va:
             err(f'"{sid}" : "vue_arrivee" est obligatoire quand la trappe ({ft}) et le panier ({fp}) sont sur deux étages')
-        att = q.get("attente_voir", 12)
+        att = q.get("attente_voir", 10)
         if not _num(att) or att < 0:
             err(f'"{sid}" : "attente_voir" doit être un nombre de secondes >= 0')
         nom = q.get("nom") or sid
@@ -1160,6 +1178,9 @@ def sequences(S, etages=None):
              "ballot": {"objets": bob, "chemin": [[float(c) for c in p] for p in chemin], "vitesse_depart": float(v0),
                         "frottement": float(fr), "culbute": float(cu)},
              "panier": {"pile": [[float(c) for c in p] for p in pile]}, "attente_voir": float(att)}
+        for cle in ("invite", "invite_panier"):
+            if q.get(cle):
+                r[cle] = q[cle]
         if va:
             r["vue_arrivee"] = va
         if vd:
@@ -1167,6 +1188,15 @@ def sequences(S, etages=None):
         if etages:
             r["etage_trappe"], r["etage_panier"] = ft, fp
         out.append(r)
+    # objets du mobilier qui déclenchent une séquence quand on les touche (panier du bas) : "sequence": id connu
+    for E in [S] + list(S.get("etages") or []):
+        for o in E.get("mobilier") or []:
+            if "sequence" not in o:
+                continue
+            if o.get("commande") or o.get("porte"):
+                err(f'objet du mobilier avec "sequence" et "commande" ou "porte" : {o}')
+            if o["sequence"] not in ids:
+                print(f'  objet du mobilier lié à la séquence inconnue "{o["sequence"]}" : objet fixe, sans effet au toucher')
     return out
 
 
@@ -1239,7 +1269,7 @@ def scenarios(S, etages=None, portes=None, visites=None):
             err(f'id "{sid}" en double')
         ids.add(sid)
         inconnues = set(q) - {"id", "nom", "libelle", "libelle_arret", "libelle_son", "personnage", "etapes", "depart",
-                              "depart_bouton", "declencheur", "vue", "volume", "note"}
+                              "depart_bouton", "declencheur", "vue", "volume", "porte", "invite", "note"}
         if inconnues:
             err(f'"{sid}" : clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
         # personnage : objets du corps (fixes) et parties articulées (pivot, parent déclaré avant, poses)
@@ -1344,11 +1374,24 @@ def scenarios(S, etages=None, portes=None, visites=None):
             et_out.append({c: e[c] for c in e if c != "note"})
         db = q.get("depart_bouton", 0)
         if not isinstance(db, int) or isinstance(db, bool) or not 0 <= db < len(etapes):
-            err(f'"{sid}" : "depart_bouton" = indice de l\'étape où le bouton fait commencer (0 à {len(etapes) - 1})')
+            err(f'"{sid}" : "depart_bouton" = indice de l\'étape où il commence quand on touche sa porte (0 à {len(etapes) - 1})')
+        # on touche sa porte (fermée) pour le faire venir : "porte", sinon la première que ses étapes ouvrent ; "libelle_arret"
+        # et "libelle_son" (anciens boutons) : acceptés, sans effet (on le touche pour qu'il s'en aille ; « Sons de la visite »
+        # est dans l'aide)
+        pq = q.get("porte")
+        if pq is not None and (not isinstance(pq, str) or (portes is not None and pq not in portes)):
+            err(f'"{sid}" : "porte" = id d\'une porte de la maquette (ouv-...) qu\'on touche pour le faire venir, reçu {pq!r}')
+        if pq is None:
+            pq = next((e["ouvrir"] for e in et_out if "ouvrir" in e), None)
+        if "invite" in q and not (isinstance(q["invite"], str) and q["invite"]):
+            err(f'"{sid}" : "invite" (étiquette du repère sur tablette, ex. « Touche la porte ») doit être un texte')
         r = {"id": sid, "nom": q.get("nom") or sid, "libelle": q.get("libelle") or q.get("nom") or sid,
-             "libelle_arret": q.get("libelle_arret") or "Arrêter", "libelle_son": q.get("libelle_son") or "Son",
              "personnage": perso, "etapes": et_out, "depart": {k: dep[k] for k in ("x", "y", "cap", "etage") if k in dep},
              "depart_bouton": db}
+        if pq:
+            r["porte"] = pq
+        if q.get("invite"):
+            r["invite"] = q["invite"]
         dc = q.get("declencheur")
         if dc is not None:
             if not isinstance(dc, dict) or not all(_num(dc.get(k)) for k in ("x", "y", "z")) or set(dc) - {"x", "y", "z", "rayon", "attente", "auto", "hauteur"}:
@@ -1838,7 +1881,8 @@ def exterieur_animes(liste, etages=()):
         if a["id"] in deja:
             err(f'id "{a["id"]}" déjà employé par un objet animé d\'un étage')
         a["lointain"], a["cadence"] = loin, cad
-        if loin:
+        if loin:                                 # au loin (traversier) : il avance tout seul, rien à toucher
+            a["toucher"] = False
             a["objets"] = _objets_lointains(objets, f'"{a["id"]}"', err, local=True)
             for k, p in enumerate(a["trajet"]):
                 if max(abs(p[0]), abs(p[1])) > LOINTAIN_MAX:

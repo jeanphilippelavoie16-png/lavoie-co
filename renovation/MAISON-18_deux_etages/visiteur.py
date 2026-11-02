@@ -12,7 +12,8 @@ Le moteur joue le scénario (contrat : renovation/README.md, section « Scénari
 trottoir au perron (chemin et sol lus dans la visite : perron, marches ou futur balcon), cogne trois coups, crie, la porte
 s'ouvre, il entre dans l'entrée, recrie, lâche un gros pet (son synthétisé, bulle « PRRRT ! », petit nuage), attend, ressort
 et la porte se referme. Il vient tout seul quand on s'approche de l'entrée (dedans ou dehors, 13 pi ; au plus une fois aux
-2 minutes), avec le bouton « Quelqu'un cogne » ou à l'arrêt « Le visiteur à la porte » (section Extérieur).
+2 minutes), quand on TOUCHE la porte d'entrée fermée (dedans ou dehors ; repère « Touche la porte » sur tablette) ou à
+l'arrêt « Le visiteur à la porte » (section Extérieur). On le touche pendant qu'il joue : il s'efface (plus de boutons).
 
 Appelé par scene_3d.py (liste FINALE) : appliquer_scene_finale(SCENE), SCENE à deux étages avec SCENE["exterieur"].
 Pouces, repère de la maison (x le long de la façade, y vers l'arrière, z depuis le plancher du sous-sol ; RDC = 105).
@@ -201,16 +202,16 @@ TROTTOIR = [228, -462]
 PIED_MARCHES = [200, -104]
 
 SCENARIO = {
-    "id": "visiteur", "nom": "Le visiteur", "libelle": "Quelqu'un cogne", "libelle_arret": "Arrêter le visiteur",
-    "libelle_son": "Son du visiteur", "volume": 0.5,
+    "id": "visiteur", "nom": "Le visiteur", "libelle": "Quelqu'un cogne", "volume": 0.5,
+    "porte": PORTE, "invite": "Touche la porte",   # toucher la porte d'entrée fermée le fait venir ; « Sons de la visite » : aide
     "personnage": PERSONNAGE,
     "depart": {"x": TROTTOIR[0], "y": TROTTOIR[1], "cap": 95, "etage": "EXT"},
-    "depart_bouton": 1,            # le bouton et l'arrêt le font partir du pied des marches (il cogne 3 s plus tard)
+    "depart_bouton": 1,            # la porte touchée et l'arrêt le font partir du pied des marches (il cogne 3 s plus tard)
     "declencheur": {"x": 199, "y": 0, "z": Z_RDC, "rayon": 156, "hauteur": 60, "attente": 120, "auto": True},
     "vue": {"x": 80, "y": -36, "cap": 10, "etage": "EXT", "tangage": 8},
     "etapes": [
         {"marcher": [PIED_MARCHES], "vitesse": 40},                                       # 0 : monte le terrain du trottoir
-        {"marcher": [COGNE], "vitesse": 32},                                              # 1 : monte les marches (bouton : ici)
+        {"marcher": [COGNE], "vitesse": 32},                                              # 1 : monte les marches (porte touchée : ici)
         {"tourner": 90},
         {"cogner": 3, "intervalle": 0.42, "bulle": "TOC ! TOC ! TOC !", "bulle_style": "son"},
         {"attendre": 0.6},
