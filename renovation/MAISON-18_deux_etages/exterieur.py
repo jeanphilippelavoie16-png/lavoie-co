@@ -310,7 +310,46 @@ def _cote_droit(x, za):                    # au-delà de l'asphalte (x > 552) : 
     return za + 2 * min(1.0, max(0.0, (x - 552) / 8)) + 3 * min(1.0, max(0.0, (x - 560) / 12))
 
 
-def _sol_avant(x, y):                      # devant la façade (y < 0)
+# --- avant : escalier du balcon avant (photos du client, 2026-11-02 ; balcon_avant.py dessine le balcon et l'escalier). Le balcon
+# remplace le perron ; son escalier part du côté droit du balcon (x 232, à 8 à 12 pi de la façade) et descend vers l'allée en 15
+# contremarches jusqu'à l'asphalte (photos 13 à 15). Le relief de la vidéo DAG est creusé (jamais remonté) : talus raide qui suit
+# l'escalier, puis asphalte élargi devant la partie droite de la façade, du pied de l'escalier jusqu'à l'allée et à la rue. Le
+# reste de l'avant (plateau sous le balcon, talus en S, palier bas près de la maison) reste celui de la vidéo DAG.
+Z_BALCON = 103.5                           # dessus du balcon avant : 1½ po sous le seuil de la porte avant (105)
+ESC_AV = (232.0, -144.0, 386.0, -96.0)     # escalier avant : x du haut (rive du balcon), y côté rue, x du pied, y côté maison
+ESC_AV_N = 15                              # contremarches (14 girons de 11 po), dernière marche sur une dalle au pied
+AIRE_AV = (380.0, -480.0, 456.0, -80.0)    # asphalte élargi devant la partie droite de la façade (rejoint l'allée à x = 456)
+CREUX_PENTE = 0.62                         # pente des talus autour du creux (≈ 32°, talus raide des photos)
+LIGNES_AVANT = ([ESC_AV[0], AIRE_AV[0], ESC_AV[2]], [AIRE_AV[3], ESC_AV[1] - 8, ESC_AV[1], ESC_AV[3], ESC_AV[3] + 8])
+
+
+def _fond_escalier(x):
+    """Plafond du terrain sous l'escalier avant : 12 po sous la ligne des nez de marche, jamais sous l'asphalte."""
+    x0, ya, x1, yb = ESC_AV
+    za = z_allee((ya + yb) / 2)
+    t = min(max((x - x0) / (x1 - x0), 0.0), 1.0)
+    return max(za, Z_BALCON + (za - Z_BALCON) * t - 12)
+
+
+def _creux_avant(x, y):
+    """Plafond du terrain près de l'escalier avant et de l'asphalte élargi : fond (asphalte ou sous l'escalier) au point le plus
+    proche de la bande de l'escalier ou de l'aire d'asphalte, plus CREUX_PENTE fois la distance (talus tout autour)."""
+    x0, ya, x1, yb = ESC_AV
+    zones = [((x0, ya - 8, AIRE_AV[0], yb + 8), lambda px, py: _fond_escalier(px)),
+             ((AIRE_AV[0], AIRE_AV[1], AIRE_AV[2], AIRE_AV[3]), lambda px, py: z_allee(py))]
+    out = None
+    for (a, b, c, d), fond in zones:
+        px, py = min(max(x, a), c), min(max(y, b), d)
+        z = fond(px, py) + CREUX_PENTE * math.hypot(x - px, y - py)
+        out = z if out is None else min(out, z)
+    return out
+
+
+def _sol_avant(x, y):                      # devant la façade (y < 0) : relief de la vidéo DAG, creusé à l'escalier avant
+    return min(_sol_avant_dag(x, y), _creux_avant(x, y))
+
+
+def _sol_avant_dag(x, y):                  # devant la façade (y < 0), vidéo DAG
     t = _lisse((-60 - y) / 420)            # 0 près de la façade, 1 à la rue
     za = z_allee(max(y, -480))
     haut = PLATEAU + (PLATEAU_RUE - PLATEAU) * t
@@ -419,6 +458,7 @@ def _relief():
     for (a, b, c, d) in mg:
         ex += [a, c]
         ey += [b, d]
+    ex, ey = ex + LIGNES_AVANT[0], ey + LIGNES_AVANT[1]      # escalier du balcon avant, asphalte élargi
     xs = _lignes(ex, -260.0, 720.0, (-60, 580))
     ys = _lignes(ey, -620.0, 1160.0, (-120, 560))
     return {"xs": xs, "ys": ys, "z": [[round(_sol(x, y), 2) for x in xs] for y in ys]}, mg
@@ -1196,6 +1236,7 @@ def _cl_obstacles():
 def _revetements():
     out = [{"nom": "Allée d'asphalte", "mat": "ext-asphalte",
             "pts": [[456, -480], [552, -480], [552, 380], [505, 380], [505, PIERRES_Y0], [457, PIERRES_Y0], [457, 380], [456, 380]]},
+           {"nom": "Asphalte devant l'escalier avant", "mat": "ext-asphalte", "pts": rect(*AIRE_AV)},
            {"nom": "Gravier sous l'escalier du deck", "mat": "ext-gravier", "pts": rect(*GRAVIER_ESC)},
            {"nom": "Gravier autour de la piscine", "mat": "ext-gravier", "pts": cercle(PISC[0], PISC[1], GRAVIER_R, 40)}]
     out += [{"nom": f"Pas japonais {i + 1}", "mat": "ext-dalle", "pts": [list(p) for p in d]} for i, d in enumerate(DALLES)]

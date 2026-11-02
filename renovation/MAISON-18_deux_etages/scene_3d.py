@@ -55,3 +55,6 @@ else:
 # étage, repère de son plancher), pas d'extérieur.
 if os.path.isfile(os.path.join(ICI, "exterieur.py")) and "etages" in SCENE:
     SCENE["exterieur"] = _charger("m18_exterieur", "exterieur.py").EXTERIEUR
+    # balcon avant (photos du client, 2026-11-02) : balcon_avant.py complète ou remplace des éléments de l'extérieur
+    if os.path.isfile(os.path.join(ICI, "balcon_avant.py")):
+        _charger("m18_balcon_avant", "balcon_avant.py").appliquer_exterieur(SCENE["exterieur"])
