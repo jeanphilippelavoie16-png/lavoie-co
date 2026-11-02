@@ -1064,7 +1064,7 @@
       "photo": null,
       "note": "non écrite"
      },
-     "note": "moitié droite, restée à l'emplacement d'origine de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) SS-17 : fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à mesurer ; à valider avec la Ville et un professionnel."
+     "note": "moitié droite, restée à l'emplacement d'origine de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) Fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à mesurer ; à valider avec la Ville et un professionnel."
     },
     {
      "id": "ouv-SS-010",
@@ -1095,7 +1095,7 @@
       "photo": null,
       "note": "non écrite"
      },
-     "note": "moitié gauche, déplacée de 2'-0\" vers la gauche de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) SS-17 : fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à mesurer ; à valider avec la Ville et un professionnel."
+     "note": "moitié gauche, déplacée de 2'-0\" vers la gauche de l'ancienne fenêtre 6'-8\" (réponses du propriétaire (2026-10-29)) Fenêtre d'évacuation de la chambre 1 — doit OUVRIR (≥ 0,35 m², aucune dimension < 380 mm) ; la banquette fixe sous la fenêtre sert de marche ; allège et tête à mesurer ; à valider avec la Ville et un professionnel."
     },
     {
      "id": "ouv-SS-P01",
@@ -1658,7 +1658,7 @@
      "nom": "Chambre 1",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Chambre 1 (enfant de 4 ans) : lit queen-plateforme en coin, banquette sous les fenêtres, gare à jouets, garde-robe intégrée sur le mur de la salle de bain (l'ancienne garde-robe est fusionnée) — proposition SS-17 (esquisse)",
+     "description": "Chambre 1 (enfant de 4 ans), allégée : lit queen sur plateforme à bacs en coin, banquette sous les fenêtres, garde-robe intégrée sur le mur de la salle de bain (l'ancienne garde-robe est fusionnée), coin jeu au sol au centre — proposition MAISON-18 (esquisse)",
      "polygone": [
       [
        10.0,
@@ -1715,7 +1715,7 @@
      "nom": "Chambre 2",
      "nom_original": null,
      "etat": "nouveau",
-     "description": "Chambre 2 — proposition SS-17 (esquisse)",
+     "description": "Chambre 2 (enfant de 6 ans), allégée : porte-bibliothèque secrète vers le walk-in, lit queen sur plateforme à tiroirs devant un panneau de lattes, banc de fenêtre, pupitre à rabat, coin jeu au sol — proposition MAISON-18 (esquisse)",
      "polygone": [
       [
        446.0,
@@ -2076,7 +2076,7 @@
     {
      "id": "elem-SS-P-C1-BANC",
      "type": "autre",
-     "nom": "Banquette des fenêtres (assise 16–18 po), 6 tiroirs-images ; marche d'évacuation",
+     "nom": "Banquette des fenêtres (assise 16 po), 4 grands tiroirs ; marche d'évacuation",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
@@ -2101,117 +2101,9 @@
      "libelle": "BANQUETTE"
     },
     {
-     "id": "elem-SS-P-C1-BIB1",
-     "type": "armoires",
-     "nom": "Bibliothèque entre les fenêtres (livres face avant), ancrée",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 144.0,
-      "y": 363.75,
-      "rotation_deg": 180,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 24,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 11.5,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
-    },
-    {
-     "id": "elem-SS-P-C1-BIB2",
-     "type": "armoires",
-     "nom": "Bibliothèque au coin des fenêtres, ancrée",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 208.0,
-      "y": 363.75,
-      "rotation_deg": 180,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 24,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 11.5,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
-    },
-    {
-     "id": "elem-SS-P-C1-CANOPEE",
-     "type": "trappe",
-     "nom": "Canopée de rangement au-dessus du lit (dessous à 72 po), portes à loquet",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 51.25,
-      "y": 362.75,
-      "rotation_deg": 180,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 81.5,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 13.5,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
-    },
-    {
-     "id": "elem-SS-P-C1-GARE",
-     "type": "comptoir",
-     "nom": "Gare à jouets : 3 modules bas de bacs (dessus à 24 po), crémaillères au mur",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 228.75,
-      "y": 310.0,
-      "rotation_deg": 90,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 84,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 18,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": "BACS"
-    },
-    {
      "id": "elem-SS-P-C1-GR",
      "type": "armoires",
-     "nom": "Garde-robe intégrée 134 po (penderie évolutive, tour de tiroirs, niche-cachette, tiroirs de plinthe)",
+     "nom": "Garde-robe intégrée 134 po à portes pleines de chêne (penderie évolutive, 4 tiroirs, rotation des jouets ; le haut aux parents)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
@@ -2238,7 +2130,7 @@
     {
      "id": "elem-SS-P-C1-LIT",
      "type": "autre",
-     "nom": "Lit-plateforme queen « cabane » (matelas 60 × 80 à 22 po), 3 bacs roulants dessous, dosseret à niches éclairées",
+     "nom": "Lit-plateforme queen (matelas 60 × 80 à 22 po), 3 bacs-wagons roulants dessous, tête en lattes de chêne, tablette-dosseret",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
@@ -2261,33 +2153,6 @@
      },
      "note": "proposition SS-17 (esquisse)",
      "libelle": "LIT QUEEN"
-    },
-    {
-     "id": "elem-SS-P-C1-VEST",
-     "type": "autre",
-     "nom": "Station du matin : banc à cases, crochets, miroir incassable, tablette",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 170.125,
-      "y": 239.25,
-      "rotation_deg": 0,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 51.75,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 14,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
     },
     {
      "id": "elem-SS-P-CABANE",
@@ -2343,47 +2208,20 @@
      "note": "proposition SS-17 (esquisse)"
     },
     {
-     "id": "elem-SS-P-CH2-ACTIV",
-     "type": "comptoir",
-     "nom": "Mur d'activité (12 po) : crochets, cases basses, bureau à rabat sur rail, panneau perforé, armoires hautes",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 248.25,
-      "y": 296.5,
-      "rotation_deg": 0,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 12,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 63,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
-    },
-    {
      "id": "elem-SS-P-CH2-BANC",
      "type": "comptoir",
-     "nom": "Banc-cabane sous la fenêtre (assise 18, 3 tiroirs, trappe d'accès au drain, coussin = lit d'appoint) ; rail-rideau au plafond",
+     "nom": "Banc de fenêtre (assise 18 po, 3 tiroirs ; celui du centre s'enlève : trappe d'accès au drain) ; marche d'évacuation",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 432,
+      "x": 434,
       "y": 316,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 28,
+       "valeur": 24,
        "source": "PRÉSUMÉ",
        "photo": null
       },
@@ -2397,52 +2235,25 @@
      "libelle": ""
     },
     {
-     "id": "elem-SS-P-CH2-GARAGE",
-     "type": "comptoir",
-     "nom": "Garage à jouets : banc bas de 16 po, 4 bacs-wagons ; rebords à livres et rail de galerie au-dessus",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 351,
-      "y": 240.25,
-      "rotation_deg": 0,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 134,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 16,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)",
-     "libelle": ""
-    },
-    {
      "id": "elem-SS-P-CH2-LATTES",
      "type": "autre",
-     "nom": "Panneau de tête en lattes de chêne sur feutre (alcôve du lit), 2 liseuses DEL",
+     "nom": "Tête de lit : panneau de lattes de chêne sur feutre (106 × 60 po), 2 liseuses DEL",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
       "x": 355,
-      "y": 368.5,
+      "y": 368.75,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 66,
+       "valeur": 106,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 3,
+       "valeur": 2.5,
        "source": "PRÉSUMÉ",
        "photo": null
       }
@@ -2453,7 +2264,7 @@
     {
      "id": "elem-SS-P-CH2-LIT",
      "type": "autre",
-     "nom": "Lit-plateforme queen intégré : socle de chêne à tiroirs, 2 bacs-wagons au pied, matelas 60 × 80 (dessus à 22 po), tête dans l'alcôve de lattes",
+     "nom": "Lit-plateforme queen : socle de chêne à 4 tiroirs, matelas 60 × 80 (dessus à 22 po)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
@@ -2480,18 +2291,18 @@
     {
      "id": "elem-SS-P-CH2-ND",
      "type": "comptoir",
-     "nom": "Chevet-niche droit intégré (tiroir, niche éclairée, USB-C)",
+     "nom": "Chevet flottant droit à tiroir (dessus à 24 po)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 403,
-      "y": 364,
+      "x": 398,
+      "y": 362,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 30,
+       "valeur": 16,
        "source": "PRÉSUMÉ",
        "photo": null
       },
@@ -2501,23 +2312,24 @@
        "photo": null
       }
      },
-     "note": "proposition SS-17 (esquisse)"
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
     },
     {
      "id": "elem-SS-P-CH2-NG",
      "type": "comptoir",
-     "nom": "Chevet-niche gauche intégré (tiroir, niche éclairée, USB-C)",
+     "nom": "Chevet flottant gauche à tiroir (dessus à 24 po)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
       "x": 312,
-      "y": 364,
+      "y": 362,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 20,
+       "valeur": 16,
        "source": "PRÉSUMÉ",
        "photo": null
       },
@@ -2527,7 +2339,8 @@
        "photo": null
       }
      },
-     "note": "proposition SS-17 (esquisse)"
+     "note": "proposition SS-17 (esquisse)",
+     "libelle": ""
     },
     {
      "id": "elem-SS-P-CH2-PB",
@@ -2557,83 +2370,31 @@
      "libelle": ""
     },
     {
-     "id": "elem-SS-P-CH2-PONT",
-     "type": "trappe",
-     "nom": "Pont d'armoires hautes (z 66-96) au-dessus des niches, du lit et du bout du banc ; DEL dessous",
+     "id": "elem-SS-P-CH2-PUPITRE",
+     "type": "armoires",
+     "nom": "Pupitre à rabat mural (36 po, rabat à 23 po, 9 po fermé) et tabouret",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 374,
-      "y": 364,
+      "x": 300,
+      "y": 236.75,
       "rotation_deg": 0,
       "source": "PRÉSUMÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 144,
+       "valeur": 36,
        "source": "PRÉSUMÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 12,
+       "valeur": 9,
        "source": "PRÉSUMÉ",
        "photo": null
       }
      },
      "note": "proposition SS-17 (esquisse)",
      "libelle": ""
-    },
-    {
-     "id": "elem-SS-P-CH2-TG",
-     "type": "armoires",
-     "nom": "Tour gauche du mur de tête (bacs, niches éclairées, armoire haute), ancrée",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 290,
-      "y": 364,
-      "rotation_deg": 0,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 24,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 12,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)"
-    },
-    {
-     "id": "elem-SS-P-CH2-TOUR",
-     "type": "armoires",
-     "nom": "Tour d'angle à trésors (bacs à jouets, vitrine LEGO, armoire haute), ancrée",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 432,
-      "y": 247.125,
-      "rotation_deg": 0,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 28,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 29.75,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "note": "proposition SS-17 (esquisse)"
     },
     {
      "id": "elem-SS-P-DIVAN",
@@ -6330,9 +6091,9 @@
      },
      "x1": 108,
      "y1": 157,
-     "x2": 175,
+     "x2": 146,
      "y2": 157,
-     "note": "Cloison S. de bain / chambre avant / LIN. ; axe y = 13'-1\" (cote-RDC-037, -036).",
+     "note": "Cloison S. de bain / chambre avant / LIN. ; axe y = 13'-1\" (cote-RDC-037, -036). — raccourcie à x = 146 : la lingerie (LIN.) est enlevée (proposition MAISON-18 (esquisse) — entrée vitrée).",
      "source_position": "DÉDUIT"
     },
     {
@@ -6352,96 +6113,6 @@
      "y2": 157,
      "note": "Cloison chambre avant / G.R. / VEST. ; axe x = 12'-2\" (cote-RDC-038).",
      "source_position": "DÉDUIT"
-    },
-    {
-     "id": "mur-RDC-014",
-     "type": "int",
-     "porteur": "inconnu",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "MESURÉ",
-      "photo": null,
-      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
-     },
-     "x1": 175,
-     "y1": 54,
-     "x2": 175,
-     "y2": 157,
-     "note": "Cloison G.R. avant / LIN. côté hall ; axe x = 12'-2\" + 2'-5\" (cote-RDC-039) ; arrêtée au VEST. (y ≈ 54 ESTIMÉ).",
-     "source_position": "DÉDUIT"
-    },
-    {
-     "id": "mur-RDC-015",
-     "type": "int",
-     "porteur": "inconnu",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "MESURÉ",
-      "photo": null,
-      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
-     },
-     "x1": 146,
-     "y1": 134,
-     "x2": 175,
-     "y2": 134,
-     "note": "Cloison LIN. / G.R. avant (y ESTIMÉ).",
-     "source_position": "ESTIMÉ"
-    },
-    {
-     "id": "mur-RDC-016",
-     "type": "int",
-     "porteur": "inconnu",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "MESURÉ",
-      "photo": null,
-      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
-     },
-     "x1": 146,
-     "y1": 54,
-     "x2": 175,
-     "y2": 54,
-     "note": "Cloison G.R. avant / VEST. (y ESTIMÉ).",
-     "source_position": "ESTIMÉ"
-    },
-    {
-     "id": "mur-RDC-017",
-     "type": "int",
-     "porteur": "inconnu",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "MESURÉ",
-      "photo": null,
-      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
-     },
-     "x1": 175,
-     "y1": 63,
-     "x2": 222,
-     "y2": 63,
-     "note": "Ligne de la porte entrée / hall (montants courts) ; y ESTIMÉ.",
-     "source_position": "ESTIMÉ"
-    },
-    {
-     "id": "mur-RDC-018",
-     "type": "int",
-     "porteur": "inconnu",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "MESURÉ",
-      "photo": null,
-      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
-     },
-     "x1": 222,
-     "y1": 5,
-     "x2": 222,
-     "y2": 94.6,
-     "note": "Cloison hall / salon ; axe x = 18'-6\" (cote-RDC-040). Elle s'arrête où commençait l'ancienne arche (début ESTIMÉ au dessin 1957 : centre ≈ 9'-10\", largeur 4'-0\" écrite) ; au-delà, ouvert jusqu'à la colonne 8\"x8\" de l'axe B (réponses du propriétaire, 2026-10-29).",
-     "source_position": "ESTIMÉ"
     },
     {
      "id": "mur-RDC-020",
@@ -6498,24 +6169,6 @@
      "source_position": "DÉDUIT"
     },
     {
-     "id": "mur-RDC-023",
-     "type": "int",
-     "porteur": "inconnu",
-     "indices_porteur": [],
-     "epaisseur": {
-      "valeur": 4.5,
-      "source": "MESURÉ",
-      "photo": null,
-      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
-     },
-     "x1": 146,
-     "y1": 337.5,
-     "x2": 175,
-     "y2": 337.5,
-     "note": "Cloison entre les 2 G.R. de la chambre arrière (y ESTIMÉ).",
-     "source_position": "ESTIMÉ"
-    },
-    {
      "id": "mur-RDC-024",
      "type": "int",
      "porteur": "inconnu",
@@ -6568,6 +6221,66 @@
      "y2": 142,
      "source_position": "PHOTO",
      "note": "Cloison salle de bain / chambre avant, reportée 15 po plus à l'avant que la base (y 157 → 142) : la salle de bain des photos 13 à 15 est plus profonde que 61 po — À MESURER (relevé photo RDC-01 (photos du 2026-11-01))."
+    },
+    {
+     "id": "mur-RDC-E01",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 2.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "mur de verre trempé feuilleté plancher-plafond, cadre d'aluminium noir mat de 1¾ po"
+     },
+     "x1": 146,
+     "y1": 157,
+     "x2": 224,
+     "y2": 157,
+     "materiau": "verre",
+     "source_position": "PRÉSUMÉ",
+     "note": "Mur de verre projeté — entrée / dégagement, du poteau C04 au poteau C05, sous la poutre de bois brut (proposition MAISON-18 (esquisse) — entrée vitrée)."
+    },
+    {
+     "id": "mur-RDC-E02",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 2.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "mur de verre trempé feuilleté plancher-plafond, cadre d'aluminium noir mat de 1¾ po"
+     },
+     "x1": 232,
+     "y1": 157,
+     "x2": 272.25,
+     "y2": 157,
+     "materiau": "verre",
+     "source_position": "PRÉSUMÉ",
+     "note": "Mur de verre projeté — entrée / dégagement, du poteau C05 au coin (proposition MAISON-18 (esquisse) — entrée vitrée)."
+    },
+    {
+     "id": "mur-RDC-E03",
+     "type": "int",
+     "etat": "nouveau",
+     "porteur": "non",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 2.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "mur de verre trempé feuilleté plancher-plafond, cadre d'aluminium noir mat de 1¾ po"
+     },
+     "x1": 272.25,
+     "y1": 157,
+     "x2": 272.25,
+     "y2": 5,
+     "materiau": "verre",
+     "source_position": "PRÉSUMÉ",
+     "note": "Mur de verre projeté — entrée et escalier / salon (sert aussi de garde à la volée) (proposition MAISON-18 (esquisse) — entrée vitrée)."
     }
    ],
    "ouvertures": [
@@ -6920,43 +6633,13 @@
       "note": "non écrite"
      },
      "sens": {
-      "charniere": "fin",
-      "ouvre_vers": "gauche"
+      "charniere": "debut",
+      "ouvre_vers": "gauche",
+      "note": "pentures à gauche : la porte s'ouvre contre le banc ; 42 po libres devant la porte et au haut de l'escalier — proposition MAISON-18 (esquisse) — entrée vitrée"
      },
      "texte_original": "2'-10\"x6'-10\"",
-     "note": "porte d'entrée avant ; pentures côté salon (vantail dessiné le long de la cloison du salon) ; ouvre vers l'intérieur ; donne sur le perron de béton"
-    },
-    {
-     "id": "ouv-RDC-011",
-     "type": "porte",
-     "operation": "aucune",
-     "mur_id": "mur-RDC-017",
-     "position": {
-      "valeur": 23.5,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "position non cotée, mesurée au dessin (P4)"
-     },
-     "largeur": {
-      "valeur": 32.0,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-062"
-     },
-     "hauteur": {
-      "valeur": 80.0,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-062"
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "texte_original": "2'-8\"x6'-8\"",
-     "note": "baie sans porte : « la porte n'existe pas ici » (annotateur en ligne (2026-10-29)) ; porte entrée → hall ; pentures côté gauche ; ouvre vers le hall"
+     "note": "porte d'entrée avant ; pentures côté salon (vantail dessiné le long de la cloison du salon) ; ouvre vers l'intérieur ; donne sur le perron de béton",
+     "fermee": true
     },
     {
      "id": "ouv-RDC-014",
@@ -7105,153 +6788,6 @@
      "fermee": true
     },
     {
-     "id": "ouv-RDC-019",
-     "type": "porte",
-     "operation": "battante",
-     "mur_id": "mur-RDC-021",
-     "position": {
-      "valeur": 150,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "position non cotée, mesurée au dessin (P4)"
-     },
-     "largeur": {
-      "valeur": 28,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-053"
-     },
-     "hauteur": {
-      "valeur": 80,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-053"
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "sens": {
-      "charniere": "debut",
-      "ouvre_vers": "gauche"
-     },
-     "texte_original": "2'-4\"x6'-8\"",
-     "note": "porte du G.R. arrière de la chambre arrière ; pentures sur le montant central commun"
-    },
-    {
-     "id": "ouv-RDC-020",
-     "type": "porte",
-     "operation": "battante",
-     "mur_id": "mur-RDC-021",
-     "position": {
-      "valeur": 113,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "position non cotée, mesurée au dessin (P4)"
-     },
-     "largeur": {
-      "valeur": 28,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-054"
-     },
-     "hauteur": {
-      "valeur": 80,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-054"
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "sens": {
-      "charniere": "fin",
-      "ouvre_vers": "gauche"
-     },
-     "texte_original": "2'-4\"x6'-8\"",
-     "note": "porte du 2e G.R. de la chambre arrière ; pentures sur le montant central commun",
-     "fermee": true
-    },
-    {
-     "id": "ouv-RDC-021",
-     "type": "porte",
-     "operation": "battante",
-     "mur_id": "mur-RDC-013",
-     "position": {
-      "valeur": 88,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "position non cotée, mesurée au dessin (P4)"
-     },
-     "largeur": {
-      "valeur": 30,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-061"
-     },
-     "hauteur": {
-      "valeur": 80,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-061"
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "sens": {
-      "charniere": "debut",
-      "ouvre_vers": "gauche"
-     },
-     "texte_original": "2'-6\"x6'-8\"",
-     "note": "porte du G.R. de la chambre avant ; ouvre dans la chambre",
-     "fermee": true
-    },
-    {
-     "id": "ouv-RDC-022",
-     "type": "porte",
-     "operation": "battante",
-     "mur_id": "mur-RDC-012",
-     "position": {
-      "valeur": 52.5,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "position non cotée, mesurée au dessin (P4)"
-     },
-     "largeur": {
-      "valeur": 21.0,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-059"
-     },
-     "hauteur": {
-      "valeur": 80.0,
-      "source": "LU",
-      "photo": "P4",
-      "ref": "cote-RDC-059"
-     },
-     "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "sens": {
-      "charniere": "debut",
-      "ouvre_vers": "gauche"
-     },
-     "texte_original": "1'-9\"x6'-8\"",
-     "note": "porte de la lingerie (LIN.) ; pentures côté gauche (vantail dessiné sur le jambage gauche, P4/P5) ; ouvre vers le dégagement",
-     "fermee": true
-    },
-    {
      "id": "ouv-RDC-026",
      "type": "porte",
      "operation": "aucune",
@@ -7318,14 +6854,78 @@
      },
      "texte_original": "2'-10\"x6'-10\"",
      "note": "porte extérieure arrière (vers les marches arrière) ; ouvre vers l'intérieur de l'entrée"
+    },
+    {
+     "id": "ouv-RDC-E01",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-RDC-E01",
+     "etat": "nouveau",
+     "position": {
+      "valeur": 58.75,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "porte vitrée contre l'habillage du poteau C05"
+     },
+     "largeur": {
+      "valeur": 36.0,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "sens": {
+      "charniere": "fin",
+      "ouvre_vers": "gauche"
+     },
+     "materiau": "verre",
+     "texte_original": null,
+     "note": "Porte vitrée battante (verre trempé clair, cadre noir mat mince, poignée longue noire), ouvre vers le dégagement, pentures côté poteau ; ferme-porte doux — proposition MAISON-18 (esquisse) — entrée vitrée"
+    },
+    {
+     "id": "ouv-RDC-CH1-GR",
+     "type": "porte",
+     "operation": "coulissante",
+     "mur_id": "mur-RDC-021",
+     "etat": "nouveau",
+     "position": {
+      "valeur": 131.0,
+      "source": "PRÉSUMÉ",
+      "photo": null,
+      "note": "baie de 66 po, y 302 à 368 (retours de 4 et 2 po)"
+     },
+     "largeur": {
+      "valeur": 66.0,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "PRÉSUMÉ",
+      "photo": null
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null
+     },
+     "note": "Garde-robe des parents : 2 portes coulissantes de 34 po (miroir pleine hauteur à cadre noir mat devant, panneau noir mat à rainures derrière), rail encastré. Remplace les 2 portes battantes de 28 po ; mur-RDC-021 porteur INCONNU : linteau à valider avec un professionnel (proposition MAISON-18, chambre des parents (esquisse))."
     }
    ],
    "pieces": [
     {
      "id": "piece-RDC-CH1",
-     "nom": "Chambre arrière",
+     "nom": "Chambre des parents",
      "nom_original": "CHAMBRE",
-     "description": null,
+     "description": "Chambre des parents (ancienne chambre arrière) : lit king tête au mur gauche, mur de tête intégré à niches éclairées, garde-robe réunie à portes coulissantes — proposition MAISON-18, chambre des parents (esquisse)",
      "polygone": [
       [
        10.0,
@@ -7429,9 +7029,9 @@
     },
     {
      "id": "piece-RDC-CH2",
-     "nom": "Chambre avant",
+     "nom": "Bureau",
      "nom_original": "CHAMBRE",
-     "description": null,
+     "description": "Bureau de travail et de gaming (ancienne chambre avant) : deux postes assis face à la fenêtre de façade (vue vers le fleuve), coin détente ; la garde-robe est conservée.",
      "polygone": [
       [
        143.75,
@@ -7480,106 +7080,6 @@
        "valeur": 144.75,
        "source": "DÉDUIT",
        "photo": null
-      }
-     }
-    },
-    {
-     "id": "piece-RDC-GR1",
-     "nom": "G.R. 1",
-     "nom_original": "G.R.",
-     "description": "Garde-robe 1 de la chambre arrière",
-     "polygone": [
-      [
-       148.25,
-       339.75
-      ],
-      [
-       172.75,
-       339.75
-      ],
-      [
-       172.75,
-       370.0
-      ],
-      [
-       148.25,
-       370.0
-      ]
-     ],
-     "superficie": {
-      "valeur": 5.1,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-     },
-     "hauteur_plafond": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 24.5,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      },
-      "y": {
-       "valeur": 30.25,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      }
-     }
-    },
-    {
-     "id": "piece-RDC-GR2",
-     "nom": "G.R. 2",
-     "nom_original": "G.R.",
-     "description": "Garde-robe 2 de la chambre arrière",
-     "polygone": [
-      [
-       148.25,
-       335.25
-      ],
-      [
-       148.25,
-       298.25
-      ],
-      [
-       172.75,
-       298.25
-      ],
-      [
-       172.75,
-       335.25
-      ]
-     ],
-     "superficie": {
-      "valeur": 6.3,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-     },
-     "hauteur_plafond": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 24.5,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      },
-      "y": {
-       "valeur": 37.0,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
     },
@@ -7694,18 +7194,11 @@
     {
      "id": "piece-RDC-DEG",
      "nom": "Dégagement",
-     "nom_original": "(aucun nom au plan)",
+     "nom_original": null,
+     "etat": "nouveau",
      "description": "Dégagement (aucun nom au plan) ; inclut l'ancien passage ; ouvert sur le salon et la salle à manger (constat 2026-10-29)",
      "polygone": [
       [
-       143.75,
-       204.0
-      ],
-      [
-       143.75,
-       209.75
-      ],
-      [
        110.25,
        209.75
       ],
@@ -7714,11 +7207,19 @@
        159.25
       ],
       [
-       177.25,
+       146.0,
        159.25
       ],
       [
-       177.25,
+       146.0,
+       158.0
+      ],
+      [
+       273.25,
+       158.0
+      ],
+      [
+       273.25,
        157.0
       ],
       [
@@ -7728,168 +7229,59 @@
       [
        316.0,
        204.0
+      ],
+      [
+       143.75,
+       204.0
+      ],
+      [
+       143.75,
+       209.75
       ]
      ],
      "superficie": {
-      "valeur": 67.4,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-     },
-     "hauteur_plafond": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 67.0,
+      "source": "DÉDUIT",
       "photo": null,
-      "note": "non écrite"
+      "note": "aire du polygone au nu des murs"
      },
      "dimensions": {
       "x": {
        "valeur": 205.75,
        "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "photo": null
       },
       "y": {
        "valeur": 52.75,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "source": "DÉDUIT",
+       "photo": null
       }
-     }
-    },
-    {
-     "id": "piece-RDC-HALL",
-     "nom": "Hall",
-     "nom_original": "HALL",
-     "description": null,
-     "polygone": [
-      [
-       222.0,
-       94.6
-      ],
-      [
-       222.0,
-       157.0
-      ],
-      [
-       177.25,
-       157.0
-      ],
-      [
-       177.25,
-       65.25
-      ],
-      [
-       219.75,
-       65.25
-      ],
-      [
-       219.75,
-       94.6
-      ]
-     ],
-     "superficie": {
-      "valeur": 28.1,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
       "valeur": null,
       "source": "ILLISIBLE",
       "photo": null,
       "note": "non écrite"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 44.75,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      },
-      "y": {
-       "valeur": 91.75,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      }
      }
     },
     {
      "id": "piece-RDC-ENT",
      "nom": "Entrée",
-     "nom_original": "(aucun nom au plan)",
-     "description": "Entrée avant (aucun nom au plan)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Grande entrée vitrée (trémie de l'escalier comprise) : porte d'entrée, haut de l'escalier du sous-sol, garde-corps de verre, banc à bottes, armoires-vestiaires et niche-console ; murs de verre à cadres noirs — proposition MAISON-18 (esquisse) — entrée vitrée",
      "polygone": [
       [
-       175.0,
-       51.75
-      ],
-      [
-       175.0,
+       271.25,
        10.0
       ],
       [
-       219.75,
-       10.0
-      ],
-      [
-       219.75,
-       60.75
-      ],
-      [
-       177.25,
-       60.75
-      ],
-      [
-       177.25,
-       51.75
-      ]
-     ],
-     "superficie": {
-      "valeur": 15.6,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-     },
-     "hauteur_plafond": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 44.75,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      },
-      "y": {
-       "valeur": 50.75,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      }
-     }
-    },
-    {
-     "id": "piece-RDC-VES",
-     "nom": "Vest.",
-     "nom_original": "VEST.",
-     "description": "Vestiaire (garde-robe d'entrée, ouvert)",
-     "polygone": [
-      [
-       175.0,
-       10.0
-      ],
-      [
-       175.0,
-       51.75
+       271.25,
+       156.0
       ],
       [
        148.25,
-       51.75
+       156.0
       ],
       [
        148.25,
@@ -7897,156 +7289,47 @@
       ]
      ],
      "superficie": {
-      "valeur": 7.8,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-     },
-     "hauteur_plafond": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 124.7,
+      "source": "DÉDUIT",
       "photo": null,
-      "note": "non écrite"
+      "note": "aire du polygone au nu des murs"
      },
      "dimensions": {
       "x": {
-       "valeur": 26.75,
+       "valeur": 123.0,
        "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "photo": null
       },
       "y": {
-       "valeur": 41.75,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "valeur": 146.0,
+       "source": "DÉDUIT",
+       "photo": null
       }
-     }
-    },
-    {
-     "id": "piece-RDC-GRA",
-     "nom": "G.R.",
-     "nom_original": "G.R.",
-     "description": "Garde-robe de la chambre avant",
-     "polygone": [
-      [
-       148.25,
-       131.75
-      ],
-      [
-       148.25,
-       56.25
-      ],
-      [
-       172.75,
-       56.25
-      ],
-      [
-       172.75,
-       131.75
-      ]
-     ],
-     "superficie": {
-      "valeur": 12.8,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
      },
      "hauteur_plafond": {
       "valeur": null,
       "source": "ILLISIBLE",
       "photo": null,
       "note": "non écrite"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 24.5,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      },
-      "y": {
-       "valeur": 75.5,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      }
-     }
-    },
-    {
-     "id": "piece-RDC-LIN",
-     "nom": "Lin.",
-     "nom_original": "LIN.",
-     "description": "Lingerie",
-     "polygone": [
-      [
-       148.25,
-       154.75
-      ],
-      [
-       148.25,
-       136.25
-      ],
-      [
-       172.75,
-       136.25
-      ],
-      [
-       172.75,
-       154.75
-      ]
-     ],
-     "superficie": {
-      "valeur": 3.1,
-      "source": "ESTIMÉ",
-      "photo": "P4",
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-     },
-     "hauteur_plafond": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": null,
-      "note": "non écrite"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 24.5,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      },
-      "y": {
-       "valeur": 18.5,
-       "source": "ESTIMÉ",
-       "photo": "P4",
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      }
      }
     },
     {
      "id": "piece-RDC-SAL",
      "nom": "Salon",
-     "nom_original": "SALON",
-     "description": null,
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Salon",
      "polygone": [
       [
        446.0,
        157.0
       ],
       [
-       222.0,
+       273.25,
        157.0
       ],
       [
-       222.0,
-       94.6
-      ],
-      [
-       224.25,
-       94.6
-      ],
-      [
-       224.25,
+       273.25,
        10.0
       ],
       [
@@ -8055,30 +7338,28 @@
       ]
      ],
      "superficie": {
-      "valeur": 227.3,
+      "valeur": 176.3,
       "source": "DÉDUIT",
       "photo": null,
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+      "note": "aire du polygone au nu des murs"
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 172.75,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 147.0,
+       "source": "DÉDUIT",
+       "photo": null
+      }
      },
      "hauteur_plafond": {
       "valeur": null,
       "source": "ILLISIBLE",
       "photo": null,
       "note": "non écrite"
-     },
-     "dimensions": {
-      "x": {
-       "valeur": 224.0,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      },
-      "y": {
-       "valeur": 147.0,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
-      }
      }
     },
     {
@@ -8180,9 +7461,193 @@
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
      }
+    },
+    {
+     "id": "piece-RDC-GRP",
+     "nom": "G.R.",
+     "nom_original": null,
+     "etat": "nouveau",
+     "description": "Garde-robe des parents (G.R. 1 et 2 réunies) : double penderie, tour de tiroirs, penderie longue, tablette haute ; portes coulissantes — proposition MAISON-18, chambre des parents (esquisse)",
+     "polygone": [
+      [
+       148.25,
+       298.25
+      ],
+      [
+       172.75,
+       298.25
+      ],
+      [
+       172.75,
+       370.0
+      ],
+      [
+       148.25,
+       370.0
+      ]
+     ],
+     "superficie": {
+      "valeur": 12.2,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire du polygone au nu intérieur"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 24.5,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 71.75,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
     }
    ],
    "elements": [
+    {
+     "id": "elem-RDC-CH1-CHEV1",
+     "type": "autre",
+     "nom": "Chevet suspendu noir mat à tiroir (dessus à 25 po)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 27.0,
+      "y": 240.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 22,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 16,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18, chambre des parents (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-CH1-CHEV2",
+     "type": "autre",
+     "nom": "Chevet suspendu noir mat à tiroir (dessus à 25 po)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 27.0,
+      "y": 356.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 22,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 16,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18, chambre des parents (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-CH1-GRTIR",
+     "type": "armoires",
+     "nom": "Garde-robe : tour de 4 tiroirs et tablettes (entre la double penderie et la penderie longue)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 160.875,
+      "y": 335.25,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 22,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 22.75,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18, chambre des parents (esquisse)",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-CH1-LIT",
+     "type": "autre",
+     "nom": "Lit king sur plateforme noir mat 84 × 82 po (matelas 76 × 80), 4 tiroirs (2 par côté), socle en retrait ; 31 po de chaque côté, 38 po au pied",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 63.5,
+      "y": 298.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 82.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 84.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18, chambre des parents (esquisse)",
+     "libelle": "LIT KING"
+    },
+    {
+     "id": "elem-RDC-CH1-TETE",
+     "type": "autre",
+     "nom": "Mur de tête intégré : fourrure de 9 po revêtue de bois de grange, 2 niches noir mat éclairées (USB-C), niche-tablette éclairée, tête rembourrée, 2 liseuses murales",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 14.5,
+      "y": 298.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 144.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 9.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18, chambre des parents (esquisse)",
+     "libelle": ""
+    },
     {
      "id": "elem-RDC-CHEM",
      "type": "cheminee",
@@ -8209,6 +7674,385 @@
      "texte_original": null,
      "photo": "P4",
      "note": "massif hachuré accolé à l'extérieur du mur gauche, vis-à-vis de la cloison S. de bain / chambre avant ; un conduit (rectangle blanc) dedans"
+    },
+    {
+     "id": "elem-RDC-E-ARM1",
+     "type": "armoires",
+     "nom": "Armoire-vestiaire pleine hauteur, portes noir mat, tringle et tablettes",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 160.25,
+      "y": 82.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 36,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — entrée vitrée"
+    },
+    {
+     "id": "elem-RDC-E-ARM2",
+     "type": "armoires",
+     "nom": "Armoire-vestiaire pleine hauteur, portes noir mat (manteaux des garçons, sacs, aspirateur)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 160.25,
+      "y": 139.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 30,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — entrée vitrée"
+    },
+    {
+     "id": "elem-RDC-E-BANC",
+     "type": "autre",
+     "nom": "Banc à bottes de chêne : 3 cases à bottes avec bacs d'égouttement, coussin, dossier de lattes de chêne, crochets enfants (40 po) et adultes (64 po), tablette à 4 bacs, caisson haut",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 157.25,
+      "y": 37.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 54,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 18,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — entrée vitrée",
+     "libelle": "BANC"
+    },
+    {
+     "id": "elem-RDC-E-CONS",
+     "type": "comptoir",
+     "nom": "Niche-console ouverte de chêne : tiroir de recharge (USB-C), plateau à clés, miroir, DEL ; armoires noires dessus et dessous",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 160.25,
+      "y": 112.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 24,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — entrée vitrée",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-E-GC1",
+     "type": "autre",
+     "nom": "Garde-corps de verre clair, poteaux d'acier noir, main courante de chêne (36 po ; 42 po en option) (côté entrée)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 232.75,
+      "y": 93.335,
+      "rotation_deg": 90,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 82.66999999999999,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 1.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — entrée vitrée",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-E-GC2",
+     "type": "autre",
+     "nom": "Garde-corps de verre clair, poteaux d'acier noir, main courante de chêne (36 po ; 42 po en option) (bout de la trémie)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 252.0,
+      "y": 135.92,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 36,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 1.5,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — entrée vitrée",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-P-BUR-CH1",
+     "type": "autre",
+     "nom": "Chaise ergonomique, poste 1 (gauche)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 60.0,
+      "y": 57.5,
+      "rotation_deg": 180,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 26,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 26,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-P-BUR-CH2",
+     "type": "autre",
+     "nom": "Chaise ergonomique, poste 2 (droite)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 114.0,
+      "y": 57.5,
+      "rotation_deg": 180,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 26,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 26,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-P-BUR-CRED",
+     "type": "armoires",
+     "nom": "Crédence flottante de chêne 48 × 18 po (consoles, manettes, casques, jeux), DEL dessous",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 84.0,
+      "y": 130.75,
+      "rotation_deg": 180,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 48.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 18.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-P-BUR-FAUT",
+     "type": "autre",
+     "nom": "Fauteuil de détente en cuir cognac (coin détente), table d'appoint et liseuse",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 28.5,
+      "y": 118.5,
+      "rotation_deg": 195,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 26,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 31,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-P-BUR-LATTES",
+     "type": "autre",
+     "nom": "Mur de lattes de chêne acoustiques sur feutre noir (plancher au plafond)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 10.6,
+      "y": 74.88,
+      "rotation_deg": 90,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 129.75,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 1.2,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
+     "libelle": ""
+    },
+    {
+     "id": "elem-RDC-P-BUR-PLAN",
+     "type": "comptoir",
+     "nom": "Plan de travail continu en chêne 132 × 30 po (dessus à 29,5 po), deux postes de 54 po face à la fenêtre ; ordinateurs suspendus dessous aux deux bouts, caisson à 3 tiroirs au centre, goulotte à câbles, ruban DEL blanc chaud",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 77.25,
+      "y": 25.0,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 132.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "bureau-gaming de MAISON-18 (rdc_bureau.py) ; mobilier proposé, chambre avant non photographiée : à mesurer",
+     "libelle": "2 POSTES"
+    },
+    {
+     "id": "elem-RDC-P-ESC",
+     "type": "escalier",
+     "nom": "Escalier entre le sous-sol et le rez-de-chaussée (projeté)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 252.0,
+      "y": 82.0,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 136.0,
+       "source": "PRÉSUMÉ",
+       "photo": null,
+       "note": "10 girons droits de 10 po + 3 tournants"
+      },
+      "largeur": {
+       "valeur": 36.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "escalier": {
+      "nb_contremarches": {
+       "valeur": 14,
+       "source": "DÉDUIT",
+       "photo": null,
+       "note": "même nombre que l'escalier de 1957 (P2)"
+      },
+      "fleche": "DESCEND",
+      "direction": "+y",
+      "tournant": {
+       "nb": 3,
+       "carre": [
+        234,
+        14,
+        270,
+        50
+       ],
+       "pivot": [
+        234,
+        50
+       ]
+      },
+      "style": "flottant",
+      "tremie": [
+       234,
+       14,
+       270,
+       134.67
+      ]
+     },
+     "note": "Escalier à l'entrée avant (option 2 de l'étude 3, choisie par le propriétaire le 2026-10-30) : 14 contremarches, 3 tournantes en haut, sortie à l'ouest dans le vestibule d'entrée. Hauteur d'étage ≈ 105 po (8 pi au sous-sol, propriétaire) ; giron, échappée et trémie à valider — proposition SS-17 (esquisse) — RDC (entrée vitrée) : trémie d'environ 36 × 121 po (x 234 → 270, y 14 → 134,7) ; échappée ≈ 77 po (1,96 m) au bord de la trémie avec le plafond du sous-sol à 8 pi ; largeur 36 po ; garde-corps de verre (36 po min., 42 po en option) côté entrée et au bout de la trémie ; le mur de verre côté salon sert de garde à droite ; main courante continue côté salon — à valider (proposition MAISON-18 (esquisse) — entrée vitrée)."
     },
     {
      "id": "elem-RDC-R-COL",
@@ -8372,6 +8216,46 @@
      "photo": "rdc_actuel/13, 14, 15",
      "note": "vu sur les photos 13, 14, 15 ; position et dimensions estimées — relevé photo RDC-01 (photos du 2026-11-01)",
      "libelle": "DOUCHE"
+    },
+    {
+     "id": "elem-RDC-R-ESCARR",
+     "type": "escalier",
+     "nom": "Escalier existant de l'entrée arrière (descend vers la gauche)",
+     "nom_original": null,
+     "etat": "existant",
+     "libelle": "DESCEND",
+     "position": {
+      "x": 256.5,
+      "y": 414,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 55,
+       "source": "ESTIMÉ",
+       "photo": "rdc_actuel/01, 07, 08",
+       "note": "du nez du palier (x ≈ 284) au mur de gauche (x = 229)"
+      },
+      "largeur": {
+       "valeur": 32,
+       "source": "ESTIMÉ",
+       "photo": "rdc_actuel/01, 07, 08",
+       "note": "le long du mur du fond"
+      }
+     },
+     "escalier": {
+      "nb_contremarches": {
+       "valeur": 6,
+       "source": "ESTIMÉ",
+       "photo": "rdc_actuel/01",
+       "note": "seules les premières marches sont visibles sur les photos"
+      },
+      "fleche": "DESCEND",
+      "direction": "-x"
+     },
+     "photo": "rdc_actuel/01, 07, 08",
+     "note": "Main courante de bois sur le mur du fond ; volée, palier et porte extérieure à mesurer — relevé photo RDC-01 (photos du 2026-11-01)"
     },
     {
      "id": "elem-RDC-R-EVIER",
@@ -8644,57 +8528,6 @@
      },
      "photo": "rdc_actuel/13, 14, 15",
      "note": "vu sur les photos 13, 14, 15 ; position et dimensions estimées — relevé photo RDC-01 (photos du 2026-11-01)"
-    },
-    {
-     "id": "elem-RDC-P-ESC",
-     "type": "escalier",
-     "nom": "Escalier entre le sous-sol et le rez-de-chaussée (projeté)",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 252.0,
-      "y": 82.0,
-      "rotation_deg": 0,
-      "source": "PRÉSUMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 136.0,
-       "source": "PRÉSUMÉ",
-       "photo": null,
-       "note": "10 girons droits de 10 po + 3 tournants"
-      },
-      "largeur": {
-       "valeur": 36.0,
-       "source": "PRÉSUMÉ",
-       "photo": null
-      }
-     },
-     "escalier": {
-      "nb_contremarches": {
-       "valeur": 14,
-       "source": "DÉDUIT",
-       "photo": null,
-       "note": "même nombre que l'escalier de 1957 (P2)"
-      },
-      "fleche": "DESCEND",
-      "direction": "+y",
-      "tournant": {
-       "nb": 3,
-       "carre": [
-        234,
-        14,
-        270,
-        50
-       ],
-       "pivot": [
-        234,
-        50
-       ]
-      },
-      "style": "flottant"
-     },
-     "note": "Escalier à l'entrée avant (option 2 de l'étude 3, choisie par le propriétaire le 2026-10-30) : 14 contremarches, 3 tournantes en haut, sortie à l'ouest dans le vestibule d'entrée. Hauteur d'étage ≈ 105 po (8 pi au sous-sol, propriétaire) ; giron, échappée et trémie à valider — proposition SS-17 (esquisse)"
     }
    ],
    "structure": [
@@ -8794,26 +8627,6 @@
      "note": "Poutre au plafond du RDC, côté rue seulement, exactement à l'aplomb de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe B) (réponses du propriétaire (2026-10-29)). Étendue prise identique à celle de la poutre du sous-sol. Sur l'axe C : poutre autoportante str-RDC-P03. — partie apparente (bois brut teint) du hall au mur de droite, photos 01 à 05 ; côté chambres : cachée dans le plafond ou les cloisons (relevé photo RDC-01 (photos du 2026-11-01)).",
      "afficher": false,
      "source_position": "PHOTO"
-    },
-    {
-     "id": "str-RDC-R01",
-     "type": "poutre",
-     "libelle": null,
-     "dimension": {
-      "valeur": null,
-      "source": "ILLISIBLE",
-      "photo": "rdc_actuel/04",
-      "note": "section non relevée ; bois brut teint apparent"
-     },
-     "sens": "y",
-     "geometrie": {
-      "x1": 222,
-      "y1": 94.6,
-      "x2": 222,
-      "y2": 157
-     },
-     "source_position": "PHOTO",
-     "note": "Poutre apparente au-dessus de l'ouverture hall / salon, du bout de la cloison au poteau de l'axe B (photos 03, 04, 05) ; décorative ou porteuse : à vérifier (relevé photo RDC-01 (photos du 2026-11-01))."
     }
    ],
    "cotes": [
@@ -10953,40 +10766,40 @@
    ],
    "notes": [
     {
-     "id": "note-RDC-R01",
+     "id": "note-RDC-P01",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Relevé photo de l'état actuel (15 photos du 2026-11-01) : ce n'est pas une proposition."
+     "interpretation": "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes estimées sur photos, à mesurer)."
     },
     {
-     "id": "note-RDC-R02",
+     "id": "note-RDC-P02",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Salle de bain : cloison côté chambre avant reportée de 15 po (photos) ; à mesurer."
+     "interpretation": "Entrée vitrée : garde-robes du hall enlevées, murs de verre à cadres noirs, porte vitrée vers le dégagement."
     },
     {
-     "id": "note-RDC-R03",
+     "id": "note-RDC-P03",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Porte de la salle de bain déplacée de 10 po vers l'arrière (laveuse-sécheuse à côté) ; à mesurer."
+     "interpretation": "Escalier vers le sous-sol : trémie ≈ 3 × 10 pi ; échappée ≈ 1,96 m à vérifier ; garde-corps de 42 po conseillé."
     },
     {
-     "id": "note-RDC-R04",
+     "id": "note-RDC-P04",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Poutres et poteaux de bois brut teint apparents : axe B (hall → mur de droite) et ouverture du hall."
+     "interpretation": "Chambre des parents : lit king, mur de tête en bois de grange, garde-robes réunies à portes coulissantes."
     },
     {
-     "id": "note-RDC-R05",
+     "id": "note-RDC-P05",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Cuisine : brique, armoires noires, îlot, frigo encastré et frigo à portes françaises (photos 01 à 03, 08)."
+     "interpretation": "Bureau-gaming (ancienne chambre avant) : 2 postes face à la fenêtre avant."
     },
     {
-     "id": "note-RDC-R06",
+     "id": "note-RDC-P06",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Chambre avant : non photographiée ; mobilier de la maquette présumé."
+     "interpretation": "Poutre et appuis de l'ancienne cloison hall/salon, coupe-feu entre logements : à valider avec la Ville et un professionnel."
     }
    ],
    "lignes_cote": [
@@ -12270,6 +12083,114 @@
      "source_position": "DÉDUIT",
      "retire_selon": "réponses du propriétaire (2026-10-29)",
      "description_retrait": "partie de la cloison hall / salon au-delà de l'ancienne arche (vers l'axe B), retirée"
+    },
+    {
+     "id": "mur-RDC-014",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 175,
+     "y1": 54,
+     "x2": 175,
+     "y2": 157,
+     "note": "Cloison G.R. avant / LIN. côté hall ; axe x = 12'-2\" + 2'-5\" (cote-RDC-039) ; arrêtée au VEST. (y ≈ 54 ESTIMÉ). — ENLEVÉE : grande entrée vitrée (proposition MAISON-18 (esquisse) — entrée vitrée).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-RDC-015",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 146,
+     "y1": 134,
+     "x2": 175,
+     "y2": 134,
+     "note": "Cloison LIN. / G.R. avant (y ESTIMÉ). — ENLEVÉE : grande entrée vitrée (proposition MAISON-18 (esquisse) — entrée vitrée).",
+     "source_position": "ESTIMÉ"
+    },
+    {
+     "id": "mur-RDC-016",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 146,
+     "y1": 54,
+     "x2": 175,
+     "y2": 54,
+     "note": "Cloison G.R. avant / VEST. (y ESTIMÉ). — ENLEVÉE : grande entrée vitrée (proposition MAISON-18 (esquisse) — entrée vitrée).",
+     "source_position": "ESTIMÉ"
+    },
+    {
+     "id": "mur-RDC-017",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 175,
+     "y1": 63,
+     "x2": 222,
+     "y2": 63,
+     "note": "Ligne de la porte entrée / hall (montants courts) ; y ESTIMÉ. — ENLEVÉE : grande entrée vitrée (proposition MAISON-18 (esquisse) — entrée vitrée).",
+     "source_position": "ESTIMÉ"
+    },
+    {
+     "id": "mur-RDC-018",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 222,
+     "y1": 5,
+     "x2": 222,
+     "y2": 94.6,
+     "note": "Cloison hall / salon ; axe x = 18'-6\" (cote-RDC-040). Elle s'arrête où commençait l'ancienne arche (début ESTIMÉ au dessin 1957 : centre ≈ 9'-10\", largeur 4'-0\" écrite) ; au-delà, ouvert jusqu'à la colonne 8\"x8\" de l'axe B (réponses du propriétaire, 2026-10-29). — ENLEVÉE : grande entrée vitrée (proposition MAISON-18 (esquisse) — entrée vitrée).",
+     "source_position": "ESTIMÉ"
+    },
+    {
+     "id": "mur-RDC-023",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 146,
+     "y1": 337.5,
+     "x2": 175,
+     "y2": 337.5,
+     "note": "Cloison entre les 2 G.R. de la chambre arrière (y ESTIMÉ). — retiré : G.R. 1 et 2 réunies (proposition MAISON-18, chambre des parents (esquisse)).",
+     "source_position": "ESTIMÉ"
     }
    ],
    "ouvertures_retirees": [
@@ -12487,6 +12408,187 @@
      "texte_original": "ARCHE 4'-0\"",
      "note": "arche hall / salon ; position ESTIMÉE (dessin)",
      "retire_selon": "réponses du propriétaire (2026-10-29) : plus d'arche ni de mur au-delà"
+    },
+    {
+     "id": "ouv-RDC-011",
+     "type": "porte",
+     "operation": "aucune",
+     "mur_id": "mur-RDC-017",
+     "position": {
+      "valeur": 23.5,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "position non cotée, mesurée au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 32.0,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-062"
+     },
+     "hauteur": {
+      "valeur": 80.0,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-062"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "texte_original": "2'-8\"x6'-8\"",
+     "note": "baie sans porte : « la porte n'existe pas ici » (annotateur en ligne (2026-10-29)) ; porte entrée → hall ; pentures côté gauche ; ouvre vers le hall"
+    },
+    {
+     "id": "ouv-RDC-021",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-RDC-013",
+     "position": {
+      "valeur": 88,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "position non cotée, mesurée au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 30,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-061"
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-061"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche"
+     },
+     "texte_original": "2'-6\"x6'-8\"",
+     "note": "porte du G.R. de la chambre avant ; ouvre dans la chambre",
+     "fermee": true
+    },
+    {
+     "id": "ouv-RDC-022",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-RDC-012",
+     "position": {
+      "valeur": 52.5,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "position non cotée, mesurée au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 21.0,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-059"
+     },
+     "hauteur": {
+      "valeur": 80.0,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-059"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche"
+     },
+     "texte_original": "1'-9\"x6'-8\"",
+     "note": "porte de la lingerie (LIN.) ; pentures côté gauche (vantail dessiné sur le jambage gauche, P4/P5) ; ouvre vers le dégagement",
+     "fermee": true
+    },
+    {
+     "id": "ouv-RDC-019",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-RDC-021",
+     "position": {
+      "valeur": 150,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "position non cotée, mesurée au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 28,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-053"
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-053"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche"
+     },
+     "texte_original": "2'-4\"x6'-8\"",
+     "note": "porte du G.R. arrière de la chambre arrière ; pentures sur le montant central commun — retiré : G.R. 1 et 2 réunies (proposition MAISON-18, chambre des parents (esquisse)).",
+     "finition": "blanc"
+    },
+    {
+     "id": "ouv-RDC-020",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-RDC-021",
+     "position": {
+      "valeur": 113,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "position non cotée, mesurée au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 28,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-054"
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-054"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "sens": {
+      "charniere": "fin",
+      "ouvre_vers": "gauche"
+     },
+     "texte_original": "2'-4\"x6'-8\"",
+     "note": "porte du 2e G.R. de la chambre arrière ; pentures sur le montant central commun — retiré : G.R. 1 et 2 réunies (proposition MAISON-18, chambre des parents (esquisse)).",
+     "fermee": true,
+     "finition": "blanc"
     }
    ],
    "limites_zones": [],
@@ -12609,6 +12711,26 @@
      },
      "note": "écrit dans le salon ; solives de plafond probables",
      "retire_selon": "solives 2x7 : retirées du plan à la demande du propriétaire (annotateur en ligne (2026-10-29))"
+    },
+    {
+     "id": "str-RDC-R01",
+     "type": "poutre",
+     "libelle": null,
+     "dimension": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": "rdc_actuel/04",
+      "note": "section non relevée ; bois brut teint apparent"
+     },
+     "sens": "y",
+     "geometrie": {
+      "x1": 222,
+      "y1": 94.6,
+      "x2": 222,
+      "y2": 157
+     },
+     "source_position": "PHOTO",
+     "note": "Poutre apparente au-dessus de l'ouverture hall / salon, du bout de la cloison au poteau de l'axe B (photos 03, 04, 05) ; décorative ou porteuse : à vérifier (relevé photo RDC-01 (photos du 2026-11-01)). — ENLEVÉE avec la cloison hall / salon ; si elle se révèle porteuse à l'ouverture du plafond, la reprendre (ingénieur) — proposition MAISON-18 (esquisse) — entrée vitrée."
     }
    ],
    "notes_retirees": [
@@ -12660,6 +12782,19 @@
      "interpretation": "Symboles électriques non légendés : non reportés sur ce plan (voir extraction/RDC.json).",
      "photo": "P4",
      "retire_selon": "annotateur en ligne (2026-10-29)"
+    }
+   ],
+   "tremies": [
+    {
+     "id": "tremie-RDC-ESC",
+     "rect": [
+      234,
+      14,
+      270,
+      134.67
+     ],
+     "element": "elem-RDC-P-ESC",
+     "note": "ouverture du plancher du RDC au-dessus de l'escalier du sous-sol (chevêtres et solives doublées : ingénieur)"
     }
    ]
   }

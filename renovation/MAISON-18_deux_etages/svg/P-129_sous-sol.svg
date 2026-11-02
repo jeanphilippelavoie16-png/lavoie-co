@@ -386,24 +386,7 @@
 </g>
 <g id="elem-SS-P-C1-BANC">
 <polygon class="elem" points="457.885,171.479 313.135,171.479 313.135,188.979 457.885,188.979"/>
-<text x="342.187" y="197.046" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">BANQUETTE</text>
-</g>
-<g id="elem-SS-P-C1-BIB1">
-<polygon class="elem" points="376.135,171.479 352.135,171.479 352.135,182.979 376.135,182.979"/>
-<polyline class="elem-fin" points="376.135,171.479 352.135,182.979"/>
-<polyline class="elem-fin" points="376.135,182.979 352.135,171.479"/>
-</g>
-<g id="elem-SS-P-C1-BIB2">
-<polygon class="elem" points="440.135,171.479 416.135,171.479 416.135,182.979 440.135,182.979"/>
-<polyline class="elem-fin" points="440.135,171.479 416.135,182.979"/>
-<polyline class="elem-fin" points="440.135,182.979 416.135,171.479"/>
-</g>
-<g id="elem-SS-P-C1-CANOPEE">
-<polygon class="elem-tir" points="312.135,171.479 230.635,171.479 230.635,184.979 312.135,184.979"/>
-</g>
-<g id="elem-SS-P-C1-GARE">
-<polygon class="elem" points="457.885,272.979 457.885,188.979 439.885,188.979 439.885,272.979"/>
-<text x="426.394" y="278.022" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">BACS</text>
+<text x="386.71" y="185.723" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">BANQUETTE</text>
 </g>
 <g id="elem-SS-P-C1-GR">
 <polygon class="elem" points="230.135,288.729 364.385,288.729 364.385,264.729 230.135,264.729"/>
@@ -415,9 +398,6 @@
 <polygon class="elem" points="231.135,238.979 313.135,238.979 313.135,170.979 231.135,170.979"/>
 <text x="272.135" y="207.267" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">LIT QUEEN</text>
 </g>
-<g id="elem-SS-P-C1-VEST">
-<polygon class="elem" points="364.385,308.729 416.135,308.729 416.135,294.729 364.385,294.729"/>
-</g>
 <g id="elem-SS-P-CABANE">
 <polygon class="elem" points="457.135,525.979 489.135,525.979 489.135,493.979 457.135,493.979"/>
 </g>
@@ -425,43 +405,29 @@
 <circle class="elem" cx="254.135" cy="402.979" r="11"/>
 <text x="248.186" y="422.046" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">C.E.</text>
 </g>
-<g id="elem-SS-P-CH2-ACTIV">
-<polygon class="elem" points="462.385,275.979 474.385,275.979 474.385,212.979 462.385,212.979"/>
-</g>
 <g id="elem-SS-P-CH2-BANC">
-<polygon class="elem" points="638.135,278.979 666.135,278.979 666.135,170.979 638.135,170.979"/>
-</g>
-<g id="elem-SS-P-CH2-GARAGE">
-<polygon class="elem" points="504.135,308.729 638.135,308.729 638.135,292.729 504.135,292.729"/>
+<polygon class="elem" points="642.135,278.979 666.135,278.979 666.135,170.979 642.135,170.979"/>
 </g>
 <g id="elem-SS-P-CH2-LATTES">
-<polygon class="elem" points="542.135,173.979 608.135,173.979 608.135,170.979 542.135,170.979"/>
+<polygon class="elem" points="522.135,173.479 628.135,173.479 628.135,170.979 522.135,170.979"/>
 </g>
 <g id="elem-SS-P-CH2-LIT">
 <polygon class="elem" points="542.135,257.979 608.135,257.979 608.135,173.979 542.135,173.979"/>
 <text x="575.135" y="218.267" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">LIT QUEEN</text>
 </g>
 <g id="elem-SS-P-CH2-ND">
-<polygon class="elem" points="608.135,182.979 638.135,182.979 638.135,170.979 608.135,170.979"/>
+<polygon class="elem" points="610.135,184.979 626.135,184.979 626.135,172.979 610.135,172.979"/>
 </g>
 <g id="elem-SS-P-CH2-NG">
-<polygon class="elem" points="522.135,182.979 542.135,182.979 542.135,170.979 522.135,170.979"/>
+<polygon class="elem" points="524.135,184.979 540.135,184.979 540.135,172.979 524.135,172.979"/>
 </g>
 <g id="elem-SS-P-CH2-PB">
 <polygon class="elem" points="462.385,178.979 498.135,178.979 498.135,170.979 462.385,170.979"/>
 </g>
-<g id="elem-SS-P-CH2-PONT">
-<polygon class="elem-tir" points="522.135,182.979 666.135,182.979 666.135,170.979 522.135,170.979"/>
-</g>
-<g id="elem-SS-P-CH2-TG">
-<polygon class="elem" points="498.135,182.979 522.135,182.979 522.135,170.979 498.135,170.979"/>
-<polyline class="elem-fin" points="498.135,182.979 522.135,170.979"/>
-<polyline class="elem-fin" points="498.135,170.979 522.135,182.979"/>
-</g>
-<g id="elem-SS-P-CH2-TOUR">
-<polygon class="elem" points="638.135,308.729 666.135,308.729 666.135,278.979 638.135,278.979"/>
-<polyline class="elem-fin" points="638.135,308.729 666.135,278.979"/>
-<polyline class="elem-fin" points="638.135,278.979 666.135,308.729"/>
+<g id="elem-SS-P-CH2-PUPITRE">
+<polygon class="elem" points="502.135,308.729 538.135,308.729 538.135,299.729 502.135,299.729"/>
+<polyline class="elem-fin" points="502.135,308.729 538.135,299.729"/>
+<polyline class="elem-fin" points="502.135,299.729 538.135,308.729"/>
 </g>
 <g id="elem-SS-P-DIVAN">
 <polygon class="elem" points="522.135,500.979 560.135,500.979 560.135,412.979 522.135,412.979"/>
@@ -934,6 +900,12 @@
 <text x="395.165" y="238.998" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">18'-11¾&quot; × 11'-5¾&quot;</text>
 <text x="395.165" y="249.38" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">199,2 pi² (18,5 m²)</text>
 </g>
+<g id="piece-SS-CH2">
+<path class="invisible" fill-rule="evenodd" d="M 666.135 170.979 L 462.385 170.979 L 462.385 308.729 L 666.135 308.729 Z"/>
+<text x="597.772" y="270.905" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">CHAMBRE 2</text>
+<text x="597.772" y="282.554" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">16'-11¾&quot; × 11'-5¾&quot;</text>
+<text x="597.772" y="292.935" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">194,9 pi² (18,1 m²)</text>
+</g>
 <g id="piece-SS-SALON">
 <path class="invisible" fill-rule="evenodd" d="M 666.135 530.979 L 666.135 383.979 L 492.385 383.979 L 492.385 530.979 Z"/>
 <text x="597.642" y="438.493" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">SÉJOUR</text>
@@ -951,11 +923,6 @@
 <text x="406.26" y="341.383" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">HALL</text>
 <text x="406.26" y="353.031" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">6'-11¾&quot; × 5'-9¾&quot;</text>
 <text x="406.26" y="363.413" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">40,5 pi² (3,8 m²)</text>
-</g>
-<g id="piece-SS-CH2">
-<path class="invisible" fill-rule="evenodd" d="M 666.135 170.979 L 462.385 170.979 L 462.385 308.729 L 666.135 308.729 Z"/>
-<text x="594.744" y="270.505" font-family="Arial, Helvetica, sans-serif" font-size="14.076" font-weight="bold" text-anchor="middle" fill="#000000">CHAMBRE 2</text>
-<text x="594.744" y="282.153" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="middle" fill="#000000">194,9 pi² (18,1 m²)</text>
 </g>
 <g id="piece-SS-GYM">
 <path class="invisible" fill-rule="evenodd" d="M 334.385 530.979 L 447.135 530.979 L 447.135 384.979 L 368.385 384.979 L 368.385 386.229 L 334.385 386.229 Z"/>

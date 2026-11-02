@@ -10,19 +10,14 @@ SS;piece-SS-CH1;Chambre 1;"18'-11¾""";"11'-5¾""";199,20;18,51;"60'-11""";"8'-0
 SS;piece-SS-CH2;Chambre 2;"16'-11¾""";"11'-5¾""";194,90;18,11;"56'-11""";"8'-0""";455,33;2;1;DÉDUIT
 SS;piece-SS-LEG;Walk-in isolé;"7'-4""";"4'-2""";30,60;2,84;"23'-0""";;;1;0;DÉDUIT
 SS;piece-SS-PERRON;Excroissance sous perron;"5'-0""";"3'-6""";17,50;1,63;"17'-0""";;;0;0;DÉDUIT
-RDC;piece-RDC-CH1;Chambre arrière;"12'-0""";"11'-1¾""";136,50;12,68;"48'-3""";;;3;1;ESTIMÉ
+RDC;piece-RDC-CH1;Chambre des parents;"12'-0""";"11'-1¾""";136,50;12,68;"48'-3""";;;2;1;ESTIMÉ
 RDC;piece-RDC-SDB;Salle de bain;"7'-11¾""";"6'-3¾""";50,40;4,68;"28'-7""";;;1;1;DÉDUIT
-RDC;piece-RDC-CH2;Chambre avant;"12'-0¾""";"11'-1¾""";124,00;11,52;"46'-5""";;;2;1;DÉDUIT
-RDC;piece-RDC-GR1;G.R. 1;"2'-6¼""";"2'-0½""";5,10;0,47;"9'-1½""";;;1;0;ESTIMÉ
-RDC;piece-RDC-GR2;G.R. 2;"3'-1""";"2'-0½""";6,30;0,59;"10'-3""";;;1;0;ESTIMÉ
+RDC;piece-RDC-CH2;Bureau;"12'-0¾""";"11'-1¾""";124,00;11,52;"46'-5""";;;1;1;DÉDUIT
 RDC;piece-RDC-GRU;G.R. 3;"3'-2½""";"2'-0½""";6,60;0,61;"10'-6""";;;1;0;ESTIMÉ
 RDC;piece-RDC-UTI;Salle à manger;"13'-11¾""";"13'-10""";169,40;15,74;"55'-7½""";;;2;1;DÉDUIT
-RDC;piece-RDC-DEG;Dégagement;"17'-1¾""";"4'-4¾""";67,40;6,26;"43'-1""";;;4;0;ESTIMÉ
-RDC;piece-RDC-HALL;Hall;"7'-7¾""";"3'-8¾""";28,10;2,61;"22'-9""";;;1;0;ESTIMÉ
-RDC;piece-RDC-ENT;Entrée;"4'-2¾""";"3'-8¾""";15,60;1,45;"15'-11""";;;2;0;ESTIMÉ
-RDC;piece-RDC-VES;Vest.;"3'-5¾""";"2'-2¾""";7,80;0,72;"11'-5""";;;0;0;ESTIMÉ
-RDC;piece-RDC-GRA;G.R.;"6'-3½""";"2'-0½""";12,80;1,19;"16'-8""";;;1;0;ESTIMÉ
-RDC;piece-RDC-LIN;Lin.;"2'-0½""";"1'-6½""";3,10;0,29;"7'-2""";;;1;0;ESTIMÉ
-RDC;piece-RDC-SAL;Salon;"18'-8""";"12'-3""";227,30;21,12;"61'-10""";;;0;1;DÉDUIT
+RDC;piece-RDC-DEG;Dégagement;"17'-1¾""";"4'-4¾""";67,00;6,22;"43'-1""";;;4;0;DÉDUIT
+RDC;piece-RDC-ENT;Entrée;"12'-2""";"10'-3""";124,70;11,59;"44'-10""";;;2;0;DÉDUIT
+RDC;piece-RDC-SAL;Salon;"14'-4¾""";"12'-3""";176,30;16,38;"53'-3½""";;;0;1;DÉDUIT
 RDC;piece-RDC-CUI;Cuisine;"17'-9""";"10'-10""";192,30;17,87;"57'-2""";;;0;2;DÉDUIT
 RDC;piece-RDC-EAR;Entrée arr.;"7'-4""";"4'-2""";30,60;2,84;"23'-0""";;;2;1;PRÉSUMÉ
+RDC;piece-RDC-GRP;G.R.;"5'-11¾""";"2'-0½""";12,20;1,13;"16'-0½""";;;1;0;DÉDUIT

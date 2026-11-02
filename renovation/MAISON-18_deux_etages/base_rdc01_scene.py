@@ -108,6 +108,9 @@ R += [B(XB, 198, 446, 369.45, 0, 96, "brique_rouge"), B(XB, 159, 446, 162, 0, 96
 # poteau de bois brut contre le mur arrière (photo 07) et chambranle noir de la baie de l'entrée arrière
 M += [B(263.5, 364.5, 270, 370, 0, 96, "bois_brut")]
 M += [B(276.2, 369.0, 279.2, 369.5, 0, 82.8, NOIR), B(310.8, 369.0, 313.8, 369.5, 0, 82.8, NOIR), B(276.2, 369.0, 313.8, 369.5, 80, 82.8, NOIR)]
+# ... et noir aussi dans l'épaisseur de la baie (photos 01, 07, 08) : par-dessus le doublage de pin que pose le moteur
+M += [B(278.95, 369.95, 279.55, 380.05, 0, 80.05, NOIR), B(310.45, 369.95, 311.05, 380.05, 0, 80.05, NOIR),
+      B(278.95, 369.95, 311.05, 380.05, 79.45, 80.05, NOIR)]
 # cadrage noir de la fenêtre de l'évier, store cellulaire noir à demi baissé
 M += [B(334.5, 369.0, 337.5, 369.5, 31, 85, NOIR), B(412.5, 369.0, 415.5, 369.5, 31, 85, NOIR), B(334.5, 369.0, 415.5, 369.5, 82, 85, NOIR),
       B(338, 371, 412, 372, 68, 81.5, "carbone"), B(337.5, 370.2, 412.5, 372.5, 81, 82, NOIR)]
@@ -322,21 +325,15 @@ M += [MOD("lit_queen", 52, 85, face="+x"), MOD("table_chevet", 19, 39, face="+x"
 EAR_X0, EAR_XN, EAR_Y0, EAR_Y1, GIRON, CM = 229, 284, 398, 430, 10.5, 7.5     # nez du palier à x = 284 : la porte
 # extérieure (pentures côté mur du fond, battant de 34 po jusqu'à x ≈ 285½) ne balaie pas la volée
 M += [A(294, 395, 315.5, 425, 0, 0.4, "tapis", r=2, b=0.2)]                                   # devant la porte extérieure
-for k in range(1, 7):                                                                        # 6 contremarches, palier tournant
-    xa, xb, z = max(EAR_X0, EAR_XN - GIRON * k), EAR_XN - GIRON * (k - 1), -CM * k
-    M += [B(xa, EAR_Y0, xb + 1, EAR_Y1, z - 1.5, z, "ardoise_noire"), B(xb - 0.5, EAR_Y0, xb + 0.25, EAR_Y1, z, z + CM, NOIR)]
-M += [B(EAR_X0, EAR_Y0 - 1.5, EAR_XN, EAR_Y0, -60, 0, NOIR),                                    # limon côté palier
-      B(EAR_X0, EAR_Y0 - 0.3, EAR_XN + 0.6, EAR_Y0 + 0.4, -0.2, 0.3, "inox"), B(EAR_XN, EAR_Y0, EAR_XN + 0.6, EAR_Y1, -0.2, 0.3, "inox")]
-# main courante : 34 po au-dessus du nez des marches, retour au mur en haut, consoles noires
-ZR = lambda x: 34 - CM * (EAR_XN - x) / GIRON
-M += [T([(EAR_XN, EAR_Y1, ZR(EAR_XN)), (EAR_XN, EAR_Y1 - 2.6, ZR(EAR_XN)), (EAR_XN - 2, EAR_Y1 - 2.6, ZR(EAR_XN - 2)),
-         (EAR_X0 + 3, EAR_Y1 - 2.6, ZR(EAR_X0 + 3))], 0.8, "bois_brut", bouts=True)]
-M += [CY(x, EAR_Y1 - 2, EAR_Y1, ZR(x) - 1.6, 0.3, NOIR) for x in (EAR_XN - 5, EAR_XN - 28, EAR_X0 + 8)]
+# Volée de 6 marches qui descend vers la porte extérieure : NON dessinée dans la maquette des deux étages (elle plongerait
+# dans le walk-in du sous-sol, sous le perron) ; niveau réel de l'entrée arrière, nombre de marches et garde à mesurer.
 
 # portes d'une autre finition que le pin (portes plates blanches des garde-robes de la chambre arrière, photo 10) : l'ouverture
-# porte "finition": "<matériau>" dans maison.json (base_rdc01_modifs.py ou un module rdc_*.py). La visionneuse ne connaît
-# qu'un matériau de battant par maquette ("porte" → mats_finitions) : on habille le battant, calculé par les fonctions du
-# moteur (porte ouverte à 90° ou fermée), d'une pellicule de 0,08 po de ce matériau. Objets marqués "role": "finition_porte".
+# porte "finition": "<matériau>" dans maison.json (base_rdc01_modifs.py ou un module rdc_*.py). Le moteur ne connaît qu'un
+# matériau de battant ("porte" → mats_finitions) : on habille le battant, à l'état FERMÉ calculé par le moteur (battant()),
+# d'une pellicule de 0,08 po de ce matériau, liée à la porte ("porte": id) pour qu'elle pivote avec elle quand on l'ouvre.
+# Moteur plus ancien (sans battant()) : battant dessiné tel quel (feuille_porte / porte_fermee), sans lien.
+# Objets marqués "role": "finition_porte" ; rien n'est ajouté si maison.json ou le moteur manquent.
 def portes_finies(niveau="RDC"):
     import importlib.util, json, os, sys
     ici = os.path.dirname(os.path.abspath(__file__))
@@ -344,25 +341,40 @@ def portes_finies(niveau="RDC"):
         mj = json.load(open(os.path.join(ici, "donnees", "maison.json"), encoding="utf-8"))
         niv = next(n for n in mj["niveaux"] if n["id"] == niveau)
         g = sys.modules.get("__main__")                # le moteur qui nous charge (generer_3d.py), sinon son fichier
-        if not (hasattr(g, "feuille_porte") and hasattr(g, "porte_fermee")):
+        if not any(hasattr(g, f) for f in ("battant", "feuille_porte")):
             f = next(p for p in (os.path.join(ici, "..", "outils", "generer_3d.py"),
                                  os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "generer_3d.py")) if os.path.isfile(p))
             spec = importlib.util.spec_from_file_location("m18_moteur_portes", f)
             g = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(g)
-    except Exception as err:                       # maison.json pas encore construit, moteur en chantier : battants en pin
+    except Exception as err:                       # maison.json pas encore construit, moteur introuvable : battants en pin
         print("  portes finies ignorées :", err)
         return []
     murs, out, e = {m["id"]: m for m in niv["murs"]}, [], 0.08
+    par_mur = {}
+    for o in niv["ouvertures"]:
+        par_mur.setdefault(o["mur_id"], []).append(o)
     for o in niv["ouvertures"]:
         m = murs.get(o["mur_id"])
         if not o.get("finition") or not m or o["type"] == "fenetre" or o.get("operation") in ("coulissante", "aucune") \
                 or o.get("materiau") == "verre" or (o.get("position") or {}).get("valeur") is None:
             continue
         t = (m.get("epaisseur") or {}).get("valeur") or 4.5
-        f = g.porte_fermee(m, o, t)[0] if o.get("fermee") else dict(g.feuille_porte(m, o, t), z0=0.5, z1=80)
+        lien = {}
+        try:
+            if hasattr(g, "battant"):
+                bt = g.battant(dict(m, _ouvertures=par_mur.get(m["id"], [])), o, t, [])
+                f = next(b for b in bt["boites"] if b["mat"] in ("porte", "porte-ext"))
+                lien = {"porte": o["id"]}
+            elif o.get("fermee"):
+                f = g.porte_fermee(m, o, t)[0]
+            else:
+                f = dict(g.feuille_porte(m, o, t), z0=0.5, z1=80)
+        except Exception as err:
+            print("  porte", o["id"], "laissée en pin :", err)
+            continue
         out.append(dict(B(f["x0"] - e, f["y0"] - e, f["x1"] + e, f["y1"] + e, f["z0"] - e, f["z1"] + e, o["finition"]),
-                        role="finition_porte", ouverture=o["id"]))
+                        role="finition_porte", ouverture=o["id"], **lien))
     return out
 
 
@@ -396,21 +408,23 @@ SCENE = {
     "accents": [],
     "mobilier": M,
     "revetements": R,
-    "lumieres": [{"x": 340, "y": 356}, {"x": 375, "y": 356}, {"x": 410, "y": 356}, {"x": 430, "y": 322}, {"x": 430, "y": 262},
-                 {"x": 430, "y": 210}, {"x": 362, "y": 236}, {"x": 362, "y": 282}, {"x": 395, "y": 190},
+    # encastrés de la cuisine : devant la hotte et devant la colonne d'armoires (avant : au-dessus de la hotte et cachés
+    # au-dessus de la colonne pleine hauteur, qui ne laisse que 0,2 po sous le plafond)
+    "lumieres": [{"x": 340, "y": 356}, {"x": 375, "y": 356}, {"x": 410, "y": 356}, {"x": 414, "y": 322}, {"x": 406, "y": 262},
+                 {"x": 406, "y": 222}, {"x": 362, "y": 236}, {"x": 362, "y": 282}, {"x": 395, "y": 190},
                  {"x": 225, "y": 296, "z": 70, "i": 5}, {"x": 186, "y": 214}, {"x": 290, "y": 360, "i": 6},
                  {"x": 198, "y": 180}, {"x": 200, "y": 112}, {"x": 198, "y": 36}, {"x": 128, "y": 186},
                  {"x": 42, "y": 190}, {"x": 82, "y": 190},
                  {"x": 77, "y": 296, "z": 82, "i": 5}, {"x": 77, "y": 75, "z": 92, "i": 5},
                  {"x": 300, "y": 80, "z": 92, "i": 4}, {"x": 390, "y": 80, "z": 92, "i": 4}, {"x": 273, "y": 405}],
     "visites": [{"nom": "Entrée avant", "x": 198, "y": 34, "cap": 90},
-                {"nom": "Hall (mur de cadres)", "x": 292, "y": 128, "cap": 182},
-                {"nom": "Salon", "x": 346, "y": 212, "cap": 266},
+                {"nom": "Hall (mur de cadres)", "x": 300, "y": 146, "cap": 184},
+                {"nom": "Salon", "x": 300, "y": 80, "cap": 25},
                 {"nom": "Salon vers le hall", "x": 362, "y": 196, "cap": 198},
                 {"nom": "Cuisine", "x": 262, "y": 232, "cap": 32},
                 {"nom": "Îlot et cuisinière", "x": 318, "y": 318, "cap": 350},
                 {"nom": "Cuisine vers le salon", "x": 336, "y": 206, "cap": 262},
-                {"nom": "Salle à manger", "x": 200, "y": 222, "cap": 72},
+                {"nom": "Salle à manger", "x": 305, "y": 212, "cap": 145},
                 {"nom": "Coin bureau", "x": 296, "y": 268, "cap": 192},
                 {"nom": "Corridor", "x": 150, "y": 186, "cap": 180},
                 {"nom": "Salle de bain", "x": 118, "y": 188, "cap": 180},

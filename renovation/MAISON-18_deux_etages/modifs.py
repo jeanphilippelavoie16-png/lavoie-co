@@ -50,4 +50,14 @@ def appliquer(maison):
               "nom_pdf": "MAISON-18_deux_etages.pdf"})
     _niv(maison, "SS")["feuille"], _niv(maison, "SS")["nom"] = "P-129", "Sous-sol proposé"
     rdc["feuille"], rdc["nom"] = "P-130", "Rez-de-chaussée proposé"
+    # notes de la feuille P-130 (le cartouche en tient 6) : le détail est dans DESIGN.md
+    notes = [
+        "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes estimées sur photos, à mesurer).",
+        "Entrée vitrée : garde-robes du hall enlevées, murs de verre à cadres noirs, porte vitrée vers le dégagement.",
+        "Escalier vers le sous-sol : trémie ≈ 3 × 10 pi ; échappée ≈ 1,96 m à vérifier ; garde-corps de 42 po conseillé.",
+        "Chambre des parents : lit king, mur de tête en bois de grange, garde-robes réunies à portes coulissantes.",
+        "Bureau-gaming (ancienne chambre avant) : 2 postes face à la fenêtre avant.",
+        "Poutre et appuis de l'ancienne cloison hall/salon, coupe-feu entre logements : à valider avec la Ville et un professionnel.",
+    ]
+    rdc["notes"] = [{"id": f"note-RDC-P{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t} for i, t in enumerate(notes)]
     return maison
