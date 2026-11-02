@@ -51,7 +51,7 @@ PEINTURES = {   # nom : [couleur à l'écran, description, alias employé par le
     "Asphalte": ["#45474A", "allée", "ext-asphalte"],
     "Gazon": ["#6E8A4E", "pelouse", "ext-gazon"],
     "Toile de piscine": ["#3E8DB5", "fond de la piscine (toile bleue)", "ext-toile"],
-    "Gris piscine": ["#9A9EA2", "paroi de la piscine hors-terre", "ext-piscine"],
+    "Gris piscine": ["#8C939A", "paroi de la piscine hors-terre", "ext-piscine"],
     "Gris foncé": ["#5C5F63", "montants de la piscine, appareils", "ext-gris"],
     "Dalle blanche": ["#E6E3DC", "pas japonais (interblocs blancs)", "ext-dalle"],
     "Épinette": ["#3E5A3F", "épinettes et haie de cèdres", "ext-sapin"],
@@ -128,13 +128,14 @@ def releve():
             murs = [(m["id"], m["type"], m["x1"], m["y1"], m["x2"], m["y2"], (m.get("epaisseur") or {}).get("valeur") or 10)
                     for m in n["murs"] if m["type"] in ("fondation", "ext") and m.get("materiau") not in ("verre", "lattes")]
             ids = {m[0] for m in murs}
-            ouvs = [(o["mur_id"], o["type"], (o.get("position") or {}).get("valeur"), (o.get("largeur") or {}).get("valeur"))
+            ouvs = [(o["mur_id"], o["type"], (o.get("position") or {}).get("valeur"), (o.get("largeur") or {}).get("valeur"),
+                     (o.get("allege") or {}).get("valeur") if isinstance(o.get("allege"), dict) else None)
                     for o in n["ouvertures"] if o["mur_id"] in ids]
             out[n["id"]] = (murs, [o for o in ouvs if o[2] is not None and o[3] is not None])
     except (OSError, ValueError, KeyError):
         pass
     for nid in ("SS", "RDC"):
-        out.setdefault(nid, (MURS_REPLI[nid], OUV_REPLI[nid]))
+        out.setdefault(nid, (MURS_REPLI[nid], [o + (None,) for o in OUV_REPLI[nid]]))
     return out
 
 
@@ -148,9 +149,13 @@ def _dans(x, y, rects):
 
 
 # ------------------------------------------------------------------------------------------------- enveloppe de la maison
+MARGELLES = []     # puits des fenêtres du sous-sol dont l'allège tombe sous le terrain (le moteur les dessine) : rempli par enveloppe()
+
+
 def enveloppe():
     """Parement de brique sur le RDC, crépi blanc sur la fondation apparente, fenêtres noires vues de dehors, cadres de portes."""
     out = []
+    MARGELLES.clear()
     R = releve()
     niveaux = {"SS": dict(emprise=[CORPS, ENTREE_ARR, PERRON], z0=SOL - 4, z1=97.0, mat="crepi",
                           fen=(56, 86), porte=(0, 80)),
@@ -191,11 +196,16 @@ def enveloppe():
                     debut = None
                 a += pas
             trous = []
-            for (mur, typ_o, c, w) in ouvs:
+            for (mur, typ_o, c, w, allege) in ouvs:
                 if mur != mid:
                     continue
                 z0o, z1o = cfg["fen"] if typ_o == "fenetre" else cfg["porte"]
+                if typ_o == "fenetre" and allege is not None:      # allège propre à la fenêtre (fenêtres agrandies vers le bas)
+                    z0o = allege + (Z_RDC if nid == "RDC" else 0)
                 trous.append((c - w / 2, c + w / 2, z0o, z1o, typ_o))
+                if nid == "SS" and typ_o == "fenetre" and z0o < SOL + 2:    # margelle du moteur (36 po, débord 6 po) : gazon troué
+                    (xa, ya), (xb, yb) = pt(c - w / 2 - 7.5, f - 0.5), pt(c + w / 2 + 7.5, f + 37.5)
+                    MARGELLES.append((min(xa, xb), min(ya, yb), max(xa, xb), max(ya, yb)))
             trous.sort()
             for (a0, a1) in libres:
                 coupe = [tr for tr in trous if tr[1] > a0 and tr[0] < a1]
@@ -369,8 +379,8 @@ DALLES = [[(486.5, 598.4), (495.4, 575.5), (461.2, 562.2), (452.3, 585.2)],     
           [(473.6, 632.1), (482.5, 609.1), (448.3, 595.9), (439.4, 618.8)],
           [(433.4, 665.9), (469.7, 665.9), (469.7, 641.5), (433.4, 641.5)]]
 APPAREILS = [(33.8, 780.0), (0.4, 790.7), (25.2, 857.4), (59.4, 847.5)]          # dalle des appareils de la piscine (3' × 6')
-ALLEE = (462, -480, 556, 60)               # allée d'asphalte le long du côté droit (hors plan DAG : supposée)
-DESCENTE = (456, 94, 504, 212)             # descente de la porte de côté du sous-sol (hors plan : supposée)
+ALLEE = (462, -480, 556, 40)               # allée d'asphalte le long du côté droit (hors plan DAG : supposée)
+DESCENTE = (456, 100, 504, 212)            # descente de la porte de côté du sous-sol (hors plan : supposée)
 # lignes de lot : arrière et côtés mesurés sur le plan DAG ; devant prolongé avec le plan d'implantation de 1957 (marge avant
 # de 40', ligne droite ⟂ à la rue, façade du lot 57,23')
 TERRAIN = [[560, -480], [560, 871], [-43, 903], [-128, -480]]
@@ -520,7 +530,7 @@ def terrain_et_vegetation():
     from shapely.ops import unary_union
     out = []
     lot = Polygon(TERRAIN)
-    maison = unary_union([box(*CORPS), box(*ENTREE_ARR), box(*PERRON), box(*CHEMINEE), box(*DESCENTE)])
+    maison = unary_union([box(*CORPS), box(*ENTREE_ARR), box(*PERRON), box(*CHEMINEE), box(*DESCENTE)] + [box(*r) for r in MARGELLES])
     gazon = lot.difference(maison)
     for zone in (box(-500, -600, 700, 0), box(-500, 380, 700, 1000), box(-500, 0, 0, 380), box(456, 0, 700, 380)):
         g = gazon.intersection(zone)
@@ -532,9 +542,9 @@ def terrain_et_vegetation():
     x0, y0, x1, y1 = DESCENTE
     r = SOL / 7
     out += [B(x1 - 6, y0, x1, y1, -6, SOL + 4, "beton"), B(x0, y1 - 6, x1, y1, -6, SOL + 4, "beton"),
-            B(x0, y0 + 6 + 60, x1 - 6, y1 - 6, -6, 0, "beton")]
+            B(x0, y0 + 60, x1 - 6, y1 - 6, -6, 0, "beton")]
     for i in range(1, 7):
-        out.append(B(x0, y0 + 6 + 10 * (i - 1), x1 - 6, y0 + 66, -6, SOL - r * i, "beton"))
+        out.append(B(x0, y0 + 6 + 9 * (i - 1), x1 - 6, y0 + 60, -6, SOL - r * i, "beton"))
     out += garde_corps((x1 - 3, y0), (x1 - 3, y1), SOL + 4, 36) + garde_corps((x0 + 1, y1 - 3), (x1, y1 - 3), SOL + 4, 36)
     # haie de cèdres le long de la ligne de lot oblique (cour arrière), 6 pi
     ys = [380 + 20 * i for i in range(26)] + [895]
@@ -566,9 +576,9 @@ def _planchers():
     out.append({"nom": "Dalle du cabanon (devant les portes)", "pts": rect(CAB[0] - 4, CAB[1] - 4, CAB[2] + 4, CAB[1]), "z": SOL + 4})
     out += [{"nom": f"Pas japonais {i + 1}", "pts": [list(p) for p in d], "z": SOL + 1.5} for i, d in enumerate(DALLES)]
     x0, y0, x1, y1 = DESCENTE
-    out += [{"nom": f"Descente de la porte de côté, marche {i}", "pts": rect(x0, y0 + 6 + 10 * (i - 1), x1 - 6, y0 + 6 + 10 * i),
+    out += [{"nom": f"Descente de la porte de côté, marche {i}", "pts": rect(x0, y0 + 6 + 9 * (i - 1), x1 - 6, y0 + 6 + 9 * i),
              "z": round(SOL - SOL / 7 * i, 2)} for i in range(1, 7)]
-    out.append({"nom": "Descente de la porte de côté, palier", "pts": rect(x0, y0 + 66, x1 - 6, y1 - 6), "z": 0})
+    out.append({"nom": "Descente de la porte de côté, palier", "pts": rect(x0, y0 + 60, x1 - 6, y1 - 6), "z": 0})
     return out
 
 
