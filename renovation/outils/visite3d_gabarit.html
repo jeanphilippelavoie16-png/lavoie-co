@@ -759,19 +759,21 @@ const GLB = {}, ECHECS = [];
 const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele, image, ecran };
 // Portes interactives (S.battants de chaque étage) : le vantail est décrit FERMÉ ; f = 0 fermée, 1 ouverte.
 // Battante : rotation de f·angle autour du pivot (charnière) ; coulissante : translation de f·glisse. Chaque porte existe
-// deux fois : pleine hauteur dans la visite, coupée à 4 pi dans la maquette ; les deux bougent ensemble.
+// deux fois : pleine hauteur dans la visite, coupée à 4 pi dans la maquette ; les deux bougent ensemble. Boîtes et objets
+// « fixe » (vantail fixe d'une porte coulissante double) : groupe immobile, mais le toucher ouvre ou ferme la porte.
 const PORTES = {};
 for (const E of ETAGES) for (const p of E.d.battants || []) {
   const pt = { p, E, f: p.etat === "fermee" ? 0 : 1, etat: p.etat, anim: null, groupes: [] };
   for (const [parent, couper] of [[E.g.murs, false], [E.g.coupe, true]]) {
-    const ext = new THREE.Group(), int = new THREE.Group();
+    const ext = new THREE.Group(), int = new THREE.Group(), fixe = new THREE.Group();
     ext.position.copy(P(p.pivot[0], p.pivot[1], 0)); int.position.copy(P(-p.pivot[0], -p.pivot[1], 0));
-    ext.add(int); parent.add(ext); ext.userData.porte = p.id;
+    ext.add(int); parent.add(ext); ext.userData.porte = p.id; fixe.userData.porte = p.id; parent.add(fixe);
     for (const b of p.boites) {
-      if (!couper) boite(b, int);
-      else if (b.z0 < 48) boite({ ...b, z1: Math.min(b.z1, 48) }, int);
+      const g = b.fixe ? fixe : int;
+      if (!couper) boite(b, g);
+      else if (b.z0 < 48) boite({ ...b, z1: Math.min(b.z1, 48) }, g);
     }
-    pt.groupes.push({ ext, int });
+    pt.groupes.push({ ext, int, fixe });
   }
   PORTES[p.id] = pt; E.portes.push(pt); poserPorte(pt);
 }
@@ -801,7 +803,7 @@ for (const E of ETAGES) {                // empreintes au sol (OMBRES) : remises
     const pt = o.porte && PORTES[o.porte];
     if (pt) {                                    // meuble porté par une porte (porte-bibliothèque) : il pivote avec elle
       const n0 = OMBRES.length;
-      for (const g of pt.groupes) (FORMES[o.forme] || boite)(o, g.int);
+      for (const g of pt.groupes) (FORMES[o.forme] || boite)(o, o.fixe ? g.fixe : g.int);
       OMBRES.length = n0; continue;
     }
     const cm = o.commande && CMD[o.commande];

@@ -6,7 +6,9 @@ Lit <projet>/donnees/maison.json (produit par construire_projet.py) et, s'il exi
 Facultatif : SCENE["commandes"] (toile motorisée, stores...) rend des objets du mobilier mobiles dans la visite (voir commandes()).
 
 Portes : chaque porte battante ou coulissante devient un objet qu'on ouvre et ferme en le touchant (voir battant()) ; état de
-départ = celui dessiné (« fermee » ou ouverte à 90°). Un objet du mobilier qui porte "porte": id d'ouverture pivote avec elle.
+départ = celui dessiné (« fermee » ou ouverte à 90°). Un objet du mobilier qui porte "porte": id d'ouverture pivote avec elle
+(avec "fixe": true, il reste en place mais le toucher ouvre ou ferme la porte : vantail fixe d'une porte coulissante double).
+Porte coulissante double de garde-robe : "vantaux": 2 dans l'ouverture (voir battant()), "finition" : matériau de ses vantaux.
 
 Plusieurs étages (opt-in) : SCENE = {"titre", "etages": [scène SS, scène RDC], "depart": {..., "etage": "SS"}}, chaque scène
 d'étage complète (comme aujourd'hui, avec son "niveau"). Chaque étage est construit avec la géométrie de son niveau de
@@ -618,7 +620,11 @@ def battant(m, o, t, mobilier):
     la porte pousse) ; coulissante : translation "glisse" [dx, dy] (dans le mur si la place y est : porte escamotable,
     sinon le long de la face du mur ou de la cloison vitrée). "etat" de départ = celui dessiné (« fermee » ou ouverte) ;
     "zone" = baie dans le mur (une porte fermée y bloque la marche). Porte « fermee » cachée derrière un meuble qui la
-    couvre (porte-bibliothèque) : ce mobilier pivote avec elle (clé "porte" ajoutée à l'objet). Retourne None sans porte."""
+    couvre (porte-bibliothèque) : ce mobilier pivote avec elle (clé "porte" ajoutée à l'objet). Retourne None sans porte.
+    Coulissante à deux vantaux ("vantaux": 2, garde-robe) : deux rails dans l'épaisseur de la baie ; le vantail avant (côté
+    "ouvre_vers") glisse devant le vantail arrière, qui reste en place au bout "charniere" ("fin" par défaut) ; boîtes du
+    vantail fixe marquées "fixe" (elles font partie de la porte : les toucher l'ouvre ou la ferme) ; "finition" : matériau de
+    ces deux vantaux (sinon celui des portes de l'étage)."""
     op = o.get("operation") or "battante"
     if op == "aucune" or o.get("position", {}).get("valeur") is None or o.get("largeur", {}).get("valeur") is None:
         return None
@@ -653,6 +659,28 @@ def battant(m, o, t, mobilier):
                 bx(al0, al0 + k, ac0, ac1, 0.5, 80, "metal"), bx(al1 - k, al1, ac0, ac1, 0.5, 80, "metal"),
                 bx(al0, al1, ac0, ac1, 0.5, 2, "metal"), bx(al0, al1, ac0, ac1, 78.5, 80, "metal")]
 
+    if op == "coulissante" and o.get("vantaux") == 2:
+        # deux vantaux de w/2 + 1 (2 po de chevauchement) sur deux rails dans l'épaisseur de la baie : l'avant (côté où la
+        # porte « ouvre ») glisse de w/2 - 1 devant l'arrière, fixe au bout "charniere" ; ouverte : une moitié de baie libre
+        out["type"] = "coulissante"
+        if o.get("finition") and not verre:                 # matériau des vantaux (sinon celui des portes de l'étage)
+            mat = o["finition"]
+        wl = w / 2 + 1
+        e2 = min(1.6, t / 2 - 0.1)
+        av, ar = sorted([side * 0.2, side * e2]), sorted([-side * 0.2, -side * e2])
+        if s.get("charniere", "fin") != "debut":
+            (f0, f1), (m0, m1), dirg = (b - wl, b), (a, a + wl), 1
+        else:
+            (f0, f1), (m0, m1), dirg = (a, a + wl), (b - wl, b), -1
+        out["boites"] = vantail(m0, m1, *av) + [dict(q, fixe=True) for q in vantail(f0, f1, *ar)]
+        # tirettes noires côté pièce, au bord libre de chaque vantail
+        qa = m0 + 2 if dirg > 0 else m1 - 3
+        qf = f1 - 3 if dirg > 0 else f0 + 2
+        out["boites"] += [bx(qa, qa + 1, *sorted([side * e2, side * (e2 + 0.3)]), 30, 50, "metal"),
+                          dict(bx(qf, qf + 1, *sorted([-side * 0.2, side * 0.15]), 30, 50, "metal"), fixe=True)]
+        out["pivot"] = [round(v, 3) for v in pt(c, 0)]
+        out["glisse"] = [round(ux * dirg * (w - wl), 3), round(uy * dirg * (w - wl), 3)]
+        return out
     if op == "coulissante":
         # place libre dans le mur de chaque côté de la baie (jusqu'à la prochaine ouverture ou au bout du mur)
         out["type"] = "coulissante"

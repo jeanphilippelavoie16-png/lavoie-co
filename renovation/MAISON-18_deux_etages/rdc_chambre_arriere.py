@@ -35,6 +35,7 @@ YC = 298.0                                        # axe du lit (milieu de la cha
 PX0, PX1, PY0, PY1 = 21.5, 105.5, 257.0, 339.0    # plateforme king 84 × 82 (matelas 76 × 80 : x 23–103, y 260–336)
 GX0, GX1, GY0, GY1 = 148.25, 172.75, 298.25, 370.0  # garde-robe réunie (nu intérieur)
 OY0, OY1 = 302.0, 368.0                           # baie coulissante dans mur-RDC-021 (66 po)
+NOIR_MAT = "noir-mat"                             # vantaux des portes coulissantes (dessinés par le moteur)
 NICHES = [(230.0, 250.0, 32.0, 64.0), (346.0, 366.0, 32.0, 64.0)]   # niches latérales (y0, y1, z0, z1), 6 po de creux
 TABLETTE = (256.0, 340.0, 54.0, 64.0)                               # niche-tablette au-dessus de la tête de lit
 
@@ -96,6 +97,11 @@ def appliquer_modifs_rdc(maison, ctx):
             "id": "ouv-RDC-CH1-GR", "type": "porte", "operation": "coulissante", "mur_id": "mur-RDC-021", "etat": "nouveau",
             "position": _dim(round((OY0 + OY1) / 2 - y0, 2), "PRÉSUMÉ", "baie de 66 po, y 302 à 368 (retours de 4 et 2 po)"),
             "largeur": _dim(OY1 - OY0), "hauteur": _dim(80), "allege": {"valeur": None, "source": "ILLISIBLE", "photo": None},
+            # (2026-11-02, portes bloquées) deux vantaux dessinés par le moteur : l'avant (miroir, côté chambre) glisse devant
+            # l'arrière (noir mat, fixe au bout y = 368) ; les deux s'ouvrent et se ferment en les touchant
+            "vantaux": 2, "finition": NOIR_MAT,
+            "sens": {"charniere": "fin", "ouvre_vers": "gauche", "note": "vantail arrière fixe au bout y = 368 ; le vantail "
+                     "avant (miroir) glisse devant lui"},
             "note": "Garde-robe des parents : 2 portes coulissantes de 34 po (miroir pleine hauteur à cadre noir mat devant, "
                     "panneau noir mat à rainures derrière), rail encastré. Remplace les 2 portes battantes de 28 po ; "
                     "mur-RDC-021 porteur INCONNU : linteau à valider avec un professionnel (" + SRC + ")."})
@@ -270,14 +276,16 @@ def _mobilier(h, fen=None):
     M += [B(152.0, 348.0 + k * 2.9, 169.0, 348.8 + k * 2.9, 22.0, 66.8, LINGE[(k + 3) % len(LINGE)]) for k in range(6)]
     M += [B(149.6, 346.25, 172.6, GY1, 6.0, 6.75, "placage")]
     M += [A(151.0, y, 161.0, y + 3.4, 6.75, 10.5, m, r=1.2, b=0.6) for y, m in ((348.5, "carbone"), (353.0, "cuir"), (357.5, "blanc"), (362.0, "carbone"))]
-    # portes coulissantes (rail encastré) : miroir devant (au repos à droite), panneau noir glissé derrière lui
+    # portes coulissantes (rail encastré). Les deux vantaux noir mat sont ceux de la porte ouv-RDC-CH1-GR du moteur
+    # ("vantaux": 2) : l'avant (x 144,4–145,8 ; fermé : y 302–336) glisse de 32 po devant l'arrière (x 146,2–147,6 ;
+    # y 334–368, fixe). Avant (2026-11-02), ils étaient un décor FIXE dessiné ouvert devant la porte du moteur : le
+    # toucher tombait sur le décor et la porte ne s'ouvrait ni ne se fermait. Le miroir et les rainures sont liés à la
+    # porte ("porte") : le miroir glisse avec le vantail avant ; les rainures restent sur le vantail fixe ("fixe").
+    GRP = {"porte": "ouv-RDC-CH1-GR"}
     M += [B(144.0, OY0, 148.0, OY1, 79.4, 80.0, "metal")]                              # rail
-    M += [B(144.0, 334.0, 145.3, OY1, 0.5, 79.3, NOIR),                                # vantail avant : cadre noir mat
-          B(143.8, 335.5, 144.0, OY1 - 1.5, 2.0, 77.8, "miroir"),                      # miroir pleine hauteur
-          B(146.4, 334.0, 147.7, OY1, 0.5, 79.3, NOIR)]                                # vantail arrière (glissé derrière)
-    M += [B(147.7, 334.6, 147.9, 335.0, 4, 76, "carbone")]
-    M += [B(146.3, y, 146.4, y + 0.2, 1.0, 79.0, "carbone") for y in range(336, 367, 3)]   # rainures (face chambre)
-    M += [B(143.55, 365.0, 143.8, 366.2, 30.0, 50.0, "metal")]                         # tirette noire
+    M += [dict(B(144.2, OY0 + 3.75, 144.4, OY0 + 32.5, 2.0, 77.8, "miroir"), face="-x", **GRP)]   # miroir (vantail avant, fermé)
+    M += [dict(B(146.1, y, 146.2, y + 0.2, 1.0, 79.0, "carbone"), fixe=True, **GRP)
+          for y in range(337, 366, 3)]                                                 # rainures (vantail arrière, face chambre)
 
     # ------------------------------------------------------------ fenêtre : rideau de lin pleine hauteur, store opaque
     # un seul grand panneau qui se range côté lit (x < 61) : le coin entre la fenêtre et la garde-robe reste libre

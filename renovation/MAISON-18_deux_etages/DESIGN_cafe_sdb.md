@@ -27,7 +27,7 @@ Avec la volée, la pièce n'est qu'un palier et une cage d'escalier : il ne rest
 vide de l'escalier, et le palier est pris par l'arc de la porte. **Aucun mur n'a 36 po libres devant lui.** Un coin café
 n'y entre pas sans refermer la descente.
 
-#### Parti pris (option A, dessinée)
+#### Parti pris (option A, dessinée) — **acceptée par le client le 2026-11-02** (« C'est parfait comme tu as fait là »)
 **On referme la descente par un plancher à niveau** (solives sur lambourdes, contreplaqué, ardoise comme le reste) et on
 fait du **mur de gauche (x = 229, 50 po, le seul mur plein)** un coin café encastré, d'un mur à l'autre :
 - le sous-sol garde l'escalier principal (neuf, à l'entrée avant) et sa porte de côté ; le walk-in de la chambre 2 (SS-17),

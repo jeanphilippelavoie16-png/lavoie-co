@@ -6782,8 +6782,9 @@
       "note": "non écrite"
      },
      "sens": {
-      "charniere": "debut",
-      "ouvre_vers": "droite"
+      "charniere": "fin",
+      "ouvre_vers": "droite",
+      "note": "pentures côté arrière (y ≈ 288), poignée côté renfoncement : d'après la photo 06 — proposition MAISON-18, cuisine et salle à manger (esquisse)"
      },
      "texte_original": "2'-4\"x6'-8\"",
      "note": "porte du G.R. de la chambre d'utilité",
@@ -6884,6 +6885,13 @@
       "source": "ILLISIBLE",
       "photo": null
      },
+     "vantaux": 2,
+     "finition": "noir-mat",
+     "sens": {
+      "charniere": "fin",
+      "ouvre_vers": "gauche",
+      "note": "vantail arrière fixe au bout y = 368 ; le vantail avant (miroir) glisse devant lui"
+     },
      "note": "Garde-robe des parents : 2 portes coulissantes de 34 po (miroir pleine hauteur à cadre noir mat devant, panneau noir mat à rainures derrière), rail encastré. Remplace les 2 portes battantes de 28 po ; mur-RDC-021 porteur INCONNU : linteau à valider avec un professionnel (proposition MAISON-18, chambre des parents (esquisse))."
     }
    ],
@@ -6950,7 +6958,7 @@
      "id": "piece-RDC-SDB",
      "nom": "Salle de bain",
      "nom_original": "S. DE BAIN",
-     "description": null,
+     "description": "Salle de bain ; laveuse-sécheuse remplacées par une colonne d'apothicaire pleine hauteur — proposition MAISON-18 (esquisse) — coin café et salle de bain (client, 2026-11-02)",
      "polygone": [
       [
        105.75,
@@ -7111,11 +7119,11 @@
        204.0
       ],
       [
-       316.0,
+       264.0,
        204.0
       ],
       [
-       316.0,
+       264.0,
        370.0
       ],
       [
@@ -7132,10 +7140,10 @@
       ]
      ],
      "superficie": {
-      "valeur": 169.4,
+      "valeur": 109.4,
       "source": "DÉDUIT",
       "photo": null,
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+      "note": "aire recalculée : la cuisine suit la tuile d'ardoise (x 264 → 446, photos 01, 02, 07, 08) — proposition MAISON-18, cuisine et salle à manger (esquisse)"
      },
      "hauteur_plafond": {
       "valeur": null,
@@ -7145,16 +7153,14 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 167.75,
+       "valeur": 115.75,
        "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "photo": null
       },
       "y": {
        "valeur": 166.0,
        "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "photo": null
       }
      }
     },
@@ -7166,6 +7172,26 @@
      "description": "Dégagement (aucun nom au plan) ; inclut l'ancien passage ; ouvert sur le salon et la salle à manger (constat 2026-10-29)",
      "polygone": [
       [
+       146.0,
+       157.0
+      ],
+      [
+       264.0,
+       157.0
+      ],
+      [
+       264.0,
+       204.0
+      ],
+      [
+       143.75,
+       204.0
+      ],
+      [
+       143.75,
+       209.75
+      ],
+      [
        110.25,
        209.75
       ],
@@ -7176,37 +7202,17 @@
       [
        146.0,
        159.25
-      ],
-      [
-       146.0,
-       157.0
-      ],
-      [
-       316.0,
-       157.0
-      ],
-      [
-       316.0,
-       204.0
-      ],
-      [
-       143.75,
-       204.0
-      ],
-      [
-       143.75,
-       209.75
       ]
      ],
      "superficie": {
-      "valeur": 67.9,
+      "valeur": 51.0,
       "source": "DÉDUIT",
       "photo": null,
-      "note": "aire du polygone au nu des murs"
+      "note": "aire recalculée : la cuisine suit la tuile d'ardoise (x 264 → 446, photos 01, 02, 07, 08) — proposition MAISON-18, cuisine et salle à manger (esquisse)"
      },
      "dimensions": {
       "x": {
-       "valeur": 205.75,
+       "valeur": 153.75,
        "source": "DÉDUIT",
        "photo": null
       },
@@ -7325,30 +7331,30 @@
      "id": "piece-RDC-CUI",
      "nom": "Cuisine",
      "nom_original": "CUISINE S.-À-MANGER (1957) ; « Cuisine » (2016)",
-     "description": "Cuisine (« Cuisine » sur le croquis 2016) ; aire ouverte sur la salle à manger et le salon ; mobilier, électroménagers et comptoirs non représentés",
+     "description": "Cuisine : tout le rectangle de tuile d'ardoise noire, de la baie de l'entrée arrière à la poutre ; îlot et 3 tabourets — proposition MAISON-18, cuisine et salle à manger (esquisse)",
      "polygone": [
       [
-       316.0,
+       446.0,
        370.0
       ],
       [
-       316.0,
+       264.0,
+       370.0
+      ],
+      [
+       264.0,
        157.0
       ],
       [
        446.0,
        157.0
-      ],
-      [
-       446.0,
-       370.0
       ]
      ],
      "superficie": {
-      "valeur": 192.3,
+      "valeur": 269.2,
       "source": "DÉDUIT",
       "photo": null,
-      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+      "note": "aire recalculée : la cuisine suit la tuile d'ardoise (x 264 → 446, photos 01, 02, 07, 08) — proposition MAISON-18, cuisine et salle à manger (esquisse)"
      },
      "hauteur_plafond": {
       "valeur": null,
@@ -7358,24 +7364,22 @@
      },
      "dimensions": {
       "x": {
-       "valeur": 130.0,
+       "valeur": 182.0,
        "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "photo": null
       },
       "y": {
        "valeur": 213.0,
        "source": "DÉDUIT",
-       "photo": null,
-       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+       "photo": null
       }
      }
     },
     {
      "id": "piece-RDC-EAR",
-     "nom": "Entrée arr.",
+     "nom": "Coin café",
      "nom_original": "(aucun nom ; « ARMOIRES » écrit)",
-     "description": "Entrée arrière (« ARMOIRES »)",
+     "description": "Entrée arrière vers le palier de la piscine, avec coin café sur le mur de gauche ; descente refermée par un plancher à niveau (option A) — proposition MAISON-18 (esquisse) — coin café et salle de bain (client, 2026-11-02)",
      "polygone": [
       [
        229.0,
@@ -7472,6 +7476,59 @@
     }
    ],
    "elements": [
+    {
+     "id": "elem-RDC-C-CAFE",
+     "type": "comptoir",
+     "nom": "Coin café : comptoir de bois de grange (dessus à 36¼ po) sur caissons noir mat de 24 po, 3 tiroirs (grains et capsules, tasses, filtres), machine espresso, moulin ; dosseret et mur de brique rouge ; 2 tablettes flottantes de bois de grange à DEL (58 et 72 po) ; 2 prises doubles (circuit de 20 A)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 241.9,
+      "y": 405.0,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 50.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 25.8,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — coin café et salle de bain (client, 2026-11-02)"
+    },
+    {
+     "id": "elem-RDC-C-FRIGO",
+     "type": "refrigerateur",
+     "nom": "Petit frigo de 24 po sous le comptoir (lait), porte vitrée noire, ventilation par l'avant, pentures côté mur avant",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 241.55,
+      "y": 392.75,
+      "rotation_deg": 270,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 24.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 24.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — coin café et salle de bain (client, 2026-11-02)",
+     "libelle": "FR."
+    },
     {
      "id": "elem-RDC-CH1-CHEV1",
      "type": "autre",
@@ -7820,6 +7877,35 @@
      },
      "note": "proposition MAISON-18 (esquisse) — entrée vitrée",
      "libelle": ""
+    },
+    {
+     "id": "elem-RDC-K-GM",
+     "type": "armoires",
+     "nom": "Garde-manger encastré pleine hauteur (remplace le coin ordi) : caisson et portes noir mat, 5 tiroirs coulissants intérieurs, 2 portes hautes, cadre et joue de bois de grange — 42¼ × 29 po, face au nu du mur des G.R.",
+     "nom_original": null,
+     "etat": "nouveau",
+     "libelle": "G.-M.",
+     "position": {
+      "x": 162.75,
+      "y": 229.38,
+      "rotation_deg": 270,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 42.25,
+       "source": "PROPOSÉ",
+       "photo": null,
+       "note": "du poteau (y ≈ 208) au mur des G.R. (y = 250¾) : à mesurer"
+      },
+      "largeur": {
+       "valeur": 29.0,
+       "source": "PROPOSÉ",
+       "photo": null,
+       "note": "profondeur du renfoncement (photos 05, 06) : à mesurer"
+      }
+     },
+     "note": "Coin ordi de RDC-01 (bureau flottant, écrans, chaise) enlevé ; thermostat à déplacer sur le mur voisin (électricien) — proposition MAISON-18, cuisine et salle à manger (esquisse)"
     },
     {
      "id": "elem-RDC-P-BUR-CH1",
@@ -8204,46 +8290,6 @@
      "libelle": "DOUCHE"
     },
     {
-     "id": "elem-RDC-R-ESCARR",
-     "type": "escalier",
-     "nom": "Escalier existant de l'entrée arrière (descend vers la gauche)",
-     "nom_original": null,
-     "etat": "existant",
-     "libelle": "DESCEND",
-     "position": {
-      "x": 256.5,
-      "y": 414,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 55,
-       "source": "ESTIMÉ",
-       "photo": "rdc_actuel/01, 07, 08",
-       "note": "du nez du palier (x ≈ 284) au mur de gauche (x = 229)"
-      },
-      "largeur": {
-       "valeur": 32,
-       "source": "ESTIMÉ",
-       "photo": "rdc_actuel/01, 07, 08",
-       "note": "le long du mur du fond"
-      }
-     },
-     "escalier": {
-      "nb_contremarches": {
-       "valeur": 6,
-       "source": "ESTIMÉ",
-       "photo": "rdc_actuel/01",
-       "note": "seules les premières marches sont visibles sur les photos"
-      },
-      "fleche": "DESCEND",
-      "direction": "-x"
-     },
-     "photo": "rdc_actuel/01, 07, 08",
-     "note": "Main courante de bois sur le mur du fond ; volée, palier et porte extérieure à mesurer — relevé photo RDC-01 (photos du 2026-11-01)"
-    },
-    {
      "id": "elem-RDC-R-EVIER",
      "type": "evier",
      "nom": "Évier double noir, robinet noir",
@@ -8324,33 +8370,6 @@
      "photo": "rdc_actuel/01, 02, 03, 08",
      "note": "vu sur les photos 01, 02, 03, 08 ; position et dimensions estimées — relevé photo RDC-01 (photos du 2026-11-01)",
      "libelle": "ÎLOT"
-    },
-    {
-     "id": "elem-RDC-R-LAV",
-     "type": "laveuse",
-     "nom": "Laveuse et sécheuse frontales empilées",
-     "nom_original": null,
-     "etat": "existant",
-     "position": {
-      "x": 90.5,
-      "y": 158.25,
-      "rotation_deg": 0,
-      "source": "ESTIMÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 27,
-       "source": "ESTIMÉ",
-       "photo": "rdc_actuel/13, 14, 15"
-      },
-      "largeur": {
-       "valeur": 28,
-       "source": "ESTIMÉ",
-       "photo": "rdc_actuel/13, 14, 15"
-      }
-     },
-     "photo": "rdc_actuel/13, 14, 15",
-     "note": "vu sur les photos 13, 14, 15 ; position et dimensions estimées — relevé photo RDC-01 (photos du 2026-11-01)"
     },
     {
      "id": "elem-RDC-R-LAVABO1",
@@ -8487,6 +8506,32 @@
      },
      "photo": "rdc_actuel/13, 14, 15",
      "note": "vu sur les photos 13, 14, 15 ; position et dimensions estimées — relevé photo RDC-01 (photos du 2026-11-01)"
+    },
+    {
+     "id": "elem-RDC-S-APOTH",
+     "type": "armoires",
+     "nom": "Colonne d'apothicaire pleine hauteur (29½ × 24 po) à la place de la laveuse-sécheuse : 2 paniers à linge basculants (pâle / foncé), 6 tiroirs de bois de grange à porte-étiquettes noirs (un par membre de la famille), niche éclairée de serviettes roulées, armoire du haut ; caisson noir mat comme la vanité",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 90.975,
+      "y": 156.25,
+      "rotation_deg": 0,
+      "source": "PRÉSUMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 29.55,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 24.0,
+       "source": "PRÉSUMÉ",
+       "photo": null
+      }
+     },
+     "note": "proposition MAISON-18 (esquisse) — coin café et salle de bain (client, 2026-11-02)"
     }
    ],
    "structure": [
@@ -11914,6 +11959,73 @@
      "photo": "P4",
      "note": "dalle devant la porte d'entrée ; « REN. » = renforcé (armé) de barres ½ po à 10 po c/c ; dimensions non cotées (ESTIMÉ)",
      "retire_selon": "perron avant : seul l'intérieur du bâtiment est dessiné (propriétaire, 2026-10-29)"
+    },
+    {
+     "id": "elem-RDC-R-ESCARR",
+     "type": "escalier",
+     "nom": "Escalier existant de l'entrée arrière (descend vers la gauche)",
+     "nom_original": null,
+     "etat": "existant",
+     "libelle": "DESCEND",
+     "position": {
+      "x": 256.5,
+      "y": 414,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 55,
+       "source": "ESTIMÉ",
+       "photo": "rdc_actuel/01, 07, 08",
+       "note": "du nez du palier (x ≈ 284) au mur de gauche (x = 229)"
+      },
+      "largeur": {
+       "valeur": 32,
+       "source": "ESTIMÉ",
+       "photo": "rdc_actuel/01, 07, 08",
+       "note": "le long du mur du fond"
+      }
+     },
+     "escalier": {
+      "nb_contremarches": {
+       "valeur": 6,
+       "source": "ESTIMÉ",
+       "photo": "rdc_actuel/01",
+       "note": "seules les premières marches sont visibles sur les photos"
+      },
+      "fleche": "DESCEND",
+      "direction": "-x"
+     },
+     "photo": "rdc_actuel/01, 07, 08",
+     "note": "Main courante de bois sur le mur du fond ; volée, palier et porte extérieure à mesurer — relevé photo RDC-01 (photos du 2026-11-01) — RETIRÉ, MAISON-18 : descente de l'entrée arrière refermée par un plancher à niveau pour le coin café (option A, à valider : voir DESIGN_cafe_sdb.md)."
+    },
+    {
+     "id": "elem-RDC-R-LAV",
+     "type": "laveuse",
+     "nom": "Laveuse et sécheuse frontales empilées",
+     "nom_original": null,
+     "etat": "existant",
+     "position": {
+      "x": 90.5,
+      "y": 158.25,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 27,
+       "source": "ESTIMÉ",
+       "photo": "rdc_actuel/13, 14, 15"
+      },
+      "largeur": {
+       "valeur": 28,
+       "source": "ESTIMÉ",
+       "photo": "rdc_actuel/13, 14, 15"
+      }
+     },
+     "photo": "rdc_actuel/13, 14, 15",
+     "note": "vu sur les photos 13, 14, 15 ; position et dimensions estimées — relevé photo RDC-01 (photos du 2026-11-01) — RETIRÉ, MAISON-18 : laveuse et sécheuse enlevées (client, 2026-11-02) : colonne d'apothicaire à leur place ; entrées d'eau, renvoi et prise de la sécheuse condamnés dans le mur, sortie de la sécheuse bouchée (à faire par un plombier et un électricien)."
     }
    ],
    "murs_retires": [
