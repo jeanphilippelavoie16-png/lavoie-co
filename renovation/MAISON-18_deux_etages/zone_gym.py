@@ -102,13 +102,18 @@ def appliquer_scene(S, h):
     # miroir sans cadre 105 × 74 en 4 panneaux, pellicule de sécurité, profilé noir mince en bas
     M += [B(XM, 12, XM + 0.5, 117.25, 10, 84, "miroir"), B(XM, 12, XM + 0.75, 117.25, 9.5, 10, "metal")]
     M += [B(XM + 0.5, y - 0.06, XM + 0.53, y + 0.06, 10, 84, "carbone") for y in (38.3, 64.6, 90.9)]
-    # porte du lavage (fermée dans la 3D) : miroir collé sur sa face gym, presque à fleur du mur-miroir ; cadre noir
-    # (chambranle et chant de la porte en noir) ; poignée noire côté libre (pentures du côté du hall)
-    M += [B(112.9, 120.55, 114.1, 149.45, 0.5, 80, "metal"), B(114.1, 120.75, 114.2, 149.25, 1.5, 79.5, "miroir")]
+    # porte du lavage (fermée dans la 3D) : miroir collé sur sa face gym ; cadre noir ; poignée noire côté libre (pentures
+    # du côté du hall). MAISON-18 (client, 2026-11-02 : « on n'est pas capable d'accéder à la salle de lavage, la porte pas
+    # capable d'ouvrir ») : le miroir et sa plaque noire étaient un décor FIXE posé devant la porte, à fleur du mur-miroir :
+    # il captait le toucher (la porte ne s'ouvrait pas) et restait dans la baie quand elle s'ouvrait. Ils sont maintenant
+    # collés sur la face gym du vantail que dessine le moteur (fermé : x 109,75 → 111,55) et liés à la porte
+    # ("porte": "ouv-SS-P02") : ils pivotent avec elle vers le lavage (pivot inchangé, x 109,75 ; y 149,5).
+    P02 = {"porte": "ouv-SS-P02"}
+    M += [dict(B(111.55, 120.75, 111.75, 149.25, 1.5, 79.5, "miroir"), **P02)]
     M += [B(XM, 117.35, XM + 0.75, 120.15, 0, 82.65, "metal"), B(XM, 149.85, XM + 0.75, 152.65, 0, 82.65, "metal"),
           B(XM, 117.35, XM + 0.75, 152.65, 79.9, 82.65, "metal")]
-    M += [T([(114.2, 124, 38), (116.4, 124, 38), (116.4, 129, 38)], 0.35, "metal", bouts=True),
-          T([(111.1, 124, 38), (108.9, 124, 38), (108.9, 129, 38)], 0.35, "metal", bouts=True)]
+    # poignée côté gym sur le miroir, liée à la porte (côté lavage : la béquille noire du moteur)
+    M += [dict(T([(111.75, 124, 38), (113.6, 124, 38), (113.6, 129, 38)], 0.35, "metal", bouts=True), **P02)]
     # DEL linéaire encastrée au plafond qui lave le miroir (3000 K)
     M += [B(115.5, 12, 117, 150, 95.7, 96, "spot")]
 

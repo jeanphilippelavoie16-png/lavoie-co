@@ -51,8 +51,9 @@ Repère de la maison, en pouces ; z est compté depuis le plancher du sous-sol. 
 
 - **Brique rouge** sur le rez-de-chaussée, de 97 po jusqu'aux soffites (202). **Fondation** en crépi **blanc lisse**, de 97 po
   jusqu'au terrain (elle se voit sur 37 à 97 po selon le niveau). Les deux parements sont percés aux ouvertures de **notre
-  proposition** (`maison.json`).
-- **Fenêtres noires** : cadre, vitre, meneaux sur les grandes baies, allège de béton au RDC. Cadres noirs autour des portes.
+  proposition** (`maison.json` : largeur, centre, allège et hauteur de chaque fenêtre).
+- **Fenêtres noires** : cadre, vitre, meneaux aux mêmes places qu'à l'intérieur (sections de `fenetres_video.py`, meneaux
+  inégaux du bureau et du salon compris), allège de béton au RDC. Cadres noirs autour des portes.
 - **Toit à deux versants 5/12** (fermes 5/12 du croquis de 2016) en bardeau gris anthracite : faîte selon x (y 190, z 294), débord
   de 16 po, **pignons blancs en déclin vertical** aux deux bouts. **Pignon avant** transversal 5/12 au-dessus de la partie droite
   de la façade (x 154 à 472, sommet ≈ 276), avec retours de corniche en boîte à ses pieds. **Appentis 3/12** sur l'entrée
@@ -68,20 +69,21 @@ Repère de la maison, en pouces ; z est compté depuis le plancher du sous-sol. 
 
 - **Lignes de lot** : arrière et côtés relevés au plan DAG. Devant, on a prolongé avec le plan de 1957 : marge avant de 40 pi
   (rue à y = -480), ligne droite perpendiculaire à la rue, façade du lot de 57,23 pi, ligne gauche oblique.
-- **Relief** (`EXTERIEUR["relief"]`, grille de 85 × 113 lignes, pas de 12 po près de la maison et de l'allée, 24 po ailleurs) :
+- **Relief** (`EXTERIEUR["relief"]`, grille de 83 × 110 lignes, pas de 12 po près de la maison et de l'allée, 24 po ailleurs) :
   - **allée d'asphalte au niveau du sous-sol** collée à la fondation sur tout le côté droit (x 456-552) : -15 à la rue, -8 au coin
     avant, -2 devant la porte de côté (seuil à 0), +3 au coin arrière ; elle continue derrière la maison en couloir de 4 pi
     (x 457-505) jusqu'au pied des marches de pierre ;
   - **devant** : plateau à 59 devant la partie gauche (perron), **talus de gazon en S** de x 282 (59) à x 350 (16,5), **palier bas**
     à 16,5-17 devant la grande fenêtre et la fenêtre du sous-sol, puis une chute presque verticale jusqu'à l'allée (x 444 à 456) ;
     plateau et palier descendent doucement vers la rue (34 et 4 à la ligne avant) ;
-  - **côté gauche** : 58 à l'avant, 56 au coin arrière ;
+  - **côté gauche** : 58 au coin avant, 52 devant les deux fenêtres du sous-sol (allège 56, sans margelle dans notre
+    proposition : 4 po de dégagement), 56 au coin arrière ;
   - **cour** à 48 (pied de l'escalier, piscine, cabanon), qui monte doucement vers la ligne gauche (56 à x ≤ 0) ;
   - à l'est du bout de l'allée, un gazon bas (3 à 5) avec des arbustes, retenu au sud par l'aile du muret.
 - **Revêtements** drapés : allée d'asphalte, gravier sous l'escalier et autour de la piscine, pas japonais.
 - **Trous** : l'emprise de la maison (corps, entrée arrière, perron, cheminée). Les **margelles** des fenêtres du sous-sol sont
-  faites par le moteur d'après le relief : il n'en reste qu'au côté gauche et à l'arrière (terrain à 48-58) ; devant et le long de
-  l'allée, le terrain est sous l'allège (palier bas à 17, allée à 0).
+  faites par le moteur d'après le relief : il n'en reste qu'à l'arrière (terrain à 48) ; devant et le long de l'allée, le terrain
+  est sous l'allège (palier bas à 17, allée à 0) ; au côté gauche, le terrain est tenu à 52, sous l'allège de 56.
 - **Arbres** : une lisière de grands feuillus au-delà de la ligne arrière, le long de la ligne gauche et au-delà de l'allée,
   quatre bouleaux derrière le cabanon, deux pins près du coin arrière droit, un petit arbre ornemental à l'avant gauche ; haie
   ou arbustes du voisin de l'autre côté de l'allée.
@@ -105,8 +107,9 @@ les pas japonais, la piscine vue de la cour. Leur z est lu dans le relief.
    confortable. Il faudrait alors une volée plus longue (environ 60 po) : à faire vérifier par DAG.
 5. **Toit** : la forme vient de la vidéo (détail et incertitudes dans la section du 2026-11-02). Le bout gauche du toit ne se voit
    dans aucune capture.
-6. **Fenêtres** : allège et tête lues dans les scènes d'étage (sous-sol 56-86, RDC 34-82 au-dessus du plancher), sauf les
-   fenêtres agrandies vers le bas : leur allège propre est lue dans `maison.json` (sous-sol à 40, salon à 20).
+6. **Fenêtres** : allège et hauteur lues dans `maison.json` pour chaque fenêtre (depuis le 2026-11-02, les 10 fenêtres visibles
+   dans la vidéo en ont pris les dimensions, à la demande du client : `DESIGN_fenetres_video.md`) ; celles qui n'en ont pas
+   gardent les valeurs de l'étage (sous-sol 56-86, RDC 34-82 au-dessus du plancher).
 7. **Perron avant** : on ne connaît ni le nombre de marches ni leur direction. Elles sont dessinées droit vers la rue, avec un
    pied sur le plateau (≈ 59). Il n'y a plus de trottoir jusqu'à l'allée : il traverserait le talus. Accès à pied depuis l'allée
    (marches dans le talus ou allée vers la rue) : **à décider avec le client**.
@@ -169,8 +172,10 @@ gauche du deck, bacs à plantes, tronc de l'arbre du devant) ; les prismes de ga
 Le client a envoyé 12 captures nettes de la vidéo DAG (façade avant de face et de biais, coin avant droit avec l'allée, dessous
 du deck, escalier et cabanon, deck et piscine, salon du patio, façade arrière, vue aérienne, vue du dessus). Deux analyses ont
 comparé chaque capture au modèle (caméra de la capture 03 calée par moindres carrés ; capture 12 redressée sur le plan du deck) ;
-on a vérifié chaque point sur les captures avant de le reprendre. Planche capture / rendu :
-`planche_comparaison.jpg` (dossier de travail de l'extérieur).
+on a vérifié chaque point sur les captures avant de le reprendre. Planche capture / rendu (12 vues, moteur figé de HEAD, relief
+dessiné par le moteur) : `/tmp/claude-0/-home-user-lavoie-co/a2f554a7-a4f7-5946-bdd4-2eb9d5a22192/scratchpad/m18/ext_donnees/planche_comparaison.jpg`
+(dossier de travail, hors dépôt). Données : 1 219 objets (environ 1 000 avant),
+relief de 83 × 110 lignes ; avec `EXT_APERCU=1`, 3 298 colonnes d'aperçu en plus.
 
 **Ce qui a changé, et pourquoi**
 
@@ -178,10 +183,10 @@ on a vérifié chaque point sur les captures avant de le reprendre. Planche capt
 |---|---|---|---|
 | Toit | croupe 5/12 partout, petite croupe sur l'entrée arrière | **deux versants 5/12**, faîte selon x sur toute la longueur, **pignons blancs** aux deux bouts ; **pignon avant** transversal au-dessus de la partie droite de la façade ; **appentis 3/12** sur l'entrée arrière | 03 et 07 : grand pignon blanc sur tout le côté droit ; 10 et 11 : faîte presque aussi long que la maison ; 01, 02 : pignon blanc au-dessus du salon ; 11 : pan arrière prolongé plus bas au-dessus de l'entrée arrière, côtés en rives droites |
 | Pignons | — | déclin vertical blanc à couvre-joints, rives et fascias blancs, retours de corniche en boîte | 01, 02, 03 |
-| Appentis | — | pente 3/12 au lieu de 5/12, soffite à 189 | à 5/12, le fascia tomberait sous la tête de notre fenêtre ouv-RDC-008 (187) ; la brique des murs de l'entrée arrière s'arrête sous ce soffite |
+| Appentis | — | pente 3/12 au lieu de 5/12, soffite à 189 | à 5/12, le fascia tomberait à ≈ 181, sous la tête de la fenêtre ouv-RDC-008 (185) et de la porte arrière (≈ 188 avec son cadre) ; la brique des murs de l'entrée arrière s'arrête sous ce soffite |
 | Cheminée | jusqu'à 290 (sous le faîte), conduit | jusqu'à 318 (2 pi au-dessus du faîte), chapeau de béton | 01, 02 ; règle des 2 pi |
 | Évent | ventilateur gris | évent noir à chapeau près du faîte, pan arrière, x ≈ 232 | 07, 09, 10 |
-| Fondation | crépi beige texturé, 49 po visibles partout | **crépi blanc lisse**, jusqu'au relief : ≈ 38 po à gauche, ≈ 80 devant la partie droite, toute la hauteur le long de l'allée | 01, 02, 03, 11 |
+| Fondation | crépi beige texturé, 49 po visibles partout | **crépi blanc lisse**, jusqu'au relief : ≈ 38 à 45 po à gauche, ≈ 80 devant la partie droite, toute la hauteur le long de l'allée | 01, 02, 03, 11 |
 | Terrain | plat à 48 | **relief** (voir « Le terrain ») : allée au niveau du sous-sol, talus en S, palier bas, cour à 48 | 01, 02, 03 (calée), 04, 12 |
 | Porte de côté | descente extérieure de 6 marches, murets, garde-corps, trou dans le gazon | **de plain-pied** sur l'allée ; descente supprimée | 03 |
 | Allée | boîte d'asphalte de la rue à y = 40, à 6 po de la fondation | asphalte drapé, collé à la fondation, jusqu'au fond (couloir de 4 pi derrière la maison) | 02, 03, 04, 12 |
@@ -198,6 +203,7 @@ on a vérifié chaque point sur les captures avant de le reprendre. Planche capt
 | Corde à linge | — | du mur arrière à un poteau au fond | 08 à 12 (la double ligne blanche n'est pas la ligne de lot) |
 | Végétation | haie de cèdres de 6 pi, 6 épinettes, 3 bouleaux | **pas de haie** ; lisière de grands feuillus, bouleaux derrière le cabanon, 2 pins près de l'allée, arbre ornemental devant, clôture de bois au fond | 01 à 12 |
 | Arrêts de visite | z = 48 partout | z lu dans le relief ; ajout de « L'allée devant la porte de côté », « Façade avant de biais » et « Le bout de l'allée et les marches de pierre » ; « Façade avant » placé comme la capture 01 | — |
+| Couleurs | — | asphalte, composite, blocs, pierre, gravier et dalles un peu plus foncés que les teintes lues sur la vidéo | au soleil, le moteur éclaircit beaucoup les surfaces horizontales : l'asphalte au soleil sort beige clair quelle que soit sa teinte (reflet du soleil sur les peintures), il n'est foncé qu'à l'ombre ; à signaler à l'agent du moteur |
 
 **Ce qui reste à valider sur place**
 
@@ -205,7 +211,8 @@ on a vérifié chaque point sur les captures avant de le reprendre. Planche capt
   (263 à 282 selon la capture ; on a 276), la hauteur du soffite de l'appentis de l'entrée arrière et sa pente (3/12 supposé).
 - **Niveaux** : rue et pente de l'allée devant la maison (-15 à la rue, extrapolé), drainage devant la porte de côté (seuil à 0,
   asphalte à -2), forme du talus vers la rue, bord du palier bas sur l'allée (chute de 25 po : talus raide ou bordure ?), niveau
-  de la cour près de la ligne gauche (≈ 56 estimé ± 8 po).
+  de la cour près de la ligne gauche (≈ 56 estimé ± 8 po), niveau le long du mur gauche (52 devant les fenêtres du sous-sol :
+  s'il est plus haut, il faut des margelles).
 - **Murets** : longueur réelle du muret le long de l'allée (depuis le coin de la maison ou seulement au pied de l'escalier),
   hauteur (≈ 45 po), aile le long de x, matériau (bloc architectural ou béton coulé) ; nombre et taille des dalles de pierre.
 - **Garde-corps du palier côté allée** : 42 po plutôt que 36 (chute d'environ 95 po).
@@ -217,10 +224,13 @@ on a vérifié chaque point sur les captures avant de le reprendre. Planche capt
 
 **Écarts voulus avec la vidéo (on ne les copie pas)**
 
-- **Fenêtres et portes** : on garde **notre proposition** (`maison.json`) : fenêtres du sous-sol et du salon agrandies vers le
-  bas (allèges à 40 et 20), têtes à 86 et 187, soffite à 202 (plafond du RDC à 201). La vidéo a des têtes collées au soffite,
-  une fenêtre avant du sous-sol d'environ 36 po, de plus petites fenêtres de côté au sous-sol, une porte avant noire vitrée
-  pleine hauteur, une porte de côté noire à demi vitrée, et un avant-toit environ 8 po plus bas (brique jusqu'à ≈ 194).
+- **Fenêtres et portes** : elles suivent **notre proposition** (`maison.json`), lue à chaque génération ; ces données ne les
+  copient pas de la vidéo. Le même jour, le client a demandé que les 10 fenêtres visibles prennent les dimensions de la vidéo :
+  c'est fait dans `fenetres_video.py` (largeur, allège, tête à 80 po du plancher, sections), et l'extérieur suit. Il reste des
+  écarts voulus : le **soffite reste à 202** (plafond du RDC à 201 ; dans la vidéo, le mur est plus bas et les têtes touchent le
+  soffite, brique jusqu'à ≈ 194), les fenêtres que la vidéo ne montre pas gardent leurs valeurs (mur gauche, chambre 1 du
+  sous-sol, dont la 2e fenêtre que la vidéo a omise et que le client confirme), et les **portes** restent celles de la
+  maquette (la vidéo a une porte avant noire vitrée pleine hauteur et une porte de côté noire à demi vitrée).
 - **Perron avant** : on garde celui du **relevé** (la vidéo n'en montre pas), recalé sur le plateau (5 contremarches).
 - **Brique** : la vidéo a une brique rouge orangé plus vive ; la teinte est réglée dans le catalogue du moteur (pas dans ces
   données). À signaler si le client la trouve trop sombre.

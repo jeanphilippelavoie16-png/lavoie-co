@@ -65,14 +65,14 @@ PEINTURES = {   # nom : [couleur à l'écran, description, alias employé par le
     "Crépi blanc": ["#EEEDE8", "fondation apparente (crépi lisse)", "ext-crepi"],
     "Bardeau gris anthracite": ["#3F4245", "toit de la maison (bardeau d'asphalte)", "ext-bardeau"],
     "Bardeau du cabanon": ["#4E5154", "toit du cabanon", "ext-bardeau-cab"],
-    "Asphalte": ["#45474A", "allée au niveau du sous-sol", "ext-asphalte"],
-    "Gravier gris pâle": ["#B6B6B2", "sous l'escalier du deck, autour de la piscine", "ext-gravier"],
-    "Composite beige clair": ["#CBB592", "platelage et girons (palier, patio, deck, escalier)", "ext-composite"],
+    "Asphalte": ["#1D1E20", "allée au niveau du sous-sol", "ext-asphalte"],
+    "Gravier gris pâle": ["#9A9A96", "sous l'escalier du deck, autour de la piscine", "ext-gravier"],
+    "Composite beige clair": ["#A88D69", "platelage et girons (palier, patio, deck, escalier)", "ext-composite"],
     "Joint de platelage": ["#6E604E", "joints entre les lames", "ext-joint"],
-    "Bloc de béton gris pâle": ["#A8AAA6", "murets de soutènement", "ext-bloc"],
+    "Bloc de béton gris pâle": ["#8E908C", "murets de soutènement", "ext-bloc"],
     "Couronnement de muret": ["#C3C4C0", "chaperon des murets", "ext-chaperon"],
     "Joint de bloc": ["#7E807C", "joints horizontaux des murets", "ext-joint-bloc"],
-    "Pierre naturelle gris pâle": ["#C4C3BD", "marches de pierre de l'allée à la cour", "ext-pierre"],
+    "Pierre naturelle gris pâle": ["#A2A19B", "marches de pierre de l'allée à la cour", "ext-pierre"],
     "Toile de piscine": ["#5FA9CC", "fond de la piscine (eau turquoise)", "ext-toile"],
     "Gris piscine": ["#8C9090", "paroi de la piscine hors-terre", "ext-piscine"],
     "Margelle de piscine": ["#C9CBCA", "margelle de la piscine", "ext-margelle"],
@@ -82,7 +82,7 @@ PEINTURES = {   # nom : [couleur à l'écran, description, alias employé par le
     "Résine tressée anthracite": ["#3A3B3C", "salon de patio modulaire", "ext-osier"],
     "Coussins blanc cassé": ["#D8D6D0", "coussins du salon de patio", "ext-coussin"],
     "Carreaux de porte": ["#C9CFD2", "carreaux de la porte de garage du cabanon", "ext-carreau"],
-    "Dalle blanche": ["#DCDFDC", "pas japonais (dalles blanc gris)", "ext-dalle"],
+    "Dalle blanche": ["#C8CBC8", "pas japonais (dalles blanc gris)", "ext-dalle"],
     "Bois de clôture": ["#8A6A48", "clôture d'intimité au fond du lot", "ext-cloture"],
     "Feuillage": ["#4F6B3E", "feuillus", "ext-feuillage"],
     "Feuillage clair": ["#6A8748", "feuillus au soleil, arbre ornemental", "ext-feuillage-clair"],
@@ -154,7 +154,8 @@ OUV_REPLI = {    # niveau : [(mur, type, position depuis le 1er point, largeur)]
 
 
 def releve():
-    """{niveau: (murs extérieurs, ouvertures)} depuis donnees/maison.json (construit avant la maquette), sinon le repli."""
+    """{niveau: (murs extérieurs, ouvertures)} depuis donnees/maison.json (construit avant la maquette), sinon le repli.
+    Ouverture : (mur, type, position, largeur, allège, hauteur, id) ; allège et hauteur None = valeurs de l'étage."""
     f = os.path.join(ICI, "donnees", "maison.json")
     out = {}
     try:
@@ -165,18 +166,33 @@ def releve():
             murs = [(m["id"], m["type"], m["x1"], m["y1"], m["x2"], m["y2"], (m.get("epaisseur") or {}).get("valeur") or 10)
                     for m in n["murs"] if m["type"] in ("fondation", "ext") and m.get("materiau") not in ("verre", "lattes")]
             ids = {m[0] for m in murs}
-            ouvs = [(o["mur_id"], o["type"], (o.get("position") or {}).get("valeur"), (o.get("largeur") or {}).get("valeur"),
-                     (o.get("allege") or {}).get("valeur") if isinstance(o.get("allege"), dict) else None)
+            val = lambda o, k: (o.get(k) or {}).get("valeur") if isinstance(o.get(k), dict) else None
+            ouvs = [(o["mur_id"], o["type"], val(o, "position"), val(o, "largeur"), val(o, "allege"),
+                     val(o, "hauteur") if o["type"] == "fenetre" else None, o.get("id"))
                     for o in n["ouvertures"] if o["mur_id"] in ids]
             out[n["id"]] = (murs, [o for o in ouvs if o[2] is not None and o[3] is not None])
     except (OSError, ValueError, KeyError):
         pass
     for nid in ("SS", "RDC"):
-        out.setdefault(nid, (MURS_REPLI[nid], [o + (None,) for o in OUV_REPLI[nid]]))
+        out.setdefault(nid, (MURS_REPLI[nid], [o + (None, None, None) for o in OUV_REPLI[nid]]))
     return out
 
 
+def _sections():
+    """{id de fenêtre: (nombre de sections, fractions des meneaux inégaux ou None)} : fenetres_video.py (fenêtres aux dimensions
+    de la vidéo, décision du client), pour que les meneaux vus de dehors soient ceux de l'intérieur ; {} s'il manque."""
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("m18_fenetres_video_ext", os.path.join(ICI, "fenetres_video.py"))
+        fv = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(fv)
+        return {oid: (fv.retenu(oid)["sections"], f.get("meneaux")) for oid, f in fv.FENETRES.items()}
+    except Exception:                       # module absent ou changé : meneaux également répartis selon la largeur
+        return {}
+
+
 RELEVE = releve()
+SECTIONS = _sections()
 
 # emprises (nu extérieur) : corps de la maison, entrée arrière (caveau dessous), excroissance sous le perron
 CORPS, ENTREE_ARR, PERRON = (0, 0, 456, 380), (219, 380, 327, 440), (162, -48, 234, 0)
@@ -311,7 +327,7 @@ def _margelles_prevues():
     murs, ouvs = RELEVE["SS"]
     par_id = {m[0]: m for m in murs}
     out = []
-    for (mid, typ, c, w, allege) in ouvs:
+    for (mid, typ, c, w, allege, _, _) in ouvs:
         if typ != "fenetre" or mid not in par_id:
             continue
         _, _, x1, y1, x2, y2, t = par_id[mid]
@@ -422,20 +438,22 @@ def enveloppe():
                     debut = None
                 a += pas
             trous = []
-            for (mur, typ_o, c, w, allege) in ouvs:
+            for (mur, typ_o, c, w, allege, haut, oid) in ouvs:
                 if mur != mid:
                     continue
                 z0o, z1o = cfg["fen"] if typ_o == "fenetre" else cfg["porte"]
-                if typ_o == "fenetre" and allege is not None:      # allège propre à la fenêtre (fenêtres agrandies vers le bas)
+                if typ_o == "fenetre" and allege is not None:      # allège et tête propres à la fenêtre (maison.json)
                     z0o = allege + (Z_RDC if nid == "RDC" else 0)
-                trous.append((c - w / 2, c + w / 2, z0o, z1o, typ_o))
+                    if haut:
+                        z1o = z0o + haut
+                trous.append((c - w / 2, c + w / 2, z0o, z1o, typ_o, oid, ux + uy))
             trous.sort()
             for (a0, a1) in libres:
                 # bas du crépi : 4 po sous le plus bas du relief devant ce morceau de mur (le terrain coupe le reste)
                 z0 = cfg["z0"] if "z0" in cfg else round(min(_zg(*pt(a0 + (a1 - a0) * k / 8, f + 1.5)) for k in range(9)) - 4, 1)
                 coupe = [tr for tr in trous if tr[1] > a0 and tr[0] < a1]
                 pos = a0
-                for (o0, o1, z0o, z1o, _) in coupe:
+                for (o0, o1, z0o, z1o, *_) in coupe:
                     if o0 > pos:
                         out.append(bx(pos, o0, f - 0.5, f + 0.5, z0, z1m, cfg["mat"]))
                     if z0o > z0:
@@ -446,16 +464,17 @@ def enveloppe():
                 if pos < a1:
                     out.append(bx(pos, a1, f - 0.5, f + 0.5, z0, z1m, cfg["mat"]))
                 # fenêtres (cadre noir, vitre, allège) et cadres de portes, vus de dehors
-                for (o0, o1, z0o, z1o, typ_o) in coupe:
+                for (o0, o1, z0o, z1o, typ_o, oid, sens) in coupe:
                     if typ_o == "fenetre":
                         k = 2.5
                         out += [bx(o0, o0 + k, f - 3, f + 0.2, z0o, z1o, "metal"), bx(o1 - k, o1, f - 3, f + 0.2, z0o, z1o, "metal"),
                                 bx(o0, o1, f - 3, f + 0.2, z1o - k, z1o, "metal"), bx(o0, o1, f - 3, f + 0.2, z0o, z0o + k, "metal"),
                                 bx(o0 + k, o1 - k, f - 2, f - 1.6, z0o + k, z1o - k, "vitre"),
                                 bx(o0 - 1.5, o1 + 1.5, f - 0.5, f + 2.0, z0o - 2.5, z0o, "beton" if nid == "RDC" else "metal")]
-                        n_mont = 2 if o1 - o0 > 90 else (1 if o1 - o0 > 50 else 0)
-                        for j in range(n_mont):
-                            am = o0 + (o1 - o0) * (j + 1) / (n_mont + 1)
+                        n_sec, inegaux = SECTIONS.get(oid, (3 if o1 - o0 > 90 else (2 if o1 - o0 > 50 else 1), None))
+                        fr = inegaux or [(j + 1) / n_sec for j in range(n_sec - 1)]
+                        for q in fr:                       # fractions depuis le bout de plus petite coordonnée
+                            am = o0 + (o1 - o0) * (q if sens > 0 else 1 - q)
                             out.append(bx(am - 1, am + 1, f - 2.6, f - 0.5, z0o + k, z1o - k, "metal"))
                     else:
                         zb = max(z0o, z0)
@@ -473,7 +492,7 @@ def enveloppe():
 
 
 # ------------------------------------------------------------------------------------------------- toit
-ZS_APPENTIS = 190.0        # sous-face de l'appentis de l'entrée arrière (tête de la fenêtre ouv-RDC-008 à 187)
+ZS_APPENTIS = 190.0        # sous-face de l'appentis de l'entrée arrière : au-dessus de ouv-RDC-008 et du cadre de la porte arrière (≈ 188)
 
 
 def toit():
@@ -570,7 +589,7 @@ def _marches_perron():
 
 
 # ------------------------------------------------------------------------------------------------- garde-corps d'aluminium
-def garde_corps(a, b, z, h, genre="barreaux"):
+def garde_corps(a, b, z, h):
     """Garde-corps d'aluminium noir horizontal de a à b (segment parallèle à x ou à y), plancher à z, hauteur h :
     poteaux (≤ 60 po), main courante, lisse basse, barreaux tous les 4¾ po."""
     (xa, ya), (xb, yb) = a, b
@@ -815,13 +834,13 @@ def _palmier(x, y, z, g):
     for j in range(3):
         a = g + 2.1 * j
         out.append(T([(x, y, z + 14), (x + 2.5 * math.cos(a), y + 2.5 * math.sin(a), z + 32 + 4 * j)], 0.8, "bois_brut", pans=6))
-    for j in range(12):
-        a = g + 2 * math.pi * j / 12
+    for j in range(16):
+        a = g + 2 * math.pi * j / 16
         z0 = z + 30 + 5 * (j % 3)
         L = 18 + 5 * (j % 2) + (6 if j % 4 == 0 else 0)
         dz = 30 if j % 4 == 0 else 22 - 3 * (j % 3)
         out.append(T([(x + 2 * math.cos(a), y + 2 * math.sin(a), z0), (x + 0.45 * L * math.cos(a), y + 0.45 * L * math.sin(a), z0 + dz),
-                      (x + L * math.cos(a), y + L * math.sin(a), z0 + dz - 12)], 1.7, "plante", pans=5))
+                      (x + L * math.cos(a), y + L * math.sin(a), z0 + dz - 12)], 1.3, "plante", pans=5))
     return out
 
 
@@ -862,10 +881,10 @@ ARBRES = [  # (x, y, hauteur, genre) : f = feuillu, b = bouleau, p = pin, o = ar
     # bouleaux derrière le cabanon
     (455, 930, 380, "b"), (510, 955, 420, "b"), (565, 920, 360, "b"), (405, 955, 400, "b"),
     # le long de la ligne gauche (cimes au-dessus de la pelouse)
-    (-190, -80, 560, "f"), (-200, 80, 600, "f"), (-185, 240, 520, "f"), (-150, 400, 580, "f"), (-130, 560, 540, "f"),
+    (-200, 80, 600, "f"), (-185, 240, 520, "f"), (-150, 400, 580, "f"), (-130, 560, 540, "f"),
     (-120, 710, 600, "f"), (-115, 840, 520, "f"),
     # au-delà de l'allée (côté droit) : feuillus et deux pins près du coin arrière droit
-    (650, -260, 520, "f"), (690, -40, 600, "f"), (660, 180, 560, "f"), (640, 430, 560, "p"), (690, 560, 600, "p"),
+    (780, -330, 520, "f"), (720, 20, 600, "f"), (680, 210, 560, "f"), (640, 430, 560, "p"), (690, 560, 600, "p"),
     (680, 780, 580, "f"),
     # petit arbre ornemental à l'avant gauche
     (-60, -250, 170, "o"),
@@ -879,21 +898,18 @@ def terrain_et_vegetation():
     for i, (x, y, H, g) in enumerate(ARBRES):
         z = _zg(x, y)
         if g == "p":
-            out += [C(x, y, 7, z, z + 90, "bois_brut", pans=10), C(x, y, H * 0.17, z + 60, z + H, "ext-sapin", r2=0, pans=12)]
+            out += [C(x, y, 7, z, z + 90, "bois_brut", pans=10), C(x, y, H * 0.12, z + 60, z + H, "ext-sapin", r2=0, pans=12)]
         elif g == "o":
             out += [C(x, y, 4, z, z + 80, "bois_brut", pans=10), SPH(x, y, z + 115, 50, "ext-feuillage-clair", ecrase=0.85)]
         else:
             tronc = "ext-bouleau" if g == "b" else "bois_brut"
             m1, m2 = ("ext-feuillage", "ext-feuillage-clair") if i % 2 else ("ext-feuillage-clair", "ext-feuillage")
             dx, dy = (0.08 * H, -0.05 * H) if i % 3 else (-0.07 * H, 0.06 * H)
-            out += [C(x, y, 4.5 if g == "b" else 8, z, z + 0.55 * H, tronc, pans=10),
-                    SPH(x, y, z + 0.64 * H, 0.27 * H, m1, ecrase=0.8), SPH(x + dx, y + dy, z + 0.82 * H, 0.2 * H, m2, ecrase=0.85)]
-    # haie (ou arbustes) du voisin, de l'autre côté de l'allée (à valider)
-    for (ya, yb) in ((-300, 40), (40, 380)):
-        zb = min(_zg(575, ya), _zg(575, yb)) - 2
-        out.append(P(rect(566, ya, 584, yb), zb, zb + 64, "ext-sapin"))
-    # arbustes foncés à l'est du bout de l'allée (gazon bas)
-    out += [SPH(x, y, _zg(x, y) + r * 0.6, r, "ext-sapin", ecrase=0.8) for (x, y, r) in ((530, 428, 26), (547, 468, 28), (525, 494, 22))]
+            out += [C(x, y, 4.5 if g == "b" else 8, z, z + 0.45 * H, tronc, pans=10),
+                    SPH(x, y, z + 0.58 * H, 0.28 * H, m1, ecrase=0.8), SPH(x + dx, y + dy, z + 0.8 * H, 0.21 * H, m2, ecrase=0.85)]
+    # arbustes bas de l'autre côté de l'allée (chez le voisin) et à l'est du bout de l'allée (gazon bas), à valider
+    out += [SPH(x, y, _zg(x, y) + r * 0.5, r, "ext-sapin", ecrase=0.75) for (x, y, r) in
+            ((592, 20, 20), (598, 140, 24), (590, 260, 20), (596, 360, 22), (550, 448, 17), (552, 486, 18))]
     # clôture d'intimité en bois (6 pi) sur la ligne arrière, poteaux 4 × 4 tous les 96 po (à valider : voisin ou nouvelle)
     a, b = (-43.0, 903.0), (560.0, 871.0)
     n = 3
@@ -973,7 +989,7 @@ def _visites():
         {"nom": "Façade avant", "x": 228, "y": -390, "cap": 90, "z": s(228, -390)},
         {"nom": "Façade avant de biais (côté allée)", "x": 500, "y": -300, "cap": 118, "z": s(500, -300)},
         {"nom": "L'allée et le côté", "x": 530, "y": -430, "cap": 100, "z": s(530, -430)},
-        {"nom": "L'allée devant la porte de côté", "x": 515, "y": 180, "cap": 180, "z": s(515, 180)},
+        {"nom": "L'allée devant la porte de côté", "x": 530, "y": 110, "cap": 145, "z": s(530, 110)},
         {"nom": "Le bout de l'allée et les marches de pierre", "x": 481, "y": 405, "cap": 92, "z": s(481, 405)},
         {"nom": "Cour arrière — vue d'ensemble", "x": 535, "y": 640, "cap": 207, "z": s(535, 640)},
         {"nom": "Le patio", "x": 372, "y": 452, "cap": 123, "z": Z},
