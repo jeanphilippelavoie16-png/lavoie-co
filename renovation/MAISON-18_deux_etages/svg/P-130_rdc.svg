@@ -120,8 +120,8 @@
 <polyline class="cart-l" points="867.2,258.212 1072,258.212"/>
 <text x="872.96" y="268.351" font-family="Arial, Helvetica, sans-serif" font-size="8.798" font-weight="bold" text-anchor="start" fill="#000000">NOTES DE LA PROPOSITION</text>
 <text x="872.96" y="279.06" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">1. Esquisse sur le relevé photo RDC-01 (le reste</text>
-<text x="872.96" y="290.084" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">est l'existant ; cotes à mesurer) ; fenêtre du salon</text>
-<text x="872.96" y="301.107" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">descendue (allège ≈ 20 po).</text>
+<text x="872.96" y="290.084" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">est l'existant ; cotes à mesurer) ; fenêtres selon</text>
+<text x="872.96" y="301.107" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">la vidéo DAG (salon : allège ≈ 12 po).</text>
 <text x="872.96" y="314.051" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">2. Grande entrée ouverte : garde-robes du hall</text>
 <text x="872.96" y="325.075" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">enlevées ; escalier entouré d'un garde-corps de</text>
 <text x="872.96" y="336.098" font-family="Arial, Helvetica, sans-serif" font-size="8.798" text-anchor="start" fill="#000000">verre.</text>
@@ -199,8 +199,8 @@
 <path class="mur-lourd" fill-rule="evenodd" d="M 452.21 194.979 L 452.21 124.979 L 442.21 124.979 L 442.21 194.979 Z"/>
 </g>
 <g id="mur-RDC-006">
-<path class="mur-lourd" fill-rule="evenodd" d="M 442.21 134.979 L 442.21 124.979 L 495.21 124.979 L 495.21 134.979 Z"/>
-<path class="mur-lourd" fill-rule="evenodd" d="M 550.21 124.979 L 550.21 134.979 L 537.21 134.979 L 537.21 124.979 Z"/>
+<path class="mur-lourd" fill-rule="evenodd" d="M 442.21 134.979 L 442.21 124.979 L 498.21 124.979 L 498.21 134.979 Z"/>
+<path class="mur-lourd" fill-rule="evenodd" d="M 550.21 124.979 L 550.21 134.979 L 534.21 134.979 L 534.21 124.979 Z"/>
 </g>
 <g id="mur-RDC-007">
 <path class="mur-lourd" fill-rule="evenodd" d="M 540.21 124.979 L 550.21 124.979 L 550.21 138.979 L 540.21 138.979 Z"/>
@@ -223,12 +223,12 @@
 <polyline class="mur-lourd-c" points="358.71,564.979 358.71,554.979 405.21,554.979 405.21,564.979 358.71,564.979"/>
 <polyline class="mur-lourd-c" points="223.21,194.979 223.21,184.979 233.21,184.979 283.71,184.979 283.71,194.979 233.21,194.979 233.21,355.979 223.21,355.979 223.21,194.979"/>
 <polyline class="mur-lourd-c" points="358.71,194.979 358.71,184.979 402.21,184.979 402.21,194.979 358.71,194.979"/>
-<polyline class="mur-lourd-c" points="442.21,124.979 452.21,124.979 495.21,124.979 495.21,134.979 452.21,134.979 452.21,184.979 502.21,184.979 502.21,194.979 452.21,194.979 442.21,194.979 438.21,194.979 438.21,184.979 442.21,184.979 442.21,134.979 442.21,124.979"/>
+<polyline class="mur-lourd-c" points="442.21,124.979 452.21,124.979 498.21,124.979 498.21,134.979 452.21,134.979 452.21,184.979 502.21,184.979 502.21,194.979 452.21,194.979 442.21,194.979 438.21,194.979 438.21,184.979 442.21,184.979 442.21,134.979 442.21,124.979"/>
 <polyline class="mur-lourd-c" points="439.21,564.979 439.21,554.979 546.21,554.979 546.21,564.979 439.21,564.979"/>
 <polyline class="mur-lourd-c" points="654.21,554.979 669.21,554.979 669.21,402.979 679.21,402.979 679.21,554.979 679.21,564.979 669.21,564.979 654.21,564.979 654.21,554.979"/>
 <polyline class="mur-lourd-c" points="669.21,194.979 635.71,194.979 635.71,184.979 669.21,184.979 679.21,184.979 679.21,194.979 679.21,366.979 669.21,366.979 669.21,194.979"/>
 <polyline class="mur-lourd-c" points="550.21,172.979 550.21,184.979 560.71,184.979 560.71,194.979 550.21,194.979 540.21,194.979 534.21,194.979 534.21,184.979 540.21,184.979 540.21,172.979 550.21,172.979"/>
-<polyline class="mur-lourd-c" points="540.21,134.979 537.21,134.979 537.21,124.979 540.21,124.979 550.21,124.979 550.21,134.979 550.21,138.979 540.21,138.979 540.21,134.979"/>
+<polyline class="mur-lourd-c" points="540.21,134.979 534.21,134.979 534.21,124.979 540.21,124.979 550.21,124.979 550.21,134.979 550.21,138.979 540.21,138.979 540.21,134.979"/>
 </g>
 </g>
 <g inkscape:groupmode="layer" inkscape:label="20-Ouvertures" id="20-Ouvertures">
@@ -282,11 +282,11 @@
 <polyline class="ouv" points="679.21,366.979 669.21,366.979"/>
 </g>
 <g id="ouv-RDC-008">
-<polyline class="ouv" points="495.21,134.979 537.21,134.979"/>
-<polyline class="ouv" points="495.21,124.979 537.21,124.979"/>
-<polyline class="ouv-fin" points="495.21,129.979 537.21,129.979"/>
-<polyline class="ouv" points="495.21,134.979 495.21,124.979"/>
-<polyline class="ouv" points="537.21,134.979 537.21,124.979"/>
+<polyline class="ouv" points="498.21,134.979 534.21,134.979"/>
+<polyline class="ouv" points="498.21,124.979 534.21,124.979"/>
+<polyline class="ouv-fin" points="498.21,129.979 534.21,129.979"/>
+<polyline class="ouv" points="498.21,134.979 498.21,124.979"/>
+<polyline class="ouv" points="534.21,134.979 534.21,124.979"/>
 </g>
 <g id="ouv-RDC-010">
 <polyline class="ouv" points="405.21,554.979 405.21,520.979"/>

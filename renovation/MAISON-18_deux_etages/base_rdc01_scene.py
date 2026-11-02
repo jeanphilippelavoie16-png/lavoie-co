@@ -96,25 +96,55 @@ def appareil(x0, x1, y_dos, y_face, z0):
 M = []
 R = []      # revêtements (brique, papier peint, crépi, bandes d'ardoise)
 
+
+# MAISON-18 (client, 2026-11-02 : « les fenêtres dans la vidéo sont de bonnes dimensions ») : allège, tête et sections des
+# fenêtres vues dans la vidéo DAG (fenetres_video.py) ; SCENE["fenetres"] plus bas. Les cadrages, briques d'embrasure et
+# stores de la cuisine et du salon suivent ces valeurs (avant : allège 34, tête 82 de l'étage).
+def _fenetres_video():
+    import importlib.util
+    import os
+    spec = importlib.util.spec_from_file_location(
+        "m18_fenetres_video", os.path.join(os.path.dirname(os.path.abspath(__file__)), "fenetres_video.py"))
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+FV = _fenetres_video()
+FEN = FV.reglages_3d("RDC")
+
+
+def _at(oid):
+    """(allège, tête) d'une fenêtre du RDC : vidéo DAG, sinon celles de l'étage (34, 82)."""
+    r = FEN.get(oid) or {}
+    return r.get("allege", 34), r.get("tete", 82)
+
+
+A5, T5 = _at("ouv-RDC-005")      # fenêtre de l'évier (mur arrière)
+A7, T7 = _at("ouv-RDC-007")      # fenêtre du mur de droite de la cuisine
+T2 = _at("ouv-RDC-002")[1]       # grande fenêtre du salon
+
 # =============================================================================================== cuisine
 # brique rouge à joints pâles : mur arrière (du poteau au coin) et mur de droite (photos 01, 02, 07, 08)
 YB = 369.45
 R += [B(266, YB, 276.5, 370, 0, 96, "brique_rouge"), B(276.5, YB, 313.5, 370, 82.5, 96, "brique_rouge"),
-      B(313.5, YB, 337.5, 370, 0, 96, "brique_rouge"), B(337.5, YB, 412.5, 370, 0, 34, "brique_rouge"),
-      B(337.5, YB, 412.5, 370, 82, 96, "brique_rouge"), B(412.5, YB, 446, 370, 0, 96, "brique_rouge")]
+      B(313.5, YB, 337.5, 370, 0, 96, "brique_rouge"), B(337.5, YB, 412.5, 370, 0, A5, "brique_rouge"),
+      B(337.5, YB, 412.5, 370, T5, 96, "brique_rouge"), B(412.5, YB, 446, 370, 0, 96, "brique_rouge")]
 XB = 445.45
 R += [B(XB, 198, 446, 369.45, 0, 96, "brique_rouge"), B(XB, 159, 446, 162, 0, 96, "brique_rouge"),
-      B(XB, 162, 446, 198, 0, 34, "brique_rouge"), B(XB, 162, 446, 198, 82, 96, "brique_rouge")]
+      B(XB, 162, 446, 198, 0, A7, "brique_rouge"), B(XB, 162, 446, 198, T7, 96, "brique_rouge")]
 # poteau de bois brut contre le mur arrière (photo 07) et chambranle noir de la baie de l'entrée arrière
 M += [B(263.5, 364.5, 270, 370, 0, 96, "bois_brut")]
 M += [B(276.2, 369.0, 279.2, 369.5, 0, 82.8, NOIR), B(310.8, 369.0, 313.8, 369.5, 0, 82.8, NOIR), B(276.2, 369.0, 313.8, 369.5, 80, 82.8, NOIR)]
 # ... et noir aussi dans l'épaisseur de la baie (photos 01, 07, 08) : par-dessus le doublage de pin que pose le moteur
 M += [B(278.95, 369.95, 279.55, 380.05, 0, 80.05, NOIR), B(310.45, 369.95, 311.05, 380.05, 0, 80.05, NOIR),
       B(278.95, 369.95, 311.05, 380.05, 79.45, 80.05, NOIR)]
-# cadrage noir de la fenêtre de l'évier, store cellulaire noir à demi baissé
-M += [B(334.5, 369.0, 337.5, 369.5, 31, 85, NOIR), B(412.5, 369.0, 415.5, 369.5, 31, 85, NOIR), B(334.5, 369.0, 415.5, 369.5, 82, 85, NOIR),
-      B(338, 371, 412, 372, 68, 81.5, "carbone"), B(337.5, 370.2, 412.5, 372.5, 81, 82, NOIR)]
-M += [B(445.0, 159, 445.5, 162, 31, 85, NOIR), B(445.0, 198, 445.5, 201, 31, 85, NOIR), B(445.0, 159, 445.5, 201, 82, 85, NOIR)]
+# cadrage noir de la fenêtre de l'évier, store cellulaire noir à demi baissé (ils suivent l'allège et la tête de la fenêtre)
+M += [B(334.5, 369.0, 337.5, 369.5, A5 - 3, T5 + 3, NOIR), B(412.5, 369.0, 415.5, 369.5, A5 - 3, T5 + 3, NOIR),
+      B(334.5, 369.0, 415.5, 369.5, T5, T5 + 3, NOIR),
+      B(338, 371, 412, 372, T5 - 14, T5 - 0.5, "carbone"), B(337.5, 370.2, 412.5, 372.5, T5 - 1, T5, NOIR)]
+M += [B(445.0, 159, 445.5, 162, A7 - 3, T7 + 3, NOIR), B(445.0, 198, 445.5, 201, A7 - 3, T7 + 3, NOIR),
+      B(445.0, 159, 445.5, 201, T7, T7 + 3, NOIR)]
 # armoires du bas noir mat, comptoir de bois de grange (mur arrière : évier double noir sous la fenêtre, lave-vaisselle)
 M += [A(318, 345.5, 446, 369.4, 4, 34.5, NOIR, r=0.3, b=0.3), B(319, 347.5, 446, 369.4, 0, 4, "carbone"),
       A(317, 343.5, 446, 374.4, 34.5, 36.25, "bois_grange", r=0.4, b=0.3)]
@@ -122,9 +152,11 @@ M += [B(336, 345.2, 360, 345.6, 4.5, 34, "inox"), CX(338, 358, 344.6, 31.5, 0.45
 M += [B(x - 0.12, 345.3, x + 0.12, 345.5, 5, 34, "carbone") for x in (336, 360, 378, 396, 420)]                # joints des portes
 M += [B(x, 345.0, x + 0.6, 345.5, 27, 32, "metal") for x in (333, 362.5, 375.5, 393, 399, 416.5)]             # poignées
 M += [B(359, 347, 374, 366, 35.9, 36.3, "carbone"), B(376, 347, 391, 366, 35.9, 36.3, "carbone"),            # évier double noir
-      C(375, 368.2, 1.2, 36.25, 37.5, "metal"),
-      T([(375, 368.2, 37.5), (375, 368.2, 52), (375, 366.5, 55.5), (375, 362, 55.5), (375, 360, 51)], 0.6, "metal"),
-      T([(377.5, 368.2, 37), (377.5, 368.2, 41), (378.5, 366, 42)], 0.25, "metal")]
+      C(375, 367.2, 1.2, 36.25, 37.5, "metal"),
+      T([(375, 367.2, 37.5), (375, 367.2, 52), (375, 365.5, 55.5), (375, 362, 55.5), (375, 360, 51)], 0.6, "metal"),
+      T([(377.5, 367.2, 37), (377.5, 367.2, 41), (378.5, 365, 42)], 0.25, "metal")]
+# (2026-11-02) robinet avancé de 1 po (y 368,2 → 367,2) : la tablette de la fenêtre de l'évier, remontée à ≈ 37½ po (vidéo
+# DAG), passe maintenant au-dessus du comptoir (y 368¾–373¾) et le pied du robinet l'aurait traversée
 # mur de droite : coin, cuisinière inox avec hotte cheminée, petit comptoir, tablettes flottantes de bois
 M += [A(421.6, 336, 446, 345.5, 4, 34.5, NOIR, r=0.3, b=0.3), A(421.6, 290, 446, 306, 4, 34.5, NOIR, r=0.3, b=0.3),
       B(423.6, 290, 446, 306, 0, 4, "carbone"), B(423.6, 336, 446, 345.5, 0, 4, "carbone"),
@@ -227,7 +259,7 @@ M += [A(431, 68, 446, 124, 14, 29, "bois_grange", r=0.4, b=0.3), B(430.8, 72, 43
 M += [A(437, 116, 446, 152, 81, 92.5, "blanc", r=2.5, b=1), B(436.8, 118, 437.2, 150, 82, 84, "gris")]
 M += [MOD("plante_sansevieria", 418, 26, H=40), C(418, 26, 7, 0, 9, "osier")]
 # grande fenêtre de façade : store cellulaire gris remonté
-M += [B(323.5, 6.5, 430.5, 8, 75, 81.5, "gris"), B(323, 6, 431, 9, 81, 82, "blanc")]
+M += [B(323.5, 6.5, 430.5, 8, T2 - 7, T2 - 0.5, "gris"), B(323, 6, 431, 9, T2 - 1, T2, "blanc")]      # suit la tête
 # plafond texturé (crépi) au salon seulement (photos 03, 04)
 R += [B(224.25, 10, 446, 152, 95.6, 96, "crepi")]
 
@@ -379,6 +411,9 @@ def portes_finies(niveau="RDC"):
 
 
 M += portes_finies()
+# meneaux inégaux des fenêtres de façade vues dans la vidéo DAG (bureau 1/3 + 2/3, salon 3/4 + 1/4) : le moteur ne fait que
+# des meneaux également répartis ; ces fenêtres ont "sections": 1 dans SCENE["fenetres"] (fenetres_video.meneaux_3d)
+M += FV.meneaux_3d("RDC", B)
 
 # bande d'ardoise devant la baie de l'entrée arrière, prolongement du plancher de la cuisine (photo 07), et barres de seuil
 R += [B(262, 336, 316.1, 370, 0, 0.12, "ardoise_noire"), B(261.5, 335.5, 316.5, 336.2, 0, 0.3, "inox"),
@@ -391,10 +426,11 @@ SCENE = {
     # trou dans le plancher [x0, y0, x1, y1] : volée qui descend de l'entrée arrière (demande au moteur ; ignoré tant que la
     # visionneuse ne perce pas le plancher, le sous-plancher de béton cache alors tout ce qui est sous z = 0)
     "tremies_plancher": [[EAR_X0, EAR_Y0, EAR_XN, EAR_Y1]],
-    "allege_fenetre": 34, "tete_fenetre": 82,     # ESTIMÉ sur les photos
-    # MAISON-18 (client, 2026-11-02 : « la fenêtre du salon en haut est aussi plus grande vers le bas ») : grande fenêtre de
-    # façade du salon (3 sections) descendue à 20 po (HYPOTHÈSE à mesurer), tête et linteau 2-2×10 inchangés
-    "fenetres": {"ouv-RDC-002": {"allege": 20, "sections": 3}},
+    "allege_fenetre": 34, "tete_fenetre": 82,     # ESTIMÉ sur les photos (gardées pour ouv-RDC-006, qu'on ne voit pas dans la vidéo)
+    # MAISON-18 : d'abord (client, 2026-11-02 : « la fenêtre du salon en haut est aussi plus grande vers le bas ») salon
+    # descendu à 20 po (HYPOTHÈSE), 3 sections ; puis (« les fenêtres dans la vidéo sont de bonnes dimensions ») toutes les
+    # fenêtres vues dans la vidéo DAG à ses dimensions : fenetres_video.py (salon : allège ≈ 12 po, 2 sections 3/4 + 1/4)
+    "fenetres": FEN,
     "sol_defaut": "erable",
     "sols": {"piece-RDC-CUI": "ardoise_noire", "piece-RDC-ENT": "ardoise_noire", "piece-RDC-EAR": "ardoise_noire",
              "piece-RDC-SDB": "porcelaine"},

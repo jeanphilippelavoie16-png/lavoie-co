@@ -662,3 +662,5 @@ dans la section « grande entrée vitrée » ci-dessus ne s'appliquent plus.
 ## Mise à jour (2026-11-02) : un seul frigo en haut
 Le 2e frigo (portes françaises, devant la fenêtre du mur de droite de la cuisine) est retiré à la demande du client : la
 fenêtre est dégagée ; le frigo encastré dans la colonne d'armoires reste.
+
+## Mise à jour (2026-11-02) : fenêtres aux dimensions de la vidéo DAG — toutes les fenêtres visibles dans la vidéo (« de bonnes dimensions », dit le client) en prennent la largeur, l'allège, la tête (80 po, à la tête des portes) et les sections ; ouv-SS-002 déplacée de +13 po vers l'allée, ouv-SS-003 à 84 po, ouv-RDC-008 à 36 po, salon à 12 po : fenetres_video.py, détail dans DESIGN_fenetres_video.md.

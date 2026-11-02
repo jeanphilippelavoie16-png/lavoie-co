@@ -178,7 +178,7 @@ def _decoupe(y0, y1, z0, z1, trous):
     return [(ya, yb, za, zb) for ya, yb, libres in tranches for za, zb in libres]
 
 
-def _mobilier(h):
+def _mobilier(h, fen=None):
     A, B, C, CX, CY, T = h.A, h.B, h.C, h.CX, h.CY, h.T
     NOIR = "noir-mat"
     M = []
@@ -287,7 +287,9 @@ def _mobilier(h):
         pas = (x1 - x0) / n
         M += [A(x0 + k * pas, 362.4 + (0.9 if k % 2 else 0), x0 + (k + 1) * pas + 0.4, 364.6 + (0.9 if k % 2 else 0),
                 0.8, 93.6, "draps", r=1.0, b=0.4) for k in range(n)]
-    M += [B(61.0, 371.0, 135.0, 371.6, 70.0, 82.0, "tissu"), B(60.5, 370.6, 135.5, 372.0, 81.0, 82.0, "metal")]
+    # (2026-11-02) le store suit la tête de la fenêtre : 80 po dans la vidéo DAG (fen = SCENE["fenetres"]), 82 avant
+    te = ((fen or {}).get("ouv-RDC-003") or {}).get("tete", 82)
+    M += [B(61.0, 371.0, 135.0, 371.6, te - 12.0, te, "tissu"), B(60.5, 370.6, 135.5, 372.0, te - 1.0, te, "metal")]
 
     # ------------------------------------------------------------ cloison du pied (x = 143,75) : une seule œuvre encadrée
     M += h.cadre_mur_x(XD, 256.0, 290.0, 40.0, 74.0, "jete", sens=-1, cadre="metal")
@@ -302,7 +304,7 @@ def appliquer_scene_rdc(S, h):
     S["revetements"][:] = [o for o in S.get("revetements", []) if not _dans_zone(o)]
     S["lumieres"][:] = [l for l in S.get("lumieres", []) if not (ZONE[0][0] < l["x"] < ZONE[0][2] and ZONE[0][1] < l["y"] < ZONE[0][3])]
     # 2) mobilier proposé
-    S["mobilier"] += _mobilier(h)
+    S["mobilier"] += _mobilier(h, S.get("fenetres"))
     # 3) éclairage : 4 encastrés autour du lit (pas au-dessus des oreillers), 1 dans la garde-robe, lueur du mur de tête
     S["lumieres"] += [{"x": 40, "y": 242, "i": 5}, {"x": 40, "y": 354, "i": 5}, {"x": 124, "y": 254, "i": 6},
                       {"x": 124, "y": 342, "i": 6}, {"x": 160.5, "y": 334, "i": 4}, {"x": 24, "y": YC, "z": 66, "i": 2}]

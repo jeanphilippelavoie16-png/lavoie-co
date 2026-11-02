@@ -333,7 +333,10 @@ def appliquer_scene_rdc(S, h):
           A(xm + 1.5, YA - 1.4, xm + 22.0, YA, 44.0, 80.0, "feutre-sable", r=0.4, b=0.35)]
     # tapis à poils ras sous les chaises (roulettes) ; toile solaire enroulée en haut de la fenêtre
     M += [A(34.0, 34.0, 139.0, 104.0, 0, 0.35, "tapis", r=1.5, b=0.12)]
-    M += [B(FEN[0] + 0.5, 6.3, FEN[1] - 0.5, 8.2, 77.6, 81.8, "gris"), B(FEN[0] + 1.0, 7.0, FEN[1] - 1.0, 7.3, 75.5, 77.6, "gris")]
+    # (2026-11-02) la toile suit la tête de la fenêtre : 80 po dans la vidéo DAG (SCENE["fenetres"]), 82 avant
+    dz = 82 - ((S.get("fenetres") or {}).get("ouv-RDC-001") or {}).get("tete", S.get("tete_fenetre", 82))
+    M += [B(FEN[0] + 0.5, 6.3, FEN[1] - 0.5, 8.2, 77.6 - dz, 81.8 - dz, "gris"),
+          B(FEN[0] + 1.0, 7.0, FEN[1] - 1.0, 7.3, 75.5 - dz, 77.6 - dz, "gris")]
     # petite plante au bout gauche du plan
     M += [h.MOD("plante_syngonium", 21.0, 21.0, z=PZ1, H=17)]
     S["mobilier"] += M

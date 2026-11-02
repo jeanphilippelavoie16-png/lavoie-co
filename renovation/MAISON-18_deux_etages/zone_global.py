@@ -16,7 +16,8 @@ Huit changements pour deux garçons de 4 et 6 ans, l'hiver à Baie-Comeau :
 MAISON-18 (client, 2026-11-02) : « les fenêtres en bas sont plus grosses aussi (par le bas), sauf salle de bain et salle de
 lavage » et « un gros congélateur debout ... lui trouver une place en bas » :
 9. fenêtres du séjour, de la chambre 1 et de la chambre 2 descendues par le bas (allège 40 po, HYPOTHÈSE à mesurer ; tête
-   inchangée) avec margelles (SCENE["fenetres"] du moteur) ; bain et lavage inchangés ;
+   inchangée) avec margelles (SCENE["fenetres"] du moteur) ; bain et lavage inchangés ; puis (2026-11-02, « les fenêtres
+   dans la vidéo sont de bonnes dimensions ») séjour et chambre 2 aux dimensions de la vidéo DAG (fenetres_video.py) ;
 10. congélateur vertical (≈ 20 pi³, 32 × 30 × 70 po) dans une niche de 33 po au bout du comptoir de pliage (le trieur part,
    le bac recule de 7 po, paniers des garçons de 12 po), prise simple dédiée au-dessus ; le déshumidificateur, qui était
    à 5 po devant le chauffe-eau, passe sous la fenêtre à côté de la laveuse (36 po libres devant le panneau et le chauffe-eau).
@@ -299,7 +300,7 @@ def _congelateur(h):
     return out
 
 
-def _sejour(h):
+def _sejour(h, fen=None):
     A, B, C, MOD = h.A, h.B, h.C, h.MOD
     out = []
     # --- banc-rangement à jouets de chêne pleine largeur sous la toile : 143 × 16 po, dessus à 16 po (la barre de lestage,
@@ -329,9 +330,13 @@ def _sejour(h):
     # quelques blocs de bois sur le tapis de l'aire de jeu (sol chauffant dessous)
     out += [B(402, 38, 405, 41, 0.5, 3.5, "placage"), B(405.6, 38.4, 408.6, 41.4, 0.5, 3.5, "laque-marine"),
             B(403.8, 38.8, 406.8, 41.8, 3.5, 6.5, "art-argile"), B(398, 46, 404, 49, 0.5, 3.5, "placage")]
-    # store à enrouleur sans cordon dans l'embrasure de la fenêtre (y 57–93), à moitié remonté
-    out += [h.CY(447.6, 57.5, 92.5, 85.1, 0.8, "carbone"), B(447.5, 57.6, 447.7, 92.4, 63, 84.4, "tissu"),
-            B(447.3, 57.6, 447.9, 92.4, 62.4, 63, "metal")]
+    # store à enrouleur sans cordon dans l'embrasure de la fenêtre (y 57–93), à moitié remonté ; il suit l'allège et la tête
+    # de ouv-SS-004 (fen = SCENE["fenetres"] ; vidéo DAG, 2026-11-02 : 44 → 80 po ; avant 40 → 86 : mêmes boîtes qu'avant)
+    r = (fen or {}).get("ouv-SS-004") or {}
+    al, te = r.get("allege", ALLEGE_SS), r.get("tete", 86)
+    zb = (al + te) / 2                                                                      # bas du store : mi-hauteur
+    out += [h.CY(447.6, 57.5, 92.5, te - 0.9, 0.8, "carbone"), B(447.5, 57.6, 447.7, 92.4, zb, te - 1.6, "tissu"),
+            B(447.3, 57.6, 447.9, 92.4, zb - 0.6, zb, "metal")]
     # --- boîte de plancher (2 prises + 2 USB-C) au bout de l'accoudoir, sous un guéridon avec lampe : pas de rallonge
     out += [B(306, 135, 312, 141, 0.5, 0.62, "laiton"), B(307, 136, 311, 140, 0.62, 0.66, "carbone")]
     gx, gy = 312, 140
@@ -349,12 +354,27 @@ def _sejour(h):
     return out
 
 
+def _fenetres_video():
+    """fenetres_video.py (même dossier) : dimensions des fenêtres de la vidéo DAG (MAISON-18, 2026-11-02)."""
+    import importlib.util
+    import os
+    spec = importlib.util.spec_from_file_location(
+        "m18_fenetres_video", os.path.join(os.path.dirname(os.path.abspath(__file__)), "fenetres_video.py"))
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
 def appliquer_scene(S, h):
     M = S["mobilier"]
     _retirer_ss16(M)
-    # fenêtres descendues par le bas (allège 40 po, tête de l'étage) ; le moteur pose les margelles (terrain à 48 po)
+    # fenêtres descendues par le bas (allège 40 po, tête de l'étage) ; le moteur pose les margelles (terrain à 48 po).
+    # MAISON-18 (client, 2026-11-02 : « les fenêtres dans la vidéo sont de bonnes dimensions ») : celles qu'on voit dans la
+    # vidéo DAG en prennent les dimensions (fenetres_video.py : séjour et chambre 2 à 44 → 80 po, 3 sections à la façade et
+    # dans la chambre 2) ; la chambre 1 (cachée par le deck dans la vidéo) garde l'hypothèse de 40 po
     S["fenetres"] = dict(S.get("fenetres") or {}, **{oid: {"allege": ALLEGE_SS} for oid in FENETRES_BASSES})
-    M += _vestiaire(h) + _nuit(h) + _salle_de_bain(h) + _lavage(h) + _sejour(h)
+    S["fenetres"].update(_fenetres_video().reglages_3d("SS"))
+    M += _vestiaire(h) + _nuit(h) + _salle_de_bain(h) + _lavage(h) + _sejour(h, S["fenetres"])
     # l'encastré du séjour sous le nuage devient une lumière intégrée au nuage (la source passe sous les lattes)
     S["lumieres"][:] = [l for l in S["lumieres"] if not (l.get("x") == 330 and l.get("y") == 80 and not l.get("z"))]
     S["lumieres"] += [{"x": 338, "y": 84, "z": 101, "i": 6}]
@@ -379,8 +399,10 @@ def appliquer_scene(S, h):
             ligne[1] += ", congélateur vertical blanc dans une niche au bout du comptoir (prise dédiée)"
         elif ligne[0] == "Vestiaire":
             ligne[1] = ligne[1].replace("banc et cases en chêne", "banc de chêne et bacs d'égouttement")
-    S["palette"].append(["Fenêtres (MAISON-18)", "séjour et chambres : fenêtres agrandies vers le bas (allège ≈ 40 po, à "
-                         "mesurer), cadres noirs, margelles de béton ; salle de bain et salle de lavage inchangées", "#1E1E1E"])
+    S["palette"].append(["Fenêtres (MAISON-18)", "séjour et chambre 2 aux dimensions de la vidéo DAG (allège ≈ 44 po, tête "
+                         "≈ 80 po, 3 sections à la façade et dans la chambre 2), chambre 1 agrandie vers le bas (allège ≈ 40 "
+                         "po) ; à mesurer ; cadres noirs, margelles de béton ; salle de bain et salle de lavage inchangées",
+                         "#1E1E1E"])
     S["palette"].append(["Rangements des garçons (SS-17)", "casiers d'hiver de chêne avec séchoirs à bottes et portes hautes "
                          "vert forêt (comme les armoires gardées), grille à neige encastrée en aluminium noir, banc à jouets "
                          "de chêne, paniers de linge et serviettes à la couleur de chaque garçon (vert forêt, marine), "

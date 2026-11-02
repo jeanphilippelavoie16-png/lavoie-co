@@ -52,7 +52,7 @@ def appliquer(maison):
     rdc["feuille"], rdc["nom"] = "P-130", "Rez-de-chaussée proposé"
     # notes de la feuille P-130 (le cartouche en tient 6) : le détail est dans DESIGN.md
     notes = [
-        "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes à mesurer) ; fenêtre du salon descendue (allège ≈ 20 po).",
+        "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes à mesurer) ; fenêtres selon la vidéo DAG (salon : allège ≈ 12 po).",
         "Grande entrée ouverte : garde-robes du hall enlevées ; escalier entouré d'un garde-corps de verre.",
         "Escalier vers le sous-sol : trémie ≈ 3 × 10 pi ; échappée ≈ 1,96 m à vérifier ; garde-corps de 42 po conseillé.",
         "Chambre des parents : lit king, mur de tête en bois de grange, garde-robes réunies à portes coulissantes.",
@@ -60,14 +60,13 @@ def appliquer(maison):
         "Poutre et appuis de l'ancienne cloison hall/salon, coupe-feu entre logements : à valider avec la Ville et un professionnel.",
     ]
     rdc["notes"] = [{"id": f"note-RDC-P{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t} for i, t in enumerate(notes)]
-    # fenêtres agrandies vers le bas et congélateur (client, 2026-11-02) : allège de la fenêtre du salon dans les données (le plan
-    # ne dessine pas l'allège ; la 3D la prend dans base_rdc01_scene.py, SCENE["fenetres"]) ; note 1 de P-129
-    for o in rdc["ouvertures"]:
-        if o["id"] == "ouv-RDC-002":
-            o["allege"] = {"valeur": 20, "source": "PRÉSUMÉ", "photo": None,
-                           "note": "MAISON-18 (client, 2026-11-02 : « plus grande vers le bas ») : allège abaissée d'environ 34 à 20 po "
-                                   "(HYPOTHÈSE), tête et linteau 2-2×10 inchangés ; à mesurer et à valider"}
+    # fenêtres aux dimensions de la vidéo DAG (client, 2026-11-02 : « les fenêtres dans la vidéo sont de bonnes dimensions ») :
+    # largeur, centre (ouv-SS-002 seulement), allège, hauteur et chaînes de cotes dans maison.json ; remplace l'hypothèse
+    # « salon descendu à 20 po » et, au sous-sol, celle de zone_global (allège 40) pour les fenêtres qu'on voit dans la vidéo.
+    # En dernier : la vidéo l'emporte sur les modules de zone. La 3D prend les mêmes valeurs (zone_global.py, base_rdc01_scene.py).
+    _charger("m18_fenetres_video", "fenetres_video.py").appliquer_plans(maison)
     ss = _niv(maison, "SS")
     if ss.get("notes"):
-        ss["notes"][0]["interpretation"] = "Fenêtres agrandies par le bas (allège ≈ 40 po, sauf bain et lavage) ; congélateur au lavage."
+        ss["notes"][0]["interpretation"] = ("Fenêtres selon la vidéo DAG (allège ≈ 44, tête ≈ 80 po ; chambre 1 : allège ≈ 40) ; "
+                                            "congélateur au lavage.")
     return maison

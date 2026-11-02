@@ -801,31 +801,31 @@
      "operation": "fixe",
      "mur_id": "mur-SS-001",
      "position": {
-      "valeur": 377,
-      "source": "DÉDUIT",
-      "photo": "P2",
-      "note": "axe à 6'-2\" du nu ext. droit (cote-SS-030)"
+      "valeur": 390.0,
+      "source": "ESTIMÉ",
+      "photo": null,
+      "note": "MAISON-18 (2026-11-02) : axe à x = 395 d'après la vidéo DAG (avant 382, axe à 6'-2\" du nu ext. droit (cote-SS-030)) ; écart confirmé par les deux relevés ; à vérifier sur place"
      },
      "largeur": {
-      "valeur": 75,
-      "source": "LU",
-      "photo": "P2",
-      "ref": "cote-SS-032"
+      "valeur": 72,
+      "source": "ESTIMÉ",
+      "photo": null,
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG, captures 01 (mesure), 02 ; avant 6'-3\" (LU) ; à mesurer sur place"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 36,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 44 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": 40,
-      "source": "PRÉSUMÉ",
+      "valeur": 44,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po (HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 01 (mesure), 02), depuis le plancher de l'étage ; avant 40 po ; à mesurer"
      },
      "texte_original": "6'-3\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), margelle ; appui, allège de béton et margelle à valider avec un professionnel."
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : largeur 75 → 72 po ; centre 382 → 395 ; allège 40 → 44 ; tête 86 → 80 ; sections 2 → 3. DÉPLACÉE de +13 po vers l'allée (x 359–431, bord droit aligné sur celui de ouv-RDC-002 comme dans la vidéo ; plan : axe à 6'-2\" du nu droit, x 344½–419½) ; 3 sections égales ; recoupe sur la 01 : 72,1 po, x 358,2–430,3. À mesurer sur place."
     },
     {
      "id": "ouv-SS-003",
@@ -839,25 +839,25 @@
       "note": "axe à 6'-0\" du nu ext. arrière (cote-SS-021)"
      },
      "largeur": {
-      "valeur": 80.0,
-      "source": "LU",
-      "photo": "P2",
-      "ref": "cote-SS-025"
+      "valeur": 84,
+      "source": "ESTIMÉ",
+      "photo": null,
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG, captures 03 (seule, de biais) ; avant 6'-8\" (LU) ; à mesurer sur place"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 36,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 44 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": 40,
-      "source": "PRÉSUMÉ",
+      "valeur": 44,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po (HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 03 (seule, de biais)), depuis le plancher de l'étage ; avant 40 po ; à mesurer"
      },
      "texte_original": "6'-8\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis ; dessin ≈ 72 po (ESTIMÉ) — voir écart — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), margelle ; appui, allège de béton et margelle à valider avec un professionnel."
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; deux châssis ; dessin ≈ 72 po (ESTIMÉ) — voir écart — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : largeur 80 → 84 po ; allège 40 → 44 ; tête 86 → 80 ; sections 2 → 3. fenêtre d'évacuation ; 84 po : A brut 84,4 (ramené à 80 par une correction d'un pixel), B 85, recoupe sur la 03 (cadre noir sur crépi, homographie du mur) 83,5 ± 1,5 alors que la même mesure redonne 36 po pour ouv-SS-004 et la porte : la correction de A ne tient pas. À mesurer sur place."
     },
     {
      "id": "ouv-SS-004",
@@ -878,19 +878,19 @@
       "note": "largeur 1957 PRÉSUMÉE conservée après le déplacement"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 36,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 44 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": 40,
-      "source": "PRÉSUMÉ",
+      "valeur": 44,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "MAISON-18 (client, 2026-11-02 : « plus grosses par le bas ») : allège abaissée de 56 à 40 po (HYPOTHÈSE, tête inchangée ≈ 86 po) ; margelle devant ; à mesurer et à valider"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 03 (seule, de biais)), depuis le plancher de l'étage ; avant 40 po ; à mesurer"
      },
      "texte_original": "3'-0\"",
-     "note": "fenêtre déplacée à la place de l'ancienne porte (réponses du propriétaire (2026-10-29)) ; largeur 3'-0\" du plan 1957 PRÉSUMÉE conservée — MAISON-18 : agrandie vers le bas (allège ≈ 40 po, tête inchangée), margelle ; appui, allège de béton et margelle à valider avec un professionnel."
+     "note": "fenêtre déplacée à la place de l'ancienne porte (réponses du propriétaire (2026-10-29)) ; largeur 3'-0\" du plan 1957 PRÉSUMÉE conservée — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : allège 40 → 44 ; tête 86 → 80 ; sections 2 → 2. largeur et centre du plan confirmés (recoupe 35,7 po, centre 73). À mesurer sur place."
     },
     {
      "id": "ouv-SS-005",
@@ -4848,7 +4848,7 @@
      "id": "note-SS-P01",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Fenêtres agrandies par le bas (allège ≈ 40 po, sauf bain et lavage) ; congélateur au lavage."
+     "interpretation": "Fenêtres selon la vidéo DAG (allège ≈ 44, tête ≈ 80 po ; chambre 1 : allège ≈ 40) ; congélateur au lavage."
     },
     {
      "id": "note-SS-P02",
@@ -4889,41 +4889,43 @@
       0
      ],
      "p2": [
-      344.5,
+      359.0,
       0
      ],
      "direction": "x",
      "facade": "avant",
      "rang": 1,
-     "source": "DÉDUIT",
+     "source": "ESTIMÉ",
      "statut": "confirmee",
      "ref": null,
      "valeur_attendue": null,
-     "repere": null
+     "repere": null,
+     "note": "MAISON-18 (2026-11-02) : ouv-SS-002 selon la vidéo DAG (avant 0→344.5)"
     },
     {
      "id": "lc-SS-002",
      "p1": [
-      344.5,
+      359.0,
       0
      ],
      "p2": [
-      419.5,
+      431.0,
       0
      ],
      "direction": "x",
      "facade": "avant",
      "rang": 1,
-     "source": "LU",
+     "source": "ESTIMÉ",
      "statut": "confirmee",
-     "ref": "cote-SS-032",
-     "valeur_attendue": 75,
-     "repere": null
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null,
+     "note": "MAISON-18 (2026-11-02) : ouv-SS-002 selon la vidéo DAG (avant 344.5→419.5, LU cote-SS-032 = 75)"
     },
     {
      "id": "lc-SS-003",
      "p1": [
-      419.5,
+      431.0,
       0
      ],
      "p2": [
@@ -4933,11 +4935,12 @@
      "direction": "x",
      "facade": "avant",
      "rang": 1,
-     "source": "DÉDUIT",
+     "source": "ESTIMÉ",
      "statut": "confirmee",
      "ref": null,
      "valeur_attendue": null,
-     "repere": null
+     "repere": null,
+     "note": "MAISON-18 (2026-11-02) : ouv-SS-002 selon la vidéo DAG (avant 419.5→456)"
     },
     {
      "id": "lc-SS-004",
@@ -4984,22 +4987,23 @@
       0
      ],
      "p2": [
-      382,
+      395,
       0
      ],
      "direction": "x",
      "facade": "avant",
      "rang": 2,
-     "source": "LU",
+     "source": "ESTIMÉ",
      "statut": "confirmee",
-     "ref": "cote-SS-029",
-     "valeur_attendue": 148,
-     "repere": null
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null,
+     "note": "MAISON-18 (2026-11-02) : ouv-SS-002 selon la vidéo DAG (avant 234→382, LU cote-SS-029 = 148)"
     },
     {
      "id": "lc-SS-007",
      "p1": [
-      382,
+      395,
       0
      ],
      "p2": [
@@ -5009,11 +5013,12 @@
      "direction": "x",
      "facade": "avant",
      "rang": 2,
-     "source": "LU",
+     "source": "ESTIMÉ",
      "statut": "confirmee",
-     "ref": "cote-SS-030",
-     "valeur_attendue": 74,
-     "repere": null
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null,
+     "note": "MAISON-18 (2026-11-02) : ouv-SS-002 selon la vidéo DAG (avant 382→456, LU cote-SS-030 = 74)"
     },
     {
      "id": "lc-SS-008",
@@ -5479,41 +5484,43 @@
      ],
      "p2": [
       456,
-      268.0
+      266.0
      ],
      "direction": "y",
      "facade": "droite",
      "rang": 1,
-     "source": "DÉDUIT",
+     "source": "ESTIMÉ",
      "statut": "confirmee",
      "ref": null,
      "valeur_attendue": null,
-     "repere": null
+     "repere": null,
+     "note": "MAISON-18 (2026-11-02) : ouv-SS-003 selon la vidéo DAG (avant 196.0→268.0)"
     },
     {
      "id": "lc-SS-033",
      "p1": [
       456,
-      268.0
+      266.0
      ],
      "p2": [
       456,
-      348.0
+      350.0
      ],
      "direction": "y",
      "facade": "droite",
      "rang": 1,
-     "source": "LU",
+     "source": "ESTIMÉ",
      "statut": "confirmee",
-     "ref": "cote-SS-025",
-     "valeur_attendue": 80.0,
-     "repere": "ecart-020"
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": "ecart-020",
+     "note": "MAISON-18 (2026-11-02) : ouv-SS-003 selon la vidéo DAG (avant 268.0→348.0, LU cote-SS-025 = 80.0)"
     },
     {
      "id": "lc-SS-034",
      "p1": [
       456,
-      348.0
+      350.0
      ],
      "p2": [
       456,
@@ -5522,11 +5529,12 @@
      "direction": "y",
      "facade": "droite",
      "rang": 1,
-     "source": "DÉDUIT",
+     "source": "ESTIMÉ",
      "statut": "confirmee",
      "ref": null,
      "valeur_attendue": null,
-     "repere": null
+     "repere": null,
+     "note": "MAISON-18 (2026-11-02) : ouv-SS-003 selon la vidéo DAG (avant 348.0→380)"
     },
     {
      "id": "lc-SS-035",
@@ -6296,19 +6304,19 @@
       "ref": "cote-RDC-014"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 42.5,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 37.5 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 37.5,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 01 (mesure), 02, 03), depuis le plancher de l'étage ; avant 34 po ; à mesurer"
      },
      "texte_original": "6'-3\" ; LINTEAU 2-2\"x8\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; chambre avant",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; chambre avant — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : allège 34 → 37.5 ; tête 82 → 80 ; sections 2 → 2 inégales. 2 sections inégales : petite (≈ 25 po) côté x 0, à gauche vu de la rue ; largeur 76–77 dans la vidéo = 6'-3\" du plan à l'incertitude près (gardée). À mesurer sur place.",
      "linteau": {
       "id": "str-RDC-L01",
       "texte_original": "LINTEAU 2-2\"x8\"",
@@ -6337,19 +6345,19 @@
       "ref": "cote-RDC-015"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 68,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 12 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": 20,
-      "source": "PRÉSUMÉ",
+      "valeur": 12,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "MAISON-18 (client, 2026-11-02 : « plus grande vers le bas ») : allège abaissée d'environ 34 à 20 po (HYPOTHÈSE), tête et linteau 2-2×10 inchangés ; à mesurer et à valider"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 01 (mesure), 02, 03), depuis le plancher de l'étage ; avant 20 po ; à mesurer"
      },
      "texte_original": "9'-0\" ; LINTEAU 2-2\"x10\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; salon, 3 sections",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; salon, 3 sections — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : allège 20 → 12 ; tête 82 → 80 ; sections 3 → 2 inégales. 2 sections et non 3 : grand fixe (≈ 81 po) côté porte, petite section (≈ 27 po) côté allée ; allège ≈ 12 po (l'hypothèse de 20 po tombe). À mesurer sur place.",
      "linteau": {
       "id": "str-RDC-L02",
       "texte_original": "LINTEAU 2-2\"x10\"",
@@ -6378,19 +6386,19 @@
       "ref": "cote-RDC-024"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 56.5,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 23.5 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 23.5,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 10 (mesure), 11, 09), depuis le plancher de l'étage ; avant 34 po ; à mesurer"
      },
      "texte_original": "6'-3\" ; LINTEAU 2-2\"x8\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; chambre arrière",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; chambre arrière — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : allège 34 → 23.5 ; tête 82 → 80 ; sections 2 → 3. nettement plus haute que la cuisine (≈ 56 po) ; 3 sections égales. À mesurer sur place.",
      "linteau": {
       "id": "str-RDC-L03",
       "texte_original": "LINTEAU 2-2\"x8\"",
@@ -6419,19 +6427,19 @@
       "ref": "cote-RDC-025"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 42.5,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 37.5 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 37.5,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 10 (mesure), 11), depuis le plancher de l'étage ; avant 34 po ; à mesurer"
      },
      "texte_original": "3'-0\" ; LIN. 2-2\"x6\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; chambre d'utilité",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; chambre d'utilité — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : allège 34 → 37.5 ; tête 82 → 80 ; sections 2 → 2. en partie cachée par l'entrée arrière sur la 10 ; même bas que la cuisine. À mesurer sur place.",
      "linteau": {
       "id": "str-RDC-L04",
       "texte_original": "LIN. 2-2\"x6\"",
@@ -6460,19 +6468,19 @@
       "ref": "cote-RDC-028"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 42.5,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 37.5 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 37.5,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 10 (mesure), 11, 07), depuis le plancher de l'étage ; avant 34 po ; à mesurer"
      },
      "texte_original": "6'-3\" ; LINTEAU 2-2\"x8\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; cuisine, au-dessus de l'évier",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; cuisine, au-dessus de l'évier — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : allège 34 → 37.5 ; tête 82 → 80 ; sections 2 → 3. 3 sections égales (le tiers côté entrée arrière est caché sur la 10, vu sur la 11) ; centre 378 dans la vidéo, 375 au plan : gardé (3 po). À mesurer sur place.",
      "linteau": {
       "id": "str-RDC-L05",
       "texte_original": "LINTEAU 2-2\"x8\"",
@@ -6542,19 +6550,19 @@
       "ref": "cote-RDC-008"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 56,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 24 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 24,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 03 (seule, de biais)), depuis le plancher de l'étage ; avant 34 po ; à mesurer"
      },
      "texte_original": "3'-0\" ; LIN. 2-2\"x6\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; cuisine / s.-à-manger",
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; cuisine / s.-à-manger — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : allège 34 → 24 ; tête 82 → 80 ; sections 2 → 2. haute et étroite, juste au-dessus de la porte de côté du SS ; largeur 36 (A) / 40 (B) : recoupe sur la 03 (R−G) ≈ 31–35 po, on garde 36 (plan). À mesurer sur place.",
      "linteau": {
       "id": "str-RDC-L07",
       "texte_original": "LIN. 2-2\"x6\"",
@@ -6577,25 +6585,25 @@
       "note": "8'-2\" + 8'-3\" + 8'-0\""
      },
      "largeur": {
-      "valeur": 42.0,
-      "source": "LU",
-      "photo": "P6",
-      "ref": "cote-RDC-026"
+      "valeur": 36,
+      "source": "ESTIMÉ",
+      "photo": null,
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG, captures 10 (mesure), 11, 09 ; avant 3'-6\" (LU) ; à mesurer sur place"
      },
      "hauteur": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 42,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "hauteur non écrite"
+      "note": "MAISON-18 (2026-11-02) : allège 38 → tête 80 po (au soffite dans la vidéo, alignée sur la tête des portes)"
      },
      "allege": {
-      "valeur": null,
-      "source": "ILLISIBLE",
+      "valeur": 38,
+      "source": "ESTIMÉ",
       "photo": null,
-      "note": "non écrite"
+      "note": "MAISON-18 (2026-11-02) : vidéo DAG (captures 10 (mesure), 11, 09), depuis le plancher de l'étage ; avant 34 po ; à mesurer"
      },
      "texte_original": "3'-6\"",
-     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; entrée arrière ; aucun linteau écrit"
+     "note": "type d'ouvrant non indiqué au plan (« fixe » = représentation par défaut) ; entrée arrière ; aucun linteau écrit — MAISON-18 (2026-11-02, client : « les fenêtres dans la vidéo sont de bonnes dimensions ») : largeur 42 → 36 po ; allège 34 → 38 ; tête 82 → 80 ; sections 2 → 2. PLUS ÉTROITE que le plan (3'-6\" = 42) : 36 po dans les deux relevés. À mesurer sur place."
     },
     {
      "id": "ouv-RDC-010",
@@ -10720,7 +10728,7 @@
      "id": "note-RDC-P01",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes à mesurer) ; fenêtre du salon descendue (allège ≈ 20 po)."
+     "interpretation": "Esquisse sur le relevé photo RDC-01 (le reste est l'existant ; cotes à mesurer) ; fenêtres selon la vidéo DAG (salon : allège ≈ 12 po)."
     },
     {
      "id": "note-RDC-P02",
