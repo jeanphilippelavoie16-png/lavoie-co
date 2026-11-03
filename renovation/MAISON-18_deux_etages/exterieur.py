@@ -42,7 +42,8 @@ CONTRAT (lu par le moteur) — EXTERIEUR = {
                              plus de 8 po aussi ;
   "trous": [[[x, y], ...]],  où le terrain n'est pas dessiné : emprise de la maison (corps, entrée arrière, perron plein,
                              cheminée). Les margelles des fenêtres du sous-sol sont calculées par le moteur à partir du relief ;
-  "visites": [{"nom", "x", "y", "cap", "z"}],  arrêts dehors (z = dessus du sol ou du plancher sous les pieds) ;
+  "visites": [{"nom", "x", "y", "cap", "z"}],  arrêts dehors (z = dessus du sol ou du plancher sous les pieds ; facultatif :
+                                                sans lui, le plus haut plancher sous le point, sinon le terrain) ;
   "lumieres": [{"x", "y", "z", "i"}],   appliques (même format que les lumières d'étage, z absolu) ;
   "peintures": {nom: [couleur, description, alias]}  couleurs des alias employés par les objets ("ext-blanc"…) ;
   "palette": [[nom, description, couleur]]           (facultatif) matériaux de l'extérieur, section « Extérieur » de la liste }.

@@ -254,7 +254,7 @@ def _ambiance(h):
 
 VISITES = [
     {"nom": "Chambre 1 — la niche bleue", "x": 226, "y": 311, "cap": 180},
-    {"nom": "Chambre 1 — coin lecture et bureau", "x": 100, "y": 360, "cap": 322},
+    {"nom": "Chambre 1 — coin lecture et bureau", "x": 99, "y": 359, "cap": 322},     # recalé (fluidité)
     {"nom": "Chambre 1 — la niche de près", "x": 172, "y": 296, "cap": 168},
     {"nom": "Chambre 1 — l'entrée sous la poutre", "x": 213, "y": 300, "cap": 270},
 ]

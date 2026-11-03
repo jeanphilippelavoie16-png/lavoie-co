@@ -521,13 +521,13 @@ SCENE = {
                 {"nom": "Séjour", "x": 424, "y": 146, "cap": 200, "commandes": {"toile": "haut"}},
                 {"nom": "Galerie de famille", "x": 296, "y": 118, "cap": 276, "commandes": {"toile": "haut"}},
                 {"nom": "Coin cinéma (toile)", "x": 294, "y": 84, "cap": 0, "commandes": {"toile": "bas"}},
-                {"nom": "Gym (porte vitrée)", "x": 168, "y": 192, "cap": 270},
+                {"nom": "Gym (porte vitrée)", "x": 168, "y": 189, "cap": 270},     # recalé : 9 po du cadre (fluidité)
                 {"nom": "Vélo et tapis roulant", "x": 126, "y": 146, "cap": 320},
                 {"nom": "Salle de lavage", "x": 70, "y": 128, "cap": 262},
                 {"nom": "Hall — le mur de la poutre", "x": 252, "y": 172, "cap": 155},
                 {"nom": "Salle de bain (entrée)", "x": 134, "y": 182, "cap": 162},
                 {"nom": "Le bain (alcôve de pierre)", "x": 128, "y": 188, "cap": 150},
-                {"nom": "Douche à l'italienne (derrière la poutre)", "x": 122, "y": 222, "cap": 8},
+                {"nom": "Douche à l'italienne (derrière la poutre)", "x": 124, "y": 222, "cap": 8},     # recalé (fluidité)
                 {"nom": "Vanité", "x": 75, "y": 202, "cap": 270},
                 {"nom": "Chambre 1", "x": 222, "y": 246, "cap": 132},
                 {"nom": "Chambre 2", "x": 262, "y": 250, "cap": 40},

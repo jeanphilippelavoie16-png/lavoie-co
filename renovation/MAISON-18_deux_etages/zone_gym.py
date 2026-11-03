@@ -190,7 +190,7 @@ def appliquer_scene(S, h):
     S["visites"][:] = [v for v in S["visites"] if v["nom"] not in SS16_VISITES_GYM]
     i = next((k + 1 for k, v in enumerate(S["visites"]) if v["nom"].startswith("Gym (porte")), len(S["visites"]))
     S["visites"][i:i] = [{"nom": "Gym — mur-miroir et zone au sol", "x": 204, "y": 130, "cap": 203},
-                         {"nom": "Gym — cardio", "x": 150, "y": 150, "cap": 285}]
+                         {"nom": "Gym — cardio", "x": 148, "y": 142, "cap": 285}]     # recalé : 9 po des appareils (fluidité)
 
     # --- palette --------------------------------------------------------------------------------------------------
     S["palette"][:] = [p for p in S["palette"] if p[0] != "Gym"]

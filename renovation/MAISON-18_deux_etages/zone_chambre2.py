@@ -319,7 +319,7 @@ def appliquer_scene(S, h):
     vis[:] = [v for v in vis if v.get("nom") not in ("Chambre 2", "Walk-in (caveau isolé)")]
     vis[i:i] = [{"nom": "Chambre 2 — vue d'entrée (mur de chêne, lit, coin lecture)", "x": 262, "y": 244, "cap": 50},
                 {"nom": "Chambre 2 — bureau réglable et fenêtre", "x": 290, "y": 262, "cap": 16},
-                {"nom": "Walk-in — penderie à deux hauteurs et colonne de tiroirs", "x": 250, "y": 378, "cap": 60}]
+                {"nom": "Walk-in — penderie à deux hauteurs et colonne de tiroirs", "x": 256, "y": 378, "cap": 60}]     # recalé : au milieu de la porte (fluidité)
     pal = S.setdefault("palette", [])
     pal[:] = [p for p in pal if not p[0].startswith(("Chambre 2", "Walk-in"))]
     for p in pal:

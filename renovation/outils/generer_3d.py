@@ -1744,8 +1744,15 @@ def preparer_exterieur(X, M, etages, scene):
     tt = [Polygon(t) for t in scene.get("terrain_trou") or []] + [Polygon(t) for t in trous]
     trous_terrain = contours(unary_union([maison] + tt).buffer(0))
     for v in X.get("visites") or []:
-        if not isinstance(v, dict) or not all(num(v.get(k)) for k in ("x", "y", "cap", "z")):
-            err(f'arrêt de visite « {v.get("nom") if isinstance(v, dict) else v} » : "x", "y", "cap" et "z" numériques attendus')
+        if not isinstance(v, dict) or not all(num(v.get(k)) for k in ("x", "y", "cap")) or ("z" in v and not num(v["z"])):
+            err(f'arrêt de visite « {v.get("nom") if isinstance(v, dict) else v} » : "x", "y", "cap" (et "z", facultatif) numériques attendus')
+        # --- fluidité B : "z" facultatif (sans lui, la visite pose les pieds sur le plus haut plancher sous le point, sinon sur le
+        # terrain) ; un "z" resté sous un plancher construit depuis par-dessus est signalé (la visite prend alors le plancher)
+        if "z" in v:
+            dessus = [p for p in planchers if p["z"] > v["z"] + 8.5 and Polygon(p["pts"]).covers(Point(v["x"], v["y"]))]
+            if dessus:
+                p = max(dessus, key=lambda q: q["z"])
+                print(f'  attention : arrêt « {v.get("nom")} » : z = {v["z"]} sous le plancher « {p["nom"]} » (z = {p["z"]}) ; la visite prend le plancher')
         scene["visites"].append(dict(v, etage="EXT"))
     lumieres = []
     for l in X.get("lumieres") or []:

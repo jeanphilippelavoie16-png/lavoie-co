@@ -343,17 +343,7 @@ def _entiers(o):
     return {k: (round(v) if isinstance(v, float) else [[round(a) for a in p] for p in v] if k == "pts" else v) for k, v in o.items()}
 
 
-ARRET = (100.0, -200.0)        # arrêt « Le fleuve et le traversier » (haut du terrain avant)
-
-
-def _z_relief(R, x, y):
-    """z du relief du lot en (x, y) : mêmes triangles que le moteur (diagonale (xs[i], ys[j]) -> (xs[i+1], ys[j+1]))."""
-    xs, ys, Z = R["xs"], R["ys"], R["z"]
-    i = max(0, min(len(xs) - 2, max(k for k in range(len(xs)) if xs[k] <= x) if x >= xs[0] else 0))
-    j = max(0, min(len(ys) - 2, max(k for k in range(len(ys)) if ys[k] <= y) if y >= ys[0] else 0))
-    u, v = (x - xs[i]) / (xs[i + 1] - xs[i]), (y - ys[j]) / (ys[j + 1] - ys[j])
-    z00, z10, z01, z11 = Z[j][i], Z[j][i + 1], Z[j + 1][i], Z[j + 1][i + 1]
-    return z00 + u * (z10 - z00) + v * (z11 - z10) if u >= v else z00 + v * (z01 - z00) + u * (z11 - z01)
+ARRET = (100.0, -200.0)        # arrêt « Le fleuve et le traversier » (sur le filet du balcon avant)
 
 
 def appliquer_scene_finale(S):
@@ -363,9 +353,9 @@ def appliquer_scene_finale(S):
     X["lointain"] = {"ouvert": ["-y"], "eau": eau(), "terre": terre(X["relief"]), "objets": [_entiers(o) for o in objets_lointains()],
                      "brume": 2400000, "couleur_brume": "#d9e3ea"}
     X.setdefault("animes", []).append(anime_traversier())
-    # sur le haut du terrain avant, à gauche du perron (hors de la zone où le visiteur arrive), regard vers le fleuve
-    X.setdefault("visites", []).append({"nom": "Le fleuve et le traversier", "x": ARRET[0], "y": ARRET[1], "cap": 270, "tangage": -4,
-                                         "z": round(_z_relief(X["relief"], *ARRET), 1)})
+    # à gauche du perron (hors de la zone où le visiteur arrive), regard vers le fleuve ; sans « z » : les pieds sur le sol réel
+    # (le moteur prend le plus haut plancher qui couvre le point : le filet du balcon avant, construit depuis par-dessus le terrain)
+    X.setdefault("visites", []).append({"nom": "Le fleuve et le traversier", "x": ARRET[0], "y": ARRET[1], "cap": 270, "tangage": -4})
     X.setdefault("palette", []).extend([
         ["Fleuve Saint-Laurent", "au loin, 45 m plus bas que le sous-sol ; la rive à 450 m, l'autre rive hors de vue", "#143350"],
         ["Traversier F.-A.-Gauthier (STQ)", "133 m ; coque bleue, superstructure blanche ; passe à 2 et 2,7 km, à 3 × sa vitesse réelle", BLEU_COQUE]])

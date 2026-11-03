@@ -41,19 +41,64 @@
 ## Maquette 3D
     python3 renovation/outils/generer_3d.py renovation/<projet>
 Lit `donnees/maison.json` et `scene_3d.py` (matériaux, peinture, mobilier, éclairage, arrêts de visite) du projet.
-La visite est pensée pour une tablette à l'horizontale : toucher le plancher ou le petit plan pour y marcher (chemin
+La visite est pensée pour une tablette à l'horizontale (sur téléphone : voir « Se déplacer ») : toucher le plancher ou le petit plan pour y marcher (chemin
 automatique par les portes), glisser pour regarder, ◀ ▶ pour la visite guidée, liste des pièces à gauche, maquette sans
 plafond (un doigt tourne, deux doigts zooment) ; toucher un objet animé ou mobile le fait bouger (voir « Toucher les objets »). Les escaliers projetés (`etat: nouveau`) sont modélisés avec leur trémie ;
 `peinture` / `accents` dans `scene_3d.py` colorent les murs pièce par pièce. Les visites déjà publiées de SS-02 et SS-03
 gardent l'ancienne visionneuse tant qu'on ne les régénère pas.
 
-Rendu (bouton **Haute / Normale** en haut ; Haute par défaut, une tablette lente passe seule en Normale) : image rendue
-dans une cible multi-échantillonnée puis finie par passes (occlusion ambiante, halo des sources claires, vignette) ;
-encastrés 3000 K et lumière du jour bleutée par les fenêtres, attribués aux sources les plus proches du visiteur (nombre
-de lumières fixe, avec fondu) ; ombres douces des encastrés les plus proches ; vernis (clearcoat) des planchers, comptoirs
-et céramiques et duvet (sheen) des tissus ; ciel et terrain vus par les fenêtres (`sol_exterieur` dans `scene_3d.py`,
-en pouces ; par défaut 8 po sous l'allège au sous-sol, -30 ailleurs). Un matériau du catalogue peut donner son fini :
-`vernis`, `vernis_rugosite`, `duvet`. Normale coupe les ombres, l'occlusion, le halo et les finis.
+Rendu (bouton **Haute / Normale / Légère** en haut, voir « Profils de qualité et éclairage » ci-dessous) : en Haute et
+Normale, image rendue dans une cible multi-échantillonnée puis finie par passes (occlusion ambiante, halo des sources
+claires, vignette) ; encastrés 3000 K et lumière du jour bleutée par les fenêtres, attribués aux sources les plus proches du
+visiteur (nombre de lumières fixe, avec fondu) ; ombres douces des encastrés les plus proches ; vernis (clearcoat) des
+planchers, comptoirs et céramiques et duvet (sheen) des tissus ; ciel et terrain vus par les fenêtres (`sol_exterieur` dans
+`scene_3d.py`, en pouces ; par défaut 8 po sous l'allège au sous-sol, -30 ailleurs). Un matériau du catalogue peut donner
+son fini : `vernis`, `vernis_rugosite`, `duvet`.
+
+<!-- --- fluidité A -->
+### Profils de qualité et éclairage (fluidité, 2026-11-02)
+Demande du client : « ça bug quand on bouge » et « l'éclairage aussi j'ai l'impression ça fait bugger, optimise ça ». Le
+profil est **décidé au chargement**, avant la première compilation des programmes de rendu (le nombre de vraies lumières,
+les ombres projetées et les finis en font partie) :
+
+| Profil | Pour | Vraies lumières (constantes toute la visite) | Ombres | Image |
+|---|---|---|---|---|
+| **Haute** | ordinateur (défaut) | 10 encastrés (4 avec ombre), 3 fenêtres, 4 lampes, soleil, ciel | 4 projecteurs (1024 px) + soleil (2048 px) | définition 1,5, anticrénelage 4×, occlusion, halo, vernis et duvet |
+| **Normale** | tablette (défaut d'un écran tactile) | mêmes lumières que Haute (places en trop éteintes) | 2 projecteurs (512 px) + soleil (1024 px) | définition 1, anticrénelage 2×, sans passes ; vernis et duvet gardés |
+| **Légère** | téléphone (défaut : écran tactile de moins de 600 px de côté) | **4 encastrés, 1 fenêtre, soleil, ciel** (6 lumières directes par pixel au lieu de 18) | **soleil seulement** (1024 px, figée) ; aucune ombre de projecteur ni de lampe | dessinée directement dans le canevas (anticrénelage natif, sans cible ni passe finale), sans vernis ni duvet, définition 1 au repos |
+
+- **Nombre de lumières constant par profil** : on ne recompile jamais rien en changeant de pièce, d'étage ou de Haute à
+  Normale (places en trop éteintes, jamais retirées). Passer à Légère ou en sortir **recharge la page** (le choix est
+  mémorisé sous la clé `visite3d-qualite-2` : un ancien choix « Haute » d'un téléphone ne compte plus).
+- **Légère, ambiance** : sans lampes ni projecteurs d'ombre, l'ambiance douce vient du ciel (hémisphère à 0,5 au lieu de
+  0,25) et de l'image des reflets de la pièce ; abat-jour, appliques, guirlandes, voyants et disques des encastrés restent
+  lumineux par leur matériau (émissif), sans vraie lumière.
+- **Ombres et reflets figés en mouvement** (tous profils) : tant que la caméra bouge (et 300 ms après), les projecteurs
+  d'ombre gardent leurs sources (avant : une carte d'ombre refaite environ à chaque mètre, 2 à 3 fois le coût d'une image),
+  les ombres à refaire (étage, trémie) attendent l'arrêt, et les images de reflet se prennent à l'arrêt seulement ; à
+  l'arrêt, réattribution avec le fondu habituel. L'ombre du soleil est figée (refaite seulement si une porte extérieure,
+  le mode ou la qualité change).
+- **Aucun programme compilé en route** : tous sont préparés au chargement (les deux étages, l'extérieur, le lointain, les
+  personnages dedans et dehors et en fondu, le ballot, les halos du toucher, les miroirs). Les reflets sont pris avec les
+  mêmes programmes que l'image (tone mapping ACES « personnalisé » dont l'exposition négative veut dire « sans ») : plus de
+  deuxième programme par matériau.
+- **Cadence** : au plus 30 images/s en Légère, 60 ailleurs (un écran de 90 ou 120 Hz ne fait pas viser 90 ou 120), à
+  intervalle régulier. En mouvement sur écran tactile, si les images tardent (plus de 40 ms en moyenne sur 8), la
+  définition baisse (×0,8 puis ×0,65) ; une image nette revient à l'arrêt.
+- **Animations au repos** : un objet animé demande des images selon sa vitesse à l'écran (environ 2 pixels par image, entre
+  2 et sa `cadence`) : le traversier à 2 km ne force plus que 2 à 4 images/s ; Légère : 15 au plus (robot, visiteur), voyant
+  seul 4. Le visiteur automatique ne se lance pas pendant qu'on bouge (2 s immobile) et son plan se calcule une marche par
+  image.
+- **Lointain** : arbres en icosaèdres (20 triangles, 80 à moins de 600 m), cônes sans fond, maisons sans face du dessous ;
+  terre et objets fixes en 12 secteurs de 30° : on ne dessine que ceux que l'œil voit (dehors : le champ de vision ;
+  dedans : par les fenêtres et portes ouvertes).
+- **Formes rondes** sans `pans` donnés : découpage selon la taille (cylindres 10 à 32 pans, sphères 8 × 6 à 16 × 12, tores
+  selon section et rayon) ; les données qui donnent `pans` ne changent pas.
+- **Appels de dessin** : murs et mobilier de chaque étage fusionnés par matériau dans des cases de 6 m (au lieu de 3).
+- **Toucher** : les rayons ne visitent que ce qui est montré (l'autre étage caché, son mobilier et le lointain sont sautés).
+- Tests : `qualite` (lecture), `choisirQualite("haute" | "normale")` (Légère : recharge), `PRECOMP` (programmes préparés au
+  chargement et leur durée).
+<!-- --- fin fluidité A -->
 
 Commandes interactives (facultatif : toile motorisée, stores, porte de garage...) : `SCENE["commandes"]` =
 `[{"id": "toile", "nom", "libelle_bas", "libelle_haut", "pivot_z", "fraction_min": 0.03, "depart": "haut", "duree": 3.0}]`
@@ -65,6 +110,29 @@ la zone de toucher couvre toute sa course (bas et haut, 6 po de plus vers le bo�
 touchant son boîtier ou l'endroit où elle descend. Facultatif : `"invite"` (étiquette du repère sur tablette ; défaut
 « Touche pour descendre la toile », d'après `libelle_bas` / `libelle_haut`, qui servent aussi au survol et à l'aide).
 Sans `commandes`, rien ne change. Pour les tests : `commander(id, "bas" | "haut" | "basculer", immediat)`.
+
+### Se déplacer (contrôles ; téléphone)
+Depuis la demande du client du 2026-11-02 (« ça bug quand on bouge, c'est dur de se déplacer »), tout projet :
+
+| Contrôle | Comportement |
+|---|---|
+| Joystick (écran tactile, en bas à gauche) | vers le haut on avance, vers le bas on recule, **sur les côtés on tourne** (un seul pouce suffit ; au clavier, A / D restent des pas de côté) ; zone morte de 12 %, vitesse progressive (déviation^1,6), départ et arrêt amortis (~0,15 s) ; 70 po/s, 50 dans l'escalier ; toucher le joystick arrête une marche automatique |
+| Un doigt glisse sur la vue | le regard suit, amorti (60 ms), rapporté à la largeur de l'écran (toute la largeur d'un téléphone ≈ 94°, d'une tablette ≈ 190°) ; tangage presque figé si le glissé est horizontal ; souris : direct. Seuil de 10 px (5 à la souris) : un doigt qui a glissé n'est jamais un toucher, le doigt qui reste après un pincement non plus |
+| Toucher la vue | un objet (voir plus bas) ; sinon le plancher (on y marche) ; **un mur ou un plafond** : on va à son pied, de notre côté ; **un point hors d'atteinte** (terrain hors du lot, gazon derrière une clôture) : au point atteignable le plus proche ; dehors, l'horizon (le fleuve au loin, jusqu'à 20° au-dessus) : vers là, jusqu'au bout du lot ; le ciel : « On ne peut pas aller là ». Un rond passager montre chaque toucher reçu (rosé s'il ne mène nulle part) |
+| Collision | rayon de 6 po pour la marche (`RAYON_PAS` ; le chemin automatique garde 9 po), coins arrondis (vraie distance du cercle à la boîte), petits pas de 3 po, **glissement** le long des murs droits ou en biais (la direction libre la plus proche, par 5°) |
+| Portes | **aimant** : à moins de 24 po d'une porte ouverte qu'on vise à moins de 40° de son axe, on est ramené dans le passage (au plus d'un pas de côté par pas) |
+| Escaliers | le premier pas depuis le pied est permis (les marches à portée du pied ne bloquent plus, la trémie compte toujours) ; dans l'escalier, ramené à 8 po au plus de la ligne de foulée ; l'œil suit les marches amorti (une rampe plutôt que des saccades) |
+| Arrêts | un arrêt posé dans un obstacle ou à moins de 7 po d'un mur est **dégagé** à l'arrivée (point libre le plus proche, 36 po au plus, sans traverser de mur) ; un visiteur coincé peut toujours s'éloigner de l'obstacle. Dehors, le `z` d'un arrêt est **facultatif** (sans lui : le plus haut plancher sous le point, sinon le terrain) ; un `z` resté sous un plancher construit depuis par-dessus est signalé par `generer_3d.py`, et la visite prend le plancher |
+
+**Téléphone** (écran tactile dont le petit côté fait moins de 600 px : classe `tel` sur `body`) : la vue d'abord. Liste des
+arrêts dans un tiroir (bouton **☰ Arrêts** en haut à gauche ; choisir un arrêt ou toucher la vue le referme) ; commandes
+(Visite, Maquette, Mobilier, Matériaux, qualité, plein écran, aide) derrière **⋯** en haut à droite ; plan réduit à 112 px (en
+haut à droite en portrait, en bas à droite en paysage), repliable (bouton **–** / **Plan**) ; visite guidée ◀ ▶ à droite du
+joystick en portrait (rien ne recouvre le joystick) ; bandeau « à l'horizontale, la vue est plus large » qui ne fait que
+passer (6 s, une fois). Tablette et ordinateur : disposition inchangée. Le visiteur d'un scénario caché par un mur ou une
+porte fermée non vitrée ne fait plus redessiner la visite (même test que le robot).
+Pour les tests : `cibleToucher(x, y)` (ce que ferait un toucher, sans rien lancer), `pointAtteignable(x, y, zone)`,
+`degager(zone, x, y, z)`, `vuScenario(Q)`, `aimantPorte(dx, dy)`, `JOY`, `RAYON_PAS`, `fermerTiroirs()`.
 
 ### Toucher les objets (aucun bouton d'action)
 Depuis la demande du client du 2026-11-02 (« enlève ces boutons-là, je veux que ça interagisse quand on y touche »), la visite

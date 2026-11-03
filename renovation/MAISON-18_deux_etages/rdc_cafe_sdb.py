@@ -384,7 +384,7 @@ def appliquer_scene_rdc(S, h):
     # visite : « Coin café » après « Entrée arrière », « Salle de bain — rangement » après « Vanité »
     vis = [v for v in S.get("visites", []) if v.get("nom") not in ("Coin café", "Salle de bain — rangement")]
     cafe = {"nom": "Coin café", "x": 307, "y": 406, "cap": 186}
-    sdb = {"nom": "Salle de bain — rangement", "x": 103, "y": 196, "cap": 252}
+    sdb = {"nom": "Salle de bain — rangement", "x": 101, "y": 194, "cap": 252}     # recalé : 9 po des murs (fluidité)
     noms = [v.get("nom") for v in vis]
     i = noms.index("Vanité") + 1 if "Vanité" in noms else len(vis)
     vis.insert(i, sdb)

@@ -131,13 +131,67 @@ body.multi .palette { max-height: calc(100vh - 420px); }
 @media (max-height: 820px) { #rail button { min-height: 40px; padding: 7px 10px; font-size: .86rem; } #rail { top: calc(var(--st) + 66px); } }
 @media (max-height: 560px) { #plan { width: 160px; height: 160px; } #rail { width: 150px; } #rail button { min-height: 38px; padding: 6px 10px; font-size: .84rem; } #etages { bottom: calc(var(--sb) + 202px); } }
 @media (max-width: 760px) { .titre { display: none; } #rail { width: 140px; } #ici { min-width: 120px; } #plan { width: 150px; height: 150px; } .palette { top: auto; bottom: 240px; } #etages { bottom: calc(var(--sb) + 192px); } }
+/* --- fluidité B : retour du toucher (rond au point touché ; rosé avec un mot s'il ne mène nulle part) */
+.rond-toucher { position: fixed; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; border: 3px solid #fff; pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.28), inset 0 0 0 1px rgba(0,0,0,.18); animation: rond-toucher .55s ease-out forwards; }
+.rond-toucher.non { border-color: #ffb8aa; }
+@keyframes rond-toucher { from { transform: scale(.3); opacity: 1; } to { transform: scale(1.15); opacity: 0; } }
+#toucher-rien { position: fixed; padding: 7px 14px; font-size: .88rem; font-weight: 700; pointer-events: none; white-space: nowrap; }
+#astuce { pointer-events: none; }
+/* --- fluidité B : téléphone (body.tel : écran tactile dont le petit côté fait moins de 600 px) : la vue d'abord. Arrêts dans un
+   tiroir (« Arrêts »), commandes derrière « ⋯ », plan réduit et repliable, visite guidée à côté du joystick (rien dessus),
+   bandeau « à l'horizontale » discret qui s'efface seul ; un toucher sur la vue referme tiroir et menu */
+#b-arrets, #b-outils, #b-plan { display: none; }
+body.tel .titre, body.tel .mini h2 { display: none; }
+body.tel .haut { align-items: center; }
+body.tel #b-arrets { display: flex; align-items: center; gap: 7px; font-weight: 700; padding: 8px 14px 8px 12px; }
+body.tel #b-arrets i { font-style: normal; font-size: 1.05rem; line-height: 1; }
+body.tel #b-outils { display: block; margin-left: auto; font-size: 1.25rem; line-height: 1; padding: 6px 13px; font-weight: 700; }
+body.tel .outils { display: none; }
+body.tel.outils-ouverts .haut, body.tel.rail-ouvert #rail { z-index: 6; }
+body.tel.outils-ouverts .outils { display: flex; position: fixed; top: calc(var(--st) + 56px); right: var(--sr); flex-direction: column; align-items: stretch; width: 214px; margin: 0; }
+body.tel .outils .sep { display: none; }
+body.tel .outils button { text-align: left; }
+body.tel #rail { display: none; }
+body.tel.rail-ouvert #rail { display: flex; top: calc(var(--st) + 56px); bottom: calc(var(--sb) + 74px); width: min(300px, calc(100vw - 24px)); }
+body.tel.rail-ouvert #rail button { min-height: 44px; font-size: .92rem; }
+body.tel #joy { width: 116px; height: 116px; left: calc(var(--sl) + 6px); bottom: calc(var(--sb) + 4px); }
+body.tel #joy span { left: 34px; top: 34px; }
+body.tel #guide button { width: 46px; padding: 6px; font-size: 1.1rem; }
+body.tel #ici { min-width: 0; flex: 1 1 auto; overflow: hidden; }
+body.tel #ici b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .9rem; }
+body.tel #ici small { white-space: nowrap; }
+body.tel .mini { padding: 4px; }
+body.tel #plan { width: 112px; height: 112px; }
+body.tel #b-plan { display: grid; place-items: center; position: absolute; left: -8px; top: -8px; width: 40px; height: 40px; min-width: 40px; min-height: 40px; padding: 0;
+  border-radius: 50%; background: var(--panel); border: 1px solid var(--line); font-weight: 700; font-size: .78rem; box-shadow: 0 1px 6px rgba(0,0,0,.18); }
+body.tel.plan-replie #plan { display: none; }
+body.tel.plan-replie .mini { padding: 0; border: 0; background: none; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+body.tel.plan-replie #b-plan { position: static; width: 54px; height: 44px; border-radius: 12px; }
+body.tel #invite-voir { bottom: calc(var(--sb) + 128px); }
+body.tel #tourne { left: 50%; right: auto; top: auto; bottom: calc(var(--sb) + 130px); transform: translateX(-50%); width: max-content; max-width: calc(100vw - 24px);
+  padding: 6px 13px; border-radius: 999px; font-size: .8rem; pointer-events: none; animation: invite-vie 6s ease forwards; }
+body.tel #tourne button { display: none; }
+@media (orientation: portrait) {
+  body.tel #guide { left: auto; right: var(--sr); transform: none; max-width: calc(100vw - var(--sl) - var(--sr) - 134px); }
+  body.tel .mini { top: calc(var(--st) + 56px); bottom: auto; }
+  body.tel #etages { bottom: calc(var(--sb) + 64px); }
+}
+@media (orientation: landscape) {
+  body.tel #ici { min-width: 150px; }
+  body.tel #etages { bottom: calc(var(--sb) + 144px); }
+}
+body.tel.sans-joy #guide { left: 50%; right: auto; transform: translateX(-50%); max-width: calc(100vw - 24px); }
+/* --- fin fluidité B */
 </style>
 
 <div id="vue"></div>
 <div id="voile"></div>
 <div id="etiquettes"></div>
 <div class="haut">
+  <button class="carte" id="b-arrets" aria-expanded="false" aria-controls="rail"><i aria-hidden="true">☰</i>Arrêts</button>
   <div class="carte titre">__TITRE__<small id="projet"></small></div>
+  <button class="carte" id="b-outils" aria-expanded="false" aria-label="Commandes : visite, maquette, mobilier, matériaux, qualité, aide">⋯</button>
   <div class="carte outils" role="toolbar" aria-label="Commandes">
     <button id="m-visite" aria-pressed="true">Visite</button>
     <button id="m-maquette" aria-pressed="false">Maquette</button>
@@ -157,7 +211,8 @@ body.multi .palette { max-height: calc(100vh - 420px); }
 </div>
 <button class="carte" id="invite-voir" hidden><span class="ic" aria-hidden="true">▶</span><span class="lib"></span><i class="duree" aria-hidden="true"></i></button>
 <div class="carte" id="etages" role="group" aria-label="Étages" hidden></div>
-<div class="carte mini"><h2 id="plan-nom" hidden></h2><canvas id="plan" width="420" height="420" aria-label="Plan : touchez pour y aller"></canvas></div>
+<div class="carte mini"><h2 id="plan-nom" hidden></h2><canvas id="plan" width="420" height="420" aria-label="Plan : touchez pour y aller"></canvas><button id="b-plan" aria-expanded="true" aria-label="Replier le plan">–</button></div>
+<div class="carte" id="toucher-rien" role="status" hidden></div>
 <div class="carte palette" id="palette" hidden><h2>Matériaux proposés</h2><ul id="pal"></ul><h2>Peinture</h2><ul id="pei"></ul>
   <h2>Crédits (modèles 3D et textures)</h2><ol id="cred" style="margin:0;padding-left:18px;font-size:.72rem;color:var(--muted);display:grid;gap:4px"></ol></div>
 <div id="joy" hidden><span></span></div>
@@ -166,10 +221,10 @@ body.multi .palette { max-height: calc(100vh - 420px); }
 <div id="aide" hidden><div class="carte">
   <h2>Se promener</h2>
   <ul>
-    <li><b>Touchez le plancher</b> (ou un point du petit plan) : vous y marchez tout seul, en passant par les portes.</li>
+    <li><b>Touchez le plancher</b> (ou un point du petit plan) : vous y marchez tout seul, en passant par les portes. Un mur touché : vous allez à son pied ; un endroit hors d'atteinte : au plus près.</li>
     <li><b>Glissez un doigt</b> pour regarder autour ; pincez pour zoomer.</li>
-    <li><b>◀ ▶</b> en bas : visite guidée, pièce par pièce. La liste à gauche va directement à une pièce.</li>
-    <li><b>Joystick</b> (en bas à gauche) pour marcher librement. Au clavier : W A S D ou les flèches.</li>
+    <li><b>◀ ▶</b> en bas : visite guidée, pièce par pièce. La liste des arrêts (à gauche, ou le bouton « Arrêts » sur un téléphone) va directement à une pièce.</li>
+    <li><b>Joystick</b> (en bas à gauche) : vers le haut on avance, vers le bas on recule, sur les côtés on tourne. On glisse le long des murs et on est guidé dans les portes et l'escalier. Au clavier : W A S D ou les flèches.</li>
     <li><b>Maquette</b> : vue de dessus sans plafond ; un doigt tourne, deux doigts zooment et déplacent ; touchez une pièce pour y entrer.</li>
     <li><b>Haute / Normale</b> (en haut) : qualité de l'image (définition, ombres, finition). Normale, choisie d'office sur tablette, est plus fluide ; Haute est plus fine.</li>
     <li id="aide-portes" hidden><b>Portes</b> : touchez une porte pour l'ouvrir ou la fermer (en visite comme en maquette). Une porte fermée bloque le passage ; en marchant au toucher, elle s'ouvre toute seule.</li>
@@ -209,12 +264,31 @@ $("projet").textContent = S.projet;
 
 // ---------- rendu (couleurs données en sRGB, comme un nuancier de peinture)
 THREE.ColorManagement.legacyMode = false;
+// --- fluidité A : profil « Légère » (téléphone), décidé AVANT la création du rendu et la première compilation : le nombre de
+// vraies lumières, les ombres projetées et les finis font partie des programmes de rendu. Écran tactile étroit (moins de
+// 600 px de côté) : Légère d'office ; sinon Haute (ordinateur) ou Normale (tablette). Le choix du visiteur (bouton Qualité)
+// est mémorisé sous une nouvelle clé : un ancien choix « Haute » sur un téléphone ne compte plus.
+const CLE_QUALITE = "visite3d-qualite-2";
+let qualiteMemo = null;
+try { qualiteMemo = localStorage.getItem(CLE_QUALITE); } catch (_) {}
+const LEGERE = qualiteMemo ? qualiteMemo === "legere" : tactile && Math.min(innerWidth, innerHeight) < 600;
+// --- fin fluidité A
 // L'image est rendue dans une cible multi-échantillonnée (anticrénelage) puis finie par des passes plein écran
 // (occlusion ambiante, halo des lumières, vignette) : le canevas lui-même n'a donc pas besoin d'anticrénelage.
-const renderer = new THREE.WebGLRenderer({ antialias: !(window.WebGL2RenderingContext), powerPreference: "high-performance" });
+// --- fluidité A : profil Légère, image dessinée directement dans le canevas, avec son anticrénelage natif (presque gratuit sur
+// un processeur graphique de téléphone), sans cible multi-échantillonnée ni passe finale
+const renderer = new THREE.WebGLRenderer({ antialias: LEGERE || !(window.WebGL2RenderingContext), powerPreference: "high-performance" });
 renderer.setPixelRatio(1);
 renderer.outputEncoding = THREE.sRGBEncoding;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
+// --- fluidité A : ACES par un « tone mapping » personnalisé dont l'exposition négative veut dire « aucun » (images des reflets) :
+// la scène et ses reflets partagent les mêmes programmes (avant : un 2e programme par matériau, compilé en route au premier
+// reflet de chaque pièce). Rendu identique : ACES à l'exposition 1, ou la couleur telle quelle pour les reflets.
+THREE.ShaderChunk.tonemapping_pars_fragment = THREE.ShaderChunk.tonemapping_pars_fragment.replace(
+  "vec3 CustomToneMapping( vec3 color ) { return color; }",
+  "vec3 CustomToneMapping( vec3 color ) { return toneMappingExposure < 0.0 ? color : ACESFilmicToneMapping( color ); }");
+renderer.toneMapping = THREE.CustomToneMapping;
+const EXPO_REFLET = -1;                  // exposition des images de reflet (sans tone mapping)
+// --- fin fluidité A
 renderer.toneMappingExposure = 1.0;
 renderer.physicallyCorrectLights = true;
 renderer.shadowMap.enabled = true;
@@ -237,10 +311,23 @@ const camera = new THREE.PerspectiveCamera(68, 1, 0.05, 200);
 const QUALITES = {
   haute: { nom: "Haute", pr: 1.5, msaa: 4, ao: true, halo: true, ombres: 4, simples: 6, jour: 3, carte: 1024, miroir: 256, soleil: 2048 },
   normale: { nom: "Normale", pr: 1, msaa: 2, ao: false, halo: false, ombres: 2, simples: 6, jour: 2, carte: 512, miroir: 128, soleil: 1024 },
+  // --- fluidité A : Légère (téléphone) : 4 encastrés et 1 fenêtre, sans ombre de projecteur (seule l'ombre du soleil, figée),
+  // sans lampes (abat-jour, appliques, guirlandes et voyants restent lumineux par leur matériau), sans vernis ni duvet ; le
+  // ciel (hémisphère) éclaire un peu plus pour garder l'ambiance douce ; définition 1 au repos, réduite en mouvement si les
+  // images tardent (voir la boucle). Choisie au chargement : passer à Légère ou en sortir recharge la page.
+  legere: { nom: "Légère", pr: 1, msaa: 0, ao: false, halo: false, ombres: 0, simples: 4, jour: 1, carte: 512, miroir: 128, soleil: 1024, amb: 0.5 },
+  // --- fin fluidité A
 };
-const PLACES = { ombre: 4, simple: 6, jour: 3, lampe: 4 };      // vraies lumières (nombre fixe quelle que soit la qualité)
-let qualite = tactile ? "normale" : "haute";
-try { const q = localStorage.getItem("visite3d-qualite"); if (QUALITES[q]) qualite = q; } catch (_) {}
+// vraies lumières (nombre fixe pour toute la visite : aucune recompilation en changeant de pièce, d'étage ou de qualité)
+const PLACES = LEGERE ? { ombre: 0, simple: 4, jour: 1, lampe: 0 } : { ombre: 4, simple: 6, jour: 3, lampe: 4 };   // --- fluidité A
+let qualite = LEGERE ? "legere" : tactile ? "normale" : "haute";
+if (QUALITES[qualiteMemo]) qualite = qualiteMemo;      // --- fluidité A : clé mémorisée (Légère seulement si LEGERE)
+// --- fluidité A : état du mouvement (voir la boucle). figer : la caméra a bougé il y a moins de REPOS ms : cartes d'ombre,
+// projecteurs d'ombre et reflets restent figés jusqu'à l'arrêt ; cadence : images par seconde au plus (régulières) ;
+// echelle : définition réduite en mouvement si les images tardent (écran tactile)
+const FLUIDE = { figer: false, tBouge: -1e9, REPOS: 300, ombres: false, cadence: LEGERE ? 30 : 60, tRendu: 0,
+  echelle: 1, ecarts: [], tEchelle: 0, tPrec: 0 };
+// --- fin fluidité A
 
 // ---------- matériaux
 // Images (data: URI) : une seule texture par image ; une fois envoyée au processeur graphique, l'image décodée est libérée
@@ -444,11 +531,17 @@ function boite(b, groupe) {
   m.position.set(cx, cy, cz); groupe.add(m);
   return m;
 }
+// --- fluidité A : découpage des formes rondes selon leur taille quand les données ne le donnent pas (avant : 32 pans,
+// sphères 16 × 12, tores 12 × 40 même pour une ampoule de guirlande ou une tige de 1/2 po). Les grosses formes gardent leur
+// finesse ; dehors, environ −50 000 triangles (guirlandes, garde-corps, mobilier du balcon).
+const pansPour = (r) => (r < 1 ? 10 : r < 3 ? 16 : r < 8 ? 24 : 32);
+// --- fin fluidité A
 function cylindre(c, groupe) {
   let g, p;
-  if (c.axe === "y") { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.y1 - c.y0) * K, c.pans || 32); g.rotateX(Math.PI / 2); p = P(c.x, (c.y0 + c.y1) / 2, c.z); }
-  else if (c.axe === "x") { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.x1 - c.x0) * K, c.pans || 32); g.rotateZ(Math.PI / 2); p = P((c.x0 + c.x1) / 2, c.y, c.z); }
-  else { g = new THREE.CylinderGeometry((c.r2 ?? c.r) * K, c.r * K, (c.z1 - c.z0) * K, c.pans || 32); p = P(c.x, c.y, (c.z0 + c.z1) / 2); }
+  const n = c.pans || pansPour(Math.max(c.r, c.r2 || 0));      // --- fluidité A
+  if (c.axe === "y") { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.y1 - c.y0) * K, n); g.rotateX(Math.PI / 2); p = P(c.x, (c.y0 + c.y1) / 2, c.z); }
+  else if (c.axe === "x") { g = new THREE.CylinderGeometry(c.r * K, c.r * K, (c.x1 - c.x0) * K, n); g.rotateZ(Math.PI / 2); p = P((c.x0 + c.x1) / 2, c.y, c.z); }
+  else { g = new THREE.CylinderGeometry((c.r2 ?? c.r) * K, c.r * K, (c.z1 - c.z0) * K, n); p = P(c.x, c.y, (c.z0 + c.z1) / 2); }
   const m = new THREE.Mesh(g, MAT[c.mat] || MAT.blanc); m.position.copy(p); groupe.add(m);
 }
 
@@ -493,18 +586,20 @@ function prisme(o, groupe) {             // polygone en plan extrudé de z0 à z
 function tube(o, groupe) {
   const pts = o.pts.map(([x, y, z]) => P(x, y, z));
   const c = pts.length === 2 ? new THREE.LineCurve3(pts[0], pts[1]) : new THREE.CatmullRomCurve3(pts, false, "centripetal");
-  const g = new THREE.TubeGeometry(c, pts.length === 2 ? 1 : 24, o.r * K, o.pans || 12, false);
+  const g = new THREE.TubeGeometry(c, pts.length === 2 ? 1 : 24, o.r * K, o.pans || (o.r < 1 ? 8 : 12), false);     // --- fluidité A
   const m = placer(g, o, groupe);
   if (o.bouts) for (const q of [pts[0], pts[pts.length - 1]]) { const s = new THREE.Mesh(new THREE.SphereGeometry(o.r * K, 10, 6), m.material); s.position.copy(q); groupe.add(s); }
   return m;
 }
 function sphere(o, groupe) {
-  const g = new THREE.SphereGeometry(o.r * K, 16, 12);
+  const g = new THREE.SphereGeometry(o.r * K, ...(o.r < 1.5 ? [8, 6] : o.r < 4 ? [12, 8] : [16, 12]));     // --- fluidité A
   if (o.ecrase) g.scale(1, o.ecrase, 1);
   const m = placer(g, o, groupe); m.position.copy(P(o.x, o.y, o.z)); return m;
 }
 function tore(o, groupe) {
-  const g = new THREE.TorusGeometry(o.R * K, o.r * K, 12, 40, o.arc ?? Math.PI * 2);
+  // --- fluidité A : section et tour découpés selon la taille (et la part du tour pour un arc)
+  const arc = o.arc ?? Math.PI * 2, tour = Math.max(6, Math.round((o.R < 6 ? 16 : o.R < 15 ? 24 : 40) * Math.min(1, arc / (Math.PI * 2) + 0.25)));
+  const g = new THREE.TorusGeometry(o.R * K, o.r * K, o.r < 1 ? 6 : o.r < 2 ? 8 : 12, tour, arc);
   if (o.axe === "x") g.rotateY(Math.PI / 2); else if (o.axe === "z") g.rotateX(-Math.PI / 2);
   if (o.tourne) g.rotateY(o.tourne * Math.PI / 180);
   const m = placer(g, o, groupe); m.position.copy(P(o.x, o.y, o.z)); return m;
@@ -1130,7 +1225,9 @@ function fusionnerGroupe(racine, cas = CASE, petits = true) {
   }
   FUSION.avant += retirer.length; FUSION.apres += n; FUSION.ms += Math.round(performance.now() - t0);
 }
-for (const E of ETAGES) for (const k of ["murs", "mob", "plafond", "coupe"]) fusionnerGroupe(E.g[k]);
+// --- fluidité A : murs et mobilier fusionnés par cases de 6 m (au lieu de 3) : beaucoup moins d'appels de dessin (sous-sol :
+// 359 au séjour, chacun ~0,1 ms de processeur sur téléphone), un peu plus de triangles hors champ (sans effet sur l'image)
+for (const E of ETAGES) for (const k of ["murs", "mob", "plafond", "coupe"]) fusionnerGroupe(E.g[k], k === "murs" || k === "mob" ? 6 : CASE);
 
 // ---------- extérieur : ciel clair et terrain vus par les fenêtres (au lieu d'un vide), cachés en maquette
 // Soleil du jour (extérieur) : direction vers le soleil, repère three (x, haut, -y de la maison) : devant à gauche, à 48° de
@@ -1440,7 +1537,11 @@ function routeScen(xa, ya, za, zRef, cibles) {        // points [x, y, zone] du 
   const S0 = [0]; for (let i = 1; i < n; i++) S0.push(S0[i - 1] + Math.hypot(X[i] - X[i - 1], Y[i] - Y[i - 1]));
   return { X, Y, Z: Zl, ZN, C, S: S0, L: S0[n - 1] || 0, n };
 }
-function planScenario(Q) {
+// --- fluidité A : le plan se calcule aussi par étapes (planScenarioPas : une marche, donc un chemin, par image), pour que le
+// lancement automatique ne gèle pas une image (19 à 32 ms d'un coup mesurés sur ordinateur, × 3 à 5 sur téléphone)
+function planScenario(Q) { const g = planScenarioPas(Q); let r; while (!(r = g.next()).done); return r.value; }
+function* planScenarioPas(Q) {
+  // --- fin fluidité A
   const d = Q.d, p = d.personnage, ph = [], ev = [], bulles = [], debuts = [];
   const dep = d.depart, z0 = MULTI ? idEtage(dep.etage ?? ETAGES[0].id) : 0;
   const etat = { x: dep.x, y: dep.y, cap: dep.cap * Math.PI / 180, zone: z0, z: zSolZone(z0, dep.x, dep.y, EXT && z0 === IEXT ? XT.sol : ETAGES[Math.min(z0, ETAGES.length - 1)].z) };
@@ -1457,6 +1558,7 @@ function planScenario(Q) {
   for (const e of d.etapes) {
     debuts.push(t);
     if (e.marcher) {
+      yield;                                            // --- fluidité A : un chemin par image (lancement automatique)
       const r = routeScen(etat.x, etat.y, etat.zone, etat.z, e.marcher);
       if (r.n < 2 || r.L < 1) continue;
       tourner(r.C[0], "repos");
@@ -1638,7 +1740,7 @@ function lancerScenario(id, depuis = "bouton") {     // depuis : "porte" (on a t
   const Q = SCENS[id]; if (!Q || Q.t != null) return false;
   finSortie(Q);
   if (!Q.racine.parent) gExterieur.add(Q.racine);
-  planScenario(Q);
+  if (Q.planFrais) Q.planFrais = false; else planScenario(Q);     // --- fluidité A : plan déjà calculé par étapes (automatique)
   Q.portesAvant = {};
   for (const e of Q.plan.ev) if (e.porte && PORTES[e.porte] && !(e.porte in Q.portesAvant)) Q.portesAvant[e.porte] = PORTES[e.porte].etat;
   Q.depuis = depuis; Q.t = depuis === "auto" ? 0 : Q.plan.debuts[Q.d.depart_bouton] || 0; Q.retard = 0;
@@ -1687,7 +1789,13 @@ function majScenarios(tms) {                          // vrai : une image est à
     if (Q.t == null) {                                // déclenchement automatique : le visiteur s'approche de l'entrée (après un
       // premier geste sur la page : on l'entend ; jamais pendant un test automatique sans geste)
       if (dc && dc.auto && SCEN.geste && !SCEN.fige && mode === "visite" && !vol && !document.hidden && tms >= (Q.prochainAuto || 0)
-          && Math.hypot(joueur.x - dc.x, joueur.y - dc.y) < dc.rayon && Math.abs(joueur.z - dc.z) < dc.hauteur) lancerScenario(Q.d.id, "auto");
+          && Math.hypot(joueur.x - dc.x, joueur.y - dc.y) < dc.rayon && Math.abs(joueur.z - dc.z) < dc.hauteur) {
+        // --- fluidité A : jamais pendant qu'on bouge (2 s immobile) ; le plan se calcule une étape par image, puis il part
+        if (tms - FLUIDE.tBouge < 2000) { Q.prepa = null; continue; }
+        if (!Q.prepa) Q.prepa = planScenarioPas(Q);
+        if (Q.prepa.next().done) { Q.prepa = null; Q.planFrais = true; lancerScenario(Q.d.id, "auto"); }
+        // --- fin fluidité A
+      } else Q.prepa = null;
       continue;
     }
     if (Q.retard > 0) { Q.retard -= dt; if (Q.retard > 0) continue; }
@@ -1700,13 +1808,28 @@ function majScenarios(tms) {                          // vrai : une image est à
     if (Q.t >= Q.plan.T) { arreterScenario(Q.d.id, true); continue; }
     poserScenario(Q, Q.t);
     Q.racine.getWorldPosition(sphScen.center); sphScen.center.y += Q.haut / 2 * K; sphScen.radius = (Q.haut / 2 + 30) * K;
-    const vu = estVu(Q.racine) && frScen.intersectsSphere(sphScen);
+    const vu = estVu(Q.racine) && frScen.intersectsSphere(sphScen) && vuScenario(Q);     // --- fluidité B : pas à travers les murs
     if (dt > 0 && (vu || Q.vuPrec)) besoin = true;     // une image de plus quand il sort du champ (pas d'image figée au bord)
     Q.vuPrec = vu;
   }
   majBullesScen();
-  if (!besoin || tms - SCEN.tImage < 1000 / 30 - 4) return false;
+  if (!besoin || tms - SCEN.tImage < 1000 / (LEGERE ? 15 : 30) - 4) return false;   // --- fluidité A : Légère : 15 images/s
   SCEN.tImage = tms; return true;
+}
+// --- fluidité B (A4, murs) : un personnage caché par un mur ne fait pas redessiner la visite. Dedans, sur son étage ou dehors,
+// il faut une ligne libre de l'œil à lui (même test que le robot : murs pleins de l'étage, et les portes fermées non vitrées) ;
+// le visiteur dehors, ou en maquette, le champ de vision suffit
+const portesOpaques = new Map();
+function vuScenario(Q) {
+  if (mode !== "visite" || dehors() || Q.zone == null) return true;
+  const E = ETAGES[joueur.etage]; if (!E || (Q.zone !== IEXT && Q.zone !== joueur.etage)) return true;
+  if (!portesOpaques.has(E)) portesOpaques.set(E, E.portes.map((pt) => ({ pt, b: (pt.p.boites || []).filter((b) => !b.pts && b.x1 != null && b.z1 != null && !["vitre", "verre", "porte-verre"].includes(b.mat)) })));
+  const murs = [...mursAnim[E.i]];
+  for (const q of portesOpaques.get(E)) if (q.pt.f < 0.25) murs.push(...q.b);
+  const zo = joueur.zVue - E.z + OEIL, o = [joueur.x, joueur.y, zo], dx = Q.x - joueur.x, dy = Q.y - joueur.y, L = Math.hypot(dx, dy) || 1;
+  const k = Math.min(1, 900 / L), nx = -dy / L * 10, ny = dx / L * 10;
+  return [0.5, 0.9].some((h) => { const zc = Q.z - E.z + Q.haut * h;
+    return [[Q.x, Q.y], [Q.x + nx, Q.y + ny], [Q.x - nx, Q.y - ny]].some(([x, y]) => segmentLibre(murs, o, [joueur.x + (x - joueur.x) * k, joueur.y + (y - joueur.y) * k, zo + (zc - zo) * k])); });
 }
 // ---------- bulles : au-dessus de la tête, rabattues au bord de l'écran si la tête est hors champ
 function majBullesScen() {
@@ -1769,7 +1892,45 @@ function finSortie(Q) { if (!Q.sortie) return; Q.sortie = null; fonduScenario(Q,
 const LOIN_K = 0.02, LOIN_K_EAU = 0.001;                 // 10 km → 200 m (plan lointain de la caméra) ; l'eau : 150 km → 150 m
 const LOIN_EXT = ANIMES_EXT.some(([, d]) => d.lointain);
 const gLoin = new THREE.Group(); gLoin.renderOrder = -1000; gLoin.userData.garder = true;
-const U_LOIN = { uSoleil: { value: DIR_SOLEIL }, uBrume: { value: new THREE.Color(LOIN ? LOIN.couleur_brume : "#dbe4eb") },
+// --- fluidité A : secteurs du lointain (voir plus bas) et ce que l'œil en voit. Un « cône » : azimuts [a0, a1] (radians,
+// repère three) et pentes [p0, p1] (tangente de la hauteur angulaire) ; ses sommets sont dessinés ramenés vers l'œil, mais
+// dans la même direction : le test se fait sur leurs vraies positions.
+const SECTEURS_LOIN = [];
+function coneDe(pts, o) {
+  let ac = null, d0 = 0, d1 = 0, p0 = Infinity, p1 = -Infinity;
+  for (const q of pts) {
+    const dx = q.x - o.x, dz = q.z - o.z, a = Math.atan2(dz, dx), t = (q.y - o.y) / Math.max(1e-6, Math.hypot(dx, dz));
+    if (ac === null) ac = a;
+    const d = Math.atan2(Math.sin(a - ac), Math.cos(a - ac)); d0 = Math.min(d0, d); d1 = Math.max(d1, d);
+    p0 = Math.min(p0, t); p1 = Math.max(p1, t);
+  }
+  return { a0: ac + d0, a1: ac + d1, p0, p1 };
+}
+const vCone = [0, 1, 2, 3, 4, 5].map(() => new THREE.Vector3());
+function coneCamera() {                      // champ de vision de la caméra (plein tour s'il contient la verticale)
+  const v = camera.getWorldDirection(vCone[0]), pitch = Math.asin(Math.max(-1, Math.min(1, v.y))), demi = camera.fov * Math.PI / 360;
+  const pts = [[-1, -1], [1, -1], [1, 1], [-1, 1], [0, -1], [0, 1]].map(([x, y], i) => vCone[i].set(x, y, 1).unproject(camera));
+  const c = coneDe(pts, camera.position);
+  if (Math.abs(pitch) + demi > 1.45) { c.a0 = -Math.PI; c.a1 = Math.PI; }
+  c.a0 -= 0.05; c.a1 += 0.05; return c;
+}
+function voitSecteur(B, o, cones) {
+  const dmin = Math.hypot(Math.max(B.min.x - o.x, 0, o.x - B.max.x), Math.max(B.min.z - o.z, 0, o.z - B.max.z));
+  if (dmin < 1) return true;
+  const dmax = Math.hypot(Math.max(Math.abs(B.min.x - o.x), Math.abs(B.max.x - o.x)), Math.max(Math.abs(B.min.z - o.z), Math.abs(B.max.z - o.z)));
+  const az = coneDe([{ x: B.min.x, y: 0, z: B.min.z }, { x: B.max.x, y: 0, z: B.min.z }, { x: B.min.x, y: 0, z: B.max.z }, { x: B.max.x, y: 0, z: B.max.z }], o);
+  const hi = B.max.y - o.y, lo = B.min.y - o.y, p1 = hi / (hi > 0 ? dmin : dmax), p0 = lo / (lo < 0 ? dmin : dmax);
+  return cones.some((c) => p1 >= c.p0 && p0 <= c.p1 && (c.a1 - c.a0 >= 2 * Math.PI ||
+    Math.abs(Math.atan2(Math.sin((c.a0 + c.a1 - az.a0 - az.a1) / 2), Math.cos((c.a0 + c.a1 - az.a0 - az.a1) / 2))) <= (c.a1 - c.a0 + az.a1 - az.a0) / 2));
+}
+// champs : cônes des ouvertures vues de dedans ; null : dehors (ou œil dans une ouverture) : le champ de vision
+function majLointain(champs, actif) {
+  if (!SECTEURS_LOIN.length) return;
+  const cones = !actif ? null : champs ? champs.map((F) => F.cone) : [coneCamera()];
+  for (const m of SECTEURS_LOIN) m.visible = !cones || (cones.length > 0 && voitSecteur(m.userData.secteurLoin, camera.position, cones));
+}
+// --- fin fluidité A
+const U_LOIN ={ uSoleil: { value: DIR_SOLEIL }, uBrume: { value: new THREE.Color(LOIN ? LOIN.couleur_brume : "#dbe4eb") },
   uBrumeL: { value: (LOIN ? LOIN.brume : 1200000) * K }, uCiel: { value: new THREE.Color("#c3d3e6") }, uSol: { value: new THREE.Color("#7b786b") } };
 const VS_LOIN = `uniform float uEch; varying vec3 vW; varying vec3 vN; varying vec3 vC; varying vec2 vUv;
   void main() {
@@ -1823,10 +1984,19 @@ function geoLoin(o) {                      // géométrie d'un objet du lointain
     g.rotateX(-Math.PI / 2); g.translate(0, o.z0 * K, 0);
   } else if (f === "boite") {
     g = new THREE.BoxGeometry((o.x1 - o.x0) * K, (o.z1 - o.z0) * K, (o.y1 - o.y0) * K); g.translate(...vers(P((o.x0 + o.x1) / 2, (o.y0 + o.y1) / 2, (o.z0 + o.z1) / 2)));
+    // --- fluidité A : sans la face du dessous (posée au sol, jamais vue) : 10 triangles au lieu de 12
+    const ix = g.index.array; g.setIndex([...ix.slice(0, 18), ...ix.slice(24)]);
   } else if (f === "cylindre") {
-    g = new THREE.CylinderGeometry((o.r2 ?? o.r) * K, o.r * K, (o.z1 - o.z0) * K, o.pans || 10); g.translate(...vers(P(o.x, o.y, (o.z0 + o.z1) / 2)));
+    // --- fluidité A : un cône (r2 = 0, conifère) n'a pas besoin de son disque du dessous
+    g = new THREE.CylinderGeometry((o.r2 ?? o.r) * K, o.r * K, (o.z1 - o.z0) * K, o.pans || 10, 1, o.r2 === 0); g.translate(...vers(P(o.x, o.y, (o.z0 + o.z1) / 2)));
   } else if (f === "sphere") {
-    g = new THREE.SphereGeometry(o.r * K, 10, 7); if (o.ecrase) g.scale(1, o.ecrase, 1); g.translate(...vers(P(o.x, o.y, o.z)));
+    // --- fluidité A : icosaèdre à normales lisses (20 triangles, 80 à moins de 600 m de la maison) au lieu de 140 : à cette
+    // distance et sous la brume, la silhouette ne change pas (350 arbres : 49 000 → ~10 000 triangles)
+    const loinM = Math.hypot(o.x - (bx0 + bx1) / 2, o.y - (by0 + by1) / 2) * K;
+    g = new THREE.IcosahedronGeometry(o.r * K, loinM < 600 ? 1 : 0);
+    const ps = g.attributes.position, ns = g.attributes.normal, vn = new THREE.Vector3();
+    for (let i = 0; i < ps.count; i++) { vn.fromBufferAttribute(ps, i).normalize(); ns.setXYZ(i, vn.x, vn.y, vn.z); }
+    if (o.ecrase) g.scale(1, o.ecrase, 1); g.translate(...vers(P(o.x, o.y, o.z)));
   } else if (f === "toit") {               // deux versants : profil triangulaire extrudé le long du faîtage
     const enX = (o.faitage || "x") === "x", L = (enX ? o.x1 - o.x0 : o.y1 - o.y0) * K, W = (enX ? o.y1 - o.y0 : o.x1 - o.x0) * K;
     g = new THREE.ExtrudeGeometry(new THREE.Shape([new THREE.Vector2(-W / 2, 0), new THREE.Vector2(W / 2, 0), new THREE.Vector2(0, (o.z1 - o.z0) * K)]), { depth: L, bevelEnabled: false });
@@ -1896,7 +2066,36 @@ if (LOIN) {
     if (o.forme === "texte") { gLoin.add(loinMaillage(texteLoin(o))); continue; }
     const g = geoLoin(o); if (g) geos.push(g);
   }
-  if (geos.length) gLoin.add(loinMaillage(new THREE.Mesh(mergeBufferGeometries(geos, false), MAT_LOIN)));
+  // --- fluidité A : terre et objets fixes en 12 secteurs de 30° autour de la maison (un maillage chacun) : on ne dessine que
+  // ceux que l'œil peut voir (dehors : le champ de vision ; dedans : par les fenêtres ; voir majLointain). Avant : un seul
+  // maillage, dessiné en entier dès qu'une fenêtre, même du sous-sol, était dans le champ.
+  if (geos.length) {
+    const NS = 12, cx = (bx0 + bx1) / 2 * K, cz = -(by0 + by1) / 2 * K, parts = Array.from({ length: NS }, () => []);
+    const sect = (x, z) => Math.min(NS - 1, Math.floor((Math.atan2(z - cz, x - cx) + Math.PI) / (2 * Math.PI) * NS));
+    const sous = (g, tris) => {            // triangles choisis d'une géométrie sans index
+      const r = new THREE.BufferGeometry();
+      for (const [n, a] of Object.entries(g.attributes)) {
+        const s = a.itemSize, arr = new Float32Array(tris.length * 3 * s);
+        tris.forEach((i, k) => arr.set(a.array.subarray(i * s, (i + 3) * s), k * 3 * s));
+        r.setAttribute(n, new THREE.BufferAttribute(arr, s));
+      }
+      return r;
+    };
+    const c = new THREE.Vector3();
+    for (const g of geos) {
+      const p = g.attributes.position;
+      if (p.count > 3000) {                // la terre (ou un gros objet) : triangle par triangle
+        const per = Array.from({ length: NS }, () => []);
+        for (let i = 0; i + 2 < p.count; i += 3) per[sect((p.getX(i) + p.getX(i + 1) + p.getX(i + 2)) / 3, (p.getZ(i) + p.getZ(i + 1) + p.getZ(i + 2)) / 3)].push(i);
+        per.forEach((tris, s) => { if (tris.length) parts[s].push(sous(g, tris)); });
+      } else { g.computeBoundingBox(); g.boundingBox.getCenter(c); parts[sect(c.x, c.z)].push(g); }
+    }
+    for (const gs of parts) if (gs.length) {
+      const m = loinMaillage(new THREE.Mesh(mergeBufferGeometries(gs, false), MAT_LOIN));
+      m.geometry.computeBoundingBox(); m.userData.secteurLoin = m.geometry.boundingBox.clone(); SECTEURS_LOIN.push(m); gLoin.add(m);
+    }
+  }
+  // --- fin fluidité A
 }
 // objets animés « lointain » (traversier...) : les formes simples de leur repère, fusionnées (une fois par partie qui tourne),
 // voyants à part ; même horloge et mêmes trajets que les autres (poserAnime) ; le lointain ne se touche pas
@@ -2078,6 +2277,8 @@ function tailleOmbres(Q) {                 // cartes d'ombre de la qualité (102
 }
 // ombres à refaire : toutes (étage, mode, mobilier...) ou seulement celles des projecteurs à moins de « rayon » m de « pres »
 function refaireOmbres(pres, rayon = 6) {
+  // --- fluidité A : toutes à refaire (étage, trémie dans le champ...) pendant qu'on bouge : à l'arrêt seulement (voir la boucle)
+  if (!pres && FLUIDE.figer) { FLUIDE.ombres = true; return; }
   for (const p of BASSINS.ombre.places) {
     if (p.k < 0 || (pres && p.l.position.distanceTo(pres) > rayon)) continue;
     p.l.shadow.needsUpdate = true; renderer.shadowMap.needsUpdate = true;
@@ -2115,7 +2316,15 @@ function majLumieres(x, y, maquette, instant) {      // vrai : un fondu est enco
     .filter((a) => a[0] < Infinity).sort((a, b) => a[0] - b[0]).slice(0, n).map((a) => a[1]);
   const no = Math.min(Q.ombres, BASSINS.ombre.places.length), ns = Math.min(Q.simples, BASSINS.simple.places.length);
   const enc = maquette ? repartis(ok).slice(0, no + ns) : proches(ENCASTRES, no + ns);
-  viser(BASSINS.ombre, enc.slice(0, no)); viser(BASSINS.simple, enc.slice(no));
+  // --- fluidité A : en mouvement, les projecteurs d'ombre gardent leurs sources (ou s'éteignent si leur étage n'est plus éclairé) :
+  // aucune carte d'ombre refaite en marchant (avant : environ une par mètre) ; les places simples prennent les encastrés les
+  // plus proches qui restent. Réattribués 300 ms après l'arrêt, avec le fondu.
+  if (FLUIDE.figer && !maquette && !instant && no) {
+    const gardees = BASSINS.ombre.places.map((p) => p.veut).filter((k) => k >= 0 && ok[ENCASTRES[k].E.i]);
+    viser(BASSINS.ombre, gardees);
+    viser(BASSINS.simple, proches(ENCASTRES, no + ns).filter((k) => !gardees.includes(k)).slice(0, ns));
+  } else { viser(BASSINS.ombre, enc.slice(0, no)); viser(BASSINS.simple, enc.slice(no)); }
+  // --- fin fluidité A
   viser(BASSINS.jour, maquette ? [] : proches(FENETRES, Math.min(Q.jour, BASSINS.jour.places.length)));
   viser(BASSINS.lampe, proches(LAMPES, BASSINS.lampe.places.length));
   // fondu en temps réel (même si l'image est lente) : ¼ s pour éteindre une place, ¼ s pour la rallumer ailleurs
@@ -2138,7 +2347,7 @@ function majLumieres(x, y, maquette, instant) {      // vrai : un fondu est enco
     p.l.intensity = p.k >= 0 ? b.sources[p.k].i * p.f : 0;
     if (p.l.intensity !== i0) change = true;
   }
-  ambiance.intensity = maquette ? (vueMaquette === "ext" ? 0.55 : 1.0) : 0.25;
+  ambiance.intensity = maquette ? (vueMaquette === "ext" ? 0.55 : 1.0) : Q.amb ?? 0.25;     // --- fluidité A : Légère : ciel plus fort
   soleil.intensity = maquette ? (vueMaquette === "ext" ? SOLEIL_JOUR : 1.6) : XT ? SOLEIL_JOUR : 0;
   return change;
 }
@@ -2174,13 +2383,15 @@ const REFLETS = { travaux: [], version: 1, miroirs: [], pm: null, env: null, cub
   cubes: [0, 1].map(() => new THREE.WebGLCubeRenderTarget(256, { type: THREE.HalfFloatType })), cc: new THREE.CubeCamera(0.05, 60, null) };
 REFLETS.cc.position.copy(P(S.depart.x - 120, S.depart.y - 40, 55 + joueur.z));
 function rendreFace(tr) {                // une face d'un cube de reflet ; vrai quand le cube est fini
-  const cams = tr.cc.children, tm = renderer.toneMapping, fond = scene.background, cible = renderer.getRenderTarget();
-  renderer.toneMapping = THREE.NoToneMapping; scene.background = ciel;
+  // --- fluidité A : sans tone mapping par l'exposition « reflet » (mêmes programmes que l'image), plus par NoToneMapping
+  const cams = tr.cc.children, ex = renderer.toneMappingExposure, fond = scene.background, cible = renderer.getRenderTarget();
+  renderer.toneMappingExposure = EXPO_REFLET; scene.background = ciel;
   tr.cc.updateMatrixWorld(true);
   if (tr.cacher) tr.cacher.visible = false;
   renderer.setRenderTarget(tr.rt, tr.face); renderer.render(scene, cams[tr.face]);
   if (tr.cacher) tr.cacher.visible = true;
-  renderer.setRenderTarget(cible); renderer.toneMapping = tm; scene.background = fond;
+  renderer.setRenderTarget(cible); renderer.toneMappingExposure = ex; scene.background = fond;
+  // --- fin fluidité A
   if (++tr.face < 6) return false;
   tr.fin(); return true;
 }
@@ -2249,6 +2460,15 @@ function travaillerReflets(n) {          // au plus n faces de cube (une par ima
 const refletsEnCours = () => REFLETS.travaux.length > 0 || !!miroirAFaire();
 // refait l'environnement (après le mouvement d'une commande, ou à l'arrivée sur un étage) : progressivement
 function recapturerReflets(ici) { REFLETS.version++; capturePrincipale(ici, false); sale = true; }
+// --- fluidité A : Légère : aucun vernis ni duvet (catalogue, modèles 3D, personnages compris), avant la première compilation
+if (LEGERE) {
+  const plat = (m) => { if (m && m.isMeshPhysicalMaterial) { m.clearcoat = 0; m.sheen = 0; } };
+  const voir = (o) => { for (const m of [].concat(o.material || [], o.userData.matInt || [], o.userData.matExt || [])) plat(m); };
+  scene.traverse(voir); for (const Q of SCEN.liste) Q.racine.traverse(voir);
+  for (const Q of ANIM.seqs) if (Q.modele) Q.modele.traverse(voir);
+  for (const m of Object.values(MAT)) plat(m); for (const m of MATX.values()) plat(m);
+}
+// --- fin fluidité A
 scene.background = ciel; renderer.shadowMap.needsUpdate = true;
 capturePrincipale(false, true);
 // Extérieur : ses matériaux (copies) prennent la lumière du ciel seul (même taille de cube que les reflets de la maison : même
@@ -2273,7 +2493,7 @@ if (XT) {
 // AO : occlusion ambiante à demi-résolution (coins, dessous des meubles), floutée en tenant compte de la profondeur.
 // Halo : les sources très claires (encastrés, fenêtres) débordent un peu, comme dans une photo.
 const POST = (() => {
-  if (!renderer.capabilities.isWebGL2) return null;
+  if (!renderer.capabilities.isWebGL2 || LEGERE) return null;     // --- fluidité A : Légère : image directe dans le canevas
   const cible = (w, h, o) => new THREE.WebGLRenderTarget(w, h, { depthBuffer: false, ...o });
   const rt = new THREE.WebGLRenderTarget(4, 4, { samples: QUALITES[qualite].msaa, encoding: THREE.sRGBEncoding });
   rt.depthTexture = new THREE.DepthTexture(4, 4, THREE.UnsignedIntType);
@@ -2382,24 +2602,61 @@ const POST = (() => {
     mAO, mFlou, mFinal, rt,
   };
 })();
-if (XT) {                                // programmes de l'extérieur (seul dans la scène, rendu dans la cible de la chaîne)
-  const t = performance.now(), n0 = renderer.info.programs.length, cible = renderer.getRenderTarget(), retires = [gMurs, gMob, gPlafond, gSols, gCoupe];
-  poserSoleil(); scene.remove(...retires);
-  if (POST) renderer.setRenderTarget(POST.rt);
-  try { renderer.compile(scene, camera); } catch (e) { console.warn("précompilation", e); }
-  renderer.setRenderTarget(cible); scene.add(...retires);
+// --- fluidité A : TOUS les programmes préparés au chargement (avant : l'extérieur seulement ; 41 programmes se compilaient en
+// route pendant une tournée de 8 arrêts, un gel de 50 à 300 ms chacun sur téléphone). La scène entière (les deux étages, leur
+// mobilier caché compris, l'extérieur, le lointain, les objets animés) plus ce qui n'y est pas encore : personnages (matériaux
+// de dedans et de dehors, et en fondu), modèle du ballot, halos du toucher, miroirs à la taille de leur image. Dans la cible
+// de la chaîne (les reflets ont les mêmes programmes) ; Légère (image dans le canevas) : aussi dans une cible de reflet.
+{
+  const t = performance.now(), n0 = renderer.info.programs.length, cible = renderer.getRenderTarget();
+  const extra = new THREE.Group(), detaches = [];
+  const ajout = (geo, mat) => { if (mat && !Array.isArray(mat)) extra.add(new THREE.Mesh(geo, mat)); };
+  for (const Q of SCEN.liste) {
+    if (!Q.racine.parent) { gExterieur.add(Q.racine); detaches.push(Q.racine); }
+    for (const m of Q.meshes) for (const mat of [m.userData.matInt, m.userData.matExt]) {
+      ajout(m.geometry, mat);
+      if ((Q.mats || []).includes(mat)) ajout(m.geometry, Object.assign(mat.clone(), { transparent: true, opacity: 0.5 }));
+    }
+  }
+  for (const Q of ANIM.seqs) if (Q.modele && !Q.modele.parent) { gExterieur.add(Q.modele); detaches.push(Q.modele); }
+  const vide = new THREE.BufferGeometry(); vide.setAttribute("position", new THREE.BufferAttribute(new Float32Array(9), 3));
+  for (const side of [THREE.FrontSide, THREE.BackSide])       // halos (voir preparerHalo)
+    ajout(vide, new THREE.MeshBasicMaterial({ color: "#ffb43c", transparent: true, opacity: 0, depthWrite: false, side, fog: false, toneMapped: false }));
+  const cubesMiroir = [];
+  if (REFLETS.miroirs.length) for (const n of new Set(LEGERE ? [QUALITES.legere.miroir] : [QUALITES.haute.miroir, QUALITES.normale.miroir])) {
+    const rt = new THREE.WebGLCubeRenderTarget(n); cubesMiroir.push(rt);
+    const m = REFLETS.miroirs[0].o.material.clone(); m.envMap = rt.texture; ajout(vide, m);
+  }
+  gExterieur.add(extra); poserSoleil();
+  for (const rt of POST ? [POST.rt] : [null, REFLETS.cubes[0]]) {
+    renderer.setRenderTarget(rt);
+    try { renderer.compile(scene, camera); } catch (e) { console.warn("précompilation", e); }
+  }
+  renderer.setRenderTarget(cible); gExterieur.remove(extra);
+  for (const o of detaches) o.parent.remove(o);
+  for (const rt of cubesMiroir) rt.dispose();
   PRECOMP.ms = Math.round(performance.now() - t); PRECOMP.programmes = renderer.info.programs.length - n0;
 }
+// --- fin fluidité A
 function choisirQualite(q, manuel) {      // ne change que des réglages (définition, cibles, places allumées) : aucune recompilation
   if (!QUALITES[q]) return;
+  // --- fluidité A : Légère n'a ni les mêmes lumières ni les mêmes finis (autres programmes) : y entrer ou en sortir recharge
+  // la page, le choix mémorisé (sans le visiteur : rien ne change)
+  if ((q === "legere") !== LEGERE) {
+    if (!manuel) return;
+    try { localStorage.setItem(CLE_QUALITE, q); } catch (_) { return; }
+    $("t-qual").textContent = "…"; location.reload(); return;
+  }
+  // --- fin fluidité A
   if (QUALITES[qualite].miroir !== QUALITES[q].miroir) REFLETS.version++;   // miroirs refaits à la bonne taille
   qualite = q; const Q = QUALITES[q];
-  if (manuel) { try { localStorage.setItem("visite3d-qualite", q); } catch (_) {} }
+  if (manuel) { try { localStorage.setItem(CLE_QUALITE, q); } catch (_) {} }     // --- fluidité A : nouvelle clé
   tailleOmbres(Q); refaireOmbres();
   majLumieres(mode === "visite" ? joueur.x : orbite.cx, mode === "visite" ? joueur.y : orbite.cy, mode !== "visite", true);
   renderer.setPixelRatio(Math.min(devicePixelRatio, Q.pr));
   if (POST) POST.echantillons(Q.msaa);
   const b = $("t-qual"); b.textContent = Q.nom; b.setAttribute("aria-label", "Qualité du rendu : " + Q.nom.toLowerCase());
+  b.title = "Qualité du rendu : Haute, Normale (tablette) ou Légère (téléphone, la plus fluide)";     // --- fluidité A
   if (typeof taille === "function" && camera.aspect) taille();
 }
 
@@ -2425,10 +2682,13 @@ const porteBloque = (pt) => pt.etat === "fermee" || pt.f < 0.8;          // ferm
 // libre sur l'étage E : murs et obstacles (sauf les marches de l'escalier qu'on emprunte, esc >= 0), trémies (plancher troué),
 // portes fermées (avecPortes), sans jamais enfermer le visiteur qui se tient déjà dans l'embrasure
 // (avec un extérieur : seulement dans l'emprise de l'étage ; la zone extérieure a ses propres règles, voir libreExt)
-function libreE(E, x, y, r = RAYON, esc = -1, avecPortes = false) {
+// --- fluidité B : coins arrondis (vraie distance du cercle à la boîte) ; escPied : escalier dont on est au pied (ses marches
+// ne bloquent pas le premier pas, la trémie compte toujours)
+function toucheBoite(b, x, y, r) { const dx = Math.max(b.x0 - x, 0, x - b.x1), dy = Math.max(b.y0 - y, 0, y - b.y1); return dx * dx + dy * dy < r * r; }
+function libreE(E, x, y, r = RAYON, esc = -1, avecPortes = false, escPied = -1) {
   if (E.ext) return libreExt(x, y, r, avecPortes);
   if (XT && !dansEmpreinte(E, x, y)) return false;
-  for (const b of E.obstacles) if (!(esc >= 0 && b.esc != null) && x > b.x0 - r && x < b.x1 + r && y > b.y0 - r && y < b.y1 + r) return false;
+  for (const b of E.obstacles) if (!(esc >= 0 && b.esc != null) && !(escPied >= 0 && b.esc === escPied) && x > b.x0 - r && x < b.x1 + r && y > b.y0 - r && y < b.y1 + r && toucheBoite(b, x, y, r)) return false;
   if (esc < 0) for (const t of E.trous) if (dans(t, x, y)) return false;
   if (avecPortes) for (const pt of E.portes) if (porteBloque(pt) && dansZone(pt.p.zone, x, y, r) && !dansZone(pt.p.zone, joueur.x, joueur.y, r)) return false;
   return XT ? true : x > bx0 && x < bx1 && y > by0 - 60 && y < by1 + 80;      // avec un extérieur, l'emprise suffit (seuils compris)
@@ -2443,7 +2703,7 @@ function libreExt(x, y, r = RAYON, avecPortes = false) {
   if (h == null || INFO_EXT.raide || !dans(XT.terrain, x, y) || prochePoly(XT.terrain, x, y, r)) return false;
   for (const o of XT.obstacles) if (x > o.x0 - r && x < o.x1 + r && y > o.y0 - r && y < o.y1 + r && (dans(o.pts, x, y) || prochePoly(o.pts, x, y, r))) return false;
   const za = h + 12, zb = h + 60;
-  for (const b of EXT.murs) if (b.za < zb && b.zb > za && x > b.x0 - r && x < b.x1 + r && y > b.y0 - r && y < b.y1 + r) return false;
+  for (const b of EXT.murs) if (b.za < zb && b.zb > za && x > b.x0 - r && x < b.x1 + r && y > b.y0 - r && y < b.y1 + r && toucheBoite(b, x, y, r)) return false;   // --- fluidité B : coins arrondis
   if (avecPortes) for (const pt of EXT.portes) if (porteBloque(pt) && pt.E.z < zb && pt.E.z + 80 > za && dansZone(pt.p.zone, x, y, r) && !dansZone(pt.p.zone, joueur.x, joueur.y, r)) return false;
   return true;
 }
@@ -2480,18 +2740,133 @@ function solA(x, y, z) {
   return null;
 }
 function surEscalier() { if (!ESCALIERS.length) return -1; const s = solA(joueur.x, joueur.y, joueur.z); return s ? s.esc : -1; }
+// --- fluidité B : marche au joystick (et au clavier). Collision douce : rayon RAYON_PAS (le chemin automatique garde RAYON),
+// coins arrondis, petits pas de 3 po au plus, glissement le long des murs droits ou en biais, aimant de porte, premier pas sur
+// l'escalier depuis son pied ; un visiteur posé trop près d'un obstacle (arrêt) peut toujours s'en éloigner
+const RAYON_PAS = 6;
+let coinceIci = false;                   // la position actuelle touche déjà un obstacle (évalué à chaque petit pas)
+function escAuPied(x, y, z) {            // escalier dont une marche est à portée du pied (9 po au plus) sans être dessus, ou -1
+  for (let k = 0; k < ESCALIERS.length; k++) {
+    const es = ESCALIERS[k], g = es.grille, m = RAYON_PAS + 4;
+    if (x < g.x0 - m || y < g.y0 - m || x > g.x0 + g.nx * g.pas + m || y > g.y0 + g.ny * g.pas + m || hauteurEsc(es, x, y) != null) continue;
+    for (let a = 0; a < 16; a++) for (const d of [3, 6, 9]) {
+      const h = hauteurEsc(es, x + d * Math.cos(a * Math.PI / 8), y + d * Math.sin(a * Math.PI / 8));
+      if (h != null && Math.abs(h - z) <= 12) return k;
+    }
+  }
+  return -1;
+}
+function distPoly(pts, x, y) {           // distance (po) du point au bord du polygone
+  let m = Infinity;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const [ax, ay] = pts[j], [bx, by] = pts[i], L2 = (bx - ax) ** 2 + (by - ay) ** 2 || 1;
+    const t = Math.max(0, Math.min(1, ((x - ax) * (bx - ax) + (y - ay) * (by - ay)) / L2));
+    m = Math.min(m, Math.hypot(x - ax - t * (bx - ax), y - ay - t * (by - ay)));
+  }
+  return m;
+}
+function gene(Z, x, y, esc = -1, r = RAYON_PAS) {     // enfoncement (po) du cercle (x, y, r) dans les obstacles de la zone Z
+  let g = 0;
+  const boite = (b) => { const dx = Math.max(b.x0 - x, 0, x - b.x1), dy = Math.max(b.y0 - y, 0, y - b.y1), d = Math.hypot(dx, dy);
+    if (d < r) g += r - d + (d > 0 ? 0 : Math.min(x - b.x0, b.x1 - x, y - b.y0, b.y1 - y)); };
+  if (!Z.ext) { for (const b of Z.obstacles) if (!(esc >= 0 && b.esc != null)) boite(b); return g; }
+  const h = hauteurExt(x, y) ?? XT.sol;
+  for (const b of EXT.murs) if (b.za < h + 60 && b.zb > h + 12) boite(b);
+  for (const o of XT.obstacles) if (x > o.x0 - r && x < o.x1 + r && y > o.y0 - r && y < o.y1 + r) {
+    const d = distPoly(o.pts, x, y); if (dans(o.pts, x, y)) g += r + d; else if (d < r) g += r - d; }
+  return g;
+}
 function poser(x, y) {                   // essaie d'aller en (x, y) en marchant (marches, plancher, obstacles, portes)
   const s = solA(x, y, joueur.z);
-  if (!s || !libreE(zoneDe(s.etage), x, y, RAYON, s.esc, true)) return false;
+  if (!s) return false;
+  const Z = zoneDe(s.etage);
+  if (!libreE(Z, x, y, RAYON_PAS, s.esc, true, s.esc < 0 && ESCALIERS.length ? escAuPied(x, y, joueur.z) : -1)) {
+    // coincé contre un obstacle : seul un pas qui s'en éloigne (sans entrer dans un autre) est permis
+    if (!coinceIci || s.etage !== joueur.etage || !libreE(Z, x, y, 0.5, s.esc, true) || gene(Z, x, y, s.esc) >= gene(Z, joueur.x, joueur.y, s.esc) - 0.01) return false;
+  }
   joueur.x = x; joueur.y = y; joueur.z = s.z;
   if (s.etage !== joueur.etage) majEtageCourant(s.etage);
   return true;
+}
+const COS40 = Math.cos(40 * Math.PI / 180);
+// aimant de porte : à moins de 24 po d'une porte ouverte qu'on vise à moins de 40° de son axe, le pas est ramené dans le
+// passage (vers l'axe, au plus d'un pas de côté par pas) ; déjà dans le passage, rien ne change
+function aimantPorte(dx, dy) {
+  const Z = zoneDe(joueur.etage), liste = Z.ext ? EXT.portes : Z.portes, L = Math.hypot(dx, dy);
+  if (!liste || !liste.length || L < 1e-6) return [dx, dy];
+  let m = null;
+  for (const pt of liste) {
+    if (porteBloque(pt)) continue;
+    const [x0, y0, x1, y1] = pt.p.zone, enX = x1 - x0 < y1 - y0;          // mur le long de y : on traverse en x
+    const demi = (enX ? y1 - y0 : x1 - x0) / 2, ep = (enX ? x1 - x0 : y1 - y0) / 2, jeu = demi - RAYON_PAS - 1.5;
+    const av = enX ? joueur.x - (x0 + x1) / 2 : joueur.y - (y0 + y1) / 2, cote = enX ? joueur.y - (y0 + y1) / 2 : joueur.x - (x0 + x1) / 2;
+    const ma = (enX ? dx : dy) / L;
+    if (jeu <= 0 || Math.abs(ma) < COS40 || (av * ma > 0 && Math.abs(av) > ep)) continue;       // pas visée, ou on en sort
+    if (Math.abs(av) > ep + 24 + RAYON_PAS || Math.abs(cote) > demi + RAYON_PAS + 8) continue;   // trop loin, ou pas devant
+    if (!m || Math.abs(av) < m.d) m = { enX, jeu, cote, ma, d: Math.abs(av) };
+  }
+  if (!m) return [dx, dy];
+  const voulu = m.cote + (m.enX ? dy : dx), cible = Math.max(-m.jeu, Math.min(m.jeu, voulu));
+  if (cible === voulu) return [dx, dy];
+  const corr = Math.max(-L, Math.min(L, cible - m.cote)), f = Math.sign(m.ma) * L * Math.max(Math.abs(m.ma), 0.75), k = L / Math.hypot(f, corr);
+  return m.enX ? [f * k, corr * k] : [corr * k, f * k];
+}
+// dans l'escalier, en le montant ou le descendant (à moins de 40° de la ligne de foulée) : ramené à 8 po au plus de cette ligne,
+// loin des limons et des garde-corps de la trémie (comme l'aimant de porte)
+function aimantEscalier(dx, dy, esc) {
+  const l = ESCALIERS[esc] && ESCALIERS[esc].chemin, L = Math.hypot(dx, dy);
+  if (!l || l.length < 2 || L < 1e-6) return [dx, dy];
+  let m = null;
+  for (let i = 1; i < l.length; i++) {
+    const [ax, ay] = l[i - 1], [bx, by] = l[i], ux = bx - ax, uy = by - ay, n = Math.hypot(ux, uy) || 1;
+    const t = Math.max(0, Math.min(1, ((joueur.x - ax) * ux + (joueur.y - ay) * uy) / (n * n))), px = ax + t * ux, py = ay + t * uy, d = Math.hypot(joueur.x - px, joueur.y - py);
+    if (!m || d < m.d) m = { d, ex: ux / n, ey: uy / n, px, py };
+  }
+  const ma = (dx * m.ex + dy * m.ey) / L; if (Math.abs(ma) < COS40) return [dx, dy];
+  const nx = -m.ey, ny = m.ex, cote = (joueur.x - m.px) * nx + (joueur.y - m.py) * ny, voulu = cote + dx * nx + dy * ny, cible = Math.max(-8, Math.min(8, voulu));
+  if (cible === voulu) return [dx, dy];
+  const corr = Math.max(-L, Math.min(L, cible - cote)), f = Math.sign(ma) * L * Math.max(Math.abs(ma), 0.75), k = L / Math.hypot(f, corr);
+  return [(f * m.ex + corr * nx) * k, (f * m.ey + corr * ny) * k];
+}
+function pasDoux(dx, dy) {               // un petit pas : aimants (porte, escalier) ; le pas entier, sinon la direction libre la plus proche
+  const s0 = solA(joueur.x, joueur.y, joueur.z), e0 = s0 ? s0.esc : -1;
+  coinceIci = !libreE(zoneDe(joueur.etage), joueur.x, joueur.y, RAYON_PAS, e0, true, e0 < 0 && ESCALIERS.length ? escAuPied(joueur.x, joueur.y, joueur.z) : -1);
+  [dx, dy] = e0 >= 0 ? aimantEscalier(dx, dy, e0) : aimantPorte(dx, dy);
+  const x = joueur.x, y = joueur.y, L = Math.hypot(dx, dy), a0 = Math.atan2(dy, dx);
+  if (poser(x + dx, y + dy)) return true;
+  for (let d = 5; d <= 85; d += 5) {     // glissement : tourné de d°, raccourci comme une projection sur le mur
+    const c = Math.cos(d * Math.PI / 180) * L;
+    for (const sg of [1, -1]) { const a = a0 + sg * d * Math.PI / 180; if (poser(x + Math.cos(a) * c, y + Math.sin(a) * c)) return true; }
+  }
+  return false;
 }
 function marcher(av, lat, dt) {
   const v = (surEscalier() >= 0 ? 50 : 70) * dt;   // po/s
   const dx = (Math.cos(joueur.cap) * av + Math.cos(joueur.cap - Math.PI / 2) * lat) * v;
   const dy = (Math.sin(joueur.cap) * av + Math.sin(joueur.cap - Math.PI / 2) * lat) * v;
-  poser(joueur.x + dx, joueur.y); poser(joueur.x, joueur.y + dy);
+  const n = Math.ceil(Math.hypot(dx, dy) / 3);
+  for (let k = 0; k < n; k++) if (!pasDoux(dx / n, dy / n)) break;
+}
+// dégagement : un arrêt (ou un point visé) posé dans un obstacle ou trop près : le point libre le plus proche (36 po au plus),
+// sans traverser de mur pour l'atteindre ; sinon le point lui-même
+function obstaclesEn(Z, x, y) {
+  const dedans = (b) => x >= b.x0 && x <= b.x1 && y >= b.y0 && y <= b.y1;
+  if (!Z.ext) return Z.obstacles.filter(dedans);
+  const h = hauteurExt(x, y) ?? XT.sol;
+  return [...EXT.murs.filter((b) => b.za < h + 60 && b.zb > h + 12 && dedans(b)), ...XT.obstacles.filter((o) => dedans(o) && dans(o.pts, x, y))];
+}
+function degager(f, x, y, z) {
+  const Z = zoneDe(f); if (!Z) return [x, y];
+  const ok = (px, py) => { const s = solA(px, py, z); return !!s && s.etage === f && libreE(Z, px, py, RAYON_PAS + 1, s.esc, false); };
+  if (ok(x, y)) return [x, y];
+  const ici = new Set(obstaclesEn(Z, x, y));
+  for (let r = 1; r <= 36; r++) for (let k = 0; k < 32; k++) {
+    const c = Math.cos(k * Math.PI / 16), s = Math.sin(k * Math.PI / 16), px = x + r * c, py = y + r * s;
+    if (!ok(px, py)) continue;
+    let mur = false; for (let t = 1; t < r && !mur; t++) mur = obstaclesEn(Z, x + t * c, y + t * s).some((o) => !ici.has(o));
+    if (!mur) return [px, py];
+  }
+  return [x, y];
 }
 const angle = (a) => Math.atan2(Math.sin(a), Math.cos(a));
 
@@ -2686,17 +3061,22 @@ let trajet = null, vol = null;
 function allerA(x, y, capFinal, f = joueur.etage) {
   const c = trajetVers(x, y, f);
   if (!c || c.length < 2) return false;
+  return suivreTrajet(c, capFinal, f);
+}
+function suivreTrajet(c, capFinal, f) {  // --- fluidité B : un trajet déjà calculé (toucher)
   vol = null; trajet = { pts: c, i: 1, capFinal }; marque(c[c.length - 1][0], c[c.length - 1][1], f);
   ouvrirPortesSur(c);
   return true;
 }
-// hauteur des pieds à un arrêt : plancher de l'étage ; dehors, le z de l'arrêt ou le sol sous lui
-const zArret = (v, f) => (f === IEXT && EXT ? (v.z ?? hauteurExt(v.x, v.y) ?? XT.sol) : ETAGES[f].z);
+// hauteur des pieds à un arrêt : plancher de l'étage ; dehors, le z de l'arrêt ou le sol sous lui (--- fluidité B : un z donné
+// qui n'a plus de sol à une marche près, un balcon construit depuis par-dessus par exemple, cède la place au sol réel)
+const zArret = (v, f) => { if (!(f === IEXT && EXT)) return ETAGES[f].z; const h = hauteurExt(v.x, v.y);
+  return v.z != null && (h == null || Math.abs(h - v.z) <= MARCHE) ? v.z : h ?? v.z ?? XT.sol; };
 function volerA(v) {
   trajet = null;
-  const f = v.etage == null ? joueur.etage : idEtage(v.etage), za = zArret(v, f);
+  const f = v.etage == null ? joueur.etage : idEtage(v.etage), za = zArret(v, f), [ax, ay] = degager(f, v.x, v.y, za);   // --- fluidité B
   vol = { t: 0, debut: performance.now(), de: { ...joueur }, etage: f, change: f !== joueur.etage || joueur.z !== za,
-          a: { x: v.x, y: v.y, cap: joueur.cap + angle(v.cap * Math.PI / 180 - joueur.cap), tangage: v.tangage != null ? v.tangage * Math.PI / 180 : -0.08, z: za } };
+          a: { x: ax, y: ay, cap: joueur.cap + angle(v.cap * Math.PI / 180 - joueur.cap), tangage: v.tangage != null ? v.tangage * Math.PI / 180 : -0.08, z: za } };
 }
 // monter ou descendre : on marche jusqu'à l'escalier, on le parcourt en douceur et on s'arrête un peu après l'arrivée
 function allerEtage(f) {
@@ -2814,7 +3194,8 @@ if (XT) {
   }
   // maillages candidats et leur boîte (portes et commandes : élargie de 1 m, ils bougent)
   const boite3 = new THREE.Box3();
-  gExterieur.traverse((o) => { if (o.isMesh && !o.userData.terrain) CULL.ext.push({ o, b: boite3.setFromObject(o).clone() }); });
+  // --- fluidité A : sauf les secteurs du lointain (leur propre test, majLointain)
+  gExterieur.traverse((o) => { if (o.isMesh && !o.userData.terrain && !o.userData.secteurLoin) CULL.ext.push({ o, b: boite3.setFromObject(o).clone() }); });
   for (const E of ETAGES) for (const k of ["murs", "mob", "plafond", "sols"]) E.g[k].traverse((o) => {
     if (!o.isMesh) return;
     let bouge = false, bord = false;
@@ -2836,7 +3217,7 @@ function majPortails() {
   const actif = mode === "visite", cibles = actif ? (dehors() ? CULL.int : CULL.ext) : [], ens = actif ? (dehors() ? CULL.intSet : CULL.extSet) : null;
   // tout ce qui n'est pas visé redevient visible
   if (CULL.caches.size) for (const o of [...CULL.caches]) if (!ens || !ens.has(o)) { o.layers.enable(0); CULL.caches.delete(o); }
-  CULL.actif = actif; if (!actif) return;
+  CULL.actif = actif; if (!actif) { majLointain(null, false); return; }      // --- fluidité A : maquette : tout le lointain
   camera.updateMatrixWorld(); mPV.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); frustum.setFromProjectionMatrix(mPV);
   const oeil = camera.position, ox = oeil.x / K, oy = -oeil.z / K, oz = oeil.y / K;
   const champs = [];
@@ -2861,6 +3242,7 @@ function majPortails() {
     const n = Pt.enX ? new THREE.Vector3(-cote, 0, 0) : new THREE.Vector3(0, 0, cote);   // vers l'au-delà (repère three : -y → +z)
     F.planes[4].setFromNormalAndCoplanarPoint(n, milieuP); F.planes[5].copy(F.planes[4]);
     F.mob = !!Pt.pt || milieuP.distanceTo(oeil) < 3; F.E = Pt.E.i;
+    F.cone = coneDe(coinsP, oeil);                                               // --- fluidité A : directions vues (lointain)
     champs.push(F);
   }
   let vus = 0;
@@ -2871,6 +3253,7 @@ function majPortails() {
     else if (!CULL.caches.has(c.o)) { c.o.layers.disable(0); CULL.caches.add(c.o); }
   }
   CULL.n = champs.length; CULL.vus = vus;
+  majLointain(dehors() || tout ? null : champs, true);      // --- fluidité A : secteurs du lointain vus (dedans : par les ouvertures)
 }
 // maquette : un étage seul (à sa hauteur), ou les deux, le rez-de-chaussée à droite et plus haut (en escalier)
 function decalMaquette(E) {
@@ -2931,6 +3314,19 @@ function animerPortes(t) {               // vrai : une porte a bougé (ombres re
 const cnv = renderer.domElement, doigts = new Map();
 let geste = null;
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+// --- fluidité A : les rayons du toucher ne visitent que ce qui est montré (three r149 lance le rayon aussi contre les objets
+// cachés : l'autre étage, son mobilier, ~280 000 triangles) ni le lointain (dessiné ramené vers l'œil : le rayon ne le
+// trouverait pas où on le voit). Même résultat pour tous les appelants : ils écartaient déjà ce qui est caché.
+ray.intersectObjects = function (objets, recursif = true, res = []) {
+  const visiter = (o) => {
+    if (!o.visible || o === gLoin) return;
+    if (o.layers.test(this.layers)) o.raycast(this, res);
+    if (recursif) for (const c of o.children) visiter(c);
+  };
+  for (const o of objets) visiter(o);
+  return res.sort((a, b) => a.distance - b.distance);
+};
+// --- fin fluidité A
 const estVu = (o) => { for (let q = o; q; q = q.parent) if (!q.visible) return false; return true; };
 function viser3D(cx, cy) {
   const r = cnv.getBoundingClientRect();
@@ -2980,6 +3376,91 @@ function objetSous(cx, cy) {
 }
 const commandeSous = (cx, cy) => { const o = objetSous(cx, cy); return o && o.commande || null; };
 const porteSous = (cx, cy) => { const o = objetSous(cx, cy); return o && o.porte || null; };
+// --- fluidité B : ce qu'un toucher au sol ferait, sans rien lancer : { esc, monte } (une marche), { pts, x, y, f, approx } (un
+// trajet ; approx : on va au point atteignable le plus proche de celui visé) ou null. En visite, un mur ou un plafond touché
+// mène au pied du mur, de notre côté ; un point hors d'atteinte (terrain hors du lot, gazon derrière la clôture), au plus près.
+function cibleToucher(cx, cy) {
+  let s = solSous(cx, cy);
+  if (!s && mode === "visite") s = piedDuMur(cx, cy) || versHorizon(cx, cy);
+  if (!s) return null;
+  if (s.esc != null) return { esc: s.esc, monte: s.z > joueur.z + 4 };
+  if (mode !== "visite") return { x: s.x, y: s.y, f: s.etage, maquette: true };
+  const q = pointAtteignable(s.x, s.y, s.etage); if (!q) return null;
+  const c = trajetVers(q[0], q[1], s.etage);
+  return c && c.length >= 2 ? { pts: c, x: q[0], y: q[1], f: s.etage, approx: q[2] } : null;
+}
+function piedDuMur(cx, cy) {             // premier mur ou plafond visé : un point de plancher à son pied, reculé vers soi
+  viser3D(cx, cy);
+  const cibles = [gMurs, gPlafond]; if (XT && gExterieur.visible) cibles.push(gExterieur);
+  const h = ray.intersectObjects(cibles, true).find((q) => !q.object.userData.zone && !q.object.userData.haloDe && estVu(q.object));
+  if (!h) return null;
+  let E = null; for (let o = h.object; o && !E; o = o.parent) if (o.userData.etage != null) E = ETAGES[o.userData.etage];
+  const f = dehors() || !E ? joueur.etage : E.i, dec = !dehors() && E ? E.decal : { x: 0, z: 0 };
+  const px = (h.point.x - dec.x) / K, py = -(h.point.z - dec.z) / K, d = Math.hypot(px - joueur.x, py - joueur.y) || 1, rec = Math.min(d, RAYON * 1.5);
+  return { x: px - (px - joueur.x) / d * rec, y: py - (py - joueur.y) / d * rec, etage: f };
+}
+function versHorizon(cx, cy) {           // dehors, rien sous le doigt (le fleuve au loin, l'horizon) : vers là, jusqu'au bout du lot ;
+  if (!dehors() || !EXT.gr) return null;  // le ciel (plus de 20° au-dessus de l'horizon) : rien
+  viser3D(cx, cy);
+  const d = ray.ray.direction, h = Math.hypot(d.x, d.z); if (d.y > Math.sin(20 * Math.PI / 180) || h < 1e-6) return null;
+  const ux = d.x / h, uy = -d.z / h, g = EXT.gr, X1 = g.x0 + g.nx * g.pas, Y1 = g.y0 + g.ny * g.pas;
+  const t = Math.min(ux > 0 ? (X1 - joueur.x) / ux : ux < 0 ? (g.x0 - joueur.x) / ux : 1e5, uy > 0 ? (Y1 - joueur.y) / uy : uy < 0 ? (g.y0 - joueur.y) / uy : 1e5);
+  return t > 12 ? { x: joueur.x + ux * (t - 4), y: joueur.y + uy * (t - 4), etage: IEXT } : null;
+}
+function composantes(Z) {                // composantes connexes de la grille de marche d'une zone (calculées une fois, au besoin)
+  if (Z.comp) return Z.comp;
+  const gr = Z.gr, nx = gr.nx, ny = gr.ny, N = nx * ny, L = gr.libre, H = gr.h, lab = new Int32Array(N).fill(-1), pile = new Int32Array(N);
+  let n = 0;
+  for (let s = 0; s < N; s++) {
+    if (!L[s] || lab[s] >= 0) continue;
+    let h = 0; pile[h++] = s; lab[s] = n;
+    while (h) {
+      const k = pile[--h], i = k % nx, j = (k - i) / nx;
+      for (let dj = -1; dj <= 1; dj++) for (let di = -1; di <= 1; di++) {
+        if (!di && !dj) continue;
+        const a = i + di, b = j + dj; if (a < 0 || b < 0 || a >= nx || b >= ny) continue;
+        const k2 = b * nx + a; if (!L[k2] || lab[k2] >= 0) continue;
+        if (di && dj && (!L[j * nx + a] || !L[b * nx + i])) continue;
+        if (H && Math.abs(H[k2] - H[k]) > MARCHE) continue;
+        lab[k2] = n; pile[h++] = k2;
+      }
+    }
+    n++;
+  }
+  return (Z.comp = lab);
+}
+// [x, y, approx] : le point visé s'il est atteignable (sa composante est celle où l'on se tient, ou celle d'un bout d'escalier ou
+// de porte extérieure de la zone), sinon le centre de case atteignable le plus proche ; null s'il n'y en a pas
+function pointAtteignable(x, y, f) {
+  const Z = zoneDe(f); if (!Z || !Z.gr) return null;
+  const gr = Z.gr, nx = gr.nx, ny = gr.ny, lab = composantes(Z), ok = new Set();
+  const ajouter = (px, py) => { let [i, j] = celluleG(gr, px, py); if (!gr.libre[j * nx + i]) { const q = procheLibreG(gr, i, j, Z.ext ? 40 : 12); if (!q) return; [i, j] = q; } ok.add(lab[j * nx + i]); };
+  if (f === joueur.etage) ajouter(joueur.x, joueur.y);
+  for (const Q of PASSAGES) for (const de of [Q.a, Q.b]) if (de === f) { const l = lignePassage(Q, de); ajouter(l[0][0], l[0][1]); }
+  const [ti, tj] = celluleG(gr, x, y), t = tj * nx + ti;
+  if (gr.libre[t] && ok.has(lab[t])) return [x, y, false];
+  let m = null, dm = Infinity;
+  const essai = (i, j) => { if (i < 0 || j < 0 || i >= nx || j >= ny) return; const k = j * nx + i; if (!gr.libre[k] || !ok.has(lab[k])) return;
+    const px = gr.x0 + (i + .5) * gr.pas, py = gr.y0 + (j + .5) * gr.pas, d = Math.hypot(px - x, py - y); if (d < dm) { dm = d; m = [px, py]; } };
+  for (let r = 0, R = Math.max(nx, ny); r < R; r++) {
+    if (m && (r - 1) * gr.pas > dm) break;
+    for (let d = -r; d <= r; d++) { essai(ti + d, tj - r); if (r) essai(ti + d, tj + r); }
+    for (let d = -r + 1; d < r; d++) { essai(ti - r, tj + d); essai(ti + r, tj + d); }
+  }
+  return m ? [m[0], m[1], dm > 24] : null;
+}
+function rondToucher(x, y, ok) {         // rond passager au point touché (pâle et rosé : le toucher ne mène nulle part)
+  const d = document.createElement("div"); d.className = "rond-toucher" + (ok ? "" : " non");
+  d.style.left = x + "px"; d.style.top = y + "px"; document.body.append(d); setTimeout(() => d.remove(), 650);
+  return d;
+}
+let motMin = 0;
+function motToucher(x, y, texte) {
+  const m = $("toucher-rien"); m.textContent = texte; m.hidden = false;
+  m.style.left = Math.max(12, Math.min(innerWidth - 12 - m.offsetWidth, x - m.offsetWidth / 2)) + "px"; m.style.top = Math.max(64, y - 70) + "px";
+  clearTimeout(motMin); motMin = setTimeout(() => (m.hidden = true), 1700);
+}
+// --- fin fluidité B (toucher)
 cnv.addEventListener("pointerdown", (e) => {
   cnv.setPointerCapture(e.pointerId);
   doigts.set(e.pointerId, { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now(), bouton: e.button,
@@ -3006,6 +3487,7 @@ cnv.addEventListener("pointermove", (e) => {
   if (!f.glisse && Math.hypot(f.x - f.x0, f.y - f.y0) < f.seuil) return;
   f.glisse = true;                                      // il glisse : on regarde autour, ce ne sera pas un toucher
   if (mode === "maquette" && (f.bouton === 2 || e.shiftKey)) { deplacerOrbite(dx, dy); return; }
+  if (e.pointerType !== "mouse" && mode === "visite") { regarder(dx, dy, f); return; }    // --- fluidité B : regard adouci
   tourner(dx, dy);
 });
 function finDoigt(e) {
@@ -3018,14 +3500,21 @@ function finDoigt(e) {
   // toucher un objet : la toile ou le bureau monte ou descend, le robot s'arrête ou repart, la trappe envoie le linge, la porte
   // d'entrée fermée fait venir le visiteur (il s'en va si on le touche), une autre porte s'ouvre ou se ferme
   if (toucherObjet(e.clientX, e.clientY)) return;
-  const s = solSous(e.clientX, e.clientY);
-  if (!s) return;
-  if (s.esc != null) {                                // une marche : on monte (ou on descend) l'escalier
-    const es = ESCALIERS[s.esc]; if (es) allerEtage(s.z > joueur.z + 4 ? es.haut : es.bas);
-    return;
-  }
-  if (mode === "visite") allerA(s.x, s.y, undefined, s.etage);
-  else entrerDans(s.x, s.y, s.etage);
+  // --- fluidité B : le sol, un mur (on va à son pied) ou un point hors d'atteinte (au plus près). Un rond montre tout de suite que
+  // le toucher est reçu (le chemin se calcule à l'image suivante) ; rosé, avec « On ne peut pas aller là », s'il ne mène nulle part
+  const x = e.clientX, y = e.clientY, m = mode, rond = m === "visite" ? rondToucher(x, y, true) : null;
+  requestAnimationFrame(() => setTimeout(() => {
+    if (mode !== m) return;
+    const c = cibleToucher(x, y);
+    if (!c) { if (rond) { rond.classList.add("non"); motToucher(x, y, "On ne peut pas aller là"); } return; }
+    if (!rond) rondToucher(x, y, true);
+    if (c.esc != null) {                              // une marche : on monte (ou on descend) l'escalier
+      const es = ESCALIERS[c.esc]; if (es) allerEtage(c.monte ? es.haut : es.bas);
+      return;
+    }
+    if (c.maquette) entrerDans(c.x, c.y, c.f);
+    else suivreTrajet(c.pts, undefined, c.f);
+  }, 0));
 }
 cnv.addEventListener("pointerup", finDoigt);
 let survol = 0, survolMin = 0;                          // souris : main et léger halo au-dessus d'un objet qu'on peut toucher
@@ -3093,6 +3582,30 @@ function bougerJoy(e) {
   const r = joy.getBoundingClientRect(); let x = (e.clientX - r.left - r.width / 2) / 50, y = (e.clientY - r.top - r.height / 2) / 50;
   const n = Math.hypot(x, y); if (n > 1) { x /= n; y /= n; }
   jv = { x, y }; bouton.style.transform = `translate(${x * 40}px, ${y * 40}px)`;
+}
+// --- fluidité B : joystick adouci (zone morte de 12 %, réponse progressive, départ et arrêt amortis en ~0,15 s) : vers le haut
+// on avance, sur les côtés on tourne (un seul pouce suffit) ; le regard au doigt suit, amorti (60 ms) et rapporté à la largeur
+// de l'écran (un glissé de toute la largeur d'un téléphone ≈ 94°), le tangage presque figé si le glissé est horizontal
+const JOY = { x: 0, y: 0, t: 0 }, REGARD = { dx: 0, dy: 0, t: 0 }, VIRAGE = 1.5;    // rad/s, joystick à fond sur le côté
+function joyLisse(t) {
+  const dt = JOY.t ? Math.min(0.25, (t - JOY.t) / 1000) : 0; JOY.t = t;
+  let x = jv.x, y = jv.y; const n = Math.hypot(x, y);
+  if (n < 0.12) x = y = 0; else { const k = Math.pow((n - 0.12) / 0.88, 1.6) / n; x *= k; y *= k; }
+  const a = 1 - Math.exp(-dt / (x || y ? 0.12 : 0.07));
+  JOY.x += (x - JOY.x) * a; JOY.y += (y - JOY.y) * a;
+  if (!x && !y && Math.hypot(JOY.x, JOY.y) < 0.03) JOY.x = JOY.y = 0;
+  return JOY;
+}
+function regarder(dx, dy, f) {           // un doigt glisse sur la vue (visite) : le regard suit, amorti dans la boucle
+  if (Math.abs(f.x - f.x0) > 2.2 * Math.abs(f.y - f.y0)) dy *= 0.2;
+  const k = Math.max(0.0028, Math.min(0.0042, 1.65 / Math.max(1, innerWidth))) / 0.0042;
+  REGARD.dx += dx * k; REGARD.dy += dy * k; vol = null; sale = true;
+}
+function lisserRegard(t) {
+  const dt = REGARD.t ? Math.min(0.25, (t - REGARD.t) / 1000) : 0; REGARD.t = t;
+  if (!REGARD.dx && !REGARD.dy) return;
+  const a = Math.abs(REGARD.dx) + Math.abs(REGARD.dy) < 0.5 ? 1 : 1 - Math.exp(-dt / 0.06);
+  tourner(REGARD.dx * a, REGARD.dy * a); REGARD.dx *= 1 - a; REGARD.dy *= 1 - a;
 }
 
 // ---------- plan miniature (repère du plan : façade en bas), un fond par étage
@@ -3202,6 +3715,7 @@ function allerArret(i) {
     choisirMode("visite"); joueur.x = v.x; joueur.y = v.y; joueur.cap = v.cap * Math.PI / 180; joueur.tangage = -0.08;
     const za = zArret(v, f);
     if (f !== joueur.etage || joueur.z !== za) { majEtageCourant(f, true); joueur.z = joueur.zVue = za; }
+    [joueur.x, joueur.y] = degager(f, v.x, v.y, za);                  // --- fluidité B : jamais posé dans un obstacle
   } else volerA({ ...v, etage: f });
   // arrêt avec "commandes" : la toile (ou autre) s'anime vers l'état demandé, une fois arrivé
   for (const [id, etat] of Object.entries(v.commandes || {})) setTimeout(() => { if (arret === i) commander(id, etat); }, 700);
@@ -3221,7 +3735,8 @@ if (MULTI) rail.querySelector("h2").remove();      // « Aller à » suffit : le
 $("prec").onclick = () => allerArret(arret < 0 ? S.visites.length - 1 : arret - 1);
 $("suiv").onclick = () => allerArret(arret + 1);
 $("t-mob").onclick = (e) => { gMob.visible = !gMob.visible; refaireOmbres(); e.currentTarget.setAttribute("aria-pressed", String(gMob.visible)); };
-$("t-qual").onclick = () => choisirQualite(qualite === "haute" ? "normale" : "haute", true);
+// --- fluidité A : Haute → Normale → Légère → Haute (Légère : la page se recharge)
+$("t-qual").onclick = () => choisirQualite({ haute: "normale", normale: "legere", legere: "haute" }[qualite], true);
 $("t-pal").onclick = (e) => { const p = $("palette"); p.hidden = !p.hidden; e.currentTarget.setAttribute("aria-pressed", String(!p.hidden)); };
 $("t-aide").onclick = () => ($("aide").hidden = false);
 $("aide-ok").onclick = () => ($("aide").hidden = true);
@@ -3349,6 +3864,17 @@ function majVuAnimes() {
     A.vu = [[A.x, A.y], [A.x + nx, A.y + ny], [A.x - nx, A.y - ny]].some(([x, y]) => segmentLibre(mursAnim[A.E.i], o, [x, y, zc]));
   }
 }
+// --- fluidité A : images par seconde qu'il faut à un objet animé qui roule : environ 2 pixels de mouvement à l'écran par image
+// (vitesse de la phase et rotation sur place, vues à sa vraie distance), entre 2 et sa « cadence » (30 ; Légère : 15)
+const vCad = new THREE.Vector3();
+function cadenceAnime(A) {
+  const p = A.phase, T = Math.max(1e-3, p.t1 - p.t0);
+  const v = Math.hypot(p.x1 - p.x0, p.y1 - p.y0) / T + Math.abs(p.c1 - p.c0) / T * (A.rayon || 12) + (A.tournants.length ? 6 : 0);   // po/s
+  A.ext.getWorldPosition(vCad); const d = Math.max(0.3, vCad.distanceTo(camera.position));
+  const px = v * K / d * innerHeight / (2 * Math.tan(camera.fov * Math.PI / 360));
+  return Math.max(2, Math.min(A.d.cadence || 30, LEGERE ? 15 : 30, Math.ceil(px / 2)));
+}
+// --- fin fluidité A
 function majAnimations(t) {                // pose les objets animés ; vrai : une image est à refaire (30 par seconde au plus)
   const dt = ANIM.fige || !ANIM.tPrec ? 0 : Math.min(0.1, (t - ANIM.tPrec) / 1000); ANIM.tPrec = t;
   const page = !document.hidden;
@@ -3369,8 +3895,10 @@ function majAnimations(t) {                // pose les objets animés ; vrai : u
     else poserSequence(Q);
   }
   // --- lointain : en mouvement, la plus grande « cadence » des objets qui roulent et se voient (défaut 30 ; traversier : 10)
-  let cad = besoin === 2 ? 0 : 8;
-  if (besoin === 2) { for (const A of ANIM.liste) if (A.vu && !A.pause && A.phase.roule) cad = Math.max(cad, A.d.cadence || 30);
+  // --- fluidité A : … et selon leur vitesse à l'écran (cadenceAnime) : un objet loin ou lent (traversier à 2 km : 4 images/s)
+  // ne force plus 10 ou 30 images par seconde ; Légère : 15 au plus, voyant seul 4 (au lieu de 8)
+  let cad = besoin === 2 ? 0 : LEGERE ? 4 : 8;
+  if (besoin === 2) { for (const A of ANIM.liste) if (A.vu && !A.pause && A.phase.roule) cad = Math.max(cad, cadenceAnime(A));
     if (!cad || ANIM.seqs.some((Q) => Q.t != null)) cad = 30; }
   // --- fin lointain
   if (ANIM.fige || !page || !besoin || t - ANIM.tImage < 1000 / cad - 4) return false;   // figé (tests) : une image par changement
@@ -3767,6 +4295,27 @@ function masquerAstuce() { if (astuceVue) return; astuceVue = true; astuce.style
 setTimeout(masquerAstuce, 9000);
 function orientation() { $("tourne").hidden = !(tactile && innerHeight > innerWidth * 1.1) || $("tourne").dataset.ok === "1"; }
 $("tourne-ok").onclick = () => { $("tourne").dataset.ok = "1"; orientation(); };
+// --- fluidité B : téléphone (écran tactile dont le petit côté fait moins de 600 px) : tiroir des arrêts, commandes derrière
+// « ⋯ », plan réduit et repliable ; choisir un arrêt ou une commande, ou toucher la vue, referme ce qui est ouvert. Le bandeau
+// « à l'horizontale » ne fait que passer (6 s, une fois)
+const estTel = () => tactile && Math.min(innerWidth, innerHeight) < 600;
+function majTel() { document.body.classList.toggle("tel", estTel()); }
+majTel(); addEventListener("resize", majTel);
+function fermerTiroirs() {
+  document.body.classList.remove("rail-ouvert", "outils-ouverts");
+  $("b-arrets").setAttribute("aria-expanded", "false"); $("b-outils").setAttribute("aria-expanded", "false");
+}
+for (const [id, cl] of [["b-arrets", "rail-ouvert"], ["b-outils", "outils-ouverts"]]) $(id).onclick = () => {
+  const o = !document.body.classList.contains(cl); fermerTiroirs(); masquerAstuce();
+  document.body.classList.toggle(cl, o); $(id).setAttribute("aria-expanded", String(o));
+  if (o && cl === "rail-ouvert" && boutons[arret]) boutons[arret].scrollIntoView({ block: "center" });
+};
+for (const el of [rail, document.querySelector(".outils")]) el.addEventListener("click", (e) => { if (e.target.closest("button") && document.body.classList.contains("tel")) fermerTiroirs(); });
+cnv.addEventListener("pointerdown", fermerTiroirs);
+$("b-plan").onclick = () => { const r = document.body.classList.toggle("plan-replie"); $("b-plan").textContent = r ? "Plan" : "–";
+  $("b-plan").setAttribute("aria-expanded", String(!r)); $("b-plan").setAttribute("aria-label", r ? "Montrer le plan" : "Replier le plan"); };
+if (estTel()) { $("tourne").firstElementChild.textContent = "À l'horizontale, la vue est plus large"; setTimeout(() => { $("tourne").dataset.ok = "1"; orientation(); }, 6500); }
+// --- fin fluidité B (téléphone)
 choisirMode("visite");
 choisirQualite(qualite);
 $("ici-n").textContent = `${S.visites.length} arrêts`;
@@ -3816,6 +4365,21 @@ function taille() {
   sale = true;
 }
 addEventListener("resize", taille); taille();
+// --- fluidité A : définition adaptative (écran tactile) : en mouvement, si l'intervalle moyen des 8 dernières images dépasse
+// 40 ms (moins de 25 images/s), la définition baisse (×0,8 puis ×0,65, au plus un palier par seconde) ; à l'arrêt, une image
+// nette à pleine définition
+function adapterDefinition(t, bouge) {
+  const F = FLUIDE;
+  if (bouge && t - F.tRendu < 250) { F.ecarts.push(t - F.tRendu); if (F.ecarts.length > 8) F.ecarts.shift(); } else if (!bouge) F.ecarts.length = 0;
+  let e = F.echelle;
+  if (F.figer && F.ecarts.length >= 8 && t - F.tEchelle > 1000 && e > 0.65) {
+    if (F.ecarts.reduce((a, b) => a + b, 0) / F.ecarts.length > 40) e = e > 0.9 ? 0.8 : 0.65;
+  } else if (!F.figer && e < 1) e = 1;
+  if (e === F.echelle) return;
+  F.echelle = e; F.tEchelle = t; F.ecarts.length = 0;
+  renderer.setPixelRatio(Math.min(devicePixelRatio, QUALITES[qualite].pr) * e); taille();
+}
+// --- fin fluidité A
 let t0 = performance.now(), escPrec = -1, nImages = 0, lumEnFondu = true, nBoucle = 0;
 const ANIM_ACTIF = ANIM.liste.length > 0 || ANIM.seqs.length > 0;
 const camPrec = new THREE.Matrix4(), projPrec = new THREE.Matrix4();
@@ -3831,11 +4395,15 @@ function boucle(t) {
     if (touches.has("d")) lat += 1;
     if (touches.has("arrowleft")) joueur.cap += 1.8 * dt;
     if (touches.has("arrowright")) joueur.cap -= 1.8 * dt;
-    av -= jv.y; lat += jv.x;
-    if (av || lat) { stop(); vol = null; voile.style.opacity = "0"; marcher(av, lat, dt); }
+    // --- fluidité B : joystick adouci (les côtés tournent), regard au doigt amorti ; le pouce sur le joystick arrête la marche auto
+    const clavier = av || lat, J = joyLisse(t); lisserRegard(t);
+    if (clavier || jv.x || jv.y) { stop(); vol = null; voile.style.opacity = "0"; }
+    av -= J.y; if (J.x && !vol) joueur.cap -= J.x * VIRAGE * dt;
+    if ((av || lat) && !trajet && !vol) marcher(av, lat, dt);
     avancerTrajets(dt);
   }
-  if (!vol) { const dz = joueur.z - joueur.zVue; joueur.zVue = Math.abs(dz) < 0.02 ? joueur.z : joueur.zVue + dz * Math.min(1, dt * 12); }
+  // l'œil suit les pieds, amorti (--- fluidité B : 7/s au lieu de 12/s, les marches de 7½ po deviennent une rampe)
+  if (!vol) { const dz = joueur.z - joueur.zVue; joueur.zVue = Math.abs(dz) < 0.02 ? joueur.z : joueur.zVue + dz * Math.min(1, dt * 7); }
   if (MULTI) { const s = surEscalier(); if ((s >= 0) !== (escPrec >= 0)) { escPrec = s; majBoutonsEtage(); } }
   const tt = performance.now();
   verifierInviteArret();                               // arrivé à un arrêt : repères des objets à toucher (écran tactile)
@@ -3845,6 +4413,15 @@ function boucle(t) {
   placerCamera(); camera.updateMatrixWorld();
   let bouge = false;
   if (!camPrec.equals(camera.matrixWorld) || !projPrec.equals(camera.projectionMatrix)) { camPrec.copy(camera.matrixWorld); projPrec.copy(camera.projectionMatrix); sale = bouge = true; }
+  // --- fluidité A : en mouvement (et 300 ms après), ombres, projecteurs d'ombre et reflets restent figés ; à l'arrêt : lumières
+  // réattribuées (fondu), ombres reportées refaites, définition pleine
+  if (bouge) FLUIDE.tBouge = tt;
+  const figer = tt - FLUIDE.tBouge < FLUIDE.REPOS;
+  if (FLUIDE.figer && !figer) { lumEnFondu = true; if (FLUIDE.echelle < 1) sale = true; }
+  FLUIDE.figer = figer;
+  if (!figer && FLUIDE.ombres) { FLUIDE.ombres = false; refaireOmbres(); }
+  const tourRendu = t - FLUIDE.tRendu >= 1000 / FLUIDE.cadence - 4;      // cadence plafonnée et régulière (voir plus bas)
+  // --- fin fluidité A
   // objets animés et séquences : posés à chaque tour ; image à refaire 30 fois par seconde au plus, et seulement s'ils se voient
   const imageAnim = ANIM_ACTIF && majAnimations(tt);
   if (SCEN.liste.length && majScenarios(tt)) sale = true;      // --- scénarios (personnage qui joue : 30 images/s au plus s'il se voit)
@@ -3855,11 +4432,18 @@ function boucle(t) {
                                    : majLumieres(orbite.cx, orbite.cy, true);
     if (lumEnFondu) sale = true;
   }
-  // reflets en cours (étage, commande, miroirs proches) : une face de cube par image (une sur trois en se déplaçant)
-  if (mode === "visite" && (!bouge || nBoucle % 3 === 0) && (REFLETS.travaux.length || miroirAFaire())) { travaillerReflets(1); sale = true; }
+  // reflets en cours (étage, commande, miroirs proches) : une face de cube par image affichée, à l'arrêt seulement
+  // --- fluidité A : (avant : une sur trois en se déplaçant) ; jamais dans un tour sans image (cadence)
+  if (mode === "visite" && !figer && tourRendu && (REFLETS.travaux.length || miroirAFaire())) { travaillerReflets(1); sale = true; }
   // nouvel étage : l'image des reflets est refaite là où l'on s'arrête
-  if (refletsEtage && mode === "visite" && !trajet && !vol && performance.now() - refletsEtage > 400) { refletsEtage = 0; recapturerReflets(true); }
+  if (refletsEtage && mode === "visite" && !trajet && !vol && !figer && performance.now() - refletsEtage > 400) { refletsEtage = 0; recapturerReflets(true); }
   if (!sale && !imageAnim && !renderer.shadowMap.needsUpdate) return;
+  // --- fluidité A : au plus FLUIDE.cadence images par seconde, à intervalle régulier (un écran de 90 ou 120 Hz ne fait pas viser
+  // 90 ou 120 images : 30 en Légère, 60 ailleurs) ; l'image en attente est faite au tour suivant permis
+  if (!tourRendu) { sale = true; return; }
+  if (tactile) adapterDefinition(t, bouge);
+  FLUIDE.tRendu = t;
+  // --- fin fluidité A
   sale = false; nImages++;
   renderer.info.reset();
   if (POST) POST.rendre(QUALITES[qualite]); else renderer.render(scene, camera);
@@ -3950,4 +4534,8 @@ function etatSequence(id) {
 // ouvertures : nombre de champs, maillages vus), PRECOMP (programmes préparés au chargement), soleil
 Object.assign(window, { EXT, IEXT, hauteurExt, libreExt, libreE, trajetVers, zoneDe, CULL, PRECOMP, soleil, majPortails, allerArret, visites: S.visites,
   vueMaquette: () => vueMaquette, poser, marcher, avancerTrajets });
+// --- fluidité B (tests) : cibleToucher(x, y) (ce que ferait un toucher, sans rien lancer), pointAtteignable(x, y, zone),
+// degager(zone, x, y, z) (point libre le plus proche d'un arrêt), vuScenario(Q), aimantPorte(dx, dy), RAYON_PAS, fermerTiroirs(),
+// JOY (joystick adouci : x tourne, y avance)
+Object.assign(window, { cibleToucher, pointAtteignable, degager, vuScenario, aimantPorte, RAYON_PAS, fermerTiroirs, JOY });
 </script>

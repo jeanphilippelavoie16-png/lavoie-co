@@ -467,7 +467,7 @@ SCENE = {
                 {"nom": "Coin bureau", "x": 296, "y": 268, "cap": 192},
                 {"nom": "Corridor", "x": 150, "y": 186, "cap": 180},
                 {"nom": "Salle de bain", "x": 118, "y": 188, "cap": 180},
-                {"nom": "Vanité", "x": 102, "y": 178, "cap": 140},
+                {"nom": "Vanité", "x": 101, "y": 182, "cap": 140},     # recalé : 9 po des murs (fluidité)
                 {"nom": "Chambre arrière", "x": 127, "y": 220, "cap": 100},
                 {"nom": "Chambre arrière, tête de lit", "x": 112, "y": 336, "cap": 222},
                 {"nom": "Chambre avant (présumée)", "x": 126, "y": 126, "cap": 212},
