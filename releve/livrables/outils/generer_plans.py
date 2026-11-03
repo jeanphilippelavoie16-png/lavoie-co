@@ -1,0 +1,3452 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+generer_plans.py — Générateur des plans du relevé de l'existant.
+
+Transforme maison.json (schéma figé, voir travail/SCHEMA.md §4 et §6) en :
+  svg/<feuille>_<slug>.svg      une feuille tabloïd 17×11 po par niveau (calques Inkscape)
+  pdf/plans_existants.pdf       toutes les feuilles, à l'échelle exacte
+  png/<feuille>_<slug>.png      aperçus 150 ppp
+  dxf/<feuille>_<slug>.dxf      géométrie en pouces réels (repère maison), R2010
+  donnees/tableau_pieces.csv    tableau des pièces (Excel Québec)
+  donnees/verifications.txt     rapport des contrôles
+
+Usage :  python3 generer_plans.py [--json ../donnees/maison.json] [--sortie ..]
+
+Sortie déterministe : aucune date système, aucun aléatoire.
+"""
+import subprocess
+import argparse
+import csv
+import glob
+import hashlib
+import io
+import json
+import math
+import os
+import re
+import sys
+import unicodedata
+
+from shapely import STRtree, affinity
+from shapely.geometry import (LineString, MultiLineString, MultiPolygon, Point,
+                              Polygon, GeometryCollection, box as sbox)
+from shapely.ops import nearest_points, polylabel, substring, unary_union
+
+# ---------------------------------------------------------------------------
+# Constantes de mise en page
+# ---------------------------------------------------------------------------
+CALQUES = ["00-Cartouche", "10-Murs", "20-Ouvertures", "30-Escaliers-Elements",
+           "40-Structure", "50-Cotes", "60-Etiquettes", "70-Incertitudes",
+           "90-RENO-Propose"]
+ORANGE = "#E8730C"
+POLICE = "Arial, Helvetica, sans-serif"
+CAP = 0.716            # hauteur des capitales / taille de police (Arial)
+FEUILLE_L, FEUILLE_H = 17.0, 11.0      # po imprimés (tabloïd paysage)
+MARGE = 0.25                           # cadre de feuille
+CART_L = 3.2                           # largeur du cartouche (po imprimés)
+ZONE = (MARGE + 0.03, MARGE + 0.03, FEUILLE_L - MARGE - CART_L - 0.05, FEUILLE_H - MARGE - 0.03)
+# (dénominateur, libellé, graduations de l'échelle graphique en pi)
+ECHELLES = [(48, '1/4" = 1\'-0"', (0, 2, 4, 8)),
+            (64, '3/16" = 1\'-0"', (0, 4, 8, 12)),
+            (96, '1/8" = 1\'-0"', (0, 4, 8, 16))]
+# Cotation (mm imprimés)
+C_D1 = 6.5       # face du bâtiment → 1re chaîne
+C_ESP = 9.0      # espacement entre chaînes (texte possible au-dessus ET au-dessous de chaque ligne)
+C_GAP = 0.8      # ligne de cote → bas du texte
+C_DEP = 1.5      # dépassement des lignes d'attache au-delà de la ligne de cote
+C_ECART = 1.5    # écart objet → début de ligne d'attache
+C_TICK = 2.6     # longueur du trait oblique
+H_COTE = 2.5     # hauteur des capitales (mm) : cotes, notes, libellés
+H_NOM = 4.0      # noms de pièces
+ORDRE_COTES_INT_D_ABORD = False  # textes des cotes intérieures placés avant les étiquettes de pièces
+H_NOM_MIN = 3.5  # noms de pièces, taille réduite (police 4,9 mm) pour les petites pièces
+H_FACADE = 3.5
+TRI = 4.0        # côté du triangle de repère ⚠ (mm)
+
+ORDRE_SRC = ["MESURÉ", "LU", "DÉDUIT", "ESTIMÉ", "PRÉSUMÉ", "ILLISIBLE"]   # MESURÉ = sur place (propriétaire)
+T_DEFAUT = {"ext": 6.0, "fondation": 10.0, "int": 4.5}
+
+# Styles : remplissage, trait, épaisseur (mm), tirets (mm), épaisseur DXF (1/100 mm), type de ligne DXF
+STYLES = {
+    "fond": ("#FFFFFF", None, 0, None),
+    "masque": ("#FFFFFF", None, 0, None),
+    "mur-lourd": ("#4D4D4D", None, 0, None),
+    "mur-leger": ("#C8C8C8", None, 0, None),
+    "mur-lourd-c": (None, "#000000", 0.70, None),
+    "mur-leger-c": (None, "#000000", 0.50, None),
+    "mur-neuf": ("#FFFFFF", None, 0, None),          # cloison projetée (proposition) : blanche, contour noir
+    "ouv": (None, "#000000", 0.25, None),
+    "ouv-fin": (None, "#000000", 0.18, None),
+    "ouv-tir": (None, "#000000", 0.25, (1.5, 1.0)),
+    "elem": (None, "#000000", 0.25, None),
+    "elem-fin": (None, "#000000", 0.18, None),
+    "elem-tir": (None, "#000000", 0.25, (1.5, 1.0)),
+    "elem-plein": ("#000000", None, 0, None),
+    "elem-blanc": ("#FFFFFF", "#000000", 0.25, None),
+    "str": (None, "#000000", 0.35, None),
+    "str-fin": (None, "#000000", 0.25, None),
+    "str-poutre": (None, "#000000", 0.35, (6.0, 1.5)),
+    "str-axe": (None, "#000000", 0.35, (8.0, 1.5, 1.0, 1.5)),
+    "str-tir": (None, "#000000", 0.25, (2.5, 1.2)),
+    "str-plein": ("#000000", None, 0, None),
+    "cote": (None, "#000000", 0.18, None),
+    "cote-tick": (None, "#000000", 0.35, None),
+    "rappel": (None, "#000000", 0.18, None),
+    "inc": (ORANGE, None, 0, None),
+    "inc-c": (None, ORANGE, 0.25, None),
+    "inc-blanc": ("#FFFFFF", None, 0, None),
+    "cart-cadre": (None, "#000000", 0.70, None),
+    "cart-l": (None, "#000000", 0.35, None),
+    "cart-f": (None, "#000000", 0.18, None),
+    "cart-noir": ("#000000", None, 0, None),
+    "cart-blanc": ("#FFFFFF", "#000000", 0.18, None),
+    "cart-lourd": ("#4D4D4D", "#000000", 0.35, None),
+    "cart-leger": ("#C8C8C8", "#000000", 0.25, None),
+    "cart-neuf": ("#FFFFFF", "#000000", 0.35, None),
+    "invisible": (None, None, 0, None),
+    "limite-zone": (None, "#808080", 0.18, (2.0, 1.2)),
+}
+DXF_LT = {"str-poutre": ("DASHED", 7.5), "str-axe": ("DASHDOT", 12.0), "str-tir": ("HIDDEN", 3.7),
+          "ouv-tir": ("HIDDEN", 2.5), "elem-tir": ("HIDDEN", 2.5)}
+
+
+# ---------------------------------------------------------------------------
+# Outils généraux
+# ---------------------------------------------------------------------------
+def sans_accents(s):
+    return "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
+
+
+def norm_src(s):
+    if not s:
+        return None
+    s0 = sans_accents(str(s)).strip().upper()
+    for v in ORDRE_SRC:
+        if sans_accents(v) == s0:
+            return v
+    return None
+
+
+def num(v):
+    """Nombre, ou objet dimension → valeur numérique ; sinon None."""
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return float(v)
+    if isinstance(v, dict):
+        return num(v.get("valeur"))
+    return None
+
+
+def src(v):
+    return norm_src(v.get("source")) if isinstance(v, dict) else None
+
+
+def pire_source(liste):
+    rangs = [ORDRE_SRC.index(s) for s in liste if s in ORDRE_SRC]
+    return ORDRE_SRC[max(rangs)] if rangs else ""
+
+
+FRAC = {0: "", 1: "¼", 2: "½", 3: "¾"}
+
+
+def pipo(v):
+    """Pouces → texte pi-po arrondi au 1/4 po (12'-6½")."""
+    q = int(round(abs(v) * 4 + 1e-9))
+    pi, r = divmod(q, 48)
+    po, f = divmod(r, 4)
+    s = f"{pi}'-{po}{FRAC[f]}\"" if pi else f"{po}{FRAC[f]}\""
+    return ("-" + s) if (v < 0 and q) else s
+
+
+def metres(v):
+    return f"{abs(v) * 0.0254:.2f}".replace(".", ",") + " m"
+
+
+def fr(v, d=2):
+    return f"{v:.{d}f}".replace(".", ",")
+
+
+def f3(v):
+    s = f"{v:.3f}".rstrip("0").rstrip(".")
+    return "0" if s in ("-0", "", "-") else s
+
+
+def esc(s):
+    return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            .replace('"', "&quot;"))
+
+
+def slugify(s):
+    s = sans_accents(str(s)).lower()
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return s or "niveau"
+
+
+def rot2(p, ang):
+    a = math.radians(ang)
+    c, s = math.cos(a), math.sin(a)
+    return (p[0] * c - p[1] * s, p[0] * s + p[1] * c)
+
+
+def polys_de(g):
+    if g is None or g.is_empty:
+        return []
+    if isinstance(g, Polygon):
+        return [g]
+    if isinstance(g, (MultiPolygon, GeometryCollection)):
+        out = []
+        for x in g.geoms:
+            out += polys_de(x)
+        return out
+    return []
+
+
+def lignes_de(g):
+    if g is None or g.is_empty:
+        return []
+    if isinstance(g, LineString):
+        return [list(g.coords)]
+    if isinstance(g, (MultiLineString, GeometryCollection)):
+        out = []
+        for x in g.geoms:
+            out += lignes_de(x)
+        return out
+    if isinstance(g, Polygon):
+        return [list(g.exterior.coords)] + [list(i.coords) for i in g.interiors]
+    if isinstance(g, MultiPolygon):
+        out = []
+        for x in g.geoms:
+            out += lignes_de(x)
+        return out
+    return []
+
+
+# ---------------------------------------------------------------------------
+# Métrique du texte (Liberation Sans = métriques d'Arial)
+# ---------------------------------------------------------------------------
+class Metrique:
+    def __init__(self):
+        self.f = {}
+        try:
+            from PIL import ImageFont
+            for gras, nom in ((False, "LiberationSans-Regular.ttf"), (True, "LiberationSans-Bold.ttf")):
+                cand = sorted(glob.glob("/usr/share/fonts/**/" + nom, recursive=True))
+                if cand:
+                    self.f[gras] = ImageFont.truetype(cand[0], 1000)
+        except Exception:
+            self.f = {}
+
+    def l(self, txt, taille, gras=False):
+        f = self.f.get(gras)
+        if f is not None:
+            return f.getlength(txt) / 1000.0 * taille
+        return 0.6 * taille * len(txt)
+
+
+MET = Metrique()
+
+
+def haut_txt(s):
+    return 0.93 if any(c in "ÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ" for c in s) else 0.76
+
+
+def boite(x, y, larg, f, ancre="middle", rot=0.0, pad=0.0, s=""):
+    """Boîte englobante d'un texte (ligne de base en (x, y))."""
+    x0 = {"start": 0.0, "middle": -larg / 2, "end": -larg}[ancre]
+    top = haut_txt(s) * f
+    b = Polygon([(x0 - pad, -0.21 * f - pad), (x0 + larg + pad, -0.21 * f - pad),
+                 (x0 + larg + pad, top + pad), (x0 - pad, top + pad)])
+    if rot:
+        b = affinity.rotate(b, rot, origin=(0, 0))
+    return affinity.translate(b, x, y)
+
+
+def couper(txt, f, lmax, gras=False):
+    mots, lignes, cur = str(txt).split(), [], ""
+    for m in mots:
+        essai = (cur + " " + m).strip()
+        if cur and MET.l(essai, f, gras) > lmax:
+            lignes.append(cur)
+            cur = m
+        else:
+            cur = essai
+    if cur:
+        lignes.append(cur)
+    return lignes or [""]
+
+
+# ---------------------------------------------------------------------------
+# Rapport de vérifications
+# ---------------------------------------------------------------------------
+SECTIONS = ["Identifiants", "Murs", "Ouvertures", "Pièces", "Bilan de surface",
+            "Chaînes de cotes", "Repères d'incertitude", "Textes (chevauchements)", "Mise en page", "Reproductibilité"]
+
+
+class Verif:
+    def __init__(self):
+        self.items = {s: [] for s in SECTIONS}
+
+    def add(self, sect, statut, msg):
+        self.items[sect].append((statut, msg))
+
+    def compte(self, sect):
+        c = {"ERREUR": 0, "AVERT": 0}
+        for st, _ in self.items[sect]:
+            if st in c:
+                c[st] += 1
+        return c
+
+
+# ---------------------------------------------------------------------------
+# Dessin : primitives en coordonnées maison (pouces réels, y vers le haut)
+# ---------------------------------------------------------------------------
+class Dessin:
+    def __init__(self):
+        self.groupes = {c: [] for c in CALQUES}
+
+    def g(self, calque, gid=None):
+        lst = []
+        self.groupes[calque].append((gid, lst))
+        return lst
+
+
+def P_pl(pts, st, ferme=False):
+    return {"k": "pl", "pts": [tuple(p) for p in pts], "st": st, "ferme": ferme}
+
+
+def P_poly(rings, st):
+    return {"k": "poly", "rings": [[tuple(p) for p in r] for r in rings], "st": st}
+
+
+def P_arc(c, r, a0, da, st):
+    return {"k": "arc", "c": tuple(c), "r": r, "a0": a0, "da": da, "st": st}
+
+
+def P_cercle(c, r, st):
+    return {"k": "cercle", "c": tuple(c), "r": r, "st": st}
+
+
+def P_txt(x, y, s, f, ancre="middle", rot=0.0, gras=False, coul="#000000"):
+    return {"k": "txt", "x": x, "y": y, "s": s, "f": f, "ancre": ancre, "rot": rot, "gras": gras, "coul": coul}
+
+
+def poly_prims(g, st):
+    return [P_poly([list(p.exterior.coords)[:-1]] + [list(i.coords)[:-1] for i in p.interiors], st)
+            for p in polys_de(g)]
+
+
+def geom_prim(p):
+    """Géométrie shapely (traits) d'une primitive, pour la détection des chevauchements."""
+    k = p["k"]
+    if k == "pl":
+        pts = p["pts"] + ([p["pts"][0]] if p["ferme"] else [])
+        return LineString(pts) if len(pts) >= 2 else None
+    if k == "poly":
+        rings = p["rings"]
+        if not rings or len(rings[0]) < 3:
+            return None
+        return Polygon(rings[0], rings[1:])
+    if k == "arc":
+        n = 16
+        pts = [(p["c"][0] + p["r"] * math.cos(math.radians(p["a0"] + p["da"] * i / n)),
+                p["c"][1] + p["r"] * math.sin(math.radians(p["a0"] + p["da"] * i / n))) for i in range(n + 1)]
+        return LineString(pts)
+    if k == "cercle":
+        return Point(p["c"]).buffer(p["r"], 8).exterior
+    return None
+
+
+def transformer(p, f, drot):
+    q = dict(p)
+    k = p["k"]
+    if k == "pl":
+        q["pts"] = [f(a) for a in p["pts"]]
+    elif k == "poly":
+        q["rings"] = [[f(a) for a in r] for r in p["rings"]]
+    elif k in ("arc", "cercle"):
+        q["c"] = f(p["c"])
+        if k == "arc":
+            q["a0"] = p["a0"] + drot
+    elif k == "txt":
+        q["x"], q["y"] = f((p["x"], p["y"]))
+        q["rot"] = p["rot"] + drot
+    return q
+
+
+# ---------------------------------------------------------------------------
+# Placement des textes sans chevauchement
+# ---------------------------------------------------------------------------
+class Placeur:
+    def __init__(self):
+        self.L, self.Lo = [], []      # traits
+        self.Z, self.Zo = [], []      # zones (aires d'éléments, pour les étiquettes de pièces)
+        self.T, self.To, self.Td = [], [], []
+        self._t = {"L": None, "Z": None, "T": None}
+        self.pieces = []          # polygones des pièces (pénalité « dans une autre pièce »)
+        self.cat = {}             # propriétaire → catégorie (cote, elem, col, mur)
+
+    def ligne(self, g, own):
+        if g is not None and not g.is_empty:
+            self.L.append(g)
+            self.Lo.append(own)
+            self._t["L"] = None
+
+    def prims(self, prims, own):
+        for p in prims:
+            if p["k"] != "txt":
+                g = geom_prim(p)
+                if p["k"] == "poly" and g is not None and STYLES[p["st"]][0] in ("#FFFFFF",):
+                    continue
+                self.ligne(g, own)
+
+    def retirer(self, own):
+        for L, O, k in ((self.L, self.Lo, "L"), (self.Z, self.Zo, "Z")):
+            keep = [i for i, o in enumerate(O) if o != own]
+            L[:] = [L[i] for i in keep]
+            O[:] = [O[i] for i in keep]
+            self._t[k] = None
+
+    def zone(self, g, own):
+        if g is not None and not g.is_empty:
+            self.Z.append(g)
+            self.Zo.append(own)
+            self._t["Z"] = None
+
+    def texte(self, g, own, desc):
+        self.T.append(g)
+        self.To.append(own)
+        self.Td.append(desc)
+        self._t["T"] = None
+
+    def _arbre(self, k):
+        if self._t[k] is None:
+            lst = {"L": self.L, "Z": self.Z, "T": self.T}[k]
+            self._t[k] = STRtree(lst) if lst else False
+        return self._t[k]
+
+    def conflits_textes(self, g, ignore=()):
+        t = self._arbre("T")
+        if not t or g is None:
+            return 0
+        return sum(1 for i in t.query(g, predicate="intersects") if self.To[int(i)] not in ignore)
+
+    def croise(self, g, cats, ignore=()):
+        """Nombre de traits de catégorie `cats` (cote, elem, col, mur…) croisés par g."""
+        t = self._arbre("L")
+        if not t or g is None:
+            return 0
+        n = 0
+        for i in t.query(g, predicate="intersects"):
+            o = self.Lo[int(i)]
+            if o not in ignore and self.cat.get(o) in cats:
+                n += 1
+        return n
+
+    def conflits_sel(self, g, owners):
+        t = self._arbre("L")
+        if not t or g is None:
+            return 0
+        return sum(1 for i in t.query(g, predicate="intersects") if self.Lo[int(i)] in owners)
+
+    def conflits(self, g, ignore=(), zones=False):
+        n = 0
+        for k, owners in (("L", self.Lo), ("T", self.To)) + ((("Z", self.Zo),) if zones else ()):
+            t = self._arbre(k)
+            if not t:
+                continue
+            for i in t.query(g, predicate="intersects"):
+                if owners[int(i)] in ignore:
+                    continue
+                n += 1
+        return n
+
+
+# ---------------------------------------------------------------------------
+# Modèle : murs et ouvertures
+# ---------------------------------------------------------------------------
+class Mur:
+    def __init__(self, d):
+        self.d = d
+        self.id = str(d.get("id"))
+        self.type = str(d.get("type") or "int").lower()
+        if self.type not in T_DEFAUT:
+            self.type = "int"
+        self.p1 = (float(d["x1"]), float(d["y1"]))
+        self.p2 = (float(d["x2"]), float(d["y2"]))
+        dx, dy = self.p2[0] - self.p1[0], self.p2[1] - self.p1[1]
+        self.L = math.hypot(dx, dy)
+        self.u = (dx / self.L, dy / self.L)
+        self.n = (-self.u[1], self.u[0])          # gauche en regardant de p1 vers p2
+        t = num(d.get("epaisseur"))
+        self.t_src = src(d.get("epaisseur"))
+        self.t_defaut = False
+        if t is None or t <= 0:
+            t = T_DEFAUT[self.type]
+            self.t_defaut = True
+            self.t_src = "PRÉSUMÉ"
+        self.t = t
+        self.e0 = self.e1 = 0.0
+        self.ouvs = []
+        self.lourd = self.type in ("ext", "fondation")
+
+    def pt(self, s, o=0.0):
+        return (self.p1[0] + self.u[0] * s + self.n[0] * o, self.p1[1] + self.u[1] * s + self.n[1] * o)
+
+    def rect(self, s0, s1, o0, o1):
+        return Polygon([self.pt(s0, o0), self.pt(s1, o0), self.pt(s1, o1), self.pt(s0, o1)])
+
+    def emprise(self):
+        return self.rect(-self.e0, self.L + self.e1, -self.t / 2, self.t / 2)
+
+    def axe(self):
+        return LineString([self.p1, self.p2])
+
+
+def prolongements(murs):
+    """Prolonge les extrémités qui aboutissent à un autre mur jusqu'à sa face opposée (coins propres)."""
+    for A in murs:
+        for fin in (0, 1):
+            E = A.p1 if fin == 0 else A.p2
+            uo = (-A.u[0], -A.u[1]) if fin == 0 else A.u
+            best = 0.0
+            for B in murs:
+                if B is A:
+                    continue
+                cr = uo[0] * B.u[1] - uo[1] * B.u[0]
+                if abs(cr) < 0.2:
+                    continue
+                w = (E[0] - B.p1[0], E[1] - B.p1[1])
+                s = -(w[0] * B.u[1] - w[1] * B.u[0]) / cr
+                demi = B.t / 2 / abs(cr)
+                if abs(s) > demi + 1.0:
+                    continue
+                P = (E[0] + s * uo[0], E[1] + s * uo[1])
+                tb = (P[0] - B.p1[0]) * B.u[0] + (P[1] - B.p1[1]) * B.u[1]
+                if tb < -B.t - 1 or tb > B.L + B.t + 1:
+                    continue
+                best = max(best, s + demi)
+            best = min(best, 2 * max(m.t for m in murs))
+            if fin == 0:
+                A.e0 = best
+            else:
+                A.e1 = best
+
+
+class Ouv:
+    def __init__(self, d, mur):
+        self.d = d
+        self.id = str(d.get("id"))
+        self.type = str(d.get("type") or "porte").lower()
+        op = d.get("operation")
+        if not op:
+            op = {"porte": "battante", "porte-patio": "coulissante", "fenetre": "coulissante",
+                  "arche": "aucune", "porte-garage": "aucune"}.get(self.type, "battante")
+        self.op = str(op).lower()
+        self.mur = mur
+        self.pos = num(d.get("position"))
+        self.w = num(d.get("largeur"))
+        sens = d.get("sens") if isinstance(d.get("sens"), dict) else {}
+        self.charniere = sens.get("charniere") if sens.get("charniere") in ("debut", "fin") else None
+        self.ouvre = sens.get("ouvre_vers") if sens.get("ouvre_vers") in ("gauche", "droite") else None
+        self.valide = self.pos is not None and self.w is not None and self.w > 0
+        if self.valide:
+            self.a = self.pos - self.w / 2
+            self.b = self.pos + self.w / 2
+
+    def est_porte(self):
+        return self.type in ("porte", "porte-patio", "porte-garage")
+
+    def besoin_sens(self):
+        if self.type == "fenetre" or self.type == "arche":
+            return None
+        if self.op == "battante":
+            return ("charniere", "ouvre_vers")
+        if self.op in ("double", "pliante"):
+            return ("ouvre_vers",)
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Symboles d'ouvertures
+# ---------------------------------------------------------------------------
+def dessin_ouverture(o, mm):
+    m = o.mur
+    hw = m.t / 2
+    a, b, c, w = o.a, o.b, o.pos, o.w
+    P = m.pt
+    pr = []
+    typ, op = o.type, o.op
+
+    def battant(h_s, f_s, sg, larg):
+        H = P(h_s, sg * hw)
+        F = P(f_s, sg * hw)
+        nv = (m.n[0] * sg, m.n[1] * sg)
+        O = (H[0] + nv[0] * larg, H[1] + nv[1] * larg)
+        a_f = math.degrees(math.atan2(F[1] - H[1], F[0] - H[0]))
+        a_o = math.degrees(math.atan2(nv[1], nv[0]))
+        da = (a_o - a_f + 180) % 360 - 180
+        return [P_pl([H, O], "ouv"), P_arc(H, larg, a_f, da, "ouv-fin")]
+
+    if typ == "fenetre" or (op == "fixe" and typ != "arche"):
+        pr.append(P_pl([P(a, -hw), P(b, -hw)], "ouv"))
+        pr.append(P_pl([P(a, hw), P(b, hw)], "ouv"))
+        pr.append(P_pl([P(a, 0), P(b, 0)], "ouv-fin"))
+        pr.append(P_pl([P(a, -hw), P(a, hw)], "ouv"))
+        pr.append(P_pl([P(b, -hw), P(b, hw)], "ouv"))
+    elif typ == "arche" or op == "aucune" and typ != "porte-garage":
+        pr.append(P_pl([P(a, -hw), P(b, -hw)], "ouv-tir"))
+        pr.append(P_pl([P(a, hw), P(b, hw)], "ouv-tir"))
+    elif op == "coulissante":
+        ep = max(0.75, min(1.75, m.t / 4))
+        o1 = m.t / 6
+        pr.append(P_pl([P(a, o1 - ep / 2), P(c + 2, o1 - ep / 2), P(c + 2, o1 + ep / 2), P(a, o1 + ep / 2)], "ouv", True))
+        pr.append(P_pl([P(c - 2, -o1 - ep / 2), P(b, -o1 - ep / 2), P(b, -o1 + ep / 2), P(c - 2, -o1 + ep / 2)], "ouv", True))
+        pr.append(P_pl([P(a, -hw), P(a, hw)], "ouv-fin"))
+        pr.append(P_pl([P(b, -hw), P(b, hw)], "ouv-fin"))
+    elif typ == "porte-garage":
+        pr.append(P_pl([P(a, -1), P(b, -1), P(b, 1), P(a, 1)], "ouv", True))
+    elif op == "pliante" and o.ouvre:
+        sg = 1 if o.ouvre == "gauche" else -1
+        if w >= 36:
+            pr.append(P_pl([P(a, sg * hw), P(a + w / 4, sg * (hw + w / 5)), P(c, sg * hw)], "ouv"))
+            pr.append(P_pl([P(b, sg * hw), P(b - w / 4, sg * (hw + w / 5)), P(c, sg * hw)], "ouv"))
+        else:
+            h_s, f_s = (a, b) if o.charniere != "fin" else (b, a)
+            pr.append(P_pl([P(h_s, sg * hw), P((a + b) / 2, sg * (hw + w / 3.5)), P(f_s, sg * hw)], "ouv"))
+    elif op == "double" and o.ouvre:
+        sg = 1 if o.ouvre == "gauche" else -1
+        pr += battant(a, c, sg, w / 2)
+        pr += battant(b, c, sg, w / 2)
+    elif op == "battante" and o.charniere and o.ouvre:
+        sg = 1 if o.ouvre == "gauche" else -1
+        h_s, f_s = (a, b) if o.charniere == "debut" else (b, a)
+        pr += battant(h_s, f_s, sg, w)
+    else:
+        # sens manquant ou opération inconnue : baie seule (signalée dans les vérifications)
+        pr.append(P_pl([P(a, -hw), P(b, -hw)], "ouv-tir"))
+        pr.append(P_pl([P(a, hw), P(b, hw)], "ouv-tir"))
+    return pr
+
+
+# ---------------------------------------------------------------------------
+# Symboles d'éléments fixes (repère local : longueur sur x, largeur sur y, dos vers −y)
+# ---------------------------------------------------------------------------
+DIM_DEFAUT = {"toilette": (20, 28), "lavabo": (20, 18), "baignoire": (60, 30), "evier": (30, 21),
+              "cuisiniere": (30, 26), "refrigerateur": (30, 30), "laveuse": (27, 27), "secheuse": (27, 27),
+              "chauffe-eau": (22, 22), "fournaise": (24, 30), "reservoir-huile": (60, 27), "cheminee": (24, 24),
+              "foyer": (48, 24), "comptoir": (48, 25), "armoires": (36, 24), "panneau-electrique": (16, 4),
+              "bac-lavage": (24, 20), "robinet-exterieur": (4, 4), "drain": (6, 6), "event": (8, 8),
+              "trappe": (22, 30), "perron": (60, 48), "marches-ext": (48, 33), "escalier": (120, 36),
+              "autre": (24, 24)}
+# libellés proposés (du plus long au plus court) ; [] = symbole sans libellé
+LIBELLES = {"toilette": [], "lavabo": [], "baignoire": [], "evier": [], "cuisiniere": [], "comptoir": [],
+            "armoires": [], "laveuse": ["L"], "secheuse": ["S"], "refrigerateur": ["RÉF."],
+            "chauffe-eau": ["C.E."], "panneau-electrique": ["PANNEAU ÉLECT.", "P.É."], "bac-lavage": ["BAC"],
+            "robinet-exterieur": ["R.E."], "drain": ["DRAIN", "D"], "event": ["ÉVENT"], "trappe": ["TRAPPE"],
+            "fournaise": ["FOURNAISE", "FOURN."], "reservoir-huile": ["RÉSERVOIR À L'HUILE", "RÉS. HUILE"],
+            "cheminee": ["CHEMINÉE"], "foyer": ["FOYER"]}
+SANS_INTERIEUR = {"cheminee", "armoires", "marches-ext", "panneau-electrique", "trappe"}
+
+
+def ellipse(cx, cy, rx, ry, n=36):
+    return [(cx + rx * math.cos(2 * math.pi * i / n), cy + ry * math.sin(2 * math.pi * i / n)) for i in range(n)]
+
+
+def rect_arrondi(x0, y0, x1, y1, r):
+    r = max(0.01, min(r, (x1 - x0) / 2 - 0.01, (y1 - y0) / 2 - 0.01))
+    g = sbox(x0 + r, y0 + r, x1 - r, y1 - r).buffer(r, quad_segs=4)
+    return list(g.exterior.coords)[:-1]
+
+
+def hachures(poly, pas, ang=45.0):
+    minx, miny, maxx, maxy = poly.bounds
+    cx, cy = (minx + maxx) / 2, (miny + maxy) / 2
+    R = math.hypot(maxx - minx, maxy - miny)
+    d = (math.cos(math.radians(ang)), math.sin(math.radians(ang)))
+    nrm = (-d[1], d[0])
+    out = []
+    k = -int(R / pas) - 1
+    while k * pas <= R:
+        o = k * pas
+        p0 = (cx + nrm[0] * o - d[0] * R, cy + nrm[1] * o - d[1] * R)
+        p1 = (cx + nrm[0] * o + d[0] * R, cy + nrm[1] * o + d[1] * R)
+        inter = poly.intersection(LineString([p0, p1]))
+        out += lignes_de(inter)
+        k += 1
+    return out
+
+
+def symbole(typ, L, W, mm):
+    """Primitives locales et contour (Polygon) d'un élément fixe."""
+    x0, x1, y0, y1 = -L / 2, L / 2, -W / 2, W / 2
+    R = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+    contour = Polygon(R)
+    pr = []
+    if typ == "toilette":
+        td = min(9.0, 0.32 * W)
+        pr.append(P_pl([(x0, y0), (x1, y0), (x1, y0 + td), (x0, y0 + td)], "elem", True))
+        cy = (y0 + td + y1) / 2
+        el = ellipse(0, cy, 0.4 * L, (y1 - y0 - td) / 2)
+        pr.append(P_pl(el, "elem", True))
+        contour = unary_union([sbox(x0, y0, x1, y0 + td), Polygon(el)])
+    elif typ == "lavabo":
+        pr.append(P_pl(R, "elem", True))
+        pr.append(P_pl(ellipse(0, 0.08 * W, 0.36 * L, 0.32 * W), "elem-fin", True))
+    elif typ == "baignoire":
+        pr.append(P_pl(R, "elem", True))
+        pr.append(P_pl(rect_arrondi(x0 + 3, y0 + 3, x1 - 3, y1 - 2.5, 5), "elem-fin", True))
+        pr.append(P_cercle((x0 + 7, (y0 + y1) / 2 + 0.25), 1.0, "elem-fin"))
+    elif typ in ("evier", "bac-lavage"):
+        pr.append(P_pl(R, "elem", True))
+        if typ == "evier" and L >= 30:
+            bw = (L - 7) / 2
+            pr.append(P_pl(rect_arrondi(x0 + 2.5, y0 + 2.5, x0 + 2.5 + bw, y1 - 2.5, 2), "elem-fin", True))
+            pr.append(P_pl(rect_arrondi(x1 - 2.5 - bw, y0 + 2.5, x1 - 2.5, y1 - 2.5, 2), "elem-fin", True))
+        else:
+            pr.append(P_pl(rect_arrondi(x0 + 2.5, y0 + 2.5, x1 - 2.5, y1 - 2.5, 2), "elem-fin", True))
+    elif typ == "cuisiniere":
+        pr.append(P_pl(R, "elem", True))
+        r = min(L, W) * 0.15
+        for sx in (-1, 1):
+            for sy in (-1, 1):
+                pr.append(P_cercle((sx * L / 4, sy * W / 4.5 + 1), r * (1.0 if sx < 0 else 0.8), "elem-fin"))
+    elif typ == "refrigerateur":
+        pr.append(P_pl(R, "elem", True))
+        pr.append(P_pl([(x0, y1 - 2), (x1, y1 - 2)], "elem-fin"))
+    elif typ == "laveuse":
+        pr.append(P_pl(R, "elem", True))
+        pr.append(P_cercle((0, 1), 0.36 * min(L, W), "elem-fin"))
+    elif typ == "secheuse":
+        pr.append(P_pl(R, "elem", True))
+        pr.append(P_pl([(x0, y0 + 4), (x1, y0 + 4)], "elem-fin"))
+    elif typ == "chauffe-eau":
+        r = min(L, W) / 2
+        pr.append(P_cercle((0, 0), r, "elem"))
+        contour = Point(0, 0).buffer(r, 16)
+    elif typ == "reservoir-huile":
+        pts = rect_arrondi(x0, y0, x1, y1, W / 2)
+        pr.append(P_pl(pts, "elem", True))
+        contour = Polygon(pts)
+    elif typ == "cheminee":
+        pr.append(P_pl(R, "elem", True))
+        for ln in hachures(contour, mm(1.4)):
+            pr.append(P_pl(ln, "elem-fin"))
+    elif typ == "foyer":
+        pr.append(P_pl(R, "elem", True))
+        pr.append(P_pl([(x0 + L * 0.2, y0), (x0 + L * 0.3, y0 + W * 0.6), (x1 - L * 0.3, y0 + W * 0.6), (x1 - L * 0.2, y0)], "elem-fin"))
+    elif typ == "armoires":
+        pr.append(P_pl(R, "elem", True))
+        pr.append(P_pl([(x0, y0), (x1, y1)], "elem-fin"))
+        pr.append(P_pl([(x0, y1), (x1, y0)], "elem-fin"))
+    elif typ == "panneau-electrique":
+        pr.append(P_poly([R], "elem-plein"))
+    elif typ == "robinet-exterieur":
+        r = max(L, W) / 2
+        pr.append(P_cercle((0, 0), r, "elem"))
+        contour = Point(0, 0).buffer(r, 12)
+    elif typ == "drain":
+        r = max(L, W) / 2
+        pr.append(P_cercle((0, 0), r, "elem"))
+        pr.append(P_pl([(-r * 0.7, -r * 0.7), (r * 0.7, r * 0.7)], "elem-fin"))
+        pr.append(P_pl([(-r * 0.7, r * 0.7), (r * 0.7, -r * 0.7)], "elem-fin"))
+        contour = Point(0, 0).buffer(r, 12)
+    elif typ == "event":
+        pr.append(P_pl(R, "elem", True))
+        pr.append(P_pl([(x0, y0), (x1, y1)], "elem-fin"))
+        pr.append(P_pl([(x0, y1), (x1, y0)], "elem-fin"))
+    elif typ == "trappe":
+        pr.append(P_pl(R, "elem-tir", True))
+    elif typ == "marches-ext":
+        pr.append(P_pl(R, "elem", True))
+    else:   # fournaise, comptoir, perron, autre…
+        pr.append(P_pl(R, "elem", True))
+        if typ == "fournaise":
+            pr.append(P_pl([(x0 + 2, y0 + 2), (x1 - 2, y0 + 2), (x1 - 2, y1 - 2), (x0 + 2, y1 - 2)], "elem-fin", True))
+    return pr, contour
+
+
+# ---------------------------------------------------------------------------
+# Chaînes de cotes automatiques (si niveau.lignes_cote est absent)
+# ---------------------------------------------------------------------------
+def chaines_auto(niv_id, murs):
+    ext = [m for m in murs if m.lourd]
+    if not ext:
+        return []
+    U = unary_union([m.emprise() for m in ext])
+    F = unary_union([Polygon(p.exterior) for p in polys_de(U)])
+    minx, miny, maxx, maxy = F.bounds
+    res = []
+    n = 0
+    for facade, axe, sg in (("avant", 0, -1), ("arriere", 0, 1), ("gauche", 1, -1), ("droite", 1, 1)):
+        lo, hi = (minx, maxx) if axe == 0 else (miny, maxy)
+
+        def face(c):
+            c = min(max(c, lo + 0.05), hi - 0.05)
+            ln = LineString([(c, miny - 10), (c, maxy + 10)]) if axe == 0 else LineString([(minx - 10, c), (maxx + 10, c)])
+            b = F.intersection(ln).bounds
+            if not b or any(math.isnan(v) for v in b):
+                return None
+            v0, v1 = (b[1], b[3]) if axe == 0 else (b[0], b[2])
+            return v0 if sg < 0 else v1
+
+        # sommets du profil de la façade
+        som = {lo, hi}
+        for p in polys_de(F):
+            for x, y in p.exterior.coords:
+                c = x if axe == 0 else y
+                if lo + 0.5 < c < hi - 0.5:
+                    f1, f2 = face(c - 0.1), face(c + 0.1)
+                    if f1 is not None and f2 is not None and abs(f1 - f2) > 0.5:
+                        som.add(c)
+        # murs de façade
+        fac = []
+        for m in ext:
+            parall = abs(m.u[1]) < 0.01 if axe == 0 else abs(m.u[0]) < 0.01
+            if not parall:
+                continue
+            mid = m.pt(m.L / 2)
+            cm, nm = (mid[0], mid[1]) if axe == 0 else (mid[1], mid[0])
+            fc = face(cm)
+            if fc is not None and abs(nm + sg * m.t / 2 - fc) <= 1.0:
+                fac.append(m)
+        cloisons, ouvs = set(), set()
+        for m in murs:
+            if m in fac or (m.lourd and m.emprise().intersection(F.exterior).length > 0.5 * m.L):
+                continue
+            perp = abs(m.u[0]) < 0.01 if axe == 0 else abs(m.u[1]) < 0.01
+            if perp:
+                for E in (m.p1, m.p2):
+                    if any(f.emprise().distance(Point(E)) <= 1.0 for f in fac):
+                        cloisons.add(E[0] if axe == 0 else E[1])
+        for f in fac:
+            for o in f.ouvs:
+                if o.valide:
+                    c = f.pt(o.pos)
+                    ouvs.add(c[0] if axe == 0 else c[1])
+
+        def uniq(vals):
+            out = []
+            for v in sorted(vals):
+                if lo - 0.01 <= v <= hi + 0.01 and (not out or v - out[-1] > 0.25):
+                    out.append(v)
+            return out
+
+        def pt(c):
+            fc = face(c)
+            return [round(c, 4), round(fc, 4)] if axe == 0 else [round(fc, 4), round(c, 4)]
+
+        chaines = {3: [lo, hi], 2: uniq(som | cloisons), 1: uniq(som | ouvs) if ouvs else None}
+        if len(chaines[2]) <= 2:
+            chaines[2] = None
+        for rang in (1, 2, 3):
+            ch = chaines[rang]
+            if not ch:
+                continue
+            for c1, c2 in zip(ch[:-1], ch[1:]):
+                n += 1
+                res.append({"id": f"lc-{niv_id}-A{n:03d}", "p1": pt(c1), "p2": pt(c2),
+                            "direction": "x" if axe == 0 else "y", "facade": facade, "rang": rang,
+                            "source": "DÉDUIT", "statut": "confirmee", "ref": None,
+                            "valeur_attendue": None, "repere": None, "auto": True})
+    return res
+
+
+# ---------------------------------------------------------------------------
+# Construction d'une feuille
+# ---------------------------------------------------------------------------
+FACADES = {"avant": (1, -1), "arriere": (1, 1), "gauche": (0, -1), "droite": (0, 1)}  # (axe normal, signe)
+
+
+class Feuille:
+    pass
+
+
+def charger_niveau(niv, verif):
+    nid = str(niv.get("id") or "?")
+    murs, par_id = [], {}
+    for d in niv.get("murs") or []:
+        try:
+            m = Mur(d)
+            if m.L < 0.01:
+                raise ValueError("longueur nulle")
+        except Exception as e:
+            verif.add("Murs", "ERREUR", f"[{nid}] {d.get('id')} : géométrie invalide ({e}) — ignoré")
+            continue
+        murs.append(m)
+        par_id[m.id] = m
+        if m.t_defaut:
+            verif.add("Murs", "AVERT", f"[{nid}] {m.id} : épaisseur absente → {pipo(m.t)} présumé (repère ⚠)")
+    prolongements(murs)
+    ouvs = []
+    for d in niv.get("ouvertures") or []:
+        oid = d.get("id")
+        m = par_id.get(d.get("mur_id"))
+        if m is None:
+            verif.add("Ouvertures", "ERREUR", f"[{nid}] {oid} : mur_id « {d.get('mur_id')} » inexistant")
+            continue
+        o = Ouv(d, m)
+        if not o.valide:
+            verif.add("Ouvertures", "ERREUR", f"[{nid}] {oid} : position ou largeur manquante — non dessinée")
+            continue
+        if o.a < -0.01 or o.b > m.L + 0.01:
+            verif.add("Ouvertures", "ERREUR",
+                      f"[{nid}] {oid} : hors du mur {m.id} (de {f3(o.a)} à {f3(o.b)} po ; mur de {f3(m.L)} po)")
+        bs = o.besoin_sens()
+        if bs:
+            manque = [k for k in bs if (o.charniere if k == "charniere" else o.ouvre) is None]
+            if manque:
+                verif.add("Ouvertures", "ERREUR",
+                          f"[{nid}] {oid} : porte {o.op} sans sens ({', '.join(manque)}) — dessinée comme baie")
+        m.ouvs.append(o)
+        ouvs.append(o)
+    # chevauchement d'ouvertures sur un même mur
+    for m in murs:
+        lst = sorted(m.ouvs, key=lambda o: o.a)
+        for o1, o2 in zip(lst[:-1], lst[1:]):
+            if o2.a < o1.b - 0.01:
+                verif.add("Ouvertures", "AVERT", f"[{nid}] {o1.id} et {o2.id} se chevauchent sur {m.id}")
+    return murs, ouvs
+
+
+def charger_pieces(niv, verif):
+    nid = str(niv.get("id") or "?")
+    pieces = []
+    for d in niv.get("pieces") or []:
+        pid = d.get("id")
+        pts = d.get("polygone") or []
+        try:
+            pts = [(float(p[0]), float(p[1])) for p in pts]
+        except Exception:
+            verif.add("Pièces", "ERREUR", f"[{nid}] {pid} : polygone illisible")
+            continue
+        if len(pts) >= 2 and math.hypot(pts[0][0] - pts[-1][0], pts[0][1] - pts[-1][1]) < 1e-6:
+            pts = pts[:-1]
+        if len(pts) < 3:
+            verif.add("Pièces", "ERREUR", f"[{nid}] {pid} : polygone non fermé (moins de 3 sommets)")
+            continue
+        poly = Polygon(pts)
+        if not poly.is_valid:
+            from shapely.validation import explain_validity
+            verif.add("Pièces", "ERREUR", f"[{nid}] {pid} : polygone invalide ({explain_validity(poly)})")
+            poly = poly.buffer(0)
+            if poly.is_empty:
+                continue
+        elif not Polygon(pts).exterior.is_ccw:
+            verif.add("Pièces", "AVERT", f"[{nid}] {pid} : polygone en sens horaire (antihoraire attendu)")
+        pieces.append((d, poly))
+    for i in range(len(pieces)):
+        for j in range(i + 1, len(pieces)):
+            a = pieces[i][1].intersection(pieces[j][1]).area
+            if a > 1.0:
+                verif.add("Pièces", "ERREUR", f"[{nid}] {pieces[i][0].get('id')} et {pieces[j][0].get('id')} "
+                                              f"se chevauchent ({fr(a / 144, 2)} pi²)")
+    return pieces
+
+
+def geom_structure(s):
+    g = s.get("geometrie") or {}
+    typ = str(s.get("type") or "").lower()
+
+    def n_(k):
+        return num(g.get(k))
+
+    x1, y1, x2, y2 = n_("x1"), n_("y1"), n_("x2"), n_("y2")
+    x, y = n_("x"), n_("y")
+    if typ == "colonne":
+        if x is None or y is None:
+            return None
+        w = n_("largeur") or 4.0
+        p = n_("profondeur") or w
+        return sbox(x - w / 2, y - p / 2, x + w / 2, y + p / 2)
+    if isinstance(g.get("polygone"), list) and len(g["polygone"]) >= 3:
+        try:
+            return Polygon([(float(a), float(b)) for a, b in g["polygone"]])
+        except Exception:
+            return None
+    if typ == "semelle":
+        if x is not None and y is not None:
+            w = n_("largeur") or 24.0
+            p = n_("profondeur") or w
+            return sbox(x - w / 2, y - p / 2, x + w / 2, y + p / 2)
+        if None not in (x1, y1, x2, y2):
+            if abs(x2 - x1) > 1 and abs(y2 - y1) > 1 and n_("largeur") is None:
+                return sbox(min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2))
+            return LineString([(x1, y1), (x2, y2)]).buffer((n_("largeur") or 20.0) / 2, cap_style="flat")
+        return None
+    if typ == "solives":
+        if None in (x1, y1, x2, y2):
+            return None
+        return sbox(min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2))
+    if None in (x1, y1, x2, y2):
+        return None
+    return LineString([(x1, y1), (x2, y2)])
+
+
+def texte_dim_structure(s):
+    d = s.get("dimension") or {}
+    v = d.get("valeur") if isinstance(d, dict) else None
+    if v is None or v == "":
+        v = d.get("texte_original") if isinstance(d, dict) else None
+    if v is None:
+        return ""
+    t = str(v)
+    if isinstance(d, dict) and norm_src(d.get("source")) == "ESTIMÉ":
+        t = "≈" + t
+    return t
+
+
+def construire(niv, idx, projet, ctx, verif):
+    """Construit la feuille d'un niveau : retourne un objet Feuille (dessin + données)."""
+    F = Feuille()
+    F.types_legende = set()
+    F.murs_neufs = False
+    F.murs_verre = False
+    F.types_str = set()
+    nid = str(niv.get("id") or f"N{idx}")
+    F.nid = nid
+    F.nom = str(niv.get("nom") or nid)
+    F.feuille = str(niv.get("feuille") or f"A-{100 + idx}")
+    F.slug = str(niv.get("slug") or {"SS": "sous-sol", "RDC": "rdc"}.get(nid, slugify(F.nom)))
+    murs, ouvs = charger_niveau(niv, verif)
+    pieces = charger_pieces(niv, verif)
+    F.murs, F.ouvs, F.pieces = murs, ouvs, pieces
+
+    # --- polygones de murs (rectangle − baies)
+    for m in murs:
+        emp = m.emprise()
+        trous = [m.rect(o.a, o.b, -m.t / 2 - 0.05, m.t / 2 + 0.05) for o in m.ouvs if o.valide]
+        m.poly = emp.difference(unary_union(trous)) if trous else emp
+    lourd = unary_union([m.poly for m in murs if m.lourd]) if any(m.lourd for m in murs) else Polygon()
+    leger_u = unary_union([m.poly for m in murs if not m.lourd]) if any(not m.lourd for m in murs) else Polygon()
+    leger = leger_u.difference(lourd) if not lourd.is_empty else leger_u
+
+    # --- éléments (géométrie)
+    elems = []
+    for e in niv.get("elements") or []:
+        pos = e.get("position") or {}
+        x, y = num(pos.get("x")), num(pos.get("y"))
+        typ = str(e.get("type") or "autre").lower()
+        if x is None or y is None:
+            verif.add("Mise en page", "AVERT", f"[{nid}] {e.get('id')} : élément sans position — non dessiné")
+            continue
+        dims = e.get("dimensions") or {}
+        L, W = num(dims.get("longueur")), num(dims.get("largeur"))
+        dL, dW = DIM_DEFAUT.get(typ, DIM_DEFAUT["autre"])
+        if L is None or L <= 0 or W is None or W <= 0:
+            verif.add("Mise en page", "INFO", f"[{nid}] {e.get('id')} : dimensions absentes → symbole par défaut "
+                                              f"{pipo(dL)} × {pipo(dW)}")
+            L = L if (L and L > 0) else dL
+            W = W if (W and W > 0) else dW
+        elems.append({"d": e, "id": str(e.get("id")), "typ": typ, "x": x, "y": y,
+                      "rot": num(pos.get("rotation_deg")) or 0.0, "L": L, "W": W})
+    # --- structure (géométrie)
+    strs = []
+    for s in niv.get("structure") or []:
+        g = geom_structure(s)
+        if g is None or g.is_empty:
+            verif.add("Mise en page", "AVERT", f"[{nid}] {s.get('id')} : géométrie de structure incomplète — non dessinée")
+            continue
+        strs.append((s, g))
+
+    # --- lignes de cote
+    lcs = niv.get("lignes_cote")
+    if lcs is None:
+        lcs = chaines_auto(nid, murs)
+        verif.add("Chaînes de cotes", "INFO", f"[{nid}] lignes_cote absent → {len(lcs)} cotes générées "
+                                              f"automatiquement (source DÉDUIT)")
+    lcs = [l for l in lcs if isinstance(l, dict)]
+
+    # --- emprise géométrique (po réels)
+    geoms = [m.emprise() for m in murs] + [p for _, p in pieces] + [g for _, g in strs]
+    for el in elems:
+        geoms.append(rect_element(el))
+    if not geoms:
+        geoms = [sbox(0, 0, 120, 120)]
+    G = unary_union(geoms).bounds   # minx, miny, maxx, maxy
+
+    # --- choix de l'échelle
+    rangs_f = {f: set() for f in FACADES}
+    for l in lcs:
+        f = l.get("facade")
+        if f in rangs_f:
+            rangs_f[f].add(int(num(l.get("rang")) or 1))
+    f_c = H_COTE / CAP          # taille de police des cotes (mm)
+
+    def ext_mm(f):
+        r = len(rangs_f[f])
+        base = C_D1 + (r - 1) * C_ESP + 4.2 if r else 0.0
+        if f == "avant":
+            return (base if r else 3.0) + 1.5 + 1.14 * (H_FACADE / CAP)
+        return base + (C_DEP if r else 0)
+
+    ext = {f: ext_mm(f) for f in FACADES}
+    zw, zh = ZONE[2] - ZONE[0], ZONE[3] - ZONE[1]
+    choix = None
+    for k, lib, grad in ECHELLES:
+        w = (G[2] - G[0]) / k + (ext["gauche"] + ext["droite"]) / 25.4
+        h = (G[3] - G[1]) / k + (ext["avant"] + ext["arriere"]) / 25.4
+        if w <= zw and h <= zh:
+            choix = (k, lib, grad)
+            break
+    if choix is None:
+        choix = ECHELLES[-1]
+        verif.add("Mise en page", "AVERT", f"[{nid}] le plan dépasse la zone de dessin même au 1/8\" = 1'-0\"")
+    k, lib, grad = choix
+    F.k, F.echelle, F.grad = k, lib, grad
+    verif.add("Mise en page", "INFO", f"[{nid}] feuille {F.feuille} : échelle {lib}")
+
+    def mm(v):
+        return v / 25.4 * k
+
+    F.mm = mm
+    # origine : centrer (plan + annotations) dans la zone de dessin
+    ext_r = {f: mm(v) for f, v in ext.items()}
+    zcx, zcy = (ZONE[0] + ZONE[2]) / 2 * k, (ZONE[1] + ZONE[3]) / 2 * k
+    F.X0 = zcx - ((G[0] - ext_r["gauche"]) + (G[2] + ext_r["droite"])) / 2
+    F.Y0 = zcy + ((G[3] + ext_r["arriere"]) + (G[1] - ext_r["avant"])) / 2
+
+    D = Dessin()
+    PL = Placeur()
+    F.dessin, F.placeur = D, PL
+    zx0, zy0 = ZONE[0] * k - F.X0, F.Y0 - ZONE[1] * k
+    zx1, zy1 = ZONE[2] * k - F.X0, F.Y0 - ZONE[3] * k
+    big = 100 * k
+    PL.ligne(sbox(zx0 - big, zy1 - big, zx1 + big, zy0 + big).difference(sbox(zx0, zy1, zx1, zy0)), "cadre")
+    fc = mm(f_c)                 # police cotes / libellés (po réels)
+    fn = mm(H_NOM / CAP)         # police noms de pièces
+
+    # =============================== 10-Murs ===============================
+    for m in sorted(murs, key=lambda m: m.lourd):
+        g = D.g("10-Murs", m.id)
+        neuf = str(m.d.get("etat") or "") == "nouveau"
+        if neuf:
+            F.murs_neufs = True
+        g += poly_prims(m.poly, "mur-lourd" if m.lourd else ("mur-neuf" if neuf else "mur-leger"))
+        if str(m.d.get("materiau") or "") == "verre":        # cloison vitrée : trait central comme une fenêtre
+            F.murs_verre = True
+            g.append(P_pl([m.p1, m.p2], "ouv-fin"))
+        PL.ligne(m.poly, m.id)
+    if not leger.is_empty:
+        lg = leger.boundary
+        if not lourd.is_empty:
+            lg = lg.difference(lourd.buffer(0.02))
+        D.g("10-Murs", "contour-murs-legers").extend(P_pl(c, "mur-leger-c") for c in lignes_de(lg))
+    if not lourd.is_empty:
+        D.g("10-Murs", "contour-murs-lourds").extend(P_pl(c, "mur-lourd-c") for c in lignes_de(lourd.boundary))
+
+    # =============================== 20-Ouvertures ===============================
+    for o in ouvs:
+        pr = dessin_ouverture(o, mm)
+        D.g("20-Ouvertures", o.id).extend(pr)
+        PL.prims(pr, o.id)
+
+    # =============================== 30-Escaliers-Elements ===============================
+    grp_elem = {}
+    lib_elems = []
+    textes_esc = []
+    for el in elems:
+        g = D.g("30-Escaliers-Elements", el["id"])
+        grp_elem[el["id"]] = g
+        if el["typ"] == "escalier" or (el["typ"] == "marches-ext" and isinstance(el["d"].get("escalier"), dict)):
+            sp = dessiner_escalier(el, g, PL, mm, fc, verif, nid)
+            if sp:
+                textes_esc.append(sp)
+            continue
+        pr, cont = symbole(el["typ"], el["L"], el["W"], mm)
+
+        def tf(p, el=el):
+            q = rot2(p, el["rot"])
+            return (q[0] + el["x"], q[1] + el["y"])
+
+        prs = [transformer(p, tf, el["rot"]) for p in pr]
+        cont = affinity.translate(affinity.rotate(cont, el["rot"], origin=(0, 0)), el["x"], el["y"])
+        g += prs
+        PL.prims(prs, el["id"])
+        PL.zone(cont, el["id"])
+        if "libelle" in el["d"] and not el["d"]["libelle"]:
+            libs = []                                   # symbole seul, expliqué dans la légende
+            F.types_legende.add(el["typ"])
+        else:
+            libs = [str(el["d"]["libelle"])] if el["d"].get("libelle") else LIBELLES.get(el["typ"])
+        if libs is None:
+            nom = str(el["d"].get("nom") or el["typ"]).upper()
+            libs = [nom]
+        if libs:
+            lib_elems.append((el, cont, libs, g))
+
+    # =============================== 40-Structure ===============================
+    lib_str = []
+    elem_zones = [rect_element(el) for el in elems]
+    for s, geo in strs:
+        if s.get("afficher") is False:          # gardé dans les données, masqué sur le plan
+            continue
+        F.types_str.add(str(s.get("type") or "").lower())
+        sid = str(s.get("id"))
+        typ = str(s.get("type") or "").lower()
+        g = D.g("40-Structure", sid)
+        dt = texte_dim_structure(s)
+        if typ in ("poutre", "axe", "linteau") and isinstance(geo, LineString):
+            st = {"poutre": "str-poutre", "axe": "str-axe", "linteau": "str-tir"}[typ]
+            pr = [P_pl(list(geo.coords), st)]
+            g += pr
+            PL.prims(pr, sid)
+            if typ == "poutre":
+                lib = str(s.get("libelle") or ("POUTRE " + dt)).strip()
+            elif typ == "axe":
+                lib = dt.upper() if dt else "AXE PORTEUR D'ORIGINE"
+            else:
+                lib = ("LINTEAU " + dt).strip()
+            lib_str.append(("ligne", sid, geo, lib, g))
+        elif typ == "colonne":
+            c = list(geo.exterior.coords)[:-1]
+            pr = [P_pl(c, "str", True), P_pl([c[0], c[2]], "str-fin"), P_pl([c[1], c[3]], "str-fin")]
+            g += pr
+            PL.prims(pr, sid)
+            PL.zone(geo, sid)
+            if dt:
+                lib_str.append(("autour", sid, geo, "COL. " + dt, g))
+        elif typ == "semelle":
+            for p in polys_de(geo):
+                pr = [P_pl(list(p.exterior.coords)[:-1], "str-tir", True)]
+                g += pr
+                PL.prims(pr, sid)
+        elif typ == "solives":
+            fl = fleche_solives(s, geo, murs, elem_zones, mm)
+            if not fl:
+                continue
+            esp = None
+            gg = s.get("geometrie") or {}
+            for cand in (gg.get("espacement"), s.get("espacement"), (s.get("dimension") or {}).get("espacement")):
+                if num(cand) is not None:
+                    esp = num(cand)
+                    break
+            lib = ("SOLIVES " + dt).strip()
+            if esp and "@" not in dt:
+                lib += f" @ {f3(esp)}\" c/c"
+            lib_str.append(("solives", sid, fl, lib, g))
+        else:
+            for p in polys_de(geo) or []:
+                pr = [P_pl(list(p.exterior.coords)[:-1], "str-tir", True)]
+                g += pr
+                PL.prims(pr, sid)
+            if isinstance(geo, LineString):
+                pr = [P_pl(list(geo.coords), "str-tir")]
+                g += pr
+                PL.prims(pr, sid)
+
+    # =============================== Limites de zones ouvertes (sans mur) ===============================
+    F.limites = False
+    for lz in niv.get("limites_zones") or []:
+        if not isinstance(lz, dict):
+            continue
+        try:
+            a_, b_ = (float(lz["p1"][0]), float(lz["p1"][1])), (float(lz["p2"][0]), float(lz["p2"][1]))
+        except Exception:
+            verif.add("Mise en page", "AVERT", f"[{nid}] limite de zone {lz.get('id')} : p1/p2 illisibles — ignorée")
+            continue
+        pr = [P_pl([a_, b_], "limite-zone")]
+        D.g("60-Etiquettes", str(lz.get("id") or "limite-zone")).extend(pr)
+        PL.prims(pr, str(lz.get("id") or "limite-zone"))
+        F.limites = True
+
+    # =============================== 50-Cotes (traits de façade) ===============================
+    cotes = preparer_cotes(lcs, G, mm, verif, nid)
+    PL.cat.update({m.id: "mur" for m in murs})
+    PL.cat.update({el["id"]: "elem" for el in elems})
+    PL.cat.update({str(s_.get("id")): "col" for s_, _ in strs if str(s_.get("type") or "").lower() == "colonne"})
+    PL.cat.update({c["id"]: "cote" for c in cotes})
+    emp_m = unary_union([m.emprise() for m in murs]) if murs else Polygon()
+    # les lignes d'attache des façades sont interrompues sur les volumes qu'elles traversent
+    # (éléments extérieurs, pièces et murs des excroissances)
+    masque = unary_union([z.buffer(mm(0.8), join_style=2) for z in elem_zones if not z.within(emp_m.envelope)]
+                         + [p.buffer(mm(0.5), join_style=2) for _, p in pieces] + [emp_m.buffer(mm(0.5), join_style=2)])
+    dessiner_traits_cotes(cotes, D, PL, mm, masque)
+    tracer_cotes_int(cotes, PL, mm)        # cotes intérieures : ligne fixe (p1/p2 + decalage)
+
+    # =============================== Libellé de façade (fixe) ===============================
+    av = [c["ligne"] for c in cotes if c["facade"] == "avant"]
+    tf_ = mm(H_FACADE / CAP)
+    yb = (min(av) - mm(4.2 + 1.5) - 0.93 * tf_) if av else G[1] - mm(4.5) - 0.93 * tf_
+    murs_b = emp_m.bounds if murs else G
+    xf = (murs_b[0] + murs_b[2]) / 2
+    txt = "FAÇADE AVANT (RUE)"
+    gfa = D.g("60-Etiquettes", "facade-avant")
+    gfa.append(P_txt(xf, yb, txt, tf_, "middle", 0, True))
+    PL.texte(boite(xf, yb, MET.l(txt, tf_, True), tf_, "middle", 0, 0, txt), "facade-avant", "libellé de façade")
+
+    # points visés par les repères d'écart : réservés avant de placer les textes
+    empreinte = unary_union([emp_m] + [p for _, p in pieces]) if (murs or pieces) else Polygon()
+    for ec in ctx["ecarts"]:
+        pos = ec.get("position")
+        if ctx["num_ecart"].get(str(ec.get("id"))) in ctx["ouverts"] and \
+                str(ec.get("niveau")) in (nid, "global") and isinstance(pos, list) and len(pos) >= 2 \
+                and num(pos[0]) is not None and num(pos[1]) is not None:
+            P0 = Point(float(pos[0]), float(pos[1]))
+            if empreinte.is_empty or empreinte.distance(P0) <= 24.0:
+                PL.ligne(P0.buffer(mm(1.0)), "point:" + str(ec.get("id")))
+
+    # =============================== Textes (ordre de priorité) ===============================
+    placer_textes_cotes(cotes, PL, mm, fc)
+    for sp in textes_esc:
+        placer_textes_escalier(sp, PL, mm, fc)
+    PL.pieces = [p for _, p in pieces]
+    # étiquettes de pièces dans leur pièce : complètes d'abord, en laissant libres les bandes de texte
+    # des cotes intérieures ; puis les textes de ces cotes ; puis les étiquettes complètes restantes
+    # et les étiquettes réduites
+    for c in cotes:
+        if c["facade"] == "int":
+            A, B = pt_cote(c, c["c1"], c["ligne"]), pt_cote(c, c["c2"], c["ligne"])
+            large = MET.l(c["texte"], fc) + mm(1.0) > c["c2"] - c["c1"]
+            h = C_GAP + (2.2 if large else 1.0) * 0.97 * H_COTE / CAP + 0.3
+            # réserve d'un seul côté (« dessous ») : l'étiquette peut occuper l'autre côté, le texte
+            # de la cote se reportera alors du côté réservé
+            PL.ligne(LineString([A, B]).buffer(-mm(h), single_sided=True), "__reserve__")
+            PL.ligne(LineString([A, B]).buffer(mm(h), single_sided=True), "__reserve2__")
+    F.dims_omises = False
+    F.etiquettes = {}
+    restants = sorted(pieces, key=lambda dp: -dp[1].area)
+    ordre_etapes = ((("complet", "cotes"), ("reduit", "")) if ORDRE_COTES_INT_D_ABORD else
+                    (("complet", "reserve2"), ("complet", "reserve"), ("complet", "cotes"), ("reduit", "")))
+    if ORDRE_COTES_INT_D_ABORD:
+        PL.retirer("__reserve2__")
+    for mode, etape in ordre_etapes:
+        if etape == "reserve":
+            PL.retirer("__reserve2__")
+        if etape == "cotes":
+            PL.retirer("__reserve__")
+            placer_textes_int(cotes, PL, mm, fc, unary_union([emp_m] + [p for _, p in pieces]) if (murs or pieces) else None)
+        encore = []
+        for d, poly in restants:
+            r = placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, mode=mode, F=F)
+            if r is None:
+                encore.append((d, poly))
+            elif r:
+                F.dims_omises = True
+        restants = encore
+    PL.ligne(boite(xf, yb, MET.l(txt, tf_, True), tf_, "middle", 0, mm(8), txt), "__facade__")
+    for d, poly in sorted(restants, key=lambda dp: dp[1].area):
+        placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=2, autres=[p for _, p in pieces if p is not poly], F=F)
+        F.dims_omises = True
+    PL.retirer("__facade__")
+    # --- 70-Incertitudes (repères ancrés, après les étiquettes de pièces)
+    demandes = []
+    for ec in ctx["ecarts"]:
+        eid = str(ec.get("id"))
+        n = ctx["num_ecart"].get(eid)
+        pos = ec.get("position")
+        if str(ec.get("niveau")) not in (nid, "global"):
+            continue
+        if isinstance(pos, list) and len(pos) >= 2 and num(pos[0]) is not None and num(pos[1]) is not None:
+            P0 = Point(float(pos[0]), float(pos[1]))
+            if empreinte.is_empty or empreinte.distance(P0) <= 24.0:
+                demandes.append((n, 0, P0.buffer(mm(0.6)), P0, eid))
+    for c in [c for c in cotes if c["facade"] != "int"]:
+        rep_ = c["l"].get("repere")
+        if rep_:
+            n = ctx["num_ecart"].get(str(rep_))
+            if n is None:
+                verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : repère « {rep_} » absent du registre — aucun repère dessiné")
+            else:
+                demandes.append((n, 1, c["boite"], c["boite"], "rep-" + c["id"]))
+        elif c["source"] == "PRÉSUMÉ" or c["statut"] == "conflit":
+            verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : cote présumée ou en conflit sans écart référencé (repere) — aucun repère dessiné")
+    murs_ref = {}
+    sans_ref = []
+    for m in murs:
+        if m.t_src != "PRÉSUMÉ":
+            continue
+        ref = (m.d.get("epaisseur") or {}).get("ref") if isinstance(m.d.get("epaisseur"), dict) else None
+        n = ctx["num_ecart"].get(str(ref)) if ref else None
+        if n is None:
+            sans_ref.append(m.id)
+            continue
+        murs_ref.setdefault(n, []).append(m)
+        mid = Point(m.pt(m.L / 2))
+        demandes.append((n, 2, mid.buffer(m.t / 2 + mm(0.3)), mid, "rep-" + m.id))
+    if sans_ref:
+        verif.add("Repères d'incertitude", "AVERT", f"[{nid}] épaisseur présumée sans écart référencé (epaisseur.ref) : "
+                                                   f"{', '.join(sans_ref)} — aucun repère dessiné")
+    fermes = sorted(set(dm[0] for dm in demandes if dm[0] not in ctx["ouverts"]))
+    if fermes:
+        verif.add("Repères d'incertitude", "INFO", f"[{nid}] écarts non ouverts, sans repère dessiné : "
+                                                   + ", ".join(f"⚠{n}" for n in fermes))
+    demandes = [dm for dm in demandes if dm[0] in ctx["ouverts"]]
+    places = placer_reperes(demandes, D, PL, mm)
+    for el, cont, libs, g in lib_elems:
+        placer_libelle_element(el, cont, libs, g, PL, mm, fc)
+    groupes = {}
+    if not TEXTES_STRUCTURE:
+        lib_str = []                             # projet.affichage.textes_structure = false : aucun libellé de structure
+    for kind, sid, geo, lib, g in lib_str:
+        groupes.setdefault((kind, lib), []).append((sid, geo, g))
+    F.typ = any(len(v) > 1 for v in groupes.values())
+    for (kind, lib), items in groupes.items():
+        if kind == "ligne":
+            placer_long_ligne(items, lib, PL, mm, fc)
+        elif kind == "solives":
+            placer_solives(items, lib, PL, mm, fc)
+        else:
+            placer_autour_groupe(items, lib, PL, mm, fc)
+
+    demandes2 = []
+    for c in [c for c in cotes if c["facade"] == "int"]:
+        rep_ = c["l"].get("repere")
+        if rep_:
+            n = ctx["num_ecart"].get(str(rep_))
+            if n is None:
+                verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : repère « {rep_} » absent du registre — aucun repère dessiné")
+            elif n not in places:
+                demandes2.append((n, 1, c["boite"], c["boite"], "rep-" + c["id"]))
+        elif c["source"] == "PRÉSUMÉ" or c["statut"] == "conflit":
+            verif.add("Repères d'incertitude", "AVERT", f"[{nid}] {c['id']} : cote présumée ou en conflit sans écart référencé (repere) — aucun repère dessiné")
+    places += placer_reperes([dm for dm in demandes2 if dm[0] in ctx["ouverts"]], D, PL, mm)
+    F.reperes = []
+    for ec in ctx["ecarts"]:
+        n = ctx["num_ecart"].get(str(ec.get("id")))
+        if n not in ctx["ouverts"]:
+            continue
+        if n in places or str(ec.get("niveau")) == nid:
+            desc = str(ec.get("description") or "")
+            if n in murs_ref:
+                ms = murs_ref[n]
+                vals = sorted(set(pipo(m.t) for m in ms))
+                quoi = "toutes les cloisons" if all(not m.lourd for m in ms) else "tous les murs"
+                desc = f"{quoi.capitalize()} sans cote d'épaisseur : {', '.join(vals)} présumé ({len(ms)} murs, repère unique). " + desc
+            F.reperes.append((n, str(ec.get("id")), desc))
+    F.reperes.sort(key=lambda r: r[0])
+
+    # =============================== 00-Cartouche ===============================
+    cartouche(F, niv, projet, ctx)
+
+    # =============================== chevauchements restants ===============================
+    verifier_textes(F, verif)
+    verifier_etiquettes(F, verif)
+    F.cotes = cotes
+    F.lcs = lcs
+    return F
+
+
+# ---------------------------------------------------------------------------
+# Escaliers
+# ---------------------------------------------------------------------------
+def rect_element(el):
+    """Rectangle (Polygon) occupé par un élément, en coordonnées maison."""
+    es = el["d"].get("escalier") if isinstance(el["d"].get("escalier"), dict) else {}
+    dv = {"+x": (1, 0), "-x": (-1, 0), "+y": (0, 1), "-y": (0, -1)}.get(str(es.get("direction")))
+    L, W = el["L"], el["W"]
+    if el["typ"] == "escalier" and dv is not None:
+        rot = 0.0 if abs(dv[0]) > 0.5 else 90.0
+    elif el["typ"] == "marches-ext" and dv is not None:
+        rot = 0.0
+    else:
+        rot = el["rot"]
+    r = affinity.rotate(sbox(-L / 2, -W / 2, L / 2, W / 2), rot, origin=(0, 0))
+    return affinity.translate(r, el["x"], el["y"])
+
+
+def eventail(tr):
+    """Rayons des marches tournantes : du pivot vers le bord opposé du carré, en nb parts égales de 90°.
+    Retourne [(pivot, point)] pour j = 0..nb (0 : long du bord horizontal, nb : long du bord vertical)."""
+    x0, y0, x1, y1 = tr["carre"]
+    px, py = tr["pivot"]
+    xf, yf = (x0 if abs(px - x1) < 0.01 else x1), (y0 if abs(py - y1) < 0.01 else y1)
+    hx, vy = math.copysign(1, xf - px), math.copysign(1, yf - py)
+    out = []
+    for j in range(int(tr["nb"]) + 1):
+        f = math.radians(90 * j / tr["nb"])
+        dx, dy = math.cos(f) * hx, math.sin(f) * vy
+        t = min(abs((xf - px) / dx) if abs(dx) > 1e-9 else 1e9, abs((yf - py) / dy) if abs(dy) > 1e-9 else 1e9)
+        out.append(((px, py), (px + dx * t, py + dy * t)))
+    return out
+
+
+def dessiner_escalier(el, g, PL, mm, fc, verif, nid):
+    e = el["d"]
+    es = e.get("escalier") if isinstance(e.get("escalier"), dict) else {}
+    dv = {"+x": (1, 0), "-x": (-1, 0), "+y": (0, 1), "-y": (0, -1)}.get(str(es.get("direction")))
+    if dv is None:
+        dv = rot2((0, 1), el["rot"])
+    pv = (-dv[1], dv[0])
+    if el["typ"] == "marches-ext":
+        run, wid = el["W"], el["L"]
+        if abs(dv[0]) > 0.5:
+            run, wid = el["L"], el["W"]
+    else:
+        run, wid = el["L"], el["W"]
+    c = (el["x"], el["y"])
+
+    def P(s, t):
+        return (c[0] + dv[0] * s + pv[0] * t, c[1] + dv[1] * s + pv[1] * t)
+
+    R = [P(-run / 2, -wid / 2), P(run / 2, -wid / 2), P(run / 2, wid / 2), P(-run / 2, wid / 2)]
+    pr = [P_pl(R, "elem", True)]
+    n = num(es.get("nb_contremarches"))
+    n = int(round(n)) if n and n >= 2 else None
+    if n and es.get("girons"):          # volée d'un escalier en L : girons comptés à part (la dernière marche est le palier)
+        pas = run / int(es["girons"])
+        nb = int(es["girons"]) - 1
+    elif n:
+        pas = run / n
+        nb = n - 1
+    else:
+        pas = 10.0
+        nb = int(run / pas - 1e-6)
+    tr = es.get("tournant") if isinstance(es.get("tournant"), dict) else None
+    if tr and n:
+        # marches tournantes dans un carré (« carre » [x0, y0, x1, y1]) autour d'un pivot ; le reste est droit
+        x0, y0, x1, y1 = tr["carre"]
+        ss = [(xx - c[0]) * dv[0] + (yy - c[1]) * dv[1] for xx, yy in ((x0, y0), (x1, y1))]
+        lo, hi = (-run / 2, min(ss)) if max(ss) > 0 else (max(ss), run / 2)
+        nd = n - 1 - int(tr["nb"])
+        for i in range(nd + 1):
+            s = lo + i * (hi - lo) / nd
+            if abs(abs(s) - run / 2) > 0.01:
+                pr.append(P_pl([P(s, -wid / 2), P(s, wid / 2)], "elem-fin"))
+        for a_, b_ in eventail(tr)[1:-1]:
+            pr.append(P_pl([a_, b_], "elem-fin"))
+    else:
+        for i in range(1, nb + 1):
+            s = -run / 2 + i * pas
+            pr.append(P_pl([P(s, -wid / 2), P(s, wid / 2)], "elem-fin"))
+    texte_fl = str(es.get("fleche") or "").upper()
+    if el["typ"] == "escalier" or texte_fl:
+        S = P(-run / 2 + min(mm(2), run * 0.1), 0)
+        E = P(run / 2 - min(mm(1), run * 0.05), 0)
+        pr.append(P_pl([S, E], "elem"))
+        pr.append(P_cercle(S, mm(0.7), "elem"))
+        ah, aw = mm(2.4), mm(0.9)
+        B = (E[0] - dv[0] * ah, E[1] - dv[1] * ah)
+        pr.append(P_poly([[E, (B[0] + pv[0] * aw, B[1] + pv[1] * aw), (B[0] - pv[0] * aw, B[1] - pv[1] * aw)]], "elem-plein"))
+    g += pr
+    PL.prims(pr, el["id"])
+    PL.zone(Polygon(R), el["id"])
+    if el["typ"] != "escalier" or es.get("sans_texte"):
+        return None                     # sans_texte : volée courte d'un escalier en L, la flèche suffit
+    textes = []
+    if texte_fl in ("MONTE", "DESCEND"):
+        textes.append(texte_fl)
+    elif texte_fl:
+        textes.append(texte_fl)
+    textes.append(f"{n} CM" if n else "≈ GIRON 10\"")
+    return (el["id"], g, c, dv, run, wid, textes[:2])
+
+
+def fleche_solives(s, zone, murs, elem_zones, mm):
+    """Flèches candidates (prims, segment) pour une zone de solives, de la plus longue à la plus courte."""
+    sens = str(s.get("sens") or "").lower()
+    if sens not in ("x", "y"):
+        sens = "y"
+    minx, miny, maxx, maxy = zone.bounds
+    obst = unary_union([m.emprise().buffer(mm(3)) for m in murs] + [z.buffer(mm(2)) for z in elem_zones]) \
+        if (murs or elem_zones) else Polygon()
+    cands = []
+    k = 0
+    while 0.06 + 0.04 * k <= 0.94 + 1e-9:
+        fr_ = 0.06 + 0.04 * k
+        k += 1
+        if sens == "x":
+            yy = miny + (maxy - miny) * fr_
+            ln = LineString([(minx, yy), (maxx, yy)])
+        else:
+            xx = minx + (maxx - minx) * fr_
+            ln = LineString([(xx, miny), (xx, maxy)])
+        rest = ln.difference(obst) if not obst.is_empty else ln
+        for part in lignes_de(rest):
+            L = LineString(part)
+            if L.length < mm(12):
+                continue
+            half = min(L.length * 0.35, mm(30))
+            for pos in (0.5, 0.35, 0.65):
+                c = L.interpolate(pos, normalized=True)
+                if sens == "x":
+                    A, B = (c.x - half, c.y), (c.x + half, c.y)
+                else:
+                    A, B = (c.x, c.y - half), (c.x, c.y + half)
+                cands.append((-round(L.length / mm(10)), abs(fr_ - 0.5), abs(pos - 0.5), round(A[0], 4), round(A[1], 4), A, B))
+    cands.sort(key=lambda t: t[:5])
+    out = []
+    for *_, A, B in cands:
+        L = math.hypot(B[0] - A[0], B[1] - A[1])
+        dv = ((B[0] - A[0]) / L, (B[1] - A[1]) / L)
+        pv = (-dv[1], dv[0])
+        ah, aw = mm(2.4), mm(0.9)
+        pr = [P_pl([A, B], "str-fin")]
+        for T, sg in ((B, 1), (A, -1)):
+            Bb = (T[0] - sg * dv[0] * ah, T[1] - sg * dv[1] * ah)
+            pr.append(P_poly([[T, (Bb[0] + pv[0] * aw, Bb[1] + pv[1] * aw), (Bb[0] - pv[0] * aw, Bb[1] - pv[1] * aw)]], "str-plein"))
+        out.append((pr, LineString([A, B])))
+    return out
+
+
+def placer_solives(items, lib, PL, mm, fc):
+    """Flèche(s) de solives et libellé (unique, « typ. » si plusieurs zones), placés après les étiquettes."""
+    if len(items) > 1:
+        lib = lib + " (typ.)"
+    etiquete = False
+    for own, cands, g in items:
+        choix = None
+        repli = None
+        for pr, seg in cands:
+            geos = [geom_prim(p) for p in pr]
+            if sum(PL.conflits_textes(gm, (own,)) for gm in geos):
+                continue
+            if etiquete:
+                choix = (pr, seg, None)
+                break
+            def gen(seg=seg):
+                for fr_, off, ang, up, w in cands_long_ligne(seg, lib, fc, mm):
+                    p = seg.interpolate(fr_, normalized=True)
+                    x, y = p.x + up[0] * off, p.y + up[1] * off
+                    b = boite(x, y, w, fc, "middle", ang, 0, lib)
+                    if abs(off) > mm(1.5) + 0.8 * fc:
+                        continue
+                    yield b.buffer(mm(0.3), join_style=2), None, (x, y, ang, b)
+            PL.prims(pr, "fleche:" + own)       # la flèche candidate compte comme obstacle pour son libellé
+            pay, _, cout = essayer(PL, gen(), ignore=(), zones=True)
+            PL.retirer("fleche:" + own)
+            if cout == 0:
+                choix = (pr, seg, pay)
+                break
+            if repli is None:
+                repli = (pr, seg, pay)
+        if choix is None and not etiquete:
+            # recherche complète (le long de la flèche puis à proximité, avec renvoi) sur plusieurs flèches
+            essais = 0
+            for pr, seg in cands:
+                geos = [geom_prim(p) for p in pr]
+                if sum(PL.conflits_textes(gm, (own,)) for gm in geos):
+                    continue
+                essais += 1
+                if essais > 8:
+                    break
+                PL.prims(pr, "fleche:" + own)
+                cout = placer_long_ligne([(own, seg, g)], lib, PL, mm, fc, essai=True, typ=False)
+                PL.retirer("fleche:" + own)
+                if cout == 0:
+                    repli = (pr, seg, None)
+                    break
+        if choix is None:
+            choix = repli if repli is not None else ((cands[0][0], cands[0][1], None) if cands else None)
+        if choix is None:
+            continue
+        pr, seg, pay = choix
+        g += pr
+        PL.prims(pr, own)
+        if etiquete:
+            continue
+        if pay is not None and choix is not repli:
+            x, y, ang, b = pay
+            g.append(P_txt(x, y, lib, fc, "middle", ang))
+            PL.texte(b, own, f"libellé {own} « {lib} »")
+        else:
+            placer_long_ligne([(own, seg, g)], lib, PL, mm, fc, typ=False)     # le long de la flèche ou à proximité
+        etiquete = True
+
+
+# ---------------------------------------------------------------------------
+# Recherche générique d'emplacement sans chevauchement
+# ---------------------------------------------------------------------------
+def essayer(PL, cands, ignore=(), zones=True, ld_cats=None):
+    """cands : itérable de (zone, rappel|None, données). Retourne (données, rappel, coût) du premier
+    candidat sans conflit, sinon du moins coûteux. Une ligne de rappel ne doit croiser aucun texte."""
+    best = None
+    for z, ld, pay in cands:
+        c = PL.conflits(z, ignore=ignore, zones=zones)
+        if ld is not None:
+            c += PL.conflits_textes(ld, ignore)
+            if ld_cats and c == 0:
+                c += PL.croise(ld, ld_cats, ignore)
+        if c == 0:
+            return pay, ld, 0
+        if best is None or c < best[2]:
+            best = (pay, ld, c)
+    return best if best is not None else (None, None, 1)
+
+
+def bloc(lignes, rot=0.0):
+    """Bloc de lignes de texte centré sur (0, 0) : (prims, boîtes, enveloppe)."""
+    hs = [f * (1.18 if i else 1.0) for i, (t, f, g) in enumerate(lignes)]
+    y = sum(hs) / 2
+    prims, boites = [], []
+    for (t, f, gr), h in zip(lignes, hs):
+        y -= h
+        yb = y + 0.24 * f
+        prims.append(P_txt(0.0, yb, t, f, "middle", 0, gr))
+        boites.append(boite(0.0, yb, MET.l(t, f, gr), f, "middle", 0, 0, t))
+    env = unary_union(boites).envelope
+    if rot:
+        prims = [transformer(p, lambda q: rot2(q, rot), rot) for p in prims]
+        boites = [affinity.rotate(b, rot, origin=(0, 0)) for b in boites]
+        env = affinity.rotate(env, rot, origin=(0, 0))
+    return prims, boites, env
+
+
+def poser(bl, x, y):
+    prims, boites, env = bl
+    return ([transformer(p, lambda q: (q[0] + x, q[1] + y), 0.0) for p in prims],
+            [affinity.translate(b, x, y) for b in boites], affinity.translate(env, x, y))
+
+
+def anneaux(geom, W, H, dists, nang=16):
+    """Centres candidats autour de la boîte englobante de geom, par distances croissantes."""
+    minx, miny, maxx, maxy = geom.bounds
+    cx, cy = (minx + maxx) / 2, (miny + maxy) / 2
+    hw, hh = (maxx - minx) / 2, (maxy - miny) / 2
+    for d in dists:
+        for i in range(nang):
+            a = 2 * math.pi * i / nang
+            ca, sa = math.cos(a), math.sin(a)
+            yield d, (cx + ca * (hw + d + W / 2), cy + sa * (hh + d + H / 2))
+
+
+def grille_autour(cible, W, H, rayon, pas, limite=6000):
+    """Centres candidats sur une grille autour de `cible`, triés par distance croissante à la cible."""
+    minx, miny, maxx, maxy = cible.bounds
+    x0, y0 = minx - rayon - W / 2, miny - rayon - H / 2
+    nx = int((maxx - minx + 2 * rayon + W) / pas) + 1
+    ny = int((maxy - miny + 2 * rayon + H) / pas) + 1
+    pts = []
+    for i in range(nx):
+        for j in range(ny):
+            x, y = x0 + i * pas, y0 + j * pas
+            dx = max(minx - x - W / 2, 0, x - W / 2 - maxx)
+            dy = max(miny - y - H / 2, 0, y - H / 2 - maxy)
+            dd = math.hypot(dx, dy)
+            if dd <= rayon:
+                pts.append((round(dd, 6), round(x, 6), round(y, 6)))
+    pts.sort()
+    return pts[:limite]
+
+
+def rappel(env, cible):
+    a, b = nearest_points(env, cible)
+    return LineString([(a.x, a.y), (b.x, b.y)]) if a.distance(b) > 1e-6 else None
+
+
+def poser_libelle(lignes, ancre, own, g, PL, mm, dists, interieur=None, zones=True, cible=None, rot_ok=False):
+    """Place un bloc de texte près de `ancre` (à l'intérieur de `interieur` si possible), sinon autour,
+    avec ligne de rappel. Retourne le coût (0 = aucun chevauchement)."""
+    rots = [0.0, 90.0] if rot_ok else [0.0]
+    cible = cible if cible is not None else ancre
+    def gen():
+        if interieur is not None and not interieur.is_empty:
+            c = interieur.representative_point() if not interieur.contains(ancre.centroid) else ancre.centroid
+            for rot in rots:
+                bl = bloc(lignes, rot)
+                _, _, env = poser(bl, c.x, c.y)
+                z = env.buffer(mm(0.3), join_style=2)
+                if z.within(interieur):
+                    yield z, None, (bl, c.x, c.y)
+        yield from cands_autour(bloc(lignes), ancre, mm, dists, PL.pieces)
+    pay, ld, cout = essayer(PL, gen(), ignore=(own,), zones=zones)
+    bl, x, y = pay
+    prims, boites, env = poser(bl, x, y)
+    if ld is not None:
+        lp = [P_pl(list(ld.coords), "rappel")]
+        g += lp
+        PL.prims(lp, own)
+    g += prims
+    for b, (t, f, gr) in zip(boites, lignes):
+        PL.texte(b, own, f"libellé {own} « {t} »")
+    return cout
+
+
+# ---------------------------------------------------------------------------
+# Cotes
+# ---------------------------------------------------------------------------
+def preparer_cotes(lcs, G, mm, verif, nid):
+    rangs = {}
+    for l in lcs:
+        f = str(l.get("facade") or "int").lower()
+        if f in FACADES:
+            rangs.setdefault(f, set()).add(int(num(l.get("rang")) or 1))
+    index = {f: {r: i for i, r in enumerate(sorted(v))} for f, v in rangs.items()}
+    cotes = []
+    for l in lcs:
+        lid = str(l.get("id"))
+        try:
+            p1 = (float(l["p1"][0]), float(l["p1"][1]))
+            p2 = (float(l["p2"][0]), float(l["p2"][1]))
+        except Exception:
+            verif.add("Chaînes de cotes", "ERREUR", f"[{nid}] {lid} : p1/p2 illisibles — ignorée")
+            continue
+        d = str(l.get("direction") or ("x" if abs(p2[0] - p1[0]) >= abs(p2[1] - p1[1]) else "y")).lower()
+        ax = 0 if d == "x" else 1
+        facade = str(l.get("facade") or "int").lower()
+        rang = int(num(l.get("rang")) or 1)
+        longueur = abs(p2[ax] - p1[ax])
+        if longueur < 0.01:
+            verif.add("Chaînes de cotes", "AVERT", f"[{nid}] {lid} : longueur nulle — ignorée")
+            continue
+        c1, c2 = sorted((p1[ax], p2[ax]))
+        dec = 0.0
+        if facade in FACADES:
+            nax, sg = FACADES[facade]
+            if nax == ax:
+                verif.add("Chaînes de cotes", "ERREUR", f"[{nid}] {lid} : direction {d} incompatible avec la façade {facade}")
+                continue
+            face = (G[1] if sg < 0 else G[3]) if nax == 1 else (G[0] if sg < 0 else G[2])
+            ligne = face + sg * mm(C_D1 + index[facade][rang] * C_ESP)
+        else:
+            facade = "int"
+            dec = num(l.get("decalage")) or 0.0
+            ligne = p1[1 - ax] + dec
+            sg = 1 if dec >= 0 else -1
+        src_ = norm_src(l.get("source")) or ""
+        statut = str(l.get("statut") or "")
+        prefix = "≈ " if src_ == "ESTIMÉ" else ""
+        suffix = " ?" if src_ == "ILLISIBLE" or statut == "illisible" else ""
+        cotes.append({"l": l, "id": lid, "p1": p1, "p2": p2, "ax": ax, "facade": facade, "rang": rang,
+                      "c1": c1, "c2": c2, "ligne": ligne, "sg": sg, "longueur": longueur, "dec": dec,
+                      "source": src_, "statut": statut,
+                      "texte": (f"{prefix}{pipo(longueur)} ({metres(longueur)}){suffix}" if METRIQUE
+                                else f"{prefix}{pipo(longueur)}{suffix}"),
+                      "imp": f"{prefix}{pipo(longueur)}{suffix}", "met": f"({metres(longueur)})",
+                      "rot": 0.0 if ax == 0 else 90.0,
+                      "up": (0.0, 1.0) if ax == 0 else (-1.0, 0.0)})
+    return cotes
+
+
+def pt_cote(c, along, normal):
+    return (along, normal) if c["ax"] == 0 else (normal, along)
+
+
+def dessiner_traits_cotes(cotes, D, PL, mm, masque=None):
+    """Traits des cotes de façade (lignes d'attache fusionnées par façade et abscisse)."""
+    attache = {}
+    for c in cotes:
+        c["grp"] = D.g("50-Cotes", c["id"])
+        if c["facade"] == "int":
+            continue
+        for p in (c["p1"], c["p2"]):
+            a = p[c["ax"]]
+            n = p[1 - c["ax"]]
+            key = (c["facade"], round(a, 2))
+            s = c["sg"]
+            rec = attache.get(key)
+            if rec is None:
+                attache[key] = {"own": c, "a": a, "start": n, "end": c["ligne"], "sg": s}
+            else:
+                if s * n < s * rec["start"]:
+                    rec["start"] = n
+                if s * c["ligne"] > s * rec["end"]:
+                    rec["end"] = c["ligne"]
+    for key in attache:
+        r = attache[key]
+        c = r["own"]
+        s = r["sg"]
+        n0 = r["start"] + s * mm(C_ECART)
+        n1 = r["end"] + s * mm(C_DEP)
+        if s * (n1 - n0) <= 0:
+            continue
+        ln = LineString([pt_cote(c, r["a"], n0), pt_cote(c, r["a"], n1)])
+        if masque is not None and not masque.is_empty:
+            ln = ln.difference(masque)
+        for part in lignes_de(ln):
+            pr = P_pl(part, "cote")
+            c["grp"].append(pr)
+            PL.prims([pr], "attache:" + c["id"])
+            PL.cat["attache:" + c["id"]] = "attache"
+    ticks = set()
+    for c in cotes:
+        if c["facade"] == "int":
+            continue
+        pr = traits_ligne_cote(c, c["ligne"], mm, ticks)
+        c["grp"].extend(pr)
+        PL.prims(pr, c["id"])
+
+
+def traits_ligne_cote(c, ligne, mm, ticks=None):
+    tk = mm(C_TICK) / 2 / math.sqrt(2)
+    A = pt_cote(c, c["c1"], ligne)
+    B = pt_cote(c, c["c2"], ligne)
+    pr = [P_pl([A, B], "cote")]
+    if c["facade"] == "int":
+        for p in (c["p1"], c["p2"]):
+            n = p[1 - c["ax"]]
+            if abs(n - ligne) > mm(C_ECART) * 1.5:
+                s = 1 if ligne > n else -1
+                pr.append(P_pl([pt_cote(c, p[c["ax"]], n + s * mm(C_ECART)),
+                                pt_cote(c, p[c["ax"]], ligne + s * mm(C_DEP))], "cote"))
+    for T in (A, B):
+        if ticks is not None:
+            key = (c["facade"], round(ligne, 2), round(T[0], 2), round(T[1], 2))
+            if key in ticks:
+                continue
+            ticks.add(key)
+        pr.append(P_pl([(T[0] - tk, T[1] - tk), (T[0] + tk, T[1] + tk)], "cote-tick"))
+    return pr
+
+
+def cands_texte_cote(c, ligne, fc, mm, loin=True, etages=False, grille=True, interieur=False, portee=1.5):
+    """Positions candidates du texte d'une cote : (textes, None, None, boîte, rappel).
+    textes = [(x, y, ancre, chaîne)] ; une ligne « 12'-6" (3,81 m) » ou deux lignes (pi-po / métrique)."""
+    t1 = c["texte"]
+    imp, met = c["imp"], c["met"]
+    w = MET.l(t1, fc)
+    gap = mm(C_GAP)
+    haut = gap + 0.21 * fc
+    bas = -(gap + 0.78 * fc)
+    pas = 1.18 * fc
+    mid = (c["c1"] + c["c2"]) / 2
+    span = c["c2"] - c["c1"]
+    up = c["up"]
+
+    def P(a, off):
+        b = pt_cote(c, a, ligne)
+        return b[0] + up[0] * off, b[1] + up[1] * off
+
+    seg_c = LineString([pt_cote(c, c["c1"] + 0.15 * span, ligne), pt_cote(c, c["c2"] - 0.15 * span, ligne)])
+
+    def cand(lignes, ld_cible=None):
+        textes, boites = [], []
+        for a, off, anc, t in lignes:
+            x, y = P(a, off)
+            textes.append((x, y, anc, t))
+            boites.append(boite(x, y, MET.l(t, fc), fc, anc, c["rot"], 0, t))
+        bx = unary_union(boites) if len(boites) > 1 else boites[0]
+        if ld_cible == "segment":
+            rp = rappel(bx, seg_c)          # renvoi vers le point le plus proche de la partie centrale
+        else:
+            rp = rappel(bx, Point(ld_cible)) if ld_cible is not None else None
+        return textes, None, None, bx, rp
+
+    # un texte plus long que son segment n'est jamais centré dessus (il couperait ses lignes d'attache)
+    if w + mm(1.0) <= span:
+        yield cand([(mid, haut, "middle", t1)])
+        yield cand([(mid, bas, "middle", t1)])
+    if w + mm(2) < span:
+        for fr_ in (0.3, 0.7, 0.2, 0.8, 0.4, 0.6, 0.1, 0.9, 0.25, 0.75, 0.15, 0.85, 0.05, 0.95):
+            a = min(max(c["c1"] + span * fr_, c["c1"] + w / 2 + mm(0.8)), c["c2"] - w / 2 - mm(0.8))
+            yield cand([(a, haut, "middle", t1)])
+            yield cand([(a, bas, "middle", t1)])
+    # deux lignes (pi-po au-dessus du métrique) entre les lignes d'attache
+    w2 = max(MET.l(imp, fc), MET.l(met, fc))
+    if METRIQUE and w2 + mm(1.0) <= span:
+        yield cand([(mid, haut + pas, "middle", imp), (mid, haut, "middle", met)])
+        yield cand([(mid, bas, "middle", imp), (mid, bas - pas, "middle", met)])
+        if w2 + mm(2) < span:
+            for fr_ in (0.3, 0.7, 0.2, 0.8, 0.1, 0.9):
+                a = min(max(c["c1"] + span * fr_, c["c1"] + w2 / 2 + mm(0.8)), c["c2"] - w2 / 2 - mm(0.8))
+                yield cand([(a, haut + pas, "middle", imp), (a, haut, "middle", met)])
+                yield cand([(a, bas, "middle", imp), (a, bas - pas, "middle", met)])
+    if not interieur:
+        for lvl in (haut, bas):
+            yield cand([(c["c2"] + mm(1.3), lvl, "start", t1)], pt_cote(c, c["c2"], ligne) if w + mm(1.0) > span else None)
+            yield cand([(c["c1"] - mm(1.3), lvl, "end", t1)], pt_cote(c, c["c1"], ligne) if w + mm(1.0) > span else None)
+    if etages:
+        cible = pt_cote(c, mid, ligne)
+        for k in (1, 2, 3):
+            for sgn in (1, -1):
+                lvl = (haut + k * pas) if sgn > 0 else (bas - k * pas)
+                for da in (0.0, mm(4), -mm(4), mm(8), -mm(8)):
+                    if interieur and not (c["c1"] <= mid + da <= c["c2"]):
+                        continue
+                    yield cand([(mid + da, lvl, "middle", t1)], "segment" if interieur else cible)
+    if loin and not interieur:
+        for k in range(1, max(1, min(9, int(1.5 * w / mm(3.5)) + 1))):
+            for lvl in (haut, bas):
+                yield cand([(c["c2"] + mm(1.3) + k * mm(3.5), lvl, "start", t1)], pt_cote(c, c["c2"], ligne))
+                yield cand([(c["c1"] - mm(1.3) - k * mm(3.5), lvl, "end", t1)], pt_cote(c, c["c1"], ligne))
+    if etages and grille:
+        # dernier recours : n'importe où à proximité, avec ligne de rappel vers le milieu de la cote
+        cible = pt_cote(c, mid, ligne)
+        seg = LineString([pt_cote(c, c["c1"], ligne), pt_cote(c, c["c2"], ligne)])
+        hh = 0.97 * fc
+        W_, H_ = (w, hh) if c["ax"] == 0 else (hh, w)
+        for dd, x, y in grille_autour(seg, W_, H_, min(mm(50), portee * w), mm(1.0), 9000):
+            if interieur:
+                al, pe = (x, y) if c["ax"] == 0 else (y, x)
+                marge = w / 2 + (mm(6) if portee < 3 else w / 2)
+                if not (c["c1"] - marge <= al <= c["c2"] + marge):
+                    continue
+                if (al < c["c1"] or al > c["c2"]) and abs(pe - ligne) < 0.97 * fc + gap:
+                    continue          # jamais dans le prolongement de la ligne
+            if c["ax"] == 0:
+                xb, yb = x, y - 0.27 * fc
+            else:
+                xb, yb = x + 0.27 * fc, y
+            bx = boite(xb, yb, w, fc, "middle", c["rot"], 0, t1)
+            yield [(xb, yb, "middle", t1)], None, None, bx, rappel(bx, seg_c if interieur else Point(cible))
+
+
+def ecrire_texte_cote(c, choix, PL, fc):
+    textes, _, _, bx, rp = choix
+    for x, y, anc, t in textes:
+        c["grp"].append(P_txt(x, y, t, fc, anc, c["rot"]))
+    if rp is not None:
+        lp = P_pl(list(rp.coords), "rappel")
+        c["grp"].append(lp)
+        PL.prims([lp], c["id"])
+    for x, y, anc, t in textes:
+        PL.texte(boite(x, y, MET.l(t, fc), fc, anc, c["rot"], 0, t), c["id"], f"cote {c['id']}")
+    c["boite"] = bx
+
+
+def placer_textes_cotes(cotes, PL, mm, fc):
+    """Textes des cotes de façade : centré, sinon décalé, au-dessous, au-delà des extrémités (rappel)."""
+    fac = [c for c in cotes if c["facade"] != "int"]
+    # les cotes les plus contraintes (texte plus large que le segment) d'abord
+    fac = sorted(fac, key=lambda c: (round((c["c2"] - c["c1"]) - MET.l(c["texte"], fc), 6), fac.index(c)))
+    places = {}
+    for phase in (1,):
+        for c in fac:
+            if c["id"] in places:
+                continue
+            gen = cands_texte_cote(c, c["ligne"], fc, mm)
+            if phase == 0:
+                gen = [next(gen)]
+            def zgen(gen=gen):
+                for ch in gen:
+                    yield ch[3].buffer(mm(0.25), join_style=2), ch[4], ch
+            pay, ld, cout = essayer(PL, zgen(), ignore=(), zones=False, ld_cats=("elem", "col"))
+            if cout == 0 or phase == 1:
+                places[c["id"]] = pay
+                ecrire_texte_cote(c, pay, PL, fc)
+
+
+def chaines_int(cotes):
+    """Regroupe les cotes intérieures colinéaires et contiguës (même direction, même ligne) en chaînes."""
+    ints = [c for c in cotes if c["facade"] == "int"]
+    groupes = {}
+    for c in ints:
+        groupes.setdefault((c["ax"], round(c["p1"][1 - c["ax"]] + c["dec"], 1)), []).append(c)
+    out = []
+    for key in groupes:
+        lst = sorted(groupes[key], key=lambda c: (c["c1"], c["c2"]))
+        cur = [lst[0]]
+        for c in lst[1:]:
+            if c["c1"] <= max(x["c2"] for x in cur) + 0.5:
+                cur.append(c)
+            else:
+                out.append(cur)
+                cur = [c]
+        out.append(cur)
+    out.sort(key=lambda ch: min(ints.index(c) for c in ch))
+    return out
+
+
+def tracer_cotes_int(cotes, PL, mm):
+    """Cotes intérieures : la ligne est à p1/p2 + decalage (jamais déplacée)."""
+    for c in cotes:
+        if c["facade"] != "int":
+            continue
+        pr = traits_ligne_cote(c, c["ligne"], mm)
+        c["grp"].extend(pr)
+        PL.prims(pr, c["id"])
+
+
+def placer_textes_int(cotes, PL, mm, fc, empreinte=None):
+    """Textes des cotes intérieures : centrés sur leur segment si possible ; sinon décalés le long du
+    segment, sur deux lignes, empilés ou à côté avec un renvoi vers le milieu de la cote — jamais
+    au-delà des extrémités ni dans un mur. Les plus contraintes d'abord."""
+    ints = [c for c in cotes if c["facade"] == "int"]
+    ints = sorted(ints, key=lambda c: (round((c["c2"] - c["c1"]) - MET.l(c["texte"], fc), 6), ints.index(c)))
+    for c in ints:
+        best = None
+        milieu = Point(pt_cote(c, (c["c1"] + c["c2"]) / 2, c["ligne"]))
+        dedans = empreinte is not None and empreinte.contains(milieu)
+        for portee, zones_ in ((1.5, True), (2.2, True), (3.5, True), (1.5, False), (2.2, False)):
+            # dernier recours (zones_=False) : texte sur l'aire d'un élément, sans croiser aucun trait
+            def zgen(c=c, portee=portee):
+                for ch in cands_texte_cote(c, c["ligne"], fc, mm, loin=False, etages=True, interieur=True, portee=portee):
+                    if dedans and not ch[3].within(empreinte):
+                        continue          # ligne dans le bâtiment : son texte y reste aussi
+                    yield ch[3].buffer(mm(0.25), join_style=2), ch[4], ch
+            pay, ld, cout = essayer(PL, zgen(), ignore=(), zones=zones_, ld_cats=("elem", "col"))
+            if best is None or cout < best[0]:
+                best = (cout, pay)
+            if cout == 0:
+                break
+        ecrire_texte_cote(c, best[1], PL, fc)
+
+
+# ---------------------------------------------------------------------------
+# Repères ⚠n
+# ---------------------------------------------------------------------------
+def marqueur_prims(n, cx, cy, mm):
+    s = mm(TRI)
+    h = s * math.sqrt(3) / 2
+    tri = [(cx - s / 2, cy - h / 3), (cx + s / 2, cy - h / 3), (cx, cy + 2 * h / 3)]
+    bw = s * 0.07
+    pr = [P_poly([tri], "inc"),
+          P_poly([[(cx - bw, cy - h * 0.02), (cx + bw, cy - h * 0.02), (cx + bw * 0.8, cy + h * 0.42), (cx - bw * 0.8, cy + h * 0.42)]], "inc-blanc"),
+          P_poly([[(cx - bw, cy - h * 0.2), (cx + bw, cy - h * 0.2), (cx + bw, cy - h * 0.1), (cx - bw, cy - h * 0.1)]], "inc-blanc")]
+    f = mm(H_COTE / CAP)
+    t = str(n)
+    xt = cx + s / 2 + mm(0.4)
+    yt = cy - h / 3
+    pr.append(P_txt(xt, yt, t, f, "start", 0, True, ORANGE))
+    tb = boite(xt, yt, MET.l(t, f, True), f, "start", 0, 0, t)
+    return pr, Polygon(tri), tb
+
+
+def cands_marqueur(n, ancre, cible, own, mm):
+    s = mm(TRI)
+    f = mm(H_COTE / CAP)
+    larg = s + mm(0.4) + MET.l(str(n), f, True)
+    haut = max(s * 0.87, 0.97 * f)
+    for d, (x, y) in anneaux(ancre, larg, haut, (mm(0.5), mm(1.5), mm(3), mm(5), mm(8), mm(12), mm(17), mm(23)), 16):
+        tx = x - larg / 2 + s / 2
+        pr, tri, tb = marqueur_prims(n, tx, y, mm)
+        zone = unary_union([tri, tb]).envelope.buffer(mm(0.3), join_style=2)
+        ld = rappel(tri, cible) if (d > mm(1.0) or cible.geom_type == "Point") else None
+        if ld is not None and ld.intersects(tb):
+            continue
+        yield zone, ld, (pr, tri, tb, ld)
+    for dd, x, y in grille_autour(ancre, larg, haut, mm(25), mm(1.2), 3000):
+        tx = x - larg / 2 + s / 2
+        pr, tri, tb = marqueur_prims(n, tx, y, mm)
+        zone = unary_union([tri, tb]).envelope.buffer(mm(0.3), join_style=2)
+        ld = rappel(tri, cible)
+        if ld is not None and ld.intersects(tb):
+            continue
+        yield zone, ld, (pr, tri, tb, ld)
+
+
+def placer_reperes(demandes, D, PL, mm):
+    """demandes : (n, priorité, ancre, cible, own). Un seul repère par numéro et par feuille."""
+    places = []
+    par_n = {}
+    for i, dm in enumerate(demandes):
+        par_n.setdefault(dm[0], []).append((dm[1], i, dm))
+    for n in sorted(par_n):
+        best = None
+        for _, _, (n_, pr_, ancre, cible, own) in sorted(par_n[n], key=lambda t: (t[0], t[1])):
+            pay, ld, cout = essayer(PL, cands_marqueur(n, ancre, cible, own, mm), ignore=(own,), zones=True)
+            if best is None or cout < best[0]:
+                best = (cout, pay, own, cible)
+            if cout == 0:
+                break
+        cout, (pr, tri, tb, ld), own, cible = best
+        g = D.g("70-Incertitudes", own)
+        if cible.geom_type == "Point":
+            g.append(P_cercle((cible.x, cible.y), mm(0.6), "inc"))
+        if ld is not None:
+            lp = P_pl(list(ld.coords), "inc-c")
+            g.append(lp)
+            PL.prims([lp], own)
+        g += pr
+        PL.ligne(tri, own)
+        PL.texte(tb, own, f"repère ⚠{n} ({own})")
+        places.append(n)
+    return places
+
+
+# ---------------------------------------------------------------------------
+# Libellés d'éléments, de structure, d'escaliers ; étiquettes de pièces
+# ---------------------------------------------------------------------------
+DISTS = (1.2, 3, 5, 8, 12, 17, 23, 30)
+
+
+def placer_libelle_element(el, cont, libs, g, PL, mm, fc):
+    """Libellé d'un élément : à l'intérieur du symbole si possible (1 ou 2 lignes), sinon autour, dans la
+    zone libre la plus proche (ligne de rappel)."""
+    dists = [mm(d) for d in DISTS]
+    variantes = []
+    for t in libs:
+        variantes.append([(t, fc, False)])
+        deux = lignes_nom_2(t, fc) if " " in t else None
+        if deux:
+            variantes.append([(x, fc, False) for x in deux])
+    interieur = cont.buffer(-mm(0.2)) if el["typ"] not in SANS_INTERIEUR else None
+    if interieur is not None and not interieur.is_empty:
+        minx, miny, maxx, maxy = interieur.bounds
+        c0 = cont.centroid
+        pts = [(0.0, c0.x, c0.y)]
+        pas = mm(1.0)
+        for i in range(int((maxx - minx) / pas) + 1):
+            for j in range(int((maxy - miny) / pas) + 1):
+                x, y = minx + i * pas, miny + j * pas
+                pts.append((round(math.hypot(x - c0.x, y - c0.y), 6), round(x, 6), round(y, 6)))
+        pts.sort()
+        for lignes in variantes:
+            bl = bloc(lignes)
+            e0 = bl[2].buffer(mm(0.3), join_style=2)
+            if e0.bounds[2] - e0.bounds[0] > maxx - minx or e0.bounds[3] - e0.bounds[1] > maxy - miny:
+                continue
+            for _, x, y in pts:
+                z = affinity.translate(e0, x, y)
+                if z.within(interieur) and PL.conflits(z, ignore=(el["id"],)) == 0:
+                    prims, boites, _ = poser(bl, x, y)
+                    g += prims
+                    for b, (t, f, gr) in zip(boites, lignes):
+                        PL.texte(b, el["id"], f"libellé {el['id']} « {t} »")
+                    return
+    for i, lignes in enumerate(variantes):
+        cout = poser_libelle_test(lignes, cont, el["id"], PL, mm, dists)
+        if cout == 0 or i == len(variantes) - 1:
+            poser_libelle(lignes, cont, el["id"], g, PL, mm, dists)
+            return
+
+
+def penalite_pieces(pts, ancre, pieces, pen_voisine, pen_autre, siennes=None):
+    """Trie des centres candidats par distance + pénalité s'ils tombent dans une autre pièce que celle de
+    l'ancre : faible pour une pièce voisine, forte pour une pièce éloignée (étiquette ambiguë)."""
+    if not pieces:
+        return pts
+    from shapely.prepared import prep
+    if siennes is None:
+        c = ancre.centroid
+        siennes = [p for p in pieces if p.buffer(1.0).contains(c)]
+    autres = [p for p in pieces if not any(p is q for q in siennes)]
+    ref = unary_union(siennes) if siennes else ancre
+    vois = [p for p in autres if p.distance(ref) <= 10.0]
+    loin = [p for p in autres if p.distance(ref) > 10.0]
+    pv = prep(unary_union(vois)) if vois else None
+    pl = prep(unary_union(loin)) if loin else None
+
+    def pen(x, y):
+        q = Point(x, y)
+        if pl is not None and pl.contains(q):
+            return pen_autre
+        if pv is not None and pv.contains(q):
+            return pen_voisine
+        return 0.0
+    return sorted(pts, key=lambda t: (t[0] + pen(t[1], t[2]), t[1], t[2]))
+
+
+def cands_autour(bl, ancre, mm, dists, pieces=None):
+    minx, miny, maxx, maxy = bl[2].bounds
+    W, H = maxx - minx, maxy - miny
+    for dd, x, y in penalite_pieces(grille_autour(ancre, W, H, mm(45), mm(1.2), 6000), ancre, pieces, mm(25), mm(25)):
+        _, _, env = poser(bl, x, y)
+        if env.intersects(ancre):
+            continue
+        yield env.buffer(mm(0.3), join_style=2), (rappel(env, ancre) if dd > mm(1.6) else None), (bl, x, y)
+
+
+def poser_libelle_test(lignes, ancre, own, PL, mm, dists, zones=True):
+    return essayer(PL, cands_autour(bloc(lignes), ancre, mm, dists, PL.pieces), ignore=(own,), zones=zones)[2]
+
+
+def cands_long_ligne(geo, lib, fc, mm):
+    coords = list(geo.coords)
+    A, B = coords[0], coords[-1]
+    ang = math.degrees(math.atan2(B[1] - A[1], B[0] - A[0]))
+    if ang > 90.0001 or ang <= -90:
+        ang = (ang + 180) % 360
+        if ang > 180:
+            ang -= 360
+    up = rot2((0, 1), ang)
+    w = MET.l(lib, fc)
+    fracs = [0.5] + [0.5 + s * k * 0.04 for k in range(1, 12) for s in (-1, 1)]
+    offs = []
+    for e in (0.9, 2.4, 4.0, 6.0):
+        offs += [mm(e) + 0.21 * fc, -(mm(e) + 0.78 * fc)]
+    for off in offs[:2]:
+        for fr_ in fracs:
+            yield fr_, off, ang, up, w
+    for off in offs[2:]:
+        for fr_ in fracs:
+            yield fr_, off, ang, up, w
+
+
+def placer_long_ligne(items, lib, PL, mm, fc, essai=False, typ=True):
+    """items : [(own, geo, g)] portant le même libellé ; un seul est étiqueté (« typ. » si plusieurs).
+    essai=True : ne rien écrire, retourner seulement le coût du meilleur emplacement."""
+    if len(items) > 1 and typ:
+        lib = lib + " (typ.)"
+    best = None
+    for own, geo, g in items:
+        def gen(geo=geo):
+            for fr_, off, ang, up, w in cands_long_ligne(geo, lib, fc, mm):
+                p = geo.interpolate(fr_, normalized=True)
+                x, y = p.x + up[0] * off, p.y + up[1] * off
+                b = boite(x, y, w, fc, "middle", ang, 0, lib)
+                ld = None
+                if abs(off) > mm(1.5) + 0.8 * fc:
+                    q = (p.x + up[0] * math.copysign(mm(0.3), off), p.y + up[1] * math.copysign(mm(0.3), off))
+                    ld = rappel(b, Point(q))
+                yield b.buffer(mm(0.3), join_style=2), ld, (x, y, ang, b)
+        pay, ld, cout = essayer(PL, gen(), ignore=(), zones=True, ld_cats=("elem", "col"))
+        if best is None or cout < best[0]:
+            best = (cout, pay, ld, own, g)
+        if cout == 0:
+            break
+    for cats in (("elem", "col"), ("col",)):     # renvoi sans élément ni colonne, sinon sans colonne
+        if best[0] == 0:
+            break
+        for own, geo, g in items:
+            w = MET.l(lib, fc)
+            def gen2(geo=geo, w=w):
+                for dd, x, y in grille_autour(geo, w, 0.97 * fc, mm(60), mm(1.5), 12000):
+                    yb = y - 0.27 * fc
+                    b = boite(x, yb, w, fc, "middle", 0.0, 0, lib)
+                    yield b.buffer(mm(0.3), join_style=2), rappel(b, geo), (x, yb, 0.0, b)
+            pay, ld, cout = essayer(PL, gen2(), ignore=(), zones=True, ld_cats=cats)
+            if cout < best[0]:
+                best = (cout, pay, ld, own, g)
+            if cout == 0:
+                break
+    if essai:
+        return best[0]
+    cout, (x, y, ang, b), ld, own, g = best
+    if ld is not None:
+        lp = P_pl(list(ld.coords), "rappel")
+        g.append(lp)
+        PL.prims([lp], own)
+    g.append(P_txt(x, y, lib, fc, "middle", ang))
+    PL.texte(b, own, f"libellé {own} « {lib} »")
+    return cout
+
+
+def placer_autour_groupe(items, lib, PL, mm, fc):
+    if len(items) > 1:
+        lib = lib + " (typ.)"
+    dists = [mm(d) for d in DISTS]
+    best = None
+    for own, geo, g in items:
+        cout = poser_libelle_test([(lib, fc, False)], geo, own, PL, mm, dists)
+        if best is None or cout < best[0]:
+            best = (cout, own, geo, g)
+        if cout == 0:
+            break
+    _, own, geo, g = best
+    poser_libelle([(lib, fc, False)], geo, own, g, PL, mm, dists)
+
+
+def placer_textes_escalier(spec, PL, mm, fc):
+    own, g, c, dv, run, wid, textes = spec
+    rot = 0.0 if abs(dv[0]) > 0.5 else 90.0
+    up = rot2((0, 1), rot)
+    for i, t in enumerate(textes):
+        larg = MET.l(t, fc, False)
+        def gen(i=i, t=t, larg=larg):
+            for fr_ in (0.0, -0.15, 0.15, -0.28, 0.28, -0.38, 0.38):
+                for side in ((0, 1) if i == 0 else (1, 0)):
+                    off = (mm(0.9) + 0.21 * fc) if side == 0 else -(mm(0.9) + 0.78 * fc)
+                    x = c[0] + dv[0] * run * fr_ + up[0] * off
+                    y = c[1] + dv[1] * run * fr_ + up[1] * off
+                    b = boite(x, y, larg, fc, "middle", rot, 0, t)
+                    yield b.buffer(mm(0.2), join_style=2), None, (x, y, b)
+        pay, _, cout = essayer(PL, gen(), ignore=(own,), zones=False)
+        x, y, b = pay
+        mb = boite(x, y, larg, fc, "middle", rot, mm(0.4), t)
+        g.append(P_poly([list(mb.exterior.coords)[:-1]], "masque"))
+        g.append(P_txt(x, y, t, fc, "middle", rot))
+        PL.texte(b, f"{own}#{i}", f"escalier {own} « {t} »")
+
+
+def lignes_nom(nom, fn, lmax):
+    if MET.l(nom, fn, True) <= lmax:
+        return [nom]
+    return lignes_nom_2(nom, fn) or [nom]
+
+
+def lignes_nom_2(nom, fn):
+    mots = nom.split()
+    best = None
+    for i in range(1, len(mots)):
+        l1, l2 = " ".join(mots[:i]), " ".join(mots[i:])
+        w = max(MET.l(l1, fn, True), MET.l(l2, fn, True))
+        if best is None or w < best[0]:
+            best = (w, [l1, l2])
+    return best[1] if best else None
+
+
+def placer_etiquette_piece(d, poly, D, PL, mm, fn, fc, passe=1, autres=None, mode="reduit", F=None):
+    """Étiquette de pièce, toujours lue DANS sa pièce si possible :
+    complète (dimensions et superficie) ; sinon nom + superficie ; sinon nom seul, horizontal puis vertical,
+    à la taille normale puis réduite (4,9 mm) ; en dernier recours (passe 2), nom hors de toute pièce
+    nommée, avec un renvoi court qui ne croise ni chaîne de cotes, ni élément, ni colonne.
+    Retourne True si les dimensions ont dû être omises, None si rien n'a été posé (passe 1)."""
+    pid = str(d.get("id"))
+    if not NOMS_PIECES and not DIMS_PIECES:
+        return False                    # aucune étiquette de pièce sur le plan (données dans tableau_pieces.csv)
+    if d.get("etiquette") is False:
+        return False                    # pièce sans étiquette (ex. cage d'escalier : le symbole suffit)
+    nom = str(d.get("nom") or d.get("nom_original") or pid).upper()
+    dims = d.get("dimensions") if isinstance(d.get("dimensions"), dict) else {}
+    minx, miny, maxx, maxy = poly.bounds
+    vx, vy = num(dims.get("x")), num(dims.get("y"))
+    sx, sy = src(dims.get("x")), src(dims.get("y"))
+    if vx is None:
+        vx, sx = maxx - minx, "DÉDUIT"
+    if vy is None:
+        vy, sy = maxy - miny, "DÉDUIT"
+    tx = ("≈" if sx == "ESTIMÉ" else "") + pipo(vx)
+    ty = ("≈" if sy == "ESTIMÉ" else "") + pipo(vy)
+    sup = d.get("superficie") if isinstance(d.get("superficie"), dict) else {}
+    a = num(sup)
+    if a is None:
+        a = poly.area / 144
+    ta = ("≈" if src(sup) == "ESTIMÉ" else "") + f"{fr(a, 1)} pi² ({fr(a * 0.09290304, 1)} m²)"
+    fn2 = mm(H_NOM_MIN / CAP)
+
+    def jeux(f):
+        j = [[nom]]
+        n2 = lignes_nom_2(nom, f)
+        if n2:
+            j.append(n2)
+        return j
+
+    variantes = []          # (lignes, rotation, complet)
+    for sous, complet in (([(f"{tx} × {ty}", fc, False), (ta, fc, False)], True),
+                          ([(f"{tx} ×", fc, False), (ty, fc, False), (ta, fc, False)], True),
+                          ([(f"{tx} ×", fc, False), (ty, fc, False), (ta.split(" (")[0], fc, False),
+                            ("(" + ta.split(" (", 1)[1] if " (" in ta else "", fc, False)], True),
+                          ([(ta, fc, False)], False)):
+        for nn in jeux(fn):
+            variantes.append(([(t, fn, True) for t in nn] + sous, 0.0, complet))
+    for f in (fn, fn2):
+        for rot in (0.0, 90.0):
+            for nn in jeux(f):
+                variantes.append(([(t, f, True) for t in nn], rot, False))
+    if mode == "complet":
+        variantes = [v for v in variantes if v[2]]
+    if not NOMS_PIECES:
+        # sans noms : dimensions et superficie seules, dans la pièce ; sinon rien (voir tableau_pieces.csv)
+        variantes = []
+        for sous, complet in (([(f"{tx} × {ty}", fc, False), (ta, fc, False)], True),
+                              ([(f"{tx} ×", fc, False), (ty, fc, False), (ta, fc, False)], True)):
+            variantes.append((sous, 0.0, complet))
+    try:
+        pole = polylabel(poly, tolerance=1.0)
+    except Exception:
+        pole = poly.representative_point()
+    interieur = poly.buffer(-mm(0.6), join_style=2)
+    choix = None
+    for lignes, rot, complet in variantes:
+        bl = bloc(lignes, rot)
+        e0 = bl[2].buffer(mm(0.4), join_style=2)
+        bminx, bminy, bmaxx, bmaxy = e0.bounds
+        if bmaxx - bminx > maxx - minx or bmaxy - bminy > maxy - miny:
+            continue
+        step = max(mm(0.4), min(bmaxx - bminx, bmaxy - bminy) / 20)
+        grille = []
+        for i in range(int((maxx - minx) / step) + 2):
+            for j in range(int((maxy - miny) / step) + 2):
+                x, y = minx + i * step, miny + j * step
+                grille.append(((x - pole.x) ** 2 + (y - pole.y) ** 2, round(x, 4), round(y, 4)))
+        grille.sort()
+        pts = [(pole.x, pole.y)] + [(x, y) for _, x, y in grille[:12000]]
+        for x, y in pts:
+            z = affinity.translate(e0, x, y)
+            if not z.within(interieur):
+                continue
+            if PL.conflits(z, ignore=(pid,), zones=True) == 0:
+                choix = (bl, x, y, None, complet, lignes)
+                break
+        if choix:
+            break
+    if choix is None and passe == 1:
+        return None
+    if choix is None and not NOMS_PIECES:
+        return True
+    if choix is None:
+        # hors de toute pièce nommée, renvoi court vers la pièce
+        coeur = poly.buffer(-mm(1.2), join_style=2)
+        vise = coeur if not coeur.is_empty else Point(pole.x, pole.y)
+        toutes = unary_union([poly] + list(autres or []))
+        from shapely.prepared import prep
+        ptoutes = prep(toutes)
+        best = None
+        for tol, rayon, pas_ in ((0.0, mm(40), mm(1.0)), (0.0, mm(90), mm(1.8)), (0.2, mm(40), mm(1.2))):
+            for f, rot in ((fn, 0.0), (fn, 90.0), (fn2, 0.0), (fn2, 90.0)):
+                for nn in jeux(f):
+                    lignes = [(t, f, True) for t in nn]
+                    bl = bloc(lignes, rot)
+                    W = bl[2].bounds[2] - bl[2].bounds[0]
+                    H = bl[2].bounds[3] - bl[2].bounds[1]
+
+                    def gen(bl=bl, W=W, H=H, lignes=lignes, tol=tol, rayon=rayon, pas_=pas_):
+                        for dd, x, y in grille_autour(poly, W, H, rayon, pas_, 25000):
+                            _, _, env = poser(bl, x, y)
+                            if ptoutes.intersects(env):
+                                part = env.intersection(toutes).area / env.area
+                                if part > tol + 1e-9:
+                                    continue
+                            yield env.buffer(mm(0.4), join_style=2), rappel(env, vise), (bl, x, y, lignes)
+                    pay, ld, cout = essayer(PL, gen(), ignore=(pid,), zones=True, ld_cats=("cote",))
+                    if pay is not None and (best is None or cout < best[0]):
+                        best = (cout, pay, ld)
+                    if cout == 0:
+                        break
+                if best is not None and best[0] == 0:
+                    break
+            if best is not None and best[0] == 0:
+                break
+        if (best is None or best[0] > 0) and F is not None:
+            # à la rigueur : dans un espace de circulation voisin (dégagement, passage, hall, corridor)
+            circ = [p_ for d_, p_ in F.pieces if p_ is not poly and est_circulation(d_)]
+            if circ:
+                hotes = unary_union(circ)
+                autres_u = unary_union([p_ for d_, p_ in F.pieces if p_ is not poly and not est_circulation(d_)])
+                for f, rot in ((fn, 0.0), (fn, 90.0), (fn2, 0.0), (fn2, 90.0)):
+                    for nn in jeux(f):
+                        lignes = [(t, f, True) for t in nn]
+                        bl = bloc(lignes, rot)
+                        W = bl[2].bounds[2] - bl[2].bounds[0]
+                        H = bl[2].bounds[3] - bl[2].bounds[1]
+
+                        def gen(bl=bl, W=W, H=H, lignes=lignes):
+                            for dd, x, y in grille_autour(poly, W, H, mm(30), mm(0.8), 20000):
+                                _, _, env = poser(bl, x, y)
+                                if not env.within(hotes) or env.intersects(autres_u):
+                                    continue
+                                yield env.buffer(mm(0.4), join_style=2), rappel(env, vise), (bl, x, y, lignes)
+                        pay, ld, cout = essayer(PL, gen(), ignore=(pid,), zones=True, ld_cats=("cote",))
+                        if pay is not None and cout == 0:
+                            best = (0, pay, ld)
+                            break
+                    if best is not None and best[0] == 0:
+                        break
+        if best is None:
+            bl = bloc([(nom, fn2, True)])
+            best = (1, (bl, pole.x, pole.y, [(nom, fn2, True)]), None)
+        cout, (bl, x, y, lignes), ld = best
+        choix = (bl, x, y, ld, False, lignes)
+    bl, x, y, ld, complet, lignes = choix
+    g = D.g("60-Etiquettes", pid)
+    g.append(P_poly([list(poly.exterior.coords)[:-1]], "invisible"))
+    prims, boites, env = poser(bl, x, y)
+    if ld is not None:
+        lp = [P_pl(list(ld.coords), "rappel"), P_cercle(ld.coords[-1], mm(0.5), "elem-plein")]
+        g += lp
+        PL.prims(lp, pid)
+    g += prims
+    for b, (t, f, gr) in zip(boites, lignes):
+        PL.texte(b, pid, f"étiquette {pid} « {t} »")
+    if F is not None:
+        F.etiquettes[pid] = (env, Point(ld.coords[-1]) if ld is not None else None, poly, complet, boites)
+    return not complet
+
+
+NOMS_PIECES = True
+DIMS_PIECES = True
+METRIQUE = True      # projet.affichage.metrique = false : cotes en pi-po seulement
+TEXTES_STRUCTURE = True   # projet.affichage.textes_structure = false : poutres, colonnes, solives sans libellé
+
+
+CIRCULATION = ("DEGAGEMENT", "PASSAGE", "HALL", "CORRIDOR", "COULOIR", "CIRCULATION")
+
+
+def est_circulation(d):
+    n = sans_accents(str(d.get("nom") or "")).upper()
+    return any(m in n for m in CIRCULATION)
+
+
+def verifier_etiquettes(F, verif):
+    """Chaque étiquette de pièce est dans son polygone, ou reliée par un renvoi qui se termine dans son polygone."""
+    mauvais = 0
+    polys = {pid: v[2] for pid, v in F.etiquettes.items()}
+    for d, p in F.pieces:
+        polys.setdefault(str(d.get("id")), p)
+    for pid, (env, bout, poly, complet, boites) in sorted(F.etiquettes.items()):
+        dedans = poly.contains(env.representative_point())
+        relie = bout is not None and poly.buffer(0.01).contains(bout)
+        if not (dedans or relie):
+            mauvais += 1
+            verif.add("Pièces", "ERREUR", f"[{F.nid}] {pid} : étiquette hors de sa pièce sans renvoi vers elle")
+        circ_ids = set(str(d_.get("id")) for d_, _ in F.pieces if est_circulation(d_))
+        autres = unary_union([q for k, q in polys.items() if k != pid and k not in circ_ids])
+        circ = unary_union([q for k, q in polys.items() if k != pid and k in circ_ids])
+        for b in boites:
+            part = b.intersection(autres).area / b.area if b.area > 0 and not autres.is_empty else 0.0
+            if part > 0.20:
+                mauvais += 1
+                verif.add("Pièces", "ERREUR", f"[{F.nid}] {pid} : texte de l'étiquette lu à {round(part * 100)} % "
+                                              f"dans une autre pièce")
+                break
+            if not circ.is_empty and b.intersection(circ).area / b.area > 0.20 and relie:
+                verif.add("Pièces", "INFO", f"[{F.nid}] {pid} : étiquette posée dans l'espace de circulation voisin, "
+                                            f"avec renvoi vers la pièce")
+                break
+    if mauvais == 0 and F.etiquettes:
+        verif.add("Pièces", "OK", f"[{F.nid}] {len(F.etiquettes)} étiquettes de pièces : chacune dans sa pièce "
+                                  f"ou reliée à elle par un renvoi qui s'y termine ; aucun texte lu à plus de "
+                                  f"20 % dans une autre pièce")
+
+
+def verifier_textes(F, verif):
+    PL = F.placeur
+    n = 0
+    vus = set()
+    T = PL.T
+    tree = STRtree(T) if T else None
+    for i, g in enumerate(T):
+        for j in tree.query(g, predicate="intersects"):
+            j = int(j)
+            if j <= i or PL.To[i] == PL.To[j] and PL.To[i] == "cartouche" and False:
+                continue
+            inter = g.intersection(T[j]).area
+            if inter > 1e-4 and (i, j) not in vus:
+                vus.add((i, j))
+                c = g.centroid
+                verif.add("Textes (chevauchements)", "AVERT",
+                          f"[{F.nid}] texte/texte : {PL.Td[i]} × {PL.Td[j]} (x≈{f3(c.x)}, y≈{f3(c.y)} po)")
+                n += 1
+    lt = STRtree(PL.L) if PL.L else None
+    if lt is not None:
+        for i, g in enumerate(T):
+            for j in lt.query(g, predicate="intersects"):
+                j = int(j)
+                if PL.Lo[j] == "cadre" and PL.To[i] == "cartouche":
+                    continue
+                if "#" in PL.To[i] and PL.Lo[j] == PL.To[i].split("#")[0]:
+                    continue                      # texte d'escalier sur fond masqué
+                if PL.Lo[j] == PL.To[i]:
+                    inter = g.intersection(PL.L[j])
+                    mesure = inter.area if inter.geom_type in ("Polygon", "MultiPolygon") else inter.length
+                    if mesure <= F.mm(0.3) * (F.mm(0.3) if inter.geom_type in ("Polygon", "MultiPolygon") else 1):
+                        continue                  # simple contact (ligne de rappel qui part du texte)
+                c = g.centroid
+                verif.add("Textes (chevauchements)", "AVERT",
+                          f"[{F.nid}] texte/trait : {PL.Td[i]} × trait de {PL.Lo[j]} (x≈{f3(c.x)}, y≈{f3(c.y)} po)")
+                n += 1
+    F.nb_chev = n
+    if n == 0:
+        verif.add("Textes (chevauchements)", "OK", f"[{F.nid}] aucun chevauchement texte/texte ni texte/trait "
+                                                   f"({len(T)} textes vérifiés)")
+
+
+# ---------------------------------------------------------------------------
+# Cartouche
+# ---------------------------------------------------------------------------
+def cartouche(F, niv, projet, ctx):
+    k, mm, X0, Y0 = F.k, F.mm, F.X0, F.Y0
+    D, PL = F.dessin, F.placeur
+    g = D.g("00-Cartouche", "cartouche")
+
+    def S(sx, sy):              # po imprimés depuis le haut-gauche → coordonnées maison
+        return (sx * k - X0, Y0 - sy * k)
+
+    def ligne(pts, st="cart-f"):
+        g.append(P_pl([S(*p) for p in pts], st))
+
+    def rect(x0, y0, x1, y1, st):
+        g.append(P_poly([[S(x0, y0), S(x1, y0), S(x1, y1), S(x0, y1)]], st))
+
+    def rcadre(x0, y0, x1, y1, st):
+        g.append(P_pl([S(x0, y0), S(x1, y0), S(x1, y1), S(x0, y1)], st, True))
+
+    def texte(sx, sy, t, hcap, gras=False, ancre="start", coul="#000000"):
+        f = mm(hcap / CAP)
+        x, y = S(sx, sy)
+        g.append(P_txt(x, y, t, f, ancre, 0, gras, coul))
+        PL.texte(boite(x, y, MET.l(t, f, gras), f, ancre, 0, 0, t), "cartouche", f"cartouche « {t[:30]} »")
+        return hcap / 25.4
+
+    def lw(t, hcap, gras=False):     # largeur en po imprimés
+        return MET.l(t, hcap / CAP, gras) / 25.4
+
+    def wrap(t, hcap, larg, gras=False):
+        return couper(t, hcap / CAP * 25.4 / 25.4, larg * 25.4, gras) if t else []
+
+    # fond blanc et cadre de feuille
+    g.append(P_poly([[S(0, 0), S(FEUILLE_L, 0), S(FEUILLE_L, FEUILLE_H), S(0, FEUILLE_H)]], "fond"))
+    rcadre(MARGE, MARGE, FEUILLE_L - MARGE, FEUILLE_H - MARGE, "cart-cadre")
+    x0, x1 = FEUILLE_L - MARGE - CART_L, FEUILLE_L - MARGE
+    y0, y1 = MARGE, FEUILLE_H - MARGE
+    ligne([(x0, y0), (x0, y1)], "cart-cadre")
+    p = 0.09
+    L = x1 - x0 - 2 * p
+    cap_s, cap_m = 2.5, 3.0
+    pas_s = 2.5 / 25.4 * 1.75
+    y = y0 + p
+
+    def cap(t, yy):
+        texte(x0 + p, yy + 2.5 / 25.4, t, 2.5, True)
+        return yy + 2.5 / 25.4 * 1.7
+
+    # --- Projet
+    y = cap("PROJET", y)
+    for t in couper(projet.get("nom") or "", 3.2 / CAP, L * 25.4, True):
+        y += 3.2 / 25.4
+        texte(x0 + p, y, t, 3.2, True)
+        y += 3.2 / 25.4 * 0.55
+    y += 0.06
+    # --- Avertissement
+    msg = projet.get("mention") or "RELEVÉ DE L'EXISTANT — PRÉLIMINAIRE, À VALIDER SUR PLACE"
+    lignes = couper(msg, 3.0 / CAP, (L - 0.12) * 25.4, True)
+    hbox = len(lignes) * 3.0 / 25.4 * 1.6 + 0.1
+    rcadre(x0 + p, y, x1 - p, y + hbox, "cart-l")
+    yy = y + 0.06
+    for t in lignes:
+        yy += 3.0 / 25.4
+        texte((x0 + x1) / 2, yy, t, 3.0, True, "middle")
+        yy += 3.0 / 25.4 * 0.6
+    y += hbox + 0.08
+    ligne([(x0, y), (x1, y)], "cart-l")
+    y += 0.07
+
+    # --- bloc du bas (de bas en haut)
+    yb = y1
+    # Niveau | Feuille
+    hrow = 0.72
+    xs = x1 - 1.15
+    ligne([(x0, yb - hrow), (x1, yb - hrow)], "cart-l")
+    ligne([(xs, yb - hrow), (xs, yb)], "cart-l")
+    texte(x0 + p, yb - hrow + 0.05 + 2.5 / 25.4, "NIVEAU", 2.5, True)
+    hn = 4.0
+    while hn > 3.0 and lw(F.nom.upper(), hn, True) > xs - x0 - 2 * p:
+        hn -= 0.25
+    nl = couper(F.nom.upper(), hn / CAP, (xs - x0 - 2 * p) * 25.4, True)
+    yy = yb - hrow + 0.05 + 2.5 / 25.4 * 2.1
+    for t in nl[:2]:
+        yy += hn / 25.4
+        texte(x0 + p, yy, t, hn, True)
+        yy += hn / 25.4 * 0.45
+    texte(xs + p, yb - hrow + 0.05 + 2.5 / 25.4, "FEUILLE", 2.5, True)
+    texte((xs + x1) / 2, yb - 0.12, F.feuille, 7.0, True, "middle")
+    yb -= hrow
+    # Échelle | Date | Révision
+    hrow = 0.48
+    ligne([(x0, yb - hrow), (x1, yb - hrow)], "cart-l")
+    xa, xb_ = x0 + 1.25, x0 + 2.3
+    ligne([(xa, yb - hrow), (xa, yb)], "cart-l")
+    ligne([(xb_, yb - hrow), (xb_, yb)], "cart-l")
+    for xx, cap_t, val in ((x0, "ÉCHELLE", F.echelle), (xa, "DATE", str(projet.get("date") or "—")),
+                           (xb_, "RÉVISION", str(projet.get("revision") or "—"))):
+        texte(xx + p, yb - hrow + 0.05 + 2.5 / 25.4, cap_t, 2.5, True)
+        texte(xx + p, yb - 0.1, val, 3.0)
+    yb -= hrow
+    # Photos sources
+    hrow = 0.42
+    ligne([(x0, yb - hrow), (x1, yb - hrow)], "cart-l")
+    texte(x0 + p, yb - hrow + 0.05 + 2.5 / 25.4, "PHOTOS SOURCES", 2.5, True)
+    ph = niv.get("photos_sources") or []
+    texte(x0 + p, yb - 0.1, ", ".join(str(x) for x in ph) if ph else "—", 3.0)
+    yb -= hrow
+    # Échelle graphique
+    hrow = 0.62
+    ligne([(x0, yb - hrow), (x1, yb - hrow)], "cart-l")
+    texte(x0 + p, yb - hrow + 0.05 + 2.5 / 25.4, "ÉCHELLE GRAPHIQUE (pi)", 2.5, True)
+    gx0 = x0 + p + 0.05
+    gy = yb - 0.27
+    hb = 1.6 / 25.4
+    grad = F.grad
+    for i in range(len(grad) - 1):
+        a, b = grad[i] * 12 / k, grad[i + 1] * 12 / k
+        rect(gx0 + a, gy, gx0 + b, gy + hb, "cart-noir" if i % 2 == 0 else "cart-blanc")
+    rcadre(gx0, gy, gx0 + grad[-1] * 12 / k, gy + hb, "cart-f")
+    for v in grad:
+        t = str(v) + (" pi" if v == grad[-1] else "")
+        texte(gx0 + v * 12 / k, gy + hb + 0.03 + 2.5 / 25.4, t, 2.5, False, "start" if v == grad[-1] and False else "middle")
+    yb -= hrow
+    # Nord
+    nord = projet.get("nord") if isinstance(projet.get("nord"), dict) else {}
+    ang = num(nord.get("angle_deg"))
+    if ang is not None:
+        hrow = 0.95
+        ligne([(x0, yb - hrow), (x1, yb - hrow)], "cart-l")
+        r = 0.3
+        cx, cy = x0 + p + r + 0.05, yb - hrow / 2 + 0.06
+        C = S(cx, cy)
+        R = r * k
+        g.append(P_cercle(C, R, "cart-f"))
+        pts = [(0, R * 0.92), (-R * 0.32, -R * 0.62), (0, -R * 0.3), (R * 0.32, -R * 0.62)]
+        pts = [rot2(q, -ang) for q in pts]
+        pts = [(C[0] + a, C[1] + b) for a, b in pts]
+        g.append(P_poly([[pts[0], pts[1], pts[2]]], "cart-noir"))
+        g.append(P_poly([[pts[0], pts[2], pts[3]]], "cart-blanc"))
+        tip = rot2((0, R * 1.0 + mm(1.2)), -ang)
+        fN = mm(3.0 / CAP)
+        xN, yN = C[0] + tip[0] * 1.0, C[1] + tip[1] * 1.0
+        # « N » placé au-delà de la pointe, hors du cercle
+        dirn = rot2((0, 1), -ang)
+        xN, yN = C[0] + dirn[0] * (R + mm(2.2)), C[1] + dirn[1] * (R + mm(2.2)) - 0.35 * fN
+        g.append(P_txt(xN, yN, "N", fN, "middle", 0, True))
+        PL.texte(boite(xN, yN, MET.l("N", fN, True), fN, "middle", 0, 0, "N"), "cartouche", "cartouche « N »")
+        tx = cx + r + 0.28
+        yy = yb - hrow + 0.08
+        yy += 2.5 / 25.4
+        texte(tx, yy, "NORD", 2.5, True)
+        stxt = f"{f3(ang).replace('.', ',')}° (sens horaire depuis +y). Source : {nord.get('source') or '—'}"
+        if nord.get("photo"):
+            stxt += f" ({nord.get('photo')})"
+        for t in couper(stxt, 2.5 / CAP, (x1 - p - tx) * 25.4)[:4]:
+            yy += pas_s
+            texte(tx, yy, t, 2.5)
+        yb -= hrow
+
+    # --- Zone centrale : légende, repères, notes
+    ymax = yb - 0.06
+    ycur = y
+
+    def peut(h):
+        return ycur + h <= ymax
+
+    # Légende
+    ycur = cap("LÉGENDE", ycur)
+    sw, sh = 0.42, 0.11
+    lx = x0 + p + sw + 0.1
+    vis = getattr(F, "types_str", None)
+    neufs = getattr(F, "murs_neufs", False)
+    items = [("lourd", "Mur extérieur / fondation"), ("leger", "Mur intérieur (cloison)"),
+             ("poutre", "Poutre (au-dessus)"), ("axe", "Axe porteur d'origine"),
+             ("col", "Colonne"), ("sol", "Solives (sens)"),
+             ("approx", "Valeur estimée (mesurée sur l'image)"),
+             ("rep", "Voir registre des écarts dans RAPPORT.md"),
+             ("cote", "Cotes en pi-po (métrique en m)" if METRIQUE else "Cotes en pieds-pouces")]
+    if neufs:
+        items.insert(2, ("neuf", "Cloison projetée (nouvelle)"))
+        if getattr(F, "murs_verre", False):
+            items.insert(3, ("verre", "Cloison vitrée projetée"))
+        items[1] = ("leger", "Mur intérieur existant")
+    if vis is not None:   # n'expliquer que les symboles réellement dessinés sur cette feuille
+        besoin = {"poutre": "poutre", "axe": "axe", "col": "colonne", "sol": "solives"}
+        items = [it for it in items if it[0] not in besoin or besoin[it[0]] in vis]
+    if getattr(F, "limites", False):
+        items.append(("limite", "Limite de zone ouverte (aucun mur)"))
+    if "drain" in getattr(F, "types_legende", ()):
+        items.append(("drain", "Drain"))
+    if "panneau-electrique" in getattr(F, "types_legende", ()):
+        items.append(("panneau", "Panneau électrique"))
+    if getattr(F, "typ", False):
+        items.append(("vide", "(typ.) : libellé typique, vaut pour les éléments identiques"))
+    if not NOMS_PIECES and not DIMS_PIECES:
+        items.append(("vide", "Noms, dimensions et superficies des pièces : voir tableau_pieces.csv"))
+    elif getattr(F, "dims_omises", False):
+        items.append(("vide", "Petites pièces : nom seul ; dimensions et superficie dans tableau_pieces.csv" if NOMS_PIECES
+                      else "Noms des pièces, et dimensions des petites pièces : voir tableau_pieces.csv"))
+    for kind, t in items:
+        if not peut(0.2):
+            break
+        yc = ycur + 0.07
+        sx0, sx1 = x0 + p, x0 + p + sw
+        if kind == "lourd":
+            rect(sx0, yc - sh / 2, sx1, yc + sh / 2, "cart-lourd")
+        elif kind == "leger":
+            rect(sx0, yc - sh / 2 * 0.75, sx1, yc + sh / 2 * 0.75, "cart-leger")
+        elif kind == "neuf":
+            rect(sx0, yc - sh / 2 * 0.75, sx1, yc + sh / 2 * 0.75, "cart-neuf")
+        elif kind == "verre":
+            rect(sx0, yc - sh / 2 * 0.35, sx1, yc + sh / 2 * 0.35, "cart-neuf")
+            g.append(P_pl([S(sx0, yc), S(sx1, yc)], "ouv-fin"))
+        elif kind in ("poutre", "axe"):
+            g.append(P_pl([S(sx0, yc), S(sx1, yc)], "str-poutre" if kind == "poutre" else "str-axe"))
+        elif kind == "col":
+            a, b = S((sx0 + sx1) / 2 - 0.05, yc - 0.05), S((sx0 + sx1) / 2 + 0.05, yc + 0.05)
+            g.append(P_pl([a, (b[0], a[1]), b, (a[0], b[1])], "str", True))
+            g.append(P_pl([a, b], "str-fin"))
+            g.append(P_pl([(b[0], a[1]), (a[0], b[1])], "str-fin"))
+        elif kind == "sol":
+            A, B = S(sx0, yc), S(sx1, yc)
+            g.append(P_pl([A, B], "str-fin"))
+            ah, aw = mm(2.0), mm(0.8)
+            g.append(P_poly([[B, (B[0] - ah, B[1] + aw), (B[0] - ah, B[1] - aw)]], "str-plein"))
+            g.append(P_poly([[A, (A[0] + ah, A[1] + aw), (A[0] + ah, A[1] - aw)]], "str-plein"))
+        elif kind == "limite":
+            g.append(P_pl([S(sx0, yc), S(sx1, yc)], "limite-zone"))
+        elif kind == "drain":
+            dc_ = S((sx0 + sx1) / 2, yc); dr_ = mm(1.3); dk_ = dr_ * 0.7
+            g.append(P_cercle(dc_, dr_, "elem"))
+            g.append(P_pl([(dc_[0] - dk_, dc_[1] - dk_), (dc_[0] + dk_, dc_[1] + dk_)], "elem-fin"))
+            g.append(P_pl([(dc_[0] - dk_, dc_[1] + dk_), (dc_[0] + dk_, dc_[1] - dk_)], "elem-fin"))
+        elif kind == "panneau":
+            pa_, pb_ = S((sx0 + sx1) / 2 - 0.08, yc - 0.025), S((sx0 + sx1) / 2 + 0.08, yc + 0.025)
+            g.append(P_poly([[pa_, (pb_[0], pa_[1]), pb_, (pa_[0], pb_[1])]], "elem-plein"))
+        elif kind == "approx":
+            texte((sx0 + sx1) / 2, yc + 0.045, "≈", 3.0, True, "middle")
+        elif kind == "rep":
+            C = S((sx0 + sx1) / 2 - 0.04, yc + 0.01)
+            pr, tri, tb = marqueur_prims("n", C[0], C[1], mm)
+            g.extend(pr[:3])
+            ftxt = pr[3]
+            g.append(ftxt)
+            PL.texte(tb, "cartouche", "cartouche « ⚠n »")
+        elif kind == "cote":
+            A, B = S(sx0, yc + 0.03), S(sx1, yc + 0.03)
+            g.append(P_pl([A, B], "cote"))
+            tk = mm(C_TICK) / 2 / math.sqrt(2)
+            for T in (A, B):
+                g.append(P_pl([(T[0] - tk, T[1] - tk), (T[0] + tk, T[1] + tk)], "cote-tick"))
+        lg = couper(t, 2.5 / CAP, (x1 - p - lx) * 25.4)
+        for i_, t_ in enumerate(lg):
+            texte(lx, yc + 0.045 + i_ * pas_s, t_, 2.5)
+        ycur += 0.19 + (len(lg) - 1) * pas_s
+    ycur += 0.04
+    ligne([(x0, ycur), (x1, ycur)], "cart-l")
+    ycur += 0.06
+
+    # Repères de la feuille
+    if F.reperes:
+        ycur = cap("REPÈRES ⚠ SUR CETTE FEUILLE".replace("⚠ ", ""), ycur)
+        tronque = False
+        for n, rid, desc in F.reperes:
+            lignes = couper(f"{desc}", 2.5 / CAP, (L - 0.42) * 25.4)
+            if len(lignes) > 3:
+                lignes = lignes[:3]
+                der = lignes[-1].rstrip(" ,;.") + " …"
+                while lw(der, 2.5) > L - 0.42 and " " in der[:-2]:
+                    der = der[:-2].rsplit(" ", 1)[0].rstrip(" ,;.") + " …"
+                lignes[-1] = der
+            lignes[-1] = lignes[-1]
+            if rid:
+                lignes.append(f"[{rid} — voir RAPPORT.md]")
+            h = len(lignes) * pas_s + 0.05
+            if not peut(h + 0.05):
+                tronque = True
+                break
+            C = S(x0 + p + 0.09, ycur + 0.06)
+            pr, tri, tb = marqueur_prims(n, C[0], C[1], mm)
+            g.extend(pr)
+            PL.texte(tb, "cartouche", f"cartouche « ⚠{n} »")
+            yy = ycur
+            for t in lignes:
+                yy += 2.5 / 25.4
+                texte(x0 + p + 0.42, yy, t, 2.5)
+                yy += pas_s - 2.5 / 25.4
+            ycur += h
+        if tronque and peut(0.12):
+            ycur += 2.5 / 25.4
+            texte(x0 + p, ycur, "… liste complète : donnees/verifications.txt", 2.5)
+            ycur += 0.06
+        ycur += 0.03
+        ligne([(x0, ycur), (x1, ycur)], "cart-l")
+        ycur += 0.06
+    # Notes
+    notes = [n_ for n_ in (niv.get("notes") or []) if isinstance(n_, dict)]
+    if notes and peut(0.3):
+        ycur = cap(projet.get("titre_notes") or "NOTES DU PLAN D'ORIGINE (traduites)", ycur)
+        for i, n_ in enumerate(notes, 1):
+            t = str(n_.get("interpretation") or n_.get("texte_original") or "")
+            if n_.get("texte_original") and n_.get("interpretation"):
+                t += f" [« {n_.get('texte_original')} »]"
+            lignes = couper(f"{i}. {t}", 2.5 / CAP, L * 25.4)
+            h = len(lignes) * pas_s
+            if not peut(h):
+                if peut(0.12):
+                    ycur += 2.5 / 25.4
+                    texte(x0 + p, ycur, "… autres notes : voir maison.json", 2.5)
+                break
+            for t2 in lignes:
+                ycur += 2.5 / 25.4
+                texte(x0 + p, ycur, t2, 2.5)
+                ycur += pas_s - 2.5 / 25.4
+            ycur += 0.03
+
+
+# ---------------------------------------------------------------------------
+# Sortie SVG
+# ---------------------------------------------------------------------------
+def css(k):
+    def mm(v):
+        return v / 25.4 * k
+    out = []
+    for nom, (fill, stroke, sw, dash) in STYLES.items():
+        r = [f"fill:{fill or 'none'}"]
+        if stroke:
+            r += [f"stroke:{stroke}", f"stroke-width:{f3(mm(sw))}", "stroke-linecap:butt", "stroke-linejoin:miter"]
+            if dash:
+                r.append("stroke-dasharray:" + ",".join(f3(mm(d)) for d in dash))
+        else:
+            r.append("stroke:none")
+        out.append(f".{nom}{{{';'.join(r)}}}")
+    return "\n".join(out)
+
+
+def svg_feuille(F, projet):
+    k, X0, Y0 = F.k, F.X0, F.Y0
+
+    def X(x):
+        return f3(X0 + x)
+
+    def Y(y):
+        return f3(Y0 - y)
+
+    def pts(lst):
+        return " ".join(f"{X(a)},{Y(b)}" for a, b in lst)
+
+    o = ['<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+         '<svg xmlns="http://www.w3.org/2000/svg" '
+         'xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" '
+         'xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" '
+         f'width="17in" height="11in" viewBox="0 0 {f3(FEUILLE_L * k)} {f3(FEUILLE_H * k)}" version="1.1">',
+         f"<title>{esc(F.feuille)} — {esc(F.nom)} — {esc(projet.get('nom') or '')}</title>",
+         f"<desc>Relevé de l'existant — préliminaire. Échelle {esc(F.echelle)} ; 1 unité = 1 po réel. "
+         f"Révision {esc(projet.get('revision') or '')}, {esc(projet.get('date') or '')}.</desc>",
+         '<sodipodi:namedview id="namedview" pagecolor="#ffffff" bordercolor="#666666" '
+         'inkscape:document-units="in" showgrid="false"/>',
+         "<defs><style type=\"text/css\">", css(k), "</style></defs>"]
+    for cal in CALQUES:
+        o.append(f'<g inkscape:groupmode="layer" inkscape:label="{cal}" id="{cal}">')
+        for gid, prims in F.dessin.groupes[cal]:
+            if not prims:
+                continue
+            if gid:
+                o.append(f'<g id="{esc(gid)}">')
+            for p in prims:
+                k_ = p["k"]
+                if k_ == "pl":
+                    tag = "polygon" if p["ferme"] else "polyline"
+                    o.append(f'<{tag} class="{p["st"]}" points="{pts(p["pts"])}"/>')
+                elif k_ == "poly":
+                    d = " ".join("M " + " L ".join(f"{X(a)} {Y(b)}" for a, b in r) + " Z" for r in p["rings"] if len(r) >= 3)
+                    o.append(f'<path class="{p["st"]}" fill-rule="evenodd" d="{d}"/>')
+                elif k_ == "arc":
+                    c, r, a0, da = p["c"], p["r"], p["a0"], p["da"]
+                    s = (c[0] + r * math.cos(math.radians(a0)), c[1] + r * math.sin(math.radians(a0)))
+                    e = (c[0] + r * math.cos(math.radians(a0 + da)), c[1] + r * math.sin(math.radians(a0 + da)))
+                    big = 1 if abs(da) > 180 else 0
+                    sweep = 0 if da > 0 else 1
+                    o.append(f'<path class="{p["st"]}" d="M {X(s[0])} {Y(s[1])} A {f3(r)} {f3(r)} 0 {big} {sweep} '
+                             f'{X(e[0])} {Y(e[1])}"/>')
+                elif k_ == "cercle":
+                    o.append(f'<circle class="{p["st"]}" cx="{X(p["c"][0])}" cy="{Y(p["c"][1])}" r="{f3(p["r"])}"/>')
+                elif k_ == "txt":
+                    x, y = X(p["x"]), Y(p["y"])
+                    tr = f' transform="rotate({f3(-p["rot"])} {x} {y})"' if abs(p["rot"]) > 1e-9 else ""
+                    gr = ' font-weight="bold"' if p["gras"] else ""
+                    o.append(f'<text x="{x}" y="{y}" font-family="{POLICE}" font-size="{f3(p["f"])}"{gr} '
+                             f'text-anchor="{p["ancre"]}" fill="{p["coul"]}"{tr}>{esc(p["s"])}</text>')
+            if gid:
+                o.append("</g>")
+        o.append("</g>")
+    o.append("</svg>")
+    return "\n".join(o) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# Sortie DXF
+# ---------------------------------------------------------------------------
+LW_OK = [0, 5, 9, 13, 15, 18, 20, 25, 30, 35, 40, 50, 53, 60, 70, 80, 90, 100, 106, 120, 140, 158, 200, 211]
+
+
+def dxf_feuille(F, chemin):
+    import ezdxf
+    from ezdxf.enums import TextEntityAlignment
+    from ezdxf import const
+    ezdxf.options.write_fixed_meta_data_for_testing = True
+    k = F.k
+    doc = ezdxf.new("R2010", setup=True)
+    doc.header["$INSUNITS"] = 1
+    doc.header["$MEASUREMENT"] = 0
+    doc.header["$LUNITS"] = 4
+    doc.header["$LTSCALE"] = 1.0
+    doc.appids.add("RELEVE")
+    for cal in CALQUES:
+        lay = doc.layers.add(cal, color=7)
+        if cal == "70-Incertitudes":
+            lay.color = 30
+            lay.rgb = (0xE8, 0x73, 0x0C)
+    if "RELEVE" not in doc.styles:
+        doc.styles.add("RELEVE", font="arial.ttf")
+        doc.styles.add("RELEVE_GRAS", font="arialbd.ttf")
+    lts = set(lt.dxf.name for lt in doc.linetypes)
+    msp = doc.modelspace()
+
+    def rgb(hexa):
+        return tuple(int(hexa[i:i + 2], 16) for i in (1, 3, 5))
+
+    def attrs(cal, st, trait=True):
+        fill, stroke, sw, dash = STYLES[st]
+        a = {"layer": cal}
+        coul = stroke if trait else fill
+        if coul and coul.upper() == ORANGE:
+            a["color"] = 30
+            a["true_color"] = ezdxf.colors.rgb2int(rgb(ORANGE))
+        elif coul and coul not in ("#000000",):
+            a["true_color"] = ezdxf.colors.rgb2int(rgb(coul))
+        else:
+            a["color"] = 7
+        if trait and sw:
+            v = int(round(sw * 100))
+            a["lineweight"] = min(LW_OK, key=lambda z: abs(z - v))
+        if trait and st in DXF_LT and DXF_LT[st][0] in lts:
+            nom, lng = DXF_LT[st]
+            base = {"DASHED": 0.75, "DASHDOT": 1.0, "HIDDEN": 0.375}[nom]
+            a["linetype"] = nom
+            a["ltscale"] = (lng / 25.4 * k) / base
+        return a
+
+    def xd(e, gid):
+        if gid:
+            e.set_xdata("RELEVE", [(1000, gid)])
+
+    for cal in CALQUES:
+        for gid, prims in F.dessin.groupes[cal]:
+            for p in prims:
+                st = p.get("st")
+                k_ = p["k"]
+                if k_ == "pl":
+                    if STYLES[st][1] is None:
+                        continue
+                    e = msp.add_lwpolyline(p["pts"], close=p["ferme"], dxfattribs=attrs(cal, st))
+                    xd(e, gid)
+                elif k_ == "poly":
+                    fill, stroke = STYLES[st][0], STYLES[st][1]
+                    if fill and fill.upper() != "#FFFFFF":
+                        a = attrs(cal, st, trait=False)
+                        h = msp.add_hatch(dxfattribs={"layer": cal})
+                        h.set_solid_fill(color=a.get("color", 7), rgb=rgb(fill))
+                        for i, r in enumerate(p["rings"]):
+                            if len(r) >= 3:
+                                h.paths.add_polyline_path(r, is_closed=True,
+                                                          flags=const.BOUNDARY_PATH_EXTERNAL if i == 0 else const.BOUNDARY_PATH_DEFAULT)
+                        xd(h, gid)
+                    if stroke:
+                        for r in p["rings"]:
+                            e = msp.add_lwpolyline(r, close=True, dxfattribs=attrs(cal, st))
+                            xd(e, gid)
+                elif k_ == "arc":
+                    a0, da = p["a0"], p["da"]
+                    s_, e_ = (a0, a0 + da) if da > 0 else (a0 + da, a0)
+                    e = msp.add_arc(p["c"], p["r"], s_ % 360, e_ % 360, dxfattribs=attrs(cal, st))
+                    xd(e, gid)
+                elif k_ == "cercle":
+                    fill, stroke = STYLES[st][0], STYLES[st][1]
+                    if stroke:
+                        e = msp.add_circle(p["c"], p["r"], dxfattribs=attrs(cal, st))
+                        xd(e, gid)
+                    elif fill and fill.upper() != "#FFFFFF":
+                        h = msp.add_hatch(dxfattribs={"layer": cal})
+                        h.set_solid_fill(color=30 if fill.upper() == ORANGE else 7, rgb=rgb(fill))
+                        h.paths.add_polyline_path(ellipse(p["c"][0], p["c"][1], p["r"], p["r"], 16), is_closed=True)
+                        xd(h, gid)
+                elif k_ == "txt":
+                    a = {"layer": cal, "style": "RELEVE_GRAS" if p["gras"] else "RELEVE"}
+                    if p["coul"].upper() == ORANGE:
+                        a["color"] = 30
+                        a["true_color"] = ezdxf.colors.rgb2int(rgb(ORANGE))
+                    else:
+                        a["color"] = 7
+                    e = msp.add_text(p["s"], height=p["f"] * CAP, rotation=p["rot"], dxfattribs=a)
+                    al = {"start": TextEntityAlignment.LEFT, "middle": TextEntityAlignment.CENTER,
+                          "end": TextEntityAlignment.RIGHT}[p["ancre"]]
+                    e.set_placement((p["x"], p["y"]), align=al)
+                    xd(e, gid)
+    texte = dxf_texte_normalise(doc)
+    # contrôle : l'ordre initial des classes (qui dépend du hachage de Python dans ezdxf) ne doit pas compter
+    from collections import OrderedDict
+    doc.classes.classes = OrderedDict(reversed(list(doc.classes.classes.items())))
+    texte2 = dxf_texte_normalise(doc)
+    with open(chemin, "wt", encoding=doc.output_encoding, errors="dxfreplace", newline="\n") as f:
+        f.write(texte)
+    return hashlib.sha256(texte.encode("utf-8")).hexdigest(), texte == texte2
+
+
+def dxf_texte_normalise(doc):
+    """Texte DXF déterministe : la section CLASSES d'ezdxf est remplie depuis un ensemble (ordre dépendant de
+    PYTHONHASHSEED) ; on la complète puis on la trie avant l'écriture."""
+    from collections import OrderedDict
+    doc.classes.add_required_classes(doc.dxfversion)
+    doc.classes.classes = OrderedDict(sorted(doc.classes.classes.items()))
+    s = io.StringIO()
+    doc.write(s)
+    return s.getvalue()
+
+
+# ---------------------------------------------------------------------------
+# Tableau des pièces, bilan de surface, chaînes
+# ---------------------------------------------------------------------------
+def lignes_csv(F, niv, verif):
+    rows = []
+    hp_niv = niv.get("hauteur_plafond")
+    for d, poly in F.pieces:
+        pid = str(d.get("id"))
+        dims = d.get("dimensions") if isinstance(d.get("dimensions"), dict) else {}
+        minx, miny, maxx, maxy = poly.bounds
+        vx, vy = num(dims.get("x")), num(dims.get("y"))
+        srcs = []
+        if vx is None:
+            vx = maxx - minx
+            srcs.append("DÉDUIT")
+        else:
+            srcs.append(src(dims.get("x")) or "DÉDUIT")
+        if vy is None:
+            vy = maxy - miny
+            srcs.append("DÉDUIT")
+        else:
+            srcs.append(src(dims.get("y")) or "DÉDUIT")
+        sup = d.get("superficie") if isinstance(d.get("superficie"), dict) else {}
+        a_poly = poly.area / 144
+        a = num(sup)
+        if a is None:
+            a = a_poly
+            srcs.append("DÉDUIT")
+        else:
+            srcs.append(src(sup) or "DÉDUIT")
+            if abs(a - a_poly) > 1.0:
+                verif.add("Pièces", "AVERT", f"[{F.nid}] {pid} : superficie déclarée {fr(a, 1)} pi² ≠ "
+                                             f"polygone {fr(a_poly, 1)} pi²")
+        hp = d.get("hauteur_plafond")
+        h = num(hp)
+        if h is None:
+            h = num(hp_niv)
+        per = poly.exterior.length
+        np_, nf = 0, 0
+        for o in F.ouvs:
+            c = Point(o.mur.pt(o.pos))
+            if poly.exterior.distance(c) <= o.mur.t / 2 + 1.0:
+                if o.type == "fenetre":
+                    nf += 1
+                elif o.est_porte():
+                    np_ += 1
+        lg, la = max(vx, vy), min(vx, vy)
+        rows.append([F.nid, pid, str(d.get("nom") or ""), pipo(lg), pipo(la), fr(a, 2), fr(a * 0.09290304, 2),
+                     pipo(per), pipo(h) if h else "", fr(per * h / 144, 2) if h else "", str(np_), str(nf),
+                     pire_source(srcs)])
+    return rows
+
+
+def bilan_surface(F, verif):
+    murs = F.murs
+    if not murs and not F.pieces:
+        return
+    emp_m = unary_union([m.emprise() for m in murs]) if murs else Polygon()
+    pu = unary_union([p for _, p in F.pieces]) if F.pieces else Polygon()
+    tout = unary_union([emp_m, pu])
+    empreinte = unary_union([Polygon(p.exterior) for p in polys_de(tout)])
+    brute = empreinte.area / 144
+    sp = sum(p.area for _, p in F.pieces) / 144
+    am = emp_m.area / 144
+    chev = pu.intersection(emp_m).area / 144
+    ecart = brute - (sp + am - chev)
+    st = "OK" if abs(ecart) <= 1.0 and chev <= 1.0 else "AVERT"
+    verif.add("Bilan de surface", st,
+              f"[{F.nid}] brute (empreinte) {fr(brute, 1)} pi² ; Σ pièces {fr(sp, 1)} pi² + murs {fr(am, 1)} pi² "
+              f"− chevauchement pièces/murs {fr(chev, 1)} pi² = {fr(sp + am - chev, 1)} pi² ; écart {fr(ecart, 1)} pi²")
+    trous = empreinte.difference(emp_m).difference(pu) if not empreinte.is_empty else Polygon()
+    lst = sorted([t for t in polys_de(trous) if t.area > 144], key=lambda t: (-t.area, t.bounds))
+    for t in lst:
+        c = t.representative_point()
+        b = t.bounds
+        verif.add("Bilan de surface", "AVERT",
+                  f"[{F.nid}] trou (ni pièce ni mur) de {fr(t.area / 144, 1)} pi² vers x={f3(c.x)}, y={f3(c.y)} po "
+                  f"(boîte {f3(b[0])},{f3(b[1])} → {f3(b[2])},{f3(b[3])})")
+    if not lst:
+        verif.add("Bilan de surface", "OK", f"[{F.nid}] aucun trou > 1 pi² entre pièces et murs")
+
+
+def controle_chaines(F, verif):
+    for c in F.cotes:
+        va = num(c["l"].get("valeur_attendue"))
+        if va is not None and abs(va - c["longueur"]) > 0.5:
+            verif.add("Chaînes de cotes", "AVERT",
+                      f"[{F.nid}] {c['id']} : longueur dessinée {pipo(c['longueur'])} ({f3(c['longueur'])} po) ≠ "
+                      f"valeur attendue {pipo(va)} ({f3(va)} po), écart {f3(c['longueur'] - va)} po")
+    par = {}
+    for c in F.cotes:
+        if c["facade"] == "int":
+            continue
+        par.setdefault(c["facade"], {}).setdefault(c["rang"], []).append(c)
+    for fac in ("avant", "arriere", "gauche", "droite"):
+        if fac not in par:
+            continue
+        rangs = par[fac]
+        ht = max((c["longueur"] for c in rangs.get(3, [])), default=None)
+        for r in sorted(rangs):
+            ch = sorted(rangs[r], key=lambda c: c["c1"])
+            for a, b in zip(ch[:-1], ch[1:]):
+                if abs(b["c1"] - a["c2"]) > 0.5:
+                    verif.add("Chaînes de cotes", "AVERT", f"[{F.nid}] façade {fac}, rang {r} : discontinuité entre "
+                                                           f"{a['id']} et {b['id']} ({f3(b['c1'] - a['c2'])} po)")
+            if r == 3 or ht is None:
+                continue
+            s = sum(c["longueur"] for c in ch)
+            if abs(s - ht) <= 0.5:
+                verif.add("Chaînes de cotes", "OK", f"[{F.nid}] façade {fac}, rang {r} : Σ = {pipo(s)} = hors-tout {pipo(ht)}")
+            else:
+                verif.add("Chaînes de cotes", "AVERT", f"[{F.nid}] façade {fac}, rang {r} : Σ = {pipo(s)} ({f3(s)} po) "
+                                                       f"≠ hors-tout {pipo(ht)} ({f3(ht)} po), écart {f3(s - ht)} po")
+        if ht is None:
+            verif.add("Chaînes de cotes", "INFO", f"[{F.nid}] façade {fac} : aucune cote hors-tout (rang 3)")
+
+
+def controle_ids(data, verif):
+    vus = {}
+    def ajoute(i, ou):
+        if i is None:
+            return
+        vus.setdefault(str(i), []).append(ou)
+    for n in data.get("niveaux") or []:
+        nid = n.get("id")
+        ajoute(nid, "niveau")
+        for cle in ("murs", "ouvertures", "pieces", "elements", "structure", "cotes", "notes", "lignes_cote",
+                    "murs_retires", "ouvertures_retirees", "elements_retires", "limites_zones"):
+            for x in n.get(cle) or []:
+                if isinstance(x, dict):
+                    ajoute(x.get("id"), f"{nid}/{cle}")
+    for e in data.get("ecarts") or []:
+        ajoute(e.get("id"), "ecarts")
+    dup = {k: v for k, v in vus.items() if len(v) > 1}
+    for k in sorted(dup):
+        verif.add("Identifiants", "ERREUR", f"id dupliqué « {k} » ({', '.join(dup[k])})")
+    if not dup:
+        verif.add("Identifiants", "OK", f"{len(vus)} identifiants, aucun doublon")
+
+
+# ---------------------------------------------------------------------------
+# Programme principal
+# ---------------------------------------------------------------------------
+def numeroter(data, verif):
+    ecarts = [e for e in (data.get("ecarts") or []) if isinstance(e, dict)]
+    num_ecart = {}
+    for i, e in enumerate(ecarts, 1):
+        m = re.search(r"(\d+)", str(e.get("id") or ""))
+        num_ecart[str(e.get("id"))] = int(m.group(1)) if m else i
+    ouverts = set()
+    for e in ecarts:
+        st = sans_accents(str(e.get("statut") or "ouvert")).strip().lower()
+        if st == "ouvert":
+            ouverts.add(num_ecart[str(e.get("id"))])
+    return {"ecarts": ecarts, "num_ecart": num_ecart, "ouverts": ouverts}
+
+
+def main(argv=None):
+    ici = os.path.dirname(os.path.abspath(__file__))
+    ap = argparse.ArgumentParser(description="Génère les plans du relevé de l'existant à partir de maison.json.")
+    ap.add_argument("--json", default=None, help="fichier maison.json (défaut : ../donnees/maison.json)")
+    ap.add_argument("--sortie", default=None, help="dossier racine des livrables (défaut : ..)")
+    args = ap.parse_args(argv)
+    chemin_json = os.path.abspath(args.json) if args.json else os.path.normpath(os.path.join(ici, "..", "donnees", "maison.json"))
+    sortie = os.path.abspath(args.sortie) if args.sortie else os.path.normpath(os.path.join(ici, ".."))
+    if not os.path.isfile(chemin_json):
+        print(f"ERREUR : fichier introuvable : {chemin_json}", file=sys.stderr)
+        return 2
+    brut = open(chemin_json, "rb").read()
+    try:
+        data = json.loads(brut.decode("utf-8-sig"))
+    except Exception as e:
+        print(f"ERREUR : JSON invalide ({e})", file=sys.stderr)
+        return 2
+    projet = data.get("projet") or {}
+    # projet.affichage.noms_pieces = false : aucun nom de pièce sur les plans (ils restent dans maison.json et le CSV)
+    global NOMS_PIECES, DIMS_PIECES, METRIQUE, TEXTES_STRUCTURE
+    TEXTES_STRUCTURE = bool(((projet.get("affichage") or {}).get("textes_structure", True)))
+    METRIQUE = bool(((projet.get("affichage") or {}).get("metrique", True)))
+    NOMS_PIECES = bool(((projet.get("affichage") or {}).get("noms_pieces", True)))
+    DIMS_PIECES = bool(((projet.get("affichage") or {}).get("dimensions_pieces", True)))
+    verif = Verif()
+    controle_ids(data, verif)
+    ctx = numeroter(data, verif)
+
+    for sous in ("svg", "pdf", "png", "dxf", "donnees"):
+        os.makedirs(os.path.join(sortie, sous), exist_ok=True)
+
+    feuilles = []
+    lignes = []
+    for i, niv in enumerate(data.get("niveaux") or []):
+        if not isinstance(niv, dict):
+            continue
+        F = construire(niv, i, projet, ctx, verif)
+        bilan_surface(F, verif)
+        controle_chaines(F, verif)
+        lignes += lignes_csv(F, niv, verif)
+        feuilles.append((F, niv))
+
+    # repères (registre)
+    for e in ctx["ecarts"]:
+        n = ctx["num_ecart"][str(e.get("id"))]
+        pos = " (positionné)" if isinstance(e.get("position"), list) else ""
+        verif.add("Repères d'incertitude", "INFO", f"⚠{n} = {e.get('id')} [{e.get('niveau')}, impact {e.get('impact')}]{pos} : "
+                                                   f"{e.get('description')}")
+
+    # --- écritures
+    import cairosvg
+    from pypdf import PdfReader, PdfWriter
+    produits = []
+    pdf_pages = []
+    for F, niv in feuilles:
+        base = f"{F.feuille}_{F.slug}"
+        svg = svg_feuille(F, projet)
+        p_svg = os.path.join(sortie, "svg", base + ".svg")
+        with open(p_svg, "w", encoding="utf-8", newline="\n") as f:
+            f.write(svg)
+        p_png = os.path.join(sortie, "png", base + ".png")
+        png = cairosvg.svg2png(bytestring=svg.encode("utf-8"), dpi=150)
+        from PIL import Image
+        Image.open(io.BytesIO(png)).save(p_png, format="PNG", dpi=(150, 150))
+        pdf_pages.append(cairosvg.svg2pdf(bytestring=svg.encode("utf-8")))
+        p_dxf = os.path.join(sortie, "dxf", base + ".dxf")
+        h, ok = dxf_feuille(F, p_dxf)
+        verif.add("Reproductibilité", "OK" if ok else "ERREUR",
+                  f"[{F.nid}] DXF {base}.dxf : sha256 {h[:16]}… "
+                  + ("identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)" if ok
+                     else "DIFFÉRENT selon l'ordre interne des classes — non reproductible"))
+        produits += [p_svg, p_png, p_dxf]
+    p_pdf = os.path.join(sortie, "pdf", projet.get("nom_pdf") or "plans_existants.pdf")
+    w = PdfWriter()
+    for b in pdf_pages:
+        r = PdfReader(io.BytesIO(b))
+        for pg in r.pages:
+            w.add_page(pg)
+    dt = re.sub(r"\D", "", str(projet.get("date") or ""))[:8] or "20000101"
+    w.add_metadata({"/Title": f"Plans de l'existant — {projet.get('nom') or ''}",
+                    "/Subject": f"Relevé de l'existant, révision {projet.get('revision') or ''}",
+                    "/Producer": "generer_plans.py", "/Creator": "generer_plans.py",
+                    "/CreationDate": f"D:{dt}000000", "/ModDate": f"D:{dt}000000"})
+    buf = io.BytesIO()
+    w.write(buf)
+    with open(p_pdf, "wb") as f:
+        f.write(buf.getvalue())
+    produits.append(p_pdf)
+
+    # CSV
+    p_csv = os.path.join(sortie, "donnees", "tableau_pieces.csv")
+    s = io.StringIO()
+    cw = csv.writer(s, delimiter=";", lineterminator="\r\n")
+    cw.writerow(["niveau", "piece_id", "piece", "longueur", "largeur", "superficie_pi2", "superficie_m2", "perimetre",
+                 "hauteur_plafond", "surface_murale_brute_pi2", "nb_portes", "nb_fenetres", "fiabilite"])
+    for r in lignes:
+        cw.writerow(r)
+    with open(p_csv, "wb") as f:
+        f.write(s.getvalue().encode("utf-8-sig"))
+    produits.append(p_csv)
+
+    # Rapport
+    p_ver = os.path.join(sortie, "donnees", "verifications.txt")
+    rap = rapport(verif, projet, brut, feuilles)
+    with open(p_ver, "w", encoding="utf-8", newline="\n") as f:
+        f.write(rap)
+    produits.append(p_ver)
+
+    # Résumé écran
+    print(f"Relevé : {projet.get('nom') or '(sans nom)'} — révision {projet.get('revision') or '?'} ({projet.get('date') or '?'})")
+    for F, _ in feuilles:
+        print(f"  {F.feuille} {F.nom} : échelle {F.echelle}, {len(F.murs)} murs, {len(F.ouvs)} ouvertures, "
+              f"{len(F.pieces)} pièces, {len(F.cotes)} cotes")
+    print("Contrôles :")
+    for sct in SECTIONS:
+        c = verif.compte(sct)
+        etat = "ERREUR" if c["ERREUR"] else ("AVERT." if c["AVERT"] else "OK")
+        print(f"  {sct:<28} {etat:<7} ({c['ERREUR']} erreur(s), {c['AVERT']} avertissement(s))")
+    print("Fichiers :")
+    for p in produits:
+        print("  " + os.path.relpath(p, sortie))
+    print(f"Détails : {os.path.relpath(p_ver, sortie)}")
+    # RAPPORT.md (registre des écarts, mesures à prendre) — régénéré avec le reste
+    p_rap = os.path.join(ici, "generer_rapport.py")
+    if os.path.isfile(p_rap) and not projet.get("proposition"):
+        subprocess.run([sys.executable, p_rap, "--json", chemin_json, "--sortie", sortie], check=True)
+    # page d'annotation (annotateur/annotateur.html), seulement pour les livrables par défaut
+    p_ann = os.path.join(ici, "generer_annotateur.py")
+    if os.path.isfile(p_ann) and not args.json and not args.sortie:
+        subprocess.run([sys.executable, p_ann], check=True)
+    return 0
+
+
+def rapport(verif, projet, brut, feuilles):
+    o = []
+    o.append("RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS")
+    o.append("=" * 72)
+    o.append(f"Projet   : {projet.get('nom') or ''}")
+    o.append(f"Révision : {projet.get('revision') or ''}    Date : {projet.get('date') or ''}")
+    o.append(f"Données  : maison.json, sha256 {hashlib.sha256(brut).hexdigest()}")
+    o.append("Feuilles : " + " ; ".join(f"{F.feuille} {F.nom} ({F.echelle})" for F, _ in feuilles))
+    o.append("")
+    o.append("SOMMAIRE")
+    for s in SECTIONS:
+        c = verif.compte(s)
+        etat = "ERREUR" if c["ERREUR"] else ("AVERT." if c["AVERT"] else "OK")
+        o.append(f"  {s:<28} {etat:<7} {c['ERREUR']} erreur(s), {c['AVERT']} avertissement(s)")
+    o.append("")
+    for i, s in enumerate(SECTIONS, 1):
+        o.append(f"{i}. {s.upper()}")
+        o.append("-" * 72)
+        if not verif.items[s]:
+            o.append("  (rien à signaler)")
+        for st, msg in verif.items[s]:
+            o.append(f"  [{st}] {msg}")
+        o.append("")
+    o.append("Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.")
+    return "\n".join(o) + "\n"
+
+
+if __name__ == "__main__":
+    sys.exit(main())

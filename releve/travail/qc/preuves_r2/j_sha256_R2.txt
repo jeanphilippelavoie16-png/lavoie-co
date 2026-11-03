@@ -1,0 +1,22 @@
+seed=1 exit=0
+seed=12345 exit=0
+seed=random exit=0
+./RAPPORT.md livré=326525ef03fe4079 s1=326525ef03fe4079 s12345=326525ef03fe4079 alea=326525ef03fe4079
+./donnees/maison.json livré=40fabadefa41471b s1=40fabadefa41471b s12345=40fabadefa41471b alea=40fabadefa41471b
+./donnees/tableau_pieces.csv livré=7f30b79552fcc15d s1=7f30b79552fcc15d s12345=7f30b79552fcc15d alea=7f30b79552fcc15d
+./donnees/verifications.txt livré=c8cf9b70a3a3693b s1=c8cf9b70a3a3693b s12345=c8cf9b70a3a3693b alea=c8cf9b70a3a3693b
+./dxf/A-100_sous-sol.dxf livré=0225685b1439526c s1=0225685b1439526c s12345=0225685b1439526c alea=0225685b1439526c
+./dxf/A-101_rdc.dxf livré=abdd3c9a99c7bf20 s1=abdd3c9a99c7bf20 s12345=abdd3c9a99c7bf20 alea=abdd3c9a99c7bf20
+./outils/README.md livré=027f0f90caeb4818 s1=027f0f90caeb4818 s12345=027f0f90caeb4818 alea=027f0f90caeb4818
+./outils/exemple_factice.json livré=8574fed546b51beb s1=8574fed546b51beb s12345=8574fed546b51beb alea=8574fed546b51beb
+./outils/generer_plans.py livré=280823e8019dc66e s1=280823e8019dc66e s12345=280823e8019dc66e alea=280823e8019dc66e
+./outils/generer_rapport.py livré=13b6196d9f567e09 s1=13b6196d9f567e09 s12345=13b6196d9f567e09 alea=13b6196d9f567e09
+./outils/pretraitement.py livré=7719627e90172b7b s1=7719627e90172b7b s12345=7719627e90172b7b alea=7719627e90172b7b
+./pdf/plans_existants.pdf livré=4eff1a02de92a7b3 s1=4eff1a02de92a7b3 s12345=4eff1a02de92a7b3 alea=4eff1a02de92a7b3
+./png/A-100_sous-sol.png livré=1da8e712d5fa518b s1=1da8e712d5fa518b s12345=1da8e712d5fa518b alea=1da8e712d5fa518b
+./png/A-101_rdc.png livré=d88270b24c76f714 s1=d88270b24c76f714 s12345=d88270b24c76f714 alea=d88270b24c76f714
+./svg/A-100_sous-sol.svg livré=ec158f5e98af14b5 s1=ec158f5e98af14b5 s12345=ec158f5e98af14b5 alea=ec158f5e98af14b5
+./svg/A-101_rdc.svg livré=7e19b580cefdea93 s1=7e19b580cefdea93 s12345=7e19b580cefdea93 alea=7e19b580cefdea93
+aleaa d78788de490487ce
+aleab d78788de490487ce
+aleac d78788de490487ce
