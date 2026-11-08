@@ -67,8 +67,8 @@
     "description": "Plan d'implantation de la maison projetée sur le lot 1-487, Ville de Baie-Comeau, éch. 1\" = 20', 6 nov. 1957, flèche du nord"
    }
   ],
-  "date": "2026-11-01",
-  "revision": "A",
+  "date": "2026-11-08",
+  "revision": "B",
   "affichage": {
    "noms_pieces": true,
    "dimensions_pieces": true,
@@ -372,7 +372,7 @@
   },
   "proposition": "MAISON-18",
   "titre_notes": "NOTES DE LA PROPOSITION",
-  "mention": "PROPOSITION MAISON-18 — LES DEUX ÉTAGES : GRANDE ENTRÉE VITRÉE, CHAMBRE KING, BUREAU-GAMING — ESQUISSE À VALIDER",
+  "mention": "PLAN FINAL MAISON-18 — LES DEUX ÉTAGES : GRANDE ENTRÉE VITRÉE, CHAMBRE KING, BUREAU ASSIS-DEBOUT",
   "nom_pdf": "MAISON-18_deux_etages.pdf",
   "base": "copie de releve/livrables/donnees/maison.json (plans de base R0, commit 59ac401)"
  },
@@ -7277,7 +7277,8 @@
        "photo": "P4",
        "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
       }
-     }
+     },
+     "etiquette": false
     },
     {
      "id": "piece-RDC-UTI",
@@ -11049,7 +11050,7 @@
      "id": "note-RDC-P05",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Bureau-gaming (ancienne chambre avant) : 2 postes face à la fenêtre avant."
+     "interpretation": "Bureau (ancienne chambre avant) : 2 bureaux assis-debout en chêne blanc face à la fenêtre avant."
     },
     {
      "id": "note-RDC-P06",

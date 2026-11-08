@@ -1,5 +1,8 @@
 # MAISON-18 — Le visiteur qui cogne à la porte (« JULIEEEEE ! »)
 
+> **Retiré de la visite le 2026-11-08**, à la demande du client : « Enlève la personne qui cogne à la porte ». Le module
+> `visiteur.py` reste dans le dossier ; pour le ramener, remettre `"visiteur"` dans `FINALE` (`scene_3d.py`).
+
 Demande du client (2026-11-02), mot pour mot : « je veux aussi que tu ajoutes un personnage qui cogne à la porte pi qui crie
 "JULIEEEEE" » ; « un vieux monsieur » ; [photo] « faut qu'il ressemble à lui » ; « il faut qu'il ait une bedaine aussi, pi il
 cogne, il crie et il rentre dans la maison. Il recrie Julie et lâche un gros pet ».

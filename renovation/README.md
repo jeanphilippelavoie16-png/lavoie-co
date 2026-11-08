@@ -13,6 +13,11 @@
 ## Régénérer
     python3 renovation/outils/construire_projet.py renovation/SS-01_amenagement_sous-sol
 
+Plan final (toutes les feuilles sur une page, l'étage le plus haut en haut, avec le lien de la visite 3D et son code QR),
+à relancer après `construire_projet.py` : écrit `pdf/<proposition>_plan_final.pdf` et l'aperçu `png/<proposition>_plan_final.png`.
+
+    python3 renovation/outils/plan_final.py renovation/MAISON-18_deux_etages --lien https://claude.ai/artifact/BcvbdKVk2VjTxMswm2JYLC
+
 ## Projets
 | Code | Projet | État |
 |---|---|---|

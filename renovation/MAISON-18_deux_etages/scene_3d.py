@@ -68,7 +68,9 @@ if os.path.isfile(os.path.join(ICI, "exterieur.py")) and "etages" in SCENE:
 
 # modules qui s'appliquent à la maquette complète, extérieur compris (fleuve et traversier, visiteur) :
 # appliquer_scene_finale(SCENE), SCENE à deux étages avec SCENE["exterieur"]
-FINALE = ["fleuve", "visiteur"]
+# le visiteur (visiteur.py) est retiré à la demande du client (2026-11-08 : « enlève la personne qui cogne à la porte ») ;
+# le module reste dans le dossier : remettre "visiteur" dans la liste pour le ramener
+FINALE = ["fleuve"]
 if "etages" in SCENE:
     for _z in FINALE:
         if os.path.isfile(os.path.join(ICI, _z + ".py")):

@@ -45,9 +45,16 @@ def appliquer(maison):
             if hasattr(mz, "appliquer_modifs_rdc"):
                 mz.appliquer_modifs_rdc(maison, ctx)
     p = maison["projet"]
-    p.update({"proposition": "MAISON-18", "revision": "A", "date": "2026-11-01", "titre_notes": "NOTES DE LA PROPOSITION",
-              "mention": "PROPOSITION MAISON-18 — LES DEUX ÉTAGES : GRANDE ENTRÉE VITRÉE, CHAMBRE KING, BUREAU-GAMING — ESQUISSE À VALIDER",
+    # révision B (2026-11-08) : plan final demandé par le client (« fais-moi le plan final ») ; les points de structure, de
+    # coupe-feu et d'évacuation restent à valider avec la Ville et un professionnel (notes des feuilles)
+    p.update({"proposition": "MAISON-18", "revision": "B", "date": "2026-11-08", "titre_notes": "NOTES DE LA PROPOSITION",
+              "mention": "PLAN FINAL MAISON-18 — LES DEUX ÉTAGES : GRANDE ENTRÉE VITRÉE, CHAMBRE KING, BUREAU ASSIS-DEBOUT",
               "nom_pdf": "MAISON-18_deux_etages.pdf"})
+    # étiquette de la G.R. 3 (placard existant du coin café) retirée : posée hors de sa pièce, elle se collait à celle de la
+    # garde-robe des parents (« G.R. 3G.R. » sur la feuille P-130, révision A) ; le placard reste dessiné
+    for pc in rdc.get("pieces") or []:
+        if pc.get("id") == "piece-RDC-GRU":
+            pc["etiquette"] = False
     _niv(maison, "SS")["feuille"], _niv(maison, "SS")["nom"] = "P-129", "Sous-sol proposé"
     rdc["feuille"], rdc["nom"] = "P-130", "Rez-de-chaussée proposé"
     # notes de la feuille P-130 (le cartouche en tient 6) : le détail est dans DESIGN.md
@@ -56,7 +63,7 @@ def appliquer(maison):
         "Grande entrée ouverte : garde-robes du hall enlevées ; escalier entouré d'un garde-corps de verre.",
         "Escalier vers le sous-sol : trémie ≈ 3 × 10 pi ; échappée ≈ 1,96 m à vérifier ; garde-corps de 42 po conseillé.",
         "Chambre des parents : lit king, mur de tête en bois de grange, garde-robes réunies à portes coulissantes.",
-        "Bureau-gaming (ancienne chambre avant) : 2 postes face à la fenêtre avant.",
+        "Bureau (ancienne chambre avant) : 2 bureaux assis-debout en chêne blanc face à la fenêtre avant.",
         "Poutre et appuis de l'ancienne cloison hall/salon, coupe-feu entre logements : à valider avec la Ville et un professionnel.",
     ]
     rdc["notes"] = [{"id": f"note-RDC-P{i + 1:02d}", "texte_original": None, "photo": None, "interpretation": t} for i, t in enumerate(notes)]

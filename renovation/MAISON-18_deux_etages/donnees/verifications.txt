@@ -1,8 +1,8 @@
 RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
-Révision : A    Date : 2026-11-01
-Données  : maison.json, sha256 795ef9e1bbd8bf0bd5f8b12d40e4a8df8cf1c05ed64f6b98178856b0c848aeb6
+Révision : B    Date : 2026-11-08
+Données  : maison.json, sha256 357b093ce233cac82dd26620b0f187e932eedaaac2fe6ff0d458bbceb42b480d
 Feuilles : P-129 Sous-sol proposé (3/16" = 1'-0") ; P-130 Rez-de-chaussée proposé (3/16" = 1'-0")
 
 SOMMAIRE
@@ -32,7 +32,7 @@ SOMMAIRE
 4. PIÈCES
 ------------------------------------------------------------------------
   [OK] [SS] 10 étiquettes de pièces : chacune dans sa pièce ou reliée à elle par un renvoi qui s'y termine ; aucun texte lu à plus de 20 % dans une autre pièce
-  [OK] [RDC] 11 étiquettes de pièces : chacune dans sa pièce ou reliée à elle par un renvoi qui s'y termine ; aucun texte lu à plus de 20 % dans une autre pièce
+  [OK] [RDC] 10 étiquettes de pièces : chacune dans sa pièce ou reliée à elle par un renvoi qui s'y termine ; aucun texte lu à plus de 20 % dans une autre pièce
 
 5. BILAN DE SURFACE
 ------------------------------------------------------------------------
@@ -68,7 +68,7 @@ SOMMAIRE
 
 8. TEXTES (CHEVAUCHEMENTS)
 ------------------------------------------------------------------------
-  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (147 textes vérifiés)
+  [OK] [SS] aucun chevauchement texte/texte ni texte/trait (146 textes vérifiés)
   [AVERT] [RDC] texte/texte : cartouche « REZ-DE-CHAUSSÉE » × cartouche « PROPOSÉ » (x≈700.488, y≈-97.127 po)
 
 9. MISE EN PAGE
@@ -84,7 +84,7 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [SS] DXF P-129_sous-sol.dxf : sha256 ce0bf6190c451b63… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
-  [OK] [RDC] DXF P-130_rdc.dxf : sha256 58c2c08e01c5a490… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [SS] DXF P-129_sous-sol.dxf : sha256 ce39e6d35784b291… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF P-130_rdc.dxf : sha256 9446379d4235a438… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.
