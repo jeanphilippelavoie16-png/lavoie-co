@@ -39,7 +39,7 @@ Plan final (toutes les feuilles sur une page, l'étage le plus haut en haut, ave
 | SS-16 | Copie de SS-15 : salle de bain refaite autour du bain (bain sculptural centré dans une alcôve de travertin chaud, niche éclairée, suspension), douche simple 36 × 48, béton poli dans tout le sous-sol ; dessous de l'escalier dégagé (plus de rangement), projecteur au plafond, toile motorisée de 120 po centrée qu'on monte et descend dans la visite, walk-in du caveau isolé (évents fermés), galerie de 6 photos de famille au séjour, robinetterie corrigée ; feuilles P-125 et P-126 | esquisse |
 | SS-17 | Par-dessus SS-16 (un module par zone) : chambres des garçons de 4 et 6 ans avec lits queen et rangement intégré (« Le socle de chêne », « La bibliothèque secrète » avec porte pivotante vers le walk-in), banc-cabane cinéma sous l'escalier, gym refait (cardio contre le mur, mur-miroir, banc-coffre), casiers d'hiver au vestiaire, banc à jouets sous la toile, trajet de nuit ; feuilles P-127 et P-128 | esquisse |
 | MAISON-18 | Les deux étages réunis en une maquette où l'on monte et descend : sous-sol de SS-17 allégé (chambres moins meublées) ; rez-de-chaussée réaménagé sur le relevé RDC-01 : grande entrée vitrée avec l'escalier et du rangement, chambre des parents avec lit king, bureau-gaming à 2 postes face à la fenêtre avant, bugs corrigés ; portes interactives ; extérieur (maison vue de dehors, cour arrière du plan DAG) où l'on marche et entre par les portes ; feuilles P-129 et P-130 | esquisse |
-| CH-01 | Projet à part (indépendant de MAISON-18) : la chambre des garçons (chambre avant du rez-de-chaussée) toute seule, telle qu'elle est (12 photos du 2026-11-09, sur le relevé RDC-01) : lits superposés et commode blanche gardés, fenêtre à 3 châssis et petits carreaux, mur vert et ses enseignes ; coin jeu proposé (table à Lego de chêne, livres de face au-dessus de la commode, tour de bacs, garde-robe aménagée avec bacs étiquetés et tiroirs à Lego triés) ; feuille P-131 | esquisse |
+| CH-01 | Projet à part (indépendant de MAISON-18) : la chambre des garçons (chambre avant du rez-de-chaussée) toute seule, telle qu'elle est (12 photos du 2026-11-09, sur le relevé RDC-01), lits superposés et commode blanche gardés. **Version 2 (rév. B)** : plus de table ; rangement d'abord (3 bacs roulants sous le lit qui sortent au toucher, armoires fermées et livres de face au-dessus de la commode, tablette haute et ses boîtes, tour aux albums, patères, garde-robe aménagée) ; coin jeu ouvert (grand tapis 4½ × 7 pi) ; thème « Camp de base » : murale graphique de montagnes en aplats, jour et nuit étoilée (`murale.py`), enseignes gardées, vert forêt et panache retirés ; feuille P-131 | esquisse |
 
 ## Études
 - `etudes/escalier/` : six emplacements possibles pour l'escalier, en haut et en bas (étude 3).
@@ -116,6 +116,12 @@ la zone de toucher couvre toute sa course (bas et haut, 6 po de plus vers le bo�
 touchant son boîtier ou l'endroit où elle descend. Facultatif : `"invite"` (étiquette du repère sur tablette ; défaut
 « Touche pour descendre la toile », d'après `libelle_bas` / `libelle_haut`, qui servent aussi au survol et à l'aide).
 Sans `commandes`, rien ne change. Pour les tests : `commander(id, "bas" | "haut" | "basculer", immediat)`.
+**Glisser** (facultatif, 2026-11-09, bacs roulants de CH-01) : `"course": [dx, dy, dz]` (po) sur la commande et
+`"anim": "glisser"` sur ses objets : ils se déplacent de toute la course à l'état « haut » et d'aucune à l'état « bas »
+(décrit dans les données : le bac rangé sous le lit) ; avec `course`, `pivot_z` est facultatif (0). Exemple :
+`{"id": "bac-1", "nom": "Bac roulant", "libelle_haut": "Sortir le bac", "libelle_bas": "Rentrer le bac", "course": [0, -22, 0],
+"depart": "bas", "duree": 0.9, "invite": "Touche le bac"}` et `{"forme": "arrondi", ..., "commande": "bac-1", "anim": "glisser"}`.
+Une commande sans `course` est rendue exactement comme avant (MAISON-18 : même scène).
 
 ### Se déplacer (contrôles ; téléphone)
 Depuis la demande du client du 2026-11-02 (« ça bug quand on bouge, c'est dur de se déplacer »), tout projet :
@@ -147,7 +153,7 @@ Descendre) et le petit plan. Tout se fait en touchant (tap, clic) l'objet dans l
 
 | On touche | Ça fait |
 |---|---|
-| une commande (toile, bureau assis-debout...) | elle monte ou descend (un toucher pendant le mouvement l'inverse) |
+| une commande (toile, bureau assis-debout, bac roulant...) | elle monte ou descend, ou le bac sort et rentre (un toucher pendant le mouvement l'inverse) |
 | un objet animé (aspirateur robot) | il s'arrête ; encore : il repart (petit bip) |
 | la trappe d'une séquence (« LINGE ») | la séquence part ; depuis l'étage de la trappe, l'invite passagère `libelle_voir` (« Voir arriver au lavage ») apparaît `attente_voir` s (défaut 10) puis s'efface seule ; on la touche pour aller voir l'arrivée |
 | un objet du mobilier qui porte `"sequence": id` (le panier du bas) | la séquence part au complet, vue d'en bas |

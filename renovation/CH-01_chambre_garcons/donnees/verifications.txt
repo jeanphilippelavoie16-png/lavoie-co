@@ -1,8 +1,8 @@
 RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
 ========================================================================
 Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
-Révision : A    Date : 2026-11-09
-Données  : maison.json, sha256 14c67207e5bad2ea174ddaefdacb46e0b57c80a53ea40d6a5201551647ab503e
+Révision : B    Date : 2026-11-09
+Données  : maison.json, sha256 14d607e18700f5222ca7f0742c34397248f98261e79035c45d80e4f84ca500db
 Feuilles : P-131 Rez-de-chaussée (1/4" = 1'-0")
 
 SOMMAIRE
@@ -19,7 +19,7 @@ SOMMAIRE
 
 1. IDENTIFIANTS
 ------------------------------------------------------------------------
-  [OK] 46 identifiants, aucun doublon
+  [OK] 47 identifiants, aucun doublon
 
 2. MURS
 ------------------------------------------------------------------------
@@ -58,6 +58,6 @@ SOMMAIRE
 
 10. REPRODUCTIBILITÉ
 ------------------------------------------------------------------------
-  [OK] [RDC] DXF P-131_chambre-garcons.dxf : sha256 bc03202631bf2e8d… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+  [OK] [RDC] DXF P-131_chambre-garcons.dxf : sha256 003371eb241d1b22… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
 
 Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.

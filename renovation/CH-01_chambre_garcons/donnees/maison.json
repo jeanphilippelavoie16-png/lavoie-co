@@ -68,7 +68,7 @@
    }
   ],
   "date": "2026-11-09",
-  "revision": "A",
+  "revision": "B",
   "affichage": {
    "noms_pieces": true,
    "dimensions_pieces": true,
@@ -87,7 +87,7 @@
   },
   "proposition": "CH-01",
   "titre_notes": "NOTES",
-  "mention": "CHAMBRE DES GARÇONS — ÉTAT ACTUEL ET COIN JEU PROPOSÉ",
+  "mention": "CHAMBRE DES GARÇONS — RANGEMENT, COIN JEU ET THÈME (VERSION 2)",
   "nom_pdf": "CH-01_chambre_garcons.pdf",
   "base": "copie de releve/livrables/donnees/maison.json (plans de base R0, commit 59ac401) + relevé RDC-01"
  },
@@ -399,7 +399,7 @@
      "id": "piece-RDC-CH2",
      "nom": "Chambre des garçons",
      "nom_original": "CHAMBRE",
-     "description": "Chambre des deux garçons (4 et 6 ans) : lits superposés et commode gardés, coin jeu proposé.",
+     "description": "Chambre des deux garçons (4 et 6 ans) : lits superposés et commode gardés ; rangement (bacs roulants sous le lit, armoires hautes, livres de face, tour aux albums) et coin jeu ouvert (version 2).",
      "polygone": [
       [
        143.75,
@@ -455,7 +455,7 @@
      "id": "piece-RDC-GRA",
      "nom": "G.R.",
      "nom_original": "G.R.",
-     "description": "Garde-robe de la chambre des garçons, aménagée (bacs, tiroirs à Lego, penderie basse).",
+     "description": "Garde-robe de la chambre des garçons, aménagée (bacs, tiroirs à Lego, penderie basse), gardée en v2.",
      "polygone": [
       [
        148.25,
@@ -506,7 +506,7 @@
     {
      "id": "elem-CH-LITS",
      "type": "autre",
-     "nom": "Lits superposés existants, simple sur simple (≈ 81 × 43 × 63 po), panneaux blancs, montants de bois naturel ; tête au mur vert",
+     "nom": "Lits superposés existants, simple sur simple (≈ 81 × 43 × 63 po), panneaux blancs, montants de bois naturel ; tête au mur de gauche",
      "nom_original": null,
      "etat": "existant",
      "position": {
@@ -614,7 +614,7 @@
     {
      "id": "elem-CH-PC2",
      "type": "autre",
-     "nom": "Plinthe chauffante électrique au mur vert (≈ 72 po)",
+     "nom": "Plinthe chauffante électrique au mur de gauche (≈ 72 po)",
      "nom_original": null,
      "etat": "existant",
      "position": {
@@ -639,122 +639,149 @@
      "libelle": ""
     },
     {
-     "id": "elem-CH-P-TABLE",
-     "type": "comptoir",
-     "nom": "Table à Lego en chêne 30 × 24 po, dessus à 20 po, rebord de ¾ po et deux bacs de tri encastrés ; à environ 1 pi des plinthes chauffantes (à valider)",
+     "id": "elem-CH-P-TAPIS",
+     "type": "trappe",
+     "nom": "Coin jeu ouvert : grand tapis plat 4½ × 7 pi (54 × 84 po), lavable ; ≈ 6 po de la plinthe de la fenêtre et ≈ 10½ po de celle du mur de gauche (à valider)",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 41.0,
-      "y": 39.5,
+      "x": 66.0,
+      "y": 46.5,
       "rotation_deg": 0,
       "source": "PROPOSÉ"
      },
      "dimensions": {
       "longueur": {
+       "valeur": 84.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 54.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "COIN JEU"
+    },
+    {
+     "id": "elem-CH-P-BAC1",
+     "type": "trappe",
+     "nom": "Bac roulant bas sous le lit du bas (19 × 30 po, 6.25 po de haut roulettes comprises) : lego ; sort de 22 po vers le tapis",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 30.5,
+      "y": 112.0,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 19.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
        "valeur": 30.0,
        "source": "PROPOSÉ",
        "photo": null
-      },
-      "largeur": {
-       "valeur": 24.0,
-       "source": "PROPOSÉ",
-       "photo": null
       }
      },
-     "note": "coin jeu proposé (CH-01) : voir DESIGN.md",
-     "libelle": "TABLE LEGO"
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "BACS ROULANTS"
     },
     {
-     "id": "elem-CH-P-TAB1",
-     "type": "autre",
-     "nom": "Tabouret d'enfant en chêne (assise à 12 po)",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 34.0,
-      "y": 59.0,
-      "rotation_deg": 0,
-      "source": "PROPOSÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 12,
-       "source": "PROPOSÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 12,
-       "source": "PROPOSÉ",
-       "photo": null
-      }
-     },
-     "note": "coin jeu proposé (CH-01) : voir DESIGN.md",
-     "libelle": ""
-    },
-    {
-     "id": "elem-CH-P-TAB2",
-     "type": "autre",
-     "nom": "Tabouret d'enfant en chêne (assise à 12 po)",
-     "nom_original": null,
-     "etat": "nouveau",
-     "position": {
-      "x": 48.0,
-      "y": 59.0,
-      "rotation_deg": 0,
-      "source": "PROPOSÉ"
-     },
-     "dimensions": {
-      "longueur": {
-       "valeur": 12,
-       "source": "PROPOSÉ",
-       "photo": null
-      },
-      "largeur": {
-       "valeur": 12,
-       "source": "PROPOSÉ",
-       "photo": null
-      }
-     },
-     "note": "coin jeu proposé (CH-01) : voir DESIGN.md",
-     "libelle": ""
-    },
-    {
-     "id": "elem-CH-P-LIVRES",
+     "id": "elem-CH-P-BAC2",
      "type": "trappe",
-     "nom": "Deux rebords à livres de face en chêne (48 × 4 po) au-dessus de la commode, à 34 et 45½ po",
+     "nom": "Bac roulant bas sous le lit du bas (19 × 30 po, 6.25 po de haut roulettes comprises) : autos ; sort de 22 po vers le tapis",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 141.75,
+      "x": 51.0,
+      "y": 112.0,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 19.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": ""
+    },
+    {
+     "id": "elem-CH-P-BAC3",
+     "type": "trappe",
+     "nom": "Bac roulant bas sous le lit du bas (11 × 30 po, 6.25 po de haut roulettes comprises) : dinos ; sort de 22 po vers le tapis",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 83.0,
+      "y": 112.0,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 11.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": ""
+    },
+    {
+     "id": "elem-CH-P-ARM",
+     "type": "trappe",
+     "nom": "Armoires murales fermées au-dessus de la commode (2 portes, 48 × 12 po, z 57 → 84) et, dessous, deux rebords à livres de face (z 33 et 44½) ; tablette haute de chêne à 85½ po de la fenêtre à la porte de la chambre",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 137.75,
       "y": 42.0,
       "rotation_deg": 90,
       "source": "PROPOSÉ"
      },
      "dimensions": {
       "longueur": {
-       "valeur": 46.0,
+       "valeur": 48.0,
        "source": "PROPOSÉ",
        "photo": null
       },
       "largeur": {
-       "valeur": 4.0,
+       "valeur": 12.0,
        "source": "PROPOSÉ",
        "photo": null
       }
      },
-     "note": "coin jeu proposé (CH-01) : voir DESIGN.md",
-     "libelle": "LIVRES DE FACE (AU MUR)"
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "ARMOIRES ET LIVRES (AU MUR)"
     },
     {
-     "id": "elem-CH-P-TOUR",
+     "id": "elem-CH-P-ALB",
      "type": "autre",
-     "nom": "Tour de 3 bacs étiquetés en chêne (17½ × 15 × 39 po), ancrée au mur",
+     "nom": "Tour aux albums de chêne (17½ × 12¾ × 42 po) : bac à toutous en bas, deux rangs d'albums debout ; ancrée au mur",
      "nom_original": null,
      "etat": "nouveau",
      "position": {
-      "x": 100.75,
-      "y": 132.0,
+      "x": 101.25,
+      "y": 133.38,
       "rotation_deg": 180,
       "source": "PROPOSÉ"
      },
@@ -765,13 +792,13 @@
        "photo": null
       },
       "largeur": {
-       "valeur": 15.0,
+       "valeur": 12.75,
        "source": "PROPOSÉ",
        "photo": null
       }
      },
-     "note": "coin jeu proposé (CH-01) : voir DESIGN.md",
-     "libelle": "BACS"
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "ALBUMS"
     },
     {
      "id": "elem-CH-P-GR1",
@@ -797,7 +824,7 @@
        "photo": null
       }
      },
-     "note": "coin jeu proposé (CH-01) : voir DESIGN.md",
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
      "libelle": "BACS ET LEGO"
     }
    ],
@@ -858,37 +885,37 @@
      "id": "note-CH-01",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Relevé photo du 2026-11-09 (12 photos) sur le relevé RDC-01 : la chambre seule ; tout est ESTIMÉ, à mesurer au ruban."
+     "interpretation": "Version 2 (rév. B) : pas de table ; rangement d'abord ; coin jeu ouvert ; thème « Camp de base »."
     },
     {
      "id": "note-CH-02",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Gardés : lits superposés et commode blanche, à leur place. Enlevés : fauteuil, petite table et chaises, présentoir, tablettes de jeux, toise, jouets."
+     "interpretation": "Gardés : lits superposés, commode, fenêtre, portes, plinthes chauffantes, enseignes. Retirés : table, tabourets, panache, vert forêt."
     },
     {
      "id": "note-CH-03",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Coin jeu proposé : table à Lego de chêne sous les enseignes, livres de face au-dessus de la commode, tour de bacs à la porte."
+     "interpretation": "Rangement : 3 bacs roulants sous le lit (≈ 100 L), armoires hautes (≈ 215 L), livres de face, tablette haute (85½ po), tour aux albums, patères, garde-robe."
     },
     {
      "id": "note-CH-04",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Garde-robe aménagée : bacs étiquetés, tiroirs à Lego triés et penderie à la hauteur des gars."
+     "interpretation": "Plinthes chauffantes : dégagements du tapis et des bacs à valider (fabricant, électricien) ; meubles ancrés."
     },
     {
      "id": "note-CH-05",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Plinthes chauffantes : dégagement à valider avec le fabricant et un électricien ; meubles bas ancrés au mur."
+     "interpretation": "Murale : murale/murale_camp_fiche.png ; couleurs à valider sur échantillon."
     },
     {
      "id": "note-CH-06",
      "texte_original": null,
      "photo": null,
-     "interpretation": "Fenêtre : 3 châssis, petits carreaux en haut, allège ≈ 37½ po, tête ≈ 80 po (vidéo DAG) ; plafond 96 po présumé."
+     "interpretation": "Existant ESTIMÉ (photos du 2026-11-09) : dessous du lit (≈ 7½ à 8 po) et plafond (96 po) à mesurer."
     }
    ],
    "lignes_cote": [
@@ -1128,7 +1155,7 @@
    "murs_retires": [],
    "ouvertures_retirees": [],
    "limites_zones": [],
-   "usage": "chambre des deux garçons (4 et 6 ans) ; plan CH-01 : la pièce seule, état actuel et coin jeu proposé",
+   "usage": "chambre des deux garçons (4 et 6 ans) ; plan CH-01 : la pièce seule, rangement et coin jeu proposés (v2)",
    "structure_retiree": [],
    "notes_retirees": [],
    "slug": "chambre-garcons"

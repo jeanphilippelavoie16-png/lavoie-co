@@ -936,7 +936,9 @@ function poserPorte(pt) {
 // Commandes interactives (opt-in, SCENE["commandes"]) : les objets liés à une commande sont construits dans leurs propres
 // groupes (jamais fusionnés ni copiés dans un lot fixe), décrits à l'état « bas ». Fraction f : 1 = bas, fraction_min = haut.
 //  « etirer » : échelle verticale autour de pivot_z (groupe extérieur posé à pivot_z, intérieur décalé de -pivot_z) ;
-//  « suivre » : translation de (pivot_z - z1)·(1 - f), z1 = haut de l'objet à l'état bas (barre de lestage).
+//  « suivre » : translation de (pivot_z - z1)·(1 - f), z1 = haut de l'objet à l'état bas (barre de lestage) ;
+//  « glisser » (2026-11-09, facultatif) : translation de course·(1 - f)/(1 - fraction_min), course = [dx, dy, dz] de la
+//  commande : 0 à l'état « bas » (tel que décrit), toute la course à l'état « haut » (bac roulant qui sort de sous le lit).
 // Plusieurs étages : le groupe d'une commande va dans le mobilier de l'étage de son premier objet.
 const CMD = {}, etatsCommandes = {};
 for (const c of S.commandes || []) {
@@ -967,11 +969,11 @@ for (const E of ETAGES) {                // empreintes au sol (OMBRES) : remises
     if (!cm) { const m = (FORMES[o.forme] || boite)(o, E.g.mob); if (m && o.face && o.mat === "miroir") m.userData.face = o.face; continue; }
     if (!cm.E) { cm.E = E; E.g.mob.add(cm.etirer); }
     const n0 = OMBRES.length;                     // pas d'ombre de contact fixe sous un objet qui bouge
-    if (o.anim === "suivre") {
+    if (o.anim === "suivre" || o.anim === "glisser") {
       const g = new THREE.Group(); g.userData.commande = cm.c.id; E.g.mob.add(g);
       (FORMES[o.forme] || boite)(o, g);
       g.updateMatrixWorld(true); const bb = new THREE.Box3().setFromObject(g, true);
-      cm.suivre.push({ g, z1: bb.isEmpty() ? cm.c.pivot_z : (bb.max.y - E.decal.y) / K });
+      cm.suivre.push({ g, z1: bb.isEmpty() ? cm.c.pivot_z : (bb.max.y - E.decal.y) / K, glisse: o.anim === "glisser" });
     } else (FORMES[o.forme] || boite)(o, cm.interieur);
     OMBRES.length = n0;
   }
@@ -997,7 +999,10 @@ for (const E of ETAGES) {                // empreintes au sol (OMBRES) : remises
 for (const cm of Object.values(CMD)) if (!cm.E) { cm.E = ETAGES[0]; ETAGES[0].g.mob.add(cm.etirer); }
 function poserCommande(cm) {
   cm.etirer.scale.y = cm.f;
-  for (const s of cm.suivre) s.g.position.y = (cm.c.pivot_z - s.z1) * (1 - cm.f) * K;
+  for (const s of cm.suivre) {
+    if (s.glisse) { const [dx, dy, dz] = cm.c.course, u = (1 - cm.f) / (1 - cm.c.fraction_min); s.g.position.copy(P(dx * u, dy * u, dz * u)); }
+    else s.g.position.y = (cm.c.pivot_z - s.z1) * (1 - cm.f) * K;
+  }
 }
 for (const cm of Object.values(CMD)) poserCommande(cm);
 // ---------- objets animés en boucle (opt-in, « animes » d'un étage : aspirateur robot...) et séquences d'un étage à l'autre

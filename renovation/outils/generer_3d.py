@@ -3,7 +3,7 @@
 
 Lit <projet>/donnees/maison.json (produit par construire_projet.py) et, s'il existe, <projet>/scene_3d.py
 (mobilier, matériaux par pièce, hauteur de plafond). Les textures (Poly Haven, CC0) sont intégrées au fichier.
-Facultatif : SCENE["commandes"] (toile motorisée, stores...) rend des objets du mobilier mobiles dans la visite (voir commandes()).
+Facultatif : SCENE["commandes"] (toile motorisée, stores, bac roulant...) rend des objets du mobilier mobiles dans la visite (voir commandes()).
 Facultatif : SCENE["animes"] d'un étage (objets qui se promènent en boucle : aspirateur robot ; voir animes()) et
 SCENE["sequences"] de la scène principale (séquence déclenchée, d'un étage à l'autre : chute à linge ; voir sequences()).
 Facultatif : SCENE["scenarios"] de la scène principale (personnage articulé qui marche, cogne, parle, fait des sons et ouvre
@@ -948,6 +948,9 @@ def commandes(S):
     toile » si pas d'"invite"). Un objet du mobilier porte "commande": id et "anim": "etirer" (défaut, mise à
     l'échelle verticale autour de pivot_z) ou "suivre" (translation, suit le bas de la partie étirée) ; un arrêt de visite
     peut porter "commandes": {id: "haut" | "bas"}. Les données décrivent l'état « bas » (ex. toile déroulée).
+    Facultatif (2026-11-09, bacs roulants de CH-01) : "course": [dx, dy, dz] (po) sur la commande et "anim": "glisser" sur
+    ses objets : translation de toute la course à l'état « haut », aucune à l'état « bas » (tel que décrit, ex. bac rangé
+    sous le lit) ; avec "course", "pivot_z" devient facultatif (0). Sans "course", la commande est rendue telle qu'avant.
     Retourne la liste complétée (valeurs par défaut) ; erreur explicite si les données ne respectent pas ce contrat."""
     def err(msg):
         raise SystemExit("scene_3d.py, commandes : " + msg)
@@ -961,6 +964,12 @@ def commandes(S):
         cid = c["id"]
         if cid in ids:
             err(f'id "{cid}" en double')
+        course = c.get("course")
+        if course is not None and not (isinstance(course, (list, tuple)) and len(course) == 3
+                                       and all(isinstance(v, (int, float)) for v in course) and any(course)):
+            err(f'commande "{cid}" : "course" doit être [dx, dy, dz] en pouces (pas tous nuls), reçu {course!r}')
+        if course is not None and "pivot_z" not in c:
+            c = dict(c, pivot_z=0.0)
         if not isinstance(c.get("pivot_z"), (int, float)):
             err(f'commande "{cid}" : "pivot_z" manquant ou non numérique (z en pouces du haut de la partie mobile, '
                 f'c.-à-d. le bas du boîtier)')
@@ -978,6 +987,8 @@ def commandes(S):
         out.append(dict(c, nom=c.get("nom") or cid, libelle_bas=c.get("libelle_bas") or "Descendre",
                         libelle_haut=c.get("libelle_haut") or "Monter", pivot_z=float(c["pivot_z"]),
                         fraction_min=float(fmin), depart=c.get("depart", "haut"), duree=float(duree)))
+        if course is not None:
+            out[-1]["course"] = [float(v) for v in course]
     lies = {}
     for o in S.get("mobilier", []):
         if "commande" not in o:
@@ -987,8 +998,11 @@ def commandes(S):
         if o["commande"] not in ids:
             err(f'objet {o.get("forme", "boite")} lié à la commande inconnue "{o["commande"]}" '
                 f'(déclarées : {", ".join(sorted(ids)) or "aucune"})')
-        if o.get("anim", "etirer") not in ("etirer", "suivre"):
-            err(f'objet de la commande "{o["commande"]}" : "anim" doit valoir "etirer" ou "suivre", reçu {o.get("anim")!r}')
+        if o.get("anim", "etirer") not in ("etirer", "suivre", "glisser"):
+            err(f'objet de la commande "{o["commande"]}" : "anim" doit valoir "etirer", "suivre" ou "glisser", '
+                f'reçu {o.get("anim")!r}')
+        if o.get("anim") == "glisser" and not next((c for c in out if c["id"] == o["commande"] and c.get("course")), None):
+            err(f'objet de la commande "{o["commande"]}" : "anim": "glisser" demande une "course" [dx, dy, dz] sur la commande')
         lies[o["commande"]] = lies.get(o["commande"], 0) + 1
     for v in S.get("visites", []):
         for cid, etat in (v.get("commandes") or {}).items():

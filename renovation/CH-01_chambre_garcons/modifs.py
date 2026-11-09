@@ -1,4 +1,4 @@
-"""CH-01 — La chambre des garçons, toute seule : état actuel (photos du 2026-11-09) et coin jeu proposé. Feuille P-131.
+"""CH-01 — La chambre des garçons, toute seule : état actuel (photos du 2026-11-09), rangement et coin jeu. Feuille P-131.
 
 Demandes du client (2026-11-09) :
 « Je veux que tu modélises la chambre en haut du coin avant comme elle est présentement. Je veux seulement garder le lit
@@ -12,6 +12,12 @@ aujourd'hui : copie de la base R0 (releve/livrables/donnees/maison.json) + relev
 telle quelle de renovation/RDC-01_etat_actuel/modifs.py). On ne garde que le rez-de-chaussée, et du rez-de-chaussée que la
 chambre avant (piece-RDC-CH2) et sa garde-robe (piece-RDC-GRA) : les murs qui les bordent sont coupés à leur contour (leur
 épaisseur reste), le reste de la maison (autres pièces, sous-sol, extérieur) est retiré. Repères : geometrie.py.
+
+Version 2 (révision B, 2026-11-09), réponse du client : « Non mais je veux pas nécessairement de table, là tu m'as donné de
+quoi de prémâché. Je veux de l'espace de rangement et un coin jeu. Je veux aussi changer les couleurs et mettre un thème plus
+genre enfant [4 et 6] ans. » La table à Lego et les tabourets partent ; le plan montre le rangement (bacs roulants sous le
+lit, armoires hautes et livres de face au-dessus de la commode, tour aux albums, garde-robe aménagée) et le coin jeu ouvert
+(grand tapis, en pointillé). Le thème et les couleurs sont dans scene_3d.py, murale.py et DESIGN.md.
 
 Le générateur de plans (releve/livrables/outils/generer_plans.py) n'est pas modifié : une maison à un seul niveau, des murs
 courts et ses options habituelles (projet.affichage, niveau.feuille / nom / slug) suffisent ; l'échelle est la plus grande
@@ -73,13 +79,13 @@ def _centre(b):
 
 
 def elements():
-    """Éléments du plan : l'existant gardé (ESTIMÉ sur les photos) et le coin jeu (PROPOSÉ)."""
+    """Éléments du plan : l'existant gardé (ESTIMÉ sur les photos), le rangement et le coin jeu (PROPOSÉ, version 2)."""
     ex = "existant, " + SOURCE + " : position et dimensions estimées, à mesurer"
-    pr = "coin jeu proposé (CH-01) : voir DESIGN.md"
+    pr = "version 2 proposée (CH-01, rév. B) : voir DESIGN.md"
     L = G.LITS
     out = [
         _element("elem-CH-LITS", "autre", "Lits superposés existants, simple sur simple (≈ 81 × 43 × 63 po), panneaux blancs, "
-                 "montants de bois naturel ; tête au mur vert", "LITS SUPERPOSÉS", *_centre(L), 180, L[2] - L[0], L[3] - L[1],
+                 "montants de bois naturel ; tête au mur de gauche", "LITS SUPERPOSÉS", *_centre(L), 180, L[2] - L[0], L[3] - L[1],
                  "existant", "ESTIMÉ", ex),
         _element("elem-CH-ECH", "autre", "Échelle de bois inclinée des lits superposés", "", (G.ECHELLE[0] + G.ECHELLE[1]) / 2,
                  (G.ECHELLE[2] + L[1]) / 2, 0, G.ECHELLE[1] - G.ECHELLE[0], L[1] - G.ECHELLE[2], "existant", "ESTIMÉ", ex),
@@ -88,22 +94,28 @@ def elements():
                  ex + " ; à ancrer au mur (anti-basculement)"),
         _element("elem-CH-PC1", "autre", "Plinthe chauffante électrique sous la fenêtre (≈ 96 po)", "PLINTHES CHAUFFANTES",
                  *_centre(G.PC_AVANT), 0, G.PC_AVANT[2] - G.PC_AVANT[0], G.PC_AVANT[3] - G.PC_AVANT[1], "existant", "ESTIMÉ", ex),
-        _element("elem-CH-PC2", "autre", "Plinthe chauffante électrique au mur vert (≈ 72 po)", "",
+        _element("elem-CH-PC2", "autre", "Plinthe chauffante électrique au mur de gauche (≈ 72 po)", "",
                  *_centre(G.PC_GAUCHE), 270, G.PC_GAUCHE[3] - G.PC_GAUCHE[1], G.PC_GAUCHE[2] - G.PC_GAUCHE[0], "existant",
                  "ESTIMÉ", ex),
-        # --- coin jeu (proposé)
-        _element("elem-CH-P-TABLE", "comptoir", "Table à Lego en chêne 30 × 24 po, dessus à 20 po, rebord de ¾ po et deux bacs "
-                 "de tri encastrés ; à environ 1 pi des plinthes chauffantes (à valider)", "TABLE LEGO", *_centre(G.TABLE), 0,
-                 G.TABLE[2] - G.TABLE[0], G.TABLE[3] - G.TABLE[1], "nouveau", "PROPOSÉ", pr),
-        _element("elem-CH-P-TAB1", "autre", "Tabouret d'enfant en chêne (assise à 12 po)", "", *G.TABOURETS[0], 0, 12, 12,
-                 "nouveau", "PROPOSÉ", pr),
-        _element("elem-CH-P-TAB2", "autre", "Tabouret d'enfant en chêne (assise à 12 po)", "", *G.TABOURETS[1], 0, 12, 12,
-                 "nouveau", "PROPOSÉ", pr),
-        _element("elem-CH-P-LIVRES", "trappe", "Deux rebords à livres de face en chêne (48 × 4 po) au-dessus de la commode, "
-                 "à 34 et 45½ po", "LIVRES DE FACE (AU MUR)", G.REBORDS[0] + (G.REBORDS[1] - G.REBORDS[0]) / 2,
-                 sum(G.REBORDS_Y) / 2, 90, G.REBORDS_Y[1] - G.REBORDS_Y[0], G.REBORDS[1] - G.REBORDS[0], "nouveau", "PROPOSÉ", pr),
-        _element("elem-CH-P-TOUR", "autre", "Tour de 3 bacs étiquetés en chêne (17½ × 15 × 39 po), ancrée au mur", "BACS",
-                 *_centre(G.TOUR), 180, G.TOUR[2] - G.TOUR[0], G.TOUR[3] - G.TOUR[1], "nouveau", "PROPOSÉ", pr),
+        # --- version 2 (proposé) : rangement d'abord, coin jeu ouvert
+        _element("elem-CH-P-TAPIS", "trappe", "Coin jeu ouvert : grand tapis plat 4½ × 7 pi (54 × 84 po), lavable ; ≈ 6 po de la "
+                 "plinthe de la fenêtre et ≈ 10½ po de celle du mur de gauche (à valider)", "COIN JEU",
+                 *_centre(G.TAPIS), 0, G.TAPIS[2] - G.TAPIS[0], G.TAPIS[3] - G.TAPIS[1], "nouveau", "PROPOSÉ", pr),
+    ]
+    noms = ("LEGO", "AUTOS", "DINOS")
+    for k, ((x0, x1), nom) in enumerate(zip(G.BACS_X, noms)):
+        out.append(_element(f"elem-CH-P-BAC{k + 1}", "trappe", f"Bac roulant bas sous le lit du bas ({x1 - x0:g} × "
+                            f"{G.BACS_Y[1] - G.BACS_Y[0]:g} po, {G.BACS_H:g} po de haut roulettes comprises) : {nom.lower()} ; "
+                            f"sort de {G.BACS_COURSE:g} po vers le tapis", "BACS ROULANTS" if k == 0 else "",
+                            (x0 + x1) / 2, sum(G.BACS_Y) / 2, 0, x1 - x0, G.BACS_Y[1] - G.BACS_Y[0], "nouveau", "PROPOSÉ", pr))
+    out += [
+        _element("elem-CH-P-ARM", "trappe", "Armoires murales fermées au-dessus de la commode (2 portes, 48 × 12 po, z 57 → 84) "
+                 "et, dessous, deux rebords à livres de face (z 33 et 44½) ; tablette haute de chêne à 85½ po de la fenêtre à "
+                 "la porte de la chambre", "ARMOIRES ET LIVRES (AU MUR)", *_centre(G.ARMOIRES), 90,
+                 G.ARMOIRES[3] - G.ARMOIRES[1], G.ARMOIRES[2] - G.ARMOIRES[0], "nouveau", "PROPOSÉ", pr),
+        _element("elem-CH-P-ALB", "autre", "Tour aux albums de chêne (17½ × 12¾ × 42 po) : bac à toutous en bas, deux rangs "
+                 "d'albums debout ; ancrée au mur", "ALBUMS", *_centre(G.ALBUMS), 180, G.ALBUMS[2] - G.ALBUMS[0],
+                 G.ALBUMS[3] - G.ALBUMS[1], "nouveau", "PROPOSÉ", pr),
         _element("elem-CH-P-GR1", "autre", "Garde-robe : étagère de 6 bacs étiquetés, 6 tiroirs à Lego triés et tablette des "
                  "constructions (28 × 16 po)", "BACS ET LEGO", *_centre(G.GR_ETAGERE), 90,
                  G.GR_ETAGERE[3] - G.GR_ETAGERE[1], G.GR_ETAGERE[2] - G.GR_ETAGERE[0], "nouveau", "PROPOSÉ", pr),
@@ -136,13 +148,14 @@ def lignes_cote():
 
 
 NOTES = (
-    "Relevé photo du 2026-11-09 (12 photos) sur le relevé RDC-01 : la chambre seule ; tout est ESTIMÉ, à mesurer au ruban.",
-    "Gardés : lits superposés et commode blanche, à leur place. Enlevés : fauteuil, petite table et chaises, présentoir, "
-    "tablettes de jeux, toise, jouets.",
-    "Coin jeu proposé : table à Lego de chêne sous les enseignes, livres de face au-dessus de la commode, tour de bacs à la porte.",
-    "Garde-robe aménagée : bacs étiquetés, tiroirs à Lego triés et penderie à la hauteur des gars.",
-    "Plinthes chauffantes : dégagement à valider avec le fabricant et un électricien ; meubles bas ancrés au mur.",
-    "Fenêtre : 3 châssis, petits carreaux en haut, allège ≈ 37½ po, tête ≈ 80 po (vidéo DAG) ; plafond 96 po présumé.",
+    "Version 2 (rév. B) : pas de table ; rangement d'abord ; coin jeu ouvert ; thème « Camp de base ».",
+    "Gardés : lits superposés, commode, fenêtre, portes, plinthes chauffantes, enseignes. Retirés : table, tabourets, "
+    "panache, vert forêt.",
+    "Rangement : 3 bacs roulants sous le lit (≈ 100 L), armoires hautes (≈ 215 L), livres de face, tablette haute "
+    "(85½ po), tour aux albums, patères, garde-robe.",
+    "Plinthes chauffantes : dégagements du tapis et des bacs à valider (fabricant, électricien) ; meubles ancrés.",
+    "Murale : murale/murale_camp_fiche.png ; couleurs à valider sur échantillon.",
+    "Existant ESTIMÉ (photos du 2026-11-09) : dessous du lit (≈ 7½ à 8 po) et plafond (96 po) à mesurer.",
 )
 
 
@@ -152,8 +165,8 @@ def appliquer(maison):
     maison["niveaux"] = [rdc]                       # un seul niveau : la chambre dans son monde à elle
     maison["ecarts"] = []
     p = maison["projet"]
-    p.update({"proposition": "CH-01", "revision": "A", "date": "2026-11-09", "titre_notes": "NOTES",
-              "mention": "CHAMBRE DES GARÇONS — ÉTAT ACTUEL ET COIN JEU PROPOSÉ",
+    p.update({"proposition": "CH-01", "revision": "B", "date": "2026-11-09", "titre_notes": "NOTES",
+              "mention": "CHAMBRE DES GARÇONS — RANGEMENT, COIN JEU ET THÈME (VERSION 2)",
               "nom_pdf": "CH-01_chambre_garcons.pdf",
               "base": "copie de releve/livrables/donnees/maison.json (plans de base R0, commit 59ac401) + relevé RDC-01"})
     p["affichage"] = dict(p.get("affichage") or {}, noms_pieces=True, dimensions_pieces=True, metrique=False,
@@ -162,7 +175,7 @@ def appliquer(maison):
 
     rdc.update({"feuille": "P-131", "nom": "Rez-de-chaussée", "slug": "chambre-garcons",
                 "photos_sources": ["photos 01 à 12 du 2026-11-09"],
-                "usage": "chambre des deux garçons (4 et 6 ans) ; plan CH-01 : la pièce seule, état actuel et coin jeu proposé",
+                "usage": "chambre des deux garçons (4 et 6 ans) ; plan CH-01 : la pièce seule, rangement et coin jeu proposés (v2)",
                 "hauteur_plafond": dim(G.PLAFOND, "PRÉSUMÉ (8 pi), comme RDC-01 ; à mesurer", "PRÉSUMÉ")})
     for k in ("murs_retires", "ouvertures_retirees", "elements_retires", "structure_retiree", "notes_retirees", "limites_zones"):
         rdc[k] = []
@@ -196,8 +209,9 @@ def appliquer(maison):
     pcs = {q["id"]: q for q in rdc["pieces"]}
     ch, gr = pcs["piece-RDC-CH2"], pcs["piece-RDC-GRA"]
     ch["nom"] = "Chambre des garçons"
-    ch["description"] = "Chambre des deux garçons (4 et 6 ans) : lits superposés et commode gardés, coin jeu proposé."
-    gr["description"] = "Garde-robe de la chambre des garçons, aménagée (bacs, tiroirs à Lego, penderie basse)."
+    ch["description"] = ("Chambre des deux garçons (4 et 6 ans) : lits superposés et commode gardés ; rangement (bacs roulants "
+                         "sous le lit, armoires hautes, livres de face, tour aux albums) et coin jeu ouvert (version 2).")
+    gr["description"] = "Garde-robe de la chambre des garçons, aménagée (bacs, tiroirs à Lego, penderie basse), gardée en v2."
     rdc["pieces"] = [ch, gr]
 
     rdc["structure"] = []        # colonne C04 et poutre de l'axe B : dans les cloisons, hors de la pièce (voir DESIGN.md)
