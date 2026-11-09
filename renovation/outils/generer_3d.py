@@ -27,6 +27,14 @@ avec un garde-corps de verre. Un projet sans "etages" garde exactement la même 
 Fenêtres (opt-in) : SCENE["fenetres"] = {id d'ouverture: {"allege": z, "tete": z}} donne à une fenêtre sa propre allège
 et sa propre tête (sinon SCENE["allege_fenetre"] / "tete_fenetre" de l'étage) ; une fenêtre descendue sous le terrain reçoit
 une margelle et le terrain est troué au ras de la maison (voir reglages_fenetres). Sans "fenetres", rien ne change.
+Petits carreaux (opt-in, clé facultative d'une fenêtre de SCENE["fenetres"]) : "carreaux" = {"hauteur", "rangs", "colonnes"}
+dessine une bande de croisillons en haut de chaque châssis (voir reglages_fenetres) ; sans elle, rien ne change.
+
+Texte (opt-in, forme « texte » du mobilier) : lettres peintes ou gravées sur fond transparent (enseigne, nom sur un bac) ;
+o = {"forme": "texte", "texte", "x", "y", "z0", "z1", "larg", "face", "couleur", "police" ("sans", "serif", "script"),
+"gras", "italique"} ; vérifié par textes_mobilier(). Emprise (opt-in) : SCENE["bornes"] = [x0, y0, x1, y1] remplace
+l'emprise tirée des murs extérieurs (plan miniature, grille de marche, ombres de contact) : utile à un projet qui ne garde
+qu'une pièce et une garde-robe qui dépasse ses murs extérieurs ; sans elle, rien ne change.
 
 Poids et mémoire : images de couleur des matériaux à 512 px au plus (TEX_COULEUR=1024 pour les garder plus fines), cartes de
 relief à 512 px (TEX_RELIEF), de rugosité à 256 px (TEX_RUGOSITE), photos à 720 px (PHOTO_MAX). La scène est passée à JSON.parse (chaîne JSON).
@@ -63,7 +71,13 @@ def reglages_fenetres(S, niv, sill, head, H):
     - "margelle" : puits de fenêtre devant une fenêtre dont l'allège tombe sous le terrain (sol_exterieur + 2 po) :
       ajoutée d'office dans ce cas ; False = jamais ; True ou {"saillie": 36, "debord": 6, "fond": allège - 8,
       "dessus": terrain + 4, "mat": "beton", "mat_fond": "beton"} pour la forcer ou la régler (saillie depuis la face
-      extérieure du mur, débord de chaque côté de la fenêtre). Le terrain est alors troué au ras de la maison et des margelles.
+      extérieure du mur, débord de chaque côté de la fenêtre). Le terrain est alors troué au ras de la maison et des margelles ;
+    - "carreaux" (facultatif) : {"hauteur": po, "rangs": n, "colonnes": n, "larg": 0.75, "mat": "metal"} : bande de petits
+      carreaux en HAUT de chaque châssis (fenêtre à croisillons) : "hauteur" depuis le cadre de tête jusqu'au croisillon du
+      bas de la bande (0 < hauteur < tête − allège − 4), "rangs" × "colonnes" carreaux par châssis (entiers >= 1),
+      croisillons de "larg" po (défaut 0,75) du matériau des cadres ("metal", défaut ; donc remplacé par SCENE["mats_finitions"]
+      comme eux). Chaque croisillon traverse la vitre : il se voit des deux côtés, de dedans comme de dehors. Sans
+      "carreaux", la fenêtre est dessinée comme avant.
     Retourne {id: réglages complets} ; erreur explicite si les données ne respectent pas ce contrat. Sans "fenetres" : {}."""
     reg = S.get("fenetres")
     if not reg:
@@ -81,7 +95,7 @@ def reglages_fenetres(S, niv, sill, head, H):
             err(f'"{oid}" n\'est pas une fenêtre de ce niveau (fenêtres : {", ".join(ids) or "aucune"})')
         if not isinstance(r, dict):
             err(f'"{oid}" : réglages attendus sous forme de dictionnaire, reçu {r!r}')
-        inconnues = set(r) - {"allege", "tete", "sections", "traverses", "margelle", "note"}
+        inconnues = set(r) - {"allege", "tete", "sections", "traverses", "margelle", "carreaux", "note"}
         if inconnues:
             err(f'"{oid}" : clé(s) inconnue(s) {", ".join(sorted(inconnues))}')
         a, t = r.get("allege", sill), r.get("tete", head)
@@ -103,7 +117,29 @@ def reglages_fenetres(S, niv, sill, head, H):
                         err(f'"{oid}" : margelle, "{k}" doit être une clé de matériau, reçu {v!r}')
                 elif k not in ("saillie", "debord", "fond", "dessus") or not num(v):
                     err(f'"{oid}" : margelle, clé "{k}" inconnue ou valeur non numérique ({v!r})')
+        cr = r.get("carreaux")
+        if cr is not None:
+            if not isinstance(cr, dict):
+                err(f'"{oid}" : "carreaux" doit être un dictionnaire {{"hauteur", "rangs", "colonnes"}}, reçu {cr!r}')
+            inc = set(cr) - {"hauteur", "rangs", "colonnes", "larg", "mat"}
+            if inc:
+                err(f'"{oid}" : carreaux, clé(s) inconnue(s) {", ".join(sorted(inc))}')
+            hb = cr.get("hauteur")
+            if not num(hb) or not 0 < hb < t - a - 4:
+                err(f'"{oid}" : carreaux, "hauteur" doit être entre 0 et tête − allège − 4 ({t - a - 4} po), reçu {hb!r}')
+            for k in ("rangs", "colonnes"):
+                v = cr.get(k)
+                if not isinstance(v, int) or isinstance(v, bool) or v < 1:
+                    err(f'"{oid}" : carreaux, "{k}" doit être un entier >= 1, reçu {v!r}')
+            lg = cr.get("larg", 0.75)
+            if not num(lg) or not 0 < lg <= 2:
+                err(f'"{oid}" : carreaux, "larg" doit être entre 0 et 2 po, reçu {lg!r}')
+            if not isinstance(cr.get("mat", "metal"), str):
+                err(f'"{oid}" : carreaux, "mat" doit être une clé de matériau, reçu {cr.get("mat")!r}')
+            cr = dict(cr, larg=lg, mat=cr.get("mat", "metal"))
         out[oid] = dict(r, allege=a, tete=t, sections=n, traverses=list(tr))
+        if cr is not None:
+            out[oid]["carreaux"] = cr
     return out
 
 
@@ -537,6 +573,16 @@ def finitions(niv, par_mur, H, sill, head, S, fen=None):
                         b_(a, a + f, -d / 2, d / 2, sill, head, "metal"), b_(b - f, b, -d / 2, d / 2, sill, head, "metal")]
                 out += [b_(xm - 0.75, xm + 0.75, -d / 2, d / 2, sill, head, "metal") for xm in meneaux]
                 out += [b_(a, b, -d / 2, d / 2, z - 0.75, z + 0.75, "metal") for z in r.get("traverses", [])]
+                cr = r.get("carreaux")
+                if cr:                                    # bande de petits carreaux en haut de chaque châssis (opt-in)
+                    e, w2, ep = cr["larg"] / 2, cr["mat"], 0.85        # croisillon qui traverse la vitre (±0,5 po)
+                    zt, zb = head - f, head - f - cr["hauteur"]
+                    bords = [a + f] + [q for xm in meneaux for q in (xm - 0.75, xm + 0.75)] + [b - f]
+                    for s0, s1 in zip(bords[0::2], bords[1::2]):
+                        out += [b_(s0, s1, -ep, ep, z - e, z + e, w2)
+                                for z in [zb + (zt - zb) * j / cr["rangs"] for j in range(cr["rangs"])]]
+                        out += [b_(s0 + (s1 - s0) * i / cr["colonnes"] - e, s0 + (s1 - s0) * i / cr["colonnes"] + e,
+                                   -ep, ep, zb + e, zt, w2) for i in range(1, cr["colonnes"])]
                 for s_ in cotes:
                     out += [b_(a, a + 0.5, s_ * d / 2, s_ * t / 2, sill, head, "porte"), b_(b - 0.5, b, s_ * d / 2, s_ * t / 2, sill, head, "porte"),
                             b_(a, b, s_ * d / 2, s_ * t / 2, head - 0.5, head, "porte"),
@@ -1585,6 +1631,10 @@ def construire(M, S, ctx=None):
              "tremies": tremies, "obstacles": obstacles, "peintures": S.get("peintures", {})}
     if battants:
         scene["battants"] = battants
+    bo = bornes_scene(S)                                # emprise donnée par la scène (opt-in), sinon murs extérieurs
+    if bo:
+        scene["bornes"] = bo
+    textes_mobilier(S)                                  # objets « texte » du mobilier (opt-in) : contrat vérifié
     an = animes(S, scene["bornes"])                     # objets animés en boucle (opt-in : aspirateur robot...)
     if an:
         scene["animes"] = an
@@ -1602,6 +1652,49 @@ def construire(M, S, ctx=None):
             scene["boites"] += mb
             scene["terrain_trou"] = terrain_trou(niv, mr)
     return scene
+
+
+def bornes_scene(S):
+    """SCENE["bornes"] (facultatif) : [x0, y0, x1, y1] en pouces, emprise de l'étage pour la visionneuse (plan miniature, grille
+    de marche, ombres de contact, lumière du jour). Sans elle (None) : emprise des murs extérieurs, comme avant."""
+    bo = S.get("bornes")
+    if bo is None:
+        return None
+    if not (isinstance(bo, (list, tuple)) and len(bo) == 4 and all(_num(v) for v in bo) and bo[0] < bo[2] and bo[1] < bo[3]):
+        raise SystemExit(f'scene_3d.py : SCENE["bornes"] doit valoir [x0, y0, x1, y1] avec x0 < x1 et y0 < y1, reçu {bo!r}')
+    return [float(v) for v in bo]
+
+
+POLICES_TEXTE = ("sans", "serif", "script")
+
+
+def textes_mobilier(S):
+    """Objets « texte » du mobilier (opt-in) : {"forme": "texte", "texte": "...", "x", "y" (centre), "z0" < "z1", "larg" > 0,
+    "face": "+x" | "-x" | "+y" | "-y" (vers où le texte se lit), "couleur": "#rrggbb" (défaut noir), "police": "sans" (défaut),
+    "serif" ou "script" (écriture liée : police du système, elle varie selon l'appareil), "gras", "italique" (booléens)}.
+    Lettres sur fond transparent, éclairées comme le mobilier, sans ombre ; à décoller de 0,05 po de la surface qui les porte.
+    Erreur explicite si le contrat n'est pas respecté ; sans objet « texte », rien ne change."""
+    for k, o in enumerate(S.get("mobilier") or []):
+        if not isinstance(o, dict) or o.get("forme") != "texte":
+            continue
+        def err(msg):
+            raise SystemExit(f'scene_3d.py, mobilier n° {k + 1} (texte) : {msg}')
+        if not isinstance(o.get("texte"), str) or not o["texte"].strip():
+            err(f'"texte" doit être une chaîne non vide, reçu {o.get("texte")!r}')
+        for c in ("x", "y", "z0", "z1", "larg"):
+            if not _num(o.get(c)):
+                err(f'"{c}" doit être un nombre, reçu {o.get(c)!r}')
+        if not (o["z0"] < o["z1"] and o["larg"] > 0):
+            err(f'il faut z0 < z1 et larg > 0, reçu z0 {o["z0"]}, z1 {o["z1"]}, larg {o["larg"]}')
+        if o.get("face", "+y") not in ("+x", "-x", "+y", "-y"):
+            err(f'"face" doit valoir "+x", "-x", "+y" ou "-y", reçu {o.get("face")!r}')
+        if "couleur" in o and not (isinstance(o["couleur"], str) and o["couleur"].startswith("#") and len(o["couleur"]) == 7):
+            err(f'"couleur" doit être une couleur "#rrggbb", reçu {o["couleur"]!r}')
+        if o.get("police", "sans") not in POLICES_TEXTE:
+            err(f'"police" doit valoir {", ".join(POLICES_TEXTE)}, reçu {o.get("police")!r}')
+        for c in ("gras", "italique"):
+            if c in o and not isinstance(o[c], bool):
+                err(f'"{c}" doit valoir True ou False, reçu {o[c]!r}')
 
 
 def _dans_poly(pts, x, y):

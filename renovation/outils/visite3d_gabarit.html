@@ -886,7 +886,27 @@ const GLB = {}, ECHECS = [];
     ld.parseAsync(octets(uri), "").then((g) => { GLB[cle] = g.scene; }).catch((e) => { ECHECS.push(cle); console.warn("modèle", cle, e); })));
   try { window.createImageBitmap = cib; } catch (_) {}
 }
-const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele, image, ecran };
+// Texte (opt-in, forme « texte » du mobilier : enseigne gravée, nom peint) : lettres dessinées sur un canevas à fond
+// transparent, plaquées sur un plan éclairé comme le mobilier, sans ombre. o = { texte, x, y (centre), z0, z1, larg, face
+// (vers où il se lit), couleur, police: "sans" | "serif" | "script", gras, italique } ; contrat : generer_3d.textes_mobilier().
+// « script » prend l'écriture liée du système (Snell Roundhand sur iPhone et iPad, Segoe Script sous Windows...).
+const POLICES_TEXTE = { sans: "Arial, Helvetica, sans-serif", serif: "Georgia, 'Times New Roman', serif",
+  script: "'Snell Roundhand', 'Segoe Script', 'Apple Chancery', 'Brush Script MT', 'URW Chancery L', cursive" };
+function texte(o, groupe) {
+  const cv = document.createElement("canvas"), W = 1024, H = Math.max(16, Math.min(1024, Math.round(W * (o.z1 - o.z0) / o.larg)));
+  cv.width = W; cv.height = H;
+  const g = cv.getContext("2d"), fs = Math.round(H * 0.78);
+  g.font = `${o.italique ? "italic " : ""}${o.gras ? "bold " : ""}${fs}px ${POLICES_TEXTE[o.police] || POLICES_TEXTE.sans}`;
+  const tw = g.measureText(o.texte).width, sx = Math.min(1, W * 0.96 / Math.max(1, tw));
+  g.setTransform(sx, 0, 0, 1, W / 2, H / 2); g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = o.couleur || "#1b1c1e";
+  g.fillText(o.texte, 0, H * 0.04);
+  const t = new THREE.CanvasTexture(cv); t.encoding = THREE.sRGBEncoding; t.anisotropy = 4;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(o.larg * K, (o.z1 - o.z0) * K), new THREE.MeshStandardMaterial({ map: t,
+    transparent: true, alphaTest: 0.05, depthWrite: false, roughness: .75, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+  m.rotation.y = { "-y": 0, "+y": Math.PI, "+x": Math.PI / 2, "-x": -Math.PI / 2 }[o.face || "+y"];
+  m.position.copy(P(o.x, o.y, (o.z0 + o.z1) / 2)); m.castShadow = false; m.userData.sansOmbre = true; groupe.add(m); return m;
+}
+const FORMES = { boite, cylindre, arrondi, tube, sphere, tore, modele, image, ecran, texte };
 // Portes interactives (S.battants de chaque étage) : le vantail est décrit FERMÉ ; f = 0 fermée, 1 ouverte.
 // Battante : rotation de f·angle autour du pivot (charnière) ; coulissante : translation de f·glisse. Chaque porte existe
 // deux fois : pleine hauteur dans la visite, coupée à 4 pi dans la maquette ; les deux bougent ensemble. Boîtes et objets

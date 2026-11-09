@@ -39,6 +39,7 @@ Plan final (toutes les feuilles sur une page, l'étage le plus haut en haut, ave
 | SS-16 | Copie de SS-15 : salle de bain refaite autour du bain (bain sculptural centré dans une alcôve de travertin chaud, niche éclairée, suspension), douche simple 36 × 48, béton poli dans tout le sous-sol ; dessous de l'escalier dégagé (plus de rangement), projecteur au plafond, toile motorisée de 120 po centrée qu'on monte et descend dans la visite, walk-in du caveau isolé (évents fermés), galerie de 6 photos de famille au séjour, robinetterie corrigée ; feuilles P-125 et P-126 | esquisse |
 | SS-17 | Par-dessus SS-16 (un module par zone) : chambres des garçons de 4 et 6 ans avec lits queen et rangement intégré (« Le socle de chêne », « La bibliothèque secrète » avec porte pivotante vers le walk-in), banc-cabane cinéma sous l'escalier, gym refait (cardio contre le mur, mur-miroir, banc-coffre), casiers d'hiver au vestiaire, banc à jouets sous la toile, trajet de nuit ; feuilles P-127 et P-128 | esquisse |
 | MAISON-18 | Les deux étages réunis en une maquette où l'on monte et descend : sous-sol de SS-17 allégé (chambres moins meublées) ; rez-de-chaussée réaménagé sur le relevé RDC-01 : grande entrée vitrée avec l'escalier et du rangement, chambre des parents avec lit king, bureau-gaming à 2 postes face à la fenêtre avant, bugs corrigés ; portes interactives ; extérieur (maison vue de dehors, cour arrière du plan DAG) où l'on marche et entre par les portes ; feuilles P-129 et P-130 | esquisse |
+| CH-01 | Projet à part (indépendant de MAISON-18) : la chambre des garçons (chambre avant du rez-de-chaussée) toute seule, telle qu'elle est (12 photos du 2026-11-09, sur le relevé RDC-01) : lits superposés et commode blanche gardés, fenêtre à 3 châssis et petits carreaux, mur vert et ses enseignes ; coin jeu proposé (table à Lego de chêne, livres de face au-dessus de la commode, tour de bacs, garde-robe aménagée avec bacs étiquetés et tiroirs à Lego triés) ; feuille P-131 | esquisse |
 
 ## Études
 - `etudes/escalier/` : six emplacements possibles pour l'escalier, en haut et en bas (étude 3).
@@ -362,6 +363,19 @@ Au loin, la profondeur est grossière : décoller de 6 po au moins ce qui est pe
                    {"forme": "texte", "texte": "F.-A.-GAUTHIER", "x": -1732, "y": 455, "z0": 134, "z1": 189, "larg": 591,
                     "face": "+y", "couleur": "#ffffff"}]})
 <!-- --- fin lointain -->
+
+### Petits carreaux, textes et emprise d'une seule pièce (facultatif, 2026-11-09)
+Ajoutés pour CH-01 ; trois clés facultatives et génériques : un projet qui ne s'en sert pas (MAISON-18 compris) donne
+exactement la même page qu'avant (vérifié octet par octet sur MAISON-18, hors du nouveau code du gabarit).
+
+| Clé | Sens |
+|---|---|
+| `SCENE["fenetres"][id]["carreaux"]` | `{"hauteur": po, "rangs": n, "colonnes": n, "larg": 0.75, "mat": "metal"}` : bande de petits carreaux en **haut de chaque châssis** (fenêtre à croisillons), de `hauteur` po sous le cadre de tête ; `rangs` × `colonnes` carreaux par châssis ; croisillons de `larg` po, du matériau des cadres (remplacé par `mats_finitions` comme eux). Chaque croisillon traverse la vitre : il se voit de dedans comme de dehors. Vérifié par `reglages_fenetres()` (0 < hauteur < tête − allège − 4, entiers >= 1, clés connues) |
+| forme `"texte"` du mobilier | `{"forme": "texte", "texte", "x", "y", "z0", "z1", "larg", "face", "couleur": "#rrggbb", "police": "sans" \| "serif" \| "script", "gras", "italique"}` : lettres peintes ou gravées sur fond transparent (enseigne, étiquette de bac), centrées en (x, y), lisibles du côté `face`, éclairées comme le mobilier, sans ombre ; décoller de 0,05 po de la surface qui les porte. `script` prend l'écriture liée du système (Snell Roundhand sur iPhone et iPad, Segoe Script sous Windows ; ailleurs, une police de repli). Vérifié par `textes_mobilier()` |
+| `SCENE["bornes"]` | `[x0, y0, x1, y1]` (po) : emprise de l'étage pour la visionneuse (plan miniature, grille de marche, ombres de contact), au lieu de celle des murs extérieurs ; utile quand on ne garde qu'une pièce dont la garde-robe dépasse les murs extérieurs coupés. Vérifié par `bornes_scene()` |
+
+Un projet à une seule pièce (CH-01) : `modifs.py` garde un seul niveau et coupe les murs au contour de la pièce ; le
+générateur de plans n'a besoin d'aucune option de plus (l'échelle la plus grande qui tient, 1/4" = 1'-0", est prise d'office).
 
 ## Matériaux
 `renovation/outils/materiaux/` : bibliothèque de matériaux réels (ambientCG, Poly Haven, CC0, ou fichiers de

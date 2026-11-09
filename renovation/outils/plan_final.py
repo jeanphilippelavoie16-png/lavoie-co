@@ -92,7 +92,8 @@ def main():
     adresse = escape(str(projet.get("nom") or ""))
     prop = str(projet.get("proposition") or os.path.basename(dossier))
     rev, date = escape(str(projet.get("revision") or "")), escape(str(projet.get("date") or ""))
-    ordre = " · ".join(f'{"en haut" if i == 0 else ("en bas" if i == len(feuilles) - 1 else "au milieu")} : '
+    place = lambda i: "" if len(feuilles) == 1 else ("en haut" if i == 0 else ("en bas" if i == len(feuilles) - 1 else "au milieu")) + " : "
+    ordre = " · ".join(f'{place(i)}'
                        f'{escape(str(n.get("nom") or ""))} ({escape(str(n.get("feuille") or ""))})'
                        for i, (n, _) in enumerate(feuilles))
     tete = svg_bandeau(L, TETE,
@@ -105,13 +106,13 @@ def main():
     xq, yq = 36, (PIED - cote) / 2
     qr = qr_svg(a.lien, xq, yq, cote)
     xt = xq + cote + 22 if qr else 36
-    lignes = [("Visite 3D de la maison", 17, "bold", "#000"),
+    lignes = [("Visite 3D", 17, "bold", "#000"),
               (escape(a.lien), 15, "normal", "#0645ad"),
               ("Touchez le lien" + (" ou balayez le code avec le téléphone" if qr else "") + " pour faire la visite.",
                11.5, "normal", "#333"),
               ("Lien privé : il s'ouvre avec le compte du propriétaire ; pour le donner à quelqu'un, le partager d'abord "
                "(menu Partager de la page).", 11.5, "normal", "#333"),
-              ("Feuilles à l'échelle 3/16\" = 1'-0\" sur 11 × 17 : imprimer " + escape(nom_pdf) +
+              ("Feuilles à l'échelle de leur cartouche sur 11 × 17 : imprimer " + escape(nom_pdf) +
                ". Sur cette page assemblée, se fier à l'échelle graphique de chaque feuille.", 11.5, "normal", "#333")]
     y, corps = yq + 14, ""
     rect_lien = None

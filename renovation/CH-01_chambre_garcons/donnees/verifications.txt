@@ -1,0 +1,63 @@
+RAPPORT DE VÉRIFICATIONS — GÉNÉRATEUR DE PLANS
+========================================================================
+Projet   : Résidence — 86, avenue Laurier, Baie-Comeau
+Révision : A    Date : 2026-11-09
+Données  : maison.json, sha256 14c67207e5bad2ea174ddaefdacb46e0b57c80a53ea40d6a5201551647ab503e
+Feuilles : P-131 Rez-de-chaussée (1/4" = 1'-0")
+
+SOMMAIRE
+  Identifiants                 OK      0 erreur(s), 0 avertissement(s)
+  Murs                         OK      0 erreur(s), 0 avertissement(s)
+  Ouvertures                   OK      0 erreur(s), 0 avertissement(s)
+  Pièces                       OK      0 erreur(s), 0 avertissement(s)
+  Bilan de surface             OK      0 erreur(s), 0 avertissement(s)
+  Chaînes de cotes             OK      0 erreur(s), 0 avertissement(s)
+  Repères d'incertitude        OK      0 erreur(s), 0 avertissement(s)
+  Textes (chevauchements)      OK      0 erreur(s), 0 avertissement(s)
+  Mise en page                 OK      0 erreur(s), 0 avertissement(s)
+  Reproductibilité             OK      0 erreur(s), 0 avertissement(s)
+
+1. IDENTIFIANTS
+------------------------------------------------------------------------
+  [OK] 46 identifiants, aucun doublon
+
+2. MURS
+------------------------------------------------------------------------
+  (rien à signaler)
+
+3. OUVERTURES
+------------------------------------------------------------------------
+  (rien à signaler)
+
+4. PIÈCES
+------------------------------------------------------------------------
+  [OK] [RDC] 2 étiquettes de pièces : chacune dans sa pièce ou reliée à elle par un renvoi qui s'y termine ; aucun texte lu à plus de 20 % dans une autre pièce
+
+5. BILAN DE SURFACE
+------------------------------------------------------------------------
+  [OK] [RDC] brute (empreinte) 170,0 pi² ; Σ pièces 136,8 pi² + murs 33,1 pi² − chevauchement pièces/murs 0,0 pi² = 170,0 pi² ; écart -0,0 pi²
+  [OK] [RDC] aucun trou > 1 pi² entre pièces et murs
+
+6. CHAÎNES DE COTES
+------------------------------------------------------------------------
+  [OK] [RDC] façade avant, rang 1 : Σ = 11'-1¾" = hors-tout 11'-1¾"
+  [OK] [RDC] façade arriere, rang 1 : Σ = 11'-1¾" = hors-tout 11'-1¾"
+  [OK] [RDC] façade droite, rang 1 : Σ = 6'-3½" = hors-tout 6'-3½"
+
+7. REPÈRES D'INCERTITUDE
+------------------------------------------------------------------------
+  (rien à signaler)
+
+8. TEXTES (CHEVAUCHEMENTS)
+------------------------------------------------------------------------
+  [OK] [RDC] aucun chevauchement texte/texte ni texte/trait (80 textes vérifiés)
+
+9. MISE EN PAGE
+------------------------------------------------------------------------
+  [INFO] [RDC] feuille P-131 : échelle 1/4" = 1'-0"
+
+10. REPRODUCTIBILITÉ
+------------------------------------------------------------------------
+  [OK] [RDC] DXF P-131_chambre-garcons.dxf : sha256 bc03202631bf2e8d… identique quel que soit l'ordre interne des classes (indépendant de PYTHONHASHSEED)
+
+Légende : [ERREUR] à corriger dans maison.json ; [AVERT] à examiner ; [INFO] information ; [OK] contrôle réussi.
