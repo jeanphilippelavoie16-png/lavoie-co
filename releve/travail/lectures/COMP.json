@@ -1,0 +1,993 @@
+{
+ "cotes": [
+  {
+   "n": 1,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "38'",
+   "valeur": 456,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r0c1",
+   "px": [
+    1057,
+    189
+   ],
+   "orientation": "horizontale",
+   "emplacement": "au-dessus du plan, entre lignes 1 et 7",
+   "mesure": "hors-tout façade : ligne 1 (nu ext. mur gauche) à ligne 7 (nu ext. mur droit)"
+  },
+  {
+   "n": 2,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "31' 8\"",
+   "valeur": 380,
+   "unite": "po",
+   "confiance": "moyenne",
+   "alternatives": [
+    "31' 6\""
+   ],
+   "tuile": "P2_r1c0",
+   "px": [
+    264,
+    965
+   ],
+   "orientation": "verticale (texte horizontal)",
+   "emplacement": "à gauche du plan, ligne de cote verticale sur toute la profondeur",
+   "mesure": "hors-tout profondeur : nu ext. mur arrière (ligne D) à nu ext. mur avant (ligne A)",
+   "note": "texte flou ; 8 concorde avec la somme de la chaîne de droite (380 po)"
+  },
+  {
+   "n": 3,
+   "photo": "P2",
+   "categorie": "epaisseur",
+   "texte_original": "10\"",
+   "valeur": 10,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c0",
+   "px": [
+    383,
+    1582
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne du bas, entre ligne 1 et le trait de rappel à droite",
+   "mesure": "épaisseur du mur latéral gauche (ligne 1 = nu ext.)"
+  },
+  {
+   "n": 4,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "11' 4\"",
+   "valeur": 136,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c0",
+   "px": [
+    618,
+    1600
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne du bas, du trait de rappel (nu int. mur gauche) à la ligne 2",
+   "mesure": "nu int. mur gauche à ligne 2"
+  },
+  {
+   "n": 5,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "2' 5\"",
+   "valeur": 29,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c0",
+   "px": [
+    863,
+    1600
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne du bas, entre lignes 2 et 3",
+   "mesure": "ligne 2 à ligne 3"
+  },
+  {
+   "n": 6,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "3' 11\"",
+   "valeur": 47,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c1",
+   "px": [
+    985,
+    1600
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne du bas, entre lignes 3 et 4",
+   "mesure": "ligne 3 à ligne 4"
+  },
+  {
+   "n": 7,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "4' 5\"",
+   "valeur": 53,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c1",
+   "px": [
+    1124,
+    1604
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne du bas, entre lignes 4 et 5",
+   "mesure": "ligne 4 à ligne 5"
+  },
+  {
+   "n": 8,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "3' 5\"",
+   "valeur": 41,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c1",
+   "px": [
+    1279,
+    1607
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne du bas, entre lignes 5 et 6",
+   "mesure": "ligne 5 à ligne 6"
+  },
+  {
+   "n": 9,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "10' 10\"",
+   "valeur": 130,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c1",
+   "px": [
+    1539,
+    1619
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne du bas, de la ligne 6 au trait de rappel (nu int. mur droit)",
+   "mesure": "ligne 6 à nu int. mur droit"
+  },
+  {
+   "n": 10,
+   "photo": "P2",
+   "categorie": "epaisseur",
+   "texte_original": "10\"",
+   "valeur": 10,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c2",
+   "px": [
+    1730,
+    1587
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne du bas, entre le trait de rappel et la ligne 7",
+   "mesure": "épaisseur du mur latéral droit (ligne 7 = nu ext.)"
+  },
+  {
+   "n": 11,
+   "photo": "P2",
+   "categorie": "epaisseur",
+   "texte_original": "10\"",
+   "valeur": 10,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r0c2",
+   "px": [
+    1851,
+    374
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne de droite, entre ligne D et le trait de rappel en dessous",
+   "mesure": "épaisseur du mur arrière (ligne D = nu ext.)"
+  },
+  {
+   "n": 12,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "13' 10\"",
+   "valeur": 166,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r0c2",
+   "px": [
+    1911,
+    640
+   ],
+   "orientation": "horizontale (cote verticale)",
+   "emplacement": "chaîne de droite, du trait de rappel (nu int. mur arrière) à la ligne C",
+   "mesure": "nu int. mur arrière à ligne C (axe porteur d'origine)"
+  },
+  {
+   "n": 13,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "3' 11\"",
+   "valeur": 47,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r1c2",
+   "px": [
+    1911,
+    988
+   ],
+   "orientation": "horizontale (cote verticale)",
+   "emplacement": "chaîne de droite, entre lignes C et B",
+   "mesure": "ligne C à ligne B (entre les deux axes porteurs d'origine)"
+  },
+  {
+   "n": 14,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "12' 3\"",
+   "valeur": 147,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c2",
+   "px": [
+    1911,
+    1270
+   ],
+   "orientation": "horizontale (cote verticale)",
+   "emplacement": "chaîne de droite, de la ligne B au trait de rappel (nu int. mur avant)",
+   "mesure": "ligne B à nu int. mur avant"
+  },
+  {
+   "n": 15,
+   "photo": "P2",
+   "categorie": "epaisseur",
+   "texte_original": "10\"",
+   "valeur": 10,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c2",
+   "px": [
+    1834,
+    1526
+   ],
+   "orientation": "horizontale",
+   "emplacement": "chaîne de droite, entre le trait de rappel et la ligne A",
+   "mesure": "épaisseur du mur avant (ligne A = nu ext., côté rue)"
+  },
+  {
+   "n": 16,
+   "photo": "P2",
+   "categorie": "annotation",
+   "texte_original": "5 / 12",
+   "valeur": 0.4167,
+   "unite": "ratio (pente)",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r0c2",
+   "px": [
+    2260,
+    585
+   ],
+   "orientation": "horizontale",
+   "emplacement": "triangle de pente sur la ferme de toit, à droite du plan",
+   "mesure": "pente du toit 5 dans 12",
+   "note": "valeur = 5/12 ; px = centre entre le 5 (2251,560) et le 12 (2275,609)"
+  },
+  {
+   "n": 17,
+   "photo": "P2",
+   "categorie": "annotation",
+   "texte_original": "Fissure ± 1,2 m au plafond de stucco",
+   "valeur": 1.2,
+   "unite": "m",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c1",
+   "px": [
+    1574,
+    1336
+   ],
+   "orientation": "horizontale",
+   "emplacement": "Salon, entre lignes 5–6 et 6–7, entre A et B",
+   "mesure": "longueur approx. de la fissure au plafond du salon",
+   "note": "1,2 m ≈ 47,2 po (conversion, non écrite)"
+  },
+  {
+   "n": 18,
+   "photo": "P2",
+   "categorie": "autre",
+   "texte_original": "Colonne C4 retirée",
+   "valeur": 4,
+   "unite": "repère",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r1c1",
+   "px": [
+    1173,
+    824
+   ],
+   "orientation": "horizontale",
+   "emplacement": "près de l'intersection ligne C / ligne 4 (axe porteur d'origine)",
+   "mesure": "identifiant de colonne retirée (C4)"
+  },
+  {
+   "n": 19,
+   "photo": "P2",
+   "categorie": "autre",
+   "texte_original": "Colonne C6 retirée",
+   "valeur": 6,
+   "unite": "repère",
+   "confiance": "haute",
+   "alternatives": [
+    "C5"
+   ],
+   "tuile": "P2_r1c1",
+   "px": [
+    1198,
+    958
+   ],
+   "orientation": "horizontale",
+   "emplacement": "sous l'axe C, flèche vers l'intersection ligne C / ligne 6",
+   "mesure": "identifiant de colonne retirée (C6)",
+   "note": "6 vs 5 : lecture 6 nette, cohérent avec la position sur la ligne 6"
+  },
+  {
+   "n": 20,
+   "photo": "P2",
+   "categorie": "autre",
+   "texte_original": "Croquis no. 1",
+   "valeur": 1,
+   "unite": "no",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c2",
+   "px": [
+    2247,
+    1569
+   ],
+   "orientation": "horizontale",
+   "emplacement": "cartouche en bas à droite",
+   "mesure": "numéro du croquis"
+  },
+  {
+   "n": 21,
+   "photo": "P2",
+   "categorie": "autre",
+   "texte_original": "Résidence du 86, Laurier",
+   "valeur": 86,
+   "unite": "no civique",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c2",
+   "px": [
+    2421,
+    1600
+   ],
+   "orientation": "horizontale",
+   "emplacement": "cartouche en bas à droite",
+   "mesure": "numéro civique"
+  },
+  {
+   "n": 22,
+   "photo": "P2",
+   "categorie": "autre",
+   "texte_original": "Le 19 septembre 2016",
+   "valeur": "2016-09-19",
+   "unite": "date",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P2_r2c2",
+   "px": [
+    2260,
+    1762
+   ],
+   "orientation": "horizontale",
+   "emplacement": "cartouche, sous « Claude Mazerolle, ing. »",
+   "mesure": "date du croquis"
+  },
+  {
+   "n": 23,
+   "photo": "P2",
+   "categorie": "autre",
+   "texte_original": "129, av. Parent",
+   "valeur": 129,
+   "unite": "no civique (entreprise)",
+   "confiance": "basse",
+   "alternatives": [],
+   "tuile": "P2_r2c2",
+   "px": [
+    2430,
+    1494
+   ],
+   "orientation": "horizontale",
+   "emplacement": "bloc logo de l'entreprise à droite (très petit, partiellement coupé)",
+   "mesure": "adresse de l'entreprise Mazerolle — sans intérêt dimensionnel",
+   "note": "téléphone/code postal à côté illisibles"
+  },
+  {
+   "n": 24,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "8'-4\"",
+   "valeur": 100,
+   "unite": "po",
+   "confiance": "moyenne",
+   "alternatives": [
+    "8'-1\"",
+    "6'-4\""
+   ],
+   "tuile": "P2_r1c1",
+   "px": [
+    1037,
+    858
+   ],
+   "orientation": "horizontale",
+   "emplacement": "filigrane, au-dessus de l'axe C, entre lignes 4 et 5 (Salle à manger)",
+   "mesure": "inconnue (cote d'origine)",
+   "note": "cote manuscrite du plan d'origine (1957) en filigrane sous l'impression 2016 ; à confronter à P3/P4/P6 ; marque de pouces non visible"
+  },
+  {
+   "n": 25,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "3'-5\"",
+   "valeur": 41,
+   "unite": "po",
+   "confiance": "moyenne",
+   "alternatives": [
+    "3'-6\""
+   ],
+   "tuile": "P2_r1c1",
+   "px": [
+    1267,
+    858
+   ],
+   "orientation": "horizontale",
+   "emplacement": "filigrane, au-dessus de l'axe C, entre lignes 5 et 6",
+   "mesure": "inconnue — probablement même cote que 5–6 du croquis (3' 5\")",
+   "note": "cote manuscrite du plan d'origine (1957) en filigrane sous l'impression 2016 ; à confronter à P3/P4/P6"
+  },
+  {
+   "n": 26,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "11'-8\"",
+   "valeur": 140,
+   "unite": "po",
+   "confiance": "moyenne",
+   "alternatives": [
+    "11'-6\""
+   ],
+   "tuile": "P2_r1c1",
+   "px": [
+    1523,
+    862
+   ],
+   "orientation": "horizontale",
+   "emplacement": "filigrane, au-dessus de l'axe C, entre lignes 6 et 7 (Cuisine)",
+   "mesure": "inconnue (cote d'origine)",
+   "note": "cote manuscrite du plan d'origine (1957) en filigrane sous l'impression 2016 ; à confronter à P3/P4/P6"
+  },
+  {
+   "n": 27,
+   "photo": "P2",
+   "categorie": "annotation",
+   "texte_original": "POUTRE … 10' FLUSH",
+   "valeur": null,
+   "unite": "?",
+   "confiance": "basse",
+   "alternatives": [
+    "10\" FLUSH"
+   ],
+   "tuile": "P2_r1c1",
+   "px": [
+    1603,
+    895
+   ],
+   "orientation": "horizontale",
+   "emplacement": "filigrane, le long de l'axe C, entre lignes 6 et 7",
+   "mesure": "note de poutre affleurante ; « 10 » pieds ou pouces incertain",
+   "note": "cote manuscrite du plan d'origine (1957) en filigrane sous l'impression 2016 ; à confronter à P3/P4/P6 ; ' vs \" indécidable"
+  },
+  {
+   "n": 28,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "?'-5\"",
+   "valeur": null,
+   "unite": "po",
+   "confiance": "basse",
+   "alternatives": [
+    "2'-5\"",
+    "12'-5\""
+   ],
+   "tuile": "P2_r1c0",
+   "px": [
+    867,
+    857
+   ],
+   "orientation": "horizontale",
+   "emplacement": "filigrane, au-dessus de l'axe C, entre lignes 2 et 3",
+   "mesure": "inconnue",
+   "note": "cote manuscrite du plan d'origine (1957) en filigrane sous l'impression 2016 ; à confronter à P3/P4/P6 ; seul le 5\" est lisible"
+  },
+  {
+   "n": 29,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "?'-5\"",
+   "valeur": null,
+   "unite": "po",
+   "confiance": "basse",
+   "alternatives": [
+    "2'-5\""
+   ],
+   "tuile": "P2_r2c0",
+   "px": [
+    864,
+    1304
+   ],
+   "orientation": "horizontale",
+   "emplacement": "filigrane, entre lignes 3 et 4, entre A et B (près du placard en H)",
+   "mesure": "inconnue",
+   "note": "cote manuscrite du plan d'origine (1957) en filigrane sous l'impression 2016 ; à confronter à P3/P4/P6 ; seul le 5\" est lisible"
+  },
+  {
+   "n": 30,
+   "photo": "P2",
+   "categorie": "cote",
+   "texte_original": "3'-?0\"",
+   "valeur": null,
+   "unite": "po",
+   "confiance": "basse",
+   "alternatives": [
+    "3'-0\"",
+    "3'-10\""
+   ],
+   "tuile": "P2_r2c0",
+   "px": [
+    770,
+    1281
+   ],
+   "orientation": "horizontale",
+   "emplacement": "filigrane, entre lignes 2 et 3, entre A et B",
+   "mesure": "inconnue",
+   "note": "cote manuscrite du plan d'origine (1957) en filigrane sous l'impression 2016 ; à confronter à P3/P4/P6 ; illisible"
+  },
+  {
+   "n": 31,
+   "photo": "P5",
+   "categorie": "lot",
+   "texte_original": "50.27'",
+   "valeur": 50.27,
+   "unite": "pi décimaux",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r0c0",
+   "px": [
+    889,
+    505
+   ],
+   "orientation": "horizontale",
+   "emplacement": "limite arrière du lot 1-487 (haut)",
+   "mesure": "largeur arrière du lot"
+  },
+  {
+   "n": 32,
+   "photo": "P5",
+   "categorie": "lot",
+   "texte_original": "1-488",
+   "valeur": null,
+   "unite": "no de lot",
+   "confiance": "moyenne",
+   "alternatives": [
+    "1-483"
+   ],
+   "tuile": "P5_r0c0",
+   "px": [
+    341,
+    638
+   ],
+   "orientation": "horizontale",
+   "emplacement": "lot voisin à gauche",
+   "mesure": "numéro de lot",
+   "note": "8 final peu net"
+  },
+  {
+   "n": 33,
+   "photo": "P5",
+   "categorie": "lot",
+   "texte_original": "1-487",
+   "valeur": null,
+   "unite": "no de lot",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r0c0",
+   "px": [
+    850,
+    638
+   ],
+   "orientation": "horizontale",
+   "emplacement": "centre du lot visé",
+   "mesure": "numéro de lot (aussi dans le titre)"
+  },
+  {
+   "n": 34,
+   "photo": "P5",
+   "categorie": "lot",
+   "texte_original": "1-486",
+   "valeur": null,
+   "unite": "no de lot",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r0c1",
+   "px": [
+    1385,
+    640
+   ],
+   "orientation": "horizontale",
+   "emplacement": "lot voisin à droite",
+   "mesure": "numéro de lot"
+  },
+  {
+   "n": 35,
+   "photo": "P5",
+   "categorie": "lot",
+   "texte_original": "115.17'",
+   "valeur": 115.17,
+   "unite": "pi décimaux",
+   "confiance": "moyenne",
+   "alternatives": [
+    "115.14'"
+   ],
+   "tuile": "P5_r0c0",
+   "px": [
+    558,
+    940
+   ],
+   "orientation": "verticale (texte lu de bas en haut)",
+   "emplacement": "limite latérale gauche du lot (oblique)",
+   "mesure": "profondeur du lot côté gauche",
+   "note": "dernier chiffre : 7 à barre haute avec amorce, mais trait montant au-dessus de la barre → 4 possible"
+  },
+  {
+   "n": 36,
+   "photo": "P5",
+   "categorie": "lot",
+   "texte_original": "112,28'",
+   "valeur": 112.28,
+   "unite": "pi décimaux",
+   "confiance": "moyenne",
+   "alternatives": [
+    "112.26'"
+   ],
+   "tuile": "P5_r0c1",
+   "px": [
+    1150,
+    966
+   ],
+   "orientation": "verticale (texte lu de bas en haut)",
+   "emplacement": "limite latérale droite du lot",
+   "mesure": "profondeur du lot côté droit",
+   "note": "séparateur écrit comme virgule ; 8 final à petite boucle haute, 6 possible"
+  },
+  {
+   "n": 37,
+   "photo": "P5",
+   "categorie": "cote",
+   "texte_original": "31'-8\"",
+   "valeur": 380,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [
+    "31'-6\""
+   ],
+   "tuile": "P5_r0c1",
+   "px": [
+    1018,
+    1043
+   ],
+   "orientation": "verticale (texte lu de bas en haut)",
+   "emplacement": "le long du mur latéral droit de la maison, à l'intérieur",
+   "mesure": "profondeur de la maison (avant à arrière)"
+  },
+  {
+   "n": 38,
+   "photo": "P5",
+   "categorie": "cote",
+   "texte_original": "9'",
+   "valeur": 9.0,
+   "unite": "pi",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r0c1",
+   "px": [
+    1064,
+    889
+   ],
+   "orientation": "horizontale",
+   "emplacement": "en haut à droite de la maison, au niveau du mur arrière",
+   "mesure": "marge latérale droite : mur droit de la maison à la limite droite du lot (au mur arrière)"
+  },
+  {
+   "n": 39,
+   "photo": "P5",
+   "categorie": "cote",
+   "texte_original": "7.79'",
+   "valeur": 7.79,
+   "unite": "pi décimaux",
+   "confiance": "moyenne",
+   "alternatives": [
+    "7.19'",
+    "1.79'"
+   ],
+   "tuile": "P5_r0c0",
+   "px": [
+    595,
+    1215
+   ],
+   "orientation": "horizontale",
+   "emplacement": "au niveau du mur avant, entre la limite gauche du lot et le mur gauche",
+   "mesure": "marge latérale gauche au mur avant",
+   "note": "1er chiffre partiellement masqué par le trait de rappel"
+  },
+  {
+   "n": 40,
+   "photo": "P5",
+   "categorie": "cote",
+   "texte_original": "38'-0\"",
+   "valeur": 456,
+   "unite": "po",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r0c0",
+   "px": [
+    831,
+    1215
+   ],
+   "orientation": "horizontale",
+   "emplacement": "au niveau du mur avant de la maison",
+   "mesure": "largeur de la maison (façade)"
+  },
+  {
+   "n": 41,
+   "photo": "P5",
+   "categorie": "cote",
+   "texte_original": "9'",
+   "valeur": 9.0,
+   "unite": "pi",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r0c1",
+   "px": [
+    1064,
+    1215
+   ],
+   "orientation": "horizontale",
+   "emplacement": "au niveau du mur avant, à droite de la maison",
+   "mesure": "marge latérale droite : mur droit à la limite droite du lot (au mur avant)"
+  },
+  {
+   "n": 42,
+   "photo": "P5",
+   "categorie": "cote",
+   "texte_original": "40'",
+   "valeur": 40.0,
+   "unite": "pi",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r1c0",
+   "px": [
+    556,
+    1430
+   ],
+   "orientation": "verticale (texte lu de bas en haut)",
+   "emplacement": "le long de la limite gauche, entre la ligne du mur avant et la rue",
+   "mesure": "marge avant (rue à mur avant), côté gauche"
+  },
+  {
+   "n": 43,
+   "photo": "P5",
+   "categorie": "cote",
+   "texte_original": "40'",
+   "valeur": 40.0,
+   "unite": "pi",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r1c1",
+   "px": [
+    1105,
+    1430
+   ],
+   "orientation": "verticale (texte lu de bas en haut)",
+   "emplacement": "le long de la limite droite (côté ALLÉE), entre la ligne du mur avant et la rue",
+   "mesure": "marge avant (rue à mur avant), côté droit"
+  },
+  {
+   "n": 44,
+   "photo": "P5",
+   "categorie": "lot",
+   "texte_original": "57.23",
+   "valeur": 57.23,
+   "unite": "pi décimaux",
+   "confiance": "haute",
+   "alternatives": [
+    "57.28"
+   ],
+   "tuile": "P5_r1c0",
+   "px": [
+    846,
+    1629
+   ],
+   "orientation": "horizontale",
+   "emplacement": "limite avant du lot, le long de l'av. Laurier",
+   "mesure": "largeur du lot en façade",
+   "note": "pas de marque ' après le nombre"
+  },
+  {
+   "n": 45,
+   "photo": "P5",
+   "categorie": "lot",
+   "texte_original": "…SUR LE LOT 1-487",
+   "valeur": null,
+   "unite": "no de lot",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r1c1",
+   "px": [
+    1700,
+    1919
+   ],
+   "orientation": "horizontale",
+   "emplacement": "titre, 2e ligne",
+   "mesure": "numéro de lot dans le titre"
+  },
+  {
+   "n": 46,
+   "photo": "P5",
+   "categorie": "autre",
+   "texte_original": "ECHELLE: 1\" = 20'",
+   "valeur": 240,
+   "unite": "rapport (1 po = 240 po)",
+   "confiance": "haute",
+   "alternatives": [],
+   "tuile": "P5_r1c1",
+   "px": [
+    979,
+    2035
+   ],
+   "orientation": "horizontale",
+   "emplacement": "titre, dernière ligne",
+   "mesure": "échelle du plan"
+  },
+  {
+   "n": 47,
+   "photo": "P5",
+   "categorie": "autre",
+   "texte_original": "6 NOV. 1957",
+   "valeur": "1957-11-06",
+   "unite": "date",
+   "confiance": "haute",
+   "alternatives": [
+    "5 NOV. 1957"
+   ],
+   "tuile": "P5_r1c0",
+   "px": [
+    361,
+    2192
+   ],
+   "orientation": "horizontale",
+   "emplacement": "coin inférieur gauche",
+   "mesure": "date du plan"
+  }
+ ],
+ "sommes_chaines": [
+  {
+   "chaine": "P2 chaîne du bas (x), ligne 1 → ligne 7",
+   "segments": [
+    {
+     "texte": "10\"",
+     "po": 10
+    },
+    {
+     "texte": "11' 4\"",
+     "po": 136
+    },
+    {
+     "texte": "2' 5\"",
+     "po": 29
+    },
+    {
+     "texte": "3' 11\"",
+     "po": 47
+    },
+    {
+     "texte": "4' 5\"",
+     "po": 53
+    },
+    {
+     "texte": "3' 5\"",
+     "po": 41
+    },
+    {
+     "texte": "10' 10\"",
+     "po": 130
+    },
+    {
+     "texte": "10\"",
+     "po": 10
+    }
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "ecart_po": 0
+  },
+  {
+   "chaine": "P2 chaîne de droite (y), ligne D → ligne A",
+   "segments": [
+    {
+     "texte": "10\"",
+     "po": 10
+    },
+    {
+     "texte": "13' 10\"",
+     "po": 166
+    },
+    {
+     "texte": "3' 11\"",
+     "po": 47
+    },
+    {
+     "texte": "12' 3\"",
+     "po": 147
+    },
+    {
+     "texte": "10\"",
+     "po": 10
+    }
+   ],
+   "somme_po": 380,
+   "hors_tout_po": 380,
+   "ecart_po": 0
+  },
+  {
+   "chaine": "P5 au mur avant (info) : 7.79' + 38'-0\" + 9' (pas de hors-tout sur cette ligne ; façade du lot 57.23' mesurée à la rue)",
+   "segments": [
+    {
+     "texte": "7.79'",
+     "po": 93.48
+    },
+    {
+     "texte": "38'-0\"",
+     "po": 456
+    },
+    {
+     "texte": "9'",
+     "po": 108
+    }
+   ],
+   "somme_po": 657.48,
+   "hors_tout_po": null,
+   "ecart_po": null
+  }
+ ]
+}

@@ -1,0 +1,3 @@
+﻿niveau;piece_id;piece;longueur;largeur;superficie_pi2;superficie_m2;perimetre;hauteur_plafond;surface_murale_brute_pi2;nb_portes;nb_fenetres;fiabilite
+RDC;piece-RDC-CH2;Chambre des garçons;"12'-0¾""";"11'-1¾""";124,00;11,52;"46'-5""";"8'-0""";371,33;2;1;DÉDUIT
+RDC;piece-RDC-GRA;G.R.;"6'-3½""";"2'-0½""";12,80;1,19;"16'-8""";"8'-0""";133,33;1;0;ESTIMÉ

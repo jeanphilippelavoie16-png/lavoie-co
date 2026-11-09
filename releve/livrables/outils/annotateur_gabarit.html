@@ -1,0 +1,450 @@
+<title>Annotateur du 86 Laurier</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Mise en page : plan sur papier blanc (à gauche ou en haut), barre d'outils, panneau des annotations et questions. */
+:root {
+  --bg: #eef1f5;            /* table de travail, gris bleuté */
+  --surface: #ffffff;
+  --ink: #18202b;
+  --muted: #5a6473;
+  --line: #cfd6df;
+  --blue: #2346a8;          /* bleu de bleu de plan : notes et traits du propriétaire */
+  --blue-soft: #e3e9f8;
+  --red: #c62828;           /* « à enlever » */
+  --orange: #e8730c;        /* repères ⚠ (même couleur que sur les plans) */
+  --orange-soft: #fdeedd;
+  --ok: #2e7d32;
+  --paper: #ffffff;         /* la feuille reste blanche dans les deux thèmes */
+  --f-ui: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1b212b; --ink: #e6eaf0; --muted: #9aa5b4; --line: #313a47;
+    --blue: #8fa8f0; --blue-soft: #232d47; --red: #ef7070; --orange: #f39a4c; --orange-soft: #3a2a1a; --ok: #7cc882;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161d; --surface: #1b212b; --ink: #e6eaf0; --muted: #9aa5b4; --line: #313a47;
+  --blue: #8fa8f0; --blue-soft: #232d47; --red: #ef7070; --orange: #f39a4c; --orange-soft: #3a2a1a; --ok: #7cc882;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-ui); font-size: 15px; line-height: 1.45; }
+.app { min-height: 100%; display: flex; flex-direction: column; gap: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px 24px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+header h1 { margin: 0; font-size: 1.25rem; text-wrap: balance; }
+header .sub { color: var(--muted); font-size: .85rem; }
+.etat { margin-left: auto; font-size: .8rem; color: var(--muted); font-family: var(--f-mono); }
+.etat.err { color: var(--red); }
+.corps { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 12px; align-items: start; }
+@media (max-width: 900px) { .corps { grid-template-columns: minmax(0, 1fr); } }
+.colplan { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.barre { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg); padding-block: 4px; }
+.onglets, .outils, .zoom { display: flex; gap: 4px; flex-wrap: wrap; }
+.sep { width: 1px; height: 28px; background: var(--line); }
+button { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+  padding: 7px 11px; cursor: pointer; min-height: 38px; }
+button:hover { border-color: var(--muted); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: var(--surface); }
+.outils button[data-outil="retirer"][aria-pressed="true"] { background: var(--red); border-color: var(--red); }
+button.prim { background: var(--blue); border-color: var(--blue); color: var(--surface); }
+button.danger { color: var(--red); border-color: var(--red); }
+button.danger.arme { background: var(--red); color: var(--surface); }
+.plan { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+  height: min(72vh, 820px); touch-action: none; user-select: none; -webkit-user-select: none; }
+@media (max-width: 900px) { .plan { height: 62vh; } }
+.plan svg.feuille { width: 100%; height: 100%; display: block; }
+.plan[data-outil="note"], .plan[data-outil="trait"], .plan[data-outil="retirer"] { cursor: crosshair; }
+.plan[data-outil="deplacer"] { cursor: grab; }
+.aide { font-size: .85rem; color: var(--muted); margin: 0; }
+.panneau { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.carte { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.carte h2 { margin: 0; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.carte.sel { border-color: var(--blue); }
+.carte.sel.ecart { border-color: var(--orange); }
+textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px; min-height: 84px; resize: vertical; width: 100%; box-sizing: border-box; }
+.rang { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.liste { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.liste li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: start; padding: 8px; border-radius: 6px; border: 1px solid transparent; cursor: pointer; }
+.liste li:hover, .liste li.actif { border-color: var(--line); background: var(--bg); }
+.pastille { font-family: var(--f-mono); font-size: .78rem; font-weight: 600; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
+.p-note { background: var(--blue-soft); color: var(--blue); }
+.p-trait { background: var(--blue-soft); color: var(--blue); }
+.p-retirer { background: color-mix(in srgb, var(--red) 15%, transparent); color: var(--red); }
+.p-ecart { background: var(--orange-soft); color: var(--orange); }
+.txt { min-width: 0; overflow-wrap: anywhere; }
+.txt small { display: block; color: var(--muted); }
+.claude { border-left: 3px solid var(--ok); padding-left: 8px; color: var(--ink); font-size: .9rem; }
+.vide { color: var(--muted); font-size: .9rem; margin: 0; }
+.fiche dl { margin: 0; display: grid; gap: 6px; }
+.fiche dt { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.fiche dd { margin: 0; overflow-wrap: anywhere; }
+.badge { font-size: .75rem; padding: 1px 6px; border-radius: 999px; border: 1px solid currentColor; }
+.b-critique { color: var(--red); } .b-moyen { color: var(--orange); } .b-faible { color: var(--muted); }
+.ok { color: var(--ok); }
+.mono { font-family: var(--f-mono); font-size: .8rem; }
+@media (prefers-reduced-motion: no-preference) { button { transition: background .12s, border-color .12s; } }
+</style>
+
+<div class="app">
+  <header>
+    <h1>Annotateur du 86 Laurier</h1>
+    <span class="sub" id="sous-titre"></span>
+    <span class="etat" id="etat">Connexion…</span>
+  </header>
+  <div class="corps">
+    <section class="colplan" aria-label="Plan">
+      <div class="barre">
+        <div class="onglets" role="group" aria-label="Niveau">
+          <button id="ong-SS" data-niv="SS" aria-pressed="false">Sous-sol</button>
+          <button id="ong-RDC" data-niv="RDC" aria-pressed="true">Rez-de-chaussée</button>
+        </div>
+        <span class="sep" aria-hidden="true"></span>
+        <div class="outils" role="group" aria-label="Outil">
+          <button id="o-dep" data-outil="deplacer" aria-pressed="true" title="Déplacer et zoomer ; toucher un ⚠ ou une annotation pour l'ouvrir">✋ Déplacer</button>
+          <button id="o-note" data-outil="note" aria-pressed="false" title="Toucher le plan pour épingler une note">📍 Note</button>
+          <button id="o-trait" data-outil="trait" aria-pressed="false" title="Dessiner à main levée">✏️ Trait</button>
+          <button id="o-ret" data-outil="retirer" aria-pressed="false" title="Barrer ce qui n'existe plus">✖ À enlever</button>
+        </div>
+        <span class="sep" aria-hidden="true"></span>
+        <div class="zoom" role="group" aria-label="Zoom">
+          <button id="z-plus" aria-label="Zoomer">＋</button>
+          <button id="z-moins" aria-label="Dézoomer">－</button>
+          <button id="z-fit">Ajuster</button>
+        </div>
+      </div>
+      <div class="plan" id="plan" data-outil="deplacer"></div>
+      <p class="aide" id="aide">Déplacer : glisser pour bouger, pincer ou molette pour zoomer. Touchez un repère orange ⚠ pour lire la question et y répondre.</p>
+    </section>
+    <aside class="panneau" aria-label="Annotations">
+      <div class="carte sel" id="selection" hidden></div>
+      <div class="carte">
+        <h2 id="t-annot">Mes annotations</h2>
+        <ul class="liste" id="liste-annot"></ul>
+        <p class="vide" id="vide-annot">Aucune annotation sur ce niveau. Choisissez Note, Trait ou À enlever, puis touchez le plan.</p>
+      </div>
+      <div class="carte">
+        <h2 id="t-quest">Questions ⚠ ouvertes</h2>
+        <ul class="liste" id="liste-quest"></ul>
+        <p class="vide" id="vide-quest" hidden>Aucune question ouverte sur ce niveau.</p>
+      </div>
+      <div class="carte">
+        <h2 id="t-rep">Vos réponses</h2>
+        <ul class="liste" id="liste-rep"></ul>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+const D = /*__DONNEES__*/null;
+const NS = "http://www.w3.org/2000/svg";
+const $ = (s) => document.querySelector(s);
+const st = { niv: "RDC", outil: "deplacer", annots: new Map(), reps: new Map(), sel: null, db: null, local: false, vb: null };
+const LIB = { note: "Note", trait: "Trait", retirer: "À enlever" };
+
+// ---------- stockage (base de l'artefact, sinon ce navigateur seulement)
+function etat(t, err) { const e = $("#etat"); e.textContent = t; e.classList.toggle("err", !!err); }
+function lireLocal(k) { try { return JSON.parse(localStorage.getItem(k) || "{}"); } catch (e) { return {}; } }
+function ecrireLocal(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function chargerLocal() {
+  for (const [id, a] of Object.entries(lireLocal("annots"))) st.annots.set(id, a);
+  for (const [id, r] of Object.entries(lireLocal("reps"))) st.reps.set(id, r);
+}
+function sauverLocal() {
+  ecrireLocal("annots", Object.fromEntries(st.annots)); ecrireLocal("reps", Object.fromEntries(st.reps));
+}
+function nouvelId() { return "a" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+async function ecrire(col, id, data) {
+  if (st.db) {
+    try { await st.db.collection(col).doc(id).set(data); etat("Enregistré"); return; }
+    catch (e) { etat("Échec de l'enregistrement (" + (e && e.code || "erreur") + ")", true); return; }
+  }
+  sauverLocal(); etat("Enregistré dans ce navigateur seulement", true);
+}
+async function effacer(col, id) {
+  if (st.db) { try { await st.db.collection(col).doc(id).delete(); etat("Supprimé"); } catch (e) { etat("Échec de la suppression", true); } return; }
+  sauverLocal();
+}
+
+// ---------- plan
+let svg, calque;
+function versMaison(p) { const f = D.feuilles[st.niv]; return { x: +(p.x - f.x0).toFixed(1), y: +(f.y0 - p.y).toFixed(1) }; }
+function versSvg(x, y) { const f = D.feuilles[st.niv]; return { x: f.x0 + x, y: f.y0 - y }; }
+function ptSvg(ev) {
+  const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+  return p.matrixTransform(svg.getScreenCTM().inverse());
+}
+function appliquerVb() { const v = st.vb; svg.setAttribute("viewBox", `${v.x} ${v.y} ${v.w} ${v.h}`); }
+function ajuster() {
+  const murs = svg.querySelector('[id="10-Murs"]');
+  const b = murs.getBBox(); const m = 70;
+  st.vb = { x: b.x - m, y: b.y - m, w: b.width + 2 * m, h: b.height + 2 * m }; appliquerVb();
+}
+function zoomer(f, cx, cy) {
+  const v = st.vb; if (cx === undefined) { cx = v.x + v.w / 2; cy = v.y + v.h / 2; }
+  const w = Math.min(Math.max(v.w * f, 40), 2000), h = v.h * w / v.w;
+  st.vb = { x: cx - (cx - v.x) * w / v.w, y: cy - (cy - v.y) * h / v.h, w, h }; appliquerVb();
+}
+function chargerFeuille() {
+  const f = D.feuilles[st.niv];
+  $("#plan").innerHTML = f.svg;
+  svg = $("#plan svg"); svg.classList.add("feuille");
+  svg.removeAttribute("width"); svg.removeAttribute("height");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  calque = document.createElementNS(NS, "g"); calque.setAttribute("id", "annotations-proprietaire"); svg.appendChild(calque);
+  svg.querySelectorAll('[id="70-Incertitudes"] > g[id^="ecart-"]').forEach((g) => {
+    g.style.cursor = "pointer";
+    const b = g.getBBox(); const z = document.createElementNS(NS, "circle");   // zone de toucher plus grande que le repère
+    z.setAttribute("cx", b.x + b.width / 2); z.setAttribute("cy", b.y + b.height / 2); z.setAttribute("r", 11); z.setAttribute("fill", "transparent");
+    g.appendChild(z);
+  });
+  ajuster(); dessinerAnnots(); listes();
+  $("#sous-titre").textContent = `${f.feuille} · ${f.nom} · ${D.projet}`;
+}
+
+function dessinerAnnots() {
+  if (!calque) return;
+  calque.textContent = "";
+  const items = trier().filter((a) => a.niveau === st.niv);
+  items.forEach((a, i) => {
+    const g = document.createElementNS(NS, "g"); g.dataset.id = a.id; g.style.cursor = "pointer";
+    const actif = st.sel && st.sel.id === a.id;
+    if (a.kind === "note") {
+      const p = versSvg(a.x, a.y);
+      const c = document.createElementNS(NS, "circle"); c.setAttribute("cx", p.x); c.setAttribute("cy", p.y); c.setAttribute("r", actif ? 9 : 7);
+      c.setAttribute("fill", getComputedStyle(document.documentElement).getPropertyValue("--blue").trim() || "#2346a8");
+      c.setAttribute("stroke", "#fff"); c.setAttribute("stroke-width", "1.5"); c.setAttribute("opacity", a.statut === "traité" ? .45 : 1);
+      const t = document.createElementNS(NS, "text"); t.setAttribute("x", p.x); t.setAttribute("y", p.y + 3.2); t.setAttribute("text-anchor", "middle");
+      t.setAttribute("font-size", "8.5"); t.setAttribute("font-weight", "bold"); t.setAttribute("fill", "#fff"); t.setAttribute("font-family", "Arial, sans-serif");
+      t.textContent = numero(a); g.append(c, t);
+    } else {
+      const pts = (a.points || []).map(([x, y]) => { const p = versSvg(x, y); return `${p.x},${p.y}`; }).join(" ");
+      const l = document.createElementNS(NS, "polyline"); l.setAttribute("points", pts); l.setAttribute("fill", "none");
+      l.setAttribute("stroke", a.kind === "retirer" ? "#c62828" : "#2346a8"); l.setAttribute("stroke-linecap", "round"); l.setAttribute("stroke-linejoin", "round");
+      l.setAttribute("stroke-width", a.kind === "retirer" ? (actif ? 9 : 7) : (actif ? 4 : 2.5)); l.setAttribute("opacity", a.statut === "traité" ? .3 : (a.kind === "retirer" ? .6 : .9));
+      g.append(l);
+      if (a.points && a.points.length) {
+        const p = versSvg(a.points[0][0], a.points[0][1]);
+        const t = document.createElementNS(NS, "text"); t.setAttribute("x", p.x + 4); t.setAttribute("y", p.y - 4); t.setAttribute("font-size", "9");
+        t.setAttribute("font-weight", "bold"); t.setAttribute("font-family", "Arial, sans-serif"); t.setAttribute("fill", a.kind === "retirer" ? "#c62828" : "#2346a8");
+        t.textContent = numero(a); g.append(t);
+      }
+    }
+    calque.appendChild(g);
+  });
+  // repères ⚠ déjà répondus : petit rond vert
+  svg.querySelectorAll('[id="70-Incertitudes"] > g[id^="ecart-"]').forEach((g) => {
+    const old = g.querySelector(".repondu"); if (old) old.remove();
+    if (st.reps.has(g.id) && (st.reps.get(g.id).texte || "").trim()) {
+      const b = g.getBBox(); const c = document.createElementNS(NS, "circle");
+      c.setAttribute("class", "repondu"); c.setAttribute("cx", b.x + b.width + 4); c.setAttribute("cy", b.y + 2); c.setAttribute("r", 3.5); c.setAttribute("fill", "#2e7d32");
+      g.appendChild(c);
+    }
+  });
+}
+function trier() { return [...st.annots.values()].sort((a, b) => (a.cree || "").localeCompare(b.cree || "")); }
+function numero(a) { const l = trier().filter((x) => x.niveau === a.niveau); return (a.niveau === "SS" ? "S" : "R") + (l.findIndex((x) => x.id === a.id) + 1); }
+
+// ---------- interactions sur le plan
+const pointeurs = new Map(); let geste = null;
+function brancherPlan() {
+  const plan = $("#plan");
+  plan.addEventListener("pointerdown", (ev) => {
+    if (!svg) return;
+    plan.setPointerCapture(ev.pointerId);
+    pointeurs.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    if (pointeurs.size === 2) { geste = { type: "pinch", d: dist(), vb: { ...st.vb } }; return; }
+    const p = ptSvg(ev);
+    if (st.outil === "trait" || st.outil === "retirer") {
+      const l = document.createElementNS(NS, "polyline"); l.setAttribute("fill", "none"); l.setAttribute("stroke-linecap", "round");
+      l.setAttribute("stroke", st.outil === "retirer" ? "#c62828" : "#2346a8"); l.setAttribute("stroke-width", st.outil === "retirer" ? 7 : 2.5);
+      l.setAttribute("opacity", st.outil === "retirer" ? .6 : .9); calque.appendChild(l);
+      geste = { type: "dessin", pts: [[p.x, p.y]], el: l };
+    } else if (st.outil === "note") {
+      geste = { type: "note", p, x0: ev.clientX, y0: ev.clientY };
+    } else {
+      geste = { type: "pan", x0: ev.clientX, y0: ev.clientY, vb: { ...st.vb }, bouge: false };
+    }
+  });
+  plan.addEventListener("pointermove", (ev) => {
+    if (!pointeurs.has(ev.pointerId)) return;
+    pointeurs.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    if (!geste) return;
+    if (geste.type === "pinch" && pointeurs.size === 2) {
+      const f = geste.d / Math.max(dist(), 1); const v = geste.vb; const r = svg.getBoundingClientRect();
+      const [a, b] = [...pointeurs.values()]; const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+      const cx = v.x + (mx - r.left) / r.width * v.w, cy = v.y + (my - r.top) / r.height * v.h;
+      const w = Math.min(Math.max(v.w * f, 40), 2000), h = v.h * w / v.w;
+      st.vb = { x: cx - (cx - v.x) * w / v.w, y: cy - (cy - v.y) * h / v.h, w, h }; appliquerVb();
+    } else if (geste.type === "pan") {
+      const r = svg.getBoundingClientRect(); const s = Math.max(geste.vb.w / r.width, geste.vb.h / r.height);
+      const dx = ev.clientX - geste.x0, dy = ev.clientY - geste.y0; if (Math.abs(dx) + Math.abs(dy) > 4) geste.bouge = true;
+      st.vb = { ...geste.vb, x: geste.vb.x - dx * s, y: geste.vb.y - dy * s }; appliquerVb();
+    } else if (geste.type === "dessin") {
+      const p = ptSvg(ev); const [lx, ly] = geste.pts[geste.pts.length - 1];
+      if (Math.hypot(p.x - lx, p.y - ly) > 1.5) { geste.pts.push([p.x, p.y]); geste.el.setAttribute("points", geste.pts.map((q) => q.join(",")).join(" ")); }
+    }
+  });
+  const fin = async (ev) => {
+    pointeurs.delete(ev.pointerId);
+    if (!geste) return;
+    const g = geste;
+    if (g.type === "pinch") { if (pointeurs.size === 0) geste = null; return; }
+    geste = null;
+    if (g.type === "pan" && !g.bouge) { const c = cible(ev); if (c) selectionner(c); return; }
+    if (g.type === "note") {
+      if (Math.abs(ev.clientX - g.x0) + Math.abs(ev.clientY - g.y0) > 8) return;
+      const c = cible(ev); if (c && c.type === "ecart") { selectionner(c); return; }
+      const m = versMaison(g.p);
+      const a = { id: nouvelId(), niveau: st.niv, kind: "note", x: m.x, y: m.y, texte: "", statut: "nouveau", cree: new Date().toISOString() };
+      st.annots.set(a.id, a); await ecrire("annotations", a.id, sansId(a)); selectionner({ type: "annot", id: a.id }, true);
+    }
+    if (g.type === "dessin") {
+      g.el.remove();
+      if (g.pts.length < 2) return;
+      const pts = g.pts.map(([x, y]) => { const m = versMaison({ x, y }); return [m.x, m.y]; });
+      const a = { id: nouvelId(), niveau: st.niv, kind: st.outil, points: pts, texte: "", statut: "nouveau", cree: new Date().toISOString() };
+      st.annots.set(a.id, a); await ecrire("annotations", a.id, sansId(a)); selectionner({ type: "annot", id: a.id }, true);
+    }
+  };
+  plan.addEventListener("pointerup", fin); plan.addEventListener("pointercancel", fin);
+  plan.addEventListener("wheel", (ev) => { if (!svg) return; ev.preventDefault(); const p = ptSvg(ev); zoomer(ev.deltaY > 0 ? 1.15 : 1 / 1.15, p.x, p.y); }, { passive: false });
+}
+// élément touché sous le doigt (la capture du pointeur redirige les clics vers le conteneur)
+function cible(ev) {
+  const e = document.elementFromPoint(ev.clientX, ev.clientY); if (!e || !e.closest) return null;
+  const a = e.closest("g[data-id]"); if (a) return { type: "annot", id: a.dataset.id };
+  const k = e.closest('g[id^="ecart-"]'); if (k) return { type: "ecart", id: k.id };
+  return null;
+}
+function dist() { const [a, b] = [...pointeurs.values()]; return Math.hypot(a.x - b.x, a.y - b.y); }
+function sansId(a) { const { id, ...r } = a; return r; }
+
+// ---------- panneau
+function el(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) { if (k === "class") e.className = v; else if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v); }
+  for (const k of kids) if (k != null) e.append(k);
+  return e;
+}
+function boutonSupprimer(action) {
+  const b = el("button", { class: "danger", type: "button" }, "Supprimer"); let t;
+  b.addEventListener("click", () => {
+    if (b.classList.contains("arme")) { clearTimeout(t); action(); return; }
+    b.classList.add("arme"); b.textContent = "Confirmer la suppression"; t = setTimeout(() => { b.classList.remove("arme"); b.textContent = "Supprimer"; }, 3500);
+  });
+  return b;
+}
+function selectionner(s, focus) {
+  st.sel = s; const box = $("#selection"); box.textContent = ""; box.hidden = !s; box.classList.toggle("ecart", !!s && s.type === "ecart");
+  if (!s) { dessinerAnnots(); listes(); return; }
+  if (s.type === "annot") {
+    const a = st.annots.get(s.id); if (!a) { box.hidden = true; return; }
+    const ta = el("textarea", { id: "txt-sel", placeholder: a.kind === "retirer" ? "Ex. : ce mur n'existe plus" : "Votre note…" }); ta.value = a.texte || "";
+    const sauver = el("button", { class: "prim", type: "button", onclick: async () => { a.texte = ta.value.trim(); a.maj = new Date().toISOString(); st.annots.set(a.id, a); await ecrire("annotations", a.id, sansId(a)); listes(); } }, "Enregistrer");
+    box.append(el("h2", {}, `${LIB[a.kind]} ${numero(a)} · ${D.feuilles[a.niveau].nom}`), ta,
+      el("div", { class: "rang" }, sauver, boutonSupprimer(async () => { st.annots.delete(a.id); await effacer("annotations", a.id); selectionner(null); }),
+        el("button", { type: "button", onclick: () => selectionner(null) }, "Fermer")));
+    if (a.reponse_claude) box.append(el("div", { class: "claude" }, el("strong", {}, "Réponse de Claude : "), a.reponse_claude));
+    if (a.statut === "traité") box.append(el("p", { class: "vide ok" }, "Traité : intégré aux plans."));
+    if (focus) setTimeout(() => ta.focus(), 0);
+  } else {
+    const e = D.ecarts.find((x) => x.id === s.id); if (!e) { box.hidden = true; return; }
+    const r = st.reps.get(e.id) || {};
+    const ta = el("textarea", { id: "txt-rep", placeholder: "Votre réponse (ex. : mesuré 6'-2\", ou : ce mur existe encore)" }); ta.value = r.texte || "";
+    const sauver = el("button", { class: "prim", type: "button", onclick: async () => {
+      const d = { ecart: e.id, niveau: e.niveau, texte: ta.value.trim(), maj: new Date().toISOString(), statut: "nouveau" };
+      st.reps.set(e.id, d); await ecrire("reponses", e.id, d); dessinerAnnots(); listes(); } }, "Enregistrer la réponse");
+    const dl = el("dl");
+    const ligne = (t, v) => { if (v) dl.append(el("dt", {}, t), el("dd", {}, v)); };
+    ligne("Question / à vérifier", e.a_valider); ligne("Ce qu'on sait", e.description); ligne("Hypothèse retenue", e.hypothese);
+    box.append(el("h2", {}, `⚠${e.num} · ${e.niveau === "global" ? "Général" : (D.feuilles[e.niveau] || {}).nom || e.niveau}`),
+      el("div", { class: "rang" }, el("span", { class: "badge b-" + e.impact }, "impact " + e.impact), el("span", { class: "badge" }, e.statut)),
+      el("div", { class: "fiche" }, dl), ta, el("div", { class: "rang" }, sauver, el("button", { type: "button", onclick: () => selectionner(null) }, "Fermer")));
+    if (r.reponse_claude) box.append(el("div", { class: "claude" }, el("strong", {}, "Réponse de Claude : "), r.reponse_claude));
+    if (focus) setTimeout(() => ta.focus(), 0);
+  }
+  dessinerAnnots(); listes();
+  if (window.matchMedia("(max-width: 900px)").matches) box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+function listes() {
+  const ul = $("#liste-annot"); ul.textContent = "";
+  const items = trier().filter((a) => a.niveau === st.niv);
+  $("#vide-annot").hidden = items.length > 0;
+  $("#t-annot").textContent = `Mes annotations · ${D.feuilles[st.niv].nom} (${items.length})`;
+  for (const a of items) {
+    const li = el("li", { class: st.sel && st.sel.id === a.id ? "actif" : "" },
+      el("span", { class: "pastille p-" + a.kind }, numero(a)),
+      el("span", { class: "txt" }, a.texte || el("em", {}, "(sans texte)"), el("small", {}, LIB[a.kind] + (a.statut === "traité" ? " · traité" : "")),
+        a.reponse_claude ? el("span", { class: "claude" }, a.reponse_claude) : null));
+    li.addEventListener("click", () => selectionner({ type: "annot", id: a.id }));
+    ul.append(li);
+  }
+  const uq = $("#liste-quest"); uq.textContent = "";
+  const qs = D.ecarts.filter((e) => e.statut === "ouvert" && (e.niveau === st.niv || e.niveau === "global"));
+  $("#t-quest").textContent = `Questions ⚠ ouvertes (${qs.length})`;
+  for (const e of qs) {
+    const rep = st.reps.get(e.id); const ok = rep && (rep.texte || "").trim();
+    const li = el("li", { class: st.sel && st.sel.id === e.id ? "actif" : "" },
+      el("span", { class: "pastille p-ecart" }, "⚠" + e.num),
+      el("span", { class: "txt" }, e.a_valider || e.description, el("small", { class: ok ? "ok" : "" }, ok ? "Répondu : " + rep.texte : "impact " + e.impact + (e.niveau === "global" ? " · général" : ""))));
+    li.addEventListener("click", () => selectionner({ type: "ecart", id: e.id }, true));
+    uq.append(li);
+  }
+  $("#vide-quest").hidden = qs.length > 0;
+  const ur = $("#liste-rep"); ur.textContent = "";
+  const reps = [...st.reps.entries()].filter(([, r]) => (r.texte || "").trim()).sort(([a], [b]) => a.localeCompare(b));
+  $("#t-rep").textContent = `Vos réponses (${reps.length})`;
+  for (const [id, r] of reps) {
+    const e = D.ecarts.find((x) => x.id === id);
+    ur.append(el("li", {}, el("span", { class: "pastille p-ecart" }, "⚠" + (e ? e.num : id)),
+      el("span", { class: "txt" }, r.texte, el("small", {}, e ? (e.a_valider || e.description).slice(0, 90) : ""),
+        r.reponse_claude ? el("span", { class: "claude" }, r.reponse_claude) : null)));
+  }
+}
+
+// ---------- démarrage
+function changerNiveau(n) {
+  st.niv = n; st.sel = null; $("#selection").hidden = true;
+  document.querySelectorAll(".onglets button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.niv === n)));
+  try { localStorage.setItem("niv", n); } catch (e) {}
+  chargerFeuille();
+}
+const AIDES = {
+  deplacer: "Déplacer : glisser pour bouger, pincer ou molette pour zoomer. Touchez un repère orange ⚠ pour lire la question et y répondre.",
+  note: "Note : touchez le plan à l'endroit voulu, puis écrivez votre note.",
+  trait: "Trait : dessinez au doigt ou à la souris (ex. un mur qui manque), puis ajoutez un commentaire.",
+  retirer: "À enlever : barrez en rouge ce qui n'existe plus, puis précisez au besoin.",
+};
+function changerOutil(o) {
+  st.outil = o; $("#plan").dataset.outil = o; $("#aide").textContent = AIDES[o];
+  document.querySelectorAll(".outils button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.outil === o)));
+}
+document.querySelectorAll(".onglets button").forEach((b) => b.addEventListener("click", () => changerNiveau(b.dataset.niv)));
+document.querySelectorAll(".outils button").forEach((b) => b.addEventListener("click", () => changerOutil(b.dataset.outil)));
+$("#z-plus").addEventListener("click", () => zoomer(1 / 1.3)); $("#z-moins").addEventListener("click", () => zoomer(1.3)); $("#z-fit").addEventListener("click", ajuster);
+brancherPlan();
+try { const n = localStorage.getItem("niv"); if (n === "SS" || n === "RDC") st.niv = n; } catch (e) {}
+changerNiveau(st.niv);
+
+(async () => {
+  const db = window.claude ? await window.claude.use("db") : null;
+  if (!db) { st.local = true; chargerLocal(); dessinerAnnots(); listes(); etat("Hors ligne : vos annotations restent dans ce navigateur", true); return; }
+  st.db = db; etat("Connecté — vos annotations sont enregistrées");
+  db.collection("annotations").onSnapshot((snap) => {
+    st.annots = new Map(snap.docs.map((d) => [d.id, { id: d.id, ...d.data() }]));
+    dessinerAnnots(); listes(); if (st.sel && st.sel.type === "annot" && !st.annots.has(st.sel.id)) selectionner(null);
+  }, (e) => etat("Connexion perdue (" + e.code + ")", true));
+  db.collection("reponses").onSnapshot((snap) => {
+    st.reps = new Map(snap.docs.map((d) => [d.id, d.data()])); dessinerAnnots(); listes();
+  }, (e) => etat("Connexion perdue (" + e.code + ")", true));
+})();
+</script>

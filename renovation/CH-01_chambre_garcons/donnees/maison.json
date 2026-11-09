@@ -1,0 +1,1165 @@
+{
+ "projet": {
+  "nom": "Résidence — 86, avenue Laurier, Baie-Comeau",
+  "unites": "pouces (affichage pi-po, métrique entre parenthèses)",
+  "origine": "coin extérieur avant-gauche de la fondation, vu de la rue ; x le long de la façade, y vers l'arrière",
+  "convention_cotation": "Hors-tout et chaînes extérieures au NU EXTÉRIEUR des murs de fondation (SS) et des murs extérieurs (RDC) ; fenêtres et portes extérieures cotées à l'AXE (centre) de l'ouverture, largeurs = baie entre jambages ; cloisons du RDC cotées à l'AXE (DÉDUIT : chaque chaîne intérieure ferme sur le hors-tout depuis les nus ext. ; les axes y = 13'-1\" (157) et 17'-0\" (204) coïncident avec les axes des poutres 8\"x10\" du sous-sol et avec les axes B et C du croquis 2016 ; la ligne 2 du croquis tombe sur l'axe de la cloison) ; au sous-sol, chaîne intérieure en x au nu intérieur des murs et aux faces des colonnes (10\" + 9'-10\" + 8\" + 7'-4\" …), chaîne en y du nu intérieur aux AXES des poutres. Épaisseurs : fondation 10\" LU (P2) ; murs ext. RDC 10\" LU (P1 2016, à confronter : dessin 1957 ≈ 11\") ; cloisons 4½\" PRÉSUMÉ sauf cloison chambre arrière / S. de bain 6\" LU ; murs du caveau 10\" (droit LU, autres PRÉSUMÉ par analogie) ; murs de l'excroissance du perron 6\" (gauche LU, autres PRÉSUMÉ) ; entrée arrière 6\" PRÉSUMÉ. Toute la géométrie est générée par code (scripts/construire_maison.py).",
+  "ancres": [
+   {
+    "id": "ancre-01",
+    "description": "hors-tout de la façade avant (nu ext.)",
+    "valeur": 456,
+    "source": "MESURÉ",
+    "reference": "38'-0\" (cote-SS-031 / RDC)",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   },
+   {
+    "id": "ancre-02",
+    "description": "hors-tout en profondeur (nu ext.)",
+    "valeur": 380,
+    "source": "MESURÉ",
+    "reference": "31'-8\"",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   },
+   {
+    "id": "ancre-03",
+    "description": "mur arrière : coin arrière droit → nu ext. du mur droit de l'entrée arrière",
+    "valeur": 129,
+    "source": "MESURÉ",
+    "reference": "10'-9\" (cote-RDC-018)",
+    "note": "valeur attendue confirmée par le propriétaire (réponses du propriétaire (2026-10-29) : « tout est bon »)"
+   }
+  ],
+  "ancres_note": "Aucune mesure sur place n'a été fournie par le propriétaire ; voir ecart-028.",
+  "nord": {
+   "angle_deg": 9.8,
+   "source": "ESTIMÉ",
+   "photo": "P7",
+   "note": "mesuré par code sur la flèche du plan d'implantation (prep/redresse/P5.jpg), ± 1,5° ; angle horaire de +y (vers l'arrière) au nord ; nord non qualifié (vrai/magnétique)"
+  },
+  "photos": [
+   {
+    "id": "P1",
+    "description": "Croquis no 1 — « Plan d'origine et plan actuel du RDC », Claude Mazerolle, ing., 19 septembre 2016 (quadrillage 1–7 / A–D, axes porteurs d'origine, colonnes retirées, fissures, ferme 5/12)"
+   },
+   {
+    "id": "P2",
+    "description": "Feuille « FONDATIONS & SOUS-SOL », éch. 1/4\" = 1'-0\" — gros plan (source principale sous-sol)"
+   },
+   {
+    "id": "P3",
+    "description": "Feuille « FONDATIONS & SOUS-SOL », vue entière avec cartouche (source secondaire)"
+   },
+   {
+    "id": "P4",
+    "description": "Feuille « REZ-DE-CHAUSSÉE », éch. 1/4\" = 1'-0\" — gros plan (source principale RDC ; haut un peu coupé)"
+   },
+   {
+    "id": "P5",
+    "description": "Feuille RDC, vue entière (source secondaire)"
+   },
+   {
+    "id": "P6",
+    "description": "Feuille RDC, vue entière, autre prise redressée en perspective (source secondaire)"
+   },
+   {
+    "id": "P7",
+    "description": "Plan d'implantation de la maison projetée sur le lot 1-487, Ville de Baie-Comeau, éch. 1\" = 20', 6 nov. 1957, flèche du nord"
+   }
+  ],
+  "date": "2026-11-09",
+  "revision": "B",
+  "affichage": {
+   "noms_pieces": true,
+   "dimensions_pieces": true,
+   "note": "noms, dimensions et superficies des pièces retirés des plans à la demande du propriétaire (2026-10-29) ; ils restent dans pieces[] et tableau_pieces.csv ; cotes intérieures et métrique retirées des plans (annotateur, 2026-10-29)",
+   "metrique": false,
+   "textes_structure": false
+  },
+  "correspondance_photos_internes": {
+   "P1": "P2",
+   "P2": "P1",
+   "P3": "P7",
+   "P4": "P3",
+   "P5": "P4",
+   "P6": "P6",
+   "P7": "P5"
+  },
+  "proposition": "CH-01",
+  "titre_notes": "NOTES",
+  "mention": "CHAMBRE DES GARÇONS — RANGEMENT, COIN JEU ET THÈME (VERSION 2)",
+  "nom_pdf": "CH-01_chambre_garcons.pdf",
+  "base": "copie de releve/livrables/donnees/maison.json (plans de base R0, commit 59ac401) + relevé RDC-01"
+ },
+ "niveaux": [
+  {
+   "id": "RDC",
+   "nom": "Rez-de-chaussée",
+   "feuille": "P-131",
+   "photos_sources": [
+    "photos 01 à 12 du 2026-11-09"
+   ],
+   "hauteur_plafond": {
+    "valeur": 96,
+    "source": "PRÉSUMÉ",
+    "photo": null,
+    "note": "PRÉSUMÉ (8 pi), comme RDC-01 ; à mesurer"
+   },
+   "murs": [
+    {
+     "id": "mur-RDC-001",
+     "type": "ext",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "sur le mur de fondation (P2)",
+      "solives de plafond 2\"x7\" @ 16\" orientées avant-arrière (P4) : appui probable — non écrit"
+     ],
+     "epaisseur": {
+      "valeur": 10.0,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "10\" confirmé par le propriétaire (2026-10-29) ; concorde avec le croquis 2016 (cote-RDC-203/210/211/215) ; dessin 1957 ≈ 11 po (ESTIMÉ)"
+     },
+     "x1": 5.0,
+     "y1": 5.0,
+     "x2": 143.25,
+     "y2": 5.0,
+     "note": "Mur avant (façade, rue). — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-RDC-004",
+     "type": "ext",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "sur le mur de fondation (P2)"
+     ],
+     "epaisseur": {
+      "valeur": 10.0,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "10\" confirmé par le propriétaire (2026-10-29) ; concorde avec le croquis 2016 (cote-RDC-203/210/211/215) ; dessin 1957 ≈ 11 po (ESTIMÉ)"
+     },
+     "x1": 5.0,
+     "y1": 5.0,
+     "x2": 5.0,
+     "y2": 139.25,
+     "note": "Mur latéral gauche (chambres, S. de bain) ; cheminée accolée à l'extérieur. — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-RDC-R01",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 5.0,
+     "y1": 142.0,
+     "x2": 108.0,
+     "y2": 142.0,
+     "source_position": "PHOTO",
+     "note": "Cloison salle de bain / chambre avant, reportée 15 po plus à l'avant que la base (y 157 → 142) : la salle de bain des photos 13 à 15 est plus profonde que 61 po — À MESURER (relevé photo RDC-01 (photos du 2026-11-01)). — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan)."
+    },
+    {
+     "id": "mur-RDC-011",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 108.0,
+     "y1": 142.0,
+     "x2": 108.0,
+     "y2": 157.0,
+     "note": "Cloison droite de la S. de bain ; axe x = 9'-0\" (cote-RDC-029). — prolongée jusqu'à y = 142 (salle de bain plus profonde, photos 13 à 15) : À MESURER. — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan).",
+     "source_position": "PHOTO"
+    },
+    {
+     "id": "mur-RDC-012",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [
+      "au-dessus de la poutre 8\"x10\" du sous-sol str-SS-P02 (axe y = 157)",
+      "axe B « porteur à l'origine » (P1, ing. 2016)"
+     ],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 108.0,
+     "y1": 157.0,
+     "x2": 146.0,
+     "y2": 157.0,
+     "note": "Cloison S. de bain / chambre avant / LIN. ; axe y = 13'-1\" (cote-RDC-037, -036). — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-RDC-013",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 146.0,
+     "y1": 5.0,
+     "x2": 146.0,
+     "y2": 157.0,
+     "note": "Cloison chambre avant / G.R. / VEST. ; axe x = 12'-2\" (cote-RDC-038). — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan).",
+     "source_position": "DÉDUIT"
+    },
+    {
+     "id": "mur-RDC-016",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 146.0,
+     "y1": 54.0,
+     "x2": 175.0,
+     "y2": 54.0,
+     "note": "Cloison G.R. avant / VEST. (y ESTIMÉ). — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan).",
+     "source_position": "ESTIMÉ"
+    },
+    {
+     "id": "mur-RDC-015",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 146.0,
+     "y1": 134.0,
+     "x2": 175.0,
+     "y2": 134.0,
+     "note": "Cloison LIN. / G.R. avant (y ESTIMÉ). — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan).",
+     "source_position": "ESTIMÉ"
+    },
+    {
+     "id": "mur-RDC-014",
+     "type": "int",
+     "porteur": "inconnu",
+     "indices_porteur": [],
+     "epaisseur": {
+      "valeur": 4.5,
+      "source": "MESURÉ",
+      "photo": null,
+      "note": "4½\" confirmé par le propriétaire (2026-10-29) ; dessin 1957 ≈ 6 po (ESTIMÉ)"
+     },
+     "x1": 175.0,
+     "y1": 54.0,
+     "x2": 175.0,
+     "y2": 134.0,
+     "note": "Cloison G.R. avant / LIN. côté hall ; axe x = 12'-2\" + 2'-5\" (cote-RDC-039) ; arrêtée au VEST. (y ≈ 54 ESTIMÉ). — CH-01 : coupé au contour de la chambre et de sa garde-robe (le reste du mur est hors du plan).",
+     "source_position": "DÉDUIT"
+    }
+   ],
+   "ouvertures": [
+    {
+     "id": "ouv-RDC-001",
+     "type": "fenetre",
+     "operation": "fixe",
+     "mur_id": "mur-RDC-001",
+     "position": {
+      "valeur": 93.0,
+      "source": "DÉDUIT",
+      "photo": "P4",
+      "note": "axe à 8'-2\" (cote-RDC-010)"
+     },
+     "largeur": {
+      "valeur": 75.0,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-014"
+     },
+     "hauteur": {
+      "valeur": 42.5,
+      "source": "ESTIMÉ",
+      "photo": null,
+      "note": "allège 37.5 → tête 80.0 po (vidéo DAG) ; à mesurer"
+     },
+     "allege": {
+      "valeur": 37.5,
+      "source": "ESTIMÉ",
+      "photo": null,
+      "note": "vidéo DAG (MAISON-18, fenetres_video.py), depuis le plancher ; à mesurer"
+     },
+     "texte_original": "6'-3\" ; LINTEAU 2-2\"x8\"",
+     "note": "chambre avant : 3 châssis égaux en PVC blanc (manivelle sur celui de droite vu de l'intérieur), bande de petits carreaux (2 rangs × 3 colonnes) en haut de chaque châssis, chambranle plat de pin teint à coins d'onglet, deux caissons noirs de stores enrouleurs au-dessus (relevé photo CH-01 (photos 01 à 12 du client (2026-11-09)))",
+     "linteau": {
+      "id": "str-RDC-L01",
+      "texte_original": "LINTEAU 2-2\"x8\"",
+      "valeur": "2-2x8",
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-071",
+      "note": "2 pièces de 2\" ; longueur = baie ; appuis non indiqués"
+     }
+    },
+    {
+     "id": "ouv-RDC-014",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-RDC-012",
+     "position": {
+      "valeur": 19,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "position non cotée, mesurée au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 30,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-060"
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-060"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "sens": {
+      "charniere": "fin",
+      "ouvre_vers": "droite"
+     },
+     "texte_original": "2'-6\"x6'-8\"",
+     "note": "porte de la chambre avant ; ouvre dans la chambre ; porte de pin teint à panneaux horizontaux, bouton rond et pentures noirs (relevé photo CH-01 (photos 01 à 12 du client (2026-11-09)))",
+     "source_position": "PHOTO"
+    },
+    {
+     "id": "ouv-RDC-021",
+     "type": "porte",
+     "operation": "battante",
+     "mur_id": "mur-RDC-013",
+     "position": {
+      "valeur": 88,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "position non cotée, mesurée au dessin (P4)"
+     },
+     "largeur": {
+      "valeur": 30,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-061"
+     },
+     "hauteur": {
+      "valeur": 80,
+      "source": "LU",
+      "photo": "P4",
+      "ref": "cote-RDC-061"
+     },
+     "allege": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "sens": {
+      "charniere": "debut",
+      "ouvre_vers": "gauche"
+     },
+     "texte_original": "2'-6\"x6'-8\"",
+     "note": "porte du G.R. de la chambre avant ; ouvre dans la chambre ; porte de pin teint à panneaux horizontaux, bouton rond et pentures noirs (relevé photo CH-01 (photos 01 à 12 du client (2026-11-09)))",
+     "fermee": true
+    }
+   ],
+   "pieces": [
+    {
+     "id": "piece-RDC-CH2",
+     "nom": "Chambre des garçons",
+     "nom_original": "CHAMBRE",
+     "description": "Chambre des deux garçons (4 et 6 ans) : lits superposés et commode gardés ; rangement (bacs roulants sous le lit, armoires hautes, livres de face, tour aux albums) et coin jeu ouvert (version 2).",
+     "polygone": [
+      [
+       143.75,
+       154.75
+      ],
+      [
+       110.25,
+       154.75
+      ],
+      [
+       110.25,
+       139.75
+      ],
+      [
+       10.0,
+       139.75
+      ],
+      [
+       10.0,
+       10.0
+      ],
+      [
+       143.75,
+       10.0
+      ]
+     ],
+     "superficie": {
+      "valeur": 124.0,
+      "source": "DÉDUIT",
+      "photo": null,
+      "note": "aire recalculée avec la cloison reportée (photos) — relevé photo RDC-01 (photos du 2026-11-01)"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 133.75,
+       "source": "DÉDUIT",
+       "photo": null
+      },
+      "y": {
+       "valeur": 144.75,
+       "source": "DÉDUIT",
+       "photo": null
+      }
+     }
+    },
+    {
+     "id": "piece-RDC-GRA",
+     "nom": "G.R.",
+     "nom_original": "G.R.",
+     "description": "Garde-robe de la chambre des garçons, aménagée (bacs, tiroirs à Lego, penderie basse), gardée en v2.",
+     "polygone": [
+      [
+       148.25,
+       131.75
+      ],
+      [
+       148.25,
+       56.25
+      ],
+      [
+       172.75,
+       56.25
+      ],
+      [
+       172.75,
+       131.75
+      ]
+     ],
+     "superficie": {
+      "valeur": 12.8,
+      "source": "ESTIMÉ",
+      "photo": "P4",
+      "note": "aire du polygone au nu intérieur ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+     },
+     "hauteur_plafond": {
+      "valeur": null,
+      "source": "ILLISIBLE",
+      "photo": null,
+      "note": "non écrite"
+     },
+     "dimensions": {
+      "x": {
+       "valeur": 24.5,
+       "source": "DÉDUIT",
+       "photo": null,
+       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+      },
+      "y": {
+       "valeur": 75.5,
+       "source": "ESTIMÉ",
+       "photo": "P4",
+       "note": "boîte englobante ; nu int. : cotes LU − épaisseurs (ext. 10\" LU P1 ; cloisons 4½\" PRÉSUMÉ ; cloison ch. arr./S. de bain 6\" LU)"
+      }
+     }
+    }
+   ],
+   "elements": [
+    {
+     "id": "elem-CH-LITS",
+     "type": "autre",
+     "nom": "Lits superposés existants, simple sur simple (≈ 81 × 43 × 63 po), panneaux blancs, montants de bois naturel ; tête au mur de gauche",
+     "nom_original": null,
+     "etat": "existant",
+     "position": {
+      "x": 51.25,
+      "y": 118.0,
+      "rotation_deg": 180,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 80.5,
+       "source": "ESTIMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 43.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      }
+     },
+     "note": "existant, relevé photo CH-01 (photos 01 à 12 du client (2026-11-09)) : position et dimensions estimées, à mesurer",
+     "libelle": "LITS SUPERPOSÉS"
+    },
+    {
+     "id": "elem-CH-ECH",
+     "type": "autre",
+     "nom": "Échelle de bois inclinée des lits superposés",
+     "nom_original": null,
+     "etat": "existant",
+     "position": {
+      "x": 69.0,
+      "y": 85.5,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 15.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 22.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      }
+     },
+     "note": "existant, relevé photo CH-01 (photos 01 à 12 du client (2026-11-09)) : position et dimensions estimées, à mesurer",
+     "libelle": ""
+    },
+    {
+     "id": "elem-CH-COMM",
+     "type": "autre",
+     "nom": "Commode blanche basse existante (≈ 48 × 16 × 27 po), 3 rangs de tiroirs",
+     "nom_original": null,
+     "etat": "existant",
+     "position": {
+      "x": 135.75,
+      "y": 42.0,
+      "rotation_deg": 90,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 48.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 16.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      }
+     },
+     "note": "existant, relevé photo CH-01 (photos 01 à 12 du client (2026-11-09)) : position et dimensions estimées, à mesurer ; à ancrer au mur (anti-basculement)",
+     "libelle": "COMMODE"
+    },
+    {
+     "id": "elem-CH-PC1",
+     "type": "autre",
+     "nom": "Plinthe chauffante électrique sous la fenêtre (≈ 96 po)",
+     "nom_original": null,
+     "etat": "existant",
+     "position": {
+      "x": 74.0,
+      "y": 12.0,
+      "rotation_deg": 0,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 96.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 3.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      }
+     },
+     "note": "existant, relevé photo CH-01 (photos 01 à 12 du client (2026-11-09)) : position et dimensions estimées, à mesurer",
+     "libelle": "PLINTHES CHAUFFANTES"
+    },
+    {
+     "id": "elem-CH-PC2",
+     "type": "autre",
+     "nom": "Plinthe chauffante électrique au mur de gauche (≈ 72 po)",
+     "nom_original": null,
+     "etat": "existant",
+     "position": {
+      "x": 12.0,
+      "y": 58.0,
+      "rotation_deg": 270,
+      "source": "ESTIMÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 72.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 3.0,
+       "source": "ESTIMÉ",
+       "photo": null
+      }
+     },
+     "note": "existant, relevé photo CH-01 (photos 01 à 12 du client (2026-11-09)) : position et dimensions estimées, à mesurer",
+     "libelle": ""
+    },
+    {
+     "id": "elem-CH-P-TAPIS",
+     "type": "trappe",
+     "nom": "Coin jeu ouvert : grand tapis plat 4½ × 7 pi (54 × 84 po), lavable ; ≈ 6 po de la plinthe de la fenêtre et ≈ 10½ po de celle du mur de gauche (à valider)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 66.0,
+      "y": 46.5,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 84.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 54.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "COIN JEU"
+    },
+    {
+     "id": "elem-CH-P-BAC1",
+     "type": "trappe",
+     "nom": "Bac roulant bas sous le lit du bas (19 × 30 po, 6.25 po de haut roulettes comprises) : lego ; sort de 22 po vers le tapis",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 30.5,
+      "y": 112.0,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 19.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "BACS ROULANTS"
+    },
+    {
+     "id": "elem-CH-P-BAC2",
+     "type": "trappe",
+     "nom": "Bac roulant bas sous le lit du bas (19 × 30 po, 6.25 po de haut roulettes comprises) : autos ; sort de 22 po vers le tapis",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 51.0,
+      "y": 112.0,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 19.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": ""
+    },
+    {
+     "id": "elem-CH-P-BAC3",
+     "type": "trappe",
+     "nom": "Bac roulant bas sous le lit du bas (11 × 30 po, 6.25 po de haut roulettes comprises) : dinos ; sort de 22 po vers le tapis",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 83.0,
+      "y": 112.0,
+      "rotation_deg": 0,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 11.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 30.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": ""
+    },
+    {
+     "id": "elem-CH-P-ARM",
+     "type": "trappe",
+     "nom": "Armoires murales fermées au-dessus de la commode (2 portes, 48 × 12 po, z 57 → 84) et, dessous, deux rebords à livres de face (z 33 et 44½) ; tablette haute de chêne à 85½ po de la fenêtre à la porte de la chambre",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 137.75,
+      "y": 42.0,
+      "rotation_deg": 90,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 48.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 12.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "ARMOIRES ET LIVRES (AU MUR)"
+    },
+    {
+     "id": "elem-CH-P-ALB",
+     "type": "autre",
+     "nom": "Tour aux albums de chêne (17½ × 12¾ × 42 po) : bac à toutous en bas, deux rangs d'albums debout ; ancrée au mur",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 101.25,
+      "y": 133.38,
+      "rotation_deg": 180,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 17.5,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 12.75,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "ALBUMS"
+    },
+    {
+     "id": "elem-CH-P-GR1",
+     "type": "autre",
+     "nom": "Garde-robe : étagère de 6 bacs étiquetés, 6 tiroirs à Lego triés et tablette des constructions (28 × 16 po)",
+     "nom_original": null,
+     "etat": "nouveau",
+     "position": {
+      "x": 164.75,
+      "y": 93.0,
+      "rotation_deg": 90,
+      "source": "PROPOSÉ"
+     },
+     "dimensions": {
+      "longueur": {
+       "valeur": 28.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      },
+      "largeur": {
+       "valeur": 16.0,
+       "source": "PROPOSÉ",
+       "photo": null
+      }
+     },
+     "note": "version 2 proposée (CH-01, rév. B) : voir DESIGN.md",
+     "libelle": "BACS ET LEGO"
+    }
+   ],
+   "structure": [],
+   "cotes": [
+    {
+     "id": "cote-RDC-014",
+     "texte_original": "6'-3\"",
+     "valeur": 75.0,
+     "lecture_1": "6'-3\"",
+     "lecture_2": "6'-3\"",
+     "statut": "confirmee",
+     "photo": "P4",
+     "emplacement": "chaîne ext. avant, rang 1 (ouvertures), gauche",
+     "px": [
+      775,
+      1672
+     ],
+     "mesure": "largeur de la fenêtre de la chambre avant (ouv-RDC-001)",
+     "lecture_3": {
+      "texte": "6'-3\"",
+      "valeur_po": 75,
+      "confiance": "moyenne",
+      "lisible": true,
+      "justification": "Le 6 est net. Le chiffre des pouces a un départ supérieur en trait plat ouvert (pas de boucle) et une masse basse empâtée, sur P4, P5 et P6. Les 8 de P4 (8'-4\", 11'-8\") ont deux boucles fermées bien visibles, pas ce chiffre. On retient un 3 à tête plate."
+     },
+     "note": "tranché par 3e lecture (moyenne) ; vignettes (fichiers de travail, numérotation interne) arbitrage/vignettes/d-RDC-01_P3.png, arbitrage/vignettes/d-RDC-01_P4.png, arbitrage/vignettes/d-RDC-01_P6.png",
+     "alternatives": [
+      {
+       "texte": "6'-8\"",
+       "valeur": 80,
+       "propose_par": "lecture_1 + lecture_2",
+       "raison": null
+      }
+     ],
+     "contrainte_de_bouclage": "aucune chaîne ; lecture 1 : largeur dessinée ≈ 76 po"
+    },
+    {
+     "id": "cote-RDC-061",
+     "texte_original": "2'-6\"x6'-8\"",
+     "valeur": 30,
+     "lecture_1": "2'-6\"x6'-8\"",
+     "lecture_2": "2'-6\"x6'-8\"",
+     "statut": "confirmee",
+     "photo": "P4",
+     "emplacement": "porte du G.R. de la chambre avant ; pentures côté avant (y≈78), ouvre dans la chambre (-x)",
+     "px": [
+      923,
+      1321
+     ],
+     "mesure": "largeur x hauteur de ouv-RDC-021 (porte)",
+     "hauteur": 80,
+     "note": "lectures 1 et 2 concordantes"
+    }
+   ],
+   "notes": [
+    {
+     "id": "note-CH-01",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Version 2 (rév. B) : pas de table ; rangement d'abord ; coin jeu ouvert ; thème « Camp de base »."
+    },
+    {
+     "id": "note-CH-02",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Gardés : lits superposés, commode, fenêtre, portes, plinthes chauffantes, enseignes. Retirés : table, tabourets, panache, vert forêt."
+    },
+    {
+     "id": "note-CH-03",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Rangement : 3 bacs roulants sous le lit (≈ 100 L), armoires hautes (≈ 215 L), livres de face, tablette haute (85½ po), tour aux albums, patères, garde-robe."
+    },
+    {
+     "id": "note-CH-04",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Plinthes chauffantes : dégagements du tapis et des bacs à valider (fabricant, électricien) ; meubles ancrés."
+    },
+    {
+     "id": "note-CH-05",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Murale : murale/murale_camp_fiche.png ; couleurs à valider sur échantillon."
+    },
+    {
+     "id": "note-CH-06",
+     "texte_original": null,
+     "photo": null,
+     "interpretation": "Existant ESTIMÉ (photos du 2026-11-09) : dessous du lit (≈ 7½ à 8 po) et plafond (96 po) à mesurer."
+    }
+   ],
+   "lignes_cote": [
+    {
+     "id": "lc-CH-001",
+     "p1": [
+      10.0,
+      0
+     ],
+     "p2": [
+      60.5,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-002",
+     "p1": [
+      60.5,
+      0
+     ],
+     "p2": [
+      135.5,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-RDC-014",
+     "valeur_attendue": 75.0,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-003",
+     "p1": [
+      135.5,
+      0
+     ],
+     "p2": [
+      143.75,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-004",
+     "p1": [
+      10.0,
+      0
+     ],
+     "p2": [
+      143.75,
+      0
+     ],
+     "direction": "x",
+     "facade": "avant",
+     "rang": 3,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-005",
+     "p1": [
+      0,
+      10.0
+     ],
+     "p2": [
+      0,
+      139.75
+     ],
+     "direction": "y",
+     "facade": "gauche",
+     "rang": 3,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-006",
+     "p1": [
+      10.0,
+      160
+     ],
+     "p2": [
+      110.25,
+      160
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-007",
+     "p1": [
+      110.25,
+      160
+     ],
+     "p2": [
+      143.75,
+      160
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 1,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-008",
+     "p1": [
+      10.0,
+      160
+     ],
+     "p2": [
+      143.75,
+      160
+     ],
+     "direction": "x",
+     "facade": "arriere",
+     "rang": 3,
+     "source": "DÉDUIT",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-009",
+     "p1": [
+      180,
+      56.25
+     ],
+     "p2": [
+      180,
+      78.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "ESTIMÉ",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-010",
+     "p1": [
+      180,
+      78.0
+     ],
+     "p2": [
+      180,
+      108.0
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "LU",
+     "statut": "confirmee",
+     "ref": "cote-RDC-061",
+     "valeur_attendue": 30.0,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-011",
+     "p1": [
+      180,
+      108.0
+     ],
+     "p2": [
+      180,
+      131.75
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 1,
+     "source": "ESTIMÉ",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    },
+    {
+     "id": "lc-CH-012",
+     "p1": [
+      180,
+      56.25
+     ],
+     "p2": [
+      180,
+      131.75
+     ],
+     "direction": "y",
+     "facade": "droite",
+     "rang": 3,
+     "source": "ESTIMÉ",
+     "statut": "confirmee",
+     "ref": null,
+     "valeur_attendue": null,
+     "repere": null
+    }
+   ],
+   "elements_electriques_non_reportes": [
+    "Luminaire plafonnier — chambre avant"
+   ],
+   "elements_retires": [],
+   "murs_retires": [],
+   "ouvertures_retirees": [],
+   "limites_zones": [],
+   "usage": "chambre des deux garçons (4 et 6 ans) ; plan CH-01 : la pièce seule, rangement et coin jeu proposés (v2)",
+   "structure_retiree": [],
+   "notes_retirees": [],
+   "slug": "chambre-garcons"
+  }
+ ],
+ "ecarts": []
+}

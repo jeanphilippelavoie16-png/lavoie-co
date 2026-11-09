@@ -1,0 +1,23 @@
+﻿niveau;piece_id;piece;longueur;largeur;superficie_pi2;superficie_m2;perimetre;hauteur_plafond;surface_murale_brute_pi2;nb_portes;nb_fenetres;fiabilite
+SS;piece-SS-LAVAGE;Salle de lavage;"12'-0¾""";"8'-3¾""";100,30;9,32;"40'-9""";"8'-0""";326,00;1;1;DÉDUIT
+SS;piece-SS-GYM;Gym;"12'-2""";"9'-4¾""";114,00;10,59;"43'-1½""";"8'-0""";345,00;2;0;DÉDUIT
+SS;piece-SS-ESC;Escalier;"11'-8""";"3'-7¼""";42,00;3,90;"30'-6½""";"8'-0""";244,33;0;0;DÉDUIT
+SS;piece-SS-SALON;Séjour;"14'-5¾""";"12'-3""";177,40;16,48;"53'-5½""";"8'-0""";427,67;0;2;DÉDUIT
+SS;piece-SS-VEST;Vestiaire;"18'-2""";"6'-5¾""";106,30;9,88;"49'-3½""";"8'-0""";394,40;2;0;DÉDUIT
+SS;piece-SS-HALL;Hall;"6'-11¾""";"3'-4½""";23,50;2,18;"20'-8½""";"8'-0""";165,67;3;0;DÉDUIT
+SS;piece-SS-SDB;Salle de bain;"14'-5¾""";"7'-4½""";89,90;8,35;"51'-9½""";"8'-0""";414,40;1;1;DÉDUIT
+SS;piece-SS-CH1;Chambre 1;"18'-11¾""";"13'-4½""";200,90;18,66;"64'-8½""";"8'-0""";517,73;1;2;DÉDUIT
+SS;piece-SS-CH2;Chambre 2;"16'-11¾""";"11'-5¾""";194,90;18,11;"56'-11""";"8'-0""";455,33;2;1;DÉDUIT
+SS;piece-SS-LEG;Walk-in isolé;"7'-4""";"4'-2""";30,60;2,84;"23'-0""";;;1;0;DÉDUIT
+SS;piece-SS-PERRON;Excroissance sous perron;"5'-0""";"3'-6""";17,50;1,63;"17'-0""";;;0;0;DÉDUIT
+RDC;piece-RDC-CH1;Chambre des parents;"12'-0""";"11'-1¾""";136,50;12,68;"48'-3""";;;2;1;ESTIMÉ
+RDC;piece-RDC-SDB;Salle de bain;"7'-11¾""";"6'-3¾""";50,40;4,68;"28'-7""";;;1;1;DÉDUIT
+RDC;piece-RDC-CH2;Bureau;"12'-0¾""";"11'-1¾""";124,00;11,52;"46'-5""";;;1;1;DÉDUIT
+RDC;piece-RDC-GRU;G.R. 3;"3'-2½""";"2'-0½""";6,60;0,61;"10'-6""";;;1;0;ESTIMÉ
+RDC;piece-RDC-UTI;Salle à manger;"13'-10""";"9'-7¾""";109,40;10,16;"46'-11½""";;;1;1;DÉDUIT
+RDC;piece-RDC-DEG;Dégagement;"12'-9¾""";"4'-4¾""";51,00;4,74;"34'-5""";;;3;0;DÉDUIT
+RDC;piece-RDC-ENT;Entrée;"12'-3""";"10'-4""";126,60;11,76;"45'-2""";;;1;0;DÉDUIT
+RDC;piece-RDC-SAL;Salon;"14'-5¾""";"12'-3""";177,40;16,48;"53'-5½""";;;0;1;DÉDUIT
+RDC;piece-RDC-CUI;Cuisine;"17'-9""";"15'-2""";269,20;25,01;"65'-10""";;;1;2;DÉDUIT
+RDC;piece-RDC-EAR;Coin café;"7'-4""";"4'-2""";30,60;2,84;"23'-0""";;;2;1;PRÉSUMÉ
+RDC;piece-RDC-GRP;G.R.;"5'-11¾""";"2'-0½""";12,20;1,13;"16'-0½""";;;1;0;DÉDUIT
