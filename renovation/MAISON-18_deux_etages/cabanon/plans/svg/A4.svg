@@ -1,0 +1,332 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1632 1056" width="1632" height="1056">
+<style>
+text{font-family:'Segoe UI',Arial,Helvetica,sans-serif;fill:#1c1c1c}
+.t{font-size:13px}.s{font-size:12.5px;fill:#555}.n{font-size:13.5px}
+.h{font-size:17px;font-weight:700}.h2{font-size:15px;font-weight:700}
+.dt{font-size:13px;fill:#a3201a;font-weight:600}.dg{font-size:12px;fill:#a3201a}
+.tb{font-size:13px;font-weight:700}.g{font-size:12.5px;fill:#666;font-style:italic}
+.ct{font-size:20px;font-weight:700}.cs{font-size:18px;font-weight:600}.cn{font-size:20px;font-weight:700}.cp{font-size:12.5px;fill:#444}
+.cadre{fill:none;stroke:#1c1c1c;stroke-width:1.6}
+.dim{stroke:#a3201a;stroke-width:.9;fill:none}.tick{stroke:#a3201a;stroke-width:1.5}
+.tr{stroke:#222;stroke-width:1.1;fill:none}.fin{stroke:#222;stroke-width:.6;fill:none}
+.gros{stroke:#111;stroke-width:2;fill:none}
+.pt{fill:#222}.rv{stroke:#555;stroke-width:.8}
+.ti{stroke:#222;stroke-width:1;stroke-dasharray:7 4;fill:none}
+.axe{stroke:#444;stroke-width:.9;stroke-dasharray:14 4 3 4;fill:none}
+.sol{stroke:#3c6e2f;stroke-width:1.6;fill:none}
+.bois{fill:#efdcae;stroke:#5a4520;stroke-width:.9}
+.bois2{fill:#d6b676;stroke:#5a4520;stroke-width:.9}
+.trt{fill:#b7cc9c;stroke:#3f5a2a;stroke-width:.9}
+.osb{fill:#e3bf7c;stroke:#6b5020;stroke-width:.6}
+.ctp{fill:#f6e9c9;stroke:#6b5020;stroke-width:.6}
+.bet{fill:#cfd0d2;stroke:#444;stroke-width:1}
+.gra{fill:#ebe5d6;stroke:#9b927c;stroke-width:.6;stroke-dasharray:3 3}
+.mur{fill:#555;stroke:#222;stroke-width:1}
+.par{fill:#fff;stroke:#222;stroke-width:1.1}
+.cj{stroke:#888;stroke-width:.7}
+.toit{fill:#4e5154;stroke:#222;stroke-width:1}
+.porte{fill:#1d1d1f;stroke:#000;stroke-width:1}
+.vit{fill:#b9cdd8;stroke:#000;stroke-width:.6}
+.vide{fill:#fff;stroke:#222;stroke-width:1}
+.boul{fill:#fff;stroke:#a3201a;stroke-width:1.8}
+.fer{stroke:#1a4f8a;stroke-width:1.6;fill:none}.ferp{fill:#1a4f8a}
+.th{fill:#e7e7e7;stroke:#888;stroke-width:.6}.tg{fill:#f3efe3;stroke:none}.tl{stroke:#bbb;stroke-width:.6}
+</style>
+<rect width="1632" height="1056" fill="#fff"/>
+<rect class="cadre" x="24" y="24" width="1584" height="1008"/>
+<line class="cadre" x1="24" y1="978" x2="1608" y2="978"/>
+<text class="ct" x="40" y="1012">CABANON 13' × 17' — 86, avenue Laurier, Baie-Comeau</text>
+<text class="cs" x="640" y="1012">Ossature des murs : côtés et fond</text>
+<text class="cn" x="1592" y="1004" text-anchor="end">A4 / 6</text>
+<text class="cp" x="1592" y="1022" text-anchor="end">2026-11-14 · plans de menuiserie · projet, pas un relevé · cotes en pieds et pouces</text>
+<text class="h" x="48.0" y="64.0" text-anchor="start">Mur de côté (deux pareils, en miroir)</text>
+<text class="s" x="48.0" y="82.0" text-anchor="start">vu de dehors ; un chevron et une solive de plafond tombent sur chaque colombage</text>
+<line class="tr" x1="76.0" y1="540.0" x2="824.0" y2="540.0"/>
+<rect class="bet" x="110.0" y="519.6" width="680.0" height="20.4"/>
+<rect class="trt" x="110.0" y="514.5" width="680.0" height="5.1"/>
+<rect class="bois" x="110.0" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="121.9" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="161.8" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="216.2" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="270.6" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="325.0" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="379.4" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="433.8" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="488.2" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="542.6" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="597.0" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="651.4" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="705.9" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="760.2" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="773.0" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="784.9" y="223.8" width="5.1" height="290.7"/>
+<rect class="bois" x="110.0" y="218.7" width="680.0" height="5.1"/>
+<rect class="bois" x="110.0" y="213.6" width="680.0" height="5.1"/>
+<line class="gros" x1="518.0" y1="223.8" x2="518.0" y2="218.7"/>
+<line class="gros" x1="354.8" y1="218.7" x2="354.8" y2="213.6"/>
+<rect class="bois2" x="110.0" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="161.8" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="216.2" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="270.6" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="325.0" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="379.4" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="433.8" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="488.2" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="542.6" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="597.0" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="651.4" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="705.9" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="760.2" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois2" x="784.9" y="198.9" width="5.1" height="14.7"/>
+<rect class="bois" x="166.9" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="221.3" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="275.8" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="330.1" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="384.6" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="438.9" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="493.3" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="547.8" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="602.1" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="656.5" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="710.9" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="765.4" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="115.1" y="194.9" width="5.1" height="18.7"/>
+<rect class="bois" x="779.8" y="194.9" width="5.1" height="18.7"/>
+<circle class="boul" cx="137.2" cy="528.4" r="3.2"/>
+<circle class="boul" cx="300.4" cy="528.4" r="3.2"/>
+<circle class="boul" cx="463.6" cy="528.4" r="3.2"/>
+<circle class="boul" cx="626.8" cy="528.4" r="3.2"/>
+<circle class="boul" cx="749.2" cy="528.4" r="3.2"/>
+<line class="dim" x1="110.0" y1="544.0" x2="110.0" y2="604.0"/>
+<line class="tick" x1="106.0" y1="604.0" x2="114.0" y2="596.0"/>
+<line class="dim" x1="790.0" y1="544.0" x2="790.0" y2="604.0"/>
+<line class="tick" x1="786.0" y1="604.0" x2="794.0" y2="596.0"/>
+<line class="dim" x1="110.0" y1="600.0" x2="790.0" y2="600.0"/>
+<text class="dt" x="450.0" y="595.0" text-anchor="middle">16'-8" — l'avant à gauche, le fond à droite</text>
+<line class="dim" x1="110.0" y1="544.0" x2="110.0" y2="574.0"/>
+<line class="tick" x1="106.0" y1="574.0" x2="114.0" y2="566.0"/>
+<line class="dim" x1="164.4" y1="544.0" x2="164.4" y2="574.0"/>
+<line class="tick" x1="160.4" y1="574.0" x2="168.4" y2="566.0"/>
+<line class="dim" x1="110.0" y1="570.0" x2="164.4" y2="570.0"/>
+<text class="dt" x="137.2" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="164.4" y1="544.0" x2="164.4" y2="574.0"/>
+<line class="tick" x1="160.4" y1="574.0" x2="168.4" y2="566.0"/>
+<line class="dim" x1="218.8" y1="544.0" x2="218.8" y2="574.0"/>
+<line class="tick" x1="214.8" y1="574.0" x2="222.8" y2="566.0"/>
+<line class="dim" x1="164.4" y1="570.0" x2="218.8" y2="570.0"/>
+<text class="dt" x="191.6" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="218.8" y1="544.0" x2="218.8" y2="574.0"/>
+<line class="tick" x1="214.8" y1="574.0" x2="222.8" y2="566.0"/>
+<line class="dim" x1="273.2" y1="544.0" x2="273.2" y2="574.0"/>
+<line class="tick" x1="269.2" y1="574.0" x2="277.2" y2="566.0"/>
+<line class="dim" x1="218.8" y1="570.0" x2="273.2" y2="570.0"/>
+<text class="dt" x="246.0" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="273.2" y1="544.0" x2="273.2" y2="574.0"/>
+<line class="tick" x1="269.2" y1="574.0" x2="277.2" y2="566.0"/>
+<line class="dim" x1="327.6" y1="544.0" x2="327.6" y2="574.0"/>
+<line class="tick" x1="323.6" y1="574.0" x2="331.6" y2="566.0"/>
+<line class="dim" x1="273.2" y1="570.0" x2="327.6" y2="570.0"/>
+<text class="dt" x="300.4" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="327.6" y1="544.0" x2="327.6" y2="574.0"/>
+<line class="tick" x1="323.6" y1="574.0" x2="331.6" y2="566.0"/>
+<line class="dim" x1="382.0" y1="544.0" x2="382.0" y2="574.0"/>
+<line class="tick" x1="378.0" y1="574.0" x2="386.0" y2="566.0"/>
+<line class="dim" x1="327.6" y1="570.0" x2="382.0" y2="570.0"/>
+<text class="dt" x="354.8" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="382.0" y1="544.0" x2="382.0" y2="574.0"/>
+<line class="tick" x1="378.0" y1="574.0" x2="386.0" y2="566.0"/>
+<line class="dim" x1="436.4" y1="544.0" x2="436.4" y2="574.0"/>
+<line class="tick" x1="432.4" y1="574.0" x2="440.4" y2="566.0"/>
+<line class="dim" x1="382.0" y1="570.0" x2="436.4" y2="570.0"/>
+<text class="dt" x="409.2" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="436.4" y1="544.0" x2="436.4" y2="574.0"/>
+<line class="tick" x1="432.4" y1="574.0" x2="440.4" y2="566.0"/>
+<line class="dim" x1="490.8" y1="544.0" x2="490.8" y2="574.0"/>
+<line class="tick" x1="486.8" y1="574.0" x2="494.8" y2="566.0"/>
+<line class="dim" x1="436.4" y1="570.0" x2="490.8" y2="570.0"/>
+<text class="dt" x="463.6" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="490.8" y1="544.0" x2="490.8" y2="574.0"/>
+<line class="tick" x1="486.8" y1="574.0" x2="494.8" y2="566.0"/>
+<line class="dim" x1="545.2" y1="544.0" x2="545.2" y2="574.0"/>
+<line class="tick" x1="541.2" y1="574.0" x2="549.2" y2="566.0"/>
+<line class="dim" x1="490.8" y1="570.0" x2="545.2" y2="570.0"/>
+<text class="dt" x="518.0" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="545.2" y1="544.0" x2="545.2" y2="574.0"/>
+<line class="tick" x1="541.2" y1="574.0" x2="549.2" y2="566.0"/>
+<line class="dim" x1="599.6" y1="544.0" x2="599.6" y2="574.0"/>
+<line class="tick" x1="595.6" y1="574.0" x2="603.6" y2="566.0"/>
+<line class="dim" x1="545.2" y1="570.0" x2="599.6" y2="570.0"/>
+<text class="dt" x="572.4" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="599.6" y1="544.0" x2="599.6" y2="574.0"/>
+<line class="tick" x1="595.6" y1="574.0" x2="603.6" y2="566.0"/>
+<line class="dim" x1="654.0" y1="544.0" x2="654.0" y2="574.0"/>
+<line class="tick" x1="650.0" y1="574.0" x2="658.0" y2="566.0"/>
+<line class="dim" x1="599.6" y1="570.0" x2="654.0" y2="570.0"/>
+<text class="dt" x="626.8" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="654.0" y1="544.0" x2="654.0" y2="574.0"/>
+<line class="tick" x1="650.0" y1="574.0" x2="658.0" y2="566.0"/>
+<line class="dim" x1="708.4" y1="544.0" x2="708.4" y2="574.0"/>
+<line class="tick" x1="704.4" y1="574.0" x2="712.4" y2="566.0"/>
+<line class="dim" x1="654.0" y1="570.0" x2="708.4" y2="570.0"/>
+<text class="dt" x="681.2" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="708.4" y1="544.0" x2="708.4" y2="574.0"/>
+<line class="tick" x1="704.4" y1="574.0" x2="712.4" y2="566.0"/>
+<line class="dim" x1="762.8" y1="544.0" x2="762.8" y2="574.0"/>
+<line class="tick" x1="758.8" y1="574.0" x2="766.8" y2="566.0"/>
+<line class="dim" x1="708.4" y1="570.0" x2="762.8" y2="570.0"/>
+<text class="dt" x="735.6" y="565.0" text-anchor="middle">16"</text>
+<line class="dim" x1="762.8" y1="544.0" x2="762.8" y2="574.0"/>
+<line class="tick" x1="758.8" y1="574.0" x2="766.8" y2="566.0"/>
+<line class="dim" x1="790.0" y1="544.0" x2="790.0" y2="574.0"/>
+<line class="tick" x1="786.0" y1="574.0" x2="794.0" y2="566.0"/>
+<line class="dim" x1="762.8" y1="570.0" x2="790.0" y2="570.0"/>
+<text class="dt" x="776.4" y="565.0" text-anchor="middle">8"</text>
+<line class="dim" x1="794.0" y1="540.0" x2="822.0" y2="540.0"/>
+<line class="tick" x1="814.0" y1="544.0" x2="822.0" y2="536.0"/>
+<line class="dim" x1="794.0" y1="519.6" x2="822.0" y2="519.6"/>
+<line class="tick" x1="814.0" y1="523.6" x2="822.0" y2="515.6"/>
+<line class="dim" x1="818.0" y1="540.0" x2="818.0" y2="519.6"/>
+<text class="dt" x="813.0" y="529.8" text-anchor="middle" transform="rotate(-90 813.0 529.8)">6"</text>
+<line class="dim" x1="794.0" y1="514.5" x2="822.0" y2="514.5"/>
+<line class="tick" x1="814.0" y1="518.5" x2="822.0" y2="510.5"/>
+<line class="dim" x1="794.0" y1="223.8" x2="822.0" y2="223.8"/>
+<line class="tick" x1="814.0" y1="227.8" x2="822.0" y2="219.8"/>
+<line class="dim" x1="818.0" y1="514.5" x2="818.0" y2="223.8"/>
+<text class="dt" x="813.0" y="369.1" text-anchor="middle" transform="rotate(-90 813.0 369.1)">7'-1½"</text>
+<line class="dim" x1="794.0" y1="540.0" x2="850.0" y2="540.0"/>
+<line class="tick" x1="842.0" y1="544.0" x2="850.0" y2="536.0"/>
+<line class="dim" x1="794.0" y1="213.6" x2="850.0" y2="213.6"/>
+<line class="tick" x1="842.0" y1="217.6" x2="850.0" y2="209.6"/>
+<line class="dim" x1="846.0" y1="540.0" x2="846.0" y2="213.6"/>
+<text class="dt" x="841.0" y="376.8" text-anchor="middle" transform="rotate(-90 841.0 376.8)">8'-0"</text>
+<line class="rv" x1="239.2" y1="121.2" x2="223.9" y2="200.0"/>
+<circle class="pt" cx="223.9" cy="200.0" r="2.2"/>
+<text class="t" x="243.2" y="125.2" text-anchor="start">solive de plafond 2 × 6, clouée au flanc du chevron</text>
+<line class="rv" x1="456.8" y1="158.6" x2="436.4" y2="203.4"/>
+<circle class="pt" cx="436.4" cy="203.4" r="2.2"/>
+<text class="t" x="460.8" y="162.6" text-anchor="start">chevron 2 × 6, sur l'axe du colombage</text>
+<text class="h" x="940.0" y="64.0" text-anchor="start">Mur du fond, vu de dehors</text>
+<text class="s" x="940.0" y="82.0" text-anchor="start">plein, sans ouverture ; même pignon qu'à l'avant</text>
+<line class="tr" x1="955.0" y1="540.0" x2="1471.0" y2="540.0"/>
+<rect class="bet" x="985.0" y="522.0" width="456.0" height="18.0"/>
+<rect class="trt" x="985.0" y="517.5" width="456.0" height="4.5"/>
+<rect class="bois" x="985.0" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="991.0" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="995.5" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1030.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1078.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1126.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1174.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1222.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1270.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1318.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1366.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1414.8" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1426.0" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1430.5" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="1436.5" y="261.0" width="4.5" height="256.5"/>
+<rect class="bois" x="985.0" y="256.5" width="456.0" height="4.5"/>
+<rect class="bois" x="985.0" y="252.0" width="456.0" height="4.5"/>
+<polygon class="bois2" points="1210.8,107.3 949.8,259.6 949.8,278.7 985.0,258.1 985.0,252.0 995.5,252.0 1210.8,126.4"/>
+<polygon class="bois2" points="1215.2,107.3 1476.2,259.6 1476.2,278.7 1441.0,258.1 1441.0,252.0 1430.5,252.0 1215.2,126.4"/>
+<rect class="bois" x="1210.8" y="107.3" width="4.5" height="21.8"/>
+<polygon class="bois" points="1030.8,252.0 1035.2,252.0 1035.2,228.8 1030.8,231.4"/>
+<polygon class="bois" points="1078.8,252.0 1083.2,252.0 1083.2,200.8 1078.8,203.4"/>
+<polygon class="bois" points="1126.8,252.0 1131.2,252.0 1131.2,172.8 1126.8,175.4"/>
+<polygon class="bois" points="1174.8,252.0 1179.2,252.0 1179.2,144.8 1174.8,147.4"/>
+<polygon class="bois" points="1222.8,252.0 1227.2,252.0 1227.2,133.4 1222.8,130.8"/>
+<polygon class="bois" points="1270.8,252.0 1275.2,252.0 1275.2,161.4 1270.8,158.8"/>
+<polygon class="bois" points="1318.8,252.0 1323.2,252.0 1323.2,189.4 1318.8,186.8"/>
+<polygon class="bois" points="1366.8,252.0 1371.2,252.0 1371.2,217.4 1366.8,214.8"/>
+<line class="dim" x1="985.0" y1="544.0" x2="985.0" y2="574.0"/>
+<line class="tick" x1="981.0" y1="574.0" x2="989.0" y2="566.0"/>
+<line class="dim" x1="1441.0" y1="544.0" x2="1441.0" y2="574.0"/>
+<line class="tick" x1="1437.0" y1="574.0" x2="1445.0" y2="566.0"/>
+<line class="dim" x1="985.0" y1="570.0" x2="1441.0" y2="570.0"/>
+<text class="dt" x="1213.0" y="565.0" text-anchor="middle">12'-8"</text>
+<line class="dim" x1="1445.0" y1="540.0" x2="1497.0" y2="540.0"/>
+<line class="tick" x1="1489.0" y1="544.0" x2="1497.0" y2="536.0"/>
+<line class="dim" x1="1445.0" y1="252.0" x2="1497.0" y2="252.0"/>
+<line class="tick" x1="1489.0" y1="256.0" x2="1497.0" y2="248.0"/>
+<line class="dim" x1="1493.0" y1="540.0" x2="1493.0" y2="252.0"/>
+<text class="dt" x="1488.0" y="396.0" text-anchor="middle" transform="rotate(-90 1488.0 396.0)">8'-0"</text>
+<line class="dim" x1="1445.0" y1="252.0" x2="1497.0" y2="252.0"/>
+<line class="tick" x1="1489.0" y1="256.0" x2="1497.0" y2="248.0"/>
+<line class="dim" x1="1445.0" y1="106.0" x2="1497.0" y2="106.0"/>
+<line class="tick" x1="1489.0" y1="110.0" x2="1497.0" y2="102.0"/>
+<line class="dim" x1="1493.0" y1="252.0" x2="1493.0" y2="106.0"/>
+<text class="dt" x="1488.0" y="179.0" text-anchor="middle" transform="rotate(-90 1488.0 179.0)">4'-0⅝"</text>
+<line class="dim" x1="1445.0" y1="540.0" x2="1527.0" y2="540.0"/>
+<line class="tick" x1="1519.0" y1="544.0" x2="1527.0" y2="536.0"/>
+<line class="dim" x1="1445.0" y1="106.0" x2="1527.0" y2="106.0"/>
+<line class="tick" x1="1519.0" y1="110.0" x2="1527.0" y2="102.0"/>
+<line class="dim" x1="1523.0" y1="540.0" x2="1523.0" y2="106.0"/>
+<text class="dt" x="1518.0" y="323.0" text-anchor="middle" transform="rotate(-90 1518.0 323.0)">12'-0⅝" dessus des chevrons</text>
+<text class="h" x="48.0" y="660.0" text-anchor="start">Pièces des murs</text>
+<rect class="th" x="48" y="674" width="720" height="21"/>
+<text class="tb" x="54.0" y="689.0" text-anchor="start">Pièce</text>
+<text class="tb" x="344.0" y="689.0" text-anchor="start">Bois</text>
+<text class="tb" x="454.0" y="689.0" text-anchor="start">Longueur</text>
+<text class="tb" x="704.0" y="689.0" text-anchor="start">Qté</text>
+<text class="n" x="54.0" y="710.0" text-anchor="start">Colombages pleins</text>
+<text class="n" x="344.0" y="710.0" text-anchor="start">2 × 4</text>
+<text class="n" x="454.0" y="710.0" text-anchor="start">7'-1½"</text>
+<text class="n" x="704.0" y="710.0" text-anchor="start">49</text>
+<line class="tl" x1="48" y1="716" x2="768" y2="716"/>
+<text class="n" x="54.0" y="731.0" text-anchor="start">Jambages de la porte</text>
+<text class="n" x="344.0" y="731.0" text-anchor="start">2 × 4</text>
+<text class="n" x="454.0" y="731.0" text-anchor="start">6'-6¼"</text>
+<text class="n" x="704.0" y="731.0" text-anchor="start">4</text>
+<line class="tl" x1="48" y1="737" x2="768" y2="737"/>
+<text class="n" x="54.0" y="752.0" text-anchor="start">Lisses traitées, côtés</text>
+<text class="n" x="344.0" y="752.0" text-anchor="start">2 × 4 traité</text>
+<text class="n" x="454.0" y="752.0" text-anchor="start">16'-8" (10' + 8')</text>
+<text class="n" x="704.0" y="752.0" text-anchor="start">2</text>
+<line class="tl" x1="48" y1="758" x2="768" y2="758"/>
+<text class="n" x="54.0" y="773.0" text-anchor="start">Lisse traitée, fond</text>
+<text class="n" x="344.0" y="773.0" text-anchor="start">2 × 4 traité</text>
+<text class="n" x="454.0" y="773.0" text-anchor="start">12'-1"</text>
+<text class="n" x="704.0" y="773.0" text-anchor="start">1</text>
+<line class="tl" x1="48" y1="779" x2="768" y2="779"/>
+<text class="n" x="54.0" y="794.0" text-anchor="start">Lisses traitées, bouts du mur avant</text>
+<text class="n" x="344.0" y="794.0" text-anchor="start">2 × 4 traité</text>
+<text class="n" x="454.0" y="794.0" text-anchor="start">23"</text>
+<text class="n" x="704.0" y="794.0" text-anchor="start">2</text>
+<line class="tl" x1="48" y1="800" x2="768" y2="800"/>
+<text class="n" x="54.0" y="815.0" text-anchor="start">Sablières, côtés (deux rangs)</text>
+<text class="n" x="344.0" y="815.0" text-anchor="start">2 × 4</text>
+<text class="n" x="454.0" y="815.0" text-anchor="start">16'-8"</text>
+<text class="n" x="704.0" y="815.0" text-anchor="start">4</text>
+<line class="tl" x1="48" y1="821" x2="768" y2="821"/>
+<text class="n" x="54.0" y="836.0" text-anchor="start">Sablières, avant et fond (deux rangs)</text>
+<text class="n" x="344.0" y="836.0" text-anchor="start">2 × 4</text>
+<text class="n" x="454.0" y="836.0" text-anchor="start">12'-1" et 12'-8"</text>
+<text class="n" x="704.0" y="836.0" text-anchor="start">2 + 2</text>
+<line class="tl" x1="48" y1="842" x2="768" y2="842"/>
+<text class="n" x="54.0" y="857.0" text-anchor="start">Linteau</text>
+<text class="n" x="344.0" y="857.0" text-anchor="start">2 × 8</text>
+<text class="n" x="454.0" y="857.0" text-anchor="start">8'-9"</text>
+<text class="n" x="704.0" y="857.0" text-anchor="start">2</text>
+<line class="tl" x1="48" y1="863" x2="768" y2="863"/>
+<text class="n" x="54.0" y="878.0" text-anchor="start">Doublure de l'ouverture</text>
+<text class="n" x="344.0" y="878.0" text-anchor="start">2 × 6</text>
+<text class="n" x="454.0" y="878.0" text-anchor="start">2 de 7'-0" traités, 1 de 8'-0"</text>
+<text class="n" x="704.0" y="878.0" text-anchor="start">3</text>
+<line class="tl" x1="48" y1="884" x2="768" y2="884"/>
+<text class="n" x="54.0" y="899.0" text-anchor="start">Colombages de pignon</text>
+<text class="n" x="344.0" y="899.0" text-anchor="start">2 × 4</text>
+<text class="n" x="454.0" y="899.0" text-anchor="start">voir A3</text>
+<text class="n" x="704.0" y="899.0" text-anchor="start">16</text>
+<line class="tl" x1="48" y1="905" x2="768" y2="905"/>
+<text class="h2" x="830.0" y="660.0" text-anchor="start">Montage</text>
+<text class="n" x="830.0" y="682.0" text-anchor="start">Monter les deux murs de côté à plat sur la dalle, les lever, les étayer d'aplomb. Monter ensuite le fond</text>
+<text class="n" x="844.0" y="700.5" text-anchor="start">et l'avant entre les deux.</text>
+<text class="n" x="830.0" y="722.0" text-anchor="start">Lisse traitée boulonnée sur une mousse de lisse. Double sablière, joints décalés d'au moins 4' d'un rang</text>
+<text class="n" x="844.0" y="740.5" text-anchor="start">à l'autre.</text>
+<text class="n" x="830.0" y="762.0" text-anchor="start">Le rang du haut de la sablière croise les coins : il passe par-dessus le mur voisin et lie les quatre</text>
+<text class="n" x="844.0" y="780.5" text-anchor="start">murs.</text>
+<text class="n" x="830.0" y="802.0" text-anchor="start">Poser l'OSB avant le toit : c'est lui qui tient les murs d'équerre. Joints sur un colombage, clous aux</text>
+<text class="n" x="844.0" y="820.5" text-anchor="start">6" en rive et aux 12" ailleurs.</text>
+<text class="n" x="830.0" y="842.0" text-anchor="start">Aux bouts du mur avant (2'-2½" de chaque côté de la porte), clouer l'OSB aux 4" : ce sont eux qui</text>
+<text class="n" x="844.0" y="860.5" text-anchor="start">retiennent le pignon.</text>
+</svg>

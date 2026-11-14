@@ -64,6 +64,19 @@ des produits de piscine à droite de la porte ; 4 luminaires DEL de 4 pi. Allée
 - `vue_interieur_depuis_porte.jpg`, `vue_atelier.jpg`, `vue_mur_bacs.jpg`, `vue_velos.jpg`.
 - Visite 3D complète (on y entre) : https://claude.ai/artifact/BcvbdKVk2VjTxMswm2JYLC, arrêts « Garage vu de la cour » et « Garage — atelier et rangement ».
 
+## Plans de construction (dossier `plans/`, 2026-11-14)
+
+Plans de menuiserie en 6 feuilles 11 × 17 : `plans/PLANS_cabanon.pdf`, une image par feuille dans `plans/png/` (A1 vue d'ensemble,
+A2 dalle, A3 et A4 ossature des murs, A5 toit, A6 gabarit du chevron, corniche, listes). Toutes les cotes sont calculées par
+`plans/plans_cabanon.py` (`python plans_cabanon.py`, puis `node rendre.js` pour les PNG et le PDF).
+
+- Charpente dimensionnée pour la neige de Baie-Comeau (4,3 kPa au sol + 0,4 kPa de pluie, 2,8 kPa sur le toit, pièces lues à
+  3,0 kPa) : colombages 2 × 4 aux 16 po, chevrons et solives de plafond 2 × 6 aux 16 po, linteau de la porte 2 − 2 × 8.
+- **Écarts avec cette fiche, à valider par le client** (détail sur la feuille A1) : hors tout fini gardé à 13' × 17', donc ossature
+  12'-8" × 16'-8" et intérieur fini 12'-0" × 16'-0" ; mur de 6 po (OSB et fourrures sous les planches) ; bordure de béton de 6 po
+  sous les murs ; dalle au nu de l'ossature, sans le débord de 2 po ; plafond fini à 7'-11½", faîte à 12'-2⅛".
+- Toujours à valider : la dalle (typique, non calculée), le dégagement de 11½ po au-dessus de la porte, le permis.
+
 ## Sources dans le dépôt
 
 - `../exterieur.py` : constantes `CAB…` en tête et fonction `garage()` (géométrie exacte).
