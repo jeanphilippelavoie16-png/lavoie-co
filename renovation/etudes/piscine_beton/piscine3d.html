@@ -1,0 +1,155 @@
+<title>Piscine de béton Laurier</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap">
+<style>
+/* Une seule scène de jour, plein écran : la maquette d'abord, une fiche discrète par-dessus. */
+:root { --ciel: #bfe3f2; --encre: #14232b; --carte: rgba(255,255,255,.86); --eau: #1f9fc4; --doux: #4b5d66; color-scheme: light; }
+html, body { height: 100%; }
+body { background: var(--ciel); color: var(--encre); font-family: Inter, system-ui, sans-serif; overflow: hidden; }
+#vue { position: fixed; inset: 0; }
+#vue canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.fiche { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; pointer-events: none; }
+.titre { background: var(--carte); border-radius: 14px; padding: 10px 14px; backdrop-filter: blur(8px); max-width: 100%; }
+.titre h1 { font: 700 1.15rem/1.15 "Space Grotesk", system-ui, sans-serif; margin: 0; text-wrap: balance; }
+.titre p { margin: 3px 0 0; font-size: .78rem; color: var(--doux); }
+.vues { margin-left: auto; display: flex; gap: 6px; pointer-events: auto; flex-wrap: wrap; }
+button { font: 600 .82rem Inter, system-ui, sans-serif; color: var(--encre); background: var(--carte); border: 0; border-radius: 999px; padding: 9px 13px; cursor: pointer; backdrop-filter: blur(8px); }
+button:focus-visible { outline: 3px solid var(--eau); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--encre); color: #fff; }
+.pied { position: fixed; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
+.pied span { background: var(--carte); border-radius: 999px; padding: 6px 11px; font-size: .76rem; backdrop-filter: blur(8px); font-variant-numeric: tabular-nums; }
+.pied b { font-weight: 600; }
+@media (max-width: 520px) { .pied span.long { display: none; } }
+</style>
+<div id="vue"></div>
+<div class="fiche">
+  <div class="titre"><h1>Piscine de béton, spa ouvert et fenêtre</h1><p>Esquisse préliminaire · glisse pour tourner, pince pour zoomer</p></div>
+  <div class="vues">
+    <button id="v-cour" aria-pressed="true">De la cour</button>
+    <button id="v-fenetre" aria-pressed="false">La fenêtre</button>
+    <button id="v-haut" aria-pressed="false">Du haut</button>
+  </div>
+</div>
+<div class="pied">
+  <span><b>Piscine</b> 21'-8" × 11'-8"</span><span><b>Spa</b> 11'-0" × 8'-0"</span><span><b>Hauteur</b> 4'-6", eau 4'-0"</span>
+  <span><b>Fenêtre</b> 8'-0" × 2'-6"</span><span class="long">Dimensions proposées, à valider par un ingénieur</span>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(() => {
+const el = document.getElementById("vue");
+const R = new THREE.WebGLRenderer({ antialias: true });
+R.setPixelRatio(Math.min(devicePixelRatio, 2)); R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap;
+R.outputEncoding = THREE.sRGBEncoding; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = .78;
+el.appendChild(R.domElement);
+const S = new THREE.Scene();
+// ciel en dégradé
+const cv = document.createElement("canvas"); cv.width = 2; cv.height = 256; const g = cv.getContext("2d");
+const gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "#6fb6e0"); gr.addColorStop(.55, "#bfe3f2"); gr.addColorStop(1, "#f3ede0");
+g.fillStyle = gr; g.fillRect(0, 0, 2, 256); S.background = new THREE.CanvasTexture(cv); S.fog = new THREE.Fog(0xcfe6ee, 130, 340);
+const cam = new THREE.PerspectiveCamera(42, 1, .1, 400);
+const ctl = new THREE.OrbitControls(cam, R.domElement); ctl.enableDamping = true; ctl.maxPolarAngle = Math.PI * .495; ctl.minDistance = 8; ctl.maxDistance = 70;
+S.add(new THREE.HemisphereLight(0xdff1ff, 0x8a7f68, .5));
+const sol = new THREE.DirectionalLight(0xfff1d6, 1.25); sol.position.set(-18, 26, 22); sol.castShadow = true;
+sol.shadow.mapSize.set(2048, 2048); Object.assign(sol.shadow.camera, { left: -30, right: 30, top: 30, bottom: -30, near: 1, far: 90 }); sol.shadow.bias = -.0004; S.add(sol);
+
+// textures procédurales
+function tex(w, h, draw, rx, ry) { const c = document.createElement("canvas"); c.width = w; c.height = h; draw(c.getContext("2d"), w, h);
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx, ry); t.encoding = THREE.sRGBEncoding; return t; }
+const bruit = (x, n, a, col) => { for (let i = 0; i < n; i++) { x.fillStyle = col(Math.random()); x.globalAlpha = a; x.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 3, 1 + Math.random() * 3); } x.globalAlpha = 1; };
+const tBeton = tex(256, 256, (x) => { x.fillStyle = "#aeaba3"; x.fillRect(0, 0, 256, 256); bruit(x, 2600, .25, r => r > .5 ? "#c9c6be" : "#7f7c75");
+  x.strokeStyle = "rgba(90,88,84,.35)"; x.lineWidth = 1; for (let y = 0; y < 256; y += 42.6) { x.beginPath(); x.moveTo(0, y); x.lineTo(256, y); x.stroke(); } }, 1, 1);  // béton coffré en planches
+const tHerbe = tex(256, 256, (x) => { x.fillStyle = "#5c9440"; x.fillRect(0, 0, 256, 256); bruit(x, 5000, .4, r => r > .5 ? "#72ab4e" : "#447a30"); }, 40, 40);
+const tDalle = tex(256, 256, (x) => { x.fillStyle = "#bdb7aa"; x.fillRect(0, 0, 256, 256); bruit(x, 1800, .22, r => r > .5 ? "#d2ccbf" : "#958f82");
+  x.strokeStyle = "#a9a393"; x.lineWidth = 3; x.strokeRect(0, 0, 256, 256); }, 1, 1);
+const tBois = tex(256, 256, (x) => { for (let i = 0; i < 6; i++) { x.fillStyle = ["#b98a5a", "#a97b4e", "#c29363"][i % 3]; x.fillRect(0, i * 42.6, 256, 41); } bruit(x, 900, .18, () => "#7d5632"); }, 1, 1);
+const M = {
+  beton: new THREE.MeshStandardMaterial({ map: tBeton, roughness: .92 }),
+  marg: new THREE.MeshStandardMaterial({ color: 0xd9d6ce, roughness: .7 }),
+  cuve: new THREE.MeshStandardMaterial({ color: 0x9fd4e0, roughness: .6 }),
+  herbe: new THREE.MeshStandardMaterial({ map: tHerbe, roughness: 1 }),
+  dalle: new THREE.MeshStandardMaterial({ map: tDalle, roughness: .9 }),
+  bois: new THREE.MeshStandardMaterial({ map: tBois, roughness: .8 }),
+  noir: new THREE.MeshStandardMaterial({ color: 0x1e1f20, roughness: .6, metalness: .3 }),
+  blanc: new THREE.MeshStandardMaterial({ color: 0xf6f4ee, roughness: .8 }),
+  vert: new THREE.MeshStandardMaterial({ color: 0x2f6b34, roughness: 1 }),
+  tronc: new THREE.MeshStandardMaterial({ color: 0x6b4a32, roughness: 1 }),
+  eauVol: new THREE.MeshPhysicalMaterial({ color: 0x0f8fb8, transparent: true, opacity: .62, roughness: .1, depthWrite: false }),
+  eau: new THREE.MeshPhysicalMaterial({ color: 0x1aa6cf, transparent: true, opacity: .8, roughness: .06, metalness: .1, clearcoat: 1, depthWrite: false }),
+  verre: new THREE.MeshPhysicalMaterial({ color: 0x9fe6f7, transparent: true, opacity: .22, roughness: .02, clearcoat: 1, depthWrite: false, side: THREE.DoubleSide }),
+};
+// boîte en pieds : x vers la droite, z vers le spa (devant), y vers le haut
+function B(x0, x1, y0, y1, z0, z1, mat, o = {}) {
+  const w = x1 - x0, h = y1 - y0, d = z1 - z0, geo = new THREE.BoxGeometry(w, h, d), m = new THREE.Mesh(geo, mat);
+  if (mat === M.beton || mat === M.bois || mat === M.dalle) {            // texture à l'échelle (1 répétition par 4 pi)
+    const uv = geo.attributes.uv, n = geo.attributes.normal; for (let i = 0; i < uv.count; i++) {
+      const ax = Math.abs(n.getX(i)), ay = Math.abs(n.getY(i)); const su = ax > .5 ? d : w, sv = ay > .5 ? d : h; uv.setXY(i, uv.getX(i) * su / 4, uv.getY(i) * sv / 4); } }
+  m.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2); m.castShadow = o.ombre !== false; m.receiveShadow = true; S.add(m); return m; }
+const L = 21.67, P = 11.67, T = .83, H = 4.5, EAU = 4.0, SW = 11, SD = 8, F0 = 12.5, F1 = 20.5, FZ0 = 1.17, FZ1 = 3.67;
+// terrain et dallage
+const gz = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), M.herbe); gz.rotation.x = -Math.PI / 2; gz.receiveShadow = true; S.add(gz);
+for (let i = -1; i < 7; i++) for (let j = 0; j < 4; j++) if (!(i < 3 && j < 2)) B(i * 4 + .04, i * 4 + 3.96, 0, .12, 0 + j * 4 + .04, j * 4 + 3.96, M.dalle, { ombre: false });   // dalles devant la fenêtre
+for (let i = -1; i < 3; i++) for (let j = 2; j < 4; j++) B(i * 4 + .04, i * 4 + 3.96, 0, .12, j * 4 + .04, j * 4 + 3.96, M.dalle, { ombre: false });
+// cuve : fond, parois, seuil, bancs, marches
+B(T, L - T, 0, .5, -P + T, 0, M.cuve); B(T, SW - T, 0, .5, -T, SD - T, M.cuve);
+B(0, L, 0, H, -P, -P + T, M.beton); B(L - T, L, 0, H, -P, 0, M.beton); B(0, T, 0, H, -P, SD, M.beton);
+B(0, SW, 0, H, SD - T, SD, M.beton); B(SW - T, SW, 0, H, -T, SD, M.beton);
+B(SW - T, F0, 0, H, -T, 0, M.beton); B(F1, L, 0, H, -T, 0, M.beton); B(F0, F1, 0, FZ0, -T, 0, M.beton); B(F0, F1, FZ1, H, -T, 0, M.beton);
+B(T, SW - T, .5, 2.4, -T, 0, M.cuve);                                                             // seuil sous l'eau
+B(T, T + 1.5, .5, 2.5, 0, SD - T, M.cuve); B(SW - T - 1.5, SW - T, .5, 2.5, 0, SD - T, M.cuve); B(T, SW - T, .5, 2.5, SD - T - 1.5, SD - T, M.cuve);   // banc en U
+for (let k = 0; k < 3; k++) B(L - T - 5, L - T, .5, 3.25 - k * .9, -P + T + k * 1, -P + T + (k + 1) * 1, M.cuve);          // marches
+// margelle
+const mg = (x0, x1, z0, z1) => B(x0, x1, H, H + .17, z0, z1, M.marg);
+mg(-.1, L + .1, -P - .1, -P + T + .1); mg(L - T - .1, L + .1, -P, .1); mg(-.1, T + .1, -P, SD + .1); mg(0, SW + .1, SD - T - .1, SD + .1); mg(SW - T - .1, SW + .1, -T, SD); mg(SW, L, -T - .1, .1);
+// fenêtre d'acrylique et son cadre noir
+B(F0, F1, FZ0, FZ1, -.46, -.36, M.verre, { ombre: false });
+B(F0 - .12, F1 + .12, FZ1, FZ1 + .12, -.02, .06, M.noir); B(F0 - .12, F1 + .12, FZ0 - .12, FZ0, -.02, .06, M.noir); B(F0 - .12, F0, FZ0, FZ1, -.02, .06, M.noir); B(F1, F1 + .12, FZ0, FZ1, -.02, .06, M.noir);
+// eau : volumes (pour la fenêtre) et surface ondulée
+B(T, L - T, .5, EAU, -P + T, -.47, M.eauVol, { ombre: false }); B(T, SW - T, .5, EAU, -.47, SD - T, M.eauVol, { ombre: false });
+const surf = [];
+function surface(x0, x1, z0, z1) { const g = new THREE.PlaneGeometry(x1 - x0, z1 - z0, Math.round((x1 - x0) * 2), Math.round((z1 - z0) * 2)); g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, M.eau); m.position.set((x0 + x1) / 2, EAU, (z0 + z1) / 2); m.receiveShadow = true; S.add(m); surf.push(m); }
+surface(T, L - T, -P + T, 0); surface(T, SW - T, 0, SD - T);
+const led = new THREE.PointLight(0x7fe9ff, .9, 16); led.position.set(14, 2, -5); S.add(led);
+// jets du spa (petites bulles)
+const bulles = []; for (let i = 0; i < 46; i++) { const b = new THREE.Mesh(new THREE.SphereGeometry(.05 + Math.random() * .05, 6, 6), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .75 }));
+  b.userData = { x: 2.6 + Math.random() * 5.8, z: .6 + Math.random() * 4.6, p: Math.random() * 3 }; S.add(b); bulles.push(b); }
+// décor : terrasse de bois, chaises longues, personnage, haie, arbres
+B(L + .4, L + 9, 0, .5, -P, 2, M.bois);
+function chaise(x, z) { B(x, x + 2.1, .9, 1.05, z, z + 4.6, M.blanc); B(x, x + 2.1, 1.05, 1.2, z, z + 1.7, M.blanc).rotation.x = -.5;
+  for (const [a, c] of [[.1, .3], [1.9, .3], [.1, 4.2], [1.9, 4.2]]) B(x + a, x + a + .1, .5, .9, z + c, z + c + .1, M.noir); }
+chaise(L + 2, -9.5); chaise(L + 5.2, -9.5);
+function perso(x, z, col, k) { const G = new THREE.Group(), m = new THREE.MeshStandardMaterial({ color: col, roughness: .9 });
+  const c = new THREE.Mesh(new THREE.CylinderGeometry(.5, .32, 4.2, 14), m); c.position.y = 2.1;
+  const h = new THREE.Mesh(new THREE.SphereGeometry(.4, 14, 12), new THREE.MeshStandardMaterial({ color: 0xe2b592, roughness: .8 })); h.position.y = 4.75;
+  for (const o of [c, h]) { o.castShadow = true; G.add(o); } G.position.set(x, .12, z); G.scale.setScalar(k); S.add(G); }
+perso(15.5, 4.2, 0x2f4858, 1); perso(13.6, 3.4, 0xe2a93f, .66);                                  // un adulte (5'-8") et un enfant de 6 ans
+for (let x = -14; x < 40; x += 2.2) { const h = new THREE.Mesh(new THREE.SphereGeometry(1.5, 8, 6), M.vert); h.position.set(x, 1.4, -P - 9); h.scale.y = 1.5; h.castShadow = true; S.add(h); }
+function arbre(x, z, h) { const t = new THREE.Mesh(new THREE.CylinderGeometry(.3, .45, h, 8), M.tronc); t.position.set(x, h / 2, z); t.castShadow = true; S.add(t);
+  const f = new THREE.Mesh(new THREE.IcosahedronGeometry(h * .5, 1), M.vert); f.position.set(x, h + h * .25, z); f.castShadow = true; S.add(f); }
+arbre(-9, -8, 9); arbre(36, -16, 11); arbre(-12, 14, 8);
+
+// vues
+const VUES = { "v-cour": [[31, 12, 22], [10, 2.2, -2]], "v-fenetre": [[17.5, 3.6, 14], [16.5, 2.5, -3]], "v-haut": [[10.8, 44, 2], [10.8, 0, -1.9]] };
+let cible = null;
+function aller(id) { cible = { p: new THREE.Vector3(...VUES[id][0]), t: new THREE.Vector3(...VUES[id][1]) };
+  for (const b of document.querySelectorAll(".vues button")) b.setAttribute("aria-pressed", b.id === id); }
+for (const id in VUES) document.getElementById(id).onclick = () => aller(id);
+cam.position.set(...VUES["v-cour"][0]); ctl.target.set(...VUES["v-cour"][1]);
+R.domElement.addEventListener("pointerdown", () => (cible = null));
+function taille() { const w = el.clientWidth, h = el.clientHeight; R.setSize(w, h, false); cam.aspect = w / h; cam.fov = w < h ? 58 : 42; cam.updateProjectionMatrix(); }
+addEventListener("resize", taille); taille();
+const calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function image(t) { t /= 1000;
+  if (cible) { cam.position.lerp(cible.p, .08); ctl.target.lerp(cible.t, .08); if (cam.position.distanceTo(cible.p) < .05) cible = null; }
+  if (!calme) { for (const m of surf) { const a = m.geometry.attributes.position; for (let i = 0; i < a.count; i++) { const x = a.getX(i) + m.position.x, z = a.getZ(i) + m.position.z;
+        a.setY(i, Math.sin(x * 1.3 + t * 1.4) * .025 + Math.cos(z * 1.7 + t * 1.1) * .02); } a.needsUpdate = true; m.geometry.computeVertexNormals(); }
+    for (const b of bulles) { const u = (t * .9 + b.userData.p) % 1; b.position.set(b.userData.x, 2.6 + u * 1.45, b.userData.z); b.material.opacity = .8 * (1 - u); } }
+  else for (const b of bulles) b.visible = false;
+  ctl.update(); R.render(S, cam); requestAnimationFrame(image); }
+requestAnimationFrame(image);
+})();
+</script>
