@@ -208,7 +208,7 @@ for (const [x, y, hh] of [[60, 960, 12], [260, 950, 14], [470, 940, 11], [-130, 
 
 
 // vues
-const VUES = { "v-cour": [[15, 17, 15.3], [17, 1, -3]], "v-fenetre": [[24, 7.5, 13.5], [14.5, 2.6, 1]], "v-haut": [[17, 95, 9], [17, 0, -3]], "v-lounge": [[26.5, 7.6, 14.2], [29.5, 2.4, 3]] };
+const VUES = { "v-cour": [[15, 17, 15.3], [17, 1, -3]], "v-fenetre": [[24, 7.5, 13.5], [14.5, 2.6, 1]], "v-haut": [[17, 95, 9], [17, 0, -3]], "v-lounge": [[17.5, 7.2, 7.5], [30, 2.6, 4.2]] };
 let cible = null;
 function aller(id) { cible = { p: new THREE.Vector3(...VUES[id][0]), t: new THREE.Vector3(...VUES[id][1]) };
   for (const b of document.querySelectorAll(".vues button")) b.setAttribute("aria-pressed", b.id === id); }
