@@ -62,14 +62,14 @@ if __name__ == "__main__":
         a.add_patch(Rectangle((x0, y0), x1 - x0, y1 - y0, fc=BET, ec="k", lw=1.5))
     a.add_patch(Rectangle((PISC[0] + 10, PISC[1] + 10), PL - 20, PW - 20, fc=EAU, ec="k", lw=.6)); a.add_patch(Rectangle((SPA[0] + 10, SPA[1] + 10), SW - 20, SD, fc=SPAC, ec="none"))
     a.add_patch(Rectangle(PATIO[:2], PATIO[2] - PATIO[0], SD, fc=BOIS, ec="k", hatch="---"))
-    a.add_patch(Rectangle((PATIO[0] - 2, YF + 8), 16, SD - 16, fc="#8a5a2e", ec="k")); a.plot([X0 + 150, X0 + 246], [YP + 5, YP + 5], color="#0077aa", lw=5)
-    for xx in (X0 + 178, X0 + 216): a.add_patch(Rectangle((xx, YF + 14), 25, 55, fc="white", ec="k"))
+    a.add_patch(Rectangle((PATIO[0] - 2, YF + 8), 16, SD - 16, fc="#8a5a2e", ec="k")); a.plot([X0 + 136, X0 + 228], [YP + 5, YP + 5], color="#0077aa", lw=5)
+    for xx in (X0 + 163, X0 + 195): a.add_patch(Rectangle((xx, YF + 14), 25, 55, fc="white", ec="k"))
     a.text(X0 + PL / 2, YP + PW / 2, "PISCINE\n20' × 20' d'eau\n4'-6\" hors sol", ha="center", va="center", fontsize=13, fontweight="bold"); a.text(X0 + SW / 2, YF + SD / 2 + 6, "SPA\nouvert", ha="center", va="center", fontsize=10, fontweight="bold")
     a.text(X0 + 196, YP + 16, "fenêtre", ha="center", fontsize=8, color="#004d6e"); a.text(X0 + PL - 30, YF + 4, "PATIO", fontsize=8, fontweight="bold", ha="center", va="bottom")
     # enceinte du patio : garde-corps de verre de 1,2 m et portillon
-    a.plot([PATIO[0], PATIO[2], PATIO[2]], [YF, YF, YP], color="#00a0c8", lw=3); a.plot([PATIO[2], PATIO[2]], [YF + 20, YF + 56], color="#e2a93f", lw=5)
-    a.annotate("garde-corps de verre 1,2 m\net portillon à fermeture auto", (PATIO[2], YF + 38), (PATIO[2] - 150, YF - 30), fontsize=8, arrowprops=dict(arrowstyle="->"), color="#005f88")
-    a.add_patch(Rectangle((PATIO[2], YF + 14), 24, 48, fc="#d8b98f", ec="k", hatch="|||")); 
+    a.plot([PATIO[0], PATIO[2], PATIO[2]], [YF, YF, YP], color="#00a0c8", lw=3); a.plot([PATIO[2] - 40, PATIO[2] - 4], [YF, YF], color="#e2a93f", lw=5)
+    a.annotate("garde-corps de verre 1,2 m\net portillon à fermeture auto", (PATIO[2] - 22, YF), (PATIO[2] - 150, YF - 30), fontsize=8, arrowprops=dict(arrowstyle="->"), color="#005f88")
+    a.add_patch(Rectangle((PATIO[2] - 40, YF - 13), 36, 13, fc="#d8b98f", ec="k")); a.add_patch(Rectangle((PATIO[2] - 30, YP - 55), 30, 55, fc="#d6d3cc", ec="k", hatch="---")); a.annotate("escalier de la piscine\n(6 contremarches)", (PATIO[2] - 15, YP - 30), (PATIO[2] + 12, YP + 60), fontsize=8, arrowprops=dict(arrowstyle="->"), bbox=dict(fc="white", ec="none", pad=1))
     a.add_patch(Rectangle(APP[:2], APP[2] - APP[0], APP[3] - APP[1], fc="#9aa0a6", ec="k")); a.annotate("appareils\n(filtre, thermopompe)", (APP[0] + 18, APP[3]), (APP[0] - 10, APP[3] + 40), fontsize=8, arrowprops=dict(arrowstyle="->"))
     def cote(x0, y0, x1, y1, t, dx=0, dy=0):
         a.annotate("", (x0, y0), (x1, y1), arrowprops=dict(arrowstyle="<->", lw=1.1, color="#b02a2a"))
@@ -89,7 +89,9 @@ if __name__ == "__main__":
         "• Le cabanon de 13' × 17' ne bouge pas ; la clôture de 6 pi non plus.",
         "• Les appareils vont près du coin arrière gauche de la maison.",
         "• Le patio (14 po) et le bar rendent la piscine facile à grimper : un",
-        "  garde-corps de verre de 1,2 m avec portillon ferme le patio."]), fontsize=10, va="top", linespacing=1.5)
+        "  garde-corps de verre de 1,2 m avec portillon ferme le patio.",
+        "• On monte dans la piscine par un escalier placé DANS cette enceinte :",
+        "  6 contremarches du patio à la margelle, puis 3 marches dans l'eau."]), fontsize=10, va="top", linespacing=1.5)
     fig.text(0.66, 0.60, "CONTRÔLE DES RÈGLES (Ville de Baie-Comeau)", fontweight="bold", fontsize=12)
     y = 0.57
     for nom, v, mini in CONTROLES:
