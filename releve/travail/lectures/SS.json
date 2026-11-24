@@ -1,0 +1,1431 @@
+{
+ "feuille": "SS",
+ "cotes": [
+  {
+   "n": 1,
+   "categorie": "cote",
+   "texte_original": "38'-0\"",
+   "valeur": 456,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c2.jpg",
+   "px": [
+    1296,
+    122
+   ],
+   "lecture_autre_photo": {
+    "P7": "38'-0\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 3 (hors-tout, le plus éloigné du mur)",
+   "mesure": "nu ext. mur gauche → nu ext. mur droit (largeur totale)",
+   "note": "le 8 est tracé comme un « B » (« 3B'-0 »)"
+  },
+  {
+   "n": 2,
+   "categorie": "cote",
+   "texte_original": "18'-3\"",
+   "valeur": 219,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c1.jpg",
+   "px": [
+    913,
+    150
+   ],
+   "lecture_autre_photo": {
+    "P7": "18'-3\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 2, du coin arrière-gauche au caveau",
+   "mesure": "nu ext. mur gauche → nu ext. mur gauche du caveau à légumes"
+  },
+  {
+   "n": 3,
+   "categorie": "cote",
+   "texte_original": "9'-0\"",
+   "valeur": 108,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c2.jpg",
+   "px": [
+    1361,
+    140
+   ],
+   "lecture_autre_photo": {
+    "P7": "9'-0\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 2, largeur du caveau",
+   "mesure": "nu ext. → nu ext. des murs latéraux du caveau à légumes"
+  },
+  {
+   "n": 4,
+   "categorie": "cote",
+   "texte_original": "10'-9\"",
+   "valeur": 129,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "10'-3\"",
+     "valeur": 123
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r0c3.jpg",
+   "px": [
+    1741,
+    152
+   ],
+   "lecture_autre_photo": {
+    "P7": "10'-9\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 2, du caveau au coin arrière-droit",
+   "mesure": "nu ext. mur droit du caveau → nu ext. mur droit de la maison",
+   "note": "glyphe identique au 9 de « 9'-10 » (boucle fermée + queue) ; la mesure à l'échelle donne ~10'-4\" ; 10'-9\" boucle la chaîne à 38'-0\""
+  },
+  {
+   "n": 5,
+   "categorie": "cote",
+   "texte_original": "13'-0\"",
+   "valeur": 156,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "10'-0\"",
+     "valeur": 120
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r0c1.jpg",
+   "px": [
+    798,
+    290
+   ],
+   "lecture_autre_photo": {
+    "P7": "13'-0\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 1 bis (ligne sous la chaîne), coin arrière-gauche → axe de la fenêtre arrière",
+   "mesure": "nu ext. mur gauche → axe (meneau) de la fenêtre arrière-gauche",
+   "note": "2e chiffre empâté (3 probable) ; à l'échelle ~13'-1\" jusqu'au trait de rappel du meneau"
+  },
+  {
+   "n": 6,
+   "categorie": "ouverture",
+   "texte_original": "6'-3\"",
+   "valeur": 75,
+   "confiance": "haute",
+   "alternatives": [
+    {
+     "texte": "6'-8\"",
+     "valeur": 80
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r0c1.jpg",
+   "px": [
+    1028,
+    312
+   ],
+   "lecture_autre_photo": {
+    "P7": "6'-3\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 1, fenêtre du mur arrière (moitié gauche)",
+   "mesure": "largeur de la fenêtre (baie double)"
+  },
+  {
+   "n": 7,
+   "categorie": "epaisseur",
+   "texte_original": "22\"",
+   "valeur": 22,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c3.jpg",
+   "px": [
+    1570,
+    217
+   ],
+   "lecture_autre_photo": {
+    "P7": "22\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, caveau, côté droit",
+   "mesure": "largeur de la semelle du mur du caveau"
+  },
+  {
+   "n": 8,
+   "categorie": "epaisseur",
+   "texte_original": "10\"",
+   "valeur": 10,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c2.jpg",
+   "px": [
+    1514,
+    247
+   ],
+   "lecture_autre_photo": {
+    "P7": "10\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, caveau, mur droit",
+   "mesure": "épaisseur du mur de fondation du caveau"
+  },
+  {
+   "n": 9,
+   "categorie": "cote",
+   "texte_original": "5'-0\"",
+   "valeur": 60,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c3.jpg",
+   "px": [
+    1590,
+    262
+   ],
+   "lecture_autre_photo": {
+    "P7": "5'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "arrière, à droite du caveau",
+   "mesure": "profondeur (saillie) du caveau depuis le mur arrière (nu ext.)"
+  },
+  {
+   "n": 10,
+   "categorie": "autre",
+   "texte_original": "3'-6\"",
+   "valeur": 42,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "3'-0\"",
+     "valeur": 36
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r0c2.jpg",
+   "px": [
+    1273,
+    300
+   ],
+   "lecture_autre_photo": {
+    "P7": "3'-6\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur du caveau à légumes, à gauche de « LÉGUMES »",
+   "mesure": "objet incertain (près d'une petite ligne de cote verticale et des tablettes en tirets)"
+  },
+  {
+   "n": 11,
+   "categorie": "ouverture",
+   "texte_original": "PORTE 2'-6\"",
+   "valeur": 30,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c2.jpg",
+   "px": [
+    1420,
+    380
+   ],
+   "lecture_autre_photo": {
+    "P7": "PORTE 2'-6\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, entrée du caveau dans le mur arrière",
+   "mesure": "largeur de la porte du caveau"
+  },
+  {
+   "n": 12,
+   "categorie": "autre",
+   "texte_original": "3",
+   "valeur": null,
+   "confiance": "basse",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c2.jpg",
+   "px": [
+    1296,
+    338
+   ],
+   "lecture_autre_photo": {
+    "P7": "3"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, au-dessus de la porte du caveau, au bout d'une petite flèche",
+   "mesure": "probablement annotation électrique (interrupteur 3 voies / « 3W ») et non une cote"
+  },
+  {
+   "n": 13,
+   "categorie": "cote",
+   "texte_original": "31'-8\"",
+   "valeur": 380,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c0.jpg",
+   "px": [
+    272,
+    945
+   ],
+   "lecture_autre_photo": {
+    "P7": "31'-8\""
+   },
+   "orientation": "verticale",
+   "emplacement": "gauche, rang 3 (hors-tout)",
+   "mesure": "nu ext. mur arrière → nu ext. mur avant (profondeur totale)"
+  },
+  {
+   "n": 14,
+   "categorie": "cote",
+   "texte_original": "16'-8\"",
+   "valeur": 200,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c0.jpg",
+   "px": [
+    412,
+    670
+   ],
+   "lecture_autre_photo": {
+    "P7": "16'-8\""
+   },
+   "orientation": "verticale",
+   "emplacement": "gauche, rang 2, segment 1 (depuis l'arrière)",
+   "mesure": "nu ext. mur arrière → axe fenêtre gauche supérieure"
+  },
+  {
+   "n": 15,
+   "categorie": "cote",
+   "texte_original": "4'-0\"",
+   "valeur": 48,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r2c0.jpg",
+   "px": [
+    395,
+    1026
+   ],
+   "lecture_autre_photo": {
+    "P7": "4'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "gauche, rang 2, segment 2",
+   "mesure": "axe fenêtre gauche supérieure → repère au bas (côté avant) de la cheminée"
+  },
+  {
+   "n": 16,
+   "categorie": "cote",
+   "texte_original": "7'-0\"",
+   "valeur": 84,
+   "confiance": "haute",
+   "alternatives": [
+    {
+     "texte": "1'-0\"",
+     "valeur": 12
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r2c0.jpg",
+   "px": [
+    387,
+    1236
+   ],
+   "lecture_autre_photo": {
+    "P7": "7'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "gauche, rang 2, segment 3",
+   "mesure": "repère cheminée → axe fenêtre gauche inférieure (évier/lessive)",
+   "note": "le 7 a un trait court, ressemble à 1 sur P7 ; mesure à l'échelle ≈ 7'-2\""
+  },
+  {
+   "n": 17,
+   "categorie": "cote",
+   "texte_original": "4'-0\"",
+   "valeur": 48,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c0.jpg",
+   "px": [
+    370,
+    1458
+   ],
+   "lecture_autre_photo": {
+    "P7": "4'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "gauche, rang 2, segment 4 (côté avant)",
+   "mesure": "axe fenêtre gauche inférieure → nu ext. mur avant"
+  },
+  {
+   "n": 18,
+   "categorie": "ouverture",
+   "texte_original": "3'-0\"",
+   "valeur": 36,
+   "confiance": "haute",
+   "alternatives": [
+    {
+     "texte": "3'-6\"",
+     "valeur": 42
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r1c0.jpg",
+   "px": [
+    472,
+    955
+   ],
+   "lecture_autre_photo": {
+    "P7": "3'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "gauche, rang 1, fenêtre supérieure (près de la fournaise)",
+   "mesure": "largeur de la fenêtre",
+   "note": "un trait de rappel traverse le 0 (aspect « b ») ; la mesure ≈ 3'-1\""
+  },
+  {
+   "n": 19,
+   "categorie": "ouverture",
+   "texte_original": "3'-0\"",
+   "valeur": 36,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r2c0.jpg",
+   "px": [
+    447,
+    1371
+   ],
+   "lecture_autre_photo": {
+    "P7": "3'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "gauche, rang 1, fenêtre inférieure (évier à lessive)",
+   "mesure": "largeur de la fenêtre"
+  },
+  {
+   "n": 20,
+   "categorie": "epaisseur",
+   "texte_original": "22\"",
+   "valeur": 22,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c1.jpg",
+   "px": [
+    607,
+    642
+   ],
+   "lecture_autre_photo": {
+    "P7": "22\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "gauche, mur latéral gauche (partie arrière)",
+   "mesure": "largeur de la semelle"
+  },
+  {
+   "n": 21,
+   "categorie": "epaisseur",
+   "texte_original": "10\"",
+   "valeur": 10,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c1.jpg",
+   "px": [
+    607,
+    684
+   ],
+   "lecture_autre_photo": {
+    "P7": "10\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "gauche, mur latéral gauche (partie arrière)",
+   "mesure": "épaisseur du mur de fondation"
+  },
+  {
+   "n": 22,
+   "categorie": "epaisseur",
+   "texte_original": "10",
+   "valeur": 10,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c0.jpg",
+   "px": [
+    538,
+    812
+   ],
+   "lecture_autre_photo": {
+    "P7": "10"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale des poteaux, segment 1 (mur gauche)",
+   "mesure": "épaisseur du mur gauche (nu ext. → nu int.)"
+  },
+  {
+   "n": 23,
+   "categorie": "cote",
+   "texte_original": "9'-10\"",
+   "valeur": 118,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c1.jpg",
+   "px": [
+    765,
+    812
+   ],
+   "lecture_autre_photo": {
+    "P7": "9'-10\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale des poteaux, segment 2",
+   "mesure": "nu int. mur gauche → face gauche de la colonne 1"
+  },
+  {
+   "n": 24,
+   "categorie": "structure",
+   "texte_original": "8\"",
+   "valeur": 8,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c1.jpg",
+   "px": [
+    937,
+    808
+   ],
+   "lecture_autre_photo": {
+    "P7": "8\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale, segment 3",
+   "mesure": "largeur de la colonne 1"
+  },
+  {
+   "n": 25,
+   "categorie": "cote",
+   "texte_original": "7'-4\"",
+   "valeur": 88,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1086,
+    812
+   ],
+   "lecture_autre_photo": {
+    "P7": "7'-4\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale, segment 4",
+   "mesure": "entre colonne 1 et colonne 2 (faces)"
+  },
+  {
+   "n": 26,
+   "categorie": "structure",
+   "texte_original": "8\"",
+   "valeur": 8,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1233,
+    812
+   ],
+   "lecture_autre_photo": {
+    "P7": "8\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale, segment 5 (dans le pli central)",
+   "mesure": "largeur de la colonne 2"
+  },
+  {
+   "n": 27,
+   "categorie": "cote",
+   "texte_original": "7'-4\"",
+   "valeur": 88,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1306,
+    809
+   ],
+   "lecture_autre_photo": {
+    "P7": "7'-4\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale, segment 6",
+   "mesure": "entre colonne 2 et colonne 3 (faces)"
+  },
+  {
+   "n": 28,
+   "categorie": "structure",
+   "texte_original": "8\"",
+   "valeur": 8,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1517,
+    806
+   ],
+   "lecture_autre_photo": {
+    "P7": "8\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale, segment 7",
+   "mesure": "largeur de la colonne 3"
+  },
+  {
+   "n": 29,
+   "categorie": "cote",
+   "texte_original": "9'-10\"",
+   "valeur": 118,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c3.jpg",
+   "px": [
+    1711,
+    810
+   ],
+   "lecture_autre_photo": {
+    "P7": "9'-10\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale, segment 8",
+   "mesure": "face droite colonne 3 → nu int. mur droit"
+  },
+  {
+   "n": 30,
+   "categorie": "epaisseur",
+   "texte_original": "10",
+   "valeur": 10,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c3.jpg",
+   "px": [
+    1911,
+    812
+   ],
+   "lecture_autre_photo": {
+    "P7": "10"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale, segment 9 (mur droit)",
+   "mesure": "épaisseur du mur droit"
+  },
+  {
+   "n": 31,
+   "categorie": "cote",
+   "texte_original": "13'-10\"",
+   "valeur": 166,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1313,
+    640
+   ],
+   "lecture_autre_photo": {
+    "P7": "13'-10\""
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale x≈1313 px (à droite du pli), segment 1",
+   "mesure": "nu int. mur arrière → axe poutre arrière"
+  },
+  {
+   "n": 32,
+   "categorie": "cote",
+   "texte_original": "3'-11\"",
+   "valeur": 47,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1313,
+    946
+   ],
+   "lecture_autre_photo": {
+    "P7": "3'-11\""
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale, segment 2",
+   "mesure": "axe poutre arrière → axe poutre avant (entre les deux POUTRES 8\"x10\")"
+  },
+  {
+   "n": 33,
+   "categorie": "cote",
+   "texte_original": "12'-3\"",
+   "valeur": 147,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r2c2.jpg",
+   "px": [
+    1316,
+    1263
+   ],
+   "lecture_autre_photo": {
+    "P7": "12'-3\""
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale, segment 3",
+   "mesure": "axe poutre avant → nu int. mur avant"
+  },
+  {
+   "n": 34,
+   "categorie": "epaisseur",
+   "texte_original": "10",
+   "valeur": 10,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c2.jpg",
+   "px": [
+    1313,
+    1516
+   ],
+   "lecture_autre_photo": {
+    "P7": "10"
+   },
+   "orientation": "verticale",
+   "emplacement": "avant, mur avant au bout de la chaîne verticale intérieure",
+   "mesure": "épaisseur du mur avant"
+  },
+  {
+   "n": 35,
+   "categorie": "structure",
+   "texte_original": "POUTRE 8\"x10\"",
+   "valeur": null,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1150,
+    870
+   ],
+   "lecture_autre_photo": {
+    "P7": "POUTRE 8\"x10\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, poutre arrière (ligne de colonnes 1-2-3)",
+   "mesure": "section de poutre 8\" x 10\""
+  },
+  {
+   "n": 36,
+   "categorie": "structure",
+   "texte_original": "POUTRE 8\"x10\"",
+   "valeur": null,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r2c2.jpg",
+   "px": [
+    1150,
+    1016
+   ],
+   "lecture_autre_photo": {
+    "P7": "POUTRE 8\"x10\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, poutre avant",
+   "mesure": "section de poutre 8\" x 10\""
+  },
+  {
+   "n": 37,
+   "categorie": "structure",
+   "texte_original": "COL. BOIS, 8\"x8\"",
+   "valeur": null,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1130,
+    938
+   ],
+   "lecture_autre_photo": {
+    "P7": "COL. BOIS, 8\"x8\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, entre les deux poutres, flèche vers colonne de la poutre avant",
+   "mesure": "section de colonne de bois 8\" x 8\"",
+   "note": "le x est tracé comme un « c » (8\"c8\")"
+  },
+  {
+   "n": 38,
+   "categorie": "structure",
+   "texte_original": "SOLIVES 2\"x10\" @ 20\" c/c",
+   "valeur": 20,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1170,
+    640
+   ],
+   "lecture_autre_photo": {
+    "P7": "SOLIVES 2\"x10\" @ 20\" c/c"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, partie arrière, le long du pli central",
+   "mesure": "solives 2\"x10\" espacées de 20\" c/c (valeur = espacement)"
+  },
+  {
+   "n": 39,
+   "categorie": "autre",
+   "texte_original": "14 C.M.",
+   "valeur": 14,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1436,
+    735
+   ],
+   "lecture_autre_photo": {
+    "P7": "14 C.M."
+   },
+   "orientation": "verticale",
+   "emplacement": "escalier (intérieur, derrière la poutre arrière)",
+   "mesure": "nombre de contremarches"
+  },
+  {
+   "n": 40,
+   "categorie": "autre",
+   "texte_original": "E 14",
+   "valeur": null,
+   "confiance": "basse",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1436,
+    840
+   ],
+   "lecture_autre_photo": {
+    "P7": "E 14"
+   },
+   "orientation": "verticale",
+   "emplacement": "escalier, bas de la volée (côté poutre)",
+   "mesure": "marque peu claire (numéro de contremarche ou annotation) ; non une cote"
+  },
+  {
+   "n": 41,
+   "categorie": "autre",
+   "texte_original": "3W",
+   "valeur": null,
+   "confiance": "basse",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c2.jpg",
+   "px": [
+    1391,
+    632
+   ],
+   "lecture_autre_photo": {
+    "P7": "3W"
+   },
+   "orientation": "verticale",
+   "emplacement": "escalier, haut de la volée, près de « RAMPE »",
+   "mesure": "probablement interrupteur 3 voies (électricité), non une cote"
+  },
+  {
+   "n": 42,
+   "categorie": "cote",
+   "texte_original": "31'-8\"",
+   "valeur": 380,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c4.jpg",
+   "px": [
+    2172,
+    955
+   ],
+   "lecture_autre_photo": {
+    "P7": "31'-8\""
+   },
+   "orientation": "verticale",
+   "emplacement": "droite, rang 3 (hors-tout)",
+   "mesure": "nu ext. mur arrière → nu ext. mur avant"
+  },
+  {
+   "n": 43,
+   "categorie": "cote",
+   "texte_original": "6'-0\"",
+   "valeur": 72,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c3.jpg",
+   "px": [
+    2008,
+    475
+   ],
+   "lecture_autre_photo": {
+    "P7": "6'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "droite, rang 2, segment 1 (depuis l'arrière)",
+   "mesure": "nu ext. mur arrière → axe fenêtre droite supérieure"
+  },
+  {
+   "n": 44,
+   "categorie": "cote",
+   "texte_original": "10'-8\"",
+   "valeur": 128,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c4.jpg",
+   "px": [
+    2019,
+    762
+   ],
+   "lecture_autre_photo": {
+    "P7": "10'-8\""
+   },
+   "orientation": "verticale",
+   "emplacement": "droite, rang 2, segment 2",
+   "mesure": "axe fenêtre droite sup. → axe fenêtre droite médiane (3'-0\")"
+  },
+  {
+   "n": 45,
+   "categorie": "cote",
+   "texte_original": "8'-9\"",
+   "valeur": 105,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "8'-5\"",
+     "valeur": 101
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r2c4.jpg",
+   "px": [
+    2030,
+    1126
+   ],
+   "lecture_autre_photo": {
+    "P7": "8'-9\""
+   },
+   "orientation": "verticale",
+   "emplacement": "droite, rang 2, segment 3",
+   "mesure": "axe fenêtre droite médiane → axe porte 2'-8\"",
+   "note": "9 à boucle fermée et queue ; boucle la chaîne à 31'-8\""
+  },
+  {
+   "n": 46,
+   "categorie": "cote",
+   "texte_original": "6'-3\"",
+   "valeur": 75,
+   "confiance": "haute",
+   "alternatives": [
+    {
+     "texte": "6'-8\"",
+     "valeur": 80
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r2c4.jpg",
+   "px": [
+    2039,
+    1406
+   ],
+   "lecture_autre_photo": {
+    "P7": "6'-3\""
+   },
+   "orientation": "verticale",
+   "emplacement": "droite, rang 2, segment 4 (côté avant)",
+   "mesure": "axe porte → nu ext. mur avant"
+  },
+  {
+   "n": 47,
+   "categorie": "ouverture",
+   "texte_original": "6'-3\"",
+   "valeur": 75,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "6'-8\"",
+     "valeur": 80
+    }
+   ],
+   "photo": "P1",
+   "tuile": "P1_r1c3.jpg",
+   "px": [
+    1940,
+    560
+   ],
+   "lecture_autre_photo": {
+    "P7": "_'-3\" (partiellement caché)"
+   },
+   "orientation": "verticale",
+   "emplacement": "droite, rang 1, fenêtre supérieure",
+   "mesure": "largeur de la fenêtre",
+   "note": "chiffre des pouces coupé par un trait du mur ; mesure ≈ 6'-1\""
+  },
+  {
+   "n": 48,
+   "categorie": "ouverture",
+   "texte_original": "3'-0\"",
+   "valeur": 36,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r1c3.jpg",
+   "px": [
+    1954,
+    965
+   ],
+   "lecture_autre_photo": {
+    "P7": "3'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "droite, rang 1, fenêtre médiane",
+   "mesure": "largeur de la fenêtre"
+  },
+  {
+   "n": 49,
+   "categorie": "ouverture",
+   "texte_original": "PORTE 2'-8\"",
+   "valeur": 32,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r2c3.jpg",
+   "px": [
+    1765,
+    1281
+   ],
+   "lecture_autre_photo": {
+    "P7": "PORTE 2'-8\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "droite, porte extérieure dans le mur droit (partie avant)",
+   "mesure": "largeur de la porte"
+  },
+  {
+   "n": 50,
+   "categorie": "autre",
+   "texte_original": "3W",
+   "valeur": null,
+   "confiance": "basse",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r2c3.jpg",
+   "px": [
+    1851,
+    1216
+   ],
+   "lecture_autre_photo": {
+    "P7": "3W"
+   },
+   "orientation": "horizontale",
+   "emplacement": "droite, au bout d'une ligne électrique tiretée, près de la porte 2'-8\"",
+   "mesure": "probablement interrupteur 3 voies, non une cote"
+  },
+  {
+   "n": 51,
+   "categorie": "cote",
+   "texte_original": "13'-6\"",
+   "valeur": 162,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c1.jpg",
+   "px": [
+    728,
+    1756
+   ],
+   "lecture_autre_photo": {
+    "P7": "13'-6\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 3, segment 1 (depuis la gauche)",
+   "mesure": "nu ext. mur gauche → nu ext. gauche de l'excroissance du perron"
+  },
+  {
+   "n": 52,
+   "categorie": "cote",
+   "texte_original": "6'-0\"",
+   "valeur": 72,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c2.jpg",
+   "px": [
+    1116,
+    1763
+   ],
+   "lecture_autre_photo": {
+    "P7": "6'-0\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 3, segment 2",
+   "mesure": "largeur hors-tout de l'excroissance de fondation sous le perron"
+  },
+  {
+   "n": 53,
+   "categorie": "cote",
+   "texte_original": "12'-4\"",
+   "valeur": 148,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c2.jpg",
+   "px": [
+    1481,
+    1763
+   ],
+   "lecture_autre_photo": {
+    "P7": "12'-4\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 3, segment 3",
+   "mesure": "nu ext. droit du perron → axe fenêtre avant"
+  },
+  {
+   "n": 54,
+   "categorie": "cote",
+   "texte_original": "6'-2\"",
+   "valeur": 74,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c3.jpg",
+   "px": [
+    1844,
+    1760
+   ],
+   "lecture_autre_photo": {
+    "P7": "6'-2\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 3, segment 4",
+   "mesure": "axe fenêtre avant → nu ext. mur droit"
+  },
+  {
+   "n": 55,
+   "categorie": "cote",
+   "texte_original": "6'-2\"",
+   "valeur": 74,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c3.jpg",
+   "px": [
+    1846,
+    1650
+   ],
+   "lecture_autre_photo": {
+    "P7": "6'-2\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 2 (doublon du segment 4 du rang 3, mêmes repères)",
+   "mesure": "axe fenêtre avant → nu ext. mur droit"
+  },
+  {
+   "n": 56,
+   "categorie": "ouverture",
+   "texte_original": "6'-3\"",
+   "valeur": 75,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c3.jpg",
+   "px": [
+    1726,
+    1571
+   ],
+   "lecture_autre_photo": {
+    "P7": "6'-3\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 1, fenêtre du mur avant (droite)",
+   "mesure": "largeur de la fenêtre (baie double)"
+  },
+  {
+   "n": 57,
+   "categorie": "cote",
+   "texte_original": "4'-0\"",
+   "valeur": 48,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c2.jpg",
+   "px": [
+    1306,
+    1626
+   ],
+   "lecture_autre_photo": {
+    "P7": "4'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "avant, excroissance du perron, côté droit",
+   "mesure": "saillie de l'excroissance de fondation devant le mur avant (nu ext. → nu ext.)"
+  },
+  {
+   "n": 58,
+   "categorie": "epaisseur",
+   "texte_original": "18\"",
+   "valeur": 18,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c2.jpg",
+   "px": [
+    1086,
+    1576
+   ],
+   "lecture_autre_photo": {
+    "P7": "18\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, excroissance du perron, côté gauche",
+   "mesure": "largeur de la semelle du mur du perron"
+  },
+  {
+   "n": 59,
+   "categorie": "epaisseur",
+   "texte_original": "6\"",
+   "valeur": 6,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c2.jpg",
+   "px": [
+    1071,
+    1608
+   ],
+   "lecture_autre_photo": {
+    "P7": "6\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, excroissance du perron, côté gauche",
+   "mesure": "épaisseur du mur de fondation du perron"
+  },
+  {
+   "n": 60,
+   "categorie": "autre",
+   "texte_original": "ÉCHELLE: 1/4\" = 1'-0\"",
+   "valeur": null,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r3c4.jpg",
+   "px": [
+    2312,
+    1765
+   ],
+   "lecture_autre_photo": {
+    "P7": "ÉCHELLE: 1/4\" = 1'-0\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "cartouche, coin inférieur droit",
+   "mesure": "échelle du dessin (1/48)"
+  },
+  {
+   "n": 61,
+   "categorie": "autre",
+   "texte_original": "(marque pâle illisible)",
+   "valeur": null,
+   "confiance": "basse",
+   "alternatives": [],
+   "photo": "P1",
+   "tuile": "P1_r0c0.jpg",
+   "px": [
+    70,
+    100
+   ],
+   "lecture_autre_photo": {
+    "P7": "illisible"
+   },
+   "orientation": "horizontale",
+   "emplacement": "hors cadre, coin supérieur gauche de la feuille",
+   "mesure": "marque très pâle (« 2-0 » ?), probablement transfert/hors dessin"
+  }
+ ],
+ "sommes_chaines": [
+  {
+   "chaine": "arrière rang 2 vs hors-tout 38'-0\"",
+   "segments": [
+    "18'-3\"",
+    "9'-0\"",
+    "10'-9\""
+   ],
+   "segments_po": [
+    219,
+    108,
+    129
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "ecart_po": 0
+  },
+  {
+   "chaine": "avant rang 3 vs 38'-0\" (hors-tout arrière)",
+   "segments": [
+    "13'-6\"",
+    "6'-0\"",
+    "12'-4\"",
+    "6'-2\""
+   ],
+   "segments_po": [
+    162,
+    72,
+    148,
+    74
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "ecart_po": 0
+  },
+  {
+   "chaine": "gauche rang 2 vs hors-tout 31'-8\"",
+   "segments": [
+    "16'-8\"",
+    "4'-0\"",
+    "7'-0\"",
+    "4'-0\""
+   ],
+   "segments_po": [
+    200,
+    48,
+    84,
+    48
+   ],
+   "somme_po": 380,
+   "hors_tout_po": 380,
+   "ecart_po": 0
+  },
+  {
+   "chaine": "droite rang 2 vs hors-tout 31'-8\"",
+   "segments": [
+    "6'-0\"",
+    "10'-8\"",
+    "8'-9\"",
+    "6'-3\""
+   ],
+   "segments_po": [
+    72,
+    128,
+    105,
+    75
+   ],
+   "somme_po": 380,
+   "hors_tout_po": 380,
+   "ecart_po": 0
+  },
+  {
+   "chaine": "intérieure horizontale (murs + colonnes) vs 38'-0\"",
+   "segments": [
+    "10",
+    "9'-10\"",
+    "8\"",
+    "7'-4\"",
+    "8\"",
+    "7'-4\"",
+    "8\"",
+    "9'-10\"",
+    "10"
+   ],
+   "segments_po": [
+    10,
+    118,
+    8,
+    88,
+    8,
+    88,
+    8,
+    118,
+    10
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "ecart_po": 0
+  },
+  {
+   "chaine": "intérieure verticale (cotes écrites seulement) vs 31'-8\"",
+   "segments": [
+    "13'-10\"",
+    "3'-11\"",
+    "12'-3\"",
+    "10"
+   ],
+   "segments_po": [
+    166,
+    47,
+    147,
+    10
+   ],
+   "somme_po": 370,
+   "hors_tout_po": 380,
+   "ecart_po": -10,
+   "note": "l'épaisseur du mur arrière (10\") n'est pas écrite sur cette chaîne ; avec 10\" ajoutés l'écart est 0"
+  },
+  {
+   "chaine": "variante arrière avec 10'-3\" (lecture alternative)",
+   "segments": [
+    "18'-3\"",
+    "9'-0\"",
+    "10'-3\""
+   ],
+   "segments_po": [
+    219,
+    108,
+    123
+   ],
+   "somme_po": 450,
+   "hors_tout_po": 456,
+   "ecart_po": -6
+  },
+  {
+   "chaine": "variante droite avec 8'-5\" (lecture alternative)",
+   "segments": [
+    "6'-0\"",
+    "10'-8\"",
+    "8'-5\"",
+    "6'-3\""
+   ],
+   "segments_po": [
+    72,
+    128,
+    101,
+    75
+   ],
+   "somme_po": 376,
+   "hors_tout_po": 380,
+   "ecart_po": -4
+  }
+ ]
+}

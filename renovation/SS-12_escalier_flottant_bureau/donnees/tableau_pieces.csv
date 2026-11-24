@@ -1,0 +1,31 @@
+﻿niveau;piece_id;piece;longueur;largeur;superficie_pi2;superficie_m2;perimetre;hauteur_plafond;surface_murale_brute_pi2;nb_portes;nb_fenetres;fiabilite
+SS;piece-SS-LAVAGE;Salle de lavage;"12'-0¾""";"8'-3¾""";100,30;9,32;"40'-9""";"8'-0""";326,00;1;1;DÉDUIT
+SS;piece-SS-GYM;Salle d'entraînement;"12'-2""";"9'-4¾""";114,00;10,59;"43'-1½""";"8'-0""";345,00;2;0;DÉDUIT
+SS;piece-SS-ESC;Escalier;"11'-8""";"3'-6¼""";41,10;3,82;"30'-4½""";"8'-0""";243,00;0;0;DÉDUIT
+SS;piece-SS-SALON;Séjour;"14'-5¾""";"12'-3""";176,40;16,39;"53'-5½""";"8'-0""";427,67;0;2;DÉDUIT
+SS;piece-SS-VEST;Vestiaire;"18'-2""";"6'-8""";110,30;10,25;"49'-8""";"8'-0""";397,33;1;0;DÉDUIT
+SS;piece-SS-HALL;Hall;"7'-5¾""";"6'-11¾""";48,60;4,52;"28'-11""";"8'-0""";231,33;2;0;DÉDUIT
+SS;piece-SS-SDB;Salle de bain;"10'-9¾""";"7'-4½""";79,70;7,40;"36'-4½""";"8'-0""";291,00;1;1;DÉDUIT
+SS;piece-SS-CH1;Chambre 1;"15'-6½""";"9'-9¾""";133,00;12,36;"50'-8½""";"8'-0""";405,67;2;2;DÉDUIT
+SS;piece-SS-GR1;G.-R.;"7'-3¾""";"2'-2""";15,80;1,47;"18'-11½""";"8'-0""";151,67;1;0;DÉDUIT
+SS;piece-SS-BUREAU;Bureau commun;"11'-8""";"8'-3""";94,30;8,76;"39'-10""";"8'-0""";318,67;3;0;DÉDUIT
+SS;piece-SS-CH2;Chambre 2;"11'-11¾""";"11'-5¾""";124,90;11,60;"46'-11""";"8'-0""";375,33;2;1;DÉDUIT
+SS;piece-SS-GR2;G.-R.;"4'-11¾""";"1'-11¾""";9,90;0,92;"13'-11""";"8'-0""";111,33;1;0;DÉDUIT
+SS;piece-SS-LEG;Rangement (caveau);"7'-4""";"4'-2""";30,60;2,84;"23'-0""";;;1;0;DÉDUIT
+SS;piece-SS-PERRON;Excroissance sous perron;"5'-0""";"3'-6""";17,50;1,63;"17'-0""";;;0;0;DÉDUIT
+RDC;piece-RDC-CH1;Chambre arrière;"12'-0""";"11'-1¾""";136,50;12,68;"48'-3""";;;3;1;ESTIMÉ
+RDC;piece-RDC-SDB;Salle de bain;"7'-11¾""";"6'-6¾""";52,40;4,87;"29'-1""";;;1;1;DÉDUIT
+RDC;piece-RDC-CH2;Chambre avant;"12'-0¾""";"11'-1¾""";121,90;11,32;"46'-5""";;;2;1;DÉDUIT
+RDC;piece-RDC-GR1;G.R. 1;"2'-6¼""";"2'-0½""";5,10;0,47;"9'-1½""";;;1;0;ESTIMÉ
+RDC;piece-RDC-GR2;G.R. 2;"3'-1""";"2'-0½""";6,30;0,59;"10'-3""";;;1;0;ESTIMÉ
+RDC;piece-RDC-GRU;G.R. 3;"3'-2½""";"2'-0½""";6,60;0,61;"10'-6""";;;1;0;ESTIMÉ
+RDC;piece-RDC-UTI;Salle à manger;"13'-11¾""";"13'-10""";169,40;15,74;"55'-7½""";;;2;1;DÉDUIT
+RDC;piece-RDC-DEG;Dégagement;"17'-1¾""";"4'-4¾""";67,40;6,26;"43'-1""";;;4;0;ESTIMÉ
+RDC;piece-RDC-HALL;Hall;"7'-7¾""";"3'-8¾""";28,10;2,61;"22'-9""";;;1;0;ESTIMÉ
+RDC;piece-RDC-ENT;Entrée;"4'-2¾""";"3'-8¾""";15,60;1,45;"15'-11""";;;2;0;ESTIMÉ
+RDC;piece-RDC-VES;Vest.;"3'-5¾""";"2'-2¾""";7,80;0,72;"11'-5""";;;0;0;ESTIMÉ
+RDC;piece-RDC-GRA;G.R.;"6'-3½""";"2'-0½""";12,80;1,19;"16'-8""";;;1;0;ESTIMÉ
+RDC;piece-RDC-LIN;Lin.;"2'-0½""";"1'-6½""";3,10;0,29;"7'-2""";;;1;0;ESTIMÉ
+RDC;piece-RDC-SAL;Salon;"18'-8""";"12'-3""";227,30;21,12;"61'-10""";;;0;1;DÉDUIT
+RDC;piece-RDC-CUI;Cuisine;"17'-9""";"10'-10""";192,30;17,87;"57'-2""";;;0;2;DÉDUIT
+RDC;piece-RDC-EAR;Entrée arr.;"7'-4""";"4'-2""";30,60;2,84;"23'-0""";;;2;1;PRÉSUMÉ

@@ -1,0 +1,4578 @@
+{
+  "id": "RDC",
+  "nom": "Rez-de-chaussée",
+  "feuille": "A-101",
+  "photos_sources": [
+    "P3",
+    "P4",
+    "P6"
+  ],
+  "hauteur_plafond": {
+    "valeur": null,
+    "source": "ILLISIBLE",
+    "photo": null,
+    "note": "aucune hauteur de plafond écrite sur la feuille"
+  },
+  "calage_estime": {
+    "methode": "homographie P3 (pixels prep/redresse/P3.jpg) → pouces, calée sur les 4 coins ext. du rectangle principal",
+    "points_px": {
+      "arriere_gauche": [
+        489,
+        216
+      ],
+      "arriere_droit": [
+        2065,
+        280
+      ],
+      "avant_gauche": [
+        427,
+        1632
+      ],
+      "avant_droit": [
+        2093,
+        1630
+      ]
+    },
+    "points_po": {
+      "arriere_gauche": [
+        0,
+        380
+      ],
+      "arriere_droit": [
+        456,
+        380
+      ],
+      "avant_gauche": [
+        0,
+        0
+      ],
+      "avant_droit": [
+        456,
+        0
+      ]
+    },
+    "controle": "cloisons à x=108/146/175/275/316 et y=157/204/223 retrouvées à ±4 po ; centres de fenêtres à ±3 po"
+  },
+  "murs": [
+    {
+      "id": "mur-RDC-001",
+      "type": "ext",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 11.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 39-42 px sur P3 ≈ 11 po)"
+      },
+      "x1": 5.5,
+      "y1": 5.5,
+      "x2": 450.5,
+      "y2": 5.5,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE)",
+      "cotes_liees": [
+        "cote-RDC-009",
+        "cote-RDC-010",
+        "cote-RDC-011",
+        "cote-RDC-012",
+        "cote-RDC-013",
+        "cote-RDC-014",
+        "cote-RDC-015",
+        "cote-RDC-001",
+        "cote-RDC-005",
+        "cote-RDC-003",
+        "cote-RDC-007",
+        "cote-RDC-037",
+        "cote-RDC-044",
+        "cote-RDC-046"
+      ],
+      "note": "mur avant (façade, rue) ; fenêtres chambre avant et salon, porte d'entrée"
+    },
+    {
+      "id": "mur-RDC-002",
+      "type": "ext",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 11.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 39-42 px sur P3 ≈ 11 po)"
+      },
+      "x1": 450.5,
+      "y1": 5.5,
+      "x2": 450.5,
+      "y2": 374.5,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE)",
+      "cotes_liees": [
+        "cote-RDC-005",
+        "cote-RDC-006",
+        "cote-RDC-007",
+        "cote-RDC-008",
+        "cote-RDC-009",
+        "cote-RDC-013",
+        "cote-RDC-018",
+        "cote-RDC-023",
+        "cote-RDC-034",
+        "cote-RDC-041"
+      ],
+      "note": "mur latéral droit (salon, cuisine) ; fenêtre latérale cuisine"
+    },
+    {
+      "id": "mur-RDC-003",
+      "type": "ext",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 11.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 39-42 px sur P3 ≈ 11 po)"
+      },
+      "x1": 5.5,
+      "y1": 374.5,
+      "x2": 450.5,
+      "y2": 374.5,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE)",
+      "cotes_liees": [
+        "cote-RDC-001",
+        "cote-RDC-005",
+        "cote-RDC-002",
+        "cote-RDC-006",
+        "cote-RDC-019",
+        "cote-RDC-020",
+        "cote-RDC-021",
+        "cote-RDC-022",
+        "cote-RDC-023",
+        "cote-RDC-024",
+        "cote-RDC-025",
+        "cote-RDC-028",
+        "cote-RDC-016",
+        "cote-RDC-017",
+        "cote-RDC-018",
+        "cote-RDC-035",
+        "cote-RDC-042",
+        "cote-RDC-045"
+      ],
+      "note": "mur arrière ; fenêtres chambre arr., ch. d'utilité, cuisine ; porte entrée arr. → palier (x≈23'-1\" à 25'-11\") ; le volume de l'entrée arrière s'y adosse entre x=219 et x=327"
+    },
+    {
+      "id": "mur-RDC-004",
+      "type": "ext",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 11.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 39-42 px sur P3 ≈ 11 po)"
+      },
+      "x1": 5.5,
+      "y1": 5.5,
+      "x2": 5.5,
+      "y2": 374.5,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE)",
+      "cotes_liees": [
+        "cote-RDC-001",
+        "cote-RDC-002",
+        "cote-RDC-003",
+        "cote-RDC-004",
+        "cote-RDC-009",
+        "cote-RDC-010",
+        "cote-RDC-016",
+        "cote-RDC-019",
+        "cote-RDC-029",
+        "cote-RDC-038"
+      ],
+      "note": "mur latéral gauche (chambres, S. de bain) ; fenêtre S. de bain ; cheminée accolée à l'extérieur"
+    },
+    {
+      "id": "mur-RDC-005",
+      "type": "ext",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 11.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 39-42 px sur P3 ≈ 11 po)"
+      },
+      "x1": 224.5,
+      "y1": 380,
+      "x2": 224.5,
+      "y2": 441.5,
+      "source_geometrie": "x DÉDUIT (cote-RDC-016) ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-016",
+        "cote-RDC-017"
+      ],
+      "note": "entrée arrière (volume en saillie) : mur gauche ; nu ext. à x=18'-3\" (LU) ; profondeur du volume NON cotée (≈ 5'-7\" ESTIMÉ)"
+    },
+    {
+      "id": "mur-RDC-006",
+      "type": "ext",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 11.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 39-42 px sur P3 ≈ 11 po)"
+      },
+      "x1": 224.5,
+      "y1": 441.5,
+      "x2": 321.5,
+      "y2": 441.5,
+      "source_geometrie": "x DÉDUIT (cote-RDC-016, -017) ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-017",
+        "cote-RDC-026",
+        "cote-RDC-027",
+        "cote-RDC-021",
+        "cote-RDC-022"
+      ],
+      "note": "entrée arrière : mur arrière (fenêtre ouv-RDC-008)"
+    },
+    {
+      "id": "mur-RDC-007",
+      "type": "ext",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 11.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 39-42 px sur P3 ≈ 11 po)"
+      },
+      "x1": 321.5,
+      "y1": 380,
+      "x2": 321.5,
+      "y2": 441.5,
+      "source_geometrie": "x DÉDUIT ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-017",
+        "cote-RDC-018",
+        "cote-RDC-027"
+      ],
+      "note": "entrée arrière : mur droit avec la porte extérieure 2'-10\"x6'-10\" vers les marches arrière ; nu ext. à x=27'-3\" (18'-3\"+9'-0\")"
+    },
+    {
+      "id": "mur-RDC-010",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 9,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-047",
+        "note": "« 9\" » (alt. 6\") — à confirmer ; dessiné ≈ 5 po"
+      },
+      "x1": 5.5,
+      "y1": 223,
+      "x2": 108,
+      "y2": 223,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (y = 31'-8\" − 13'-1\")",
+      "cotes_liees": [
+        "cote-RDC-035",
+        "cote-RDC-036",
+        "cote-RDC-047"
+      ],
+      "note": "cloison chambre arrière / S. de bain"
+    },
+    {
+      "id": "mur-RDC-011",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 108,
+      "y1": 157,
+      "x2": 108,
+      "y2": 223,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (x = 9'-0\")",
+      "cotes_liees": [
+        "cote-RDC-029",
+        "cote-RDC-030",
+        "cote-RDC-036"
+      ],
+      "note": "cloison droite de la S. de bain (porte S. de bain)"
+    },
+    {
+      "id": "mur-RDC-012",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 5.5,
+      "y1": 157,
+      "x2": 146,
+      "y2": 157,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (y = 13'-1\")",
+      "cotes_liees": [
+        "cote-RDC-037",
+        "cote-RDC-036",
+        "cote-RDC-038"
+      ],
+      "note": "cloison S. de bain / chambre avant ; prolongée jusqu'à x=146 par la baie de la porte de la chambre avant"
+    },
+    {
+      "id": "mur-RDC-013",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 206,
+      "x2": 146,
+      "y2": 296,
+      "source_geometrie": "x DÉDUIT (9'-0\"+3'-2\") ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-030",
+        "cote-RDC-031"
+      ],
+      "note": "cloison gauche de la colonne des G.R. (côté dégagement), face au G.R. de la ch. d'utilité ; se termine à y≈206 (ESTIMÉ) par un montant"
+    },
+    {
+      "id": "mur-RDC-014",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 296,
+      "x2": 146,
+      "y2": 374.5,
+      "source_geometrie": "x DÉDUIT ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-030",
+        "cote-RDC-038"
+      ],
+      "note": "façade des 2 G.R. de la chambre arrière : seulement un montant central (y≈332-345 ESTIMÉ) entre deux portes 2'-4\"x6'-8\" — pas de mur plein"
+    },
+    {
+      "id": "mur-RDC-015",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 175,
+      "y1": 253,
+      "x2": 175,
+      "y2": 374.5,
+      "source_geometrie": "x DÉDUIT (9'-0\"+3'-2\"+2'-5\") ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-031",
+        "cote-RDC-032"
+      ],
+      "note": "cloison arrière des G.R. / ch. d'utilité (porte du G.R. de la ch. d'utilité y≈253-285)"
+    },
+    {
+      "id": "mur-RDC-016",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 337.5,
+      "x2": 175,
+      "y2": 337.5,
+      "source_geometrie": "ESTIMÉ (mesuré dans P3 par homographie calée sur les 4 coins ext. 38'-0\" x 31'-8\")",
+      "cotes_liees": [],
+      "note": "cloison entre les 2 G.R. de la chambre arrière"
+    },
+    {
+      "id": "mur-RDC-017",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 296,
+      "x2": 175,
+      "y2": 296,
+      "source_geometrie": "ESTIMÉ (mesuré dans P3 par homographie calée sur les 4 coins ext. 38'-0\" x 31'-8\")",
+      "cotes_liees": [],
+      "note": "cloison entre G.R. de la chambre arr. et G.R. de la ch. d'utilité"
+    },
+    {
+      "id": "mur-RDC-018",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 253,
+      "x2": 175,
+      "y2": 253,
+      "source_geometrie": "ESTIMÉ (mesuré dans P3 par homographie calée sur les 4 coins ext. 38'-0\" x 31'-8\")",
+      "cotes_liees": [],
+      "note": "cloison avant du G.R. de la ch. d'utilité (avec ressaut dessiné)"
+    },
+    {
+      "id": "mur-RDC-019",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "aucun mur plein : ligne de portes"
+      },
+      "x1": 108,
+      "y1": 212,
+      "x2": 175,
+      "y2": 212,
+      "source_geometrie": "x DÉDUIT ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-030",
+        "cote-RDC-031"
+      ],
+      "note": "ligne de portes (aucun mur plein) : porte chambre arrière (x≈111-143) et porte ch. d'utilité (x≈149-172) ; ~11 po en avant de la cloison mur-RDC-010"
+    },
+    {
+      "id": "mur-RDC-020",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 175,
+      "y1": 204,
+      "x2": 316,
+      "y2": 204,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (y = 31'-8\" − 14'-8\")",
+      "cotes_liees": [
+        "cote-RDC-042",
+        "cote-RDC-043"
+      ],
+      "note": "cloison ch. d'utilité / passage, prolongée devant le BALAIS (porte BALAIS x≈279-312)"
+    },
+    {
+      "id": "mur-RDC-021",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 275,
+      "y1": 204,
+      "x2": 275,
+      "y2": 374.5,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (x = 9'-0\"+3'-2\"+2'-5\"+8'-4\")",
+      "cotes_liees": [
+        "cote-RDC-032",
+        "cote-RDC-033"
+      ],
+      "note": "cloison ch. d'utilité / escalier-BALAIS"
+    },
+    {
+      "id": "mur-RDC-022",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 316,
+      "y1": 157,
+      "x2": 316,
+      "y2": 374.5,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (x = 38'-0\" − 11'-8\")",
+      "cotes_liees": [
+        "cote-RDC-033",
+        "cote-RDC-034"
+      ],
+      "note": "cloison escalier / cuisine (laveuse-sécheuse adossées côté cuisine) ; porte palier→cuisine (y≈338-372) et porte passage→cuisine (y≈166-198)"
+    },
+    {
+      "id": "mur-RDC-023",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 275,
+      "y1": 241.5,
+      "x2": 316,
+      "y2": 241.5,
+      "source_geometrie": "ESTIMÉ (mesuré dans P3 par homographie calée sur les 4 coins ext. 38'-0\" x 31'-8\")",
+      "cotes_liees": [],
+      "note": "cloison bas de l'escalier / BALAIS"
+    },
+    {
+      "id": "mur-RDC-024",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 222,
+      "y1": 157,
+      "x2": 450.5,
+      "y2": 157,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (y = 13'-1\")",
+      "cotes_liees": [
+        "cote-RDC-044",
+        "cote-RDC-046",
+        "cote-RDC-043",
+        "cote-RDC-045",
+        "cote-RDC-041"
+      ],
+      "note": "cloison salon / passage et salon / cuisine-s.-à-manger ; ARCHE 6'-0\" côté cuisine"
+    },
+    {
+      "id": "mur-RDC-025",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 222,
+      "y1": 5.5,
+      "x2": 222,
+      "y2": 157,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (x = 12'-2\"+2'-5\"+3'-11\")",
+      "cotes_liees": [
+        "cote-RDC-040",
+        "cote-RDC-041"
+      ],
+      "note": "cloison hall-entrée / salon ; ARCHE 4'-0\" (?) côté hall ; montant de la porte du hall à y≈63"
+    },
+    {
+      "id": "mur-RDC-026",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 5.5,
+      "x2": 146,
+      "y2": 160,
+      "source_geometrie": "DÉDUIT des cotes (axes = nu ext. ± épaisseur/2 ESTIMÉE) (x = 12'-2\")",
+      "cotes_liees": [
+        "cote-RDC-038",
+        "cote-RDC-039"
+      ],
+      "note": "cloison chambre avant / G.R. avant / LIN. (porte G.R. avant y≈78-107)"
+    },
+    {
+      "id": "mur-RDC-027",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 175,
+      "y1": 54,
+      "x2": 175,
+      "y2": 160,
+      "source_geometrie": "x DÉDUIT ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-039",
+        "cote-RDC-040"
+      ],
+      "note": "cloison LIN. / G.R. avant côté hall ; s'arrête à y≈54 (le VEST. est ouvert sur l'entrée)"
+    },
+    {
+      "id": "mur-RDC-028",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 160,
+      "x2": 175,
+      "y2": 160,
+      "source_geometrie": "ESTIMÉ (mesuré dans P3 par homographie calée sur les 4 coins ext. 38'-0\" x 31'-8\")",
+      "cotes_liees": [],
+      "note": "cloison arrière du LIN. (porte LIN.) ; presque alignée sur mur-RDC-012 (y=157)"
+    },
+    {
+      "id": "mur-RDC-029",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 134,
+      "x2": 175,
+      "y2": 134,
+      "source_geometrie": "ESTIMÉ (mesuré dans P3 par homographie calée sur les 4 coins ext. 38'-0\" x 31'-8\")",
+      "cotes_liees": [],
+      "note": "cloison LIN. / G.R. avant"
+    },
+    {
+      "id": "mur-RDC-030",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": 6.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "épaisseur non cotée ; mesurée au dessin (≈ 18-25 px sur P3 ≈ 5-7 po)"
+      },
+      "x1": 146,
+      "y1": 54,
+      "x2": 175,
+      "y2": 54,
+      "source_geometrie": "ESTIMÉ (mesuré dans P3 par homographie calée sur les 4 coins ext. 38'-0\" x 31'-8\")",
+      "cotes_liees": [],
+      "note": "cloison G.R. avant / VEST."
+    },
+    {
+      "id": "mur-RDC-031",
+      "type": "int",
+      "porteur": "inconnu",
+      "indices_porteur": [],
+      "epaisseur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "aucun mur plein : montants de porte"
+      },
+      "x1": 175,
+      "y1": 63,
+      "x2": 222,
+      "y2": 63,
+      "source_geometrie": "x DÉDUIT ; y ESTIMÉ",
+      "cotes_liees": [
+        "cote-RDC-040"
+      ],
+      "note": "ligne de porte hall / entrée (montants seulement, aucun mur plein) : porte 2'-8\"x6'-8\""
+    }
+  ],
+  "ouvertures": [
+    {
+      "id": "ouv-RDC-001",
+      "type": "fenetre",
+      "operation": "fixe",
+      "mur_id": "mur-RDC-001",
+      "position": {
+        "valeur": 92.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 8'-2\" du nu ext. gauche (cote-RDC-010)"
+      },
+      "centre_xy": [
+        98,
+        5.5
+      ],
+      "largeur": {
+        "valeur": 75,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-014",
+        "note": "alt. 6'-8\""
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "hauteur non écrite pour les fenêtres"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "6'-3\" ; LINTEAU 2-2\"x8\"",
+      "note": "fenêtre chambre avant ; type d'ouvrant non indiqué (operation 'fixe' = inconnu, 3 carreaux dessinés) ; linteau str-RDC-L01"
+    },
+    {
+      "id": "ouv-RDC-002",
+      "type": "fenetre",
+      "operation": "fixe",
+      "mur_id": "mur-RDC-001",
+      "position": {
+        "valeur": 371.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 6'-7\" du nu ext. droit (cote-RDC-013) ; = 8'-2\"+8'-5\"+14'-10\" depuis la gauche"
+      },
+      "centre_xy": [
+        377,
+        5.5
+      ],
+      "largeur": {
+        "valeur": 108,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-015"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "hauteur non écrite pour les fenêtres"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "9'-0\" ; LINTEAU 2-2\"x10\"",
+      "note": "fenêtre salon (3 sections dessinées) ; ouvrant non indiqué ; linteau str-RDC-L02"
+    },
+    {
+      "id": "ouv-RDC-003",
+      "type": "fenetre",
+      "operation": "fixe",
+      "mur_id": "mur-RDC-003",
+      "position": {
+        "valeur": 92.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 8'-2\" du nu ext. gauche (cote-RDC-019)"
+      },
+      "centre_xy": [
+        98,
+        374.5
+      ],
+      "largeur": {
+        "valeur": 75,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-024"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "hauteur non écrite pour les fenêtres"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "6'-3\" ; LINTEAU 2-2\"x8\"",
+      "note": "fenêtre chambre arrière ; linteau str-RDC-L03"
+    },
+    {
+      "id": "ouv-RDC-004",
+      "type": "fenetre",
+      "operation": "fixe",
+      "mur_id": "mur-RDC-003",
+      "position": {
+        "valeur": 191.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 8'-2\"+8'-3\" = 16'-5\" (cotes 019, 020)"
+      },
+      "centre_xy": [
+        197,
+        374.5
+      ],
+      "largeur": {
+        "valeur": 36,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-025"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "hauteur non écrite pour les fenêtres"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "3'-0\" ; LIN. 2-2\"x6\"",
+      "note": "fenêtre chambre d'utilité ; linteau str-RDC-L04"
+    },
+    {
+      "id": "ouv-RDC-005",
+      "type": "fenetre",
+      "operation": "fixe",
+      "mur_id": "mur-RDC-003",
+      "position": {
+        "valeur": 369.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 6'-9\" du nu ext. droit (cote-RDC-023) ; = 8'-2\"+8'-3\"+8'-0\"+6'-10\" = 31'-3\" depuis la gauche ; si 6'-5\" : 31'-7\""
+      },
+      "centre_xy": [
+        375,
+        374.5
+      ],
+      "largeur": {
+        "valeur": 75,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-028"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "hauteur non écrite pour les fenêtres"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "6'-3\" ; LINTEAU 2-2\"x8\"",
+      "note": "fenêtre cuisine au-dessus de l'évier ; linteau str-RDC-L05"
+    },
+    {
+      "id": "ouv-RDC-006",
+      "type": "fenetre",
+      "operation": "fixe",
+      "mur_id": "mur-RDC-004",
+      "position": {
+        "valeur": 185.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 15'-11\" du nu ext. avant (cote-RDC-003)"
+      },
+      "centre_xy": [
+        5.5,
+        191
+      ],
+      "largeur": {
+        "valeur": 36,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-004"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "hauteur non écrite pour les fenêtres"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "3'-0\" ; LIN. 2-2\"x6\"",
+      "note": "fenêtre S. de bain (mur gauche) ; linteau str-RDC-L06"
+    },
+    {
+      "id": "ouv-RDC-007",
+      "type": "fenetre",
+      "operation": "fixe",
+      "mur_id": "mur-RDC-002",
+      "position": {
+        "valeur": 174.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 15'-0\" du nu ext. avant (cote-RDC-007)"
+      },
+      "centre_xy": [
+        450.5,
+        180
+      ],
+      "largeur": {
+        "valeur": 36,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-008"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "hauteur non écrite pour les fenêtres"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "3'-0\" ; LIN. 2-2\"x6\"",
+      "note": "fenêtre latérale cuisine / s.-à-manger (mur droit) ; linteau str-RDC-L07"
+    },
+    {
+      "id": "ouv-RDC-008",
+      "type": "fenetre",
+      "operation": "fixe",
+      "mur_id": "mur-RDC-006",
+      "position": {
+        "valeur": 68.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 8'-2\"+8'-3\"+8'-0\" = 24'-5\" du nu ext. gauche (cotes 019-021) ; 2'-9\" du nu ext. droit de l'entrée (cote-RDC-027 → 294)"
+      },
+      "centre_xy": [
+        293,
+        441.5
+      ],
+      "largeur": {
+        "valeur": 42,
+        "source": "LU",
+        "photo": "P6",
+        "ref": "cote-RDC-026",
+        "note": "alt. 3'-0\" ; largeur ESTIMÉE au dessin ≈ 39 po"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "hauteur non écrite pour les fenêtres"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "3'-6\"",
+      "note": "fenêtre de l'entrée arrière ; aucun linteau écrit (haut de P3 coupé, rien sur P4/P6)"
+    },
+    {
+      "id": "ouv-RDC-010",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-001",
+      "position": {
+        "valeur": 193.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "centre à 8'-2\"+8'-5\" = 16'-7\" du nu ext. gauche (cotes 010, 011)"
+      },
+      "centre_xy": [
+        199,
+        5.5
+      ],
+      "largeur": {
+        "valeur": 34,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 82,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-10\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "fin",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-10\"x6'-10\"",
+      "note": "porte d'entrée avant (hall/entrée) ; pentures côté droit (côté salon, x≈216), le vantail s'ouvre vers l'intérieur et se range le long de la cloison du salon ; donne sur le perron de béton"
+    },
+    {
+      "id": "ouv-RDC-011",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-031",
+      "position": {
+        "valeur": 24.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie entre cloisons x=175 et x=222 (DÉDUIT) ; y ESTIMÉ"
+      },
+      "centre_xy": [
+        199,
+        63
+      ],
+      "largeur": {
+        "valeur": 32,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-8\"x6'-8\"",
+      "note": "porte entre l'entrée (côté porte avant) et le HALL ; pentures côté gauche (x≈178), ouvre vers le hall (+y)"
+    },
+    {
+      "id": "ouv-RDC-012",
+      "type": "arche",
+      "operation": "aucune",
+      "mur_id": "mur-RDC-025",
+      "position": {
+        "valeur": 113.1,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "centre mesuré au dessin (ouverture dessinée y≈82-156)"
+      },
+      "centre_xy": [
+        222,
+        118.6
+      ],
+      "largeur": {
+        "valeur": 48,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-048",
+        "note": "alt. 6'-0\" ; ouverture dessinée ≈ 74 po (ESTIMÉ) — voir observations"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "ARCHE 4'-0\"",
+      "note": "arche hall / salon"
+    },
+    {
+      "id": "ouv-RDC-013",
+      "type": "arche",
+      "operation": "aucune",
+      "mur_id": "mur-RDC-024",
+      "position": {
+        "valeur": 181.5,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "centre mesuré au dessin (ouverture dessinée x≈367-440, ≈ 73 po)"
+      },
+      "centre_xy": [
+        403.5,
+        157
+      ],
+      "largeur": {
+        "valeur": 72,
+        "source": "LU",
+        "photo": "P3",
+        "ref": "cote-RDC-049"
+      },
+      "hauteur": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": null,
+      "texte_original": "ARCHE 6'-0\"",
+      "note": "arche salon / cuisine-s.-à-manger"
+    },
+    {
+      "id": "ouv-RDC-014",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-012",
+      "position": {
+        "valeur": 121.5,
+        "source": "DÉDUIT",
+        "photo": "P3",
+        "note": "baie entre cloison S. de bain x=108 et cloison x=146 (cotes 029, 030)"
+      },
+      "centre_xy": [
+        127,
+        157
+      ],
+      "largeur": {
+        "valeur": 30,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "fin",
+        "ouvre_vers": "droite"
+      },
+      "texte_original": "2'-6\"x6'-8\"",
+      "note": "porte de la chambre avant depuis le dégagement ; pentures côté droit (x≈143), ouvre dans la chambre (vers l'avant, -y)"
+    },
+    {
+      "id": "ouv-RDC-015",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-011",
+      "position": {
+        "valeur": 21.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée y≈164-192"
+      },
+      "centre_xy": [
+        108,
+        178
+      ],
+      "largeur": {
+        "valeur": 30,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-6\"x6'-8\"",
+      "note": "porte de la S. de bain ; pentures côté avant (y≈164), ouvre dans la S. de bain (-x)"
+    },
+    {
+      "id": "ouv-RDC-016",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-019",
+      "position": {
+        "valeur": 19.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "x DÉDUIT (baie 108-146) ; y ESTIMÉ"
+      },
+      "centre_xy": [
+        127,
+        212
+      ],
+      "largeur": {
+        "valeur": 30,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "fin",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-6\"x6'-8\"",
+      "note": "porte de la chambre arrière au bout du dégagement ; pentures côté droit (x≈143, contre la colonne des G.R.), ouvre dans la chambre (+y)"
+    },
+    {
+      "id": "ouv-RDC-017",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-019",
+      "position": {
+        "valeur": 52.5,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "x DÉDUIT (baie 146-175 = 2'-5\" d'axe en axe) ; y ESTIMÉ"
+      },
+      "centre_xy": [
+        160.5,
+        212
+      ],
+      "largeur": {
+        "valeur": 30,
+        "source": "LU",
+        "photo": "P3",
+        "note": "alt. 2'-4\" ; ne peut pas tenir dans une baie de 2'-5\" d'axe en axe — voir observations"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-6\"x6'-8\"",
+      "note": "porte de la chambre d'utilité (alcôve sous le G.R.) ; pentures côté gauche (x≈149), ouvre vers la ch. d'utilité (+y)"
+    },
+    {
+      "id": "ouv-RDC-018",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-015",
+      "position": {
+        "valeur": 16.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée y≈253-285"
+      },
+      "centre_xy": [
+        175,
+        269
+      ],
+      "largeur": {
+        "valeur": 28,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "droite"
+      },
+      "texte_original": "2'-4\"x6'-8\"",
+      "note": "porte du G.R. de la chambre d'utilité ; pentures côté avant (y≈253), ouvre dans la ch. d'utilité (+x)"
+    },
+    {
+      "id": "ouv-RDC-019",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-014",
+      "position": {
+        "valeur": 64.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée y≈345-377"
+      },
+      "centre_xy": [
+        146,
+        360
+      ],
+      "largeur": {
+        "valeur": 28,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-4\"x6'-8\"",
+      "note": "porte du G.R. arrière de la chambre arrière ; pentures sur le montant central (côté avant, y≈345), ouvre dans la chambre (-x)"
+    },
+    {
+      "id": "ouv-RDC-020",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-014",
+      "position": {
+        "valeur": 20.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée y≈300-332"
+      },
+      "centre_xy": [
+        146,
+        316
+      ],
+      "largeur": {
+        "valeur": 28,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "fin",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-4\"x6'-8\"",
+      "note": "porte du 2e G.R. de la chambre arrière ; pentures sur le montant central (côté arrière, y≈332), ouvre dans la chambre (-x)"
+    },
+    {
+      "id": "ouv-RDC-021",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-026",
+      "position": {
+        "valeur": 87.5,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée y≈78-107"
+      },
+      "centre_xy": [
+        146,
+        93
+      ],
+      "largeur": {
+        "valeur": 30,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-6\"x6'-8\"",
+      "note": "porte du G.R. de la chambre avant ; pentures côté avant (y≈78), ouvre dans la chambre (-x)"
+    },
+    {
+      "id": "ouv-RDC-022",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-028",
+      "position": {
+        "valeur": 17.5,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée x≈152-175"
+      },
+      "centre_xy": [
+        163.5,
+        160
+      ],
+      "largeur": {
+        "valeur": 18,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "fin",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "1'-6\"x6'-8\"",
+      "note": "porte de la lingerie (LIN.) ; pentures côté droit (x≈175), ouvre vers le dégagement (+y)"
+    },
+    {
+      "id": "ouv-RDC-023",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-020",
+      "position": {
+        "valeur": 120.5,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée x≈279-312 (entre cloisons 275 et 316, DÉDUIT)"
+      },
+      "centre_xy": [
+        295.5,
+        204
+      ],
+      "largeur": {
+        "valeur": 28,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "droite"
+      },
+      "texte_original": "2'-4\"x6'-8\"",
+      "note": "porte du BALAIS (sous l'escalier) ; pentures côté gauche (x≈279), ouvre vers le passage (-y)"
+    },
+    {
+      "id": "ouv-RDC-024",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-022",
+      "position": {
+        "valeur": 25.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée y≈166-198 (entre bout de la cloison d'escalier et la cloison du salon)"
+      },
+      "centre_xy": [
+        316,
+        182
+      ],
+      "largeur": {
+        "valeur": 32,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-8\"x6'-8\"",
+      "note": "porte passage → cuisine ; pentures côté avant (y≈166), ouvre vers le passage (-x)"
+    },
+    {
+      "id": "ouv-RDC-025",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-022",
+      "position": {
+        "valeur": 198.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée y≈338-372"
+      },
+      "centre_xy": [
+        316,
+        355
+      ],
+      "largeur": {
+        "valeur": 32,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "fin",
+        "ouvre_vers": "droite"
+      },
+      "texte_original": "2'-8\"x6'-8\"",
+      "note": "porte palier d'escalier → cuisine ; pentures côté arrière (y≈372), ouvre dans la cuisine (+x)"
+    },
+    {
+      "id": "ouv-RDC-026",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-003",
+      "position": {
+        "valeur": 289.5,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée x≈278-311 (entre cloison 275 et le coin de la cuisine)"
+      },
+      "centre_xy": [
+        295,
+        374.5
+      ],
+      "largeur": {
+        "valeur": 32,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 80,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-8\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "debut",
+        "ouvre_vers": "droite"
+      },
+      "texte_original": "2'-8\"x6'-8\"",
+      "note": "porte entrée arrière → palier de l'escalier (dans l'alignement du mur arrière principal) ; pentures côté gauche (x≈278), ouvre vers le palier (-y)"
+    },
+    {
+      "id": "ouv-RDC-027",
+      "type": "porte",
+      "operation": "battante",
+      "mur_id": "mur-RDC-007",
+      "position": {
+        "valeur": 29.0,
+        "source": "ESTIMÉ",
+        "photo": "P3",
+        "note": "baie dessinée y≈393-425"
+      },
+      "centre_xy": [
+        321.5,
+        409
+      ],
+      "largeur": {
+        "valeur": 34,
+        "source": "LU",
+        "photo": "P3"
+      },
+      "hauteur": {
+        "valeur": 82,
+        "source": "LU",
+        "photo": "P3",
+        "note": "6'-10\" de l'étiquette"
+      },
+      "allege": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite"
+      },
+      "sens": {
+        "charniere": "fin",
+        "ouvre_vers": "gauche"
+      },
+      "texte_original": "2'-10\"x6'-10\"",
+      "note": "porte extérieure arrière (de l'entrée arrière vers les marches arrière) ; pentures côté arrière (y≈425), ouvre vers l'intérieur de l'entrée (-x)"
+    }
+  ],
+  "pieces": [
+    {
+      "id": "piece-RDC-CH1",
+      "nom": "Chambre arrière",
+      "nom_original": "CHAMBRE",
+      "polygone": [
+        [
+          11.0,
+          226.0
+        ],
+        [
+          111.0,
+          226.0
+        ],
+        [
+          111.0,
+          212
+        ],
+        [
+          143.0,
+          212
+        ],
+        [
+          143.0,
+          369.0
+        ],
+        [
+          11.0,
+          369.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 134.2,
+        "source": "DÉDUIT",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 146,
+          "source": "DÉDUIT",
+          "photo": "P3",
+          "note": "9'-0\"+3'-2\" = 12'-2\" (nu ext. gauche → cloison des G.R.) ; aucune cote x écrite pour cette chambre"
+        },
+        "y": {
+          "valeur": 157,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-035",
+          "note": "13'-1\" mesuré du nu ext. arrière à la cloison (pas une cote nette)"
+        }
+      },
+      "note": "inclut la baie de porte au bout du dégagement (x 111-143, y 212-226) ; 2 G.R. sur le côté droit"
+    },
+    {
+      "id": "piece-RDC-SDB",
+      "nom": "Salle de bain",
+      "nom_original": "S. DE BAIN",
+      "polygone": [
+        [
+          11.0,
+          160.0
+        ],
+        [
+          105.0,
+          160.0
+        ],
+        [
+          105.0,
+          220.0
+        ],
+        [
+          11.0,
+          220.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 39.2,
+        "source": "DÉDUIT",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 108,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-029",
+          "note": "9'-0\" du nu ext. gauche à la cloison"
+        },
+        "y": {
+          "valeur": 66,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-036",
+          "note": "5'-6\" entre cloisons (axe ou nu ?)"
+        }
+      }
+    },
+    {
+      "id": "piece-RDC-CH2",
+      "nom": "Chambre avant",
+      "nom_original": "CHAMBRE",
+      "polygone": [
+        [
+          11.0,
+          11.0
+        ],
+        [
+          143.0,
+          11.0
+        ],
+        [
+          143.0,
+          154.0
+        ],
+        [
+          11.0,
+          154.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 131.1,
+        "source": "DÉDUIT",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 146,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-038",
+          "note": "12'-2\" du nu ext. gauche à la cloison"
+        },
+        "y": {
+          "valeur": 157,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-037",
+          "note": "13'-1\" du nu ext. avant à la cloison"
+        }
+      }
+    },
+    {
+      "id": "piece-RDC-GR1",
+      "nom": "Garde-robe 1 (chambre arrière)",
+      "nom_original": "G.R.",
+      "polygone": [
+        [
+          146,
+          340.5
+        ],
+        [
+          172.0,
+          340.5
+        ],
+        [
+          172.0,
+          369.0
+        ],
+        [
+          146,
+          369.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 5.1,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 29,
+          "source": "DÉDUIT",
+          "photo": "P3",
+          "note": "2'-5\" d'axe en axe (cote-RDC-031, même alignement)"
+        }
+      },
+      "note": "limite avant (y) ESTIMÉE ; façade = portes (pas de mur) ; barre & tablette (note-RDC-03)"
+    },
+    {
+      "id": "piece-RDC-GR2",
+      "nom": "Garde-robe 2 (chambre arrière)",
+      "nom_original": "G.R.",
+      "polygone": [
+        [
+          146,
+          299.0
+        ],
+        [
+          172.0,
+          299.0
+        ],
+        [
+          172.0,
+          334.5
+        ],
+        [
+          146,
+          334.5
+        ]
+      ],
+      "superficie": {
+        "valeur": 6.4,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "note": "limites y ESTIMÉES ; barre & tablette"
+    },
+    {
+      "id": "piece-RDC-GRU",
+      "nom": "Garde-robe de la chambre d'utilité",
+      "nom_original": "G.R.",
+      "polygone": [
+        [
+          149.0,
+          256.0
+        ],
+        [
+          172.0,
+          256.0
+        ],
+        [
+          172.0,
+          293.0
+        ],
+        [
+          149.0,
+          293.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 5.9,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "note": "porte sur la ch. d'utilité ; barre & tablette"
+    },
+    {
+      "id": "piece-RDC-UTI",
+      "nom": "Chambre d'utilité",
+      "nom_original": "CHAMBRE D'UTILITÉ",
+      "polygone": [
+        [
+          149.0,
+          212
+        ],
+        [
+          175,
+          212
+        ],
+        [
+          175,
+          207.0
+        ],
+        [
+          272.0,
+          207.0
+        ],
+        [
+          272.0,
+          369.0
+        ],
+        [
+          178.0,
+          369.0
+        ],
+        [
+          178.0,
+          250.0
+        ],
+        [
+          149.0,
+          250.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 113.5,
+        "source": "DÉDUIT",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 100,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-032",
+          "note": "8'-4\" entre cloisons (hors alcôve)"
+        },
+        "y": {
+          "valeur": 176,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-042",
+          "note": "14'-8\" du nu ext. arrière à la cloison avant"
+        }
+      },
+      "note": "inclut l'alcôve d'entrée sous le G.R. (x 149-175, y 212-250) ; solives 2\"x7\" @ 16\" c/c notées ici"
+    },
+    {
+      "id": "piece-RDC-DEG",
+      "nom": "Dégagement (sans nom au plan)",
+      "nom_original": "(aucun)",
+      "polygone": [
+        [
+          111.0,
+          160.0
+        ],
+        [
+          146,
+          160.0
+        ],
+        [
+          146,
+          163.0
+        ],
+        [
+          178.0,
+          163.0
+        ],
+        [
+          178.0,
+          160.0
+        ],
+        [
+          222,
+          160.0
+        ],
+        [
+          222,
+          201.0
+        ],
+        [
+          178.0,
+          201.0
+        ],
+        [
+          178.0,
+          212
+        ],
+        [
+          111.0,
+          212
+        ]
+      ],
+      "superficie": {
+        "valeur": 36.1,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 38,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-030",
+          "note": "3'-2\" (partie entre S. de bain et colonne des G.R.)"
+        }
+      },
+      "note": "corridor des chambres + carrefour avec le hall et le passage ; pas de nom écrit"
+    },
+    {
+      "id": "piece-RDC-HALL",
+      "nom": "Hall",
+      "nom_original": "HALL",
+      "polygone": [
+        [
+          178.0,
+          66.0
+        ],
+        [
+          219.0,
+          66.0
+        ],
+        [
+          219.0,
+          160.0
+        ],
+        [
+          178.0,
+          160.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 26.8,
+        "source": "DÉDUIT",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 47,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-040",
+          "note": "3'-11\" d'axe en axe (ou nu ?)"
+        }
+      },
+      "note": "limite arrière arbitraire à y≈160 (continu avec le dégagement)"
+    },
+    {
+      "id": "piece-RDC-ENT",
+      "nom": "Entrée avant (sans nom au plan)",
+      "nom_original": "(aucun)",
+      "polygone": [
+        [
+          178.0,
+          11.0
+        ],
+        [
+          219.0,
+          11.0
+        ],
+        [
+          219.0,
+          60.0
+        ],
+        [
+          178.0,
+          60.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 14.0,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "note": "espace entre la porte d'entrée et la porte du hall ; ouvert sur le VEST."
+    },
+    {
+      "id": "piece-RDC-LIN",
+      "nom": "Lingerie",
+      "nom_original": "LIN.",
+      "polygone": [
+        [
+          149.0,
+          137.0
+        ],
+        [
+          172.0,
+          137.0
+        ],
+        [
+          172.0,
+          157.0
+        ],
+        [
+          149.0,
+          157.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 3.2,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      }
+    },
+    {
+      "id": "piece-RDC-GRA",
+      "nom": "Garde-robe (chambre avant)",
+      "nom_original": "G.R.",
+      "polygone": [
+        [
+          149.0,
+          57.0
+        ],
+        [
+          172.0,
+          57.0
+        ],
+        [
+          172.0,
+          131.0
+        ],
+        [
+          149.0,
+          131.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 11.8,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 29,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-039",
+          "note": "2'-5\" d'axe en axe"
+        }
+      },
+      "note": "barre & tablette"
+    },
+    {
+      "id": "piece-RDC-VES",
+      "nom": "Vestiaire (garde-robe d'entrée)",
+      "nom_original": "VEST.",
+      "polygone": [
+        [
+          149.0,
+          11.0
+        ],
+        [
+          178.0,
+          11.0
+        ],
+        [
+          178.0,
+          51.0
+        ],
+        [
+          149.0,
+          51.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 8.1,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "note": "« VEST. » = vestiaire (une tringle est dessinée) ; ouvert sur l'entrée avant, aucune porte dessinée"
+    },
+    {
+      "id": "piece-RDC-SAL",
+      "nom": "Salon",
+      "nom_original": "SALON",
+      "polygone": [
+        [
+          225.0,
+          11.0
+        ],
+        [
+          445.0,
+          11.0
+        ],
+        [
+          445.0,
+          154.0
+        ],
+        [
+          225.0,
+          154.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 218.5,
+        "source": "DÉDUIT",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 234,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-041",
+          "note": "19'-6\" de la cloison du hall au nu ext. droit"
+        },
+        "y": {
+          "valeur": 157,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-044",
+          "note": "13'-1\" (écrit 2 fois : cote-RDC-044 et -046)"
+        }
+      }
+    },
+    {
+      "id": "piece-RDC-PAS",
+      "nom": "Passage",
+      "nom_original": "PASSAGE",
+      "polygone": [
+        [
+          222,
+          160.0
+        ],
+        [
+          313.0,
+          160.0
+        ],
+        [
+          313.0,
+          201.0
+        ],
+        [
+          222,
+          201.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 25.9,
+        "source": "DÉDUIT",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "y": {
+          "valeur": 47,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-043",
+          "note": "3'-11\""
+        }
+      },
+      "note": "mot « PASSAGE » écrit près du luminaire ; relie hall, BALAIS et cuisine"
+    },
+    {
+      "id": "piece-RDC-CUI",
+      "nom": "Cuisine / salle à manger",
+      "nom_original": "CUISINE S.-À-MANGER",
+      "polygone": [
+        [
+          319.0,
+          160.0
+        ],
+        [
+          445.0,
+          160.0
+        ],
+        [
+          445.0,
+          369.0
+        ],
+        [
+          319.0,
+          369.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 182.9,
+        "source": "DÉDUIT",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 140,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-034",
+          "note": "11'-8\" de la cloison d'escalier au nu ext. droit"
+        },
+        "y": {
+          "valeur": 223,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-045",
+          "note": "18'-7\" du nu ext. arrière à la cloison du salon"
+        }
+      }
+    },
+    {
+      "id": "piece-RDC-BAL",
+      "nom": "Placard à balais",
+      "nom_original": "BALAIS",
+      "polygone": [
+        [
+          278.0,
+          207.0
+        ],
+        [
+          313.0,
+          207.0
+        ],
+        [
+          313.0,
+          238.5
+        ],
+        [
+          278.0,
+          238.5
+        ]
+      ],
+      "superficie": {
+        "valeur": 7.7,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 41,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-033",
+          "note": "3'-5\" (largeur commune escalier/BALAIS)"
+        }
+      }
+    },
+    {
+      "id": "piece-RDC-ESC",
+      "nom": "Escalier du sous-sol et palier (sans nom au plan)",
+      "nom_original": "(aucun)",
+      "polygone": [
+        [
+          278.0,
+          244.5
+        ],
+        [
+          313.0,
+          244.5
+        ],
+        [
+          313.0,
+          369.0
+        ],
+        [
+          278.0,
+          369.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 30.3,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 41,
+          "source": "LU",
+          "photo": "P3",
+          "ref": "cote-RDC-033"
+        }
+      },
+      "note": "volées vers le sous-sol (y≈244-335) + palier en haut (y≈335-369) desservant l'entrée arrière et la cuisine"
+    },
+    {
+      "id": "piece-RDC-EAR",
+      "nom": "Entrée arrière",
+      "nom_original": "(aucun nom ; « ARMOIRES » écrit)",
+      "polygone": [
+        [
+          230.0,
+          380
+        ],
+        [
+          316.0,
+          380
+        ],
+        [
+          316.0,
+          436.0
+        ],
+        [
+          230.0,
+          436.0
+        ]
+      ],
+      "superficie": {
+        "valeur": 33.4,
+        "source": "ESTIMÉ",
+        "photo": null,
+        "note": "calculée sur le polygone (nu int., épaisseurs ESTIMÉES : ext. 11 po, cloisons 6 po)"
+      },
+      "hauteur_plafond": {
+        "valeur": null,
+        "source": "ILLISIBLE",
+        "photo": null,
+        "note": "non écrite sur la feuille"
+      },
+      "dimensions": {
+        "x": {
+          "valeur": 108,
+          "source": "LU",
+          "photo": "P6",
+          "ref": "cote-RDC-017",
+          "note": "9'-0\" hors-tout (nu ext.)"
+        }
+      },
+      "note": "volume en saillie à l'arrière ; profondeur NON cotée (ESTIMÉE ≈ 5'-7\" hors-tout) ; armoires le long du mur gauche"
+    }
+  ],
+  "elements": [
+    {
+      "id": "elem-RDC-ESC1",
+      "type": "escalier",
+      "nom": "Escalier vers le sous-sol",
+      "nom_original": "(flèche) + « 2.R. 14 C.M. » + « RAMPE »",
+      "position": {
+        "x": 295.5,
+        "y": 289.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 35,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 91,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "2.R. 14 C.M.",
+      "photo": "P3",
+      "escalier": {
+        "nb_contremarches": {
+          "valeur": 14,
+          "source": "LU",
+          "photo": "P3",
+          "note": "« 14 C.M. » = 14 contremarches ; préfixe « 2.R. » de lecture incertaine (alt. « E.R. », « 2.B. »), sens inconnu ; seulement ~10 girons dessinés à cet étage (ligne de coupe)"
+        },
+        "fleche": "DESCEND",
+        "direction": "-y",
+        "texte_original": "2.R. 14 C.M."
+      },
+      "note": "largeur 3'-5\" d'axe en axe (cote-RDC-033) ; descend vers l'avant depuis le palier arrière ; « RAMPE » (main courante) avec flèche vers le mur gauche (mur-RDC-021) ; « 3W » (interrupteur 3 voies) en haut"
+    },
+    {
+      "id": "elem-RDC-MAR-AV",
+      "type": "marches-ext",
+      "nom": "Marches extérieures avant",
+      "nom_original": "(non écrit)",
+      "position": {
+        "x": 257.5,
+        "y": -26.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 53,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 53,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "escalier": {
+        "nb_contremarches": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null,
+          "note": "non écrit ; 5 girons dessinés"
+        },
+        "fleche": null,
+        "direction": "+x",
+        "texte_original": null
+      },
+      "note": "5 girons dessinés (6 traits), parallèles à la façade, descendant vers la droite (+x) depuis le perron ; nb de contremarches NON écrit"
+    },
+    {
+      "id": "elem-RDC-PERRON",
+      "type": "perron",
+      "nom": "Perron de béton armé",
+      "nom_original": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
+      "position": {
+        "x": 197.5,
+        "y": -26.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 67,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 53,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "BETON / REN. AVEC BARRE / 1/2 Ø @ 10\" c/c",
+      "photo": "P3",
+      "note": "dalle devant la porte d'entrée ; « REN. » = renforcé (armé) de barres ½ po à 10 po c/c ; dimensions non cotées (ESTIMÉ)"
+    },
+    {
+      "id": "elem-RDC-MAR-AR",
+      "type": "marches-ext",
+      "nom": "Marches extérieures arrière",
+      "nom_original": "(non écrit)",
+      "position": {
+        "x": 367,
+        "y": 407,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 76,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 53,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "escalier": {
+        "nb_contremarches": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null,
+          "note": "non écrit"
+        },
+        "fleche": null,
+        "direction": "+x",
+        "texte_original": null
+      },
+      "note": "le long du mur arrière de la cuisine, depuis la porte extérieure de l'entrée arrière ; 7 intervalles dessinés (traits verticaux) ; nb de contremarches NON écrit ; probablement descend vers +x"
+    },
+    {
+      "id": "elem-RDC-CHEM",
+      "type": "cheminee",
+      "nom": "Cheminée (maçonnerie) avec conduit",
+      "nom_original": "(non écrit)",
+      "position": {
+        "x": -10.5,
+        "y": 142,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 20,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 20,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "massif hachuré accolé à l'extérieur du mur gauche, vis-à-vis de la cloison S. de bain / chambre avant ; un conduit (rectangle blanc) dedans"
+    },
+    {
+      "id": "elem-RDC-BAIN",
+      "type": "baignoire",
+      "nom": "Baignoire",
+      "nom_original": "(non écrit)",
+      "position": {
+        "x": 24.5,
+        "y": 190,
+        "rotation_deg": 90,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 25,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 54,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "rectangle le long du mur gauche sous la fenêtre de la S. de bain"
+    },
+    {
+      "id": "elem-RDC-LAVABO",
+      "type": "lavabo",
+      "nom": "Lavabo",
+      "nom_original": "(non écrit)",
+      "position": {
+        "x": 57,
+        "y": 206.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 11,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 11,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "trapèze contre la cloison arrière de la S. de bain ; petit cadre au-dessus contenant la cote « 9'-0\" » (miroir/tablette ?)"
+    },
+    {
+      "id": "elem-RDC-WC",
+      "type": "toilette",
+      "nom": "Toilette (probable)",
+      "nom_original": "(non écrit)",
+      "position": {
+        "x": 59,
+        "y": 166,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 20,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 16,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "contour arrondi contre la cloison avant de la S. de bain avec un cercle-croix : interprété comme cuvette ; pourrait être un luminaire"
+    },
+    {
+      "id": "elem-RDC-PHARM",
+      "type": "autre",
+      "nom": "Armoire à pharmacie (?)",
+      "nom_original": "TAB. À MÉD.",
+      "position": {
+        "x": 90,
+        "y": 212,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 22,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 20,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "TAB. À MÉD.",
+      "photo": "P3",
+      "note": "lecture incertaine (« TAN. À MÉD. » / « TAB. À MÉN. ») ; cadre contre la cloison droite de la S. de bain"
+    },
+    {
+      "id": "elem-RDC-TRAPPE",
+      "type": "trappe",
+      "nom": "Trappe d'accès (plafond ?)",
+      "nom_original": "TRAPPE",
+      "position": {
+        "x": 61,
+        "y": 188,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 27,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 17,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "TRAPPE",
+      "photo": "P3",
+      "note": "rectangle en tirets dans la S. de bain (tirets = au-dessus, probablement trappe d'entretoit)"
+    },
+    {
+      "id": "elem-RDC-EVIER",
+      "type": "evier",
+      "nom": "Évier",
+      "nom_original": "ÉVIER",
+      "position": {
+        "x": 374,
+        "y": 360.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 31,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 19,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "EVIER",
+      "photo": "P3",
+      "note": "sous la fenêtre de la cuisine"
+    },
+    {
+      "id": "elem-RDC-ARM-AR",
+      "type": "armoires",
+      "nom": "Armoires bas et haut (mur arrière)",
+      "nom_original": "ARMOIRES BAS / HAUT",
+      "position": {
+        "x": 387.5,
+        "y": 360,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 66,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 29,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "ARMOIRES BAS HAUT",
+      "photo": "P3",
+      "note": "comptoir/armoires le long du mur arrière de la cuisine ; « HAUT » avec flèche vers le mur droit"
+    },
+    {
+      "id": "elem-RDC-ARM-DR",
+      "type": "armoires",
+      "nom": "Armoires (mur droit)",
+      "nom_original": "(voir ARMOIRES BAS / HAUT)",
+      "position": {
+        "x": 432,
+        "y": 323.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 22,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 93,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "bande d'armoires le long du mur droit contenant le poêle et le réfrigérateur"
+    },
+    {
+      "id": "elem-RDC-POELE",
+      "type": "cuisiniere",
+      "nom": "Cuisinière (poêle) 220 V",
+      "nom_original": "POÊLE 220",
+      "position": {
+        "x": 431.5,
+        "y": 330.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 25,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 31,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "POELE 220",
+      "photo": "P3",
+      "note": "« 220 » = prise 220 V"
+    },
+    {
+      "id": "elem-RDC-REF",
+      "type": "refrigerateur",
+      "nom": "Réfrigérateur",
+      "nom_original": "RÉF.",
+      "position": {
+        "x": 432.5,
+        "y": 290.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 22,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 27,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "REF.",
+      "photo": "P3"
+    },
+    {
+      "id": "elem-RDC-COMPT",
+      "type": "comptoir",
+      "nom": "Comptoir (bout arrondi)",
+      "nom_original": "COMPTOIR",
+      "position": {
+        "x": 412.5,
+        "y": 259,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 63,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 21,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "COMPTOIR",
+      "photo": "P3",
+      "note": "contre le mur droit, bout gauche arrondi (presqu'île)"
+    },
+    {
+      "id": "elem-RDC-LAV",
+      "type": "laveuse",
+      "nom": "Laveuse",
+      "nom_original": "LAV.",
+      "position": {
+        "x": 332,
+        "y": 273,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 28,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 29,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "LAV.",
+      "photo": "P3",
+      "note": "adossée à la cloison d'escalier côté cuisine"
+    },
+    {
+      "id": "elem-RDC-SEC",
+      "type": "secheuse",
+      "nom": "Sécheuse 220 V",
+      "nom_original": "SEC. 220",
+      "position": {
+        "x": 332,
+        "y": 304.5,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 28,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 32,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "220 SEC.",
+      "photo": "P3",
+      "note": "« 220 » = prise 220 V"
+    },
+    {
+      "id": "elem-RDC-ARM-EAR",
+      "type": "armoires",
+      "nom": "Armoires de l'entrée arrière",
+      "nom_original": "ARMOIRES",
+      "position": {
+        "x": 243,
+        "y": 409,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": 32,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        },
+        "largeur": {
+          "valeur": 50,
+          "source": "ESTIMÉ",
+          "photo": "P3"
+        }
+      },
+      "texte_original": "ARMOIRES",
+      "photo": "P3",
+      "note": "le long du mur gauche de l'entrée arrière"
+    },
+    {
+      "id": "elem-RDC-L01",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — chambre arrière",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 73,
+        "y": 301,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole croix sans cercle ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L02",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — chambre avant",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 78,
+        "y": 84,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L03",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — chambre d'utilité",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 224,
+        "y": 293,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L04",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — dégagement / passage (près du mot PASSAGE)",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 197,
+        "y": 180,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L05",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — entrée avant",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 196,
+        "y": 34,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L06",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — palier de l'escalier",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 293,
+        "y": 355,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L07",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — entrée arrière",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 293,
+        "y": 412,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L08",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — extérieur, au-dessus des marches arrière",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 336,
+        "y": 411,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L09",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — cuisine",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 381,
+        "y": 311,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L10",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — cuisine / s.-à-manger (sur la poutre)",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 380,
+        "y": 210,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    },
+    {
+      "id": "elem-RDC-L11",
+      "type": "autre",
+      "nom": "Luminaire plafonnier — extérieur, perron avant",
+      "nom_original": "(symbole cercle-croix)",
+      "position": {
+        "x": 181,
+        "y": -10,
+        "rotation_deg": 0,
+        "source": "ESTIMÉ"
+      },
+      "dimensions": {
+        "longueur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        },
+        "largeur": {
+          "valeur": null,
+          "source": "ILLISIBLE",
+          "photo": null
+        }
+      },
+      "texte_original": null,
+      "photo": "P3",
+      "note": "symbole cercle-croix ; position ESTIMÉE"
+    }
+  ],
+  "structure": [
+    {
+      "id": "str-RDC-S01",
+      "type": "solives",
+      "dimension": {
+        "texte_original": "SOLIVES 2\"x7\" @ 16\" c/c",
+        "valeur": "2x7 @ 16 c/c",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "y",
+      "geometrie": {
+        "zone": [
+          [
+            175,
+            204
+          ],
+          [
+            275,
+            374.5
+          ]
+        ],
+        "espacement": 16
+      },
+      "note": "écrit dans la chambre d'utilité, trait à deux butées orienté en y (avant-arrière) → solives parallèles à y ; probablement solives de plafond (non précisé)"
+    },
+    {
+      "id": "str-RDC-S02",
+      "type": "solives",
+      "dimension": {
+        "texte_original": "SOLIVES 2\"x7\" @ 16\" c/c",
+        "valeur": "2x7 @ 16 c/c",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "y",
+      "geometrie": {
+        "zone": [
+          [
+            222,
+            5.5
+          ],
+          [
+            450.5,
+            157
+          ]
+        ],
+        "espacement": 16
+      },
+      "note": "écrit dans le salon, trait à deux butées orienté en y ; probablement solives de plafond"
+    },
+    {
+      "id": "str-RDC-P01",
+      "type": "poutre",
+      "dimension": {
+        "texte_original": "POUTRE 6\"x10\" FLUSH",
+        "valeur": "6x10",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "x",
+      "geometrie": {
+        "x1": 316,
+        "y1": 212,
+        "x2": 450.5,
+        "y2": 213
+      },
+      "note": "poutre affleurante (« FLUSH ») traversant la cuisine de la cloison d'escalier au mur droit ; position y NON cotée (ESTIMÉ ≈ 17'-8\" du nu ext. avant) ; dans l'alignement de la cloison avant de la ch. d'utilité (y=204) à ~8 po près"
+    },
+    {
+      "id": "str-RDC-L01",
+      "type": "linteau",
+      "dimension": {
+        "texte_original": "LINTEAU 2-2\"x8\"",
+        "valeur": "2-2x8",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "x",
+      "geometrie": {
+        "x1": 60.5,
+        "y1": 5.5,
+        "x2": 135.5,
+        "y2": 5.5
+      },
+      "note": "linteau de ouv-RDC-001 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)"
+    },
+    {
+      "id": "str-RDC-L02",
+      "type": "linteau",
+      "dimension": {
+        "texte_original": "LINTEAU 2-2\"x10\"",
+        "valeur": "2-2x10",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "x",
+      "geometrie": {
+        "x1": 323.0,
+        "y1": 5.5,
+        "x2": 431.0,
+        "y2": 5.5
+      },
+      "note": "linteau de ouv-RDC-002 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)"
+    },
+    {
+      "id": "str-RDC-L03",
+      "type": "linteau",
+      "dimension": {
+        "texte_original": "LINTEAU 2-2\"x8\"",
+        "valeur": "2-2x8",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "x",
+      "geometrie": {
+        "x1": 60.5,
+        "y1": 374.5,
+        "x2": 135.5,
+        "y2": 374.5
+      },
+      "note": "linteau de ouv-RDC-003 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)"
+    },
+    {
+      "id": "str-RDC-L04",
+      "type": "linteau",
+      "dimension": {
+        "texte_original": "LIN. 2-2\"x6\"",
+        "valeur": "2-2x6",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "x",
+      "geometrie": {
+        "x1": 179.0,
+        "y1": 374.5,
+        "x2": 215.0,
+        "y2": 374.5
+      },
+      "note": "linteau de ouv-RDC-004 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)"
+    },
+    {
+      "id": "str-RDC-L05",
+      "type": "linteau",
+      "dimension": {
+        "texte_original": "LINTEAU 2-2\"x8\"",
+        "valeur": "2-2x8",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "x",
+      "geometrie": {
+        "x1": 337.5,
+        "y1": 374.5,
+        "x2": 412.5,
+        "y2": 374.5
+      },
+      "note": "linteau de ouv-RDC-005 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)"
+    },
+    {
+      "id": "str-RDC-L06",
+      "type": "linteau",
+      "dimension": {
+        "texte_original": "LIN. 2-2\"x6\"",
+        "valeur": "2-2x6",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "y",
+      "geometrie": {
+        "x1": 5.5,
+        "y1": 173.0,
+        "x2": 5.5,
+        "y2": 209.0
+      },
+      "note": "linteau de ouv-RDC-006 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)"
+    },
+    {
+      "id": "str-RDC-L07",
+      "type": "linteau",
+      "dimension": {
+        "texte_original": "LIN. 2-2\"x6\"",
+        "valeur": "2-2x6",
+        "source": "LU",
+        "photo": "P3"
+      },
+      "sens": "y",
+      "geometrie": {
+        "x1": 450.5,
+        "y1": 162.0,
+        "x2": 450.5,
+        "y2": 198.0
+      },
+      "note": "linteau de ouv-RDC-007 (2 pièces de 2\" ; longueur = baie, appuis non indiqués)"
+    }
+  ],
+  "cotes": [
+    {
+      "id": "cote-RDC-001",
+      "texte_original": "31'-8\"",
+      "valeur": 380,
+      "lecture_1": "31'-8\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        232,
+        1019
+      ],
+      "emplacement": "chaîne ext. côté gauche, rang 3 (la plus éloignée du mur), hors-tout",
+      "mesure": "profondeur hors-tout : nu ext. mur avant → nu ext. mur arrière",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-002",
+      "texte_original": "15'-9\"",
+      "valeur": 189,
+      "lecture_1": "15'-9\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        358,
+        586
+      ],
+      "emplacement": "chaîne ext. côté gauche, rang 2, segment arrière",
+      "mesure": "nu ext. mur arrière → axe (centre) de la fenêtre de la S. de bain (ouv-RDC-006)",
+      "note": "vérifiée sur P3, P4 et P6 ; 15'-9\" + 15'-11\" = 31'-8\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-003",
+      "texte_original": "15'-11\"",
+      "valeur": 191,
+      "lecture_1": "15'-11\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        327,
+        1250
+      ],
+      "emplacement": "chaîne ext. côté gauche, rang 2, segment avant",
+      "mesure": "nu ext. mur avant → axe de la fenêtre de la S. de bain (ouv-RDC-006)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-004",
+      "texte_original": "3'-0\"",
+      "valeur": 36,
+      "lecture_1": "3'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        399,
+        892
+      ],
+      "emplacement": "chaîne ext. côté gauche, rang 1 (ouvertures)",
+      "mesure": "largeur de la fenêtre de la S. de bain (ouv-RDC-006), entre ses jambages",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-005",
+      "texte_original": "31'-8\"",
+      "valeur": 380,
+      "lecture_1": "31'-8\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        2257,
+        916
+      ],
+      "emplacement": "chaîne ext. côté droit, rang 3, hors-tout",
+      "mesure": "profondeur hors-tout : nu ext. mur avant → nu ext. mur arrière",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-006",
+      "texte_original": "16'-8\"",
+      "valeur": 200,
+      "lecture_1": "16'-8\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        2157,
+        651
+      ],
+      "emplacement": "chaîne ext. côté droit, rang 2, segment arrière",
+      "mesure": "nu ext. mur arrière → axe de la fenêtre latérale de la cuisine (ouv-RDC-007)",
+      "note": "vérifiée sur P3, P4 et P6 ; 16'-8\" + 15'-0\" = 31'-8\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-007",
+      "texte_original": "15'-0\"",
+      "valeur": 180,
+      "lecture_1": "15'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        2167,
+        1238
+      ],
+      "emplacement": "chaîne ext. côté droit, rang 2, segment avant",
+      "mesure": "nu ext. mur avant → axe de la fenêtre latérale de la cuisine (ouv-RDC-007)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-008",
+      "texte_original": "3'-0\"",
+      "valeur": 36,
+      "lecture_1": "3'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        2105,
+        970
+      ],
+      "emplacement": "chaîne ext. côté droit, rang 1 (ouvertures)",
+      "mesure": "largeur de la fenêtre latérale de la cuisine (ouv-RDC-007)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-009",
+      "texte_original": "38'-0\"",
+      "valeur": 456,
+      "lecture_1": "38'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1296,
+        1894
+      ],
+      "emplacement": "chaîne ext. avant, rang 3, hors-tout",
+      "mesure": "largeur hors-tout : nu ext. mur gauche → nu ext. mur droit",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-010",
+      "texte_original": "8'-2\"",
+      "valeur": 98,
+      "lecture_1": "8'-2\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        620,
+        1740
+      ],
+      "emplacement": "chaîne ext. avant, rang 2, 1er segment depuis la gauche",
+      "mesure": "nu ext. mur gauche → axe de la fenêtre de la chambre avant (ouv-RDC-001)",
+      "note": "vérifiée sur P3, P4 et P6 ; 8'-2\"+8'-5\"+14'-10\"+6'-7\" = 38'-0\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-011",
+      "texte_original": "8'-5\"",
+      "valeur": 101,
+      "lecture_1": "8'-5\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        987,
+        1750
+      ],
+      "emplacement": "chaîne ext. avant, rang 2, 2e segment",
+      "mesure": "axe fenêtre chambre avant (ouv-RDC-001) → axe de la porte d'entrée avant (ouv-RDC-010)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-012",
+      "texte_original": "14'-10\"",
+      "valeur": 178,
+      "lecture_1": "14'-10\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1565,
+        1750
+      ],
+      "emplacement": "chaîne ext. avant, rang 2, 3e segment",
+      "mesure": "axe porte d'entrée avant (ouv-RDC-010) → axe fenêtre du salon (ouv-RDC-002)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-013",
+      "texte_original": "6'-7\"",
+      "valeur": 79,
+      "lecture_1": "6'-7\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1937,
+        1725
+      ],
+      "emplacement": "chaîne ext. avant, rang 2, 4e segment (droite)",
+      "mesure": "axe fenêtre du salon (ouv-RDC-002) → nu ext. mur droit",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-014",
+      "texte_original": "6'-3\"",
+      "valeur": 75,
+      "lecture_1": "6'-3\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        775,
+        1672
+      ],
+      "emplacement": "chaîne ext. avant, rang 1 (ouvertures), gauche",
+      "mesure": "largeur de la fenêtre de la chambre avant (ouv-RDC-001)",
+      "alternatives": [
+        "6'-8\""
+      ],
+      "note": "3 à tête plate, lu 3 sur P3/P4/P6 ; largeur mesurée au dessin ≈ 76 po (ESTIMÉ) compatible avec 6'-3\""
+    },
+    {
+      "id": "cote-RDC-015",
+      "texte_original": "9'-0\"",
+      "valeur": 108,
+      "lecture_1": "9'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1817,
+        1662
+      ],
+      "emplacement": "chaîne ext. avant, rang 1 (ouvertures), droite",
+      "mesure": "largeur de la fenêtre du salon (ouv-RDC-002)",
+      "alternatives": [
+        "5'-0\""
+      ],
+      "note": "le 9 de cette main ressemble à un S/5 ; largeur mesurée au dessin ≈ 106 po (ESTIMÉ) → 9'-0\""
+    },
+    {
+      "id": "cote-RDC-016",
+      "texte_original": "18'-3\"",
+      "valeur": 219,
+      "lecture_1": "18'-3\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P6",
+      "px": [
+        850,
+        19
+      ],
+      "emplacement": "chaîne ext. arrière, rang 3 (le plus éloigné), 1er segment depuis la gauche — absente de P3 (haut coupé)",
+      "mesure": "nu ext. mur gauche → nu ext. du mur gauche du volume de l'entrée arrière",
+      "note": "lue sur P6, confirmée sur P4"
+    },
+    {
+      "id": "cote-RDC-017",
+      "texte_original": "9'-0\"",
+      "valeur": 108,
+      "lecture_1": "9'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P6",
+      "px": [
+        1332,
+        22
+      ],
+      "emplacement": "chaîne ext. arrière, rang 3, 2e segment — absente de P3",
+      "mesure": "largeur hors-tout du volume de l'entrée arrière (nu ext. gauche → nu ext. droit)",
+      "note": "lue sur P6, confirmée sur P4"
+    },
+    {
+      "id": "cote-RDC-018",
+      "texte_original": "10'-9\"",
+      "valeur": 129,
+      "lecture_1": "10'-9\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P6",
+      "px": [
+        1692,
+        32
+      ],
+      "emplacement": "chaîne ext. arrière, rang 3, 3e segment (droite) — absente de P3",
+      "mesure": "nu ext. droit du volume de l'entrée arrière → nu ext. mur droit",
+      "alternatives": [
+        "10'-5\""
+      ],
+      "note": "dernier chiffre : même glyphe que le 9 de « 9'-0\" » de la même chaîne (forme S/9). Avec 10'-9\" la chaîne 18'-3\"+9'-0\"+10'-9\" = 38'-0\" ; avec 10'-5\" = 37'-8\". Lue sur P6 et P4."
+    },
+    {
+      "id": "cote-RDC-019",
+      "texte_original": "8'-2\"",
+      "valeur": 98,
+      "lecture_1": "8'-2\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        679,
+        84
+      ],
+      "emplacement": "chaîne ext. arrière, rang 2 (axes des ouvertures), 1er segment depuis la gauche",
+      "mesure": "nu ext. mur gauche → axe de la fenêtre de la chambre arrière (ouv-RDC-003)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-020",
+      "texte_original": "8'-3\"",
+      "valeur": 99,
+      "lecture_1": "8'-3\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1029,
+        75
+      ],
+      "emplacement": "chaîne ext. arrière, rang 2, 2e segment",
+      "mesure": "axe fenêtre chambre arrière (ouv-RDC-003) → axe fenêtre chambre d'utilité (ouv-RDC-004)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-021",
+      "texte_original": "8'-0\"",
+      "valeur": 96,
+      "lecture_1": "8'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1406,
+        106
+      ],
+      "emplacement": "chaîne ext. arrière, rang 2, 3e segment (écrit dans l'entrée arrière, à côté de « ARMOIRES »)",
+      "mesure": "axe fenêtre chambre d'utilité (ouv-RDC-004) → axe fenêtre de l'entrée arrière (ouv-RDC-008)",
+      "note": "rattachement déduit de l'alignement des points de cote sur P6 (même ligne que 8'-2\", 8'-3\", 6'-10\", 6'-9\") ; pourrait être lu par erreur comme une dimension des armoires. Lue sur P3, P4, P6."
+    },
+    {
+      "id": "cote-RDC-022",
+      "texte_original": "6'-10\"",
+      "valeur": 82,
+      "lecture_1": "6'-10\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1687,
+        115
+      ],
+      "emplacement": "chaîne ext. arrière, rang 2, 4e segment (écrit sur les marches arrière)",
+      "mesure": "axe fenêtre de l'entrée arrière (ouv-RDC-008) → axe fenêtre de la cuisine (ouv-RDC-005)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-023",
+      "texte_original": "6'-9\"",
+      "valeur": 81,
+      "lecture_1": "6'-9\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1940,
+        145
+      ],
+      "emplacement": "chaîne ext. arrière, rang 2, 5e segment (droite)",
+      "mesure": "axe fenêtre de la cuisine (ouv-RDC-005) → nu ext. mur droit",
+      "alternatives": [
+        "6'-5\""
+      ],
+      "note": "glyphe S/9 ambigu (identique au 9 de « 9'-0\" » arrière). Avec 6'-9\" : 8'-2\"+8'-3\"+8'-0\"+6'-10\"+6'-9\" = 38'-0\" ; avec 6'-5\" = 37'-8\". Lue sur P3, P4, P6."
+    },
+    {
+      "id": "cote-RDC-024",
+      "texte_original": "6'-3\"",
+      "valeur": 75,
+      "lecture_1": "6'-3\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        843,
+        156
+      ],
+      "emplacement": "chaîne ext. arrière, rang 1 (ouvertures), gauche",
+      "mesure": "largeur de la fenêtre de la chambre arrière (ouv-RDC-003)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-025",
+      "texte_original": "3'-0\"",
+      "valeur": 36,
+      "lecture_1": "3'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1175,
+        191
+      ],
+      "emplacement": "chaîne ext. arrière, rang 1 (ouvertures)",
+      "mesure": "largeur de la fenêtre de la chambre d'utilité (ouv-RDC-004)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-026",
+      "texte_original": "3'-6\"",
+      "valeur": 42,
+      "lecture_1": "3'-6\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P6",
+      "px": [
+        1402,
+        54
+      ],
+      "emplacement": "chaîne ext. arrière (entrée arrière), rang 1 (ouvertures) — absente/coupée sur P3",
+      "mesure": "largeur de la fenêtre du mur arrière de l'entrée arrière (ouv-RDC-008)",
+      "alternatives": [
+        "3'-0\""
+      ],
+      "note": "le 2e chiffre est traversé par le trait d'attache de la cote 2'-9\" (forme « b ») : 6 ou 0 ; largeur ESTIMÉE au dessin ≈ 39 po. Lue sur P6 et P4."
+    },
+    {
+      "id": "cote-RDC-027",
+      "texte_original": "2'-9\"",
+      "valeur": 33,
+      "lecture_1": "2'-9\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P6",
+      "px": [
+        1462,
+        35
+      ],
+      "emplacement": "chaîne ext. arrière (entrée arrière), rang 2 — absente de P3",
+      "mesure": "axe fenêtre de l'entrée arrière (ouv-RDC-008) → nu ext. du mur droit de l'entrée arrière",
+      "alternatives": [
+        "6'-9\"",
+        "1'-9\""
+      ],
+      "note": "1er chiffre mal formé (« L ») ; 2'-9\" retenu car 8'-2\"+8'-3\"+8'-0\"+2'-9\" = 27'-2\" ≈ 18'-3\"+9'-0\" = 27'-3\" (écart 1\"). Lue sur P6 et P4."
+    },
+    {
+      "id": "cote-RDC-028",
+      "texte_original": "6'-3\"",
+      "valeur": 75,
+      "lecture_1": "6'-3\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1800,
+        212
+      ],
+      "emplacement": "chaîne ext. arrière, rang 1 (ouvertures), droite",
+      "mesure": "largeur de la fenêtre de la cuisine (ouv-RDC-005)",
+      "note": "vérifiée sur P3, P4 et P6"
+    },
+    {
+      "id": "cote-RDC-029",
+      "texte_original": "9'-0\"",
+      "valeur": 108,
+      "lecture_1": "9'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        675,
+        805
+      ],
+      "emplacement": "chaîne int. en x (y≈18'), 1er segment depuis la gauche (écrit dans un petit cadre dans la S. de bain)",
+      "mesure": "nu ext. mur gauche → cloison droite de la S. de bain (mur-RDC-011)",
+      "note": "chaîne intérieure en x tracée à travers la S. de bain, le dégagement, la ch. d'utilité, le BALAIS et la cuisine ; 9'-0\"+3'-2\"+2'-5\"+8'-4\"+3'-5\"+11'-8\" = 38'-0\" (ferme sur le hors-tout → extrémités au nu ext., points intermédiaires sur les cloisons, axe ou nu à confirmer)"
+    },
+    {
+      "id": "cote-RDC-030",
+      "texte_original": "3'-2\"",
+      "valeur": 38,
+      "lecture_1": "3'-2\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        910,
+        804
+      ],
+      "emplacement": "chaîne int. en x, 2e segment",
+      "mesure": "cloison droite S. de bain (mur-RDC-011) → cloison gauche de la colonne des G.R. (mur-RDC-013/014)",
+      "note": "chaîne intérieure en x tracée à travers la S. de bain, le dégagement, la ch. d'utilité, le BALAIS et la cuisine ; 9'-0\"+3'-2\"+2'-5\"+8'-4\"+3'-5\"+11'-8\" = 38'-0\" (ferme sur le hors-tout → extrémités au nu ext., points intermédiaires sur les cloisons, axe ou nu à confirmer)"
+    },
+    {
+      "id": "cote-RDC-031",
+      "texte_original": "2'-5\"",
+      "valeur": 29,
+      "lecture_1": "2'-5\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1062,
+        800
+      ],
+      "emplacement": "chaîne int. en x, 3e segment (alcôve / porte de la ch. d'utilité)",
+      "mesure": "cloison gauche colonne G.R. (mur-RDC-013) → cloison droite colonne G.R. (mur-RDC-015)",
+      "note": "chaîne intérieure en x tracée à travers la S. de bain, le dégagement, la ch. d'utilité, le BALAIS et la cuisine ; 9'-0\"+3'-2\"+2'-5\"+8'-4\"+3'-5\"+11'-8\" = 38'-0\" (ferme sur le hors-tout → extrémités au nu ext., points intermédiaires sur les cloisons, axe ou nu à confirmer)"
+    },
+    {
+      "id": "cote-RDC-032",
+      "texte_original": "8'-4\"",
+      "valeur": 100,
+      "lecture_1": "8'-4\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1250,
+        823
+      ],
+      "emplacement": "chaîne int. en x, 4e segment (ch. d'utilité)",
+      "mesure": "cloison mur-RDC-015 → cloison gauche de l'escalier (mur-RDC-021)",
+      "note": "chaîne intérieure en x tracée à travers la S. de bain, le dégagement, la ch. d'utilité, le BALAIS et la cuisine ; 9'-0\"+3'-2\"+2'-5\"+8'-4\"+3'-5\"+11'-8\" = 38'-0\" (ferme sur le hors-tout → extrémités au nu ext., points intermédiaires sur les cloisons, axe ou nu à confirmer)"
+    },
+    {
+      "id": "cote-RDC-033",
+      "texte_original": "3'-5\"",
+      "valeur": 41,
+      "lecture_1": "3'-5\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1519,
+        803
+      ],
+      "emplacement": "chaîne int. en x, 5e segment (écrit sous « BALAIS »)",
+      "mesure": "cloison gauche escalier (mur-RDC-021) → cloison droite escalier (mur-RDC-022) : largeur escalier/BALAIS",
+      "note": "chaîne intérieure en x tracée à travers la S. de bain, le dégagement, la ch. d'utilité, le BALAIS et la cuisine ; 9'-0\"+3'-2\"+2'-5\"+8'-4\"+3'-5\"+11'-8\" = 38'-0\" (ferme sur le hors-tout → extrémités au nu ext., points intermédiaires sur les cloisons, axe ou nu à confirmer)"
+    },
+    {
+      "id": "cote-RDC-034",
+      "texte_original": "11'-8\"",
+      "valeur": 140,
+      "lecture_1": "11'-8\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1815,
+        820
+      ],
+      "emplacement": "chaîne int. en x, 6e segment (cuisine)",
+      "mesure": "cloison droite escalier (mur-RDC-022) → nu ext. mur droit",
+      "note": "chaîne intérieure en x tracée à travers la S. de bain, le dégagement, la ch. d'utilité, le BALAIS et la cuisine ; 9'-0\"+3'-2\"+2'-5\"+8'-4\"+3'-5\"+11'-8\" = 38'-0\" (ferme sur le hors-tout → extrémités au nu ext., points intermédiaires sur les cloisons, axe ou nu à confirmer)"
+    },
+    {
+      "id": "cote-RDC-035",
+      "texte_original": "13'-1\"",
+      "valeur": 157,
+      "lecture_1": "13'-1\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        617,
+        617
+      ],
+      "emplacement": "chaîne int. en y (x≈5'), segment arrière (chambre arrière)",
+      "mesure": "nu ext. mur arrière → cloison chambre arr./S. de bain (mur-RDC-010)",
+      "note": "chaîne int. en y côté gauche : 13'-1\"+5'-6\"+13'-1\" = 31'-8\" (ferme sur le hors-tout)"
+    },
+    {
+      "id": "cote-RDC-036",
+      "texte_original": "5'-6\"",
+      "valeur": 66,
+      "lecture_1": "5'-6\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        600,
+        923
+      ],
+      "emplacement": "chaîne int. en y (x≈5'), segment du milieu (S. de bain)",
+      "mesure": "cloison mur-RDC-010 → cloison mur-RDC-012 (profondeur S. de bain)",
+      "note": "chaîne int. en y côté gauche : 13'-1\"+5'-6\"+13'-1\" = 31'-8\" (ferme sur le hors-tout) ; lue 5'-6\" sur P3 et P4"
+    },
+    {
+      "id": "cote-RDC-037",
+      "texte_original": "13'-1\"",
+      "valeur": 157,
+      "lecture_1": "13'-1\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        589,
+        1275
+      ],
+      "emplacement": "chaîne int. en y (x≈5'), segment avant (chambre avant)",
+      "mesure": "nu ext. mur avant → cloison S. de bain/chambre avant (mur-RDC-012)",
+      "note": "chaîne int. en y côté gauche : 13'-1\"+5'-6\"+13'-1\" = 31'-8\" (ferme sur le hors-tout)"
+    },
+    {
+      "id": "cote-RDC-038",
+      "texte_original": "12'-2\"",
+      "valeur": 146,
+      "lecture_1": "12'-2\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        705,
+        1344
+      ],
+      "emplacement": "chaîne int. en x (y≈7'), 1er segment (chambre avant)",
+      "mesure": "nu ext. mur gauche → cloison droite de la chambre avant (mur-RDC-026)",
+      "note": "chaîne int. en x côté avant : 12'-2\"+2'-5\"+3'-11\"+19'-6\" = 38'-0\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-039",
+      "texte_original": "2'-5\"",
+      "valeur": 29,
+      "lecture_1": "2'-5\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1050,
+        1350
+      ],
+      "emplacement": "chaîne int. en x (y≈7'), 2e segment (G.R. avant)",
+      "mesure": "cloison mur-RDC-026 → cloison mur-RDC-027 (profondeur G.R./LIN./VEST.)",
+      "note": "chaîne int. en x côté avant : 12'-2\"+2'-5\"+3'-11\"+19'-6\" = 38'-0\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-040",
+      "texte_original": "3'-11\"",
+      "valeur": 47,
+      "lecture_1": "3'-11\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1190,
+        1342
+      ],
+      "emplacement": "chaîne int. en x (y≈7'), 3e segment (hall)",
+      "mesure": "cloison mur-RDC-027 → cloison hall/salon (mur-RDC-025) : largeur du hall",
+      "note": "chaîne int. en x côté avant : 12'-2\"+2'-5\"+3'-11\"+19'-6\" = 38'-0\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-041",
+      "texte_original": "19'-6\"",
+      "valeur": 234,
+      "lecture_1": "19'-6\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1713,
+        1347
+      ],
+      "emplacement": "chaîne int. en x (y≈7'), 4e segment (salon)",
+      "mesure": "cloison hall/salon (mur-RDC-025) → nu ext. mur droit",
+      "note": "chaîne int. en x côté avant : 12'-2\"+2'-5\"+3'-11\"+19'-6\" = 38'-0\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-042",
+      "texte_original": "14'-8\"",
+      "valeur": 176,
+      "lecture_1": "14'-8\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1325,
+        608
+      ],
+      "emplacement": "chaîne int. en y (x≈23'), segment arrière (ch. d'utilité)",
+      "mesure": "nu ext. mur arrière → cloison avant de la ch. d'utilité (mur-RDC-020)",
+      "note": "chaîne int. en y au milieu : 13'-1\"+3'-11\"+14'-8\" = 31'-8\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-043",
+      "texte_original": "3'-11\"",
+      "valeur": 47,
+      "lecture_1": "3'-11\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1322,
+        962
+      ],
+      "emplacement": "chaîne int. en y (x≈23'), segment du milieu (PASSAGE)",
+      "mesure": "cloison mur-RDC-020 → cloison salon/passage (mur-RDC-024) : largeur du passage",
+      "note": "chaîne int. en y au milieu : 13'-1\"+3'-11\"+14'-8\" = 31'-8\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-044",
+      "texte_original": "13'-1\"",
+      "valeur": 157,
+      "lecture_1": "13'-1\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1320,
+        1303
+      ],
+      "emplacement": "chaîne int. en y (x≈23'), segment avant (salon, côté gauche)",
+      "mesure": "nu ext. mur avant → cloison salon/passage (mur-RDC-024)",
+      "note": "chaîne int. en y au milieu : 13'-1\"+3'-11\"+14'-8\" = 31'-8\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-045",
+      "texte_original": "18'-7\"",
+      "valeur": 223,
+      "lecture_1": "18'-7\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1870,
+        772
+      ],
+      "emplacement": "chaîne int. en y (x≈35'), segment arrière (cuisine)",
+      "mesure": "nu ext. mur arrière → cloison salon/cuisine avec arche (mur-RDC-024)",
+      "alternatives": [
+        "16'-7\""
+      ],
+      "note": "chaîne int. en y côté droit : 13'-1\"+18'-7\" = 31'-8\" (ferme) ; 1er chiffre 8 net sur P3/P4/P6"
+    },
+    {
+      "id": "cote-RDC-046",
+      "texte_original": "13'-1\"",
+      "valeur": 157,
+      "lecture_1": "13'-1\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1877,
+        1293
+      ],
+      "emplacement": "chaîne int. en y (x≈35'), segment avant (salon, côté droit)",
+      "mesure": "nu ext. mur avant → cloison salon/cuisine (mur-RDC-024)",
+      "note": "chaîne int. en y côté droit : 13'-1\"+18'-7\" = 31'-8\" (ferme)"
+    },
+    {
+      "id": "cote-RDC-047",
+      "texte_original": "9\"",
+      "valeur": 9,
+      "lecture_1": "9\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        713,
+        750
+      ],
+      "emplacement": "petite cote verticale au-dessus de la cloison chambre arr./S. de bain, à x≈14'",
+      "mesure": "épaisseur de la cloison chambre arrière / S. de bain (mur-RDC-010) : deux points de cote sur ses deux faces",
+      "alternatives": [
+        "6\" (si le texte est écrit tête-bêche)"
+      ],
+      "note": "écrit « \"9 » (guillemets à gauche) sur P3, P4, P6 ; épaisseur dessinée ≈ 5 po (ESTIMÉ)"
+    },
+    {
+      "id": "cote-RDC-048",
+      "texte_original": "ARCHE 4'-0\"",
+      "valeur": 48,
+      "lecture_1": "ARCHE 4'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1258,
+        1200
+      ],
+      "emplacement": "texte vertical dans la cloison hall/salon (mur-RDC-025)",
+      "mesure": "largeur de l'arche hall/salon (ouv-RDC-012)",
+      "alternatives": [
+        "ARCHE 6'-0\""
+      ],
+      "note": "glyphe « 4 » ouvert, différent du 6 de « ARCHE 6'-0\" » (P3, P4, P6) ; mais l'ouverture dessinée mesure ≈ 74 po (ESTIMÉ)"
+    },
+    {
+      "id": "cote-RDC-049",
+      "texte_original": "ARCHE 6'-0\"",
+      "valeur": 72,
+      "lecture_1": "ARCHE 6'-0\"",
+      "lecture_2": null,
+      "statut": "provisoire",
+      "photo": "P3",
+      "px": [
+        1890,
+        1047
+      ],
+      "emplacement": "texte horizontal dans la cloison salon/cuisine (mur-RDC-024)",
+      "mesure": "largeur de l'arche salon/cuisine (ouv-RDC-013)",
+      "note": "vérifiée sur P3, P4 et P6"
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-RDC-01",
+      "texte_original": "• REZ-DE-CHAUSSÉE •",
+      "interpretation": "titre de la feuille : plan du rez-de-chaussée",
+      "photo": "P6"
+    },
+    {
+      "id": "note-RDC-02",
+      "texte_original": "ÉCHELLE : 1/4\" = 1'-0\"",
+      "interpretation": "échelle 1:48 ; le dessin n'est pas fiable pour la mesure (les cotes priment), quoique l'homographie montre une bonne concordance (±3 po)",
+      "photo": "P6"
+    },
+    {
+      "id": "note-RDC-03",
+      "texte_original": "NOTE : BARRE & TABLETTE DANS TOUS LES G.R.",
+      "interpretation": "tringle et tablette dans toutes les garde-robes",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-04",
+      "texte_original": "BÉTON REN. AVEC BARRE ½\"Ø @ 10\" c/c",
+      "interpretation": "perron en béton renforcé (armé) de barres de ½ po de diamètre espacées de 10 po centre à centre",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-05",
+      "texte_original": "SOLIVES 2\"x7\" @ 16\" c/c (×2 : ch. d'utilité et salon)",
+      "interpretation": "solives de 2x7 po à 16 po c/c, orientées avant-arrière (y) ; plafond probablement",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-06",
+      "texte_original": "POUTRE 6\"x10\" FLUSH",
+      "interpretation": "poutre de 6x10 po affleurante (dans l'épaisseur du plafond) au-dessus de la cuisine/s.-à-manger",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-07",
+      "texte_original": "RAMPE",
+      "interpretation": "main courante de l'escalier du sous-sol, côté gauche (ch. d'utilité)",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-08",
+      "texte_original": "2.R. 14 C.M.",
+      "interpretation": "escalier de 14 contremarches vers le sous-sol ; préfixe « 2.R. » (ou « E.R. ») non interprété",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-09",
+      "texte_original": "ARMOIRES BAS / HAUT",
+      "interpretation": "armoires basses et hautes de cuisine",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-10",
+      "texte_original": "POÊLE 220 ; SEC. 220",
+      "interpretation": "prises 220 V pour la cuisinière et la sécheuse",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-11",
+      "texte_original": "SW ; 3W ; $ ; symboles ⊖ (cercle barré)",
+      "interpretation": "symboles électriques : SW/$ = interrupteur, 3W = interrupteur 3 voies (haut de l'escalier, hall), cercles barrés le long des murs = prises de courant ; lignes tiretées = commande des luminaires ; non inventoriés un à un",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-12",
+      "texte_original": "PASSAGE",
+      "interpretation": "nom du couloir entre le hall et la cuisine",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-13",
+      "texte_original": "TAB. À MÉD.",
+      "interpretation": "armoire/tablette à médicaments dans la S. de bain (lecture incertaine)",
+      "photo": "P3"
+    },
+    {
+      "id": "note-RDC-14",
+      "texte_original": "ARMOIRES (entrée arrière)",
+      "interpretation": "armoires de rangement dans l'entrée arrière",
+      "photo": "P3"
+    }
+  ],
+  "observations": [
+    "Chaîne arrière rang 3 (cote-RDC-016/017/018) : 18'-3\" + 9'-0\" + 10'-9\" = 38'-0\" ; si le dernier chiffre est lu 5 (10'-5\"), la chaîne ne fait que 37'-8\" (−4\"). Le glyphe est identique au 9 de « 9'-0\" » de la même chaîne → lu 9, à confirmer.",
+    "Chaîne arrière rang 2 (cotes 019-023) : 8'-2\"+8'-3\"+8'-0\"+6'-10\"+6'-9\" = 38'-0\" ; avec 6'-5\" = 37'-8\". Même ambiguïté S/9 que ci-dessus ; les deux chaînes arrière se corroborent si on lit 9.",
+    "Entrée arrière : 8'-2\"+8'-3\"+8'-0\"+2'-9\" = 27'-2\" alors que 18'-3\"+9'-0\" = 27'-3\" pour le nu ext. droit de l'entrée → écart de 1\".",
+    "Fenêtre de l'entrée arrière : « 3'-6\" » ou « 3'-0\" » (2e chiffre traversé par un trait de cote) ; dessin ≈ 39 po.",
+    "Profondeur du volume de l'entrée arrière, profondeur/longueur des marches arrière et du perron avant : aucune cote écrite → ESTIMÉ seulement (entrée ≈ 5'-7\" hors-tout, marches arr. ≈ 6'-4\" x 4'-5\", perron ≈ 5'-7\" x 4'-5\").",
+    "ARCHE hall/salon : texte lu « 4'-0\" » (glyphe 4 net sur P3, P4, P6) mais l'ouverture dessinée mesure ≈ 74 po (≈ 6'-2\"), aussi grande que l'« ARCHE 6'-0\" » salon/cuisine (≈ 73 po).",
+    "Porte de la chambre d'utilité étiquetée « 2'-6\"x6'-8\" » (alt. 2'-4\") dans une baie de 2'-5\" d'axe en axe (cote-RDC-031) : une porte de 30 po (ou 28 po) ne peut pas y tenir avec ses montants.",
+    "Cotes intérieures : elles ne sont pas des dimensions nettes de pièce — chaque chaîne intérieure ferme exactement sur le hors-tout (38'-0\" ou 31'-8\"), donc elles vont du nu ext. des murs extérieurs à des repères de cloisons (axe ou nu : à déterminer en Phase 2). Les 4 « 13'-1\" » (2 chambres, salon ×2) et les 12'-2\" / 9'-0\"+3'-2\" sont cohérents entre eux.",
+    "Toutes les chaînes ferment : gauche 15'-9\"+15'-11\" ; droite 16'-8\"+15'-0\" ; avant 8'-2\"+8'-5\"+14'-10\"+6'-7\" ; int. x 9'-0\"+3'-2\"+2'-5\"+8'-4\"+3'-5\"+11'-8\" ; int. x avant 12'-2\"+2'-5\"+3'-11\"+19'-6\" ; int. y 13'-1\"+5'-6\"+13'-1\", 14'-8\"+3'-11\"+13'-1\", 18'-7\"+13'-1\".",
+    "Petite cote « 9\" » (guillemets à gauche, peut-être « 6\" » tête-bêche) sur la cloison chambre arrière / S. de bain : seule épaisseur de mur écrite ; le dessin montre ≈ 5 po. Épaisseurs des murs ext. (≈ 11 po) et des cloisons (≈ 6 po) : ESTIMÉES seulement.",
+    "Escalier : « 14 C.M. » écrit mais ~10 girons dessinés entre le palier et le BALAIS ; préfixe « 2.R. » (ou « E.R. ») non compris.",
+    "La porte de la chambre arrière et celle de la ch. d'utilité sont dessinées ~11 po en avant de la cloison chambre arr./S. de bain (y≈212 vs 223) : baie en retrait, sans mur plein.",
+    "Le « VEST. » (vestiaire) n'a pas de porte dessinée ; ouvert sur l'entrée avant.",
+    "Rez-de-chaussée : aucune hauteur de plafond écrite ; aucune mention de mur porteur ; la poutre 6x10 FLUSH de la cuisine n'est pas cotée en position.",
+    "Le symbole cercle-croix dans la S. de bain est dessiné dans le contour de la toilette : toilette ou luminaire ? Aucune autre toilette n'est dessinée.",
+    "Les étiquettes de portes (ex. 2'-6\"x6'-8\") sont portées dans ouvertures[].texte_original et non dans cotes[]."
+  ]
+}

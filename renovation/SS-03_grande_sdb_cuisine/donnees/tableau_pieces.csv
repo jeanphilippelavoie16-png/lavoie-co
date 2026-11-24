@@ -1,0 +1,14 @@
+﻿niveau;piece_id;piece;longueur;largeur;superficie_pi2;superficie_m2;perimetre;hauteur_plafond;surface_murale_brute_pi2;nb_portes;nb_fenetres;fiabilite
+SS;piece-SS-UTIL;Utilité et buanderie;"12'-0¾""";"7'-3¾""";88,20;8,19;"38'-9""";;;1;1;DÉDUIT
+SS;piece-SS-GYM;Salle d'entraînement;"12'-2""";"10'-4¾""";126,10;11,72;"45'-1½""";;;2;0;DÉDUIT
+SS;piece-SS-SALON;Séjour / salle à manger;"18'-1""";"12'-3""";221,50;20,58;"60'-8""";;;0;2;DÉDUIT
+SS;piece-SS-CUIS;Cuisine;"18'-2""";"6'-1""";107,70;10,01;"48'-6""";;;1;0;DÉDUIT
+SS;piece-SS-CORR;Corridor;"6'-7¾""";"3'-7¾""";24,20;2,25;"20'-7""";;;2;0;DÉDUIT
+SS;piece-SS-SDB;Salle de bain;"17'-11¾""";"7'-4½""";105,80;9,83;"50'-8½""";;;1;1;DÉDUIT
+SS;piece-SS-CH1;Chambre 1;"17'-11¾""";"9'-9¾""";156,90;14,58;"55'-7""";;;2;2;DÉDUIT
+SS;piece-SS-GR1;G.-R.;"7'-3¾""";"2'-2""";15,80;1,47;"18'-11½""";;;1;0;DÉDUIT
+SS;piece-SS-PASS;Passage;"11'-8""";"5'-7½""";65,60;6,09;"34'-7""";;;3;0;DÉDUIT
+SS;piece-SS-CH2;Chambre 2;"11'-11¾""";"11'-5¾""";124,90;11,60;"46'-11""";;;2;1;DÉDUIT
+SS;piece-SS-GR2;G.-R.;"4'-11¾""";"1'-11¾""";9,90;0,92;"13'-11""";;;1;0;DÉDUIT
+SS;piece-SS-LEG;Rangement (caveau);"7'-4""";"4'-2""";30,60;2,84;"23'-0""";;;1;0;DÉDUIT
+SS;piece-SS-PERRON;Excroissance sous perron;"5'-0""";"3'-6""";17,50;1,63;"17'-0""";;;0;0;DÉDUIT

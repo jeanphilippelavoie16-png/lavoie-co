@@ -1,0 +1,2033 @@
+{
+ "feuille": "RDC",
+ "lecteur": "2e lecture indépendante",
+ "sources": [
+  "P3 (principale)",
+  "P4",
+  "P6"
+ ],
+ "note": "px = pixels de prep/redresse/<photo>.jpg ; 'identique' dans lecture_autre_photo = même lecture sur P4/P6. Cotes de structure : valeur null, voir dimension_nominale.",
+ "cotes": [
+  {
+   "n": 1,
+   "categorie": "cote",
+   "texte_original": "8'-2\"",
+   "valeur": 98,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c1.jpg",
+   "px": [
+    683,
+    82
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 1 (chaîne des axes d'ouvertures), 1er segment depuis la gauche",
+   "mesure": "coin ext. arrière-gauche → axe fenêtre chambre arrière"
+  },
+  {
+   "n": 2,
+   "categorie": "cote",
+   "texte_original": "8'-3\"",
+   "valeur": 99,
+   "confiance": "haute",
+   "alternatives": [
+    {
+     "texte": "8'-9\"",
+     "valeur": 105
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r0c1.jpg",
+   "px": [
+    1038,
+    80
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 1, 2e segment",
+   "mesure": "axe fenêtre chambre arrière → axe fenêtre chambre d'utilité"
+  },
+  {
+   "n": 3,
+   "categorie": "cote",
+   "texte_original": "8'-0\"",
+   "valeur": 96,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c2.jpg",
+   "px": [
+    1408,
+    105
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 1, 3e segment (texte écrit dans le vestibule arrière, à côté de ARMOIRES)",
+   "mesure": "axe fenêtre ch. d'utilité → axe porte arrière 2'-10\"x6'-10\" / fenêtre du vestibule"
+  },
+  {
+   "n": 4,
+   "categorie": "cote",
+   "texte_original": "6'-10'",
+   "valeur": 82,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c3.jpg",
+   "px": [
+    1689,
+    115
+   ],
+   "lecture_autre_photo": {
+    "P4": "6'-10'",
+    "P6": "6'-10'"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 1, 4e segment (écrit sur les marches arrière ; marque de pouces écrite comme ')",
+   "mesure": "axe porte/fenêtre vestibule → axe fenêtre cuisine"
+  },
+  {
+   "n": 5,
+   "categorie": "cote",
+   "texte_original": "6'-9\"",
+   "valeur": 81,
+   "confiance": "haute",
+   "alternatives": [
+    {
+     "texte": "6'-5\"",
+     "valeur": 77
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r0c3.jpg",
+   "px": [
+    1936,
+    142
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 1, 5e segment",
+   "mesure": "axe fenêtre cuisine → coin ext. arrière-droit"
+  },
+  {
+   "n": 6,
+   "categorie": "ouverture",
+   "texte_original": "6'-3\"",
+   "valeur": 75,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c1.jpg",
+   "px": [
+    840,
+    160
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 0 (cote d'ouverture contre le mur), fenêtre chambre arrière",
+   "mesure": "largeur fenêtre (jambage à jambage)"
+  },
+  {
+   "n": 7,
+   "categorie": "ouverture",
+   "texte_original": "3'-0\"",
+   "valeur": 36,
+   "confiance": "moyenne",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c2.jpg",
+   "px": [
+    1176,
+    192
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 0, fenêtre chambre d'utilité (zone sombre du pli central)",
+   "mesure": "largeur fenêtre"
+  },
+  {
+   "n": 8,
+   "categorie": "ouverture",
+   "texte_original": "6'-3\"",
+   "valeur": 75,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c3.jpg",
+   "px": [
+    1799,
+    210
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 0, fenêtre cuisine (au-dessus de LINTEAU 2-2\"x8\")",
+   "mesure": "largeur fenêtre"
+  },
+  {
+   "n": 9,
+   "categorie": "cote",
+   "texte_original": "18'-3\"",
+   "valeur": 219,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P4",
+   "tuile": "P4_r0c0.jpg",
+   "px": [
+    806,
+    20
+   ],
+   "lecture_autre_photo": {
+    "P4": "18'-3\"",
+    "P6": "18'-3\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 2 (le plus éloigné), 1er segment — absent de P3 (haut coupé)",
+   "mesure": "coin ext. arrière-gauche → face ext. gauche du vestibule arrière"
+  },
+  {
+   "n": 10,
+   "categorie": "cote",
+   "texte_original": "9'-0\"",
+   "valeur": 108,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P4",
+   "tuile": "P4_r0c1.jpg",
+   "px": [
+    1270,
+    22
+   ],
+   "lecture_autre_photo": {
+    "P4": "9'-0\"",
+    "P6": "9'-0\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 2, 2e segment — absent de P3",
+   "mesure": "largeur hors-tout du vestibule arrière (face ext. à face ext.)"
+  },
+  {
+   "n": 11,
+   "categorie": "cote",
+   "texte_original": "10-9\"",
+   "valeur": 129,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "10'-5\"",
+     "valeur": 125
+    }
+   ],
+   "photo": "P4",
+   "tuile": "P4_r0c2.jpg",
+   "px": [
+    1610,
+    34
+   ],
+   "lecture_autre_photo": {
+    "P4": "10-9\" (glyphe identique aux 9 de 6'-9\" et 9'-0\" ; peut se lire 10-5\")",
+    "P6": "10-9\" (même glyphe)"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, rang 2, 3e segment — absent de P3 ; haut du chiffre des pouces coupé par la ligne de cote, apostrophe absente",
+   "mesure": "face ext. droite du vestibule → coin ext. arrière-droit"
+  },
+  {
+   "n": 12,
+   "categorie": "ouverture",
+   "texte_original": "3'-6\"",
+   "valeur": 42,
+   "confiance": "basse",
+   "alternatives": [
+    {
+     "texte": "3'-0\"",
+     "valeur": 36
+    },
+    {
+     "texte": "3'-8\"",
+     "valeur": 44
+    }
+   ],
+   "photo": "P4",
+   "tuile": "P4_r0c1.jpg",
+   "px": [
+    1338,
+    52
+   ],
+   "lecture_autre_photo": {
+    "P4": "3'-6\" ?",
+    "P6": "3'-6\" ? (même ambiguïté)"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, vestibule, rang 0 au-dessus du mur arrière du vestibule — absent de P3 ; 2e chiffre en partie caché par une ligne d'attache",
+   "mesure": "largeur fenêtre du mur arrière du vestibule"
+  },
+  {
+   "n": 13,
+   "categorie": "cote",
+   "texte_original": "2'-9\"",
+   "valeur": 33,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "1'-9\"",
+     "valeur": 21
+    }
+   ],
+   "photo": "P4",
+   "tuile": "P4_r0c1.jpg",
+   "px": [
+    1394,
+    34
+   ],
+   "lecture_autre_photo": {
+    "P4": "2'-9\"",
+    "P6": "2'-9\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "arrière, vestibule, petite chaîne entre rang 0 et rang 2 — absent de P3",
+   "mesure": "axe fenêtre/porte du vestibule → face ext. droite du vestibule"
+  },
+  {
+   "n": 14,
+   "categorie": "cote",
+   "texte_original": "15'-9\"",
+   "valeur": 189,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c0.jpg",
+   "px": [
+    362,
+    590
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "côté gauche, rang 2, segment arrière",
+   "mesure": "coin ext. arrière-gauche → axe fenêtre salle de bain"
+  },
+  {
+   "n": 15,
+   "categorie": "cote",
+   "texte_original": "15'-11\"",
+   "valeur": 191,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c0.jpg",
+   "px": [
+    320,
+    1251
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "côté gauche, rang 2, segment avant",
+   "mesure": "axe fenêtre salle de bain → coin ext. avant-gauche"
+  },
+  {
+   "n": 16,
+   "categorie": "cote",
+   "texte_original": "31'-8\"",
+   "valeur": 380,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c0.jpg",
+   "px": [
+    245,
+    955
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "côté gauche, rang 3 (hors-tout)",
+   "mesure": "profondeur hors-tout, face ext. arrière → face ext. avant"
+  },
+  {
+   "n": 17,
+   "categorie": "ouverture",
+   "texte_original": "3'-0\"",
+   "valeur": 36,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c0.jpg",
+   "px": [
+    407,
+    900
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "côté gauche, rang 1, fenêtre salle de bain",
+   "mesure": "largeur fenêtre"
+  },
+  {
+   "n": 18,
+   "categorie": "cote",
+   "texte_original": "16 8\"",
+   "valeur": 200,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c4.jpg",
+   "px": [
+    2154,
+    640
+   ],
+   "lecture_autre_photo": {
+    "P4": "16 8\"",
+    "P6": "16 8\""
+   },
+   "orientation": "verticale",
+   "emplacement": "côté droit, rang 2, segment arrière (écrit sans apostrophe ni tiret)",
+   "mesure": "coin ext. arrière-droit → axe fenêtre côté droit (salle à manger)"
+  },
+  {
+   "n": 19,
+   "categorie": "cote",
+   "texte_original": "15'-0\"",
+   "valeur": 180,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c4.jpg",
+   "px": [
+    2169,
+    1258
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "côté droit, rang 2, segment avant",
+   "mesure": "axe fenêtre côté droit → coin ext. avant-droit"
+  },
+  {
+   "n": 20,
+   "categorie": "cote",
+   "texte_original": "31'-8\"",
+   "valeur": 380,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c4.jpg",
+   "px": [
+    2257,
+    905
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "côté droit, rang 3 (hors-tout)",
+   "mesure": "profondeur hors-tout"
+  },
+  {
+   "n": 21,
+   "categorie": "ouverture",
+   "texte_original": "3'-0\"",
+   "valeur": 36,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c4.jpg",
+   "px": [
+    2104,
+    975
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "côté droit, rang 1, fenêtre salle à manger/salon",
+   "mesure": "largeur fenêtre"
+  },
+  {
+   "n": 22,
+   "categorie": "ouverture",
+   "texte_original": "6'-3\"",
+   "valeur": 75,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "6'-8\"",
+     "valeur": 80
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r3c1.jpg",
+   "px": [
+    800,
+    1676
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 1, fenêtre chambre avant (3 à barre plate)",
+   "mesure": "largeur fenêtre"
+  },
+  {
+   "n": 23,
+   "categorie": "ouverture",
+   "texte_original": "9'-0\"",
+   "valeur": 108,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c3.jpg",
+   "px": [
+    1819,
+    1658
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 1, fenêtre salon",
+   "mesure": "largeur fenêtre"
+  },
+  {
+   "n": 24,
+   "categorie": "cote",
+   "texte_original": "8'-2\"",
+   "valeur": 98,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c1.jpg",
+   "px": [
+    618,
+    1736
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 2, 1er segment depuis la gauche",
+   "mesure": "coin ext. avant-gauche → axe fenêtre chambre avant"
+  },
+  {
+   "n": 25,
+   "categorie": "cote",
+   "texte_original": "8'-5\"",
+   "valeur": 101,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c1.jpg",
+   "px": [
+    998,
+    1751
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 2, 2e segment",
+   "mesure": "axe fenêtre chambre avant → axe porte d'entrée (repère dans le perron)"
+  },
+  {
+   "n": 26,
+   "categorie": "cote",
+   "texte_original": "14'-10\"",
+   "valeur": 178,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c3.jpg",
+   "px": [
+    1569,
+    1748
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 2, 3e segment",
+   "mesure": "axe porte d'entrée → axe fenêtre salon"
+  },
+  {
+   "n": 27,
+   "categorie": "cote",
+   "texte_original": "6'-7\"",
+   "valeur": 79,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c3.jpg",
+   "px": [
+    1936,
+    1726
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 2, 4e segment",
+   "mesure": "axe fenêtre salon → coin ext. avant-droit"
+  },
+  {
+   "n": 28,
+   "categorie": "cote",
+   "texte_original": "38'-0\"",
+   "valeur": 456,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c2.jpg",
+   "px": [
+    1301,
+    1903
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "avant, rang 3 (hors-tout)",
+   "mesure": "largeur hors-tout, face ext. gauche → face ext. droite"
+  },
+  {
+   "n": 29,
+   "categorie": "cote",
+   "texte_original": "9'-0\"",
+   "valeur": 108,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c1.jpg",
+   "px": [
+    678,
+    802
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale traversant SDB/hall/ch. d'utilité/balais/cuisine, segment 1 (écrit encadré dans la SDB)",
+   "mesure": "face ext. mur gauche → cloison droite de la SDB (repère x≈844 px)"
+  },
+  {
+   "n": 30,
+   "categorie": "cote",
+   "texte_original": "3'-2\"",
+   "valeur": 38,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c1.jpg",
+   "px": [
+    908,
+    805
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, même chaîne, segment 2 (hall devant la SDB)",
+   "mesure": "cloison SDB → cloison des garde-robes (x≈992 px)"
+  },
+  {
+   "n": 31,
+   "categorie": "cote",
+   "texte_original": "2'-5\"",
+   "valeur": 29,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c2.jpg",
+   "px": [
+    1063,
+    812
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, même chaîne, segment 3 (à droite de la cloison des G.R.)",
+   "mesure": "cloison G.R. → repère x≈1103 px (cloison/jambage côté passage)"
+  },
+  {
+   "n": 32,
+   "categorie": "cote",
+   "texte_original": "8'-4\"",
+   "valeur": 100,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c2.jpg",
+   "px": [
+    1253,
+    818
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, même chaîne, segment 4 (chambre d'utilité / passage)",
+   "mesure": "repère x≈1103 → mur de l'escalier (x≈1446)"
+  },
+  {
+   "n": 33,
+   "categorie": "cote",
+   "texte_original": "3'-5\"",
+   "valeur": 41,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c2.jpg",
+   "px": [
+    1521,
+    812
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, même chaîne, segment 5 (écrit dans le placard BALAIS)",
+   "mesure": "mur escalier → mur escalier/cuisine (largeur escalier/balais)"
+  },
+  {
+   "n": 34,
+   "categorie": "cote",
+   "texte_original": "11'-8\"",
+   "valeur": 140,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c3.jpg",
+   "px": [
+    1816,
+    817
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, même chaîne, segment 6 (cuisine/s.-à-manger)",
+   "mesure": "mur escalier côté cuisine → face ext. mur droit"
+  },
+  {
+   "n": 35,
+   "categorie": "cote",
+   "texte_original": "12'-2\"",
+   "valeur": 146,
+   "confiance": "haute",
+   "alternatives": [
+    {
+     "texte": "12'-7\"",
+     "valeur": 151
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r2c1.jpg",
+   "px": [
+    710,
+    1346
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale avant, segment 1 (chambre avant)",
+   "mesure": "face ext. mur gauche → cloison droite chambre avant"
+  },
+  {
+   "n": 36,
+   "categorie": "cote",
+   "texte_original": "2'-5\"",
+   "valeur": 29,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c2.jpg",
+   "px": [
+    1048,
+    1349
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale avant, segment 2 (garde-robe)",
+   "mesure": "profondeur G.R. entre cloisons"
+  },
+  {
+   "n": 37,
+   "categorie": "cote",
+   "texte_original": "3'-11\"",
+   "valeur": 47,
+   "confiance": "moyenne",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c2.jpg",
+   "px": [
+    1186,
+    1341
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale avant, segment 3 (hall ; texte chevauché par l'arc de porte)",
+   "mesure": "largeur du hall entre cloisons"
+  },
+  {
+   "n": 38,
+   "categorie": "cote",
+   "texte_original": "19'-6\"",
+   "valeur": 234,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c3.jpg",
+   "px": [
+    1719,
+    1348
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "intérieur, chaîne horizontale avant, segment 4 (salon)",
+   "mesure": "cloison hall/salon → face ext. mur droit"
+  },
+  {
+   "n": 39,
+   "categorie": "cote",
+   "texte_original": "13'-1\"",
+   "valeur": 157,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c1.jpg",
+   "px": [
+    612,
+    615
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale gauche, segment arrière (chambre arrière)",
+   "mesure": "face ext. mur arrière → cloison chambre/SDB"
+  },
+  {
+   "n": 40,
+   "categorie": "cote",
+   "texte_original": "5'-6\"",
+   "valeur": 66,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c1.jpg",
+   "px": [
+    598,
+    940
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale gauche, segment milieu (SDB)",
+   "mesure": "cloison chambre arr./SDB → cloison SDB/chambre av."
+  },
+  {
+   "n": 41,
+   "categorie": "cote",
+   "texte_original": "13'-1\"",
+   "valeur": 157,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c1.jpg",
+   "px": [
+    590,
+    1281
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale gauche, segment avant (chambre avant)",
+   "mesure": "cloison SDB → face ext. mur avant"
+  },
+  {
+   "n": 42,
+   "categorie": "epaisseur",
+   "texte_original": "6\"",
+   "valeur": 6,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "9\"",
+     "valeur": 9
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r1c1.jpg",
+   "px": [
+    715,
+    742
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, petite cote verticale au-dessus du 9'-0\" de la SDB (écrite tournée, se lit '\"9' à l'envers)",
+   "mesure": "épaisseur de la cloison chambre arrière / SDB"
+  },
+  {
+   "n": 43,
+   "categorie": "cote",
+   "texte_original": "14'-8\"",
+   "valeur": 176,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c2.jpg",
+   "px": [
+    1328,
+    610
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale centrale, segment arrière (chambre d'utilité)",
+   "mesure": "face ext. mur arrière → cloison ch. d'utilité/passage"
+  },
+  {
+   "n": 44,
+   "categorie": "cote",
+   "texte_original": "3'-11\"",
+   "valeur": 47,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c2.jpg",
+   "px": [
+    1335,
+    965
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale centrale, segment milieu (PASSAGE)",
+   "mesure": "largeur du passage"
+  },
+  {
+   "n": 45,
+   "categorie": "cote",
+   "texte_original": "13-1",
+   "valeur": 157,
+   "confiance": "moyenne",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c2.jpg",
+   "px": [
+    1318,
+    1296
+   ],
+   "lecture_autre_photo": {
+    "P4": "13-1",
+    "P6": "13-1"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale centrale, segment avant (côté gauche du salon, près ARCHE) ; écrit sans marques ' ni \"",
+   "mesure": "cloison passage/salon → face ext. mur avant"
+  },
+  {
+   "n": 46,
+   "categorie": "cote",
+   "texte_original": "18'-7\"",
+   "valeur": 223,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c3.jpg",
+   "px": [
+    1856,
+    775
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale droite, segment arrière (cuisine/s.-à-manger)",
+   "mesure": "face ext. mur arrière → cloison/arche cuisine-salon"
+  },
+  {
+   "n": 47,
+   "categorie": "cote",
+   "texte_original": "13'-1\"",
+   "valeur": 157,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c3.jpg",
+   "px": [
+    1879,
+    1296
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "intérieur, chaîne verticale droite, segment avant (salon)",
+   "mesure": "arche → face ext. mur avant"
+  },
+  {
+   "n": 48,
+   "categorie": "ouverture",
+   "texte_original": "2'-10\"x6'-10\"",
+   "valeur": 34,
+   "hauteur": 82,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c3.jpg",
+   "px": [
+    1544,
+    93
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "vestibule arrière, porte extérieure arrière",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 49,
+   "categorie": "ouverture",
+   "texte_original": "2'-8\"x6'-8\"",
+   "valeur": 32,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c2.jpg",
+   "px": [
+    1481,
+    318
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "vestibule arrière → palier de l'escalier (porte sur le mur gauche du vestibule)",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 50,
+   "categorie": "ouverture",
+   "texte_original": "2'-8x6'-8\"",
+   "valeur": 32,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c3.jpg",
+   "px": [
+    1649,
+    305
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "vestibule/palier arrière → cuisine",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 51,
+   "categorie": "ouverture",
+   "texte_original": "2'-4\"x6'-8\"",
+   "valeur": 28,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c1.jpg",
+   "px": [
+    945,
+    348
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "chambre arrière, garde-robe haute (1re étiquette)",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 52,
+   "categorie": "ouverture",
+   "texte_original": "2'-4\"x6'-8\"",
+   "valeur": 28,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c1.jpg",
+   "px": [
+    928,
+    397
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "chambre arrière, garde-robe (2e étiquette, juste sous la 1re)",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 53,
+   "categorie": "ouverture",
+   "texte_original": "2'-4\"x6'-8\"",
+   "valeur": 28,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c2.jpg",
+   "px": [
+    1156,
+    673
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "garde-robe s'ouvrant sur la chambre d'utilité / hall",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 54,
+   "categorie": "ouverture",
+   "texte_original": "2'-6\"x6'-8\"",
+   "valeur": 30,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c1.jpg",
+   "px": [
+    971,
+    808
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "hall, porte de la chambre arrière (côté gauche de la cloison des G.R.)",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 55,
+   "categorie": "ouverture",
+   "texte_original": "2'-6\"x6'-8\"",
+   "valeur": 30,
+   "hauteur": 80,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "2'-6\"x6'-9\"",
+     "valeur": 30,
+     "hauteur": 81
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r1c1.jpg",
+   "px": [
+    1026,
+    790
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "hall, porte côté droit de la cloison des G.R. (vers ch. d'utilité)",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 56,
+   "categorie": "ouverture",
+   "texte_original": "2'-6\"x6'-8\"",
+   "valeur": 30,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c1.jpg",
+   "px": [
+    778,
+    995
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "porte de la salle de bain",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 57,
+   "categorie": "ouverture",
+   "texte_original": "1'-9\"x6'-8\"",
+   "valeur": 21,
+   "hauteur": 80,
+   "confiance": "basse",
+   "alternatives": [
+    {
+     "texte": "1'-5\"x6'-8\"",
+     "valeur": 17,
+     "hauteur": 80
+    },
+    {
+     "texte": "1'-6\"x6'-8\"",
+     "valeur": 18,
+     "hauteur": 80
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r2c1.jpg",
+   "px": [
+    1025,
+    1015
+   ],
+   "lecture_autre_photo": {
+    "P4": "1'-9\"x6'-8\" ? (glyphe à boucle en haut, comme les 9 du dessinateur)",
+    "P6": "1'-9\"x6'-8\" ?"
+   },
+   "orientation": "verticale",
+   "emplacement": "porte de la lingerie (LIN.)",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 58,
+   "categorie": "ouverture",
+   "texte_original": "2'-6\"x6'-8\"",
+   "valeur": 30,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c1.jpg",
+   "px": [
+    963,
+    1096
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "hall, porte de la chambre avant",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 59,
+   "categorie": "ouverture",
+   "texte_original": "2'-6\"x6'-8\"",
+   "valeur": 30,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c1.jpg",
+   "px": [
+    923,
+    1321
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "chambre avant, porte de la garde-robe",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 60,
+   "categorie": "ouverture",
+   "texte_original": "2'-8\"x6'-8\"",
+   "valeur": 32,
+   "hauteur": 80,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "2'-0\"x6'-8\"",
+     "valeur": 24,
+     "hauteur": 80
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r2c2.jpg",
+   "px": [
+    1146,
+    1331
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "hall, porte de la G.R. / vestiaire près de l'entrée (à gauche du 3'-11\")",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 61,
+   "categorie": "ouverture",
+   "texte_original": "2'-10\"x6'-10\"",
+   "valeur": 34,
+   "hauteur": 82,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c2.jpg",
+   "px": [
+    1221,
+    1541
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "porte d'entrée avant (côté perron)",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 62,
+   "categorie": "ouverture",
+   "texte_original": "2'-4\"x6'-8\"",
+   "valeur": 28,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c2.jpg",
+   "px": [
+    1456,
+    945
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "passage, porte double-arc côté escalier/balais",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 63,
+   "categorie": "ouverture",
+   "texte_original": "2'-8\"x6'-8\"",
+   "valeur": 32,
+   "hauteur": 80,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c3.jpg",
+   "px": [
+    1531,
+    1002
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "passage → cuisine/salle à manger",
+   "mesure": "porte LxH (largeur x hauteur)"
+  },
+  {
+   "n": 64,
+   "categorie": "ouverture",
+   "texte_original": "ARCHE 6'-0\"",
+   "valeur": 72,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c3.jpg",
+   "px": [
+    1884,
+    1050
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "arche entre salle à manger et salon (cloison horizontale côté droit)",
+   "mesure": "largeur de l'arche"
+  },
+  {
+   "n": 65,
+   "categorie": "ouverture",
+   "texte_original": "ARCHE 4'-0\"",
+   "valeur": 48,
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "ARCHE 6'-0\"",
+     "valeur": 72
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r2c2.jpg",
+   "px": [
+    1261,
+    1160
+   ],
+   "lecture_autre_photo": {
+    "P4": "4'-0\" (glyphe à barre, différent du 6 de ARCHE 6'-0\")",
+    "P6": "4'-0\""
+   },
+   "orientation": "verticale",
+   "emplacement": "arche entre hall et salon (cloison verticale)",
+   "mesure": "largeur de l'arche"
+  },
+  {
+   "n": 66,
+   "categorie": "structure",
+   "texte_original": "LINTEAU 2-2\"x8\"",
+   "valeur": null,
+   "dimension_nominale": "2-2x8",
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c1.jpg",
+   "px": [
+    800,
+    266
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "mur arrière, fenêtre chambre arrière",
+   "mesure": "linteau 2 pièces 2\"x8\""
+  },
+  {
+   "n": 67,
+   "categorie": "structure",
+   "texte_original": "LIN. 2-2x6",
+   "valeur": null,
+   "dimension_nominale": "2-2x6",
+   "confiance": "moyenne",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c2.jpg",
+   "px": [
+    1190,
+    297
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "mur arrière, fenêtre chambre d'utilité (zone du pli)",
+   "mesure": "linteau 2 pièces 2\"x6\""
+  },
+  {
+   "n": 68,
+   "categorie": "structure",
+   "texte_original": "LINTEAU 2-2\"x8\"",
+   "valeur": null,
+   "dimension_nominale": "2-2x8",
+   "confiance": "moyenne",
+   "alternatives": [
+    {
+     "texte": "LINTEAU 2-3\"x8\"",
+     "valeur": null
+    }
+   ],
+   "photo": "P3",
+   "tuile": "P3_r0c3.jpg",
+   "px": [
+    1820,
+    245
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "mur arrière, fenêtre cuisine ; 2e '2' chevauché par un point de cote",
+   "mesure": "linteau 2 pièces 2\"x8\""
+  },
+  {
+   "n": 69,
+   "categorie": "structure",
+   "texte_original": "LIN. 2-2\"x6\"",
+   "valeur": null,
+   "dimension_nominale": "2-2x6",
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c0.jpg",
+   "px": [
+    447,
+    880
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "mur gauche, fenêtre salle de bain",
+   "mesure": "linteau 2 pièces 2\"x6\""
+  },
+  {
+   "n": 70,
+   "categorie": "structure",
+   "texte_original": "LIN. 2-2\"x6\"",
+   "valeur": null,
+   "dimension_nominale": "2-2x6",
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c4.jpg",
+   "px": [
+    2027,
+    960
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "mur droit, fenêtre salle à manger/salon",
+   "mesure": "linteau 2 pièces 2\"x6\""
+  },
+  {
+   "n": 71,
+   "categorie": "structure",
+   "texte_original": "LINTEAU 2-2\"x8\"",
+   "valeur": null,
+   "dimension_nominale": "2-2x8",
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c1.jpg",
+   "px": [
+    808,
+    1597
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "mur avant, fenêtre chambre avant",
+   "mesure": "linteau 2 pièces 2\"x8\""
+  },
+  {
+   "n": 72,
+   "categorie": "structure",
+   "texte_original": "LINTEAU 2-2\"x10\"",
+   "valeur": null,
+   "dimension_nominale": "2-2x10",
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c3.jpg",
+   "px": [
+    1824,
+    1585
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "mur avant, fenêtre salon (écrit « 2- 2\"x10\" »)",
+   "mesure": "linteau 2 pièces 2\"x10\""
+  },
+  {
+   "n": 73,
+   "categorie": "structure",
+   "texte_original": "SOLIVES 2\"x7\" @ 16\" c/c",
+   "valeur": null,
+   "dimension_nominale": "2x7 @ 16 c/c",
+   "espacement_po": 16,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c2.jpg",
+   "px": [
+    1361,
+    520
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "chambre d'utilité, flèche de portée verticale (sens avant-arrière)",
+   "mesure": "solives de plafond/plancher 2\"x7\" à 16\" c/c"
+  },
+  {
+   "n": 74,
+   "categorie": "structure",
+   "texte_original": "SOLIVES 2\"x7\" @ 16\" c/c",
+   "valeur": null,
+   "dimension_nominale": "2x7 @ 16 c/c",
+   "espacement_po": 16,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c2.jpg",
+   "px": [
+    1481,
+    1290
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "salon, flèche de portée verticale",
+   "mesure": "solives 2\"x7\" à 16\" c/c"
+  },
+  {
+   "n": 75,
+   "categorie": "structure",
+   "texte_original": "POUTRE 6\"x10\" FLUSH",
+   "valeur": null,
+   "dimension_nominale": "6x10",
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c3.jpg",
+   "px": [
+    1880,
+    867
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "cuisine/s.-à-manger, ligne horizontale du mur de l'escalier au mur droit",
+   "mesure": "poutre encastrée 6\"x10\""
+  },
+  {
+   "n": 76,
+   "categorie": "structure",
+   "texte_original": "REN. AVEC BARRE ½\"ø @ 10\" c/c",
+   "valeur": null,
+   "dimension_nominale": "½ ø @ 10 c/c",
+   "espacement_po": 10,
+   "confiance": "moyenne",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r3c2.jpg",
+   "px": [
+    1181,
+    1712
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "horizontale",
+   "emplacement": "perron de béton avant (BETON REN. AVEC BARRE ½ø @ 10\" c/c)",
+   "mesure": "armature du perron : barres ½\" à 10\" c/c"
+  },
+  {
+   "n": 77,
+   "categorie": "autre",
+   "texte_original": "14 C.M.",
+   "valeur": 14,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c2.jpg",
+   "px": [
+    1514,
+    505
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "escalier (sous-sol), entre vestibule et cuisine",
+   "mesure": "nombre de contremarches"
+  },
+  {
+   "n": 78,
+   "categorie": "autre",
+   "texte_original": "#220",
+   "valeur": 220,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r1c3.jpg",
+   "px": [
+    1644,
+    520
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "prise sécheuse (SEC.) près de LAV.",
+   "mesure": "prise 220 V"
+  },
+  {
+   "n": 79,
+   "categorie": "autre",
+   "texte_original": "#220",
+   "valeur": 220,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c4.jpg",
+   "px": [
+    2015,
+    425
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "prise POÊLE, cuisine",
+   "mesure": "prise 220 V"
+  },
+  {
+   "n": 80,
+   "categorie": "autre",
+   "texte_original": "3W",
+   "valeur": 3,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r0c2.jpg",
+   "px": [
+    1500,
+    400
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "interrupteur 3 voies, haut de l'escalier / vestibule",
+   "mesure": "symbole interrupteur 3 voies"
+  },
+  {
+   "n": 81,
+   "categorie": "autre",
+   "texte_original": "3W",
+   "valeur": 3,
+   "confiance": "moyenne",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c2.jpg",
+   "px": [
+    1233,
+    1290
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "interrupteur 3 voies, hall près de l'arche",
+   "mesure": "symbole interrupteur 3 voies"
+  },
+  {
+   "n": 82,
+   "categorie": "autre",
+   "texte_original": "3W",
+   "valeur": 3,
+   "confiance": "moyenne",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c2.jpg",
+   "px": [
+    1293,
+    1090
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "interrupteur 3 voies, salon côté gauche (près arche)",
+   "mesure": "symbole interrupteur 3 voies"
+  },
+  {
+   "n": 83,
+   "categorie": "autre",
+   "texte_original": "3W",
+   "valeur": 3,
+   "confiance": "moyenne",
+   "alternatives": [],
+   "photo": "P3",
+   "tuile": "P3_r2c4.jpg",
+   "px": [
+    2033,
+    1098
+   ],
+   "lecture_autre_photo": {
+    "P4": "identique",
+    "P6": "identique"
+   },
+   "orientation": "verticale",
+   "emplacement": "interrupteur 3 voies, salon côté droit (près arche 6'-0\")",
+   "mesure": "symbole interrupteur 3 voies"
+  },
+  {
+   "n": 84,
+   "categorie": "autre",
+   "texte_original": "ÉCHELLE: 1/4\" = 1'-0\"",
+   "valeur": null,
+   "confiance": "haute",
+   "alternatives": [],
+   "photo": "P4",
+   "tuile": "P4_r2c2.jpg",
+   "px": [
+    2134,
+    1452
+   ],
+   "lecture_autre_photo": {
+    "P4": "ECHELLE: 1/4\" = 1'-0\"",
+    "P6": "ECHELLE: 1/4\" = 1'-0\""
+   },
+   "orientation": "horizontale",
+   "emplacement": "cartouche bas-droite (coupé dans P3)",
+   "mesure": "échelle du dessin"
+  }
+ ],
+ "sommes_chaines": [
+  {
+   "chaine": "arrière rang 1 (axes ouvertures)",
+   "segments": [
+    "8'-2\"",
+    "8'-3\"",
+    "8'-0\"",
+    "6'-10\"",
+    "6'-9\""
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "hors_tout_ref": "38'-0\" (hors-tout avant)",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "arrière rang 2",
+   "segments": [
+    "18'-3\"",
+    "9'-0\"",
+    "10'-9\""
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "hors_tout_ref": "38'-0\" (hors-tout avant)",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "arrière rang 2 avec lecture alternative 10'-5\"",
+   "segments": [
+    "18'-3\"",
+    "9'-0\"",
+    "10'-5\""
+   ],
+   "somme_po": 452,
+   "hors_tout_po": 456,
+   "hors_tout_ref": "38'-0\" (hors-tout avant)",
+   "ecart_po": -4
+  },
+  {
+   "chaine": "avant rang 2",
+   "segments": [
+    "8'-2\"",
+    "8'-5\"",
+    "14'-10\"",
+    "6'-7\""
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "hors_tout_ref": "38'-0\"",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "gauche rang 2",
+   "segments": [
+    "15'-9\"",
+    "15'-11\""
+   ],
+   "somme_po": 380,
+   "hors_tout_po": 380,
+   "hors_tout_ref": "31'-8\"",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "droite rang 2",
+   "segments": [
+    "16'-8\"",
+    "15'-0\""
+   ],
+   "somme_po": 380,
+   "hors_tout_po": 380,
+   "hors_tout_ref": "31'-8\"",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "intérieure horizontale arrière (SDB→cuisine)",
+   "segments": [
+    "9'-0\"",
+    "3'-2\"",
+    "2'-5\"",
+    "8'-4\"",
+    "3'-5\"",
+    "11'-8\""
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "hors_tout_ref": "38'-0\"",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "intérieure horizontale avant (chambre→salon)",
+   "segments": [
+    "12'-2\"",
+    "2'-5\"",
+    "3'-11\"",
+    "19'-6\""
+   ],
+   "somme_po": 456,
+   "hors_tout_po": 456,
+   "hors_tout_ref": "38'-0\"",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "intérieure verticale gauche (chambres/SDB)",
+   "segments": [
+    "13'-1\"",
+    "5'-6\"",
+    "13'-1\""
+   ],
+   "somme_po": 380,
+   "hors_tout_po": 380,
+   "hors_tout_ref": "31'-8\"",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "intérieure verticale centrale (utilité/passage/salon)",
+   "segments": [
+    "14'-8\"",
+    "3'-11\"",
+    "13'-1\""
+   ],
+   "somme_po": 380,
+   "hors_tout_po": 380,
+   "hors_tout_ref": "31'-8\"",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "intérieure verticale droite (cuisine/salon)",
+   "segments": [
+    "18'-7\"",
+    "13'-1\""
+   ],
+   "somme_po": 380,
+   "hors_tout_po": 380,
+   "hors_tout_ref": "31'-8\"",
+   "ecart_po": 0
+  },
+  {
+   "chaine": "recoupement : axe porte/fenêtre du vestibule arrière depuis le coin arrière-gauche (rang 1 : 8'-2\"+8'-3\"+8'-0\" vs rang 2 : 18'-3\"+9'-0\"-2'-9\")",
+   "segments": [
+    "8'-2\"",
+    "8'-3\"",
+    "8'-0\""
+   ],
+   "somme_po": 293,
+   "hors_tout_po": 294,
+   "ecart_po": -1,
+   "note": "écart de 1\" : 2'-9\" (ou 3'-6\") à confirmer, ou repère de la cote 2'-9\" différent de l'axe"
+  }
+ ]
+}

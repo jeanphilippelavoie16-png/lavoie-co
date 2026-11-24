@@ -1,0 +1,1594 @@
+{
+ "P2": {
+  "titre": "Croquis no. 1 — Résidence du 86, Laurier à Baie-Comeau — Plan d'origine et plan actuel du R[DC] — Vue en plan du RDC",
+  "auteur": "Claude Mazerolle, ing. (Les Entreprises Claude Mazerolle inc.)",
+  "date": "2016-09-19",
+  "echelle": {
+   "valeur": null,
+   "source": "ILLISIBLE",
+   "photo": "P2",
+   "note": "aucune échelle écrite ; dessin approximativement à l'échelle (≈3,05 px/po en x et ≈3,16 px/po en y dans l'image redressée ; les bulles 1–7 tombent à ±4 px des positions déduites des cotes)"
+  },
+  "orientation": {
+   "resume": "Bas de l'image redressée = façade avant (rue) ; ligne A = nu ext. avant, D = arrière ; ligne 1 = mur latéral gauche vu de la rue, 7 = droit. Même orientation que les feuilles d'origine (schéma §2) : x = 1→7, y = A→D.",
+   "justification": [
+    "Texte explicite « Façade du bâtiment » sous la chaîne 1–7 du bas (LU).",
+    "Salon à l'avant-droite, Cuisine à l'arrière-droite, chambres à gauche (fond pâle « CHAMBRE » ×2) — conforme au schéma §2 (droite = salon/cuisine, gauche = chambres).",
+    "Ouverture pâle dans le mur avant entre lignes 3 et 4 = position cohérente avec la porte d'entrée/perron (cf. P5 : excroissance avant à ≈12,5–19 pi du coin gauche).",
+    "Cheminée : non identifiable sur P2 (aucun élément annoté « cheminée ») — ne sert pas à la justification."
+   ],
+   "repere": "x_po = (px − 370)/3,05 ; y_po = (1539 − py)/3,16 dans prep/redresse/P2.jpg (ESTIMÉ, calé sur les nus ext. dessinés)"
+  },
+  "quadrillage": [
+   {
+    "ligne": "1",
+    "axe": "x",
+    "cote_depuis_precedente": null,
+    "position_cumulee_po": {
+     "valeur": 0,
+     "source": "LU",
+     "photo": "P2",
+     "note": "LU (chaîne avant : 10\" depuis la ligne 1 jusqu'au nu int.)"
+    },
+    "ce_qui_est_sur_la_ligne": "Nu extérieur du mur latéral gauche (vu de la rue). La cote 10\" part de la ligne 1 vers l'intérieur → mur ext. 10\".",
+    "px_bulle": [
+     369,
+     1640
+    ]
+   },
+   {
+    "ligne": "2",
+    "axe": "x",
+    "cote_depuis_precedente": {
+     "valeur": 136,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 146,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT 10\"+11'-4\""
+    },
+    "ce_qui_est_sur_la_ligne": "Cloison grise 2016 côté chambre avant-gauche (placards en « H ») : trait gris px x≈807–822 → x≈143–148 po ; la ligne tombe ≈ sur l'axe de la cloison (face ou axe non précisé par le document).",
+    "px_bulle": [
+     817,
+     1635
+    ]
+   },
+   {
+    "ligne": "3",
+    "axe": "x",
+    "cote_depuis_precedente": {
+     "valeur": 29,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 175,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT +2'-5\""
+    },
+    "ce_qui_est_sur_la_ligne": "Cloison grise du placard côté hall (avant) px x≈899–916 → x≈173–179 po, et cloison grise arrière (entre chambre arrière-gauche et « Salle à manger ») px x≈896–900 → x≈173 po.",
+    "px_bulle": [
+     911,
+     1636
+    ]
+   },
+   {
+    "ligne": "4",
+    "axe": "x",
+    "cote_depuis_precedente": {
+     "valeur": 47,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 222,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT +3'-11\""
+    },
+    "ce_qui_est_sur_la_ligne": "Bout de cloison grise avant (px x≈1038–1055 → x≈220–225 po, de y≈76 po jusqu'au mur avant) ; colonne B4 (carré plein) et colonne C4 retirée sur cette ligne.",
+    "px_bulle": [
+     1047,
+     1636
+    ]
+   },
+   {
+    "ligne": "5",
+    "axe": "x",
+    "cote_depuis_precedente": {
+     "valeur": 53,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 275,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT +4'-5\""
+    },
+    "ce_qui_est_sur_la_ligne": "Trait noir fin prolongeant la ligne 5 à travers le plan depuis l'axe C jusqu'à la chaîne avant (aucun mur gris) ; dans le fond pâle, une cloison d'origine le long de la cage d'escalier (côté gauche de l'escalier, x≈274 po) entre l'axe C et le mur arrière. Signification exacte de la ligne non écrite.",
+    "px_bulle": [
+     1201,
+     1627
+    ]
+   },
+   {
+    "ligne": "6",
+    "axe": "x",
+    "cote_depuis_precedente": {
+     "valeur": 41,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 316,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT +3'-5\""
+    },
+    "ce_qui_est_sur_la_ligne": "Colonne B6 (carré plein) et colonne C6 retirée ; bande tiretée rouge « Zone de fissures au plafond de plâtre » de l'axe C au mur arrière ; dans le fond pâle, cloison d'origine entre l'escalier et la cuisine. 3'-5\" (lignes 5–6) = largeur de l'escalier d'origine (fond pâle, mention « RAMPE »).",
+    "px_bulle": [
+     1324,
+     1637
+    ]
+   },
+   {
+    "ligne": "7",
+    "axe": "x",
+    "cote_depuis_precedente": {
+     "valeur": 140,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 456,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT +10'-10\"+10\" ; = 38' LU"
+    },
+    "ce_qui_est_sur_la_ligne": "Nu extérieur du mur latéral droit ; la cote 10\" (mur ext.) est juste à gauche de la ligne 7.",
+    "px_bulle": [
+     1748,
+     1638
+    ]
+   },
+   {
+    "ligne": "A",
+    "axe": "y",
+    "cote_depuis_precedente": null,
+    "position_cumulee_po": {
+     "valeur": 0,
+     "source": "LU",
+     "photo": "P2",
+     "note": "LU (10\" depuis A jusqu'au nu int.)"
+    },
+    "ce_qui_est_sur_la_ligne": "Nu extérieur du mur avant (façade, « Façade du bâtiment »).",
+    "px_bulle": [
+     1909,
+     1540
+    ]
+   },
+   {
+    "ligne": "B",
+    "axe": "y",
+    "cote_depuis_precedente": {
+     "valeur": 157,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 157,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT 10\"+12'-3\""
+    },
+    "ce_qui_est_sur_la_ligne": "Axe tireté-point bleu « Axe porteur à l'origine » (inférieur) ; colonnes B4 et B6 (carrés pleins, non annotés) ; extrémité arrière des placards gris en « H ».",
+    "px_bulle": [
+     1935,
+     1054
+    ]
+   },
+   {
+    "ligne": "C",
+    "axe": "y",
+    "cote_depuis_precedente": {
+     "valeur": 47,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 204,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT +3'-11\""
+    },
+    "ce_qui_est_sur_la_ligne": "Axe tireté-point bleu « Axe porteur à l'origine » (supérieur) ; colonnes C4 et C6 retirées ; extrémité avant de la cloison grise de la ligne 3 (arrière) ; bande tiretée rouge le long de C de la ligne 6 jusqu'à x≈379 po.",
+    "px_bulle": [
+     1935,
+     915
+    ]
+   },
+   {
+    "ligne": "D",
+    "axe": "y",
+    "cote_depuis_precedente": {
+     "valeur": 176,
+     "source": "LU",
+     "photo": "P2"
+    },
+    "position_cumulee_po": {
+     "valeur": 380,
+     "source": "DÉDUIT",
+     "photo": "P2",
+     "note": "DÉDUIT +13'-10\"+10\" ; = 31'-8\" LU"
+    },
+    "ce_qui_est_sur_la_ligne": "Nu extérieur du mur arrière.",
+    "px_bulle": [
+     1940,
+     356
+    ]
+   }
+  ],
+  "verification_chaines": {
+   "x": "10+136+29+47+53+41+130+10 = 456 po = 38'-0\" (concorde avec la cote 38')",
+   "y": "10+147+47+166+10 = 380 po = 31'-8\" (concorde avec la cote 31' 8\")",
+   "source": "DÉDUIT"
+  },
+  "cotes": [
+   {
+    "id": "cote-P2-001",
+    "texte_original": "38'",
+    "valeur": 456,
+    "lecture_1": "38'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1060,
+     190
+    ],
+    "emplacement": "chaîne hors-tout arrière (haut de l'image), entre les bulles 1 et 7",
+    "mesure": "longueur hors-tout de la façade : nu ext. gauche (ligne 1) → nu ext. droit (ligne 7)"
+   },
+   {
+    "id": "cote-P2-002",
+    "texte_original": "31' 8\"",
+    "valeur": 380,
+    "lecture_1": "31'-8\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     240,
+     963
+    ],
+    "emplacement": "chaîne verticale à gauche, hors-tout",
+    "mesure": "profondeur hors-tout : nu ext. avant (A) → nu ext. arrière (D)"
+   },
+   {
+    "id": "cote-P2-003",
+    "texte_original": "10\"",
+    "valeur": 10,
+    "lecture_1": "10\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     382,
+     1582
+    ],
+    "emplacement": "chaîne avant (bas), 1er segment à gauche, depuis la ligne 1",
+    "mesure": "épaisseur du mur ext. gauche (ligne 1 → nu int.)"
+   },
+   {
+    "id": "cote-P2-004",
+    "texte_original": "11' 4\"",
+    "valeur": 136,
+    "lecture_1": "11'-4\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     620,
+     1597
+    ],
+    "emplacement": "chaîne avant, 2e segment",
+    "mesure": "nu int. mur gauche → ligne 2"
+   },
+   {
+    "id": "cote-P2-005",
+    "texte_original": "2' 5\"",
+    "valeur": 29,
+    "lecture_1": "2'-5\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     865,
+     1597
+    ],
+    "emplacement": "chaîne avant, ligne 2 → ligne 3",
+    "mesure": "ligne 2 → ligne 3 (profondeur des placards en H)"
+   },
+   {
+    "id": "cote-P2-006",
+    "texte_original": "3' 11\"",
+    "valeur": 47,
+    "lecture_1": "3'-11\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     985,
+     1597
+    ],
+    "emplacement": "chaîne avant, ligne 3 → ligne 4",
+    "mesure": "ligne 3 → ligne 4 (zone hall/vestibule ; ouverture pâle dans le mur avant x≈183–216 po)"
+   },
+   {
+    "id": "cote-P2-007",
+    "texte_original": "4' 5\"",
+    "valeur": 53,
+    "lecture_1": "4'-5\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1127,
+     1602
+    ],
+    "emplacement": "chaîne avant, ligne 4 → ligne 5",
+    "mesure": "ligne 4 → ligne 5"
+   },
+   {
+    "id": "cote-P2-008",
+    "texte_original": "3' 5\"",
+    "valeur": 41,
+    "lecture_1": "3'-5\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1280,
+     1605
+    ],
+    "emplacement": "chaîne avant, ligne 5 → ligne 6",
+    "mesure": "ligne 5 → ligne 6 (= largeur de la cage d'escalier d'origine, fond pâle)"
+   },
+   {
+    "id": "cote-P2-009",
+    "texte_original": "10' 10\"",
+    "valeur": 130,
+    "lecture_1": "10'-10\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1537,
+     1617
+    ],
+    "emplacement": "chaîne avant, ligne 6 → tic du nu int. droit",
+    "mesure": "ligne 6 → nu int. du mur droit"
+   },
+   {
+    "id": "cote-P2-010",
+    "texte_original": "10\"",
+    "valeur": 10,
+    "lecture_1": "10\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1732,
+     1585
+    ],
+    "emplacement": "chaîne avant, dernier segment à droite",
+    "mesure": "épaisseur du mur ext. droit (nu int. → ligne 7)"
+   },
+   {
+    "id": "cote-P2-011",
+    "texte_original": "10\"",
+    "valeur": 10,
+    "lecture_1": "10\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1887,
+     373
+    ],
+    "emplacement": "chaîne droite, en haut, sous la bulle D",
+    "mesure": "épaisseur du mur arrière (D → nu int.)"
+   },
+   {
+    "id": "cote-P2-012",
+    "texte_original": "13' 10\"",
+    "valeur": 166,
+    "lecture_1": "13'-10\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1917,
+     647
+    ],
+    "emplacement": "chaîne droite, nu int. arrière → C",
+    "mesure": "nu int. mur arrière → axe C"
+   },
+   {
+    "id": "cote-P2-013",
+    "texte_original": "3' 11\"",
+    "valeur": 47,
+    "lecture_1": "3'-11\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1913,
+     987
+    ],
+    "emplacement": "chaîne droite, C → B",
+    "mesure": "entraxe des deux « axes porteurs à l'origine » C et B"
+   },
+   {
+    "id": "cote-P2-014",
+    "texte_original": "12' 3\"",
+    "valeur": 147,
+    "lecture_1": "12'-3\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1910,
+     1269
+    ],
+    "emplacement": "chaîne droite, B → nu int. avant",
+    "mesure": "axe B → nu int. du mur avant"
+   },
+   {
+    "id": "cote-P2-015",
+    "texte_original": "10\"",
+    "valeur": 10,
+    "lecture_1": "10\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1850,
+     1525
+    ],
+    "emplacement": "chaîne droite, en bas, au-dessus de la bulle A",
+    "mesure": "épaisseur du mur avant (nu int. → A)"
+   },
+   {
+    "id": "cote-P2-016",
+    "texte_original": "5 / 12",
+    "valeur": null,
+    "lecture_1": "5/12",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     2280,
+     590
+    ],
+    "emplacement": "triangle de pente sur la ferme de toit (à droite du plan)",
+    "mesure": "pente du toit 5/12 (≈22,6°) — rapport, pas une longueur"
+   },
+   {
+    "id": "cote-P2-017",
+    "texte_original": "8'-4\" ?",
+    "valeur": null,
+    "lecture_1": "8'-4\" ?",
+    "statut": "illisible",
+    "source": "ILLISIBLE",
+    "photo": "P2",
+    "px": [
+     1050,
+     880
+    ],
+    "emplacement": "fond pâle (plan d'origine), juste au-dessus de l'axe C entre lignes 3 et 4",
+    "mesure": "cote/texte du plan d'origine visible en fond pâle ; NON réécrite par l'ingénieur ; source principale = P3",
+    "note": "lecture incertaine (8/3, 4/1) ; à lire sur P3"
+   },
+   {
+    "id": "cote-P2-018",
+    "texte_original": "3'-5\"",
+    "valeur": null,
+    "lecture_1": "3'-5\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1255,
+     880
+    ],
+    "emplacement": "fond pâle, au-dessus de l'axe C entre lignes 5 et 6",
+    "mesure": "cote/texte du plan d'origine visible en fond pâle ; NON réécrite par l'ingénieur ; source principale = P3",
+    "note": "concorde avec la cote 2016 3'-5\" (lignes 5–6, largeur d'escalier)"
+   },
+   {
+    "id": "cote-P2-019",
+    "texte_original": "11'-8\"",
+    "valeur": null,
+    "lecture_1": "11'-8\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P2",
+    "px": [
+     1500,
+     850
+    ],
+    "emplacement": "fond pâle, cuisine, au-dessus de l'axe C",
+    "mesure": "cote/texte du plan d'origine visible en fond pâle ; NON réécrite par l'ingénieur ; source principale = P3",
+    "note": "lecture probable ; à confirmer sur P3"
+   },
+   {
+    "id": "cote-P2-020",
+    "texte_original": "9'-0\" ?",
+    "valeur": null,
+    "lecture_1": "9'-0\" ?",
+    "statut": "illisible",
+    "source": "ILLISIBLE",
+    "photo": "P2",
+    "px": [
+     620,
+     880
+    ],
+    "emplacement": "fond pâle, « S. DE BAIN » au-dessus de l'axe C, à gauche",
+    "mesure": "cote/texte du plan d'origine visible en fond pâle ; NON réécrite par l'ingénieur ; source principale = P3",
+    "note": "lecture incertaine"
+   },
+   {
+    "id": "cote-P2-021",
+    "texte_original": "POUTRE … 10\" FLUSH ?",
+    "valeur": null,
+    "lecture_1": "POUTRE … 10\" FLUSH ?",
+    "statut": "illisible",
+    "source": "ILLISIBLE",
+    "photo": "P2",
+    "px": [
+     1560,
+     895
+    ],
+    "emplacement": "fond pâle, le long de l'axe C dans la cuisine",
+    "mesure": "cote/texte du plan d'origine visible en fond pâle ; NON réécrite par l'ingénieur ; source principale = P3",
+    "note": "texte d'origine partiellement lisible (« POUTRE » sûr ; « 10\" FLUSH » incertain) — note de structure du plan d'origine, à lire sur P3"
+   },
+   {
+    "id": "cote-P2-022",
+    "texte_original": "(nombreuses cotes manuscrites pâles : linteaux, ouvertures, placards, « 2'-4\" »…)",
+    "valeur": null,
+    "lecture_1": null,
+    "statut": "illisible",
+    "source": "ILLISIBLE",
+    "photo": "P2",
+    "px": null,
+    "emplacement": "fond pâle sur toute la surface du plan",
+    "mesure": "cotes du plan d'origine — trop pâles sur P2 ; les lire sur P3/P4/P6"
+   }
+  ],
+  "murs_gris_2016": [
+   {
+    "id": "P2-g01",
+    "description": "Mur extérieur avant (façade), gris, 10\" (LU)",
+    "lignes": "A, de 1 à 7",
+    "x1": 0,
+    "y1": 5,
+    "x2": 456,
+    "y2": 5,
+    "px": [
+     [
+      370,
+      1520
+     ],
+     [
+      1761,
+      1539
+     ]
+    ],
+    "interruptions_pales": [
+     {
+      "x_de": 61,
+      "x_a": 135,
+      "source": "ESTIMÉ"
+     },
+     {
+      "x_de": 183,
+      "x_a": 216,
+      "source": "ESTIMÉ",
+      "note": "entre lignes 3 et 4 : probablement la porte d'entrée (vestibule)"
+     },
+     {
+      "x_de": 325,
+      "x_a": 427,
+      "source": "ESTIMÉ"
+     }
+    ],
+    "plan_origine": "présent (contour du plan d'origine)",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   },
+   {
+    "id": "P2-g02",
+    "description": "Mur extérieur arrière, gris, 10\" (LU)",
+    "lignes": "D, de 1 à 7",
+    "x1": 0,
+    "y1": 375,
+    "x2": 456,
+    "y2": 375,
+    "px": [
+     [
+      370,
+      337
+     ],
+     [
+      1761,
+      370
+     ]
+    ],
+    "interruptions_pales": [
+     {
+      "x_de": 61,
+      "x_a": 136
+     },
+     {
+      "x_de": 181,
+      "x_a": 217
+     },
+     {
+      "x_de": 282,
+      "x_a": 314,
+      "note": "entre lignes 5 et 6, en tête de l'escalier d'origine"
+     },
+     {
+      "x_de": 341,
+      "x_a": 416
+     }
+    ],
+    "plan_origine": "présent",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   },
+   {
+    "id": "P2-g03",
+    "description": "Mur extérieur latéral gauche, gris, 10\" (LU)",
+    "lignes": "1, de A à D",
+    "x1": 5,
+    "y1": 0,
+    "x2": 5,
+    "y2": 380,
+    "px": [
+     [
+      370,
+      337
+     ],
+     [
+      400,
+      1539
+     ]
+    ],
+    "interruptions_pales": [
+     {
+      "y_de": 170,
+      "y_a": 202,
+      "note": "entre B et C (zone « S. DE BAIN » d'origine)"
+     }
+    ],
+    "plan_origine": "présent",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   },
+   {
+    "id": "P2-g04",
+    "description": "Mur extérieur latéral droit, gris, 10\" (LU)",
+    "lignes": "7, de A à D",
+    "x1": 451,
+    "y1": 0,
+    "x2": 451,
+    "y2": 380,
+    "px": [
+     [
+      1730,
+      337
+     ],
+     [
+      1761,
+      1539
+     ]
+    ],
+    "interruptions_pales": [
+     {
+      "y_de": 157,
+      "y_a": 202,
+      "note": "entre B et C"
+     }
+    ],
+    "plan_origine": "présent",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   },
+   {
+    "id": "P2-g05",
+    "description": "Cloison grise mince, entre la chambre arrière-gauche (fond « CHAMBRE ») et la « Salle à manger »",
+    "lignes": "ligne 3, de C au mur arrière",
+    "x1": 173,
+    "y1": 204,
+    "x2": 173,
+    "y2": 370,
+    "px": [
+     [
+      898,
+      911
+     ],
+     [
+      898,
+      370
+     ]
+    ],
+    "plan_origine": "une cloison d'origine (pâle, double trait des placards) court ≈ 12 po plus à gauche (x≈145–161) ; la cloison grise à x≈173 n'est pas exactement superposée — recalage du fond ou modification : NON déterminable",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   },
+   {
+    "id": "P2-g06",
+    "description": "Placards gris en « H » (cloison côté chambre avant-gauche)",
+    "lignes": "ligne 2, de B au mur avant, avec une ouverture",
+    "segments": [
+     {
+      "x": 146,
+      "y_de": 106,
+      "y_a": 157,
+      "note": "avec petit retour/capuchon en B"
+     },
+     {
+      "x": 146,
+      "y_de": 10,
+      "y_a": 78
+     }
+    ],
+    "ouverture": {
+     "y_de": 78,
+     "y_a": 106,
+     "source": "ESTIMÉ",
+     "note": "ouverture du placard inférieur vers la chambre avant"
+    },
+    "px": [
+     [
+      814,
+      1042
+     ],
+     [
+      814,
+      1508
+     ]
+    ],
+    "plan_origine": "présent (placards et « LIN. » dans le fond pâle)",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   },
+   {
+    "id": "P2-g07",
+    "description": "Placards gris en « H » (cloison côté hall)",
+    "lignes": "ligne 3, de B jusqu'à y≈51 po",
+    "x1": 176,
+    "y1": 157,
+    "x2": 176,
+    "y2": 51,
+    "px": [
+     [
+      907,
+      1042
+     ],
+     [
+      907,
+      1377
+     ]
+    ],
+    "plan_origine": "présent ; le fond pâle montre en plus une cloison médiane d'origine à x≈162 (dos-à-dos de placards) qui n'est PAS reprise en gris",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   },
+   {
+    "id": "P2-g08",
+    "description": "Traverses grises des placards (lignes 2→3)",
+    "segments": [
+     {
+      "y": 133,
+      "x_de": 146,
+      "x_a": 176,
+      "note": "ferme le « LIN. » (lingerie) ouvert vers l'arrière/axe B"
+     },
+     {
+      "y": 53,
+      "x_de": 146,
+      "x_a": 176
+     }
+    ],
+    "px": [
+     [
+      814,
+      1129
+     ],
+     [
+      907,
+      1371
+     ]
+    ],
+    "plan_origine": "« LIN. » lisible dans le fond pâle",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   },
+   {
+    "id": "P2-g09",
+    "description": "Bout de cloison grise (vestibule / hall côté salon)",
+    "lignes": "ligne 4, de y≈76 po au mur avant",
+    "x1": 222,
+    "y1": 76,
+    "x2": 222,
+    "y2": 10,
+    "px": [
+     [
+      1046,
+      1298
+     ],
+     [
+      1046,
+      1508
+     ]
+    ],
+    "plan_origine": "le fond pâle montre des traits/cotes le long de la ligne 4 jusque vers B (cloison d'origine plus longue ? ou texte vertical) — incertain",
+    "source_position": "ESTIMÉ (pixels P2 redressé, échelle ≈3,05 px/po en x, ≈3,16 px/po en y ; dessin à l'échelle approx.)"
+   }
+  ],
+  "murs_origine_non_repris_en_gris": [
+   {
+    "element": "Murs de la « S. DE BAIN » d'origine (rectangle contre le mur gauche entre B et y≈224 po, x de 10 à ≈108 po)",
+    "px": [
+     [
+      400,
+      832
+     ],
+     [
+      700,
+      1050
+     ]
+    ],
+    "repris_en_gris": false
+   },
+   {
+    "element": "Cloisons des placards/garde-robes entre la chambre arrière-gauche et la « chambre d'utilité » d'origine (x≈145–161 po, entre C et D)",
+    "repris_en_gris": "partiellement (une seule cloison grise à x≈173)"
+   },
+   {
+    "element": "Cloison d'origine le long de la ligne 5 (côté gauche de la cage d'escalier), de C vers D",
+    "repris_en_gris": false
+   },
+   {
+    "element": "Cloison d'origine le long de la ligne 6 (entre escalier et cuisine), de C vers D — recouverte par la bande rouge « zone de fissures »",
+    "repris_en_gris": false
+   },
+   {
+    "element": "Escalier d'origine (marches + « RAMPE ») entre lignes 5 et 6",
+    "repris_en_gris": false
+   },
+   {
+    "element": "Cloison médiane des placards avant (x≈162, de B au mur avant)",
+    "repris_en_gris": false
+   },
+   {
+    "element": "Toute cloison le long des axes B et C (le fond montre des éléments pâles sur C et B côté gauche : murs de la salle de bain)",
+    "repris_en_gris": false
+   }
+  ],
+  "annotations": [
+   {
+    "texte_original": "Salle à manger",
+    "interpretation": "Nom de pièce attribué par l'ingénieur (2016) ; dans le fond pâle, cet espace porte « (CH)AMBRE D'UTILITÉ » (lecture probable) — usage changé ou étiquetage libre.",
+    "position": "entre lignes 3 et 5, entre C et D",
+    "px": [
+     1091,
+     640
+    ],
+    "couleur": "bleu foncé sur cartouche blanc",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Cuisine",
+    "interpretation": "Nom de pièce 2016 ; fond pâle : « CUISINE S.-À-MANGER » (S.-À-MANGER visible sous l'étiquette), armoires « DES BAS / HAUT », « COMPTOIR ».",
+    "position": "entre lignes 6 et 7, entre C et D",
+    "px": [
+     1533,
+     636
+    ],
+    "couleur": "bleu foncé sur cartouche blanc",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Salon",
+    "interpretation": "Nom de pièce 2016, avant-droite.",
+    "position": "entre lignes 4/5 et 7, entre A et B",
+    "px": [
+     1443,
+     1247
+    ],
+    "couleur": "bleu foncé sur cartouche blanc",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Axe porteur à l'origine",
+    "interpretation": "Ligne tireté-point bleue sur l'axe C. Le document dit « porteur à l'origine » : porteur explicite pour l'état d'origine seulement.",
+    "position": "axe C (y≈204 po), de x<0 à x>456 (déborde des murs)",
+    "px": [
+     1193,
+     899
+    ],
+    "couleur": "bleu",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Axe porteur à l'origine",
+    "interpretation": "Idem sur l'axe B.",
+    "position": "axe B (y≈157 po), sur toute la largeur",
+    "px": [
+     1199,
+     1033
+    ],
+    "couleur": "bleu",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Colonne C4 retirée",
+    "interpretation": "Colonne à l'intersection C × 4 retirée (carré tireté rouge = emplacement).",
+    "position": "C4 : x≈222, y≈204 (flèche vers px ≈[1054,908])",
+    "px": [
+     1173,
+     824
+    ],
+    "couleur": "rouge foncé",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Colonne C6 retirée",
+    "interpretation": "Colonne à l'intersection C × 6 retirée (carré tireté rouge).",
+    "position": "C6 : x≈316, y≈204 (flèche vers px ≈[1327,917])",
+    "px": [
+     1198,
+     957
+    ],
+    "couleur": "rouge foncé",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Zone de fissures au plafond de plâtre",
+    "interpretation": "Bande tiretée rouge double : (1) le long de la ligne 6, de l'axe C jusqu'au mur arrière ; (2) le long de l'axe C, de la ligne 6 jusqu'à x≈379 po. Deux flèches.",
+    "position": "bande 1 : x≈313–319, y 204→370 ; bande 2 : y≈195–204, x 316→≈379",
+    "px": [
+     1484,
+     757
+    ],
+    "couleur": "rouge foncé, italique",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Fissure ± 1,2 m au plafond de stucco",
+    "interpretation": "Trait tireté rouge vertical (parallèle à y) dans le salon.",
+    "position": "x≈319 po (≈ ligne 6), y≈31→67 po (longueur dessinée ≈37 po, ESTIMÉ ; texte : ± 1,2 m ≈ 47 po)",
+    "px": [
+     1522,
+     1368
+    ],
+    "couleur": "rouge foncé, italique",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "(carrés pleins brun-rouge, sans texte)",
+    "interpretation": "Colonnes aux intersections B4 et B6 — non annotées ; PRÉSUMÉ existantes en 2016 (contraste avec C4/C6 « retirées »).",
+    "position": "B4 : x≈224, y≈157 ; B6 : x≈315, y≈157",
+    "px": [
+     1054,
+     1050
+    ],
+    "couleur": "brun-rouge plein",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Façade du bâtiment",
+    "interpretation": "Identifie le côté bas de la feuille (ligne A, chaîne 1–7) comme la façade.",
+    "position": "sous la chaîne avant",
+    "px": [
+     1011,
+     1678
+    ],
+    "couleur": "bleu souligné",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Vue en plan du RDC",
+    "interpretation": "Titre de la vue.",
+    "position": "sous « Façade du bâtiment »",
+    "px": [
+     1011,
+     1730
+    ],
+    "couleur": "bleu souligné",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Croquis no. 1",
+    "interpretation": "No du croquis.",
+    "position": "cartouche, bas-droite",
+    "px": [
+     2290,
+     1568
+    ],
+    "couleur": "bleu",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Résidence du 86, Laurier / à Baie-Comeau / Plan d'origine et plan actuel du R[DC]",
+    "interpretation": "Titre (le « DC » final est hors cadre).",
+    "position": "cartouche",
+    "px": [
+     2400,
+     1620
+    ],
+    "couleur": "noir / bleu",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Claude Mazerolle, ing. / Le 19 septembre 2016",
+    "interpretation": "Auteur et date.",
+    "position": "cartouche, bas",
+    "px": [
+     2280,
+     1745
+    ],
+    "couleur": "bleu",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Logo « Les Entreprises Claude Mazerolle inc. » + adresse (129, av. Parent, Baie-Comeau), tél., courriel",
+    "interpretation": "Identification de l'entreprise (partiellement coupé à droite).",
+    "position": "au-dessus du cartouche",
+    "px": [
+     2450,
+     1380
+    ],
+    "couleur": "noir/jaune/bleu",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "5 / 12",
+    "interpretation": "Pente de la ferme.",
+    "position": "triangle de pente sur la ferme",
+    "px": [
+     2280,
+     590
+    ],
+    "couleur": "bleu",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Bulle « A » rose avec trait, en haut à droite",
+    "interpretation": "Bulle de quadrillage isolée hors du plan (appartient probablement à une autre vue/coupe ; aucune autre info).",
+    "position": "haut-droite de la feuille",
+    "px": [
+     2045,
+     120
+    ],
+    "couleur": "rose",
+    "photo": "P2"
+   },
+   {
+    "texte_original": "Textes du fond pâle (plan d'origine)",
+    "interpretation": "CHAMBRE (arrière-gauche), (CH)AMBRE D'UTILITÉ, S. DE BAIN, TRAPPE (?), HALL, LIN., CHAMBRE (avant-gauche), RAMPE, ARMOIRES DES BAS / HAUT, FRIG./SÉC. (?), COMPTOIR, CUISINE S.-À-MANGER, POUTRE …, LINTEAU … ; note pâle illisible dans le salon (« NO… SA… DA… »).",
+    "position": "partout",
+    "px": null,
+    "couleur": "gris pâle (fond)",
+    "photo": "P2"
+   }
+  ],
+  "ferme_de_toit": {
+   "description": "Ferme de toit en bois (brun clair) dessinée à droite du plan, tournée de 90° : entrait (membrure inférieure) vertical à gauche, faîte pointé vers la droite. Deux arbalétriers (membrures supérieures), deux diagonales (montants obliques) partant du milieu de l'entrait vers le milieu de chaque arbalétrier ; connecteurs (carrés avec X) au faîte et aux jonctions diagonales/arbalétriers. Pente 5/12 (LU) ; pente mesurée sur le dessin ≈ 5,3/12 (ESTIMÉ).",
+   "pente": {
+    "texte_original": "5 / 12",
+    "valeur": "5/12",
+    "source": "LU",
+    "photo": "P2"
+   },
+   "sens_de_portee": {
+    "valeur": "y (avant-arrière)",
+    "source": "ESTIMÉ",
+    "note": "entrait dessiné parallèle à la profondeur du plan, même hauteur que le plan (31'-8\") et faîte vis-à-vis du milieu (entre B et C) ; le document ne l'écrit pas"
+   },
+   "dimensions_membrures": {
+    "valeur": null,
+    "source": "ILLISIBLE",
+    "note": "aucune dimension de bois écrite"
+   },
+   "px_bbox": [
+    2075,
+    330,
+    2360,
+    1570
+   ]
+  },
+  "autres_vues": [
+   "Bas de la feuille (sous le cadre) : une seconde vue partiellement visible — ferme/pignon dessiné faîte en haut (arbalétriers bruns, connecteur au faîte), avec bulles roses aux deux extrémités (lettres hors cadre) ; probablement une coupe/élévation transversale. px ≈ [650–2400, 1760–1932].",
+   "Haut-droite : bulle rose « A » avec trait, isolée.",
+   "Cartouche coupé à droite (titre « … actuel du R » et courriel tronqués).",
+   "Le fond pâle (plan d'origine) déborde du contour gris et montre aussi des chaînes de cotes et textes pâles hors des murs (illisibles)."
+  ],
+  "interpretation_etat_actuel": {
+   "explicite": [
+    "Titre : « Plan d'origine et plan actuel du RDC » — le croquis superpose les deux.",
+    "Axes B et C « porteurs à l'origine » (porteurs explicitement à l'ORIGINE, rien n'est écrit sur leur état 2016).",
+    "Colonnes C4 et C6 « retirées ».",
+    "Fissures : zone au plafond de plâtre (ligne 6 / axe C, cuisine–salle à manger) et fissure ± 1,2 m au plafond de stucco (salon, ≈ ligne 6).",
+    "Noms de pièces 2016 : Salle à manger, Cuisine, Salon."
+   ],
+   "suppose": [
+    "Le gris représente PROBABLEMENT les murs existants en 2016 (plan « actuel ») — ce n'est pas légendé.",
+    "Le gris semble ne montrer que certains murs : aucune cloison n'est dessinée autour de la salle de bain, ni dans la chambre arrière-gauche hormis la ligne 3, ni l'escalier du sous-sol, alors qu'une salle de bain et un escalier existent nécessairement ; le gris n'est donc vraisemblablement PAS un état actuel complet (soit relevé partiel des murs pertinents pour la structure, soit simplification).",
+    "Absence de cloison grise aux lignes 5 et 6 entre C et D suggère un espace ouvert salle à manger/cuisine en 2016 (ouverture à l'origine des fissures ?) — NON écrit.",
+    "Carrés pleins B4 et B6 = colonnes encore présentes (PRÉSUMÉ, non annotées).",
+    "Aucun mur n'est qualifié « porteur » en 2016 sur ce croquis."
+   ],
+   "a_valider_sur_place": [
+    "Existence/position de la cloison ligne 3 (x≈173–176 po) vs cloison d'origine à x≈145–161 po.",
+    "Présence de colonnes en B4, B6 et absence en C4, C6 (sous-sol).",
+    "Murs de la salle de bain et de l'escalier.",
+    "Fissures et flèche du plafond le long de C et de la ligne 6."
+   ]
+  }
+ },
+ "P5": {
+  "titre": "Plan montrant l'emplacement de la maison projetée sur le lot 1-487, Ville de Baie Comeau",
+  "texte_original_titre": "PLAN MONTRANT / L'EMPLACEMENT DE LA MAISON PROJETÉE SUR LE LOT 1-487 / VILLE DE BAIE COMEAU / ECHELLE: 1\" = 20'",
+  "date": "1957-11-06",
+  "date_texte_original": "6 NOV. 1957",
+  "echelle": {
+   "texte_original": "ECHELLE: 1\" = 20'",
+   "valeur": "1:240",
+   "source": "LU",
+   "photo": "P5"
+  },
+  "lot": "1-487 (voisins : 1-488 à gauche, 1-486 à droite, vus de la rue)",
+  "rue": "AVE. LAURIER (en bas de la feuille, longe la façade avant)",
+  "cotes": [
+   {
+    "id": "cote-P5-001",
+    "texte_original": "38'-0\"",
+    "valeur": 456,
+    "unite_valeur": "po",
+    "lecture_1": "38'-0\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     875,
+     1218
+    ],
+    "emplacement": "au-dessus de la façade de la maison",
+    "mesure": "largeur de la maison (façade sur l'av. Laurier)"
+   },
+   {
+    "id": "cote-P5-002",
+    "texte_original": "31'-8\"",
+    "valeur": 380,
+    "unite_valeur": "po",
+    "lecture_1": "31'-8\"",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     1018,
+     1030
+    ],
+    "emplacement": "écrit verticalement le long du côté droit de la maison",
+    "mesure": "profondeur de la maison"
+   },
+   {
+    "id": "cote-P5-003",
+    "texte_original": "7.79'",
+    "valeur": 93.48,
+    "unite_valeur": "po",
+    "lecture_1": "7.79'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     603,
+     1220
+    ],
+    "emplacement": "à gauche de la maison, sur le prolongement de la façade, flèche vers la ligne de lot gauche",
+    "mesure": "marge latérale gauche (ligne de lot gauche oblique → coin avant-gauche de la maison), en pieds décimaux = 7,79 pi"
+   },
+   {
+    "id": "cote-P5-004",
+    "texte_original": "9'",
+    "valeur": 108,
+    "unite_valeur": "po",
+    "lecture_1": "9'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     1080,
+     1220
+    ],
+    "emplacement": "à droite de la maison, prolongement de la façade, flèche vers la ligne de lot droite",
+    "mesure": "marge latérale droite à l'avant (coin avant-droit → ligne de lot droite)"
+   },
+   {
+    "id": "cote-P5-005",
+    "texte_original": "9'",
+    "valeur": 108,
+    "unite_valeur": "po",
+    "lecture_1": "9'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     1066,
+     889
+    ],
+    "emplacement": "à droite de la maison, prolongement du mur arrière, flèche vers la ligne de lot droite",
+    "mesure": "marge latérale droite à l'arrière"
+   },
+   {
+    "id": "cote-P5-006",
+    "texte_original": "40'",
+    "valeur": 480,
+    "unite_valeur": "po",
+    "lecture_1": "40'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     557,
+     1429
+    ],
+    "emplacement": "écrit verticalement le long de la ligne de lot gauche, devant la maison",
+    "mesure": "marge avant (rue → façade), côté gauche"
+   },
+   {
+    "id": "cote-P5-007",
+    "texte_original": "40'",
+    "valeur": 480,
+    "unite_valeur": "po",
+    "lecture_1": "40'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     1112,
+     1421
+    ],
+    "emplacement": "écrit verticalement près de la ligne de lot droite, à côté de « ALLÉE »",
+    "mesure": "marge avant, côté droit"
+   },
+   {
+    "id": "cote-P5-008",
+    "texte_original": "57.23",
+    "valeur": 686.76,
+    "unite_valeur": "po",
+    "lecture_1": "57.23",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     845,
+     1629
+    ],
+    "emplacement": "le long de l'av. Laurier (façade du lot)",
+    "mesure": "largeur du lot sur rue, pieds décimaux (unité non écrite, PRÉSUMÉ pi)",
+    "note": "aucune apostrophe visible après 57.23"
+   },
+   {
+    "id": "cote-P5-009",
+    "texte_original": "50.27'",
+    "valeur": 603.24,
+    "unite_valeur": "po",
+    "lecture_1": "50.27'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     882,
+     502
+    ],
+    "emplacement": "ligne arrière du lot",
+    "mesure": "largeur du lot à l'arrière"
+   },
+   {
+    "id": "cote-P5-010",
+    "texte_original": "115.17'",
+    "valeur": 1382.04,
+    "unite_valeur": "po",
+    "lecture_1": "115.17'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     558,
+     960
+    ],
+    "emplacement": "écrit verticalement le long de la ligne de lot gauche (oblique)",
+    "mesure": "longueur de la ligne latérale gauche du lot",
+    "note": "« 115.17' » : 1/7 à surveiller ; avant-dernier chiffre lu « 1 »"
+   },
+   {
+    "id": "cote-P5-011",
+    "texte_original": "112.28'",
+    "valeur": 1347.36,
+    "unite_valeur": "po",
+    "lecture_1": "112.28'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     1140,
+     966
+    ],
+    "emplacement": "écrit verticalement le long de la ligne de lot droite",
+    "mesure": "longueur de la ligne latérale droite du lot (dessinée ⟂ à la rue)",
+    "note": "« 112.28' » : 2/8 net"
+   },
+   {
+    "id": "cote-P5-012",
+    "texte_original": "1\" = 20'",
+    "valeur": null,
+    "unite_valeur": "po",
+    "lecture_1": "ECHELLE: 1\" = 20'",
+    "statut": "confirmee",
+    "source": "LU",
+    "photo": "P5",
+    "px": [
+     979,
+     2067
+    ],
+    "emplacement": "titre",
+    "mesure": "échelle du plan (rapport 1:240)"
+   }
+  ],
+  "maison": {
+   "rectangle": "38'-0\" × 31'-8\" (LU) ; px : gauche x=643, droite x=1030,5, façade y=1233, arrière y=906 (prep/redresse/P5.jpg). Échelle image ≈ 10,20 px/pi en x ; profondeur mesurée 327 px ≈ 32,1 pi à cette échelle (écart 1 % avec 31'-8\", acceptable).",
+   "repere": "pieds depuis le coin avant-gauche (vu de la rue) ; x le long de la façade vers la droite, y vers l'arrière (y<0 = devant la façade)",
+   "excroissance_avant": {
+    "description": "petit rectangle devant la façade (perron/marches d'entrée PRÉSUMÉ ; non légendé)",
+    "x_de_pi": {
+     "valeur": 12.6,
+     "source": "ESTIMÉ",
+     "photo": "P5"
+    },
+    "x_a_pi": {
+     "valeur": 19.0,
+     "source": "ESTIMÉ",
+     "photo": "P5"
+    },
+    "largeur_pi": {
+     "valeur": 6.4,
+     "source": "ESTIMÉ",
+     "photo": "P5"
+    },
+    "profondeur_pi": {
+     "valeur": 3.0,
+     "source": "ESTIMÉ",
+     "photo": "P5",
+     "note": "y de −3,0 à 0"
+    },
+    "px": [
+     [
+      771,
+      1233
+     ],
+     [
+      836,
+      1264
+     ]
+    ]
+   },
+   "excroissance_arriere": {
+    "description": "rectangle accolé au mur arrière (palier/perron arrière PRÉSUMÉ) + à sa droite un rectangle hachuré de traits ⟂ à la façade (marches PRÉSUMÉES, descendant vers +x/allée ? non écrit)",
+    "rectangle": {
+     "x_de_pi": {
+      "valeur": 17.0,
+      "source": "ESTIMÉ",
+      "photo": "P5"
+     },
+     "x_a_pi": {
+      "valeur": 26.4,
+      "source": "ESTIMÉ",
+      "photo": "P5"
+     },
+     "profondeur_pi": {
+      "valeur": 4.7,
+      "source": "ESTIMÉ",
+      "photo": "P5",
+      "note": "y de 31,7 à ≈36,4"
+     },
+     "px": [
+      [
+       816,
+       857
+      ],
+      [
+       912,
+       906
+      ]
+     ]
+    },
+    "marches_hachurees": {
+     "x_de_pi": {
+      "valeur": 26.4,
+      "source": "ESTIMÉ",
+      "photo": "P5"
+     },
+     "x_a_pi": {
+      "valeur": 34.5,
+      "source": "ESTIMÉ",
+      "photo": "P5"
+     },
+     "profondeur_pi": {
+      "valeur": 3.8,
+      "source": "ESTIMÉ",
+      "photo": "P5"
+     },
+     "nb_traits_internes": {
+      "valeur": 6,
+      "source": "ESTIMÉ",
+      "photo": "P5",
+      "note": "hachures à main levée, ne pas interpréter comme nombre de marches"
+     },
+     "px": [
+      [
+       912,
+       867
+      ],
+      [
+       995,
+       906
+      ]
+     ]
+    }
+   },
+   "allee": {
+    "description": "« ALLÉE » écrit verticalement entre un trait tireté (prolongement du mur droit de la maison vers la rue) et la ligne de lot droite",
+    "largeur_pi": {
+     "valeur": 9,
+     "source": "DÉDUIT",
+     "photo": "P5",
+     "note": "= marge droite 9' (cote-P5-004) ; l'allée n'a pas de cote propre"
+    },
+    "px_texte": [
+     1062,
+     1483
+    ]
+   },
+   "traces_fantomes": "lignes très pâles à l'intérieur de la maison et devant (transparence d'une autre feuille / effacement) — non interprétées"
+  },
+  "nord": {
+   "angle_deg": 9.8,
+   "definition": "angle horaire (vu en plan) de la direction « vers l'arrière de la maison » (+y, ⟂ à la façade sur l'av. Laurier) à la flèche du nord",
+   "source": "ESTIMÉ",
+   "photo": "P5",
+   "methode": "Code (nord.py) sur prep/redresse/P5.jpg : fût de la flèche = pixel le plus sombre par rangée (y 720–1392), ajustement robuste x=a·y+b (a=−0,1837, 201 pts) ; pointe (1598,3 ; 670) et queue (1465,7 ; 1392). Façade = minimum d'intensité par colonne le long du mur avant (x 650–1025 hors excroissance), pente dy/dx=+0,0115. Direction arrière = perpendiculaire à la façade vers le haut. Angle = atan2(produit vectoriel, produit scalaire) en coordonnées image (y vers le bas → sens horaire positif).",
+   "resultat_brut": {
+    "avec_facade": 9.75,
+    "avec_murs_lateraux": 10.06
+   },
+   "incertitude": "± 1,5° (dessin manuel 1957, photo non redressée en perspective, flèche tracée à main levée)",
+   "interpretation": "le nord est ≈ 10° à droite (sens horaire) de la direction façade→arrière : l'arrière de la maison regarde ≈ N 10° O, la façade ≈ S 10° E. Azimuts déduits : +y (arrière) ≈ 350°, +x (côté droit / allée) ≈ 80°, façade ≈ 170°. Nord non qualifié (vrai/magnétique) sur le plan ; une barre transversale coupe le fût (px ≈ [1490–1630, 860–890]) sans légende.",
+   "px_fleche": {
+    "pointe": [
+     1598.3,
+     670.0
+    ],
+    "queue": [
+     1465.7,
+     1392.0
+    ]
+   },
+   "px_facade": {
+    "gauche": [
+     643,
+     1232.5
+    ],
+    "droite": [
+     1030,
+     1235.5
+    ]
+   }
+  },
+  "notes": [
+   {
+    "texte_original": "1-488 / 1-487 / 1-486",
+    "interpretation": "numéros de lots (gauche / sujet / droite)",
+    "px": [
+     [
+      348,
+      638
+     ],
+     [
+      876,
+      638
+     ],
+     [
+      1365,
+      638
+     ]
+    ]
+   },
+   {
+    "texte_original": "AVE. LAURIER",
+    "interpretation": "avenue Laurier, en façade",
+    "px": [
+     799,
+     1707
+    ]
+   },
+   {
+    "texte_original": "ALLÉE",
+    "interpretation": "allée d'auto côté droit",
+    "px": [
+     1062,
+     1483
+    ]
+   },
+   {
+    "texte_original": "(nom du propriétaire d'origine écrit dans la maison)",
+    "interpretation": "non retranscrit (non nécessaire)",
+    "px": [
+     700,
+     1067
+    ]
+   },
+   {
+    "texte_original": "PLAN MONTRANT L'EMPLACEMENT DE LA MAISON PROJETÉE SUR LE LOT 1-487 — VILLE DE BAIE COMEAU — ECHELLE: 1\" = 20'",
+    "interpretation": "titre, « Baie Comeau » sans trait d'union sur l'original",
+    "px": [
+     1030,
+     1919
+    ]
+   },
+   {
+    "texte_original": "6 NOV. 1957",
+    "interpretation": "date",
+    "px": [
+     348,
+     2196
+    ]
+   },
+   {
+    "texte_original": "flèche du nord avec barre transversale",
+    "interpretation": "nord, non qualifié vrai/magnétique",
+    "px": [
+     1532,
+     1031
+    ]
+   }
+  ]
+ },
+ "observations": [
+  "P2 : les deux chaînes se ferment exactement : x 10+136+29+47+53+41+130+10 = 456 po = 38' ; y 10+147+47+166+10 = 380 po = 31'-8\". Concorde avec P5 (38'-0\" × 31'-8\") et avec le rectangle principal attendu (schéma).",
+  "P2 donne des murs extérieurs de 10\" aux quatre côtés (LU) — épaisseur typique d'une FONDATION ; un mur ossature 1957 (2x4 + revêtements) fait généralement moins. Le 10\" a pu être repris du plan de fondation : à comparer avec P3 (RDC) et P1 (sous-sol) avant de l'appliquer au RDC.",
+  "P2 : vérifier sur P1/P3 si la poutre d'origine est sur B ou sur C (P2 donne DEUX axes « porteurs à l'origine », 3'-11\" d'entraxe).",
+  "P2 : la cote 3'-5\" (lignes 5–6) coïncide avec une cote 3'-5\" pâle du plan d'origine près de la cage d'escalier → la ligne 5–6 correspond vraisemblablement à la largeur de l'escalier d'origine.",
+  "P2 : l'étiquette 2016 « Salle à manger » est posée sur un espace que le fond d'origine nomme « (CH)AMBRE D'UTILITÉ » (lecture probable) et la « Cuisine » sur la « CUISINE S.-À-MANGER » d'origine : changement d'usage/aménagement possible (NON écrit).",
+  "P2 : la cloison grise arrière de la ligne 3 (x≈173–176 po) n'est pas exactement superposée aux cloisons pâles d'origine (x≈145–161 po) — recalage approximatif du fond ou cloison déplacée : indéterminé.",
+  "P2 vs P5 : l'ouverture pâle du mur avant entre lignes 3 et 4 (x≈183–216 po ≈ 15,3–18,0 pi) tombe dans l'excroissance avant de P5 (≈12,6–19,0 pi) → cohérent avec porte d'entrée + perron (PRÉSUMÉ).",
+  "P2 vs P5 : à l'arrière, P2 montre une interruption pâle entre lignes 5 et 6 (x≈282–314 po ≈ 23,5–26,2 pi) qui tombe au bout droit du rectangle arrière de P5 (≈17,0–26,4 pi), les marches hachurées étant à droite (≈26,4–34,5 pi) → porte arrière probable vers x≈24–26 pi (PRÉSUMÉ, aucune légende).",
+  "P5 : 7.79' + 38'-0\" + 9' = 54,79 pi = largeur du lot sur la ligne de façade ; le lot se rétrécit de 57.23 (rue) à 50.27 (arrière), ligne de lot droite ⟂ à la rue, ligne gauche oblique ; à 40 pi de la rue la largeur mesurée dans l'image ≈ 54,3 pi (ESTIMÉ) → cohérent à ≈0,5 pi près.",
+  "P5 : la ligne arrière du lot n'est pas parallèle à la rue (coin arrière-gauche plus loin de la rue que le droit : 115.17' vs 112.28') ; avec la ligne droite ⟂ à la rue, cour arrière côté droit ≈ 112,28 − 40 − 31,67 = 40,61 pi (DÉDUIT, si 40' mesuré le long de la ligne droite).",
+  "P5 : les marges avant sont 40' des deux côtés → façade parallèle à l'av. Laurier (cohérent avec la mesure : pente façade 0,66° ≈ inclinaison générale de la photo).",
+  "P5 est un plan d'implantation « projeté » (1957) : les excroissances (perron avant, palier + marches arrière) sont des intentions de 1957, pas un relevé ; dimensions ESTIMÉES uniquement (aucune cote).",
+  "Nord (P5) : ≈ 10° horaire depuis +y ; aucune information d'orientation sur P2."
+ ],
+ "meta": {
+  "extracteur": "COMP (feuilles complémentaires)",
+  "fichiers": {
+   "P2": "prep/redresse/P2.jpg",
+   "P5": "prep/redresse/P5.jpg"
+  },
+  "px": "coordonnées en pixels de prep/redresse/Pn.jpg",
+  "unites": "pouces sauf mention « _pi »"
+ }
+}
