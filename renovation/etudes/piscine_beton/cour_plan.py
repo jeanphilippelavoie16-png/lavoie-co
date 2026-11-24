@@ -41,8 +41,14 @@ if __name__ == "__main__":
     a.add_patch(Rectangle((445, 380), 12, 168, fc="#b9b6ae", ec="k", lw=.6)); a.add_patch(Rectangle((457, 510), 44, 43, fc="#d9d4c7", ec="k", lw=.6)); a.text(479, 531, "marches", ha="center", va="center", fontsize=7)
     a.add_patch(Rectangle((0, 300), 456, 80, fc="#e9e6df", ec="k", lw=1.5)); a.text(228, 335, "MAISON", ha="center", va="center", fontsize=14, fontweight="bold")
     a.add_patch(Rectangle((219, 380), 108, 60, fc="#e9e6df", ec="k", lw=1.5)); a.text(273, 410, "entrée\narrière", ha="center", va="center", fontsize=8)
-    a.add_patch(Rectangle((327, 380), 129, 60, fc="#c79a66", ec="k")); a.text(391, 410, "palier (gardé)", ha="center", va="center", fontsize=8)
-    a.add_patch(Rectangle((386, 440), 70, 54, fc="#d8b98f", ec="k", hatch="---")); a.text(421, 467, "escalier", ha="center", va="center", fontsize=8)
+    a.add_patch(Rectangle((318, 442), 127, 164, fc="#b9b7b2", ec="k", lw=.6)); a.add_patch(Rectangle((445, 554), 111, 52, fc="#b9b7b2", ec="k", lw=.6))
+    a.add_patch(Rectangle((327, 380), 45, 60, fc="#d6d3cc", ec="k")); a.add_patch(Rectangle((372, 380), 70, 60, fc="#d6d3cc", ec="k", hatch="|||")); a.text(385, 410, "marches (7)", ha="center", va="center", fontsize=8, bbox=dict(fc="white", ec="none", pad=1))
+    a.add_patch(Rectangle((354, 446), 91, 164, fc="none", ec="k", ls=":", lw=1.2)); a.text(400, 615, "pergola", ha="center", fontsize=7)
+    a.add_patch(Rectangle((420, 454), 23, 68, fc="#333", ec="k")); a.add_patch(Rectangle((407, 452), 13, 72, fc="#8a5a2e", ec="k")); a.text(431, 488, "BAR", rotation=90, color="white", ha="center", va="center", fontsize=8, fontweight="bold")
+    for yy in (465, 488, 511): a.add_patch(plt.Circle((398, yy), 6, fc="#8a5a2e", ec="k"))
+    a.add_patch(Rectangle((350, 572), 84, 32, fc="#e7e2d6", ec="k")); a.add_patch(Rectangle((350, 504), 32, 60, fc="#e7e2d6", ec="k")); a.add_patch(plt.Circle((404, 545), 16, fc="#ffb066", ec="k")); a.text(404, 545, "foyer", ha="center", va="center", fontsize=7)
+    for yy in (536, 558): a.add_patch(plt.Circle((436, yy), 8, fc="#e7e2d6", ec="k"))
+    a.text(336, 478, "TERRASSE\nLOUNGE", fontsize=7, fontweight="bold", ha="center")
     a.plot([LG(300), LG(903), RA[0], 560], [300, 903, RA[1], 300], color="#b02a2a", lw=1.6, ls="-."); a.text(300, 897, "ligne de lot arrière", color="#b02a2a", fontsize=9, ha="center")
     a.text(LG(650) - 8, 650, "ligne de lot", color="#b02a2a", fontsize=9, rotation=86, ha="right", va="center"); a.text(568, 700, "ligne de lot", color="#b02a2a", fontsize=9, rotation=90, va="center")
     a.plot([LG(372) + 4, LG(899) + 4, 556, 556, 501], [372, 899, 867, 553, 553], color="#7a5230", lw=2.5); a.text(120, 880, "clôture de 6 pi (existante au projet)", color="#7a5230", fontsize=8, ha="center")
@@ -62,7 +68,7 @@ if __name__ == "__main__":
     a.text(X0 + 196, YP + 16, "fenêtre", ha="center", fontsize=8, color="#004d6e"); a.text(X0 + PL - 30, YF + 4, "PATIO", fontsize=8, fontweight="bold", ha="center", va="bottom")
     # enceinte du patio : garde-corps de verre de 1,2 m et portillon
     a.plot([PATIO[0], PATIO[2], PATIO[2]], [YF, YF, YP], color="#00a0c8", lw=3); a.plot([PATIO[2], PATIO[2]], [YF + 20, YF + 56], color="#e2a93f", lw=5)
-    a.annotate("garde-corps de verre 1,2 m\net portillon à fermeture auto", (PATIO[2], YF + 38), (PATIO[2] + 34, YF + 92), fontsize=8, arrowprops=dict(arrowstyle="->"), color="#005f88")
+    a.annotate("garde-corps de verre 1,2 m\net portillon à fermeture auto", (PATIO[2], YF + 38), (PATIO[2] - 150, YF - 30), fontsize=8, arrowprops=dict(arrowstyle="->"), color="#005f88")
     a.add_patch(Rectangle((PATIO[2], YF + 14), 24, 48, fc="#d8b98f", ec="k", hatch="|||")); 
     a.add_patch(Rectangle(APP[:2], APP[2] - APP[0], APP[3] - APP[1], fc="#9aa0a6", ec="k")); a.annotate("appareils\n(filtre, thermopompe)", (APP[0] + 18, APP[3]), (APP[0] - 10, APP[3] + 40), fontsize=8, arrowprops=dict(arrowstyle="->"))
     def cote(x0, y0, x1, y1, t, dx=0, dy=0):
@@ -78,7 +84,8 @@ if __name__ == "__main__":
         "  par la piscine de béton de 20' × 20' avec son spa, son patio et son bar.",
         "• L'ensemble est tourné vers la maison : la fenêtre, le patio et le bar",
         "  font face à la porte arrière.",
-        "• Le palier et l'escalier de la porte arrière sont gardés tels quels.",
+        "• Plus de balcon à la porte arrière : des marches larges descendent le",
+        "  long de la maison vers une terrasse lounge (bar, foyer, pergola).",
         "• Le cabanon de 13' × 17' ne bouge pas ; la clôture de 6 pi non plus.",
         "• Les appareils vont près du coin arrière gauche de la maison.",
         "• Le patio (14 po) et le bar rendent la piscine facile à grimper : un",
