@@ -6,7 +6,7 @@ from matplotlib.patches import Rectangle
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 E = 10                       # épaisseur des parois
-PL, PW, PH = 260, 140, 54    # piscine hors tout (21'-8" × 11'-8"), 4'-6" de haut
+PL, PW, PH = 260, 260, 54    # piscine hors tout (21'-8" × 21'-8" : 20' × 20' à l'intérieur), 4'-6" de haut
 SW, SD, SH = 132, 96, PH     # spa : 11'-0" de large depuis le bout gauche, 8'-0" de saillie, même hauteur que la piscine ; ouvert sur la piscine
 FX0, FX1, FZ0, FZ1 = 150, 246, 14, 44      # fenêtre : 8'-0" × 2'-6"
 BET, EAU, VIT, SPA = "#c9c7c2", "#4fb3d9", "#9fe3f5", "#3aa0c8"
@@ -69,7 +69,7 @@ face([(E + 4, 0, PH - 6), (SW - E, 0, PH - 6), (SW - E, 3 * E, PH - 6), (E + 4, 
 c.text(*P(PL / 2, PW / 2, PH - 6), "piscine", ha="center", va="center", fontsize=13, fontweight="bold")
 c.text(*P(SW / 2, -SD / 2 + E, SH - 6), "spa", ha="center", va="center", fontsize=12, fontweight="bold")
 c.text(*P((FX0 + FX1) / 2, 0, (FZ0 + FZ1) / 2), "fenêtre", ha="center", va="center", color="#005f88", fontsize=11)
-c.set_xlim(-160, PL + 170); c.set_ylim(-80, PH + 90)
+c.set_xlim(-160, PL + 170); c.set_ylim(-80, PH + 0.32 * PW + 30); c.set_xlim(-160, PL + 0.5 * PW + 100)
 
 fig.text(0.47, 0.27, "PROPOSITION", fontweight="bold", fontsize=12)
 fig.text(0.47, 0.035, "\n".join([
