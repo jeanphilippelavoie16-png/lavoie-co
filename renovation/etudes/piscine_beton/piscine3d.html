@@ -28,13 +28,13 @@ button[aria-pressed="true"] { background: var(--encre); color: #fff; }
   <div class="titre"><h1>Piscine de béton, spa ouvert et fenêtre</h1><p>Esquisse préliminaire · glisse pour tourner, pince pour zoomer</p></div>
   <div class="vues">
     <button id="v-cour" aria-pressed="true">De la cour</button>
-    <button id="v-fenetre" aria-pressed="false">La fenêtre</button>
+    <button id="v-fenetre" aria-pressed="false">Le patio</button>
     <button id="v-haut" aria-pressed="false">Du haut</button>
   </div>
 </div>
 <div class="pied">
   <span><b>Piscine</b> 20' × 20' d'eau</span><span><b>Spa</b> 11'-0" × 8'-0"</span><span><b>Hauteur</b> 4'-6", eau 4'-0"</span>
-  <span><b>Fenêtre</b> 8'-0" × 2'-6"</span><span class="long">Dimensions proposées, à valider par un ingénieur</span>
+  <span><b>Fenêtre</b> 8'-0" × 2'-6"</span><span><b>Patio</b> 10'-8" × 8'-0", bar au spa</span><span class="long">Dimensions proposées, à valider par un ingénieur</span>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -119,21 +119,30 @@ const bulles = []; for (let i = 0; i < 46; i++) { const b = new THREE.Mesh(new T
   b.userData = { x: 2.6 + Math.random() * 5.8, z: .6 + Math.random() * 4.6, p: Math.random() * 3 }; S.add(b); bulles.push(b); }
 // décor : terrasse de bois, chaises longues, personnage, haie, arbres
 B(L + .4, L + 9, 0, .5, -P, 2, M.bois);
-function chaise(x, z) { B(x, x + 2.1, .9, 1.05, z, z + 4.6, M.blanc); B(x, x + 2.1, 1.05, 1.2, z, z + 1.7, M.blanc).rotation.x = -.5;
-  for (const [a, c] of [[.1, .3], [1.9, .3], [.1, 4.2], [1.9, 4.2]]) B(x + a, x + a + .1, .5, .9, z + c, z + c + .1, M.noir); }
+function chaise(x, z, y = .5) { B(x, x + 2.1, y + .4, y + .55, z, z + 4.6, M.blanc); B(x, x + 2.1, y + .55, y + .7, z, z + 1.7, M.blanc).rotation.x = -.5;
+  for (const [a, c] of [[.1, .3], [1.9, .3], [.1, 4.2], [1.9, 4.2]]) B(x + a, x + a + .1, y, y + .4, z + c, z + c + .1, M.noir); }
+// patio pour se faire griller : plancher de bois à la hauteur du bas de la fenêtre, dans le coin entre le spa et la piscine
+const PY = FZ0 - .12;
+B(SW, L + .3, 0, PY, 0, SD + .3, M.bois); B(SW + 2, L - 2, 0, PY / 2, SD + .3, SD + 1.3, M.bois);               // plancher et une marche
+chaise(14.6, 2.6, PY); chaise(17.8, 2.6, PY);
+// petit bar sur le mur du spa : comptoir de bois à la hauteur de la margelle, 3 tabourets côté patio
+B(SW - T - .1, SW + 1.25, H + .17, H + .32, .6, SD - .6, M.bois);
+for (const z of [1.8, 4, 6.2]) { const s = new THREE.Mesh(new THREE.CylinderGeometry(.55, .55, .12, 18), M.noir); s.position.set(SW + 1.5, PY + 2.4, z); s.castShadow = true; S.add(s);
+  const p = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, 2.4, 8), M.noir); p.position.set(SW + 1.5, PY + 1.2, z); S.add(p);
+  const b = new THREE.Mesh(new THREE.CylinderGeometry(.4, .4, .05, 18), M.noir); b.position.set(SW + 1.5, PY + .03, z); S.add(b); }
 chaise(L + 2, -14); chaise(L + 5.2, -14);
 function perso(x, z, col, k) { const G = new THREE.Group(), m = new THREE.MeshStandardMaterial({ color: col, roughness: .9 });
   const c = new THREE.Mesh(new THREE.CylinderGeometry(.5, .32, 4.2, 14), m); c.position.y = 2.1;
   const h = new THREE.Mesh(new THREE.SphereGeometry(.4, 14, 12), new THREE.MeshStandardMaterial({ color: 0xe2b592, roughness: .8 })); h.position.y = 4.75;
   for (const o of [c, h]) { o.castShadow = true; G.add(o); } G.position.set(x, .12, z); G.scale.setScalar(k); S.add(G); }
-perso(15.5, 4.2, 0x2f4858, 1); perso(13.6, 3.4, 0xe2a93f, .66);                                  // un adulte (5'-8") et un enfant de 6 ans
+perso(15.5, 12.5, 0x2f4858, 1); perso(13.6, 11.6, 0xe2a93f, .66);                                  // un adulte (5'-8") et un enfant de 6 ans
 for (let x = -14; x < 40; x += 2.2) { const h = new THREE.Mesh(new THREE.SphereGeometry(1.5, 8, 6), M.vert); h.position.set(x, 1.4, -P - 9); h.scale.y = 1.5; h.castShadow = true; S.add(h); }
 function arbre(x, z, h) { const t = new THREE.Mesh(new THREE.CylinderGeometry(.3, .45, h, 8), M.tronc); t.position.set(x, h / 2, z); t.castShadow = true; S.add(t);
   const f = new THREE.Mesh(new THREE.IcosahedronGeometry(h * .5, 1), M.vert); f.position.set(x, h + h * .25, z); f.castShadow = true; S.add(f); }
 arbre(-9, -8, 9); arbre(38, -26, 11); arbre(-12, 14, 8);
 
 // vues
-const VUES = { "v-cour": [[36, 15, 25], [10, 2.2, -6]], "v-fenetre": [[17.5, 3.6, 14], [16.5, 2.5, -3]], "v-haut": [[10.8, 58, -4], [10.8, 0, -6.9]] };
+const VUES = { "v-cour": [[36, 15, 25], [10, 2.2, -6]], "v-fenetre": [[19, 6.5, 17], [14.5, 2.6, 0]], "v-haut": [[10.8, 58, -4], [10.8, 0, -6.9]] };
 let cible = null;
 function aller(id) { cible = { p: new THREE.Vector3(...VUES[id][0]), t: new THREE.Vector3(...VUES[id][1]) };
   for (const b of document.querySelectorAll(".vues button")) b.setAttribute("aria-pressed", b.id === id); }

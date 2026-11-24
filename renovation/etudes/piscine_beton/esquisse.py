@@ -9,7 +9,8 @@ E = 10                       # épaisseur des parois
 PL, PW, PH = 260, 260, 54    # piscine hors tout (21'-8" × 21'-8" : 20' × 20' à l'intérieur), 4'-6" de haut
 SW, SD, SH = 132, 96, PH     # spa : 11'-0" de large depuis le bout gauche, 8'-0" de saillie, même hauteur que la piscine ; ouvert sur la piscine
 FX0, FX1, FZ0, FZ1 = 150, 246, 14, 44      # fenêtre : 8'-0" × 2'-6"
-BET, EAU, VIT, SPA = "#c9c7c2", "#4fb3d9", "#9fe3f5", "#3aa0c8"
+BET, EAU, VIT, SPA, BOIS = "#c9c7c2", "#4fb3d9", "#9fe3f5", "#3aa0c8", "#c79a66"
+PZ = FZ0                     # plancher du patio à la hauteur du bas de la fenêtre
 pp = lambda v: f"{int(v // 12)}'-{int(v % 12)}\""
 
 fig = plt.figure(figsize=(17, 11), facecolor="white")
@@ -23,12 +24,17 @@ a.add_patch(Rectangle((0, -SD), SW, SD, fc=BET, ec="k", lw=1.5)); a.add_patch(Re
 a.add_patch(Rectangle((E, -SD + E), SW - 2 * E, 18, fc="#7cc3dd", ec="k", ls="--")); a.add_patch(Rectangle((E, -SD + E), 18, SD - E, fc="#7cc3dd", ec="k", ls="--"))
 a.add_patch(Rectangle((SW - E - 18, -SD + E), 18, SD - E, fc="#7cc3dd", ec="k", ls="--"))
 a.plot([E, SW - E], [E, E], color="k", ls=":", lw=1.2); a.text(SW / 2, E + 9, "ouvert (seuil sous l'eau)", ha="center", fontsize=8)
+a.add_patch(Rectangle((SW, -SD), PL - SW, SD, fc=BOIS, ec="k", lw=1.2, hatch="---"))
+a.add_patch(Rectangle((SW - 2, -SD + 8), 16, SD - 16, fc="#8a5a2e", ec="k")); a.text(SW + 6, -SD / 2, "BAR", rotation=90, ha="center", va="center", fontsize=8, color="white", fontweight="bold")
+for yy in (-74, -48, -22): a.add_patch(plt.Circle((SW + 24, yy), 6, fc="#333", ec="k"))
+for xx in (178, 216): a.add_patch(Rectangle((xx, -80), 25, 55, fc="white", ec="k"))
+a.text(PL - 50, -SD + 9, "PATIO", ha="center", fontsize=10, fontweight="bold")
 a.add_patch(Rectangle((FX0, 0), FX1 - FX0, E, fc=VIT, ec="#0077aa", lw=2))
 a.add_patch(Rectangle((PL - E - 60, E), 60, 48, fc="#7cc3dd", ec="k", ls="--"))
 a.text(PL / 2 + 20, PW / 2 + 10, f"PISCINE\nintérieur {pp(PL - 2 * E)} × {pp(PW - 2 * E)}\neau 4'-0\"", ha="center", va="center", fontsize=12, fontweight="bold")
 a.text(SW / 2, -SD / 2 + 14, f"SPA\n{pp(SW - 2 * E)} × {pp(SD - E)}", ha="center", va="center", fontsize=11, fontweight="bold")
 a.text(SW / 2, -SD + E + 9, "banc en U", ha="center", va="center", fontsize=8)
-a.text((FX0 + FX1) / 2, -14, f"FENÊTRE {pp(FX1 - FX0)}", ha="center", color="#0077aa", fontweight="bold")
+a.text((FX0 + FX1) / 2 - 30, 20, f"FENÊTRE {pp(FX1 - FX0)}", ha="center", color="#004d6e", fontweight="bold", fontsize=8)
 a.text(PL - E - 30, E + 24, "marches\net banc", ha="center", va="center", fontsize=8)
 def cote(ax, x0, y0, x1, y1, t, d=0, rot=0):
     ax.annotate("", (x0, y0), (x1, y1), arrowprops=dict(arrowstyle="<->", lw=1))
@@ -41,6 +47,8 @@ a.set_xlim(-40, PL + 40); a.set_ylim(-SD - 30, PW + 35)
 b = fig.add_axes([0.03, 0.06, 0.42, 0.30]); b.set_aspect("equal"); b.axis("off"); b.set_title("VUE DE FACE (côté du spa)", loc="left", fontweight="bold")
 b.add_patch(Rectangle((-30, -6), PL + 60, 6, fc="#7da35a", ec="none")); b.add_patch(Rectangle((0, 0), PL, PH, fc=BET, ec="k", lw=1.5))
 b.add_patch(Rectangle((FX0, FZ0), FX1 - FX0, FZ1 - FZ0, fc=VIT, ec="#0077aa", lw=2)); b.add_patch(Rectangle((0, 0), SW, SH, fc="#bdbbb6", ec="k", lw=1.5))
+b.add_patch(Rectangle((SW, 0), PL - SW, PZ, fc=BOIS, ec="k")); b.text((SW + PL) / 2, PZ / 2, "patio", ha="center", va="center", fontsize=8)
+b.add_patch(Rectangle((SW - 2, PH), 16, 3, fc="#8a5a2e", ec="k")); b.text(SW + 20, PH + 2, "bar", fontsize=8, va="center")
 b.plot([0, PL], [PH - 6] * 2, color="#0077aa", ls=":"); b.text(PL + 30, PH - 6, "eau", va="center", fontsize=8, color="#0077aa")
 b.text(SW / 2, SH / 2, "SPA", ha="center", va="center", fontweight="bold"); b.text((FX0 + FX1) / 2, (FZ0 + FZ1) / 2, f"acrylique\n{pp(FX1 - FX0)} × {pp(FZ1 - FZ0)}", ha="center", va="center", fontsize=9)
 cote(b, PL + 14, 0, PL + 14, PH, pp(PH), rot=90); cote(b, 0, -14, SW, -14, pp(SW))
@@ -66,6 +74,11 @@ cuve(0, 0, PL, PW, PH, BET, EAU)
 face([(FX0, 0, FZ0), (FX1, 0, FZ0), (FX1, 0, FZ1), (FX0, 0, FZ1)], VIT, ec="#0077aa", lw=2.5)
 cuve(0, -SD, SW, 2 * E, SH, "#bdbbb6", SPA, ouvert=True)
 face([(E + 4, 0, PH - 6), (SW - E, 0, PH - 6), (SW - E, 3 * E, PH - 6), (E + 4, 3 * E, PH - 6)], EAU, ec="none")   # passage ouvert
+face([(PL, -SD, 0), (PL, 0, 0), (PL, 0, PZ), (PL, -SD, PZ)], "#9c7748"); face([(SW, -SD, 0), (PL, -SD, 0), (PL, -SD, PZ), (SW, -SD, PZ)], "#b08653")
+face([(SW, -SD, PZ), (PL, -SD, PZ), (PL, 0, PZ), (SW, 0, PZ)], BOIS)
+for xx in (178, 216): face([(xx, -80, PZ + 6), (xx + 25, -80, PZ + 6), (xx + 25, -25, PZ + 6), (xx, -25, PZ + 6)], "white")
+face([(SW - 2, -SD + 8, PH + 2), (SW + 14, -SD + 8, PH + 2), (SW + 14, -8, PH + 2), (SW - 2, -8, PH + 2)], "#8a5a2e")
+c.text(*P(PL - 40, -SD + 10, PZ), "patio", ha="center", fontsize=10, fontweight="bold"); c.text(*P(SW + 30, -SD / 2, PH + 2), "bar", fontsize=9)
 c.text(*P(PL / 2, PW / 2, PH - 6), "piscine", ha="center", va="center", fontsize=13, fontweight="bold")
 c.text(*P(SW / 2, -SD / 2 + E, SH - 6), "spa", ha="center", va="center", fontsize=12, fontweight="bold")
 c.text(*P((FX0 + FX1) / 2, 0, (FZ0 + FZ1) / 2), "fenêtre", ha="center", va="center", color="#005f88", fontsize=11)
@@ -76,6 +89,8 @@ fig.text(0.47, 0.035, "\n".join([
  f"• Piscine : {pp(PL)} × {pp(PW)} hors tout, parois de béton armé de {E} po, {pp(PH)} hors sol, eau de 4'-0\" ; marches et banc dans un coin.",
  f"• Spa : {pp(SW)} × {pp(SD)}, au bout gauche du long côté, MÊME hauteur que la piscine ({pp(PH)}), banc en U avec jets,",
  "   OUVERT sur la piscine (seuil sous l'eau, même plan d'eau) : on passe du spa à la piscine en nageant.",
+ f"• Patio : {pp(PL - SW)} × {pp(SD)} dans le coin entre le spa et la piscine, plancher de bois à {PZ} po du sol (bas de la fenêtre),",
+ "   2 chaises longues ; petit bar de bois sur le mur du spa (dessus à environ 42 po du patio), 3 tabourets.",
  f"• Fenêtre : panneau d'acrylique de {pp(FX1 - FX0)} × {pp(FZ1 - FZ0)} dans le long côté, à côté du spa, visible de la cour.",
  "• Fini : béton lisse apparent ou crépi blanc dehors ; margelle de béton de 10 po ; intérieur en enduit ou en tuile.",
  "À VALIDER : structure, gel et hivernage (ingénieur) · épaisseur de l'acrylique (fabricant) · eau commune : le spa est à la",
